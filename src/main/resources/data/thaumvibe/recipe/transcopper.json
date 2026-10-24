@@ -1,0 +1,13 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "TRANSCOPPER",
+  "catalyst": "thaumvibe:copper_nugget",
+  "aspects": {
+    "metallum": 2,
+    "permutatio": 1
+  },
+  "result": {
+    "id": "thaumvibe:copper_nugget",
+    "count": 3
+  }
+}

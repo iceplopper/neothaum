@@ -1,0 +1,13 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "ALCHEMICALDUPLICATION",
+  "catalyst": "minecraft:ink_sac",
+  "aspects": {
+    "aqua": 2,
+    "sensus": 2
+  },
+  "result": {
+    "id": "minecraft:ink_sac",
+    "count": 2
+  }
+}

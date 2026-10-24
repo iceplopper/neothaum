@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": "thaumvibe:amber"
+  },
+  "result": {
+    "id": "thaumvibe:amber_block"
+  }
+}

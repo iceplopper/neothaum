@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "CAP_gold",
+  "aspects": {
+    "ordo": 3,
+    "ignis": 3,
+    "aer": 3
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": "minecraft:gold_nugget"
+  },
+  "result": {
+    "id": "thaumvibe:gold_cap"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "ALCHEMICALDUPLICATION",
+  "catalyst": "minecraft:gunpowder",
+  "aspects": {
+    "ignis": 4,
+    "perditio": 4
+  },
+  "result": {
+    "id": "minecraft:gunpowder",
+    "count": 2
+  }
+}

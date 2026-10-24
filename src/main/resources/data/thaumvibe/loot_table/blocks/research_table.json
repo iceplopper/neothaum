@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thaumvibe:table"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "thaumvibe:blocks/research_table"
+}

@@ -1,0 +1,11 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "TALLOW",
+  "catalyst": "minecraft:rotten_flesh",
+  "aspects": {
+    "praecantatio": 2
+  },
+  "result": {
+    "id": "thaumvibe:magic_tallow"
+  }
+}

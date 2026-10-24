@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "side": "thaumvibe:blocks/greatwoodside",
+    "end": "thaumvibe:blocks/greatwoodtop"
+  }
+}

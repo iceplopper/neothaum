@@ -1,0 +1,17 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "ROD_greatwood",
+  "aspects": {
+    "perditio": 3
+  },
+  "pattern": [
+    " G",
+    "G "
+  ],
+  "key": {
+    "G": "thaumvibe:greatwood_log"
+  },
+  "result": {
+    "id": "thaumvibe:greatwood_rod"
+  }
+}

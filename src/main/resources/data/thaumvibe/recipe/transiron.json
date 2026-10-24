@@ -1,0 +1,12 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "TRANSIRON",
+  "catalyst": "minecraft:iron_nugget",
+  "aspects": {
+    "metallum": 2
+  },
+  "result": {
+    "id": "minecraft:iron_nugget",
+    "count": 3
+  }
+}

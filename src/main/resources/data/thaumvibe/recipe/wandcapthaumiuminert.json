@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "CAP_thaumium",
+  "aspects": {
+    "ordo": 6,
+    "ignis": 6,
+    "aer": 6
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": "thaumvibe:thaumium_nugget"
+  },
+  "result": {
+    "id": "thaumvibe:thaumium_cap_inert"
+  }
+}

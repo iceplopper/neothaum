@@ -1,0 +1,9 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "CRUCIBLE",
+  "catalyst": "thaumvibe:earth_shard",
+  "aspects": {},
+  "result": {
+    "id": "thaumvibe:balanced_shard"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumvibe:item/order_shard",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1127169
+      }
+    ]
+  }
+}

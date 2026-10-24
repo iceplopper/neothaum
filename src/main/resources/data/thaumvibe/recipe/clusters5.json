@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumvibe:entropy_shard",
+    "thaumvibe:entropy_shard",
+    "thaumvibe:entropy_shard",
+    "thaumvibe:entropy_shard",
+    "thaumvibe:entropy_shard",
+    "thaumvibe:entropy_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:entropy_crystal_cluster"
+  }
+}

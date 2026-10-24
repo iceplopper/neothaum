@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "  I",
+    " S ",
+    "I  "
+  ],
+  "key": {
+    "I": "thaumvibe:iron_cap",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "thaumvibe:wand",
+    "components": {
+      "thaumvibe:wand_cap": "iron",
+      "thaumvibe:wand_rod": "wood"
+    }
+  }
+}

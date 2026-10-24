@@ -1,0 +1,131 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "cutout",
+  "textures": {
+    "top": "thaumvibe:blocks/crucible1",
+    "bottom": "thaumvibe:blocks/crucible2",
+    "side": "thaumvibe:blocks/crucible3",
+    "inner": "thaumvibe:blocks/crucible5",
+    "floor": "thaumvibe:blocks/crucible6",
+    "particle": "thaumvibe:blocks/crucible3"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#top"
+        },
+        "down": {
+          "texture": "#bottom"
+        },
+        "north": {
+          "texture": "#side"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "west": {
+          "texture": "#side"
+        }
+      }
+    },
+    {
+      "from": [
+        1.968,
+        0,
+        0
+      ],
+      "to": [
+        1.968,
+        16,
+        16
+      ],
+      "faces": {
+        "east": {
+          "texture": "#inner"
+        }
+      }
+    },
+    {
+      "from": [
+        14.032,
+        0,
+        0
+      ],
+      "to": [
+        14.032,
+        16,
+        16
+      ],
+      "faces": {
+        "west": {
+          "texture": "#inner"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        0,
+        1.968
+      ],
+      "to": [
+        16,
+        16,
+        1.968
+      ],
+      "faces": {
+        "south": {
+          "texture": "#inner"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        0,
+        14.032
+      ],
+      "to": [
+        16,
+        16,
+        14.032
+      ],
+      "faces": {
+        "north": {
+          "texture": "#inner"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        4,
+        0
+      ],
+      "to": [
+        16,
+        4,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#floor"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "K"
+  ],
+  "key": {
+    "K": "thaumvibe:thaumium_block"
+  },
+  "result": {
+    "id": "thaumvibe:thaumium_ingot",
+    "count": 9
+  }
+}

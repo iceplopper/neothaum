@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "thaumvibe:blocks/amberblock",
+    "end": "thaumvibe:blocks/amberblock_top"
+  }
+}

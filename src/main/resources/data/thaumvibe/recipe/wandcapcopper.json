@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "CAP_copper",
+  "aspects": {
+    "ordo": 2,
+    "ignis": 2,
+    "aer": 2
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": "thaumvibe:copper_nugget"
+  },
+  "result": {
+    "id": "thaumvibe:copper_cap"
+  }
+}

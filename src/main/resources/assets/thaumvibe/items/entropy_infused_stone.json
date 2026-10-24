@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumvibe:block/entropy_infused_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -11184777
+      }
+    ]
+  }
+}
