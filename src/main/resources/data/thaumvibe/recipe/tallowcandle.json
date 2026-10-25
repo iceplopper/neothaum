@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    " T ",
+    " T "
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "T": "thaumvibe:magic_tallow"
+  },
+  "result": {
+    "id": "thaumvibe:white_tallow_candle",
+    "count": 3
+  }
+}

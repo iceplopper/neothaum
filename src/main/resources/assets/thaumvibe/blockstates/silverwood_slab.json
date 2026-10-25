@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "thaumvibe:block/silverwood_slab"
+    },
+    "type=top": {
+      "model": "thaumvibe:block/silverwood_slab_top"
+    },
+    "type=double": {
+      "model": "thaumvibe:block/silverwood_planks"
+    }
+  }
+}

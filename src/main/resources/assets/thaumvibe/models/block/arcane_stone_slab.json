@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "thaumvibe:blocks/arcane_stone",
+    "top": "thaumvibe:blocks/arcane_stone",
+    "side": "thaumvibe:blocks/arcane_stone"
+  }
+}

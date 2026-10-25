@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "K  ",
+    "KK ",
+    "KKK"
+  ],
+  "key": {
+    "K": "thaumvibe:greatwood_planks"
+  },
+  "result": {
+    "id": "thaumvibe:greatwood_stairs",
+    "count": 4
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dyes/red",
+    "thaumvibe:white_tallow_candle"
+  ],
+  "result": {
+    "id": "thaumvibe:red_tallow_candle"
+  }
+}

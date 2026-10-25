@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "thaumvibe:quicksilver_bead"
+  },
+  "result": {
+    "id": "thaumvibe:quicksilver_drop"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "thaumvibe:blocks/planks_greatwood",
+    "top": "thaumvibe:blocks/planks_greatwood",
+    "side": "thaumvibe:blocks/planks_greatwood"
+  }
+}

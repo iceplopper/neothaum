@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "ingredient": "thaumvibe:raw_cinnabar",
+  "result": {
+    "id": "thaumvibe:quicksilver"
+  }
+}

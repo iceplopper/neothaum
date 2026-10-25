@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "ingredient": "thaumvibe:deepslate_cinnabar_ore",
+  "result": {
+    "id": "thaumvibe:quicksilver"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "thaumvibe:raw_cinnabar"
+  },
+  "result": {
+    "id": "thaumvibe:raw_cinnabar_block"
+  }
+}

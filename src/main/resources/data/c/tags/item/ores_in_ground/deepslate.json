@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "thaumvibe:deepslate_air_infused_stone",
+    "thaumvibe:deepslate_fire_infused_stone",
+    "thaumvibe:deepslate_water_infused_stone",
+    "thaumvibe:deepslate_earth_infused_stone",
+    "thaumvibe:deepslate_order_infused_stone",
+    "thaumvibe:deepslate_entropy_infused_stone",
+    "thaumvibe:deepslate_amber_bearing_stone",
+    "thaumvibe:deepslate_cinnabar_ore"
+  ]
+}

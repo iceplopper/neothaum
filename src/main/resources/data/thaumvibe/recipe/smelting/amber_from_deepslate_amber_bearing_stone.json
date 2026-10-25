@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredient": "thaumvibe:deepslate_amber_bearing_stone",
+  "result": {
+    "id": "thaumvibe:amber"
+  }
+}

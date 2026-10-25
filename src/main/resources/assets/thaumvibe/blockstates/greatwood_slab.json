@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "thaumvibe:block/greatwood_slab"
+    },
+    "type=top": {
+      "model": "thaumvibe:block/greatwood_slab_top"
+    },
+    "type=double": {
+      "model": "thaumvibe:block/greatwood_planks"
+    }
+  }
+}

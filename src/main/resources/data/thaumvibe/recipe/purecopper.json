@@ -1,0 +1,12 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "PURECOPPER",
+  "catalyst": "#thaumvibe:purifiable/copper",
+  "aspects": {
+    "metallum": 1,
+    "ordo": 1
+  },
+  "result": {
+    "id": "thaumvibe:native_copper_cluster"
+  }
+}

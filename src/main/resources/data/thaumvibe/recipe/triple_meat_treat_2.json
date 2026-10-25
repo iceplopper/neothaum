@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:sugar",
+    "thaumvibe:beef_nugget",
+    "thaumvibe:chicken_nugget",
+    "thaumvibe:fish_nugget"
+  ],
+  "result": {
+    "id": "thaumvibe:triple_meat_treat"
+  }
+}

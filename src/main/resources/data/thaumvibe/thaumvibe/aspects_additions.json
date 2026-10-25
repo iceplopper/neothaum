@@ -1,0 +1,84 @@
+{
+  "objects": [
+    {
+      "item": "thaumvibe:deepslate_air_infused_stone",
+      "aspects": {
+        "terra": 1,
+        "aer": 3,
+        "vitreus": 2
+      }
+    },
+    {
+      "item": "thaumvibe:deepslate_fire_infused_stone",
+      "aspects": {
+        "terra": 1,
+        "ignis": 3,
+        "vitreus": 2
+      }
+    },
+    {
+      "item": "thaumvibe:deepslate_water_infused_stone",
+      "aspects": {
+        "terra": 1,
+        "aqua": 3,
+        "vitreus": 2
+      }
+    },
+    {
+      "item": "thaumvibe:deepslate_earth_infused_stone",
+      "aspects": {
+        "terra": 4,
+        "vitreus": 2
+      }
+    },
+    {
+      "item": "thaumvibe:deepslate_order_infused_stone",
+      "aspects": {
+        "terra": 1,
+        "ordo": 3,
+        "vitreus": 2
+      }
+    },
+    {
+      "item": "thaumvibe:deepslate_entropy_infused_stone",
+      "aspects": {
+        "terra": 1,
+        "perditio": 3,
+        "vitreus": 2
+      }
+    },
+    {
+      "item": "thaumvibe:deepslate_amber_bearing_stone",
+      "aspects": {
+        "terra": 1,
+        "vinculum": 3,
+        "vitreus": 2
+      }
+    },
+    {
+      "item": "thaumvibe:deepslate_cinnabar_ore",
+      "aspects": {
+        "terra": 1,
+        "metallum": 2,
+        "permutatio": 2,
+        "venenum": 1
+      }
+    },
+    {
+      "item": "thaumvibe:raw_cinnabar",
+      "aspects": {
+        "terra": 1,
+        "metallum": 2,
+        "permutatio": 2,
+        "venenum": 1
+      }
+    },
+    {
+      "item": "thaumvibe:quicksilver_bead",
+      "aspects": {
+        "metallum": 1
+      }
+    }
+  ],
+  "entities": []
+}

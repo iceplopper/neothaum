@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "K  ",
+    "KK ",
+    "KKK"
+  ],
+  "key": {
+    "K": "thaumvibe:arcane_stone_bricks"
+  },
+  "result": {
+    "id": "thaumvibe:arcane_stone_stairs",
+    "count": 4
+  }
+}
