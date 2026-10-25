@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "thaumvibe",
+	"version": "${version}",
+	"name": "Thaumvibe 4",
+	"description": "A private Fabric recreation of Thaumcraft 4 by Azanor.",
+	"authors": [
+		"Azanor (original Thaumcraft 4)"
+	],
+	"license": "All-Rights-Reserved",
+	"icon": "assets/thaumvibe/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.thaumvibe.Thaumvibe"
+		],
+		"client": [
+			"dev.thaumvibe.client.ThaumvibeClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"jei": "*"
+	},
+	"mixins": [
+		"thaumvibe.mixins.json",
+		{
+			"config": "thaumvibe.client.mixins.json",
+			"environment": "client"
+		}
+	]
+}

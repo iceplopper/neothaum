@@ -1,0 +1,105 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "down": "tube"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_down_tube"
+      }
+    },
+    {
+      "when": {
+        "down": "extended"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_down_extended"
+      }
+    },
+    {
+      "when": {
+        "up": "tube"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_up_tube"
+      }
+    },
+    {
+      "when": {
+        "up": "extended"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_up_extended"
+      }
+    },
+    {
+      "when": {
+        "north": "tube"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_north_tube"
+      }
+    },
+    {
+      "when": {
+        "north": "extended"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_north_extended"
+      }
+    },
+    {
+      "when": {
+        "south": "tube"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_south_tube"
+      }
+    },
+    {
+      "when": {
+        "south": "extended"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_south_extended"
+      }
+    },
+    {
+      "when": {
+        "west": "tube"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_west_tube"
+      }
+    },
+    {
+      "when": {
+        "west": "extended"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_west_extended"
+      }
+    },
+    {
+      "when": {
+        "east": "tube"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_east_tube"
+      }
+    },
+    {
+      "when": {
+        "east": "extended"
+      },
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_east_extended"
+      }
+    },
+    {
+      "apply": {
+        "model": "thaumvibe:block/essentia_buffer_core"
+      }
+    }
+  ]
+}

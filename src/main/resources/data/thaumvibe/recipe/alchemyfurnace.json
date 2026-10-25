@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "DISTILESSENTIA",
+  "aspects": {
+    "ignis": 5,
+    "aqua": 5
+  },
+  "pattern": [
+    "SCS",
+    "SFS",
+    "SSS"
+  ],
+  "key": {
+    "C": "thaumvibe:crucible",
+    "F": "minecraft:furnace",
+    "S": "thaumvibe:arcane_stone_block"
+  },
+  "result": {
+    "id": "thaumvibe:alchemical_furnace"
+  }
+}

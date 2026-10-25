@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "CENTRIFUGE",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    "PVP",
+    "T T",
+    "PRP"
+  ],
+  "key": {
+    "T": "thaumvibe:essentia_tube",
+    "V": "thaumvibe:essentia_valve",
+    "R": "thaumvibe:restricted_essentia_tube",
+    "P": "thaumvibe:glass_phial"
+  },
+  "result": {
+    "id": "thaumvibe:essentia_buffer"
+  }
+}

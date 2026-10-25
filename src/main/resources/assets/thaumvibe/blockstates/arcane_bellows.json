@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "thaumvibe:block/arcane_bellows"
+    },
+    "facing=up": {
+      "model": "thaumvibe:block/arcane_bellows"
+    },
+    "facing=north": {
+      "model": "thaumvibe:block/arcane_bellows"
+    },
+    "facing=south": {
+      "model": "thaumvibe:block/arcane_bellows"
+    },
+    "facing=west": {
+      "model": "thaumvibe:block/arcane_bellows"
+    },
+    "facing=east": {
+      "model": "thaumvibe:block/arcane_bellows"
+    }
+  }
+}

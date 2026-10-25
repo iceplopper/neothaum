@@ -1,0 +1,15 @@
+{
+  "type": "thaumvibe:arcane_shapeless",
+  "research": "TUBEFILTER",
+  "aspects": {
+    "aqua": 5,
+    "terra": 16
+  },
+  "ingredients": [
+    "thaumvibe:essentia_tube",
+    "#c:stones"
+  ],
+  "result": {
+    "id": "thaumvibe:restricted_essentia_tube"
+  }
+}

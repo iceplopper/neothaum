@@ -1,0 +1,119 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "cutout",
+  "textures": {
+    "arm": "thaumvibe:blocks/pipe_restrict",
+    "particle": "thaumvibe:blocks/pipe_restrict"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        7,
+        7
+      ],
+      "to": [
+        8,
+        9,
+        9
+      ],
+      "faces": {
+        "down": {
+          "texture": "#arm",
+          "uv": [
+            0,
+            7,
+            8,
+            9
+          ]
+        },
+        "up": {
+          "texture": "#arm",
+          "uv": [
+            0,
+            7,
+            8,
+            9
+          ]
+        },
+        "north": {
+          "texture": "#arm",
+          "uv": [
+            8,
+            7,
+            16,
+            9
+          ]
+        },
+        "south": {
+          "texture": "#arm",
+          "uv": [
+            0,
+            7,
+            8,
+            9
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        -6,
+        7,
+        7
+      ],
+      "to": [
+        0,
+        9,
+        9
+      ],
+      "faces": {
+        "down": {
+          "texture": "#arm",
+          "uv": [
+            10,
+            7,
+            16,
+            9
+          ]
+        },
+        "up": {
+          "texture": "#arm",
+          "uv": [
+            10,
+            7,
+            16,
+            9
+          ]
+        },
+        "north": {
+          "texture": "#arm",
+          "uv": [
+            0,
+            7,
+            6,
+            9
+          ]
+        },
+        "south": {
+          "texture": "#arm",
+          "uv": [
+            10,
+            7,
+            16,
+            9
+          ]
+        },
+        "west": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ]
+        }
+      }
+    }
+  ]
+}

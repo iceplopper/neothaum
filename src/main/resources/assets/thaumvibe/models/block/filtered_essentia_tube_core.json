@@ -1,0 +1,153 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "cutout",
+  "textures": {
+    "filter": "thaumvibe:blocks/pipe_filter",
+    "core": "thaumvibe:blocks/pipe_filter_core",
+    "particle": "thaumvibe:blocks/pipe_filter"
+  },
+  "elements": [
+    {
+      "from": [
+        5.5,
+        5.5,
+        5.5
+      ],
+      "to": [
+        10.5,
+        10.5,
+        10.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "#filter",
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ]
+        },
+        "up": {
+          "texture": "#filter",
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ]
+        },
+        "north": {
+          "texture": "#filter",
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ]
+        },
+        "south": {
+          "texture": "#filter",
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ]
+        },
+        "west": {
+          "texture": "#filter",
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ]
+        },
+        "east": {
+          "texture": "#filter",
+          "uv": [
+            5.5,
+            5.5,
+            10.5,
+            10.5
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        5.52,
+        5.52,
+        5.52
+      ],
+      "to": [
+        10.48,
+        10.48,
+        10.48
+      ],
+      "faces": {
+        "down": {
+          "texture": "#core",
+          "uv": [
+            5.52,
+            5.52,
+            10.48,
+            10.48
+          ],
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#core",
+          "uv": [
+            5.52,
+            5.52,
+            10.48,
+            10.48
+          ],
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#core",
+          "uv": [
+            5.52,
+            5.52,
+            10.48,
+            10.48
+          ],
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#core",
+          "uv": [
+            5.52,
+            5.52,
+            10.48,
+            10.48
+          ],
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#core",
+          "uv": [
+            5.52,
+            5.52,
+            10.48,
+            10.48
+          ],
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#core",
+          "uv": [
+            5.52,
+            5.52,
+            10.48,
+            10.48
+          ],
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumvibe:item/arcane_alembic",
+    "model": {
+      "type": "thaumvibe:alembic"
+    }
+  }
+}

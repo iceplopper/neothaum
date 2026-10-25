@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "DISTILESSENTIA",
+  "aspects": {
+    "ordo": 5,
+    "aqua": 5
+  },
+  "pattern": [
+    "GWG"
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "W": "thaumvibe:silverwood_planks"
+  },
+  "result": {
+    "id": "thaumvibe:vis_filter",
+    "count": 2
+  }
+}

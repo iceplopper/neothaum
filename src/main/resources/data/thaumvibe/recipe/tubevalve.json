@@ -1,0 +1,15 @@
+{
+  "type": "thaumvibe:arcane_shapeless",
+  "research": "TUBES",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5
+  },
+  "ingredients": [
+    "thaumvibe:essentia_tube",
+    "minecraft:lever"
+  ],
+  "result": {
+    "id": "thaumvibe:essentia_valve"
+  }
+}

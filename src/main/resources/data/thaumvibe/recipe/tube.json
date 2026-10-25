@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "TUBES",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    " Q ",
+    "IGI",
+    " B "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "B": "minecraft:gold_nugget",
+    "G": "minecraft:glass",
+    "Q": "thaumvibe:quicksilver_drop"
+  },
+  "result": {
+    "id": "thaumvibe:essentia_tube",
+    "count": 8
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "JARVOID",
+  "aspects": {
+    "aqua": 5,
+    "perditio": 15
+  },
+  "pattern": [
+    "O",
+    "J",
+    "P"
+  ],
+  "key": {
+    "O": "minecraft:obsidian",
+    "P": "minecraft:blaze_powder",
+    "J": "thaumvibe:warded_jar"
+  },
+  "result": {
+    "id": "thaumvibe:void_jar"
+  }
+}
