@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "thaumvibe:glass_phial",
+    "minecraft:feather",
+    "#thaumvibe:dyes/black"
+  ],
+  "result": {
+    "id": "thaumvibe:scribing_tools"
+  }
+}

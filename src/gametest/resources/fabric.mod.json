@@ -1,0 +1,11 @@
+{
+	"schemaVersion": 1,
+	"id": "thaumvibe-visual-tests",
+	"version": "1.0.0",
+	"name": "Thaumvibe visual tests",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-client-gametest": ["dev.thaumvibe.gametest.VisualTests"]
+	},
+	"depends": {"thaumvibe": "*"}
+}

@@ -1,0 +1,491 @@
+{
+ "heartbeat": {
+  "sounds": [
+   {
+    "name": "thaumvibe:heartbeat",
+    "stream": false
+   }
+  ]
+ },
+ "spill": {
+  "sounds": [
+   {
+    "name": "thaumvibe:spill",
+    "stream": false
+   }
+  ]
+ },
+ "bubble": {
+  "sounds": [
+   "thaumvibe:bubble1",
+   "thaumvibe:bubble2",
+   "thaumvibe:bubble3",
+   "thaumvibe:bubble4"
+  ]
+ },
+ "alembicknock": {
+  "sounds": [
+   {
+    "name": "thaumvibe:alembicknock",
+    "stream": false
+   }
+  ]
+ },
+ "creak": {
+  "sounds": [
+   "thaumvibe:creak1",
+   "thaumvibe:creak2"
+  ]
+ },
+ "squeek": {
+  "sounds": [
+   "thaumvibe:squeek1",
+   "thaumvibe:squeek2"
+  ]
+ },
+ "golemironshoot": {
+  "sounds": [
+   {
+    "name": "thaumvibe:golemironshoot",
+    "stream": false
+   }
+  ]
+ },
+ "jar": {
+  "sounds": [
+   "thaumvibe:jar1",
+   "thaumvibe:jar2",
+   "thaumvibe:jar3",
+   "thaumvibe:jar4"
+  ]
+ },
+ "swarm": {
+  "sounds": [
+   "thaumvibe:swarm1",
+   "thaumvibe:swarm2",
+   "thaumvibe:swarm3"
+  ]
+ },
+ "swarmattack": {
+  "sounds": [
+   {
+    "name": "thaumvibe:swarmattack",
+    "stream": false
+   }
+  ]
+ },
+ "fly": {
+  "sounds": [
+   "thaumvibe:fly1",
+   "thaumvibe:fly2"
+  ]
+ },
+ "key": {
+  "sounds": [
+   {
+    "name": "thaumvibe:key",
+    "stream": false
+   }
+  ]
+ },
+ "doorfail": {
+  "sounds": [
+   {
+    "name": "thaumvibe:doorfail",
+    "stream": false
+   }
+  ]
+ },
+ "cameraticks": {
+  "sounds": [
+   {
+    "name": "thaumvibe:cameraticks",
+    "stream": false
+   }
+  ]
+ },
+ "cameraclack": {
+  "sounds": [
+   "thaumvibe:cameraclack1",
+   "thaumvibe:cameraclack2",
+   "thaumvibe:cameraclack3"
+  ]
+ },
+ "pump": {
+  "sounds": [
+   "thaumvibe:pump1",
+   "thaumvibe:pump2",
+   "thaumvibe:pump3"
+  ]
+ },
+ "page": {
+  "sounds": [
+   "thaumvibe:page1",
+   "thaumvibe:page2"
+  ]
+ },
+ "learn": {
+  "sounds": [
+   {
+    "name": "thaumvibe:learn",
+    "stream": false
+   }
+  ]
+ },
+ "write": {
+  "sounds": [
+   "thaumvibe:write1",
+   "thaumvibe:write2"
+  ]
+ },
+ "erase": {
+  "sounds": [
+   {
+    "name": "thaumvibe:erase",
+    "stream": false
+   }
+  ]
+ },
+ "brain": {
+  "sounds": [
+   "thaumvibe:brain1",
+   "thaumvibe:brain2",
+   "thaumvibe:brain3",
+   "thaumvibe:brain4"
+  ]
+ },
+ "crystal": {
+  "sounds": [
+   {
+    "name": "thaumvibe:crystal",
+    "stream": false
+   }
+  ]
+ },
+ "wispdead": {
+  "sounds": [
+   {
+    "name": "thaumvibe:wispdead",
+    "stream": false
+   }
+  ]
+ },
+ "wisplive": {
+  "sounds": [
+   "thaumvibe:wisplive1",
+   "thaumvibe:wisplive2",
+   "thaumvibe:wisplive3"
+  ]
+ },
+ "wand": {
+  "sounds": [
+   "thaumvibe:wand1",
+   "thaumvibe:wand2",
+   "thaumvibe:wand3"
+  ]
+ },
+ "wandfail": {
+  "sounds": [
+   {
+    "name": "thaumvibe:wandfail",
+    "stream": false
+   }
+  ]
+ },
+ "rumble": {
+  "sounds": [
+   {
+    "name": "thaumvibe:rumble",
+    "stream": false
+   }
+  ]
+ },
+ "ice": {
+  "sounds": [
+   "thaumvibe:ice1",
+   "thaumvibe:ice2",
+   "thaumvibe:ice3"
+  ]
+ },
+ "jacobs": {
+  "sounds": [
+   {
+    "name": "thaumvibe:jacobs",
+    "stream": false
+   }
+  ]
+ },
+ "hhoff": {
+  "sounds": [
+   {
+    "name": "thaumvibe:hhoff",
+    "stream": false
+   }
+  ]
+ },
+ "hhon": {
+  "sounds": [
+   {
+    "name": "thaumvibe:hhon",
+    "stream": false
+   }
+  ]
+ },
+ "pech_idle": {
+  "sounds": [
+   "thaumvibe:pech_idle1",
+   "thaumvibe:pech_idle2",
+   "thaumvibe:pech_idle3"
+  ]
+ },
+ "pech_trade": {
+  "sounds": [
+   {
+    "name": "thaumvibe:pech_trade",
+    "stream": false
+   }
+  ]
+ },
+ "pech_dice": {
+  "sounds": [
+   {
+    "name": "thaumvibe:pech_dice",
+    "stream": false
+   }
+  ]
+ },
+ "pech_hit": {
+  "sounds": [
+   "thaumvibe:pech_hit1",
+   "thaumvibe:pech_hit2"
+  ]
+ },
+ "pech_death": {
+  "sounds": [
+   {
+    "name": "thaumvibe:pech_death",
+    "stream": false
+   }
+  ]
+ },
+ "pech_charge": {
+  "sounds": [
+   "thaumvibe:pech_charge1",
+   "thaumvibe:pech_charge2"
+  ]
+ },
+ "shock": {
+  "sounds": [
+   "thaumvibe:shock1",
+   "thaumvibe:shock2"
+  ]
+ },
+ "fireloop": {
+  "sounds": [
+   {
+    "name": "thaumvibe:fireloop",
+    "stream": false
+   }
+  ]
+ },
+ "zap": {
+  "sounds": [
+   "thaumvibe:zap1",
+   "thaumvibe:zap2"
+  ]
+ },
+ "craftfail": {
+  "sounds": [
+   {
+    "name": "thaumvibe:craftfail",
+    "stream": false
+   }
+  ]
+ },
+ "craftstart": {
+  "sounds": [
+   {
+    "name": "thaumvibe:craftstart",
+    "stream": false
+   }
+  ]
+ },
+ "runicshieldeffect": {
+  "sounds": [
+   {
+    "name": "thaumvibe:runicshieldeffect",
+    "stream": false
+   }
+  ]
+ },
+ "runicshieldcharge": {
+  "sounds": [
+   {
+    "name": "thaumvibe:runicshieldcharge",
+    "stream": false
+   }
+  ]
+ },
+ "swing": {
+  "sounds": [
+   "thaumvibe:swing1",
+   "thaumvibe:swing2"
+  ]
+ },
+ "wind": {
+  "sounds": [
+   "thaumvibe:wind1",
+   "thaumvibe:wind2"
+  ]
+ },
+ "tool": {
+  "sounds": [
+   "thaumvibe:tool1",
+   "thaumvibe:tool2"
+  ]
+ },
+ "gore": {
+  "sounds": [
+   "thaumvibe:gore1",
+   "thaumvibe:gore2"
+  ]
+ },
+ "roots": {
+  "sounds": [
+   "thaumvibe:roots1",
+   "thaumvibe:roots2",
+   "thaumvibe:roots3"
+  ]
+ },
+ "tentacle": {
+  "sounds": [
+   "thaumvibe:tentacle1",
+   "thaumvibe:tentacle2",
+   "thaumvibe:tentacle3"
+  ]
+ },
+ "upgrade": {
+  "sounds": [
+   {
+    "name": "thaumvibe:upgrade",
+    "stream": false
+   }
+  ]
+ },
+ "whispers": {
+  "sounds": [
+   {
+    "name": "thaumvibe:whispers",
+    "stream": false
+   }
+  ]
+ },
+ "monolith": {
+  "sounds": [
+   {
+    "name": "thaumvibe:monolith",
+    "stream": false
+   }
+  ]
+ },
+ "infuser": {
+  "sounds": [
+   {
+    "name": "thaumvibe:infuser",
+    "stream": false
+   }
+  ]
+ },
+ "infuserstart": {
+  "sounds": [
+   {
+    "name": "thaumvibe:infuserstart",
+    "stream": false
+   }
+  ]
+ },
+ "egidle": {
+  "sounds": [
+   "thaumvibe:egidle1",
+   "thaumvibe:egidle2"
+  ]
+ },
+ "egattack": {
+  "sounds": [
+   {
+    "name": "thaumvibe:egattack",
+    "stream": false
+   }
+  ]
+ },
+ "egdeath": {
+  "sounds": [
+   {
+    "name": "thaumvibe:egdeath",
+    "stream": false
+   }
+  ]
+ },
+ "egscreech": {
+  "sounds": [
+   {
+    "name": "thaumvibe:egscreech",
+    "stream": false
+   }
+  ]
+ },
+ "crabclaw": {
+  "sounds": [
+   {
+    "name": "thaumvibe:crabclaw",
+    "stream": false
+   }
+  ]
+ },
+ "crabdeath": {
+  "sounds": [
+   {
+    "name": "thaumvibe:crabdeath",
+    "stream": false
+   }
+  ]
+ },
+ "crabtalk": {
+  "sounds": [
+   "thaumvibe:crabtalk1",
+   "thaumvibe:crabtalk2",
+   "thaumvibe:crabtalk3"
+  ]
+ },
+ "chant": {
+  "sounds": [
+   "thaumvibe:chant1",
+   "thaumvibe:chant2",
+   "thaumvibe:chant3"
+  ]
+ },
+ "coins": {
+  "sounds": [
+   {
+    "name": "thaumvibe:coins",
+    "stream": false
+   }
+  ]
+ },
+ "urnbreak": {
+  "sounds": [
+   {
+    "name": "thaumvibe:urnbreak",
+    "stream": false
+   }
+  ]
+ },
+ "evilportal": {
+  "sounds": [
+   {
+    "name": "thaumvibe:evilportal",
+    "stream": false
+   }
+  ]
+ }
+}

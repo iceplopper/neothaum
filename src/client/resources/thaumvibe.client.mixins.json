@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "dev.thaumvibe.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ContainerScreenAccessor",
+		"FirstPersonThaumometerMixin",
+		"SpecialModelRenderersAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
