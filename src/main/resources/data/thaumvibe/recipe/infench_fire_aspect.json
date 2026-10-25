@@ -1,0 +1,16 @@
+{
+  "type": "thaumvibe:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:fire_aspect",
+  "instability": 3,
+  "aspects": {
+    "praecantatio": 4,
+    "telum": 4,
+    "ignis": 8
+  },
+  "components": [
+    "minecraft:iron_sword",
+    "minecraft:blaze_powder",
+    "thaumvibe:salis_mundus"
+  ]
+}

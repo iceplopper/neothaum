@@ -1,0 +1,20 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ELEMENTALPICK",
+  "instability": 1,
+  "aspects": {
+    "ignis": 8,
+    "perfodio": 8,
+    "sensus": 8
+  },
+  "central": "thaumvibe:thaumium_pickaxe",
+  "components": [
+    "thaumvibe:fire_shard",
+    "thaumvibe:fire_shard",
+    "minecraft:diamond",
+    "thaumvibe:greatwood_log"
+  ],
+  "result": {
+    "id": "thaumvibe:pickaxe_of_the_core"
+  }
+}

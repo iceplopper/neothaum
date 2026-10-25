@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "INFUSION",
+  "aspects": {
+    "aer": 5
+  },
+  "pattern": [
+    "SSS",
+    " S ",
+    "SSS"
+  ],
+  "key": {
+    "S": "thaumvibe:arcane_stone_block"
+  },
+  "result": {
+    "id": "thaumvibe:arcane_pedestal",
+    "count": 2
+  }
+}

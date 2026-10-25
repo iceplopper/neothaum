@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "HOVERGIRDLE",
+  "instability": 8,
+  "aspects": {
+    "volatus": 16,
+    "potentia": 32,
+    "aer": 32,
+    "iter": 16
+  },
+  "central": "thaumvibe:mundane_belt",
+  "components": [
+    "thaumvibe:air_shard",
+    "minecraft:feather",
+    "minecraft:gold_ingot",
+    "thaumvibe:earth_shard",
+    "minecraft:feather",
+    "minecraft:gold_ingot"
+  ],
+  "result": {
+    "id": "thaumvibe:thaumostatic_girdle"
+  }
+}

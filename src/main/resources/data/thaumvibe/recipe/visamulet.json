@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "VISAMULET",
+  "instability": 6,
+  "aspects": {
+    "auram": 24,
+    "potentia": 64,
+    "praecantatio": 64,
+    "vacuos": 24
+  },
+  "central": "thaumvibe:mundane_amulet",
+  "components": [
+    "thaumvibe:primal_charm",
+    "thaumvibe:mixed_crystal_cluster",
+    "thaumvibe:mixed_crystal_cluster",
+    "thaumvibe:primal_charm",
+    "thaumvibe:mixed_crystal_cluster",
+    "thaumvibe:mixed_crystal_cluster"
+  ],
+  "result": {
+    "id": "thaumvibe:amulet_of_vis_storage"
+  }
+}

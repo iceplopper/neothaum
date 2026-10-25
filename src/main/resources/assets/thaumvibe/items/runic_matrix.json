@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumvibe:item/runic_matrix",
+    "model": {
+      "type": "thaumvibe:runic_matrix"
+    }
+  }
+}

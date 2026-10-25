@@ -1,0 +1,16 @@
+{
+  "type": "thaumvibe:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:thorns",
+  "instability": 2,
+  "aspects": {
+    "praecantatio": 4,
+    "telum": 8,
+    "herba": 8
+  },
+  "components": [
+    "minecraft:dead_bush",
+    "minecraft:quartz",
+    "thaumvibe:salis_mundus"
+  ]
+}

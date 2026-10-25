@@ -1,0 +1,27 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ROD_silverwood",
+  "instability": 5,
+  "aspects": {
+    "aer": 9,
+    "ignis": 9,
+    "aqua": 9,
+    "terra": 9,
+    "ordo": 9,
+    "perditio": 9,
+    "praecantatio": 9
+  },
+  "central": "thaumvibe:silverwood_log",
+  "components": [
+    "thaumvibe:balanced_shard",
+    "thaumvibe:air_shard",
+    "thaumvibe:fire_shard",
+    "thaumvibe:water_shard",
+    "thaumvibe:earth_shard",
+    "thaumvibe:order_shard",
+    "thaumvibe:entropy_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:silverwood_rod"
+  }
+}

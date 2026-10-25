@@ -1,0 +1,15 @@
+{
+  "type": "thaumvibe:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:feather_falling",
+  "instability": 1,
+  "aspects": {
+    "praecantatio": 4,
+    "aer": 4,
+    "volatus": 4
+  },
+  "components": [
+    "minecraft:feather",
+    "thaumvibe:salis_mundus"
+  ]
+}

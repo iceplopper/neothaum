@@ -1,0 +1,13 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "VOIDMETAL",
+  "catalyst": "minecraft:wheat_seeds",
+  "aspects": {
+    "tenebrae": 8,
+    "vacuos": 8,
+    "alienis": 2
+  },
+  "result": {
+    "id": "thaumvibe:void_seed"
+  }
+}

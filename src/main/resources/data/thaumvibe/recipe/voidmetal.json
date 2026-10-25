@@ -1,0 +1,11 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "VOIDMETAL",
+  "catalyst": "thaumvibe:void_seed",
+  "aspects": {
+    "metallum": 8
+  },
+  "result": {
+    "id": "thaumvibe:void_metal_ingot"
+  }
+}

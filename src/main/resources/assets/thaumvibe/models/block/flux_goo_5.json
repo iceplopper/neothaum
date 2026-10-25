@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "translucent",
+  "textures": {
+    "fluid": "thaumvibe:blocks/fluxgoo",
+    "particle": "thaumvibe:blocks/fluxgoo"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        10.5,
+        16
+      ],
+      "shade": false,
+      "faces": {
+        "down": {
+          "texture": "#fluid"
+        },
+        "up": {
+          "texture": "#fluid"
+        },
+        "north": {
+          "texture": "#fluid"
+        },
+        "south": {
+          "texture": "#fluid"
+        },
+        "west": {
+          "texture": "#fluid"
+        },
+        "east": {
+          "texture": "#fluid"
+        }
+      }
+    }
+  ]
+}

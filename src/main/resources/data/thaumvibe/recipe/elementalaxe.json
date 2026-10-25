@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ELEMENTALAXE",
+  "instability": 1,
+  "aspects": {
+    "aqua": 16,
+    "arbor": 8
+  },
+  "central": "thaumvibe:thaumium_axe",
+  "components": [
+    "thaumvibe:water_shard",
+    "thaumvibe:water_shard",
+    "minecraft:diamond",
+    "thaumvibe:greatwood_log"
+  ],
+  "result": {
+    "id": "thaumvibe:axe_of_the_stream"
+  }
+}

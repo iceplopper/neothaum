@@ -1,0 +1,16 @@
+{
+  "type": "thaumvibe:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:looting",
+  "instability": 3,
+  "aspects": {
+    "praecantatio": 4,
+    "telum": 4,
+    "lucrum": 8
+  },
+  "components": [
+    "minecraft:iron_sword",
+    "minecraft:diamond",
+    "thaumvibe:salis_mundus"
+  ]
+}

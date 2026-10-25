@@ -1,0 +1,18 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "CAP_thaumium",
+  "instability": 5,
+  "aspects": {
+    "potentia": 12,
+    "auram": 6
+  },
+  "central": "thaumvibe:thaumium_cap_inert",
+  "components": [
+    "thaumvibe:salis_mundus",
+    "thaumvibe:salis_mundus",
+    "thaumvibe:salis_mundus"
+  ],
+  "result": {
+    "id": "thaumvibe:thaumium_cap"
+  }
+}
