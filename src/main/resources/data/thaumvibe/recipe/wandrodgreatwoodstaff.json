@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "ROD_greatwood_staff",
+  "aspects": {
+    "ordo": 8
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "thaumvibe:primal_charm",
+    "G": "thaumvibe:greatwood_rod"
+  },
+  "result": {
+    "id": "thaumvibe:greatwood_staff_core"
+  }
+}

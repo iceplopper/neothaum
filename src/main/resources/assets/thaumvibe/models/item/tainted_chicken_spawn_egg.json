@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "thaumvibe:item/tainted_chicken_spawn_egg"
+  }
+}

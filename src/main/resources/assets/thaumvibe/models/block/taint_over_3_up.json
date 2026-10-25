@@ -1,0 +1,34 @@
+{
+  "textures": {
+    "particle": "thaumvibe:blocks/taint_fibres",
+    "t": "thaumvibe:blocks/taint_over_3"
+  },
+  "render_type": "translucent",
+  "elements": [
+    {
+      "from": [
+        0,
+        15.68,
+        0
+      ],
+      "to": [
+        16,
+        15.68,
+        16
+      ],
+      "shade": false,
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#t"
+        }
+      },
+      "light_emission": 12
+    }
+  ]
+}

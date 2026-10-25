@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "ROD_ice_staff",
+  "aspects": {
+    "ordo": 14
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "thaumvibe:primal_charm",
+    "G": "thaumvibe:icy_rod"
+  },
+  "result": {
+    "id": "thaumvibe:icy_staff_core"
+  }
+}

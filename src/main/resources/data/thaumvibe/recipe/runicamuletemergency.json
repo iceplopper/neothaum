@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "RUNICEMERGENCY",
+  "instability": 7,
+  "aspects": {
+    "tutamen": 20,
+    "praecantatio": 35,
+    "terra": 32,
+    "vacuos": 32
+  },
+  "central": "thaumvibe:amulet_of_runic_shielding",
+  "components": [
+    "thaumvibe:balanced_shard",
+    "thaumvibe:earth_shard",
+    "thaumvibe:earth_shard",
+    "minecraft:potion",
+    "thaumvibe:earth_shard",
+    "thaumvibe:earth_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:amulet_of_emergency_shielding"
+  }
+}

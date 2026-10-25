@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "thaumvibe:block/tainted_soil",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9617015
+      }
+    ]
+  }
+}

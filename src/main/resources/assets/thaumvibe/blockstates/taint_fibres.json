@@ -1,0 +1,264 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_down"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "1",
+        "down": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_1_down"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "2",
+        "down": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_2_down"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "3",
+        "down": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_3_down"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_up"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "1",
+        "up": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_1_up"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "2",
+        "up": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_2_up"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "3",
+        "up": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_3_up"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_north"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "1",
+        "north": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_1_north"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "2",
+        "north": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_2_north"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "3",
+        "north": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_3_north"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_south"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "1",
+        "south": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_1_south"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "2",
+        "south": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_2_south"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "3",
+        "south": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_3_south"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_west"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "1",
+        "west": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_1_west"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "2",
+        "west": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_2_west"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "3",
+        "west": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_3_west"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_east"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "1",
+        "east": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_1_east"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "2",
+        "east": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_2_east"
+      }
+    },
+    {
+      "when": {
+        "type": "0",
+        "overlay": "3",
+        "east": "true"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_over_3_east"
+      }
+    },
+    {
+      "when": {
+        "type": "1"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_type1"
+      }
+    },
+    {
+      "when": {
+        "type": "2"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_type2"
+      }
+    },
+    {
+      "when": {
+        "type": "3"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_type3"
+      }
+    },
+    {
+      "when": {
+        "type": "4"
+      },
+      "apply": {
+        "model": "thaumvibe:block/taint_fibres_type4"
+      }
+    }
+  ]
+}

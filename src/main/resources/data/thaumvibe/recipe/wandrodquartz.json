@@ -1,0 +1,18 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ROD_quartz",
+  "instability": 3,
+  "aspects": {
+    "ordo": 12,
+    "praecantatio": 6,
+    "vitreus": 6
+  },
+  "central": "minecraft:quartz_block",
+  "components": [
+    "thaumvibe:balanced_shard",
+    "thaumvibe:order_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:quartz_rod"
+  }
+}

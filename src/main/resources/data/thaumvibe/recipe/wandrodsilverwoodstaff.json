@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "ROD_silverwood_staff",
+  "aspects": {
+    "ordo": 24
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "thaumvibe:primal_charm",
+    "G": "thaumvibe:silverwood_rod"
+  },
+  "result": {
+    "id": "thaumvibe:silverwood_staff_core"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ROD_bone",
+  "instability": 3,
+  "aspects": {
+    "perditio": 12,
+    "praecantatio": 6,
+    "exanimis": 6
+  },
+  "central": "minecraft:bone",
+  "components": [
+    "thaumvibe:balanced_shard",
+    "thaumvibe:entropy_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:bone_rod"
+  }
+}
