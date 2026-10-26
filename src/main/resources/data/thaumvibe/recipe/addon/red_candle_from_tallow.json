@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "thaumvibe_candle_exchange",
+  "ingredients": [
+    "thaumvibe:red_tallow_candle"
+  ],
+  "result": {
+    "id": "minecraft:red_candle"
+  }
+}

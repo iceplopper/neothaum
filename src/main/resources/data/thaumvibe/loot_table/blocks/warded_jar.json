@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thaumvibe:warded_jar",
+          "modifier": [
+            {
+              "source": "block_entity",
+              "include": [
+                "thaumvibe:aspects",
+                "thaumvibe:aspect_filter"
+              ],
+              "type": "minecraft:copy_components"
+            }
+          ]
+        }
+      ],
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
+    }
+  ],
+  "random_sequence": "thaumvibe:blocks/warded_jar"
+}

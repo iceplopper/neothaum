@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thaumvibe:node_in_a_jar",
+          "modifier": [
+            {
+              "source": "block_entity",
+              "include": [
+                "thaumvibe:aspects",
+                "thaumvibe:node_type",
+                "thaumvibe:node_modifier"
+              ],
+              "type": "minecraft:copy_components"
+            }
+          ]
+        }
+      ],
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
+    }
+  ],
+  "random_sequence": "thaumvibe:blocks/node_in_a_jar"
+}

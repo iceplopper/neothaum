@@ -1,0 +1,8256 @@
+{
+  "categories": [
+    {
+      "key": "BASICS",
+      "icon": "thaumvibe:textures/items/thaumonomiconcheat.png",
+      "background": "thaumvibe:textures/gui/gui_researchback.png"
+    },
+    {
+      "key": "THAUMATURGY",
+      "icon": "thaumvibe:textures/misc/r_thaumaturgy.png",
+      "background": "thaumvibe:textures/gui/gui_researchback.png"
+    },
+    {
+      "key": "ALCHEMY",
+      "icon": "thaumvibe:textures/misc/r_crucible.png",
+      "background": "thaumvibe:textures/gui/gui_researchback.png"
+    },
+    {
+      "key": "ARTIFICE",
+      "icon": "thaumvibe:textures/misc/r_artifice.png",
+      "background": "thaumvibe:textures/gui/gui_researchback.png"
+    },
+    {
+      "key": "GOLEMANCY",
+      "icon": "thaumvibe:textures/misc/r_golemancy.png",
+      "background": "thaumvibe:textures/gui/gui_researchback.png"
+    },
+    {
+      "key": "ELDRITCH",
+      "icon": "thaumvibe:textures/misc/r_eldritch.png",
+      "background": "thaumvibe:textures/gui/gui_researchbackeldritch.png"
+    }
+  ],
+  "research": [
+    {
+      "key": "BASICTHAUMATURGY",
+      "category": "THAUMATURGY",
+      "aspects": {},
+      "col": 0,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:wand",
+        "components": {
+          "thaumvibe:wand_cap": "iron",
+          "thaumvibe:wand_rod": "wood"
+        }
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BASICTHAUMATURGY.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.BASICTHAUMATURGY.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapiron"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandbasic"
+          ]
+        }
+      ],
+      "flags": [
+        "autounlock",
+        "stub",
+        "round"
+      ]
+    },
+    {
+      "key": "FOCUSFIRE",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "ignis": 3,
+        "praecantatio": 3
+      },
+      "col": 2,
+      "row": -2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:focus_fire"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSFIRE.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSFIRE.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focusfire"
+          ]
+        }
+      ],
+      "parents": [
+        "BASICTHAUMATURGY"
+      ],
+      "flags": []
+    },
+    {
+      "key": "FOCUSFROST",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "aqua": 3,
+        "praecantatio": 3,
+        "gelum": 6
+      },
+      "col": 1,
+      "row": -5,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:focus_frost"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSFROST.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focusfrost"
+          ]
+        }
+      ],
+      "parents": [
+        "FOCUSFIRE"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "FOCUSHELLBAT",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "iter": 3,
+        "bestia": 6,
+        "ignis": 3,
+        "praecantatio": 3
+      },
+      "col": 3,
+      "row": -7,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:focus_hellbat"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSHELLBAT.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focushellbat"
+          ]
+        }
+      ],
+      "entity_triggers": [
+        "Thaumcraft.Firebat"
+      ],
+      "aspect_triggers": [
+        "ignis"
+      ],
+      "parents_hidden": [
+        "FOCUSFIRE",
+        "INFUSION"
+      ],
+      "flags": [
+        "hidden"
+      ],
+      "warp": 2
+    },
+    {
+      "key": "FOCUSEXCAVATION",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "terra": 3,
+        "perditio": 3,
+        "praecantatio": 3
+      },
+      "col": 0,
+      "row": -3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:focus_excavation"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSEXCAVATION.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focusexcavation"
+          ]
+        }
+      ],
+      "parents": [
+        "FOCUSFIRE"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "FOCUSWARDING",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "terra": 6,
+        "tutamen": 3,
+        "ordo": 3,
+        "cognitio": 3
+      },
+      "col": -2,
+      "row": -4,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:focus_warding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSWARDING.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focuswarding"
+          ]
+        }
+      ],
+      "parents": [
+        "FOCUSEXCAVATION",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "FOCUSSHOCK",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "aer": 3,
+        "potentia": 6,
+        "praecantatio": 3
+      },
+      "col": 3,
+      "row": -5,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:focus_shock"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSSHOCK.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focusshock"
+          ]
+        }
+      ],
+      "parents": [
+        "FOCUSFIRE"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "FOCUSTRADE",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "terra": 3,
+        "permutatio": 6,
+        "praecantatio": 3
+      },
+      "col": 4,
+      "row": -3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:focus_trade"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSTRADE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focustrade"
+          ]
+        }
+      ],
+      "parents": [
+        "FOCUSFIRE"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "FOCUSPORTABLEHOLE",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "iter": 3,
+        "perditio": 3,
+        "alienis": 6,
+        "aer": 3
+      },
+      "col": 7,
+      "row": -2,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:focus_portable_hole"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSPORTABLEHOLE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focusportablehole"
+          ]
+        }
+      ],
+      "parents": [
+        "FOCUSTRADE",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "FOCUSPOUCH",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "vacuos": 6,
+        "praecantatio": 3,
+        "instrumentum": 3
+      },
+      "col": 4,
+      "row": -1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:focus_pouch"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSPOUCH.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focuspouch"
+          ]
+        }
+      ],
+      "parents": [
+        "FOCUSFIRE"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "CAP_iron",
+      "category": "THAUMATURGY",
+      "aspects": {},
+      "col": 0,
+      "row": 0,
+      "complexity": 0,
+      "icon": null,
+      "flags": [
+        "virtual",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "CAP_gold",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "metallum": 3,
+        "lucrum": 3,
+        "instrumentum": 3
+      },
+      "col": 3,
+      "row": 2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:gold_cap"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CAP_gold.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapgold"
+          ]
+        }
+      ],
+      "parents": [
+        "BASICTHAUMATURGY"
+      ],
+      "flags": []
+    },
+    {
+      "key": "CAP_thaumium",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "metallum": 6,
+        "praecantatio": 6,
+        "instrumentum": 3,
+        "auram": 3
+      },
+      "col": 5,
+      "row": 4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:thaumium_cap"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CAP_thaumium.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapthaumiuminert"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapthaumium"
+          ]
+        }
+      ],
+      "parents": [
+        "CAP_gold",
+        "THAUMIUM",
+        "INFUSION"
+      ],
+      "flags": []
+    },
+    {
+      "key": "CAP_copper",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "metallum": 3,
+        "permutatio": 3,
+        "instrumentum": 3
+      },
+      "col": 2,
+      "row": 0,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:copper_cap"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CAP_copper.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapcopper"
+          ]
+        }
+      ],
+      "parents": [
+        "BASICTHAUMATURGY"
+      ],
+      "flags": []
+    },
+    {
+      "key": "CAP_silver",
+      "requires_tag": "c:nuggets/silver",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "metallum": 3,
+        "lucrum": 3,
+        "instrumentum": 3,
+        "auram": 3
+      },
+      "col": 5,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:silver_cap"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CAP_silver.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapsilverinert"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapsilver"
+          ]
+        }
+      ],
+      "parents": [
+        "CAP_gold",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_wood",
+      "category": "THAUMATURGY",
+      "aspects": {},
+      "col": 0,
+      "row": 0,
+      "complexity": 0,
+      "icon": null,
+      "flags": [
+        "virtual",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "ROD_greatwood",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "arbor": 6,
+        "praecantatio": 3
+      },
+      "col": -5,
+      "row": 2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:greatwood_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_greatwood.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodgreatwood"
+          ]
+        }
+      ],
+      "parents": [
+        "BASICTHAUMATURGY"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ROD_reed",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "aer": 6,
+        "herba": 3,
+        "praecantatio": 3
+      },
+      "col": -5,
+      "row": -1,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:reed_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_reed.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodreed"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_greatwood",
+        "INFUSION"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_blaze",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "ignis": 6,
+        "potentia": 3,
+        "praecantatio": 3
+      },
+      "col": -7,
+      "row": 0,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:blazing_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_blaze.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodblaze"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_greatwood",
+        "INFUSION"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_obsidian",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "terra": 6,
+        "ignis": 3,
+        "praecantatio": 3
+      },
+      "col": -8,
+      "row": 2,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:obsidian_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_obsidian.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodobsidian"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_greatwood",
+        "INFUSION"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_ice",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "gelum": 6,
+        "aqua": 3,
+        "praecantatio": 3
+      },
+      "col": -7,
+      "row": 4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:icy_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_ice.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodice"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_greatwood",
+        "INFUSION"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_quartz",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "ordo": 6,
+        "vitreus": 3,
+        "praecantatio": 3
+      },
+      "col": -5,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:quartz_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_quartz.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodquartz"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_greatwood",
+        "INFUSION"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_bone",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "perditio": 6,
+        "exanimis": 3,
+        "praecantatio": 3
+      },
+      "col": -3,
+      "row": 0,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:bone_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_bone.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodbone"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_greatwood",
+        "INFUSION"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "ROD_silverwood",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 6,
+        "arbor": 6,
+        "praecantatio": 9
+      },
+      "col": -2,
+      "row": 5,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:silverwood_rod"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_silverwood.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodsilverwood"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_greatwood",
+        "INFUSION"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ROD_greatwood_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "arbor": 6,
+        "praecantatio": 3
+      },
+      "col": -1,
+      "row": 7,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:greatwood_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_greatwood_staff.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_greatwood_staff.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodgreatwoodstaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_silverwood"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ROD_reed_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "aer": 6,
+        "herba": 3,
+        "praecantatio": 3
+      },
+      "col": -5,
+      "row": -2,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:reed_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_reed_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodreedstaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_reed"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood_staff"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_blaze_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "ignis": 6,
+        "potentia": 3,
+        "praecantatio": 3
+      },
+      "col": -8,
+      "row": -1,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:blazing_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_blaze_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodblazestaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_blaze"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood_staff"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_obsidian_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "terra": 6,
+        "ignis": 3,
+        "praecantatio": 3
+      },
+      "col": -9,
+      "row": 2,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:obsidian_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_obsidian_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodobsidianstaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_obsidian"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood_staff"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_ice_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "gelum": 6,
+        "aqua": 3,
+        "praecantatio": 3
+      },
+      "col": -8,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:icy_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_ice_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodicestaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_ice"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood_staff"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_quartz_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "ordo": 6,
+        "vitreus": 3,
+        "praecantatio": 3
+      },
+      "col": -4,
+      "row": 6,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:quartz_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_quartz_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodquartzstaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_quartz"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood_staff"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ROD_bone_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 3,
+        "perditio": 6,
+        "exanimis": 3,
+        "praecantatio": 3
+      },
+      "col": -2,
+      "row": -1,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:bone_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_bone_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodbonestaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_bone"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood_staff"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "ROD_silverwood_staff",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 6,
+        "arbor": 6,
+        "praecantatio": 9
+      },
+      "col": -1,
+      "row": 5,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:silverwood_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_silverwood_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodsilverwoodstaff"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_silverwood"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood_staff"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "WANDPED",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "auram": 6,
+        "praecantatio": 3,
+        "permutatio": 3,
+        "potentia": 3
+      },
+      "col": -9,
+      "row": -6,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:wand_recharge_pedestal"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.WANDPED.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandped"
+          ]
+        }
+      ],
+      "parents": [
+        "INFUSION",
+        "NODEPRESERVE",
+        "NODESTABILIZER"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "VISAMULET",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "auram": 3,
+        "praecantatio": 6,
+        "potentia": 3,
+        "vacuos": 3
+      },
+      "col": -9,
+      "row": -8,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:amulet_of_vis_storage"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.VISAMULET.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:visamulet"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.VISAMULET.2"
+        }
+      ],
+      "parents": [
+        "WANDPED"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "WANDPEDFOC",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "auram": 6,
+        "praecantatio": 6,
+        "permutatio": 6,
+        "potentia": 3,
+        "instrumentum": 3
+      },
+      "col": -10,
+      "row": -7,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:compound_recharge_focus"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.WANDPEDFOC.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandpedfocus"
+          ]
+        }
+      ],
+      "parents": [
+        "WANDPED"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "NODESTABILIZER",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "auram": 4,
+        "ordo": 4,
+        "potentia": 4
+      },
+      "col": -7,
+      "row": -4,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:node_stabilizer"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NODESTABILIZER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:nodestabilizer"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.NODESTABILIZER.2"
+        }
+      ],
+      "parents": [
+        "NODEPRESERVE"
+      ],
+      "flags": []
+    },
+    {
+      "key": "NODESTABILIZERADV",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "auram": 9,
+        "praecantatio": 6,
+        "ordo": 6,
+        "potentia": 6
+      },
+      "col": -8,
+      "row": -3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:node_stabilizer"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NODESTABILIZERADV.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:nodestabilizeradv"
+          ]
+        }
+      ],
+      "parents": [
+        "NODESTABILIZER"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "VISPOWER",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "auram": 3,
+        "machina": 3,
+        "potentia": 6
+      },
+      "col": -5,
+      "row": -6,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:node_transducer"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.VISPOWER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:nodetransducer"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.VISPOWER.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.VISPOWER.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:noderelay"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.VISPOWER.4"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.VISPOWER.5"
+        }
+      ],
+      "parents": [
+        "NODESTABILIZER"
+      ],
+      "flags": [
+        "special"
+      ]
+    },
+    {
+      "key": "VISCHARGERELAY",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "praecantatio": 3,
+        "auram": 3,
+        "machina": 3,
+        "potentia": 6
+      },
+      "col": -7,
+      "row": -6,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:vis_charge_relay"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.VISCHARGERELAY.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:nodechargerelay"
+          ]
+        }
+      ],
+      "parents": [
+        "VISPOWER",
+        "WANDPED"
+      ],
+      "parents_hidden": [
+        "ROD_greatwood"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "FOCALMANIPULATION",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "praecantatio": 8,
+        "instrumentum": 8,
+        "fabrico": 5,
+        "vitreus": 5,
+        "potentia": 5
+      },
+      "col": -3,
+      "row": -8,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:focal_manipulator"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCALMANIPULATION.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focalmanipulator"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCALMANIPULATION.2"
+        }
+      ],
+      "parents_hidden": [
+        "INFUSION",
+        "FOCUSFIRE"
+      ],
+      "parents": [
+        "VISPOWER"
+      ],
+      "flags": []
+    },
+    {
+      "key": "VAMPBAT",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "fames": 5,
+        "victus": 5,
+        "praecantatio": 5
+      },
+      "col": 4,
+      "row": -8,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/foci/vampirebats.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "focus.upgrade.vampirebats.text"
+        }
+      ],
+      "parents": [
+        "FOCUSHELLBAT"
+      ],
+      "parents_hidden": [
+        "FOCALMANIPULATION"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "BASICARTIFACE",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": 0,
+      "row": 1,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:primal_charm"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BASICARTIFACE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:primalcharm"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mundaneamulet"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mundanering"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mundanebelt"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mirrorglass"
+          ]
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "ARCANESTONE",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": 5,
+      "row": -2,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:arcane_stone_block"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANESTONE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanestone1"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanestone2"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanestone3"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanestone4"
+          ]
+        }
+      ],
+      "flags": [
+        "stub",
+        "autounlock",
+        "round"
+      ]
+    },
+    {
+      "key": "GRATE",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": 2,
+      "row": -1,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:item_grate"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GRATE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:grate"
+          ]
+        }
+      ],
+      "flags": [
+        "stub",
+        "autounlock",
+        "round"
+      ]
+    },
+    {
+      "key": "TABLE",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": 0,
+      "row": -1,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:table"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TABLE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:table"
+          ]
+        }
+      ],
+      "flags": [
+        "stub",
+        "autounlock",
+        "round"
+      ]
+    },
+    {
+      "key": "ARCTABLE",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": -1,
+      "row": -3,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:arcane_worktable"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCTABLE.1"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {}
+            },
+            1,
+            2,
+            1,
+            [
+              {
+                "item": "thaumvibe:wand",
+                "components": {
+                  "thaumvibe:wand_cap": "iron",
+                  "thaumvibe:wand_rod": "wood"
+                }
+              },
+              {
+                "item": "thaumvibe:table"
+              }
+            ]
+          ]
+        }
+      ],
+      "parents": [
+        "TABLE"
+      ],
+      "flags": [
+        "stub",
+        "autounlock",
+        "round"
+      ]
+    },
+    {
+      "key": "RESTABLE",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": 1,
+      "row": -3,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:table"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RESTABLE.1"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {}
+            },
+            1,
+            2,
+            2,
+            [
+              null,
+              {
+                "item": "thaumvibe:scribing_tools"
+              },
+              {
+                "item": "thaumvibe:table"
+              },
+              {
+                "item": "thaumvibe:table"
+              }
+            ]
+          ]
+        }
+      ],
+      "parents": [
+        "TABLE"
+      ],
+      "flags": [
+        "stub",
+        "autounlock",
+        "round"
+      ]
+    },
+    {
+      "key": "THAUMOMETER",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": 2,
+      "row": 1,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:thaumometer"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.THAUMOMETER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumometer"
+          ]
+        }
+      ],
+      "flags": [
+        "stub",
+        "autounlock",
+        "round"
+      ]
+    },
+    {
+      "key": "PAVETRAVEL",
+      "category": "ARTIFICE",
+      "aspects": {
+        "iter": 3,
+        "terra": 3,
+        "volatus": 3
+      },
+      "col": 4,
+      "row": -4,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:paving_stone_of_travel"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PAVETRAVEL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:pavetravel"
+          ]
+        }
+      ],
+      "parents": [
+        "ARCANESTONE"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "PAVEWARD",
+      "category": "ARTIFICE",
+      "aspects": {
+        "motus": 3,
+        "vinculum": 3,
+        "bestia": 3
+      },
+      "col": 6,
+      "row": -4,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:paving_stone_of_warding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PAVEWARD.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:paveward"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PAVEWARD.2"
+        }
+      ],
+      "parents": [
+        "ARCANESTONE"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "GOGGLES",
+      "category": "ARTIFICE",
+      "aspects": {
+        "sensus": 3,
+        "auram": 3,
+        "praecantatio": 3
+      },
+      "col": 4,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:goggles_of_revealing"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOGGLES.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:goggles"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMOMETER"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ARCANEEAR",
+      "category": "ARTIFICE",
+      "aspects": {
+        "sensus": 3,
+        "potentia": 3,
+        "aer": 3
+      },
+      "col": 6,
+      "row": 0,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:arcane_ear"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANEEAR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcaneear"
+          ]
+        }
+      ],
+      "parents": [
+        "GOGGLES"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "SINSTONE",
+      "category": "ARTIFICE",
+      "aspects": {
+        "sensus": 3,
+        "tenebrae": 3,
+        "alienis": 3,
+        "auram": 3
+      },
+      "col": 6,
+      "row": 2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:sinister_lodestone"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.SINSTONE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:sinstone"
+          ]
+        }
+      ],
+      "parents": [
+        "GOGGLES"
+      ],
+      "flags": [
+        "concealed"
+      ],
+      "warp": 2
+    },
+    {
+      "key": "LEVITATOR",
+      "category": "ARTIFICE",
+      "aspects": {
+        "motus": 3,
+        "volatus": 3,
+        "aer": 3
+      },
+      "col": -3,
+      "row": -3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:arcane_levitator"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.LEVITATOR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:levitator"
+          ]
+        }
+      ],
+      "parents": [
+        "NITOR"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "INFERNALFURNACE",
+      "category": "ARTIFICE",
+      "aspects": {
+        "ignis": 6,
+        "metallum": 3,
+        "fabrico": 3,
+        "auram": 3
+      },
+      "col": -4,
+      "row": -1,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_infernalfurnace.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.INFERNALFURNACE.1"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {
+                "ignis": 50,
+                "terra": 50
+              }
+            },
+            3,
+            3,
+            3,
+            [
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "thaumvibe:empty_space"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:lava"
+              },
+              {
+                "item": "minecraft:iron_bars"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              },
+              {
+                "item": "minecraft:obsidian"
+              },
+              {
+                "item": "minecraft:nether_bricks"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.INFERNALFURNACE.2"
+        }
+      ],
+      "parents": [
+        "NITOR",
+        "ALUMENTUM"
+      ],
+      "flags": [
+        "concealed"
+      ],
+      "warp": 2
+    },
+    {
+      "key": "BELLOWS",
+      "category": "ARTIFICE",
+      "aspects": {
+        "aer": 6,
+        "machina": 3,
+        "motus": 3
+      },
+      "col": -6,
+      "row": -2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:arcane_bellows"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BELLOWS.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:bellows"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.BELLOWS.2"
+        }
+      ],
+      "parents": [
+        "INFERNALFURNACE"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ENCHFABRIC",
+      "category": "ARTIFICE",
+      "aspects": {
+        "pannus": 3,
+        "praecantatio": 3
+      },
+      "col": 0,
+      "row": 3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:enchanted_fabric"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ENCHFABRIC.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:enchantedfabric"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ENCHFABRIC.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:robechest"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:robelegs"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:robeboots"
+          ]
+        }
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "INFUSION",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 6,
+        "machina": 3,
+        "fabrico": 6
+      },
+      "col": -4,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:runic_matrix"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSION.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infusionmatrix"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanepedestal"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSION.2"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {
+                "ignis": 25,
+                "terra": 25,
+                "ordo": 25,
+                "aer": 25,
+                "perditio": 25,
+                "aqua": 25
+              }
+            },
+            3,
+            3,
+            3,
+            [
+              {
+                "item": "thaumvibe:empty_space"
+              },
+              null,
+              {
+                "item": "thaumvibe:empty_space"
+              },
+              null,
+              {
+                "item": "thaumvibe:runic_matrix"
+              },
+              null,
+              {
+                "item": "thaumvibe:empty_space"
+              },
+              null,
+              {
+                "item": "thaumvibe:empty_space"
+              },
+              {
+                "item": "thaumvibe:arcane_stone_block"
+              },
+              null,
+              {
+                "item": "thaumvibe:arcane_stone_block"
+              },
+              null,
+              null,
+              null,
+              {
+                "item": "thaumvibe:arcane_stone_block"
+              },
+              null,
+              {
+                "item": "thaumvibe:arcane_stone_block"
+              },
+              {
+                "item": "thaumvibe:arcane_stone_bricks"
+              },
+              null,
+              {
+                "item": "thaumvibe:arcane_stone_bricks"
+              },
+              null,
+              {
+                "item": "thaumvibe:arcane_pedestal"
+              },
+              null,
+              {
+                "item": "thaumvibe:arcane_stone_bricks"
+              },
+              null,
+              {
+                "item": "thaumvibe:arcane_stone_bricks"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSION.3"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSION.4"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSION.5"
+        }
+      ],
+      "parents": [
+        "DISTILESSENTIA"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "FLUXSCRUB",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 3,
+        "vinculum": 3,
+        "aer": 3,
+        "aqua": 3
+      },
+      "col": -8,
+      "row": -3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:flux_scrubber"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FLUXSCRUB.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:fluxscrubber"
+          ]
+        }
+      ],
+      "parents_hidden": [
+        "INFUSION"
+      ],
+      "parents": [
+        "VISPOWER",
+        "BELLOWS",
+        "TUBES"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "RUNICARMOR",
+      "category": "ARTIFICE",
+      "aspects": {
+        "tutamen": 6,
+        "aer": 3,
+        "praecantatio": 3,
+        "potentia": 3,
+        "cognitio": 3
+      },
+      "col": 3,
+      "row": 4,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:ring_of_runic_shielding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICARMOR.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICARMOR.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:runicring"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:runicamulet"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:runicgirdle"
+          ]
+        }
+      ],
+      "parents_hidden": [
+        "INFUSION"
+      ],
+      "parents": [
+        "ENCHFABRIC"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "RUNICCHARGED",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 3,
+        "tutamen": 3,
+        "potentia": 6
+      },
+      "col": 2,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:charged_ring_of_shielding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICCHARGED.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:runicringcharged"
+          ]
+        }
+      ],
+      "parents": [
+        "RUNICARMOR"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "RUNICHEALING",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 3,
+        "tutamen": 3,
+        "sano": 4,
+        "aqua": 4
+      },
+      "col": 4,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:revitalizing_ring_of_shielding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICHEALING.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:runicringhealing"
+          ]
+        }
+      ],
+      "parents": [
+        "RUNICARMOR"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "RUNICKINETIC",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 3,
+        "tutamen": 3,
+        "aer": 6
+      },
+      "col": 2,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:kinetic_girdle_of_shielding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICKINETIC.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:runicgirdlekinetic"
+          ]
+        }
+      ],
+      "parents": [
+        "RUNICARMOR"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "RUNICEMERGENCY",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 3,
+        "tutamen": 3,
+        "terra": 4,
+        "vacuos": 4
+      },
+      "col": 4,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:amulet_of_emergency_shielding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICEMERGENCY.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:runicamuletemergency"
+          ]
+        }
+      ],
+      "parents": [
+        "RUNICARMOR"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "BANNERS",
+      "category": "ARTIFICE",
+      "aspects": {
+        "sensus": 3,
+        "pannus": 3,
+        "praecantatio": 1
+      },
+      "col": 4,
+      "row": 8,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:crimson_cult_banner"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BANNERS.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:banner_0",
+            "thaumvibe:banner_1",
+            "thaumvibe:banner_2",
+            "thaumvibe:banner_3",
+            "thaumvibe:banner_4",
+            "thaumvibe:banner_5",
+            "thaumvibe:banner_6",
+            "thaumvibe:banner_7",
+            "thaumvibe:banner_8",
+            "thaumvibe:banner_9",
+            "thaumvibe:banner_10",
+            "thaumvibe:banner_11",
+            "thaumvibe:banner_12",
+            "thaumvibe:banner_13",
+            "thaumvibe:banner_14",
+            "thaumvibe:banner_15"
+          ]
+        }
+      ],
+      "item_triggers": [
+        {
+          "item": "thaumvibe:crimson_cult_banner"
+        }
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "RUNICAUGMENTATION",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 3,
+        "tutamen": 3,
+        "permutatio": 4,
+        "lucrum": 4
+      },
+      "col": 6,
+      "row": 4,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_runicupg.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICAUGMENTATION.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": []
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RUNICAUGMENTATION.2"
+        }
+      ],
+      "parents": [
+        "RUNICARMOR"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "BOOTSTRAVELLER",
+      "category": "ARTIFICE",
+      "aspects": {
+        "iter": 3,
+        "terra": 3,
+        "volatus": 3,
+        "aqua": 3
+      },
+      "col": -1,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:boots_of_the_traveller"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BOOTSTRAVELLER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:bootstraveller"
+          ]
+        }
+      ],
+      "parents": [
+        "ENCHFABRIC",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "HOVERHARNESS",
+      "category": "ARTIFICE",
+      "aspects": {
+        "volatus": 6,
+        "iter": 6,
+        "aer": 6,
+        "machina": 3
+      },
+      "col": 1,
+      "row": 7,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:thaumostatic_harness"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.HOVERHARNESS.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:hoverharness"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.HOVERHARNESS.2"
+        }
+      ],
+      "parents": [
+        "BOOTSTRAVELLER"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "HOVERGIRDLE",
+      "category": "ARTIFICE",
+      "aspects": {
+        "volatus": 6,
+        "iter": 3,
+        "aer": 3,
+        "motus": 6
+      },
+      "col": 2,
+      "row": 7,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:thaumostatic_girdle"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.HOVERGIRDLE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:hovergirdle"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "volatus"
+      ],
+      "parents": [
+        "HOVERHARNESS"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "MIRROR",
+      "category": "ARTIFICE",
+      "aspects": {
+        "iter": 6,
+        "alienis": 3,
+        "tenebrae": 3,
+        "vitreus": 3
+      },
+      "col": -1,
+      "row": 8,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:magic_mirror"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.MIRROR.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.MIRROR.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mirror"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.MIRROR.3"
+        }
+      ],
+      "entity_triggers": [
+        "Enderman"
+      ],
+      "item_triggers": [
+        {
+          "item": "minecraft:ender_pearl"
+        },
+        {
+          "item": "minecraft:nether_portal"
+        },
+        {
+          "item": "minecraft:end_portal"
+        },
+        {
+          "item": "minecraft:end_portal_frame"
+        }
+      ],
+      "parents": [
+        "INFUSION"
+      ],
+      "flags": [
+        "hidden"
+      ]
+    },
+    {
+      "key": "MIRRORHAND",
+      "category": "ARTIFICE",
+      "aspects": {
+        "instrumentum": 6,
+        "alienis": 3,
+        "vitreus": 3,
+        "iter": 3
+      },
+      "col": 1,
+      "row": 9,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:magic_hand_mirror"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.MIRRORHAND.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mirrorhand"
+          ]
+        }
+      ],
+      "parents": [
+        "MIRROR"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "MIRRORESSENTIA",
+      "category": "ARTIFICE",
+      "aspects": {
+        "iter": 6,
+        "alienis": 3,
+        "aqua": 3,
+        "praecantatio": 3
+      },
+      "col": -1,
+      "row": 10,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:essentia_mirror"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.MIRRORESSENTIA.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mirroressentia"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.MIRRORESSENTIA.2"
+        }
+      ],
+      "parents": [
+        "MIRROR"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ARCANEBORE",
+      "category": "ARTIFICE",
+      "aspects": {
+        "perfodio": 6,
+        "motus": 3,
+        "machina": 3,
+        "instrumentum": 3
+      },
+      "col": -3,
+      "row": 8,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:arcane_bore"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANEBORE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanebore"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANEBORE.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcaneborebase"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANEBORE.3"
+        }
+      ],
+      "parents": [
+        "FOCUSEXCAVATION",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ARCANELAMP",
+      "category": "ARTIFICE",
+      "aspects": {
+        "lux": 3,
+        "sensus": 3,
+        "tenebrae": 3
+      },
+      "col": -3,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:arcane_lamp"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANELAMP.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanelamp"
+          ]
+        },
+        {
+          "type": "text",
+          "research": "ARCANEBORE",
+          "text": "tc.research_page.ARCANELAMP.2"
+        }
+      ],
+      "parents": [
+        "NITOR"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "LAMPGROWTH",
+      "category": "ARTIFICE",
+      "aspects": {
+        "lux": 3,
+        "herba": 6,
+        "victus": 3,
+        "messis": 3
+      },
+      "col": -4,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:lamp_of_growth"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.LAMPGROWTH.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:lampgrowth"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "lux",
+        "messis"
+      ],
+      "parents": [
+        "ARCANELAMP",
+        "INFUSION"
+      ],
+      "flags": [
+        "hidden"
+      ]
+    },
+    {
+      "key": "LAMPFERTILITY",
+      "category": "ARTIFICE",
+      "aspects": {
+        "bestia": 6,
+        "victus": 6,
+        "lux": 3
+      },
+      "col": -2,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:lamp_of_fertility"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.LAMPFERTILITY.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:lampfertility"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "lux",
+        "victus"
+      ],
+      "parents": [
+        "ARCANELAMP",
+        "INFUSION"
+      ],
+      "flags": [
+        "hidden"
+      ]
+    },
+    {
+      "key": "BONEBOW",
+      "category": "ARTIFICE",
+      "aspects": {
+        "telum": 3,
+        "aer": 3,
+        "motus": 3
+      },
+      "col": -7,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:bow_of_bone"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BONEBOW.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:bonebow"
+          ]
+        }
+      ],
+      "item_triggers": [
+        {
+          "item": "minecraft:bow"
+        },
+        {
+          "item": "minecraft:bone"
+        }
+      ],
+      "flags": [
+        "hidden"
+      ]
+    },
+    {
+      "key": "PRIMALARROW",
+      "category": "ARTIFICE",
+      "aspects": {
+        "telum": 3,
+        "aer": 3,
+        "ignis": 3,
+        "aqua": 3,
+        "terra": 3,
+        "ordo": 3,
+        "perditio": 3
+      },
+      "col": -9,
+      "row": 0,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:air_arrow"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMALARROW.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": []
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMALARROW.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMALARROW.3"
+        }
+      ],
+      "parents": [
+        "BONEBOW"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ELEMENTALAXE",
+      "category": "ARTIFICE",
+      "aspects": {
+        "instrumentum": 3,
+        "aqua": 3,
+        "motus": 3
+      },
+      "col": -7,
+      "row": 4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:axe_of_the_stream"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALAXE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:elementalaxe"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALAXE.2"
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ELEMENTALPICK",
+      "category": "ARTIFICE",
+      "aspects": {
+        "instrumentum": 3,
+        "ignis": 3,
+        "sensus": 3
+      },
+      "col": -7,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:pickaxe_of_the_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALPICK.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:elementalpick"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALPICK.2"
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ELEMENTALSWORD",
+      "category": "ARTIFICE",
+      "aspects": {
+        "telum": 3,
+        "aer": 3,
+        "potentia": 3
+      },
+      "col": -7,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:sword_of_the_zephyr"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALSWORD.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:elementalsword"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ELEMENTALSHOVEL",
+      "category": "ARTIFICE",
+      "aspects": {
+        "instrumentum": 3,
+        "terra": 3,
+        "fabrico": 3
+      },
+      "col": -7,
+      "row": 6,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:shovel_of_the_earthmover"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALSHOVEL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:elementalshovel"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALSHOVEL.2"
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ELEMENTALHOE",
+      "category": "ARTIFICE",
+      "aspects": {
+        "instrumentum": 3,
+        "victus": 3,
+        "messis": 3
+      },
+      "col": -7,
+      "row": 7,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:hoe_of_growth"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ELEMENTALHOE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:elementalhoe"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "WARDEDARCANA",
+      "category": "ARTIFICE",
+      "aspects": {
+        "instrumentum": 6,
+        "cognitio": 3,
+        "machina": 3,
+        "tutamen": 3
+      },
+      "col": -5,
+      "row": -4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:arcane_door"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.WARDEDARCANA.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanedoor"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.WARDEDARCANA.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:ironkey"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:goldkey"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.WARDEDARCANA.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanepressureplate"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.WARDEDARCANA.4"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wardedglass"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM"
+      ],
+      "flags": []
+    },
+    {
+      "key": "JARBRAIN",
+      "category": "ARTIFICE",
+      "aspects": {
+        "fames": 3,
+        "cognitio": 3,
+        "exanimis": 3,
+        "lucrum": 3
+      },
+      "col": -5,
+      "row": 9,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:brain_in_a_jar"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.JARBRAIN.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:jarbrain"
+          ]
+        }
+      ],
+      "parents": [
+        "INFUSION"
+      ],
+      "item_triggers": [
+        {
+          "item": "thaumvibe:quicksilver"
+        }
+      ],
+      "entity_triggers": [
+        "Thaumcraft.BrainyZombie",
+        "Thaumcraft.GiantBrainyZombie"
+      ],
+      "flags": [
+        "hidden"
+      ],
+      "warp": 3
+    },
+    {
+      "key": "INFUSIONENCHANTMENT",
+      "category": "ARTIFICE",
+      "aspects": {
+        "praecantatio": 6,
+        "cognitio": 3,
+        "telum": 3,
+        "tutamen": 3,
+        "instrumentum": 3
+      },
+      "col": -6,
+      "row": 11,
+      "complexity": 3,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_enchant.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSIONENCHANTMENT.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSIONENCHANTMENT.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.INFUSIONENCHANTMENT.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_repair"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_haste"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_protection"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_fire_protection"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_blast_protection"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_projectile_protection"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_feather_falling"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_respiration"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_aqua_affinity"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_thorns"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_sharpness"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_smite"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_bane_of_arthropods"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_knockback"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_fire_aspect"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_looting"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_efficiency"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_silk_touch"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_unbreaking"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_fortune"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_power"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_punch"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_flame"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:infench_infinity"
+          ]
+        }
+      ],
+      "parents": [
+        "JARBRAIN"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "ARMORFORTRESS",
+      "category": "ARTIFICE",
+      "aspects": {
+        "metallum": 3,
+        "tutamen": 5,
+        "fabrico": 5
+      },
+      "col": -8,
+      "row": 9,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:thaumium_fortress_helm"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARMORFORTRESS.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ARMORFORTRESS.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumfortresshelm"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumfortresschest"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumfortresslegs"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "INFUSIONENCHANTMENT"
+      ],
+      "aspect_triggers": [
+        "tutamen"
+      ],
+      "flags": [
+        "hidden"
+      ]
+    },
+    {
+      "key": "HELMGOGGLES",
+      "category": "ARTIFICE",
+      "aspects": {
+        "sensus": 5,
+        "auram": 3,
+        "tutamen": 3
+      },
+      "col": -9,
+      "row": 7,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:goggles_of_revealing"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.HELMGOGGLES.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents_hidden": [
+        "GOGGLES"
+      ],
+      "parents": [
+        "ARMORFORTRESS"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "MASKGRINNINGDEVIL",
+      "category": "ARTIFICE",
+      "aspects": {
+        "sano": 5,
+        "cognitio": 5,
+        "tutamen": 3
+      },
+      "col": -10,
+      "row": 8,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_mask0.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.MASKGRINNINGDEVIL.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "ARMORFORTRESS"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "MASKANGRYGHOST",
+      "category": "ARTIFICE",
+      "aspects": {
+        "perditio": 5,
+        "mortuus": 5,
+        "tutamen": 3
+      },
+      "col": -10,
+      "row": 9,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_mask1.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.MASKANGRYGHOST.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "ARMORFORTRESS"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "MASKSIPPINGFIEND",
+      "category": "ARTIFICE",
+      "aspects": {
+        "exanimis": 5,
+        "victus": 5,
+        "tutamen": 3
+      },
+      "col": -10,
+      "row": 10,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_mask2.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.MASKSIPPINGFIEND.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "ARMORFORTRESS"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "PHIAL",
+      "category": "ALCHEMY",
+      "aspects": {},
+      "col": 0,
+      "row": -2,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:glass_phial"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PHIAL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:phial"
+          ]
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "CRUCIBLE",
+      "category": "ALCHEMY",
+      "aspects": {},
+      "col": 0,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:crucible"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CRUCIBLE.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.CRUCIBLE.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.CRUCIBLE.3"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {}
+            },
+            1,
+            2,
+            1,
+            [
+              {
+                "item": "thaumvibe:wand",
+                "components": {
+                  "thaumvibe:wand_cap": "iron",
+                  "thaumvibe:wand_rod": "wood"
+                }
+              },
+              {
+                "item": "minecraft:cauldron"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.CRUCIBLE.4"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:balancedshard_0",
+            "thaumvibe:balancedshard_1",
+            "thaumvibe:balancedshard_2",
+            "thaumvibe:balancedshard_3",
+            "thaumvibe:balancedshard_4",
+            "thaumvibe:balancedshard_5"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.CRUCIBLE.5"
+        },
+        {
+          "type": "smelting",
+          "input": {
+            "item": "thaumvibe:balanced_shard"
+          }
+        }
+      ],
+      "flags": [
+        "stub",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "NITOR",
+      "category": "ALCHEMY",
+      "aspects": {
+        "lux": 3,
+        "ignis": 1
+      },
+      "col": 2,
+      "row": -1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:nitor"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NITOR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:nitor"
+          ]
+        }
+      ],
+      "parents": [
+        "CRUCIBLE"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ALUMENTUM",
+      "category": "ALCHEMY",
+      "aspects": {
+        "potentia": 3,
+        "ignis": 1
+      },
+      "col": 2,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:alumentum"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ALUMENTUM.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:alumentum"
+          ]
+        }
+      ],
+      "parents": [
+        "CRUCIBLE"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ALCHEMICALDUPLICATION",
+      "category": "ALCHEMY",
+      "aspects": {
+        "praecantatio": 3,
+        "lucrum": 3,
+        "fabrico": 3
+      },
+      "col": -4,
+      "row": 0,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_alchmult.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ALCHEMICALDUPLICATION.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altgunpowder"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altslime"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altclay"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altglowstone"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altink"
+          ]
+        }
+      ],
+      "parents": [
+        "TALLOW"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "ALCHEMICALMANUFACTURE",
+      "category": "ALCHEMY",
+      "aspects": {
+        "praecantatio": 3,
+        "permutatio": 3,
+        "fabrico": 3
+      },
+      "col": -5,
+      "row": -2,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_alchman.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ALCHEMICALMANUFACTURE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altweb"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altmossycobble"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altice"
+          ]
+        }
+      ],
+      "parents": [
+        "ALCHEMICALDUPLICATION"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "ENTROPICPROCESSING",
+      "category": "ALCHEMY",
+      "aspects": {
+        "praecantatio": 1,
+        "perditio": 3,
+        "fabrico": 1
+      },
+      "col": -6,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_alchent.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ENTROPICPROCESSING.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altcrackedbrick"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:altbonemeal"
+          ]
+        }
+      ],
+      "parents": [
+        "ALCHEMICALDUPLICATION"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "LIQUIDDEATH",
+      "category": "ALCHEMY",
+      "aspects": {
+        "mortuus": 3,
+        "venenum": 3,
+        "perditio": 1,
+        "aqua": 1
+      },
+      "col": -7,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:bucket_of_liquid_death"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.LIQUIDDEATH.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:liquiddeath"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "mortuus",
+        "venenum"
+      ],
+      "parents": [
+        "ENTROPICPROCESSING"
+      ],
+      "flags": [
+        "hidden"
+      ],
+      "warp": 3
+    },
+    {
+      "key": "BOTTLETAINT",
+      "category": "ALCHEMY",
+      "aspects": {
+        "vitium": 5,
+        "praecantatio": 3,
+        "perditio": 1,
+        "aqua": 1
+      },
+      "col": -8,
+      "row": 1,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:bottled_taint"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BOTTLETAINT.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:bottletaint"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "vitium"
+      ],
+      "parents": [
+        "ENTROPICPROCESSING"
+      ],
+      "flags": [
+        "hidden"
+      ],
+      "warp": 2
+    },
+    {
+      "key": "THAUMIUM",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "praecantatio": 3
+      },
+      "col": -1,
+      "row": 3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:thaumium_ingot"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.THAUMIUM.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumium"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumaxe"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumsword"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumpick"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumshovel"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumhoe"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumhelm"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumchest"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumlegs"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumiumboots"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "metallum"
+      ],
+      "parents": [
+        "CRUCIBLE"
+      ],
+      "flags": [
+        "hidden"
+      ]
+    },
+    {
+      "key": "PUREIRON",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "ordo": 3
+      },
+      "col": -2,
+      "row": 5,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:native_iron_cluster"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PUREIRON.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:pureiron"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "PUREGOLD",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "ordo": 2,
+        "lucrum": 1
+      },
+      "col": -4,
+      "row": 3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:native_gold_cluster"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PUREGOLD.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:puregold"
+          ]
+        }
+      ],
+      "parents": [
+        "PUREIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "PURECOPPER",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "ordo": 2,
+        "permutatio": 1
+      },
+      "col": -4,
+      "row": 5,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:native_copper_cluster"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PURECOPPER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:purecopper"
+          ]
+        }
+      ],
+      "parents": [
+        "PUREIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "PURETIN",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "ordo": 2,
+        "vitreus": 1
+      },
+      "col": -4,
+      "row": 7,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:native_tin_cluster"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PURETIN.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "PUREIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "PURESILVER",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "ordo": 2,
+        "lucrum": 1
+      },
+      "col": -3,
+      "row": 8,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:native_silver_cluster"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PURESILVER.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "PUREIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "PURELEAD",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "ordo": 3
+      },
+      "col": -2,
+      "row": 9,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:native_lead_cluster"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PURELEAD.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "PUREIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TRANSIRON",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "permutatio": 3
+      },
+      "col": 0,
+      "row": 5,
+      "complexity": 1,
+      "icon": {
+        "item": "minecraft:iron_nugget"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRANSIRON.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:transiron"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "TRANSGOLD",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "permutatio": 3
+      },
+      "col": 2,
+      "row": 3,
+      "complexity": 1,
+      "icon": {
+        "item": "minecraft:gold_nugget"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRANSGOLD.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:transgold"
+          ]
+        }
+      ],
+      "parents": [
+        "TRANSIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TRANSCOPPER",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "permutatio": 3
+      },
+      "col": 2,
+      "row": 5,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:copper_nugget"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRANSCOPPER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:transcopper"
+          ]
+        }
+      ],
+      "parents": [
+        "TRANSIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TRANSTIN",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "permutatio": 2,
+        "vitreus": 1
+      },
+      "col": 2,
+      "row": 7,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:tin_nugget"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRANSTIN.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "TRANSIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TRANSSILVER",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "permutatio": 2,
+        "lucrum": 1
+      },
+      "col": 1,
+      "row": 8,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:silver_nugget"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRANSSILVER.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "TRANSIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TRANSLEAD",
+      "category": "ALCHEMY",
+      "aspects": {
+        "metallum": 3,
+        "permutatio": 2,
+        "ordo": 1
+      },
+      "col": 0,
+      "row": 9,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:lead_nugget"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRANSLEAD.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "TRANSIRON"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TALLOW",
+      "category": "ALCHEMY",
+      "aspects": {
+        "corpus": 3,
+        "praecantatio": 1
+      },
+      "col": -2,
+      "row": 0,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:magic_tallow"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TALLOW.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tallow"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tallowcandle"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TALLOW.addon"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "minecraft:candle"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:addon/candle_from_white_tallow_candle",
+            "thaumvibe:addon/white_tallow_candle_from_candle",
+            "thaumvibe:addon/white_tallow_candle_from_candle",
+            "thaumvibe:addon/orange_candle_from_tallow",
+            "thaumvibe:addon/orange_tallow_candle_from_candle",
+            "thaumvibe:addon/magenta_candle_from_tallow",
+            "thaumvibe:addon/magenta_tallow_candle_from_candle",
+            "thaumvibe:addon/light_blue_candle_from_tallow",
+            "thaumvibe:addon/light_blue_tallow_candle_from_candle",
+            "thaumvibe:addon/yellow_candle_from_tallow",
+            "thaumvibe:addon/yellow_tallow_candle_from_candle",
+            "thaumvibe:addon/lime_candle_from_tallow",
+            "thaumvibe:addon/lime_tallow_candle_from_candle",
+            "thaumvibe:addon/pink_candle_from_tallow",
+            "thaumvibe:addon/pink_tallow_candle_from_candle",
+            "thaumvibe:addon/gray_candle_from_tallow",
+            "thaumvibe:addon/gray_tallow_candle_from_candle",
+            "thaumvibe:addon/light_gray_candle_from_tallow",
+            "thaumvibe:addon/light_gray_tallow_candle_from_candle",
+            "thaumvibe:addon/cyan_candle_from_tallow",
+            "thaumvibe:addon/cyan_tallow_candle_from_candle",
+            "thaumvibe:addon/purple_candle_from_tallow",
+            "thaumvibe:addon/purple_tallow_candle_from_candle",
+            "thaumvibe:addon/blue_candle_from_tallow",
+            "thaumvibe:addon/blue_tallow_candle_from_candle",
+            "thaumvibe:addon/brown_candle_from_tallow",
+            "thaumvibe:addon/brown_tallow_candle_from_candle",
+            "thaumvibe:addon/green_candle_from_tallow",
+            "thaumvibe:addon/green_tallow_candle_from_candle",
+            "thaumvibe:addon/red_candle_from_tallow",
+            "thaumvibe:addon/red_tallow_candle_from_candle",
+            "thaumvibe:addon/black_candle_from_tallow",
+            "thaumvibe:addon/black_tallow_candle_from_candle"
+          ]
+        }
+      ],
+      "parents": [
+        "CRUCIBLE"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ETHEREALBLOOM",
+      "category": "ALCHEMY",
+      "aspects": {
+        "praecantatio": 1,
+        "herba": 6,
+        "sano": 3,
+        "vitium": 6
+      },
+      "col": -2,
+      "row": -3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:ethereal_bloom"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ETHEREALBLOOM.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:etherealbloom"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ETHEREALBLOOM.2"
+        }
+      ],
+      "aspect_triggers": [
+        "vitium"
+      ],
+      "parents": [
+        "CRUCIBLE"
+      ],
+      "flags": [
+        "hidden",
+        "concealed"
+      ]
+    },
+    {
+      "key": "BATHSALTS",
+      "category": "ALCHEMY",
+      "aspects": {
+        "cognitio": 3,
+        "auram": 3,
+        "ordo": 3,
+        "sano": 3
+      },
+      "col": -4,
+      "row": -4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:purifying_bath_salts"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BATHSALTS.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:bathsalts"
+          ]
+        }
+      ],
+      "flags": [
+        "hidden"
+      ]
+    },
+    {
+      "key": "SANESOAP",
+      "category": "ALCHEMY",
+      "aspects": {
+        "cognitio": 5,
+        "ordo": 5,
+        "sano": 5,
+        "alienis": 5
+      },
+      "col": -3,
+      "row": -6,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:sanitizing_soap"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.SANESOAP.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:sanesoap"
+          ]
+        }
+      ],
+      "parents": [
+        "BATHSALTS"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ARCANESPA",
+      "category": "ALCHEMY",
+      "aspects": {
+        "aqua": 3,
+        "machina": 3,
+        "ordo": 3
+      },
+      "col": -6,
+      "row": -5,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:arcane_spa"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANESPA.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:arcanespa"
+          ]
+        }
+      ],
+      "parents": [
+        "BATHSALTS"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "DISTILESSENTIA",
+      "category": "ALCHEMY",
+      "aspects": {
+        "praecantatio": 3,
+        "aqua": 3,
+        "limus": 3
+      },
+      "col": 5,
+      "row": -1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:arcane_alembic"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.DISTILESSENTIA.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:alchemyfurnace"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.DISTILESSENTIA.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:filter"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:alembic"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:alchemicalconstruct"
+          ]
+        }
+      ],
+      "siblings": [
+        "JARLABEL"
+      ],
+      "parents": [
+        "NITOR",
+        "ALUMENTUM"
+      ],
+      "flags": []
+    },
+    {
+      "key": "JARLABEL",
+      "category": "ALCHEMY",
+      "aspects": {},
+      "col": 4,
+      "row": -3,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:warded_jar"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.JARLABEL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wardedjar"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.JARLABEL.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:jarlabel"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.JARLABEL.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": []
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:jarlabelnull"
+          ]
+        }
+      ],
+      "parents": [
+        "DISTILESSENTIA"
+      ],
+      "flags": [
+        "stub",
+        "round"
+      ]
+    },
+    {
+      "key": "JARVOID",
+      "category": "ALCHEMY",
+      "aspects": {
+        "aqua": 3,
+        "perditio": 3,
+        "vacuos": 6
+      },
+      "col": 5,
+      "row": -5,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:void_jar"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.JARVOID.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:jarvoid"
+          ]
+        }
+      ],
+      "parents": [
+        "JARLABEL"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "TUBES",
+      "category": "ALCHEMY",
+      "aspects": {
+        "aqua": 3,
+        "praecantatio": 3,
+        "permutatio": 3
+      },
+      "col": 7,
+      "row": 0,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:essentia_tube"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TUBES.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tube"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TUBES.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tubevalve"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TUBES.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:resonator"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TUBES.4"
+        }
+      ],
+      "parents": [
+        "DISTILESSENTIA"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "TUBEFILTER",
+      "category": "ALCHEMY",
+      "aspects": {
+        "aqua": 3,
+        "praecantatio": 3,
+        "permutatio": 3,
+        "ordo": 3
+      },
+      "col": 9,
+      "row": 1,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:filtered_essentia_tube"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TUBEFILTER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tubefilter"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TUBEFILTER.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tuberestrict"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tubeoneway"
+          ]
+        }
+      ],
+      "parents": [
+        "TUBES"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "ESSENTIACRYSTAL",
+      "category": "ALCHEMY",
+      "aspects": {
+        "aqua": 5,
+        "vitreus": 5,
+        "permutatio": 3,
+        "praecantatio": 5
+      },
+      "col": 8,
+      "row": -2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:essentia_crystallizer"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ESSENTIACRYSTAL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:essentiacrystalizer"
+          ]
+        }
+      ],
+      "parents": [
+        "TUBES"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "CENTRIFUGE",
+      "category": "ALCHEMY",
+      "aspects": {
+        "perditio": 3,
+        "praecantatio": 3,
+        "permutatio": 3,
+        "fabrico": 3
+      },
+      "col": 10,
+      "row": 0,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:alchemical_centrifuge"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CENTRIFUGE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:centrifuge"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.CENTRIFUGE.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.CENTRIFUGE.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tubebuffer"
+          ]
+        }
+      ],
+      "parents": [
+        "TUBEFILTER"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "THAUMATORIUM",
+      "category": "ALCHEMY",
+      "aspects": {
+        "aqua": 3,
+        "praecantatio": 6,
+        "permutatio": 3,
+        "fabrico": 3
+      },
+      "col": 10,
+      "row": -2,
+      "complexity": 3,
+      "icon": {
+        "texture": "thaumvibe:textures/blocks/alchemyblock.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.THAUMATORIUM.1"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {
+                "ignis": 15,
+                "ordo": 30,
+                "aqua": 30
+              }
+            },
+            1,
+            3,
+            1,
+            [
+              {
+                "item": "thaumvibe:alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:crucible"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.THAUMATORIUM.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.THAUMATORIUM.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:mnemonicmatrix"
+          ]
+        }
+      ],
+      "parents": [
+        "CENTRIFUGE"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "HUNGRYCHEST",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "fames": 3,
+        "vacuos": 3
+      },
+      "col": -1,
+      "row": 0,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:hungry_chest"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.HUNGRYCHEST.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:hungrychest"
+          ]
+        }
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "GOLEMFETTER",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "vinculum": 3,
+        "machina": 3
+      },
+      "col": 4,
+      "row": 8,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_fetter"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMFETTER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemfetter"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMSTONE"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "TRAVELTRUNK",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 3,
+        "iter": 3,
+        "arbor": 3,
+        "vacuos": 3
+      },
+      "col": 0,
+      "row": 4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:traveling_trunk"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRAVELTRUNK.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:traveltrunk"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TRAVELTRUNK.2"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEAIR",
+          "text": "tc.research_page.TRAVELTRUNK.UAI"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEEARTH",
+          "text": "tc.research_page.TRAVELTRUNK.UEA"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEFIRE",
+          "text": "tc.research_page.TRAVELTRUNK.UFI"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEWATER",
+          "text": "tc.research_page.TRAVELTRUNK.UWA"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEORDER",
+          "text": "tc.research_page.TRAVELTRUNK.UOR"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEENTROPY",
+          "text": "tc.research_page.TRAVELTRUNK.UEN"
+        }
+      ],
+      "parents": [
+        "INFUSION",
+        "GOLEMWOOD"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "GOLEMSTRAW",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 3,
+        "motus": 3,
+        "messis": 3,
+        "permutatio": 3
+      },
+      "col": 0,
+      "row": 2,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:straw_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMSTRAW.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMSTRAW.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemstraw"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMSTRAW.3"
+        }
+      ],
+      "siblings": [
+        "COREGATHER",
+        "GOLEMBELL"
+      ],
+      "parents": [
+        "HUNGRYCHEST"
+      ],
+      "flags": []
+    },
+    {
+      "key": "GOLEMWOOD",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 4,
+        "motus": 4,
+        "arbor": 3,
+        "permutatio": 3
+      },
+      "col": 2,
+      "row": 4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:wood_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMWOOD.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemwood"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMSTRAW"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "GOLEMTALLOW",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 3,
+        "motus": 3,
+        "corpus": 3,
+        "praecantatio": 3,
+        "permutatio": 3
+      },
+      "col": 4,
+      "row": 6,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:tallow_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMTALLOW.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:blocktallow"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemtallow"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMCLAY",
+        "TALLOW"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "GOLEMCLAY",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 6,
+        "motus": 6,
+        "terra": 3,
+        "permutatio": 3
+      },
+      "col": 2,
+      "row": 6,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:clay_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMCLAY.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemclay"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMWOOD"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "GOLEMFLESH",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 7,
+        "motus": 7,
+        "corpus": 6,
+        "permutatio": 3
+      },
+      "col": 4,
+      "row": 4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:flesh_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMFLESH.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:blockflesh"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemflesh"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMWOOD"
+      ],
+      "flags": [
+        "concealed"
+      ],
+      "warp": 3
+    },
+    {
+      "key": "GOLEMSTONE",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 6,
+        "motus": 6,
+        "terra": 3,
+        "permutatio": 3
+      },
+      "col": 2,
+      "row": 8,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:stone_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMSTONE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemstone"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMCLAY"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "GOLEMIRON",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 9,
+        "motus": 9,
+        "metallum": 3,
+        "permutatio": 3
+      },
+      "col": 0,
+      "row": 10,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:iron_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMIRON.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemiron"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMSTONE"
+      ],
+      "flags": [
+        "secondary",
+        "concealed"
+      ]
+    },
+    {
+      "key": "GOLEMTHAUMIUM",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "spiritus": 10,
+        "motus": 10,
+        "metallum": 3,
+        "praecantatio": 3,
+        "permutatio": 3
+      },
+      "col": 2,
+      "row": 10,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:thaumium_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMTHAUMIUM.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:blockthaumium"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golemthaumium"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMIRON",
+        "THAUMIUM"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "GOLEMBELL",
+      "category": "GOLEMANCY",
+      "aspects": {},
+      "col": 3,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:golemancers_bell"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMBELL.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.GOLEMBELL.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:golembell"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMSTRAW"
+      ],
+      "flags": [
+        "stub"
+      ]
+    },
+    {
+      "key": "COREGATHER",
+      "category": "GOLEMANCY",
+      "aspects": {},
+      "col": -3,
+      "row": 3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_core_gather"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREGATHER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coreblank"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.COREGATHER.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coregather"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMSTRAW"
+      ],
+      "flags": [
+        "concealed",
+        "stub"
+      ]
+    },
+    {
+      "key": "COREFILL",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "fames": 3,
+        "permutatio": 3,
+        "vacuos": 3
+      },
+      "col": -5,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_fill"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREFILL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:corefill"
+          ]
+        }
+      ],
+      "parents": [
+        "COREGATHER"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "COREEMPTY",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "vacuos": 3,
+        "permutatio": 3,
+        "lucrum": 3
+      },
+      "col": -5,
+      "row": 1,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_empty"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREEMPTY.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coreempty"
+          ]
+        }
+      ],
+      "parents": [
+        "COREGATHER"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "CORESORTING",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "vacuos": 3,
+        "permutatio": 3,
+        "lucrum": 3,
+        "fames": 3
+      },
+      "col": -7,
+      "row": 2,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_sorting"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CORESORTING.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coresorting"
+          ]
+        }
+      ],
+      "parents": [
+        "COREEMPTY",
+        "COREFILL",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "COREUSE",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "instrumentum": 3,
+        "permutatio": 3,
+        "machina": 3,
+        "humanus": 3
+      },
+      "col": -7,
+      "row": 0,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:golem_core_use"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREUSE.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.COREUSE.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coreuse"
+          ]
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEAIR",
+          "text": "tc.research_page.COREUSE.3"
+        }
+      ],
+      "parents": [
+        "COREEMPTY",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "COREHARVEST",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "meto": 6,
+        "messis": 3,
+        "iter": 3
+      },
+      "col": -2,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_harvest"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREHARVEST.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coreharvest"
+          ]
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEORDER",
+          "text": "tc.research_page.COREHARVEST.2"
+        }
+      ],
+      "parents": [
+        "COREGATHER"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "COREFISHING",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "aqua": 3,
+        "meto": 3,
+        "bestia": 3,
+        "fames": 3
+      },
+      "col": -2,
+      "row": 7,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_fishing"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREFISHING.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:corefishing"
+          ]
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEAIR",
+          "text": "tc.research_page.COREFISHING.2"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEFIRE",
+          "text": "tc.research_page.COREFISHING.3"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEORDER",
+          "text": "tc.research_page.COREFISHING.4"
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEENTROPY",
+          "text": "tc.research_page.COREFISHING.5"
+        }
+      ],
+      "parents": [
+        "COREHARVEST",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "CORELUMBER",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "arbor": 6,
+        "meto": 3,
+        "instrumentum": 3,
+        "potentia": 3
+      },
+      "col": -1,
+      "row": 7,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_chop"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CORELUMBER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:corelumber"
+          ]
+        }
+      ],
+      "parents": [
+        "COREHARVEST",
+        "ELEMENTALAXE"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "COREGUARD",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "telum": 3,
+        "vinculum": 3,
+        "sensus": 3
+      },
+      "col": -4,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_guard"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREGUARD.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coreguard"
+          ]
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEORDER",
+          "text": "tc.research_page.COREGUARD.2"
+        }
+      ],
+      "parents": [
+        "COREGATHER"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "COREBUTCHER",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "telum": 3,
+        "bestia": 3,
+        "sensus": 3,
+        "meto": 3
+      },
+      "col": -3,
+      "row": 7,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_butcher"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREBUTCHER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:corebutcher"
+          ]
+        }
+      ],
+      "parents": [
+        "COREGUARD",
+        "COREHARVEST"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "CORELIQUID",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "aqua": 3,
+        "permutatio": 3,
+        "iter": 3
+      },
+      "col": -7,
+      "row": 4,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_decanting"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CORELIQUID.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:coreliquid"
+          ]
+        },
+        {
+          "type": "text",
+          "research": "UPGRADEENTROPY",
+          "text": "tc.research_page.CORELIQUID.2"
+        }
+      ],
+      "parents": [
+        "COREFILL"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "COREALCHEMY",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "aqua": 3,
+        "iter": 3,
+        "praecantatio": 3,
+        "potentia": 3
+      },
+      "col": -9,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:golem_core_alchemy"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.COREALCHEMY.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:corealchemy"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.COREALCHEMY.2"
+        }
+      ],
+      "parents": [
+        "CORELIQUID",
+        "INFUSION"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "UPGRADEAIR",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "aer": 6,
+        "motus": 3
+      },
+      "col": 7,
+      "row": -3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_upgrade_air"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.UPGRADEAIR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:upgradeair"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMBELL"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "UPGRADEEARTH",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "terra": 6,
+        "victus": 3
+      },
+      "col": 6,
+      "row": -2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_upgrade_earth"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.UPGRADEEARTH.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:upgradeearth"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMBELL"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "UPGRADEFIRE",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "ignis": 6,
+        "potentia": 3
+      },
+      "col": 5,
+      "row": -1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_upgrade_fire"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.UPGRADEFIRE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:upgradefire"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMBELL"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "UPGRADEWATER",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "aqua": 6,
+        "sensus": 3
+      },
+      "col": 5,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_upgrade_water"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.UPGRADEWATER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:upgradewater"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMBELL"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "UPGRADEORDER",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "ordo": 6,
+        "cognitio": 3
+      },
+      "col": 6,
+      "row": 2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_upgrade_order"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.UPGRADEORDER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:upgradeorder"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMBELL"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "UPGRADEENTROPY",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "perditio": 6,
+        "cognitio": 3
+      },
+      "col": 7,
+      "row": 3,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_upgrade_entropy"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.UPGRADEENTROPY.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:upgradeentropy"
+          ]
+        }
+      ],
+      "parents": [
+        "GOLEMBELL"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "ADVANCEDGOLEM",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "victus": 3,
+        "potentia": 3,
+        "cognitio": 6,
+        "sensus": 3
+      },
+      "col": 8,
+      "row": 0,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:straw_golem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ADVANCEDGOLEM.1"
+        },
+        {
+          "type": "missing"
+        }
+      ],
+      "parents": [
+        "INFUSION",
+        "UPGRADEAIR",
+        "UPGRADEEARTH",
+        "UPGRADEFIRE",
+        "UPGRADEWATER",
+        "UPGRADEORDER",
+        "UPGRADEENTROPY"
+      ],
+      "flags": [
+        "concealed"
+      ],
+      "warp": 5
+    },
+    {
+      "key": "TINYHAT",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "pannus": 2,
+        "victus": 1,
+        "lucrum": 1
+      },
+      "col": 5,
+      "row": 10,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_top_hat"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYHAT.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinyhat"
+          ]
+        }
+      ],
+      "item_triggers": [
+        {
+          "tag": "minecraft:wool"
+        }
+      ],
+      "aspect_triggers": [
+        "pannus"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TINYGLASSES",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "pannus": 2,
+        "sensus": 1,
+        "lucrum": 1
+      },
+      "col": 6,
+      "row": 10,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_spectacles"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYGLASSES.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinyglasses"
+          ]
+        }
+      ],
+      "item_triggers": [
+        {
+          "tag": "minecraft:wool"
+        }
+      ],
+      "aspect_triggers": [
+        "pannus"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TINYBOWTIE",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "pannus": 2,
+        "iter": 1,
+        "lucrum": 1
+      },
+      "col": 7,
+      "row": 10,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_bowtie"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYBOWTIE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinybowtie"
+          ]
+        }
+      ],
+      "item_triggers": [
+        {
+          "tag": "minecraft:wool"
+        }
+      ],
+      "aspect_triggers": [
+        "pannus"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TINYFEZ",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "pannus": 2,
+        "potentia": 1,
+        "lucrum": 1
+      },
+      "col": 8,
+      "row": 10,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_fez"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYFEZ.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinyfez"
+          ]
+        }
+      ],
+      "item_triggers": [
+        {
+          "tag": "minecraft:wool"
+        }
+      ],
+      "aspect_triggers": [
+        "pannus"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TINYDART",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "volatus": 1,
+        "telum": 2,
+        "lucrum": 1
+      },
+      "col": 5,
+      "row": 11,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_dart_launcher"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYDART.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinydart"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "telum"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TINYVISOR",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "sensus": 1,
+        "tutamen": 2,
+        "lucrum": 1
+      },
+      "col": 6,
+      "row": 11,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_visor"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYVISOR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinyvisor"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "tutamen"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TINYARMOR",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "metallum": 1,
+        "tutamen": 2,
+        "lucrum": 1
+      },
+      "col": 7,
+      "row": 11,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_iron_plating"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYARMOR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinyarmor"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "tutamen"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "TINYHAMMER",
+      "category": "GOLEMANCY",
+      "aspects": {
+        "metallum": 1,
+        "telum": 2,
+        "lucrum": 1
+      },
+      "col": 8,
+      "row": 11,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:golem_mace_arm"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TINYHAMMER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:tinyhammer"
+          ]
+        }
+      ],
+      "aspect_triggers": [
+        "telum"
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ]
+    },
+    {
+      "key": "ASPECTS",
+      "category": "BASICS",
+      "aspects": {},
+      "col": 0,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_aspects.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ASPECTS.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ASPECTS.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ASPECTS.3"
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "PECH",
+      "category": "BASICS",
+      "aspects": {},
+      "col": -4,
+      "row": -4,
+      "complexity": 0,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_pech.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PECH.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PECH.2"
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "NODES",
+      "category": "BASICS",
+      "aspects": {},
+      "col": -2,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_nodes.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NODES.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.NODES.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.NODES.3"
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "WARP",
+      "category": "BASICS",
+      "aspects": {},
+      "col": 0,
+      "row": 2,
+      "complexity": 0,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_warp.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.WARP.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.WARP.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.WARP.3"
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "RESEARCH",
+      "category": "BASICS",
+      "aspects": {},
+      "col": 2,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:scribing_tools"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:thaumometer"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.3"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.4"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:scribe1"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:scribe2"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:scribe3"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.5"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.6"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.7"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.8"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.9"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.10"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.11"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCH.12"
+        }
+      ],
+      "flags": [
+        "autounlock",
+        "stub",
+        "round"
+      ]
+    },
+    {
+      "key": "KNOWFRAG",
+      "category": "BASICS",
+      "aspects": {},
+      "col": 3,
+      "row": -2,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:knowledge_fragment"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.KNOWFRAG.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:knowfrag"
+          ]
+        }
+      ],
+      "parents": [
+        "RESEARCH"
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "THAUMONOMICON",
+      "category": "BASICS",
+      "aspects": {},
+      "col": 1,
+      "row": -2,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:thaumonomicon"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.THAUMONOMICON.1"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {}
+            },
+            1,
+            2,
+            1,
+            [
+              {
+                "item": "thaumvibe:wand",
+                "components": {
+                  "thaumvibe:wand_cap": "iron",
+                  "thaumvibe:wand_rod": "wood"
+                }
+              },
+              {
+                "item": "minecraft:bookshelf"
+              }
+            ]
+          ]
+        }
+      ],
+      "parents": [
+        "RESEARCH"
+      ],
+      "flags": [
+        "autounlock",
+        "stub",
+        "round"
+      ]
+    },
+    {
+      "key": "ORE",
+      "category": "BASICS",
+      "aspects": {},
+      "col": -2,
+      "row": -2,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:cinnabar_ore"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ORE.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ORE.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:clusters0",
+            "thaumvibe:clusters1",
+            "thaumvibe:clusters2",
+            "thaumvibe:clusters3",
+            "thaumvibe:clusters4",
+            "thaumvibe:clusters5",
+            "thaumvibe:clusters6"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ORE.3"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ORE.4"
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "PLANTS",
+      "category": "BASICS",
+      "aspects": {},
+      "col": -2,
+      "row": -4,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:greatwood_sapling"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PLANTS.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:plankgreatwood"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PLANTS.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:planksilverwood"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PLANTS.3"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PLANTS.4"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PLANTS.5"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PLANTS.6"
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "ENCHANT",
+      "category": "BASICS",
+      "aspects": {},
+      "col": -4,
+      "row": -2,
+      "complexity": 0,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_enchant.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ENCHANT.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ENCHANT.2"
+        }
+      ],
+      "flags": [
+        "stub",
+        "round",
+        "autounlock"
+      ]
+    },
+    {
+      "key": "NODETAPPER1",
+      "category": "BASICS",
+      "aspects": {
+        "auram": 3,
+        "praecantatio": 3,
+        "motus": 3,
+        "permutatio": 3
+      },
+      "col": -4,
+      "row": 1,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_nodetap1.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NODETAPPER1.1"
+        }
+      ],
+      "parents": [
+        "NODES"
+      ],
+      "flags": [
+        "round"
+      ]
+    },
+    {
+      "key": "NODEPRESERVE",
+      "category": "BASICS",
+      "aspects": {
+        "auram": 3,
+        "lucrum": 3,
+        "sensus": 3
+      },
+      "col": -6,
+      "row": 2,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_nodepreserve.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NODEPRESERVE"
+        }
+      ],
+      "parents": [
+        "NODETAPPER1"
+      ],
+      "flags": [
+        "round"
+      ]
+    },
+    {
+      "key": "NODEJAR",
+      "category": "BASICS",
+      "aspects": {
+        "auram": 6,
+        "lucrum": 3,
+        "permutatio": 3,
+        "motus": 3
+      },
+      "col": -7,
+      "row": 4,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:node_in_a_jar"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NODEJAR.1"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {
+                "ignis": 70,
+                "terra": 70,
+                "aer": 70,
+                "aqua": 70,
+                "ordo": 70,
+                "perditio": 70
+              }
+            },
+            3,
+            4,
+            3,
+            [
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              "#minecraft:wooden_slabs",
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "thaumvibe:energized_aura_node"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              },
+              {
+                "item": "minecraft:glass"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.NODEJAR.2"
+        }
+      ],
+      "parents": [
+        "NODEPRESERVE"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "NODETAPPER2",
+      "category": "BASICS",
+      "aspects": {
+        "auram": 6,
+        "praecantatio": 3,
+        "motus": 3,
+        "permutatio": 3
+      },
+      "col": -3,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_nodetap2.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.NODETAPPER2.1"
+        }
+      ],
+      "parents": [
+        "NODETAPPER1"
+      ],
+      "flags": [
+        "special",
+        "round"
+      ]
+    },
+    {
+      "key": "RESEARCHER1",
+      "category": "BASICS",
+      "aspects": {
+        "cognitio": 3,
+        "sensus": 3,
+        "ordo": 3
+      },
+      "col": 4,
+      "row": 1,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_researcher1.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCHER1.1"
+        }
+      ],
+      "parents": [
+        "RESEARCH"
+      ],
+      "flags": [
+        "round"
+      ]
+    },
+    {
+      "key": "DECONSTRUCTOR",
+      "category": "BASICS",
+      "aspects": {
+        "cognitio": 3,
+        "fabrico": 3,
+        "perditio": 3
+      },
+      "col": 6,
+      "row": 2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:deconstruction_table"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.DECONSTRUCTOR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:deconstructor"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.DECONSTRUCTOR.2"
+        }
+      ],
+      "parents": [
+        "RESEARCHER1"
+      ],
+      "flags": [
+        "round"
+      ]
+    },
+    {
+      "key": "RESEARCHER2",
+      "category": "BASICS",
+      "aspects": {
+        "cognitio": 6,
+        "ordo": 3,
+        "sensus": 3,
+        "praecantatio": 3
+      },
+      "col": 3,
+      "row": 3,
+      "complexity": 2,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_researcher2.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCHER2.1"
+        }
+      ],
+      "parents": [
+        "RESEARCHER1"
+      ],
+      "flags": [
+        "round",
+        "special"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "RESEARCHDUPE",
+      "category": "BASICS",
+      "aspects": {
+        "cognitio": 6,
+        "permutatio": 3,
+        "sensus": 3,
+        "lucrum": 3,
+        "fabrico": 3
+      },
+      "col": 4,
+      "row": 5,
+      "complexity": 3,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_resdupe.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCHDUPE.1"
+        }
+      ],
+      "parents": [
+        "RESEARCHER2"
+      ],
+      "flags": [
+        "round"
+      ]
+    },
+    {
+      "key": "CRIMSON",
+      "category": "BASICS",
+      "aspects": {},
+      "col": 0,
+      "row": 4,
+      "complexity": 0,
+      "icon": {
+        "item": "thaumvibe:crimson_rites"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CRIMSON.1"
+        }
+      ],
+      "flags": [
+        "stub",
+        "hidden",
+        "round",
+        "special"
+      ],
+      "warp": 3
+    },
+    {
+      "key": "ELDRITCHMINOR",
+      "category": "ELDRITCH",
+      "aspects": {},
+      "col": 1,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_eldritchminor.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ELDRITCHMINOR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidseed"
+          ]
+        }
+      ],
+      "flags": [
+        "hidden",
+        "round",
+        "special"
+      ]
+    },
+    {
+      "key": "ELDRITCHMAJOR",
+      "category": "ELDRITCH",
+      "aspects": {},
+      "col": -1,
+      "row": 0,
+      "complexity": 0,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_eldritchmajor.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ELDRITCHMAJOR.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ELDRITCHMAJOR.2"
+        }
+      ],
+      "flags": [
+        "stub",
+        "hidden",
+        "round",
+        "special"
+      ]
+    },
+    {
+      "key": "OCULUS",
+      "category": "ELDRITCH",
+      "aspects": {
+        "cognitio": 3,
+        "tenebrae": 3,
+        "permutatio": 3,
+        "iter": 6,
+        "alienis": 6
+      },
+      "col": -2,
+      "row": 2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:eldritch_eye"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.OCULUS.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:eldritcheye"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.OCULUS.2"
+        }
+      ],
+      "parents": [
+        "CRIMSON",
+        "ELDRITCHMAJOR"
+      ],
+      "flags": [
+        "round",
+        "concealed",
+        "special"
+      ],
+      "warp": 6
+    },
+    {
+      "key": "ENTEROUTER",
+      "category": "ELDRITCH",
+      "aspects": {},
+      "col": -3,
+      "row": 4,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_outer.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ENTEROUTER.1"
+        }
+      ],
+      "parents": [
+        "OCULUS"
+      ],
+      "flags": [
+        "stub",
+        "hidden",
+        "round"
+      ]
+    },
+    {
+      "key": "OUTERREV",
+      "category": "ELDRITCH",
+      "aspects": {
+        "alienis": 4,
+        "cognitio": 4
+      },
+      "col": -5,
+      "row": 3,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_outerrev.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.OUTERREV.1"
+        }
+      ],
+      "item_triggers": [
+        {
+          "item": "thaumvibe:glyphed_stone"
+        },
+        {
+          "item": "thaumvibe:runed_stone"
+        }
+      ],
+      "parents": [
+        "ENTEROUTER"
+      ],
+      "flags": [
+        "lost",
+        "secondary",
+        "special"
+      ]
+    },
+    {
+      "key": "PRIMPEARL",
+      "category": "ELDRITCH",
+      "aspects": {
+        "aer": 8,
+        "terra": 8,
+        "ignis": 8,
+        "aqua": 8,
+        "ordo": 8,
+        "perditio": 8
+      },
+      "col": 0,
+      "row": 4,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:primordial_pearl"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMPEARL.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMPEARL.2"
+        }
+      ],
+      "item_triggers": [
+        {
+          "item": "thaumvibe:primordial_pearl"
+        }
+      ],
+      "parents": [
+        "ELDRITCHMINOR"
+      ],
+      "flags": [
+        "lost",
+        "secondary",
+        "special"
+      ]
+    },
+    {
+      "key": "PRIMNODE",
+      "category": "ELDRITCH",
+      "aspects": {
+        "auram": 1,
+        "praecantatio": 1,
+        "ordo": 1,
+        "perditio": 1
+      },
+      "col": 0,
+      "row": 6,
+      "complexity": 1,
+      "icon": {
+        "texture": "thaumvibe:textures/misc/r_nodes_2.png"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMNODE.1"
+        }
+      ],
+      "parents": [
+        "PRIMPEARL"
+      ],
+      "flags": [
+        "secondary"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "ADVALCHEMYFURNACE",
+      "category": "ELDRITCH",
+      "aspects": {
+        "auram": 1,
+        "praecantatio": 1,
+        "ordo": 1,
+        "perditio": 1
+      },
+      "col": -2,
+      "row": 6,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:advanced_alchemical_construct"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ADVALCHEMYFURNACE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:advalchemyconstruct"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ADVALCHEMYFURNACE.2"
+        },
+        {
+          "type": "compound",
+          "data": [
+            {
+              "aspects": {
+                "ignis": 50,
+                "aqua": 50,
+                "ordo": 50
+              }
+            },
+            3,
+            2,
+            3,
+            [
+              {
+                "item": "thaumvibe:arcane_alembic"
+              },
+              {
+                "item": "thaumvibe:alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:arcane_alembic"
+              },
+              {
+                "item": "thaumvibe:alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:empty_space"
+              },
+              {
+                "item": "thaumvibe:alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:arcane_alembic"
+              },
+              {
+                "item": "thaumvibe:alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:arcane_alembic"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:alchemical_furnace"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              },
+              {
+                "item": "thaumvibe:advanced_alchemical_construct"
+              }
+            ]
+          ]
+        }
+      ],
+      "parents": [
+        "PRIMPEARL",
+        "DISTILESSENTIA",
+        "VISPOWER"
+      ],
+      "flags": [
+        "secondary"
+      ]
+    },
+    {
+      "key": "PRIMALCRUSHER",
+      "category": "ELDRITCH",
+      "aspects": {
+        "perfodio": 6,
+        "instrumentum": 6,
+        "perditio": 6,
+        "vacuos": 6,
+        "telum": 6,
+        "alienis": 6,
+        "lucrum": 6
+      },
+      "col": 2,
+      "row": 5,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:primal_crusher"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMALCRUSHER.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:primalcrusher"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.PRIMALCRUSHER.2"
+        }
+      ],
+      "parents": [
+        "PRIMPEARL"
+      ],
+      "parents_hidden": [
+        "VOIDMETAL",
+        "ELEMENTALPICK",
+        "ELEMENTALSHOVEL"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
+      "key": "SANITYCHECK",
+      "category": "ELDRITCH",
+      "aspects": {
+        "cognitio": 5,
+        "alienis": 3,
+        "sensus": 5
+      },
+      "col": 2,
+      "row": 2,
+      "complexity": 1,
+      "icon": {
+        "item": "thaumvibe:sanity_checker"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.SANITYCHECK.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:sanitycheck"
+          ]
+        }
+      ],
+      "parents": [
+        "ELDRITCHMINOR"
+      ],
+      "flags": []
+    },
+    {
+      "key": "VOIDMETAL",
+      "category": "ELDRITCH",
+      "aspects": {
+        "metallum": 3,
+        "alienis": 3,
+        "tenebrae": 3,
+        "vacuos": 5
+      },
+      "col": 2,
+      "row": -2,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:void_metal_ingot"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.VOIDMETAL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidmetal"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.VOIDMETAL.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidaxe"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidsword"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidpick"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidshovel"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidhoe"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidhelm"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidchest"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidlegs"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidboots"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "ELDRITCHMINOR"
+      ],
+      "flags": []
+    },
+    {
+      "key": "ESSENTIARESERVOIR",
+      "category": "ELDRITCH",
+      "aspects": {
+        "aqua": 5,
+        "vacuos": 8,
+        "permutatio": 3,
+        "praecantatio": 5
+      },
+      "col": 4,
+      "row": -3,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:essentia_reservoir"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ESSENTIARESERVOIR.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:essentiareservoir"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ESSENTIARESERVOIR.2"
+        }
+      ],
+      "parents": [
+        "VOIDMETAL",
+        "CENTRIFUGE",
+        "INFUSION"
+      ],
+      "flags": []
+    },
+    {
+      "key": "CAP_void",
+      "category": "ELDRITCH",
+      "aspects": {
+        "vacuos": 5,
+        "alienis": 5,
+        "instrumentum": 3,
+        "praecantatio": 3,
+        "auram": 3
+      },
+      "col": 5,
+      "row": -1,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:void_cap"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.CAP_void.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapvoidinert"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandcapvoid"
+          ]
+        }
+      ],
+      "parents": [
+        "CAP_thaumium",
+        "VOIDMETAL"
+      ],
+      "flags": [
+        "concealed"
+      ],
+      "warp": 1
+    },
+    {
+      "key": "ARMORVOIDFORTRESS",
+      "category": "ELDRITCH",
+      "aspects": {
+        "tutamen": 5,
+        "alienis": 3,
+        "pannus": 3,
+        "tenebrae": 3,
+        "vacuos": 5
+      },
+      "col": 0,
+      "row": -3,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:void_thaumaturge_hood"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARMORVOIDFORTRESS.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidrobehelm"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidrobechest"
+          ]
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:voidrobelegs"
+          ]
+        }
+      ],
+      "parents": [
+        "VOIDMETAL",
+        "ENCHFABRIC",
+        "ELDRITCHMAJOR"
+      ],
+      "flags": [
+        "concealed",
+        "secondary"
+      ]
+    },
+    {
+      "key": "FOCUSPRIMAL",
+      "category": "ELDRITCH",
+      "aspects": {
+        "aer": 6,
+        "aqua": 6,
+        "ignis": 6,
+        "terra": 6,
+        "ordo": 6,
+        "perditio": 6,
+        "praecantatio": 6
+      },
+      "col": 4,
+      "row": 1,
+      "complexity": 2,
+      "icon": {
+        "item": "thaumvibe:focus_primal"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.FOCUSPRIMAL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:focusprimal"
+          ]
+        }
+      ],
+      "parents": [
+        "ELDRITCHMINOR"
+      ],
+      "flags": [
+        "concealed"
+      ],
+      "warp": 2
+    },
+    {
+      "key": "ROD_primal_staff",
+      "category": "ELDRITCH",
+      "aspects": {
+        "aer": 9,
+        "terra": 9,
+        "ignis": 9,
+        "aqua": 9,
+        "ordo": 9,
+        "perditio": 9,
+        "instrumentum": 9,
+        "praecantatio": 12
+      },
+      "col": 6,
+      "row": 2,
+      "complexity": 3,
+      "icon": {
+        "item": "thaumvibe:primal_staff_core"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ROD_primal_staff.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "thaumvibe:wandrodprimalstaff"
+          ]
+        }
+      ],
+      "entity_triggers": [
+        "Thaumcraft.PrimalOrb"
+      ],
+      "item_triggers": [
+        {
+          "item": "thaumvibe:focus_primal"
+        }
+      ],
+      "parents": [
+        "FOCUSPRIMAL"
+      ],
+      "parents_hidden": [
+        "ROD_silverwood_staff",
+        "ROD_bone_staff",
+        "ROD_greatwood_staff",
+        "ROD_blaze_staff",
+        "ROD_reed_staff",
+        "ROD_obsidian_staff",
+        "ROD_quartz_staff",
+        "ROD_ice_staff"
+      ],
+      "flags": [
+        "hidden"
+      ],
+      "warp": 3
+    }
+  ]
+}
