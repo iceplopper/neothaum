@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "LAMPGROWTH",
+  "instability": 4,
+  "aspects": {
+    "herba": 16,
+    "lux": 8,
+    "victus": 16
+  },
+  "central": "thaumvibe:arcane_lamp",
+  "components": [
+    "minecraft:gold_ingot",
+    "minecraft:bone_meal",
+    "thaumvibe:earth_shard",
+    "minecraft:gold_ingot",
+    "minecraft:bone_meal",
+    "thaumvibe:earth_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:lamp_of_growth"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "LAMPFERTILITY",
+  "instability": 4,
+  "aspects": {
+    "bestia": 16,
+    "victus": 16,
+    "lux": 8
+  },
+  "central": "thaumvibe:arcane_lamp",
+  "components": [
+    "minecraft:gold_ingot",
+    "minecraft:wheat",
+    "thaumvibe:fire_shard",
+    "minecraft:gold_ingot",
+    "minecraft:carrot",
+    "thaumvibe:fire_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:lamp_of_fertility"
+  }
+}
