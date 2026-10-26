@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "FOCUSFIRE",
+  "aspects": {
+    "ignis": 20,
+    "perditio": 10
+  },
+  "pattern": [
+    "CQC",
+    "Q#Q",
+    "CQC"
+  ],
+  "key": {
+    "#": "minecraft:fire_charge",
+    "Q": "minecraft:quartz",
+    "C": "thaumvibe:fire_shard"
+  },
+  "result": {
+    "id": "thaumvibe:focus_fire"
+  }
+}

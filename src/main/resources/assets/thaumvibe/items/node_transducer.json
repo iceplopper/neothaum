@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumvibe:item/node_transducer",
+    "model": {
+      "type": "thaumvibe:vis_device",
+      "kind": "transducer"
+    }
+  }
+}

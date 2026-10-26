@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "VISPOWER",
+  "aspects": {
+    "ignis": 8,
+    "ordo": 8
+  },
+  "pattern": [
+    " I ",
+    "ISI",
+    " I "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "S": "thaumvibe:balanced_shard"
+  },
+  "result": {
+    "id": "thaumvibe:vis_relay",
+    "count": 2
+  }
+}

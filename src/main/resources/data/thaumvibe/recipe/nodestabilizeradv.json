@@ -1,0 +1,25 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "NODESTABILIZERADV",
+  "instability": 10,
+  "aspects": {
+    "auram": 32,
+    "praecantatio": 16,
+    "ordo": 16,
+    "potentia": 16
+  },
+  "central": "thaumvibe:node_stabilizer",
+  "components": [
+    "thaumvibe:nitor",
+    "minecraft:redstone_block",
+    "thaumvibe:alumentum",
+    "minecraft:redstone_block",
+    "thaumvibe:nitor",
+    "minecraft:redstone_block",
+    "thaumvibe:alumentum",
+    "minecraft:redstone_block"
+  ],
+  "result": {
+    "id": "thaumvibe:advanced_node_stabilizer"
+  }
+}

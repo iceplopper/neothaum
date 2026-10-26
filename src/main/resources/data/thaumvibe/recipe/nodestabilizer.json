@@ -1,0 +1,24 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "NODESTABILIZER",
+  "aspects": {
+    "aqua": 32,
+    "terra": 32,
+    "ordo": 32
+  },
+  "pattern": [
+    " G ",
+    "QPQ",
+    "SNS"
+  ],
+  "key": {
+    "S": "thaumvibe:arcane_stone_bricks",
+    "G": "minecraft:gold_ingot",
+    "P": "minecraft:piston",
+    "Q": "minecraft:quartz_block",
+    "N": "thaumvibe:nitor"
+  },
+  "result": {
+    "id": "thaumvibe:node_stabilizer"
+  }
+}

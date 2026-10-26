@@ -1,0 +1,24 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "WANDPEDFOC",
+  "instability": 4,
+  "aspects": {
+    "ordo": 10,
+    "praecantatio": 15,
+    "permutatio": 10
+  },
+  "central": "minecraft:comparator",
+  "components": [
+    "thaumvibe:earth_shard",
+    "thaumvibe:vis_filter",
+    "thaumvibe:earth_shard",
+    "thaumvibe:vis_filter",
+    "thaumvibe:earth_shard",
+    "thaumvibe:vis_filter",
+    "thaumvibe:earth_shard",
+    "thaumvibe:vis_filter"
+  ],
+  "result": {
+    "id": "thaumvibe:compound_recharge_focus"
+  }
+}

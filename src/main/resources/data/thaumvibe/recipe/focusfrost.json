@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "FOCUSFROST",
+  "aspects": {
+    "aqua": 10,
+    "ordo": 10,
+    "perditio": 10
+  },
+  "pattern": [
+    "CQC",
+    "Q#Q",
+    "CQC"
+  ],
+  "key": {
+    "#": "minecraft:diamond",
+    "Q": "minecraft:quartz",
+    "C": "thaumvibe:water_shard"
+  },
+  "result": {
+    "id": "thaumvibe:focus_frost"
+  }
+}

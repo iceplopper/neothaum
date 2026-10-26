@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "VISCHARGERELAY",
+  "aspects": {
+    "ignis": 16,
+    "ordo": 16,
+    "aer": 16
+  },
+  "pattern": [
+    " R ",
+    "W W",
+    "I I"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "thaumvibe:vis_relay",
+    "W": "thaumvibe:greatwood_rod"
+  },
+  "result": {
+    "id": "thaumvibe:vis_charge_relay"
+  }
+}

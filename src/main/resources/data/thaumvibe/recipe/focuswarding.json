@@ -1,0 +1,25 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "FOCUSWARDING",
+  "instability": 4,
+  "aspects": {
+    "terra": 25,
+    "tutamen": 25,
+    "ordo": 25,
+    "cognitio": 10
+  },
+  "central": "minecraft:nether_star",
+  "components": [
+    "thaumvibe:quicksilver",
+    "thaumvibe:earth_shard",
+    "minecraft:quartz",
+    "thaumvibe:order_shard",
+    "thaumvibe:quicksilver",
+    "thaumvibe:earth_shard",
+    "minecraft:quartz",
+    "thaumvibe:order_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:focus_warding"
+  }
+}

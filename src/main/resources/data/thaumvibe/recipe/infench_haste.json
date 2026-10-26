@@ -1,0 +1,15 @@
+{
+  "type": "thaumvibe:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "thaumvibe:haste",
+  "instability": 3,
+  "aspects": {
+    "praecantatio": 4,
+    "iter": 8,
+    "volatus": 8
+  },
+  "components": [
+    "thaumvibe:nitor",
+    "thaumvibe:salis_mundus"
+  ]
+}

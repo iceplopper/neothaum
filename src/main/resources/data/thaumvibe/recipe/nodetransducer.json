@@ -1,0 +1,24 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "VISPOWER",
+  "aspects": {
+    "ignis": 32,
+    "aer": 32,
+    "perditio": 32
+  },
+  "pattern": [
+    "RCR",
+    "ISI",
+    "RAR"
+  ],
+  "key": {
+    "S": "thaumvibe:node_stabilizer",
+    "C": "minecraft:comparator",
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone_block",
+    "A": "thaumvibe:nitor"
+  },
+  "result": {
+    "id": "thaumvibe:node_transducer"
+  }
+}

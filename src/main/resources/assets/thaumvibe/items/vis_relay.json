@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "thaumvibe:item/vis_relay",
+    "model": {
+      "type": "thaumvibe:vis_device",
+      "kind": "relay"
+    }
+  }
+}

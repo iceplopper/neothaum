@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "FOCUSEXCAVATION",
+  "aspects": {
+    "terra": 20,
+    "perditio": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    "CQC",
+    "Q#Q",
+    "CQC"
+  ],
+  "key": {
+    "#": "minecraft:emerald",
+    "Q": "minecraft:quartz",
+    "C": "thaumvibe:earth_shard"
+  },
+  "result": {
+    "id": "thaumvibe:focus_excavation"
+  }
+}

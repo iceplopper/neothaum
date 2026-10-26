@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "FOCUSPOUCH",
+  "aspects": {
+    "terra": 10,
+    "ordo": 10,
+    "perditio": 10
+  },
+  "pattern": [
+    "LGL",
+    "LBL",
+    "LLL"
+  ],
+  "key": {
+    "B": "thaumvibe:mundane_belt",
+    "L": "minecraft:leather",
+    "G": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "thaumvibe:focus_pouch"
+  }
+}

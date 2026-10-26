@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "FOCUSHELLBAT",
+  "instability": 3,
+  "aspects": {
+    "ignis": 25,
+    "aer": 15,
+    "bestia": 15,
+    "perditio": 25
+  },
+  "central": "minecraft:magma_cream",
+  "components": [
+    "minecraft:quartz",
+    "thaumvibe:fire_shard",
+    "minecraft:quartz",
+    "thaumvibe:air_shard",
+    "minecraft:quartz",
+    "thaumvibe:entropy_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:focus_hellbat"
+  }
+}
