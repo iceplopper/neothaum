@@ -5,6 +5,7 @@
 	"mixins": [
 		"FurnaceAccessor",
 		"LivingEntityHurtMixin",
+		"NoteBlockMixin",
 		"OverworldBiomeBuilderMixin"
 	],
 	"injectors": {

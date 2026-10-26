@@ -3,6 +3,7 @@ package dev.thaumvibe.client.entity;
 import dev.thaumvibe.entity.TVEntities;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 
 /** ClientProxy.registerDisplayInformation: the creatures' renderers. */
 public final class TVEntityRenderers {
@@ -20,6 +21,7 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.FROST_SHARD, FocusProjectileRenderers.FrostShardRenderer::new);
 		EntityRendererRegistry.register(TVEntities.SHOCK_ORB, FocusProjectileRenderers.ShockOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.PRIMAL_ORB, FocusProjectileRenderers.PrimalOrbRenderer::new);
+		EntityRendererRegistry.register(TVEntities.BOTTLE_TAINT, ThrownItemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TAINT_SPIDER, TaintSpiderRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TAINT_SPORE, TaintSporeRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TAINT_SPORE_SWARMER, TaintSporeRenderer::new);

@@ -57,7 +57,7 @@ public class BoneBowItem extends BowItem {
 	protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float power, float uncertainty, float angle,
 		@Nullable LivingEntity target) {
 		if (projectile instanceof AbstractArrow arrow) {
-			arrow.setBaseDamage(arrow.getBaseDamage() + 0.5);
+			arrow.setBaseDamage(2.5);
 		}
 		super.shootProjectile(shooter, projectile, index, power, uncertainty, angle, target);
 	}

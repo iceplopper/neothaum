@@ -14,12 +14,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * ThaumcraftWorldGenerator.initialize: BiomeManager.addBiome(WARM/COOL, magical forest, 5) and (taint, 2). TC4 placed each at random; here
- * they take slices of the forest's climate range, magical forest on the weird side and tainted land on the ordinary side, at opposite ends of
- * the humidity range so that they generate apart.
+ * ThaumcraftWorldGenerator.initialize: BiomeManager.addBiome(WARM/COOL, magical forest, 5) and (taint, 2).
+ * Magical forest generates on the weird positive side. Tainted land is placed as a rare, localized inland blight
+ * on deep negative weirdness, far from coasts, taking a small 5% slice of the wettest humidity.
  */
 @Mixin(OverworldBiomeBuilder.class)
 public abstract class OverworldBiomeBuilderMixin {
+	private static final long MID_INLAND_MIN = Climate.quantizeCoord(0.03F);
+	private static final long RARE_WEIRDNESS_MAX = Climate.quantizeCoord(-0.4F);
+
 	@Inject(method = "addSurfaceBiome", at = @At("HEAD"), cancellable = true)
 	private void thaumvibe$shareForest(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> biomes, Climate.Parameter temperature,
 		Climate.Parameter humidity, Climate.Parameter continentalness, Climate.Parameter erosion, Climate.Parameter weirdness, float offset,
@@ -31,18 +34,24 @@ public abstract class OverworldBiomeBuilderMixin {
 		long hi = humidity.max();
 		long span = hi - lo;
 		if (weirdness.max() >= 0L) {
-			// the weird side: the driest 35% of the forest is magical forest
-			long m1 = lo + span * 35 / 100;
+			// the weird side: the driest 30% of the forest is magical forest
+			long m1 = lo + span * 30 / 100;
 			thaumvibe$add(biomes, temperature, new Climate.Parameter(lo, m1), continentalness, erosion, weirdness, offset, TVBiomes.MAGICAL_FOREST);
 			thaumvibe$add(biomes, temperature, new Climate.Parameter(m1, hi), continentalness, erosion, weirdness, offset, Biomes.FOREST);
+			ci.cancel();
 		} else {
-			// the ordinary side: the wettest 14% is tainted land (TC4's 2 to the magical forest's 5). Opposite weirdness and opposite ends of
-			// the humidity range, so the two never border each other
-			long m2 = hi - span * 14 / 100;
-			thaumvibe$add(biomes, temperature, new Climate.Parameter(lo, m2), continentalness, erosion, weirdness, offset, Biomes.FOREST);
-			thaumvibe$add(biomes, temperature, new Climate.Parameter(m2, hi), continentalness, erosion, weirdness, offset, TVBiomes.TAINTED_LAND);
+			// Tainted land must be rare and localized:
+			// 1. Only deep inland (continentalness >= 0.03F), never bordering coast, beaches, or ocean/coastal water.
+			// 2. Only in deep negative weirdness (<= -0.4F), avoiding the common low/mid slices near normal terrain.
+			// 3. Narrow 5% humidity slice so tainted biomes are small, tight pockets rather than massive sprawling regions.
+			if (continentalness.min() >= MID_INLAND_MIN && weirdness.max() <= RARE_WEIRDNESS_MAX) {
+				long m2 = hi - span * 5 / 100;
+				thaumvibe$add(biomes, temperature, new Climate.Parameter(lo, m2), continentalness, erosion, weirdness, offset, Biomes.FOREST);
+				thaumvibe$add(biomes, temperature, new Climate.Parameter(m2, hi), continentalness, erosion, weirdness, offset, TVBiomes.TAINTED_LAND);
+				ci.cancel();
+			}
+			// Otherwise, let vanilla Forest generate normally without interception.
 		}
-		ci.cancel();
 	}
 
 	private static void thaumvibe$add(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> biomes, Climate.Parameter temperature,

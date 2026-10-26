@@ -1,6 +1,6 @@
 # Thaumcraft 4.2.3.5 features not yet in Thaumvibe 4
 
-Last updated: 2026-10-26, after node jars and node effects on land.
+Last updated: 2026-10-26, after Lamps, JEI integration, Doors & Warding, Infernal Furnace, Boots Overhaul, TNC Audit, and Worldgen Fixes.
 Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ## Already done (for reference)
@@ -16,15 +16,40 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Node effects on land:** pure nodes turn tainted land (or, inside a silverwood, any land) into magical forest, sinister nodes make it eerie
   and call up giant zombies in the dark, tainted nodes spread tainted land and fibres, and nodes in tainted land can turn tainted.
 - **World and plants:** ores and infused stone, greatwood and silverwood trees, and the plants.
+- **Artifice, Lamps & Infernal Furnace:**
+  - **Infernal Furnace:** 3x3x3 multiblock formed from 12 Nether Bricks, 12 Obsidian, 1 Iron Bars, and 1 central Lava. Wand right-click on Iron Bars consumes 50 Ignis + 50 Terra vis. 27-block structure with BER animated lava, front mouth opening with fire/bars, automatic entity suction, 32-slot smelting queue, bonus nuggets/clusters/XP ejection with directional velocity, Arcane Bellows cook time acceleration & bonus chance boost, Ignis essentia input via nozzle (suction 128), and angry Blaze retaliatory spawn on break.
+  - **Thaumonomicon Parity & Auditing:** Added `case IMAGE` page rendering to `ResearchPagesScreen`, added 15 missing recipe JSONs (`bootstraveller`, `bonebow`, `bottletaint`, `sanitycheck`, `primalcrusher`, `resonator`, and 9 Void metal gear recipes), verified 100% active research entries match original TC4 pages.
+  - **Arcane Lamp:** attaches to 6 faces (floor, ceiling, wall); emits light 15 and places invisible `Blocks.LIGHT` up to 16 blocks away where light < 9; cleans up placed light blocks when broken/removed.
+  - **Lamp of Growth:** attaches to 6 faces (tubes, walls, floors); draws Herba essentia via `EssentiaTransport` (1 Herba = 100 charges); scans 6-block radius and accelerates crop/plant growth with green bonemeal sparkles; dynamic lighting (15 powered, 8 unpowered).
+  - **Lamp of Fertility:** attaches to 6 faces (tubes, walls, floors); draws Victus essentia via `EssentiaTransport` (up to 4 charges); breeds animal pairs in 7-block radius every 300 ticks when population <= 7; dynamic lighting (15 powered, 8 unpowered).
+- **Doors, warding and redstone:**
+  - arcane door (`arcane_door` block & item, unbreakable/unopenable to non-permitted, access list sync)
+  - warded glass (`warded_glass`, translucent glass unbreakable to non-owners)
+  - paving stone of warding (`paving_stone_of_warding` + invisible `warding_aura` barrier, repels mobs while letting players pass, deactivated by redstone)
+  - arcane pressure plate (`arcane_pressure_plate`, 3-mode toggle: all, except owner/permitted, only owner/permitted; opens adjacent arcane doors; unbreakable to non-owners)
+  - arcane ear (`arcane_ear`, 6-directional sensor listening for note block pitch/instrument matches within 64 blocks and outputting 10-tick redstone pulse)
+  - arcane levitator (`arcane_levitator`, 6-directional levitator lifting entities up to 10 blocks + 10 per stacked levitator, sneaking softly descends, resets fall distance)
+  - arcane keys (`iron_arcane_key` & `gold_arcane_key`, right-click imprint on door/plate, consume to grant permanent access)
 - **Essentia:**
   - warded and void jars, labels and the brain in a jar
   - every tube kind and the buffer
   - the alembic, alchemical furnace and bellows
   - phials, plus your suction priority rules
 - **Infusion:** the matrix, pedestals, pillars, stabilisers and instability, and infusion enchanting (partial, see below).
-- **Equipment:** runic shielding and runic baubles, vis amulets, the hover girdle, elemental tools, thaumium tools and armour, and thaumaturge's robes.
+- **Equipment:**
+  - runic shielding and runic baubles, vis amulets, the hover girdle, elemental tools, thaumium tools and armour, and thaumaturge's robes.
+  - **Void metal:** void tools (sword, shovel, pickaxe, axe, hoe) and void armour (helm, chestplate, leggings, boots) with warp, self-repair, and weakening strikes.
+  - **Boots of the Traveler:** step-height boost (+0.5), slow falling (-0.25/tick), runic augmentable, and client movement speed boost.
+  - **Bow of Bone:** fast draw, auto-release at 18 ticks, and +0.5 base arrow damage bonus.
+  - **Primal Crusher:** 3x3 plane excavation on pickaxe/shovel blocks, self-repair, and warp 2.
+  - **Essentia Resonator:** knocks on tubes/devices and reports current suction amount/type and essentia contents.
+  - **Sanity Checker:** corner gauge HUD display rendering permanent, sticky, and temporary warp.
+  - **Bottled Taint:** throwable splash projectile spreading taint blocks/fibres and applying Flux Taint effect.
 - **Flux:** flux goo and gas, all nine potion effects, and basic warp gain.
-- **Biomes:** Magical Forest, Tainted Land and Eerie, plus taint blocks and spread.
+- **Biomes & Worldgen Fixes:**
+  - Magical Forest, Tainted Land and Eerie, plus taint blocks and spread.
+  - **Tree Ground Validation:** fixed trees generating over water bodies on 1-block dirt pedestals by enforcing strict soil and fluid checks (`canPlaceTreeAt`).
+  - **Tainted Land Tuning:** removed coastal tainted land generation and restricted it to rare, deep-inland pockets with a narrow 5% humidity slice.
 - **Mobs:**
   - angry and furious zombies
   - wisp, firebat, Pech (with trading), thaumic slime
@@ -32,6 +57,8 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - taintacle (small, normal and giant)
   - tainted chicken, cow, pig, sheep, villager and creeper
 - **Other items:** mana beans, ethereal essence.
+- **Addon features (in `dev.thaumvibe.addon`):**
+  - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
 
 ## Still to do
 
@@ -44,25 +71,18 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)
-- **Lamps:** arcane lamp, lamp of growth and lamp of fertility.
-- **Doors, warding and redstone:**
-  - arcane door, warded glass and warding stone
-  - arcane pressure plate and arcane ear
-  - arcane levitator
-- **Big machines:** the arcane bore and its base, and the infernal (arcane) furnace multiblock.
+- **Big machines:** the arcane bore and its base.
 - **Storage:** the hungry chest.
 - **Spa and deconstruction:** the arcane spa and the deconstruction table.
 - **Misc:** the flux scrubber, the grate, and banners (cultist and the Thaumcraft colours).
 
-### Equipment and gear (M to L)
-- **Void metal:** void tools, armour and robe, with warp and self-repair.
-- **Fortress armour:** its custom model, masks and goggles upgrades.
-- **Boots of the Traveller** and the thaumostatic harness.
-- **Weapons:** the crimson blade, bone bow and primal arrows, and the primal crusher.
+### Remaining Equipment and gear (M)
+- **Fortress armour:** its custom model, masks and goggles upgrades, and void fortress robes.
+- **The thaumostatic harness.**
+- **Weapons:** the crimson blade and primal arrows.
 - **Cultist gear:** cultist robes, plate and leader armour, and cultist boots.
-- **Relics:** the resonator and the sanity checker.
-- **Throwables:** bottled taint, and throwing alumentum.
-- **Small items:** the loot bag, the iron and gold arcane keys, the stone compass, and using knowledge fragments.
+- **Throwables:** throwing alumentum.
+- **Small items:** the loot bag, the stone compass, and using knowledge fragments.
 
 ### Golemancy (L)
 - **Golems:** all material types, with cores, upgrades and decorations.
@@ -82,7 +102,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 ### Warp, fully (M)
 - **Warp events:** whispers, fake explosions, spider and guardian ambushes, nightmares, blindness and hunger.
 - **Sticky and temporary warp decay**, plus the research that grants and needs warp.
-- **The sanity checker** display.
 
 ### World generation, the rest (M)
 - **Structures:** barrow mounds with loot urns and crates, hilltop stones, and eldritch rings.
@@ -94,30 +113,18 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Lightning** from nodes to players (nodeBolt).
 - **The stone compass's** pull toward sinister nodes (TC4 records them from the node tick; nothing reads that yet).
 - **Shovel of the Earthmover:** the orientation keybind and placement preview.
-- **Missing Thaumonomicon pages:** helm goggles and mask infusions, runic augmentation.
-- **JEI plugin:** arcane, crucible and infusion categories, plus aspect lookups.
 - **Config file:** the TC4 options (spawn toggles, taint spread rate, biome weights and so on).
 - **Achievements and advancements.**
 
 ### Test coverage still missing
-- **Gametests** for the elemental tools and baubles, and Pech trading. (Taint conversion, peaceful rules, wands, foci and the vis network
-  have scenes now.)
-- **Not ported on purpose:** TC4's Frugal, Potency and Wand Fortune enchantments only applied to the old focus API that no 4.2 focus used;
-  focus upgrades replaced them.
-
-### Addon features (new, not in TC4; they go in their own package, `dev.thaumvibe.addon`)
-- **Vanilla candles as tallow candles.** Keep TC4's tallow candles, and let vanilla candles stand in for them wherever tallow candles
-  count (they stabilise infusion altars). A vanilla candle only counts while lit, and stacking more candles on one block adds nothing.
-  - **Exchange recipes:** a candle alone in the crafting grid becomes the other kind of the same colour, both ways, for every colour
-    (and the plain undyed candle).
-  - **Thaumonomicon:** a page in the tallow entry explaining this, showing the vanilla candle recipe and the exchange recipe cycling
-    through the colours.
+- **Gametests** for the elemental tools and baubles, and Pech trading. (Taint conversion, peaceful rules, wands, foci and the vis network have scenes now.)
+- **Not ported on purpose:** TC4's Frugal, Potency and Wand Fortune enchantments only applied to the old focus API that no 4.2 focus used; focus upgrades replaced them.
 
 ## Suggested order
 
-1. **Void metal and the remaining gear.**
-2. **Artifice blocks and the remaining alchemy machines.**
+1. **Artifice blocks and the remaining alchemy machines.**
+2. **Remaining gear (Fortress armor, Harness, Cultist armor, Crimson blade, Primal arrows).**
 3. **Golemancy.**
 4. **Warp events.**
 5. **Eldritch content and the Outer Lands.**
-6. **JEI, config and polish.**
+6. **Polish.**

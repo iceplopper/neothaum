@@ -3,6 +3,16 @@ package dev.thaumvibe.registry;
 import dev.thaumvibe.Thaumvibe;
 import dev.thaumvibe.blocks.AlchemyFurnaceBlock;
 import dev.thaumvibe.blocks.AlembicBlock;
+import dev.thaumvibe.blocks.ArcaneDoorBlock;
+import dev.thaumvibe.blocks.ArcaneEarBlock;
+import dev.thaumvibe.blocks.ArcaneLampBlock;
+import dev.thaumvibe.blocks.ArcaneLevitatorBlock;
+import dev.thaumvibe.blocks.ArcanePressurePlateBlock;
+import dev.thaumvibe.blocks.PavingStoneOfWardingBlock;
+import dev.thaumvibe.blocks.WardedGlassBlock;
+import dev.thaumvibe.blocks.WardingAuraBlock;
+import dev.thaumvibe.blocks.LampOfGrowthBlock;
+import dev.thaumvibe.blocks.LampOfFertilityBlock;
 import dev.thaumvibe.blocks.ArcaneWorktableBlock;
 import dev.thaumvibe.blocks.BellowsBlock;
 import dev.thaumvibe.blocks.BrainJarBlock;
@@ -221,10 +231,34 @@ public final class TVBlocks {
 		.noOcclusion().replaceable().lightLevel(dev.thaumvibe.blocks.TaintFibreBlock::lightLevel).pushReaction(PushReaction.POPPED), true);
 	public static final Block ARCANE_BELLOWS = register("arcane_bellows", BellowsBlock::new, wood(1.0F), true);
 
+	public static final Block ARCANE_FURNACE = register("arcane_furnace", dev.thaumvibe.blocks.ArcaneFurnaceBlock::new, stone(10.0F, 500.0F).sound(SoundType.STONE).noOcclusion().lightLevel(s -> s.getValue(dev.thaumvibe.blocks.ArcaneFurnaceBlock.PART) == dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.CORE || s.getValue(dev.thaumvibe.blocks.ArcaneFurnaceBlock.PART) == dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.MOUTH ? 13 : 0), false);
 	public static final Block ALCHEMICAL_FURNACE = register("alchemical_furnace", AlchemyFurnaceBlock::new,
 		stone(2.0F, 10.0F).lightLevel(s -> s.getValue(AlchemyFurnaceBlock.LIT) ? 12 : 0), true);
 	public static final Block ARCANE_ALEMBIC = register("arcane_alembic", AlembicBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.0F).sound(SoundType.METAL).noOcclusion(), true);
+	public static final Block ARCANE_LAMP = register("arcane_lamp", ArcaneLampBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.0F).sound(SoundType.METAL).noOcclusion().lightLevel(s -> 15), true);
+	public static final Block LAMP_OF_GROWTH = register("lamp_of_growth", LampOfGrowthBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).strength(3.0F, 17.0F).sound(SoundType.METAL).noOcclusion()
+			.lightLevel(s -> s.getValue(LampOfGrowthBlock.LIT) ? 15 : 8), true);
+	public static final Block LAMP_OF_FERTILITY = register("lamp_of_fertility", LampOfFertilityBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).strength(3.0F, 17.0F).sound(SoundType.METAL).noOcclusion()
+			.lightLevel(s -> s.getValue(LampOfFertilityBlock.LIT) ? 15 : 8), true);
+	public static final Block ARCANE_DOOR = register("arcane_door", ArcaneDoorBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(15.0F, 100.0F).sound(SoundType.WOOD).noOcclusion().pushReaction(PushReaction.IMMOVEABLE), true);
+	public static final Block WARDED_GLASS = register("warded_glass", WardedGlassBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.NONE).strength(15.0F, 100.0F).sound(SoundType.GLASS).noOcclusion()
+			.isValidSpawn((s, l, p, e) -> false).isSuffocating((s, l, p) -> false).isViewBlocking((s, l, p, a) -> false), true);
+	public static final Block PAVING_STONE_OF_WARDING = register("paving_stone_of_warding", PavingStoneOfWardingBlock::new,
+		stone(4.0F, 100.0F).noOcclusion(), true);
+	public static final Block WARDING_AURA = register("warding_aura", WardingAuraBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.NONE).noLootTable().strength(-1.0F, 3600000.0F).noOcclusion().pushReaction(PushReaction.IMMOVEABLE), false);
+	public static final Block ARCANE_PRESSURE_PLATE = register("arcane_pressure_plate", ArcanePressurePlateBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(15.0F, 100.0F).sound(SoundType.WOOD).noOcclusion().pushReaction(PushReaction.POPPED), true);
+	public static final Block ARCANE_EAR = register("arcane_ear", ArcaneEarBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(1.5F, 5.0F).sound(SoundType.WOOD).noOcclusion(), true);
+	public static final Block ARCANE_LEVITATOR = register("arcane_levitator", ArcaneLevitatorBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F, 5.0F).sound(SoundType.WOOD).noOcclusion(), true);
 
 	/** Config.fluxGoomaterial: a liquid you wade through, lit like the fluid's luminosity 7. */
 	private static BlockBehaviour.Properties flux() {

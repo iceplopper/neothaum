@@ -1,5 +1,16 @@
 package dev.thaumvibe.registry;
 
+import dev.thaumvibe.items.equipment.BoneBowItem;
+import dev.thaumvibe.items.equipment.BottledTaintItem;
+import dev.thaumvibe.items.equipment.PrimalCrusherItem;
+import dev.thaumvibe.items.equipment.ResonatorItem;
+import dev.thaumvibe.items.equipment.TravellerBootsItem;
+import dev.thaumvibe.items.equipment.VoidGear;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+
 import dev.thaumvibe.Thaumvibe;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -21,6 +32,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Holder;
 import java.util.Map;
 import java.util.EnumMap;
+import dev.thaumvibe.items.ArcaneKeyItem;
 import dev.thaumvibe.items.RobeArmorItem;
 import dev.thaumvibe.baubles.BaubleType;
 import dev.thaumvibe.items.BaubleBlankItem;
@@ -221,6 +233,44 @@ public final class TVItems {
 	public static final Item THAUMATURGES_ROBE = robe("thaumaturges_robe", EquipmentSlot.CHEST, ArmorType.CHESTPLATE);
 	public static final Item THAUMATURGES_LEGGINGS = robe("thaumaturges_leggings", EquipmentSlot.LEGS, ArmorType.LEGGINGS);
 	public static final Item THAUMATURGES_BOOTS = robe("thaumaturges_boots", EquipmentSlot.FEET, ArmorType.BOOTS);
+
+	public static final ArmorMaterial TRAVELLER_ARMOR = armor(25, 1, 3, 2, 1, SoundEvents.ARMOR_EQUIP_LEATHER,
+		TagKey.create(Registries.ITEM, Thaumvibe.id("enchanted_fabrics")), "bootstraveler");
+	public static final Item BOOTS_OF_THE_TRAVELLER = register("boots_of_the_traveller", TravellerBootsItem::new,
+		new Item.Properties().humanoidArmor(TRAVELLER_ARMOR, ArmorType.BOOTS).durability(350).rarity(Rarity.RARE)
+			.attributes(ItemAttributeModifiers.builder()
+				.add(Attributes.ARMOR, new AttributeModifier(Thaumvibe.id("traveller_armor"), 1.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.add(Attributes.STEP_HEIGHT, new AttributeModifier(Thaumvibe.id("traveller_step"), 0.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.add(Attributes.MOVEMENT_SPEED, new AttributeModifier(Thaumvibe.id("traveller_speed"), 0.04, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.add(Attributes.JUMP_STRENGTH, new AttributeModifier(Thaumvibe.id("traveller_jump"), 0.12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.add(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(Thaumvibe.id("traveller_fall"), 3.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.add(Attributes.WATER_MOVEMENT_EFFICIENCY, new AttributeModifier(Thaumvibe.id("traveller_water"), 0.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.build()));
+
+	public static final Item BOW_OF_BONE = register("bow_of_bone", BoneBowItem::new, new Item.Properties().durability(512));
+	public static final Item RESONATOR = register("essentia_resonator", ResonatorItem::new, new Item.Properties().stacksTo(1));
+	public static final Item SANITY_CHECKER = register("sanity_checker", Item::new, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+	public static final Item BOTTLED_TAINT = register("bottled_taint", BottledTaintItem::new, new Item.Properties().stacksTo(16));
+	public static final Item IRON_ARCANE_KEY = register("iron_arcane_key", p -> new ArcaneKeyItem(false, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLD_ARCANE_KEY = register("gold_arcane_key", p -> new ArcaneKeyItem(true, p), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+
+	public static final TagKey<Item> VOID_INGOTS = TagKey.create(Registries.ITEM, Thaumvibe.id("void_metal_ingots"));
+	public static final ToolMaterial VOID_TOOLS = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 150, 8.0F, 3.0F, 10, VOID_INGOTS);
+	public static final Item VOID_SWORD = register("void_sword", p -> new VoidGear.Tool(60, p), new Item.Properties().sword(VOID_TOOLS, 3.0F, -2.4F));
+	public static final Item VOID_SHOVEL = register("void_shovel", p -> new VoidGear.Tool(80, p), new Item.Properties().shovel(VOID_TOOLS, 1.5F, -3.0F));
+	public static final Item VOID_PICKAXE = register("void_pickaxe", p -> new VoidGear.Tool(80, p), new Item.Properties().pickaxe(VOID_TOOLS, 1.0F, -2.8F));
+	public static final Item VOID_AXE = register("void_axe", p -> new VoidGear.Tool(80, p), new Item.Properties().axe(VOID_TOOLS, 6.0F, -3.1F));
+	public static final Item VOID_HOE = register("void_hoe", p -> new VoidGear.Tool(80, p), new Item.Properties().hoe(VOID_TOOLS, -2.0F, -1.0F));
+
+	public static final ToolMaterial PRIMAL_TOOLS = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 500, 8.0F, 4.0F, 20, VOID_INGOTS);
+	public static final Item PRIMAL_CRUSHER = register("primal_crusher", PrimalCrusherItem::new,
+		new Item.Properties().pickaxe(PRIMAL_TOOLS, 1.0F, -2.8F).rarity(Rarity.RARE));
+
+	public static final ArmorMaterial VOID_ARMOR = armor(10, 3, 7, 6, 3, SoundEvents.ARMOR_EQUIP_IRON, VOID_INGOTS, "void");
+	public static final Item VOID_HELMET = register("void_helm", VoidGear.Armor::new, new Item.Properties().humanoidArmor(VOID_ARMOR, ArmorType.HELMET));
+	public static final Item VOID_CHESTPLATE = register("void_chestplate", VoidGear.Armor::new, new Item.Properties().humanoidArmor(VOID_ARMOR, ArmorType.CHESTPLATE));
+	public static final Item VOID_LEGGINGS = register("void_leggings", VoidGear.Armor::new, new Item.Properties().humanoidArmor(VOID_ARMOR, ArmorType.LEGGINGS));
+	public static final Item VOID_BOOTS = register("void_boots", VoidGear.Armor::new, new Item.Properties().humanoidArmor(VOID_ARMOR, ArmorType.BOOTS));
 
 	// ItemNuggetEdible (1, 0.3) and ItemTripleMeatTreat (6, 0.8, always edible, 66% chance of 5 s of regeneration)
 	public static final Item CHICKEN_NUGGET = food("chicken_nugget");

@@ -51,6 +51,9 @@ public final class TVClientNetwork {
 				}
 			}
 			ArcaneCraftingManager.clientArcane = arcane;
+			if (net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("jei")) {
+				dev.thaumvibe.client.jei.ThaumvibeJeiPlugin.onRecipesUpdated();
+			}
 		});
 		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.ResearchComplete.TYPE, (p, ctx) -> {
 			Minecraft mc = ctx.client();

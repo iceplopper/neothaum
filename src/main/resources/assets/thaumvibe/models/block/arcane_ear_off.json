@@ -1,0 +1,22 @@
+{
+  "textures": {
+    "particle": "thaumvibe:blocks/arcaneearbottom",
+    "down": "thaumvibe:blocks/arcaneearbottom",
+    "up": "thaumvibe:blocks/arcaneeartopoff",
+    "side": "thaumvibe:blocks/arcaneearsideoff"
+  },
+  "elements": [
+    {
+      "from": [ 3, 0, 3 ],
+      "to": [ 13, 4, 13 ],
+      "faces": {
+        "down": { "uv": [ 3, 3, 13, 13 ], "texture": "#down", "cullface": "down" },
+        "up": { "uv": [ 3, 3, 13, 13 ], "texture": "#up" },
+        "north": { "uv": [ 3, 12, 13, 16 ], "texture": "#side" },
+        "south": { "uv": [ 3, 12, 13, 16 ], "texture": "#side" },
+        "west": { "uv": [ 3, 12, 13, 16 ], "texture": "#side" },
+        "east": { "uv": [ 3, 12, 13, 16 ], "texture": "#side" }
+      }
+    }
+  ]
+}

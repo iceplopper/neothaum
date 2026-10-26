@@ -1,6 +1,10 @@
 package dev.thaumvibe.registry;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.StreamCodec;
 import dev.thaumvibe.Thaumvibe;
 import dev.thaumvibe.api.aspects.AspectList;
 import dev.thaumvibe.research.ResearchNoteData;
@@ -54,6 +58,20 @@ public final class TVComponents {
 	/** ItemJarNode "nodemod": the trapped node's modifier (NodeModifier ordinal; absent for none). */
 	public static final DataComponentType<Integer> NODE_MODIFIER = register("node_modifier",
 		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+	public record KeyData(BlockPos pos, int type) {
+		public static final Codec<KeyData> CODEC = RecordCodecBuilder.create(i -> i.group(
+			BlockPos.CODEC.fieldOf("pos").forGetter(KeyData::pos),
+			Codec.INT.fieldOf("type").forGetter(KeyData::type)
+		).apply(i, KeyData::new));
+		public static final StreamCodec<ByteBuf, KeyData> STREAM_CODEC = StreamCodec.composite(
+			BlockPos.STREAM_CODEC, KeyData::pos,
+			ByteBufCodecs.VAR_INT, KeyData::type,
+			KeyData::new);
+	}
+	/** Imprinted arcane key destination and type (0: door, 1: pressure plate). */
+	public static final DataComponentType<KeyData> KEY_DATA = register("key_data",
+		b -> b.persistent(KeyData.CODEC).networkSynchronized(KeyData.STREAM_CODEC));
 
 	private static <T> DataComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> builder) {
 		return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Thaumvibe.id(name), builder.apply(DataComponentType.builder()).build());

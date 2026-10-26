@@ -98,6 +98,11 @@ public class ThaumvibeClient implements ClientModInitializer {
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.thaumvibe.client.render.OreScanOverlay::render);
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.thaumvibe.client.render.ShieldFX::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.thaumvibe.client.render.ShieldFX::tick);
+		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
+			if (mc.player != null) {
+				dev.thaumvibe.items.equipment.TravellerBootsItem.clientTick(mc.player);
+			}
+		});
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.thaumvibe.client.fx.BoltFX::render);
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.thaumvibe.client.render.ContainerTags::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.thaumvibe.client.fx.BoltFX::tick);
@@ -134,6 +139,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.WAND_PEDESTAL, dev.thaumvibe.client.render.VisDeviceRenderers.WandPedestal::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.FOCAL_MANIPULATOR, dev.thaumvibe.client.render.VisDeviceRenderers.FocalManipulator::new);
 		MenuScreens.register(TVMenus.FOCAL_MANIPULATOR, dev.thaumvibe.client.gui.FocalManipulatorScreen::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_FURNACE, dev.thaumvibe.client.render.ArcaneFurnaceRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.CRUCIBLE, CrucibleRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_WORKTABLE, ArcaneWorktableRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.RESEARCH_TABLE, dev.thaumvibe.client.render.ResearchTableRenderer::new);
@@ -167,6 +173,12 @@ public class ThaumvibeClient implements ClientModInitializer {
 		HudElementRegistry.addLast(Thaumvibe.id("notifications"), Notifications::render);
 		HudElementRegistry.addLast(Thaumvibe.id("research_popup"), ResearchPopup::render);
 		HudElementRegistry.addLast(Thaumvibe.id("runic_shield"), dev.thaumvibe.client.hud.RunicShieldHud::render);
+		HudElementRegistry.addLast(Thaumvibe.id("sanity"), dev.thaumvibe.client.hud.SanityHud::render);
+		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
+			if (mc.player != null && !mc.isPaused()) {
+				dev.thaumvibe.items.equipment.TravellerBootsItem.clientTick(mc.player);
+			}
+		});
 
 		ScreenEvents.AFTER_INIT.register((client, screen, w, h) -> {
 			if (screen instanceof AbstractContainerScreen<?> acs) {

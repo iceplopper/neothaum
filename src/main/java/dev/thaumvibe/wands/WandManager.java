@@ -164,13 +164,119 @@ public final class WandManager {
 			}
 			return true;
 		}
+		if (state.is(Blocks.IRON_BARS) && ResearchManager.isResearchComplete(player, "INFERNALFURNACE")) {
+			return createArcaneFurnace(wand, player, level, pos);
+		}
 		if (state.is(Blocks.GLASS) && ResearchManager.isResearchComplete(player, "NODEJAR")) {
 			return createNodeJar(wand, player, level, pos);
 		}
 		return false;
 	}
 
-	/** Wand trigger 4: a node walled in by three layers of glass under a lid of wooden slabs is caught in a jar, for 70 of each primal vis. */
+	/** Wand trigger: 3x3x3 Nether Bricks, Obsidian, Lava and Iron Bars becomes an Infernal Furnace, for 50 Fire + 50 Earth vis. */
+	public static boolean createArcaneFurnace(ItemStack wand, Player player, Level level, BlockPos pos) {
+		AspectList cost = new AspectList().add(Aspect.FIRE, 50).add(Aspect.EARTH, 50);
+		for (int xx = pos.getX() - 2; xx <= pos.getX(); xx++) {
+			for (int yy = pos.getY() - 1; yy <= pos.getY() - 1; yy++) {
+				for (int zz = pos.getZ() - 2; zz <= pos.getZ(); zz++) {
+					BlockPos origin = new BlockPos(xx, yy, zz);
+					Direction facing = fitArcaneFurnace(level, origin);
+					if (facing != null && WandItem.consumeAllVisCrafting(wand, player, cost, true)) {
+						if (!level.isClientSide()) {
+							replaceArcaneFurnace(level, origin, facing);
+						}
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private static Direction fitArcaneFurnace(Level level, BlockPos origin) {
+		Block bo = Blocks.OBSIDIAN;
+		Block bn = Blocks.NETHER_BRICKS;
+		Block bf = Blocks.IRON_BARS;
+
+		Direction foundFacing = null;
+		int ironBarsCount = 0;
+
+		for (int yy = 0; yy < 3; yy++) {
+			for (int xx = 0; xx < 3; xx++) {
+				for (int zz = 0; zz < 3; zz++) {
+					BlockPos p = origin.offset(xx, yy, zz);
+					BlockState s = level.getBlockState(p);
+					boolean corner = (xx != 1 && zz != 1);
+					boolean center = (xx == 1 && zz == 1);
+
+					if (yy == 0) {
+						if (corner) {
+							if (!s.is(bn)) return null;
+						} else {
+							if (!s.is(bo)) return null;
+						}
+					} else if (yy == 1) {
+						if (corner) {
+							if (!s.is(bn)) return null;
+						} else if (center) {
+							if (!s.is(Blocks.LAVA)) return null;
+						} else {
+							if (s.is(bf)) {
+								ironBarsCount++;
+								if (xx == 1 && zz == 0) foundFacing = Direction.NORTH;
+								else if (xx == 1 && zz == 2) foundFacing = Direction.SOUTH;
+								else if (xx == 0 && zz == 1) foundFacing = Direction.WEST;
+								else if (xx == 2 && zz == 1) foundFacing = Direction.EAST;
+							} else if (!s.is(bo)) {
+								return null;
+							}
+						}
+					} else {
+						if (corner) {
+							if (!s.is(bn)) return null;
+						} else if (center) {
+							if (!s.isAir()) return null;
+						} else {
+							if (!s.is(bo)) return null;
+						}
+					}
+				}
+			}
+		}
+		return ironBarsCount == 1 ? foundFacing : null;
+	}
+
+	private static void replaceArcaneFurnace(Level level, BlockPos origin, Direction facing) {
+		BlockPos mouthPos = origin.offset(1, 1, 1).relative(facing);
+		for (int yy = 0; yy < 3; yy++) {
+			for (int xx = 0; xx < 3; xx++) {
+				for (int zz = 0; zz < 3; zz++) {
+					if (yy == 2 && xx == 1 && zz == 1) {
+						continue;
+					}
+					BlockPos p = origin.offset(xx, yy, zz);
+					dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart part;
+					if (yy == 1 && xx == 1 && zz == 1) {
+						part = dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.CORE;
+					} else if (p.equals(mouthPos)) {
+						part = dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.MOUTH;
+					} else if (yy == 1 && (xx == 1 || zz == 1)) {
+						part = dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.NOZZLE;
+					} else {
+						part = dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.CASING;
+					}
+					BlockState state = TVBlocks.ARCANE_FURNACE.defaultBlockState()
+						.setValue(dev.thaumvibe.blocks.ArcaneFurnaceBlock.PART, part)
+						.setValue(dev.thaumvibe.blocks.ArcaneFurnaceBlock.FACING, facing);
+					level.setBlock(p, state, Block.UPDATE_ALL);
+					TVNetwork.sendBlockSparkle(level, p, -9999);
+				}
+			}
+		}
+		level.playSound(null, origin.offset(1, 1, 1), TVSounds.WAND, SoundSource.BLOCKS, 1.0F, 1.0F);
+	}
+
+		/** Wand trigger 4: a node walled in by three layers of glass under a lid of wooden slabs is caught in a jar, for 70 of each primal vis. */
 	public static boolean createNodeJar(ItemStack wand, Player player, Level level, BlockPos pos) {
 		AspectList cost = new AspectList().add(Aspect.FIRE, 70).add(Aspect.EARTH, 70).add(Aspect.ORDER, 70).add(Aspect.AIR, 70)
 			.add(Aspect.ENTROPY, 70).add(Aspect.WATER, 70);

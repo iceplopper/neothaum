@@ -34,6 +34,8 @@ public final class TVBlockEntities {
 		TVBlocks.FIRE_CRYSTAL_CLUSTER, TVBlocks.WATER_CRYSTAL_CLUSTER, TVBlocks.EARTH_CRYSTAL_CLUSTER, TVBlocks.ORDER_CRYSTAL_CLUSTER,
 		TVBlocks.ENTROPY_CRYSTAL_CLUSTER, TVBlocks.MIXED_CRYSTAL_CLUSTER);
 	public static final BlockEntityType<JarBlockEntity> JAR = register("jar", JarBlockEntity::new, TVBlocks.WARDED_JAR, TVBlocks.VOID_JAR);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneFurnaceBlockEntity> ARCANE_FURNACE = register("arcane_furnace", dev.thaumvibe.tiles.ArcaneFurnaceBlockEntity::new, TVBlocks.ARCANE_FURNACE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneFurnaceNozzleBlockEntity> ARCANE_FURNACE_NOZZLE = register("arcane_furnace_nozzle", dev.thaumvibe.tiles.ArcaneFurnaceNozzleBlockEntity::new, TVBlocks.ARCANE_FURNACE);
 	public static final BlockEntityType<AlchemyFurnaceBlockEntity> ALCHEMY_FURNACE = register("alchemy_furnace", AlchemyFurnaceBlockEntity::new,
 		TVBlocks.ALCHEMICAL_FURNACE);
 	public static final BlockEntityType<AlembicBlockEntity> ALEMBIC = register("alembic", AlembicBlockEntity::new, TVBlocks.ARCANE_ALEMBIC);
@@ -69,6 +71,22 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.WandPedestalBlockEntity::new, TVBlocks.WAND_RECHARGE_PEDESTAL);
 	public static final BlockEntityType<dev.thaumvibe.tiles.FocalManipulatorBlockEntity> FOCAL_MANIPULATOR = register("focal_manipulator",
 		dev.thaumvibe.tiles.FocalManipulatorBlockEntity::new, TVBlocks.FOCAL_MANIPULATOR);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneLampBlockEntity> ARCANE_LAMP = register("arcane_lamp",
+		dev.thaumvibe.tiles.ArcaneLampBlockEntity::new, TVBlocks.ARCANE_LAMP);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneLampGrowthBlockEntity> LAMP_OF_GROWTH = register("lamp_of_growth",
+		dev.thaumvibe.tiles.ArcaneLampGrowthBlockEntity::new, TVBlocks.LAMP_OF_GROWTH);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneLampFertilityBlockEntity> LAMP_OF_FERTILITY = register("lamp_of_fertility",
+		dev.thaumvibe.tiles.ArcaneLampFertilityBlockEntity::new, TVBlocks.LAMP_OF_FERTILITY);
+	public static final BlockEntityType<dev.thaumvibe.tiles.OwnedBlockEntity> OWNED = register("owned",
+		dev.thaumvibe.tiles.OwnedBlockEntity::new, TVBlocks.ARCANE_DOOR, TVBlocks.WARDED_GLASS);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcanePressurePlateBlockEntity> ARCANE_PRESSURE_PLATE = register("arcane_pressure_plate",
+		dev.thaumvibe.tiles.ArcanePressurePlateBlockEntity::new, TVBlocks.ARCANE_PRESSURE_PLATE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneEarBlockEntity> ARCANE_EAR = register("arcane_ear",
+		dev.thaumvibe.tiles.ArcaneEarBlockEntity::new, TVBlocks.ARCANE_EAR);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR = register("arcane_levitator",
+		dev.thaumvibe.tiles.ArcaneLevitatorBlockEntity::new, TVBlocks.ARCANE_LEVITATOR);
+	public static final BlockEntityType<dev.thaumvibe.tiles.WardingStoneBlockEntity> WARDING_STONE = register("warding_stone",
+		dev.thaumvibe.tiles.WardingStoneBlockEntity::new, TVBlocks.PAVING_STONE_OF_WARDING);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));
