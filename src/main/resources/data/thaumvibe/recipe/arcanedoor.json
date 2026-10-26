@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "WARDEDARCANA",
+  "aspects": {
+    "aqua": 20,
+    "ordo": 10,
+    "terra": 10,
+    "ignis": 5
+  },
+  "pattern": [
+    "TDT",
+    "DBD",
+    "TDT"
+  ],
+  "key": {
+    "T": "thaumvibe:thaumium_ingot",
+    "D": "thaumvibe:greatwood_planks",
+    "B": "thaumvibe:zombie_brain"
+  },
+  "result": {
+    "id": "thaumvibe:arcane_door"
+  }
+}

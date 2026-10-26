@@ -1,0 +1,24 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "WARDEDARCANA",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 10,
+    "terra": 5,
+    "ignis": 5
+  },
+  "pattern": [
+    "GGG",
+    "WBW",
+    "GGG"
+  ],
+  "key": {
+    "G": "minecraft:glass",
+    "B": "thaumvibe:zombie_brain",
+    "W": "thaumvibe:greatwood_planks"
+  },
+  "result": {
+    "id": "thaumvibe:warded_glass",
+    "count": 8
+  }
+}
