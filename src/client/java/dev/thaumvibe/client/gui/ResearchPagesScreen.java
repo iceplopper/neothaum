@@ -219,6 +219,7 @@ public class ResearchPagesScreen extends Screen {
 		}
 		switch (p.type()) {
 			case TEXT, TEXT_CONCEALED -> drawTextPage(g, side, x, y - 10, Component.translatable(p.text()).getString());
+			case IMAGE -> drawImagePage(g, side, x, y - 8, p.image(), p.text());
 			case ASPECTS -> drawAspectPage(g, side, x - 8, y - 8, mx, my, p.aspects());
 			case COMPOUND_CRAFTING -> drawCompoundPage(g, side, x - 4, y - 8, mx, my, p.compound());
 			case SMELTING -> {
@@ -315,6 +316,22 @@ public class ResearchPagesScreen extends Screen {
 		return out;
 	}
 
+
+	private void drawImagePage(GuiGraphicsExtractor g, int side, int x, int y, Identifier image, String caption) {
+		if (image == null) {
+			return;
+		}
+		int px = x - 15 + side * 152;
+		int width = 139;
+		int imgW = 128;
+		int imgH = 128;
+		int imgX = px + (width - imgW) / 2;
+		g.blit(RenderPipelines.GUI_TEXTURED, image, imgX, y, 0.0F, 0.0F, imgW, imgH, imgW, imgH);
+		if (caption != null && !caption.isEmpty()) {
+			y += imgH + 4;
+			drawTextPage(g, side, x, y, Component.translatable(caption).getString());
+		}
+	}
 	/** TCFontRenderer.drawSplitString with <BR>, <LINE> and <IMG> support. */
 	private void drawTextPage(GuiGraphicsExtractor g, int side, int x, int y, String text) {
 		int px = x - 15 + side * 152;

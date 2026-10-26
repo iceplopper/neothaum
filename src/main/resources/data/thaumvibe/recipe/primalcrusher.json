@@ -1,0 +1,26 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "PRIMALCRUSHER",
+  "instability": 6,
+  "aspects": {
+    "perfodio": 24,
+    "instrumentum": 24,
+    "perditio": 16,
+    "vacuos": 16,
+    "telum": 16,
+    "alienis": 16,
+    "lucrum": 16
+  },
+  "central": "thaumvibe:primal_charm",
+  "components": [
+    "thaumvibe:primal_charm",
+    "thaumvibe:void_pickaxe",
+    "thaumvibe:void_shovel",
+    "thaumvibe:primal_charm",
+    "thaumvibe:elemental_pickaxe",
+    "thaumvibe:elemental_shovel"
+  ],
+  "result": {
+    "id": "thaumvibe:primal_crusher"
+  }
+}

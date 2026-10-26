@@ -1,0 +1,19 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "SANITYCHECK",
+  "instability": 4,
+  "aspects": {
+    "cognitio": 24,
+    "sensus": 24,
+    "alienis": 8
+  },
+  "central": "thaumvibe:thaumometer",
+  "components": [
+    "thaumvibe:mirrored_glass",
+    "thaumvibe:zombie_brain",
+    "minecraft:diamond"
+  ],
+  "result": {
+    "id": "thaumvibe:sanity_checker"
+  }
+}
