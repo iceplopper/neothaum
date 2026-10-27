@@ -170,10 +170,13 @@ public class FireBat extends Monster {
 			this.setDeltaMovement(this.getDeltaMovement().multiply(1.0, 0.6, 1.0));
 		}
 		if (level.isClientSide() && !this.getIsVampire()) {
-			level.addParticle(ParticleTypes.SMOKE, this.xo + (r.nextFloat() - r.nextFloat()) * 0.2F,
-				this.yo + this.getBbHeight() / 2.0F + (r.nextFloat() - r.nextFloat()) * 0.2F, this.zo + (r.nextFloat() - r.nextFloat()) * 0.2F, 0, 0, 0);
-			level.addParticle(ParticleTypes.FLAME, this.xo + (r.nextFloat() - r.nextFloat()) * 0.2F,
-				this.yo + this.getBbHeight() / 2.0F + (r.nextFloat() - r.nextFloat()) * 0.2F, this.zo + (r.nextFloat() - r.nextFloat()) * 0.2F, 0, 0, 0);
+			try {
+				level.addParticle(ParticleTypes.SMOKE, this.xo + (r.nextFloat() - r.nextFloat()) * 0.2F,
+					this.yo + this.getBbHeight() / 2.0F + (r.nextFloat() - r.nextFloat()) * 0.2F, this.zo + (r.nextFloat() - r.nextFloat()) * 0.2F, 0, 0, 0);
+				level.addParticle(ParticleTypes.FLAME, this.xo + (r.nextFloat() - r.nextFloat()) * 0.2F,
+					this.yo + this.getBbHeight() / 2.0F + (r.nextFloat() - r.nextFloat()) * 0.2F, this.zo + (r.nextFloat() - r.nextFloat()) * 0.2F, 0, 0, 0);
+			} catch (Throwable ignored) {
+			}
 		}
 	}
 

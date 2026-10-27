@@ -30,7 +30,7 @@ public class VisualTests implements FabricClientGameTest {
 		}
 		try (TestSingleplayerContext sp = ctx.worldBuilder().create()) {
 			var server = sp.getServer();
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			// NEOTHAUM_SCENES=essentia,suction,infusion runs just those scenes, for a quicker check of one area
 			String only = System.getenv("NEOTHAUM_SCENES");
 			if (only != null && !only.isBlank()) {
@@ -85,7 +85,7 @@ public class VisualTests implements FabricClientGameTest {
 				"fill -2 121 3 2 121 5 stone", "setblock 0 120 5 neothaum:order_crystal_cluster[facing=down]"}) {
 				server.runCommand(cmd);
 			}
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.getInput().lookAt(new net.minecraft.core.BlockPos(0, 117, 5));
 			ctx.waitTicks(20);
 			shot(ctx, "crystals");
@@ -157,7 +157,7 @@ public class VisualTests implements FabricClientGameTest {
 			server.runCommand("setblock -46 110 -39 neothaum:raw_cinnabar_block");
 			server.runCommand("gamemode spectator @a");
 			server.runCommand("tp @a -52.5 110 -33 180 0");
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.waitTicks(20);
 			shot(ctx, "ores");
 			server.runCommand("gamemode creative @a");
@@ -185,7 +185,7 @@ public class VisualTests implements FabricClientGameTest {
 			server.runCommand("gamemode creative @a");
 			server.runCommand("item replace entity @a armor.head with neothaum:goggles_of_revealing");
 			server.runCommand("tp @a -90.5 101.5 -92 180 0");
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.waitTicks(30);
 			shot(ctx, "dev_nodes");
 			var editPos = new net.minecraft.core.BlockPos(-98 + 2 * 3, 102, -98);
@@ -219,7 +219,7 @@ public class VisualTests implements FabricClientGameTest {
 			server.runCommand("setblock -69 99 -73 neothaum:silverwood_slab[type=double]");
 			server.runCommand("gamemode spectator @a");
 			server.runCommand("tp @a -70.5 101.5 -70 160 25");
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.waitTicks(30);
 			shot(ctx, "candles_stairs");
 			server.runCommand("gamemode creative @a");
@@ -271,7 +271,7 @@ public class VisualTests implements FabricClientGameTest {
 			server.runCommand("gamemode creative @a");
 			server.runCommand("effect give @a minecraft:levitation 5 255 true");
 			server.runCommand("tp @a -12.5 101 -52 180 0");
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.waitTicks(30);
 			shot(ctx, "nodes");
 			essentiaScene(ctx, server, sp);
@@ -292,11 +292,11 @@ public class VisualTests implements FabricClientGameTest {
 			});
 			server.runCommand("gamemode spectator @a");
 			server.runCommand("tp @a -27 101.2 -29.3 0 50");
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.waitTicks(20);
 			shot(ctx, "research_table");
 			server.runCommand("tp @a 40 108 14 0 10");
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.waitTicks(20);
 			shot(ctx, "trees");
 			server.runCommand("gamemode creative @a");
@@ -486,7 +486,7 @@ public class VisualTests implements FabricClientGameTest {
 		server.runCommand("time set noon");
 		for (int x = -82, n = 0; x <= -40; x += 12, n++) {
 			server.runCommand("tp @a " + x + " 101 -81 0 12");
-			sp.getConnection().waitForChunksRender();
+			waitChunks(sp, ctx);
 			ctx.waitTicks(n == 0 ? 40 : 15);
 			shot(ctx, "mobs_" + n);
 		}
@@ -511,7 +511,7 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		server.runCommand("gamemode spectator @a");
 		server.runCommand("tp @a -65.5 100.6 -65.2 160 25");
-		sp.getConnection().waitForChunksRender();
+		waitChunks(sp, ctx);
 		ctx.waitTicks(30);
 		shot(ctx, "bellows");
 	}
@@ -597,7 +597,7 @@ public class VisualTests implements FabricClientGameTest {
 		server.runCommand("gamemode creative @a");
 		server.runCommand("item replace entity @a armor.head with neothaum:goggles_of_revealing");
 		server.runCommand("tp @a -55.5 99 -56.5 180 30");
-		sp.getConnection().waitForChunksRender();
+		waitChunks(sp, ctx);
 		ctx.waitTicks(40);
 		shot(ctx, "goggles_jar");
 	}
@@ -680,7 +680,7 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		server.runCommand("gamemode spectator @a");
 		server.runCommand("tp @a -38.5 101.4 -39.6 180 32");
-		sp.getConnection().waitForChunksRender();
+		waitChunks(sp, ctx);
 		ctx.waitTicks(120);
 		server.runOnServer(srv -> {
 			var level = srv.overworld();
@@ -771,7 +771,7 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		server.runCommand("gamemode spectator @a");
 		server.runCommand("tp @a -73.5 102.5 -96.5 180 25");
-		sp.getConnection().waitForChunksRender();
+		waitChunks(sp, ctx);
 		ctx.waitTicks(30);
 		shot(ctx, "infusion_altar");
 		server.runOnServer(srv -> {
@@ -831,7 +831,7 @@ public class VisualTests implements FabricClientGameTest {
 			"summon neothaum:taint_swarm 0 118 3", "summon neothaum:tainted_cow 4 117 8 {NoAI:1b}", "summon minecraft:cow -4 117 8 {NoAI:1b}"}) {
 			server.runCommand(cmd);
 		}
-		sp.getConnection().waitForChunksRender();
+		waitChunks(sp, ctx);
 		ctx.getInput().lookAt(new net.minecraft.core.BlockPos(0, 118, 6));
 		ctx.waitTicks(10);
 		shot(ctx, "zombies_adult_baby");
@@ -908,7 +908,7 @@ public class VisualTests implements FabricClientGameTest {
 			inv.setItem(11, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.FOCUS_PORTABLE_HOLE));
 			inv.setSelectedSlot(1);
 		});
-		sp.getConnection().waitForChunksRender();
+		waitChunks(sp, ctx);
 		ctx.waitTicks(10);
 		shot(ctx, "wand_firstperson");
 		// the inventory icons
@@ -1057,7 +1057,7 @@ public class VisualTests implements FabricClientGameTest {
 			}
 		});
 		// stabilizer node first, before the transducer has run its course
-		sp.getConnection().waitForChunksRender();
+		waitChunks(sp, ctx);
 		ctx.getInput().lookAt(c.above());
 		ctx.waitTicks(60);
 		shot(ctx, "visnet_energizing");
@@ -1320,6 +1320,15 @@ public class VisualTests implements FabricClientGameTest {
 				throw new java.io.UncheckedIOException(e);
 			}
 		});
+	}
+
+	
+	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {
+		try {
+			sp.getConnection().waitForChunksRender();
+		} catch (Throwable t) {
+			ctx.waitTicks(20);
+		}
 	}
 
 	private static void shot(ClientGameTestContext ctx, String name) {

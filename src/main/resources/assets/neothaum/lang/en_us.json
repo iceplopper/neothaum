@@ -2114,5 +2114,9 @@
   "advancements.neothaum.warp.description": "Feel the chilling grasp of eldritch knowledge on your mortal mind",
   "advancements.neothaum.eldritch.title": "The Outer Lands",
   "advancements.neothaum.eldritch.description": "Gaze into the Void and discover the ancient secrets of the Eldritch Eye",
-  "recipe.type.aspect_decomp": "Aspect Combination"
+  "recipe.type.aspect_decomp": "Aspect Combination",
+  "config.jade.plugin_neothaum.crucible": "Crucible",
+  "config.jade.plugin_neothaum.jar": "Essentia Jar",
+  "config.jade.plugin_neothaum.aura_node": "Aura Node",
+  "config.jade.plugin_neothaum.runic_matrix": "Runic Matrix"
 }

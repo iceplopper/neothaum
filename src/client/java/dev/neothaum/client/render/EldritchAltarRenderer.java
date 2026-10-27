@@ -28,7 +28,7 @@ public class EldritchAltarRenderer implements BlockEntityRenderer<EldritchAltarB
 	}
 
 	private final ItemModelResolver itemModelResolver;
-	private final ItemStack eyeStack = new ItemStack(TVItems.ELDRITCH_EYE);
+	private ItemStack eyeStack;
 
 	public EldritchAltarRenderer(BlockEntityRendererProvider.Context ctx) {
 		this.itemModelResolver = ctx.itemModelResolver();
@@ -44,6 +44,7 @@ public class EldritchAltarRenderer implements BlockEntityRenderer<EldritchAltarB
 		BlockEntityRenderer.super.extractRenderState(altar, s, pt, cam, crumbling);
 		s.eyes = altar.getEyes();
 		if (s.eyes > 0) {
+			if (this.eyeStack == null) this.eyeStack = new ItemStack(TVItems.ELDRITCH_EYE);
 			this.itemModelResolver.updateForTopItem(s.eyeItem, this.eyeStack, ItemDisplayContext.GROUND, altar.getLevel(), null, 0);
 		} else {
 			s.eyeItem.clear();
