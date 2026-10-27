@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "thaumvibe:primal_arrow_air",
+    "thaumvibe:primal_arrow_fire",
+    "thaumvibe:primal_arrow_water",
+    "thaumvibe:primal_arrow_earth",
+    "thaumvibe:primal_arrow_order",
+    "thaumvibe:primal_arrow_entropy"
+  ]
+}

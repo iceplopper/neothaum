@@ -78,6 +78,8 @@ public final class TVEntities {
 		dev.thaumvibe.entity.projectile.ShockOrb::new);
 	public static final EntityType<dev.thaumvibe.entity.projectile.PrimalOrb> PRIMAL_ORB = projectile("primal_orb",
 		dev.thaumvibe.entity.projectile.PrimalOrb::new);
+	public static final EntityType<dev.thaumvibe.entity.projectile.PrimalArrowEntity> PRIMAL_ARROW = projectile("primal_arrow",
+		dev.thaumvibe.entity.projectile.PrimalArrowEntity::new);
 	public static final EntityType<dev.thaumvibe.entity.projectile.BottleTaint> BOTTLE_TAINT = projectile("bottle_taint",
 		dev.thaumvibe.entity.projectile.BottleTaint::new);
 	public static final EntityType<ThaumicSlime> THAUMIC_SLIME = mob("thaumic_slime", ThaumicSlime::new, MobCategory.MONSTER, 0.5F, 0.5F,

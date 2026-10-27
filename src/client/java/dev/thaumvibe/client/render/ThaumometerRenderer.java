@@ -113,6 +113,21 @@ public final class ThaumometerRenderer {
 					ps.popPose();
 				}
 				name = Component.translatable("block.thaumvibe.aura_node");
+			} else if (mc.level.getBlockEntity(pos) instanceof dev.thaumvibe.tiles.JarNodeBlockEntity jarNode) {
+				ScanManager.ScanResult sr = ScanManager.ScanResult.node(pos);
+				if (ScanManager.hasBeenScanned(player, sr)) {
+					aspects = jarNode.getAspects();
+					String t = Component.translatable("nodetype." + jarNode.getNodeType().name() + ".name").getString();
+					if (jarNode.getNodeModifier() != null) {
+						t = t + ", " + Component.translatable("nodemod." + jarNode.getNodeModifier().name() + ".name").getString();
+					}
+					ps.pushPose();
+					ps.translate(0.0F, 0.0F, -0.01F);
+					ps.scale(0.004F, 0.004F, 0.004F);
+					text(ps, collector, font, Component.literal(t), -font.width(t) / 2.0F, -40.0F, 0xFFEEAE16);
+					ps.popPose();
+				}
+				name = Component.translatable("block.thaumvibe.node_in_a_jar");
 			} else {
 				var block = mc.level.getBlockState(pos).getBlock();
 				var item = mc.level.getBlockState(pos).getCloneItemStack(mc.level, pos, false).getItem();

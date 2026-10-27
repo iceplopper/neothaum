@@ -1,0 +1,26 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "thaumvibe:void_robe",
+        "dyeable": {
+          "color_when_undyed": 6961280
+        }
+      },
+      {
+        "texture": "thaumvibe:void_robe_overlay"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "thaumvibe:void_robe",
+        "dyeable": {
+          "color_when_undyed": 6961280
+        }
+      },
+      {
+        "texture": "thaumvibe:void_robe_overlay"
+      }
+    ]
+  }
+}

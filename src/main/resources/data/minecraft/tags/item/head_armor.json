@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumium_helmet"
+    "thaumvibe:thaumium_helmet",
+    "thaumvibe:thaumium_fortress_helm",
+    "thaumvibe:void_robe_helm",
+    "thaumvibe:cultist_robe_helm",
+    "thaumvibe:cultist_plate_helm",
+    "thaumvibe:cultist_leader_helm"
   ]
 }

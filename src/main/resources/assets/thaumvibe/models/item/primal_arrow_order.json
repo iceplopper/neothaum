@@ -1,0 +1,6 @@
+﻿{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "thaumvibe:items/el_arrow_order"
+  }
+}

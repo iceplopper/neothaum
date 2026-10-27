@@ -3095,7 +3095,7 @@
       "row": 0,
       "complexity": 2,
       "icon": {
-        "item": "thaumvibe:air_arrow"
+        "item": "thaumvibe:primal_arrow_air"
       },
       "pages": [
         {
@@ -3104,7 +3104,14 @@
         },
         {
           "type": "recipe",
-          "recipes": []
+          "recipes": [
+            "thaumvibe:primal_arrow_air",
+            "thaumvibe:primal_arrow_fire",
+            "thaumvibe:primal_arrow_water",
+            "thaumvibe:primal_arrow_earth",
+            "thaumvibe:primal_arrow_order",
+            "thaumvibe:primal_arrow_entropy"
+          ]
         },
         {
           "type": "text",
@@ -8121,7 +8128,7 @@
       "row": -3,
       "complexity": 3,
       "icon": {
-        "item": "thaumvibe:void_thaumaturge_hood"
+        "item": "thaumvibe:void_robe_helm"
       },
       "pages": [
         {

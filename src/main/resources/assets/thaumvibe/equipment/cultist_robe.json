@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "thaumvibe:cultist_robe"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "thaumvibe:cultist_robe"
+      }
+    ]
+  }
+}

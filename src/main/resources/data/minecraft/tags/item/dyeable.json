@@ -3,6 +3,9 @@
   "values": [
     "thaumvibe:thaumaturges_robe",
     "thaumvibe:thaumaturges_leggings",
-    "thaumvibe:thaumaturges_boots"
+    "thaumvibe:thaumaturges_boots",
+    "thaumvibe:void_robe_helm",
+    "thaumvibe:void_robe_chest",
+    "thaumvibe:void_robe_legs"
   ]
 }

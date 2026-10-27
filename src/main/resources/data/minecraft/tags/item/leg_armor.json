@@ -2,6 +2,11 @@
   "replace": false,
   "values": [
     "thaumvibe:thaumium_leggings",
-    "thaumvibe:thaumaturges_leggings"
+    "thaumvibe:thaumaturges_leggings",
+    "thaumvibe:thaumium_fortress_thigh_guards",
+    "thaumvibe:void_robe_legs",
+    "thaumvibe:cultist_robe_legs",
+    "thaumvibe:cultist_plate_legs",
+    "thaumvibe:cultist_leader_legs"
   ]
 }

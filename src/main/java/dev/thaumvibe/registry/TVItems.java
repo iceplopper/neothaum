@@ -301,6 +301,56 @@ public final class TVItems {
 	public static final Item THAUMIUM_FORTRESS_THIGH_GUARDS = register("thaumium_fortress_thigh_guards", p -> new FortressArmorItem(EquipmentSlot.LEGS, p),
 		new Item.Properties().humanoidArmor(FORTRESS_ARMOR, ArmorType.LEGGINGS).rarity(Rarity.RARE));
 
+	public static final ArmorMaterial VOID_ROBE_ARMOR = armor(18, 3, 7, 6, 3, SoundEvents.ARMOR_EQUIP_IRON, VOID_INGOTS, "void_robe");
+	public static final Item VOID_ROBE_HELM = register("void_robe_helm", p -> new dev.thaumvibe.items.equipment.VoidRobeArmorItem(EquipmentSlot.HEAD, p),
+		new Item.Properties().humanoidArmor(VOID_ROBE_ARMOR, ArmorType.HELMET).rarity(Rarity.EPIC)
+			.component(DataComponents.DYED_COLOR, new DyedItemColor(dev.thaumvibe.items.equipment.VoidRobeArmorItem.DEFAULT_COLOR)));
+	public static final Item VOID_ROBE_CHEST = register("void_robe_chest", p -> new dev.thaumvibe.items.equipment.VoidRobeArmorItem(EquipmentSlot.CHEST, p),
+		new Item.Properties().humanoidArmor(VOID_ROBE_ARMOR, ArmorType.CHESTPLATE).rarity(Rarity.EPIC)
+			.component(DataComponents.DYED_COLOR, new DyedItemColor(dev.thaumvibe.items.equipment.VoidRobeArmorItem.DEFAULT_COLOR)));
+	public static final Item VOID_ROBE_LEGS = register("void_robe_legs", p -> new dev.thaumvibe.items.equipment.VoidRobeArmorItem(EquipmentSlot.LEGS, p),
+		new Item.Properties().humanoidArmor(VOID_ROBE_ARMOR, ArmorType.LEGGINGS).rarity(Rarity.EPIC)
+			.component(DataComponents.DYED_COLOR, new DyedItemColor(dev.thaumvibe.items.equipment.VoidRobeArmorItem.DEFAULT_COLOR)));
+
+	public static final ArmorMaterial CULTIST_ROBE_ARMOR = armor(15, 2, 6, 5, 2, SoundEvents.ARMOR_EQUIP_LEATHER, net.minecraft.tags.ItemTags.REPAIRS_IRON_ARMOR, "cultist_robe");
+	public static final Item CULTIST_ROBE_HELM = register("cultist_robe_helm", p -> new dev.thaumvibe.items.equipment.CultistRobeArmorItem(EquipmentSlot.HEAD, p),
+		new Item.Properties().humanoidArmor(CULTIST_ROBE_ARMOR, ArmorType.HELMET).rarity(Rarity.UNCOMMON));
+	public static final Item CULTIST_ROBE_CHEST = register("cultist_robe_chest", p -> new dev.thaumvibe.items.equipment.CultistRobeArmorItem(EquipmentSlot.CHEST, p),
+		new Item.Properties().humanoidArmor(CULTIST_ROBE_ARMOR, ArmorType.CHESTPLATE).rarity(Rarity.UNCOMMON));
+	public static final Item CULTIST_ROBE_LEGS = register("cultist_robe_legs", p -> new dev.thaumvibe.items.equipment.CultistRobeArmorItem(EquipmentSlot.LEGS, p),
+		new Item.Properties().humanoidArmor(CULTIST_ROBE_ARMOR, ArmorType.LEGGINGS).rarity(Rarity.UNCOMMON));
+
+	public static final ArmorMaterial CULTIST_BOOTS_ARMOR = armor(15, 2, 6, 5, 2, SoundEvents.ARMOR_EQUIP_IRON, net.minecraft.tags.ItemTags.REPAIRS_IRON_ARMOR, "cultist_boots");
+	public static final Item CULTIST_BOOTS = register("cultist_boots", dev.thaumvibe.items.equipment.CultistBootsItem::new,
+		new Item.Properties().humanoidArmor(CULTIST_BOOTS_ARMOR, ArmorType.BOOTS).rarity(Rarity.UNCOMMON));
+
+	public static final ArmorMaterial CULTIST_PLATE_ARMOR = armor(15, 2, 6, 5, 2, SoundEvents.ARMOR_EQUIP_IRON, net.minecraft.tags.ItemTags.REPAIRS_IRON_ARMOR, "cultist_plate");
+	public static final Item CULTIST_PLATE_HELM = register("cultist_plate_helm", p -> new dev.thaumvibe.items.equipment.CultistPlateArmorItem(EquipmentSlot.HEAD, p),
+		new Item.Properties().humanoidArmor(CULTIST_PLATE_ARMOR, ArmorType.HELMET).rarity(Rarity.UNCOMMON));
+	public static final Item CULTIST_PLATE_CHEST = register("cultist_plate_chest", p -> new dev.thaumvibe.items.equipment.CultistPlateArmorItem(EquipmentSlot.CHEST, p),
+		new Item.Properties().humanoidArmor(CULTIST_PLATE_ARMOR, ArmorType.CHESTPLATE).rarity(Rarity.UNCOMMON));
+	public static final Item CULTIST_PLATE_LEGS = register("cultist_plate_legs", p -> new dev.thaumvibe.items.equipment.CultistPlateArmorItem(EquipmentSlot.LEGS, p),
+		new Item.Properties().humanoidArmor(CULTIST_PLATE_ARMOR, ArmorType.LEGGINGS).rarity(Rarity.UNCOMMON));
+
+	public static final ArmorMaterial CULTIST_LEADER_ARMOR = armor(40, 3, 7, 6, 3, SoundEvents.ARMOR_EQUIP_IRON, net.minecraft.tags.ItemTags.REPAIRS_IRON_ARMOR, "cultist_leader");
+	public static final Item CULTIST_LEADER_HELM = register("cultist_leader_helm", p -> new dev.thaumvibe.items.equipment.CultistLeaderArmorItem(EquipmentSlot.HEAD, p),
+		new Item.Properties().humanoidArmor(CULTIST_LEADER_ARMOR, ArmorType.HELMET).rarity(Rarity.RARE));
+	public static final Item CULTIST_LEADER_CHEST = register("cultist_leader_chest", p -> new dev.thaumvibe.items.equipment.CultistLeaderArmorItem(EquipmentSlot.CHEST, p),
+		new Item.Properties().humanoidArmor(CULTIST_LEADER_ARMOR, ArmorType.CHESTPLATE).rarity(Rarity.RARE));
+	public static final Item CULTIST_LEADER_LEGS = register("cultist_leader_legs", p -> new dev.thaumvibe.items.equipment.CultistLeaderArmorItem(EquipmentSlot.LEGS, p),
+		new Item.Properties().humanoidArmor(CULTIST_LEADER_ARMOR, ArmorType.LEGGINGS).rarity(Rarity.RARE));
+
+	public static final ToolMaterial CRIMSON_TOOL = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 200, 8.0F, 3.5F, 20, VOID_INGOTS);
+	public static final Item CRIMSON_BLADE = register("crimson_blade", dev.thaumvibe.items.equipment.CrimsonSwordItem::new,
+		new Item.Properties().sword(CRIMSON_TOOL, 3.5F, -2.4F).rarity(Rarity.RARE));
+
+	public static final Item PRIMAL_ARROW_AIR = register("primal_arrow_air", p -> new dev.thaumvibe.items.equipment.PrimalArrowItem(0, p), new Item.Properties());
+	public static final Item PRIMAL_ARROW_FIRE = register("primal_arrow_fire", p -> new dev.thaumvibe.items.equipment.PrimalArrowItem(1, p), new Item.Properties());
+	public static final Item PRIMAL_ARROW_WATER = register("primal_arrow_water", p -> new dev.thaumvibe.items.equipment.PrimalArrowItem(2, p), new Item.Properties());
+	public static final Item PRIMAL_ARROW_EARTH = register("primal_arrow_earth", p -> new dev.thaumvibe.items.equipment.PrimalArrowItem(3, p), new Item.Properties());
+	public static final Item PRIMAL_ARROW_ORDER = register("primal_arrow_order", p -> new dev.thaumvibe.items.equipment.PrimalArrowItem(4, p), new Item.Properties());
+	public static final Item PRIMAL_ARROW_ENTROPY = register("primal_arrow_entropy", p -> new dev.thaumvibe.items.equipment.PrimalArrowItem(5, p), new Item.Properties());
+
 	// ItemNuggetEdible (1, 0.3) and ItemTripleMeatTreat (6, 0.8, always edible, 66% chance of 5 s of regeneration)
 	public static final Item CHICKEN_NUGGET = food("chicken_nugget");
 	public static final Item BEEF_NUGGET = food("beef_nugget");

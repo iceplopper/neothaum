@@ -2,6 +2,11 @@
   "replace": false,
   "values": [
     "thaumvibe:thaumium_chestplate",
-    "thaumvibe:thaumaturges_robe"
+    "thaumvibe:thaumaturges_robe",
+    "thaumvibe:thaumium_fortress_cuirass",
+    "thaumvibe:void_robe_chest",
+    "thaumvibe:cultist_robe_chest",
+    "thaumvibe:cultist_plate_chest",
+    "thaumvibe:cultist_leader_chest"
   ]
 }

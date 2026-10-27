@@ -1,0 +1,26 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ARMORVOIDFORTRESS",
+  "instability": 6,
+  "aspects": {
+    "metallum": 16,
+    "sensus": 16,
+    "tutamen": 16,
+    "pannus": 16,
+    "praecantatio": 16,
+    "alienis": 16,
+    "vacuos": 16
+  },
+  "central": "thaumvibe:void_helm",
+  "components": [
+    "thaumvibe:goggles_of_revealing",
+    "thaumvibe:enchanted_fabric",
+    "thaumvibe:enchanted_fabric",
+    "thaumvibe:salis_mundus",
+    "thaumvibe:enchanted_fabric",
+    "thaumvibe:enchanted_fabric"
+  ],
+  "result": {
+    "id": "thaumvibe:void_robe_helm"
+  }
+}

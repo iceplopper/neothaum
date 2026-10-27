@@ -56,6 +56,14 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Thaumium Fortress Armor:** helm, cuirass, and thigh guards with heavy physical protection (40 durability, [3,7,6,3] defense), 25 enchantability, up to 25% cumulative damage reduction, Revealer Goggles upgrade attachment, and three mystical masks: Grinning Devil, Angry Ghost (withering retaliation on hit), and Sipping Fiend (lifesteal on melee strikes); infusion recipes.
   - **Thaumostatic Harness:** flight harness (`thaumostatic_harness`) fueled by Potentia essentia from an inserted warded jar via dedicated single-slot GUI (`HoverHarnessMenu`), 'H' keybind toggle with activation sounds (`hhon`/`hhoff`) and ambient buzzing (`jacobs`), flight speed scaling with Haste enchantment and the Thaumostatic Girdle, and infusion recipe (`hoverharness.json`).
   - **Void metal:** void tools (sword, shovel, pickaxe, axe, hoe) and void armour (helm, chestplate, leggings, boots) with warp, self-repair, and weakening strikes.
+  - **Void Fortress Robes:** Void Thaumaturge Hood, Robe, and Leggings (`VoidRobeArmorItem`). Infusion upgrades from Void metal armor, 5% vis discount per piece, 2 warp per piece, continuous self-repair (1 hp / 20 ticks), dyeable with cauldron wash support, built-in Goggles of Revealing on hood, runic shielding augmentable.
+  - **Cultist Equipment:** Complete Crimson Cult gear line:
+    - **Cultist Robes:** Hood, Robe, and Leggings (`CultistRobeArmorItem`) with 1% vis discount and 1 warp per piece.
+    - **Cultist Boots:** Heavy iron boots (`CultistBootsItem`) with 1% vis discount and 1 warp.
+    - **Cultist Plate:** Knight's plate armor helm, chestplate, and greaves (`CultistPlateArmorItem`) with iron defense and runic shielding support.
+    - **Cultist Leader Armor:** Praetor's plate armor helm, chestplate, and greaves (`CultistLeaderArmorItem`) with thaumium fortress defense (40 durability factor, [3,7,6,3] protection) and runic shielding support.
+  - **Crimson Blade:** Jagged eldritch void sword (`CrimsonSwordItem`), 3.5 bonus attack damage, self-repairing, inflicts Weakness (3s) and Hunger (6s) on strike, warp 2, and "Greater Sapping" lore tooltip.
+  - **Primal Arrows:** Six elemental arrows (`PrimalArrowItem` / `PrimalArrowEntity` / `PrimalArrowRenderer`): Air (armor piercing), Fire (5s burn), Water (Slowness IV), Earth (1.5x damage), Order (Weakness IV), and Entropy (Wither). Arcane shaped crafting with primal shards; aspect-colored flight particles.
   - **Boots of the Traveler:** step-height boost (+0.5), slow falling (-0.25/tick), runic augmentable, and client movement speed boost.
   - **Bow of Bone:** fast draw, auto-release at 18 ticks, and +0.5 base arrow damage bonus.
   - **Primal Crusher:** 3x3 plane excavation on pickaxe/shovel blocks, self-repair, and warp 2.
@@ -103,10 +111,7 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ## Still to do
 
-### Remaining Equipment and gear (M)
-- **Void fortress robes** (infusion upgrade).
-- **Weapons:** the crimson blade and primal arrows.
-- **Cultist gear:** cultist robes, plate and leader armour, and cultist boots.
+### Remaining Gear & Items (S)
 - **Throwables:** throwing alumentum.
 - **Small items:** the loot bag, the stone compass, and using knowledge fragments.
 
@@ -135,7 +140,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Ethereal bloom** (a taint-cleansing plant).
 
 ### Polish and integration (S to M)
-- **Node in a Jar aspect viewing:** show node aspects, node type, and node modifier in HUD overlay when looking at a placed jarred node in the world with Goggles of Revealing or Thaumometer (parity with wild nodes and jar item tooltip).
 - **Aspect orbs** dropped by mobs on death and by the primal charm.
 - **Lightning** from nodes to players (nodeBolt).
 - **The stone compass's** pull toward sinister nodes (TC4 records them from the node tick; nothing reads that yet).
