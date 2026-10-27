@@ -60,6 +60,7 @@ public class Thaumvibe implements ModInitializer {
 		dev.thaumvibe.items.BathSaltsItem.init();
 		dev.thaumvibe.warp.WarpEvents.init();
 		dev.thaumvibe.events.AspectOrbEvents.init();
+		dev.thaumvibe.entity.champion.ChampionEvents.init();
 		LOGGER.info("Thaumvibe 4 initialized: {} aspects", Aspect.aspects.size());
 	}
 }

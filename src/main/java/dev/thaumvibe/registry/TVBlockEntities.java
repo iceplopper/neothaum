@@ -133,6 +133,8 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.eldritch.EldritchObeliskBlockEntity::new, TVBlocks.ELDRITCH_OBELISK);
 	public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchPortalBlockEntity> ELDRITCH_PORTAL = register("eldritch_portal",
 		dev.thaumvibe.tiles.eldritch.EldritchPortalBlockEntity::new, TVBlocks.ELDRITCH_PORTAL);
+	public static final BlockEntityType<dev.thaumvibe.tiles.EtherealBloomBlockEntity> ETHEREAL_BLOOM = register("ethereal_bloom",
+		dev.thaumvibe.tiles.EtherealBloomBlockEntity::new, TVBlocks.ETHEREAL_BLOOM);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));

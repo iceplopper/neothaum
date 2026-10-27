@@ -115,6 +115,7 @@ public final class TVBlocks {
 	public static final Block SHIMMERLEAF = register("shimmerleaf", p -> new TCPlantBlock(TCPlantBlock.Kind.SHIMMERLEAF, p), plant().lightLevel(s -> 8), true);
 	public static final Block CINDERPEARL = register("cinderpearl", p -> new TCPlantBlock(TCPlantBlock.Kind.CINDERPEARL, p), plant().lightLevel(s -> 8), true);
 	public static final Block VISHROOM = register("vishroom", p -> new TCPlantBlock(TCPlantBlock.Kind.VISHROOM, p), plant().lightLevel(s -> 8), true);
+	public static final Block ETHEREAL_BLOOM = register("ethereal_bloom", dev.thaumvibe.blocks.EtherealBloomBlock::new, plant().lightLevel(s -> 12), true);
 
 	// ---- cosmetic ----
 	public static final Block AMBER_BLOCK = register("amber_block", Block::new,

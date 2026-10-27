@@ -1,0 +1,14 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "ETHEREALBLOOM",
+  "catalyst": "thaumvibe:shimmerleaf",
+  "aspects": {
+    "praecantatio": 16,
+    "herba": 16,
+    "sano": 16,
+    "vitium": 8
+  },
+  "result": {
+    "id": "thaumvibe:ethereal_bloom"
+  }
+}
