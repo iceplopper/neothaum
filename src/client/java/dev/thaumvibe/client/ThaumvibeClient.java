@@ -130,6 +130,8 @@ public class ThaumvibeClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.RESERVOIR, dev.thaumvibe.client.render.ReservoirRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.THAUMATORIUM, dev.thaumvibe.client.render.ThaumatoriumRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ADVANCED_ALCHEMY_FURNACE, dev.thaumvibe.client.render.AdvancedAlchemyFurnaceRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_BORE_BASE, dev.thaumvibe.client.render.ArcaneBoreBaseRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_BORE, dev.thaumvibe.client.render.ArcaneBoreRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.NODE, NodeRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR_NODE, dev.thaumvibe.client.render.JarNodeRenderer::new);
 		dev.thaumvibe.items.JarNodeItem.DISCOVERED = a -> {
@@ -186,6 +188,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		MenuScreens.register(TVMenus.THAUMATORIUM, dev.thaumvibe.client.gui.ThaumatoriumScreen::new);
 		MenuScreens.register(TVMenus.SPA, dev.thaumvibe.client.gui.SpaScreen::new);
 		MenuScreens.register(TVMenus.DECONSTRUCTION_TABLE, dev.thaumvibe.client.gui.DeconstructionTableScreen::new);
+		MenuScreens.register(TVMenus.ARCANE_BORE, dev.thaumvibe.client.gui.ArcaneBoreScreen::new);
 		HudElementRegistry.addLast(Thaumvibe.id("notifications"), Notifications::render);
 		HudElementRegistry.addLast(Thaumvibe.id("research_popup"), ResearchPopup::render);
 		HudElementRegistry.addLast(Thaumvibe.id("runic_shield"), dev.thaumvibe.client.hud.RunicShieldHud::render);

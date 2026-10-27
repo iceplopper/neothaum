@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "ARCANEBORE",
+  "aspects": {
+    "aer": 10,
+    "ordo": 10
+  },
+  "pattern": [
+    "WIW",
+    "IDI",
+    "WIW"
+  ],
+  "key": {
+    "W": "thaumvibe:greatwood_planks",
+    "I": "minecraft:iron_ingot",
+    "D": "minecraft:dispenser"
+  },
+  "result": {
+    "id": "thaumvibe:arcane_bore_base"
+  }
+}

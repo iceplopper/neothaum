@@ -85,6 +85,10 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Essentia Mirror:** 6-face mounting, paired linkage; implements `AspectSource`, remotely querying and draining essentia via `EssentiaHandler.drainEssentia` within an 8-block radius of the destination mirror across dimensions for Infusion Altar matrices and Crucible alchemy.
   - **Hand Mirror:** paired to a Magic Mirror; right-clicking in air opens 1-slot GUI (`HandMirrorMenu` / `HandMirrorScreen`) allowing items placed in the slot to be transported directly home to the linked Magic Mirror anywhere in the world.
   - Infusion recipes for Magic Mirror, Essentia Mirror, and Hand Mirror.
+  - **Arcane Bore & Base:**
+    - **Arcane Bore Base:** Turret mount oriented by wand or placement, with suction 128 pulling Perditio essentia through tube network, and ejection nozzle directing mined block drops into adjacent inventories (chests/hoppers) or dispensing forward into the world.
+    - **Arcane Bore:** Redstone-activated rotating drilling turret mounted above or below the base. Holds an Excavation Focus and Pickaxe tool (`ArcaneBoreMenu` / `ArcaneBoreScreen`). Casts an excavation ray with spiral dig pattern up to 64 blocks, harvesting dropped items, degrading tool durability based on block hardness, and applying tool enchantments (Fortune, Silk Touch, Efficiency, and Native Clusters). Wand right-click reorients yaw/pitch smoothly with animated turret rotation.
+    - Arcane shaped recipe for Arcane Bore Base and Infusion recipe for Arcane Bore.
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
@@ -95,7 +99,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)
-- **Big machines:** the arcane bore and its base.
 - **Misc:** the flux scrubber and banners (cultist and the Thaumcraft colours).
 
 ### Remaining Equipment and gear (M)

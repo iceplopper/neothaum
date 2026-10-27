@@ -299,6 +299,10 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.5F).sound(SoundType.METAL).noOcclusion(), false);
 	public static final Block DECONSTRUCTION_TABLE = register("deconstruction_table", dev.thaumvibe.blocks.DeconstructionTableBlock::new,
 		wood(2.5F).noOcclusion(), true);
+	public static final Block ARCANE_BORE_BASE = register("arcane_bore_base", dev.thaumvibe.blocks.ArcaneBoreBaseBlock::new,
+		wood(2.5F).noOcclusion(), true);
+	public static final Block ARCANE_BORE = register("arcane_bore", dev.thaumvibe.blocks.ArcaneBoreBlock::new,
+		wood(2.5F).noOcclusion(), true);
 
 	private static BlockBehaviour.Properties mirror() {
 		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()

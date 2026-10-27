@@ -113,6 +113,10 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.AdvancedAlchemyFurnaceBlockEntity::new, TVBlocks.ADVANCED_ALCHEMICAL_FURNACE);
 	public static final BlockEntityType<dev.thaumvibe.tiles.AdvancedAlchemyFurnaceNozzleBlockEntity> ADVANCED_ALCHEMY_FURNACE_NOZZLE = register("advanced_alchemy_furnace_nozzle",
 		dev.thaumvibe.tiles.AdvancedAlchemyFurnaceNozzleBlockEntity::new, TVBlocks.ADVANCED_ALCHEMICAL_FURNACE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneBoreBaseBlockEntity> ARCANE_BORE_BASE = register("arcane_bore_base",
+		dev.thaumvibe.tiles.ArcaneBoreBaseBlockEntity::new, TVBlocks.ARCANE_BORE_BASE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ArcaneBoreBlockEntity> ARCANE_BORE = register("arcane_bore",
+		dev.thaumvibe.tiles.ArcaneBoreBlockEntity::new, TVBlocks.ARCANE_BORE);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));

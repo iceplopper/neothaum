@@ -1958,5 +1958,10 @@
   "item.thaumvibe.primordial_pearl": "Primordial Pearl",
   "item.thaumvibe.crimson_rites": "Crimson Rites",
   "item.thaumvibe.eldritch_eye": "Eldritch Eye",
-  "item.thaumvibe.runed_tablet": "Runed Tablet"
+  "item.thaumvibe.runed_tablet": "Runed Tablet",
+  "block.thaumvibe.arcane_bore_base": "Arcane Bore Base",
+  "item.thaumvibe.arcane_bore_base": "Arcane Bore Base",
+  "block.thaumvibe.arcane_bore": "Arcane Bore",
+  "item.thaumvibe.arcane_bore": "Arcane Bore",
+  "gui.bore": "Arcane Bore"
 }
