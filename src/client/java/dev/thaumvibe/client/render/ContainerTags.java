@@ -40,6 +40,9 @@ public final class ContainerTags {
 
 	/** What the block at pos holds: IAspectContainers, jars, and (beyond TC4) tubes and the alchemical furnace. */
 	private static AspectList contents(BlockEntity be) {
+		if (be instanceof dev.thaumvibe.tiles.CrucibleBlockEntity crucible) {
+			return crucible.aspects;
+		}
 		if (be instanceof JarBlockEntity jar) {
 			return jar.getAspects();
 		}
@@ -67,7 +70,10 @@ public final class ContainerTags {
 			return;
 		}
 		ItemStack head = mc.player.getItemBySlot(EquipmentSlot.HEAD);
-		if (!(head.getItem() instanceof RevealerGear r) || !r.showNodes(head)) {
+		boolean hasGoggles = head.getItem() instanceof RevealerGear r && r.showNodes(head);
+		boolean hasThaumometer = mc.player.getMainHandItem().getItem() instanceof dev.thaumvibe.items.ThaumometerItem
+			|| mc.player.getOffhandItem().getItem() instanceof dev.thaumvibe.items.ThaumometerItem;
+		if (!hasGoggles && !hasThaumometer) {
 			return;
 		}
 		BlockPos pos = hit.getBlockPos();

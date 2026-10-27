@@ -28,7 +28,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 /** Port of thaumcraft.common.tiles.TileCrucible. Water is a plain 0-1000 mB counter. */
-public class CrucibleBlockEntity extends TVBlockEntity {
+public class CrucibleBlockEntity extends TVBlockEntity implements dev.thaumvibe.api.aspects.AspectContainer {
 	public static final int CAPACITY = 1000;
 	public short heat;
 	public AspectList aspects = new AspectList();
@@ -116,6 +116,16 @@ public class CrucibleBlockEntity extends TVBlockEntity {
 				}
 				this.markForUpdate();
 			}
+			if (this.water > 0 && this.heat > 150) {
+				net.minecraft.world.phys.AABB box = new net.minecraft.world.phys.AABB(this.worldPosition.getX(), this.worldPosition.getY() + 0.2, this.worldPosition.getZ(),
+					this.worldPosition.getX() + 1.0, this.worldPosition.getY() + 1.1, this.worldPosition.getZ() + 1.0);
+				java.util.List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, box, net.minecraft.world.entity.EntitySelector.ENTITY_STILL_ALIVE);
+				for (ItemEntity item : items) {
+					if (!isCrucibleOutput(item)) {
+						this.attemptSmelt(item);
+					}
+				}
+			}
 		} else if (this.water > 0) {
 			this.drawEffects();
 		}
@@ -187,11 +197,14 @@ public class CrucibleBlockEntity extends TVBlockEntity {
 		int highest = 0;
 		CrucibleRecipe out = null;
 		for (RecipeHolder<?> h : sl.getServer().getRecipeManager().getRecipes()) {
-			if (h.value() instanceof CrucibleRecipe r && player != null && ResearchManager.isResearchComplete(player, r.research()) && r.matches(this.aspects, lastDrop)) {
-				int result = r.aspects().size();
-				if (result > highest) {
-					highest = result;
-					out = r;
+			if (h.value() instanceof CrucibleRecipe r) {
+				boolean canCraft = player != null && (player.isCreative() || ResearchManager.isResearchComplete(player, r.research()));
+				if (canCraft && r.matches(this.aspects, lastDrop)) {
+					int result = r.aspects().size();
+					if (result > highest) {
+						highest = result;
+						out = r;
+					}
 				}
 			}
 		}
@@ -205,6 +218,9 @@ public class CrucibleBlockEntity extends TVBlockEntity {
 		Player p = null;
 		if (entity.getOwner() instanceof Player owner) {
 			p = owner;
+		}
+		if (p == null && this.level != null) {
+			p = this.level.getNearestPlayer(entity, 8.0);
 		}
 		int stacksize = item.getCount();
 		var rand = this.level.getRandom();
@@ -280,5 +296,77 @@ public class CrucibleBlockEntity extends TVBlockEntity {
 		}
 		this.markForUpdate();
 		return output;
+	}
+
+	@Override
+	public AspectList getAspects() {
+		return this.aspects;
+	}
+
+	@Override
+	public void setAspects(AspectList aspects) {
+		this.aspects = aspects;
+	}
+
+	@Override
+	public boolean doesContainerAccept(Aspect tag) {
+		return true;
+	}
+
+	@Override
+	public int addToContainer(Aspect tt, int am) {
+		if (this.aspects.visSize() + am <= 100) {
+			this.aspects.add(tt, am);
+			this.markForUpdate();
+			return 0;
+		}
+		int rem = Math.max(0, 100 - this.aspects.visSize());
+		this.aspects.add(tt, rem);
+		this.markForUpdate();
+		return am - rem;
+	}
+
+	@Override
+	public boolean takeFromContainer(Aspect tt, int am) {
+		if (this.aspects.getAmount(tt) >= am) {
+			this.aspects.remove(tt, am);
+			this.markForUpdate();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean takeFromContainer(AspectList ot) {
+		for (Aspect a : ot.getAspects()) {
+			if (this.aspects.getAmount(a) < ot.getAmount(a)) {
+				return false;
+			}
+		}
+		for (Aspect a : ot.getAspects()) {
+			this.aspects.remove(a, ot.getAmount(a));
+		}
+		this.markForUpdate();
+		return true;
+	}
+
+	@Override
+	public boolean doesContainerContainAmount(Aspect tag, int amt) {
+		return this.aspects.getAmount(tag) >= amt;
+	}
+
+	@Override
+	public boolean doesContainerContain(AspectList ot) {
+		for (Aspect a : ot.getAspects()) {
+			if (this.aspects.getAmount(a) < ot.getAmount(a)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public int containerContains(Aspect tag) {
+		return this.aspects.getAmount(tag);
 	}
 }

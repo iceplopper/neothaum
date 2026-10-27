@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+    "minecraft:raw_copper",
+    "minecraft:copper_ore",
+    "minecraft:deepslate_copper_ore",
     "#c:ores/copper",
     "#c:raw_materials/copper"
   ]
