@@ -70,17 +70,10 @@ public class CrucibleRenderer implements BlockEntityRenderer<CrucibleBlockEntity
 		float v1 = sprite.getV(z1);
 
 		collector.submitCustomGeometry(ps, RenderTypes.translucentMovingBlock(), (pose, vc) -> {
-			// Top surface (viewed from above looking down)
 			vc.addVertex(pose, x0, y, z0).setColor(ri, gi, bi, alpha).setUv(u0, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
 			vc.addVertex(pose, x0, y, z1).setColor(ri, gi, bi, alpha).setUv(u0, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
 			vc.addVertex(pose, x1, y, z1).setColor(ri, gi, bi, alpha).setUv(u1, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
 			vc.addVertex(pose, x1, y, z0).setColor(ri, gi, bi, alpha).setUv(u1, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
-
-			// Bottom surface (viewed from below looking up)
-			vc.addVertex(pose, x0, y, z0).setColor(ri, gi, bi, alpha).setUv(u0, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
-			vc.addVertex(pose, x1, y, z0).setColor(ri, gi, bi, alpha).setUv(u1, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
-			vc.addVertex(pose, x1, y, z1).setColor(ri, gi, bi, alpha).setUv(u1, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
-			vc.addVertex(pose, x0, y, z1).setColor(ri, gi, bi, alpha).setUv(u0, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
 		});
 	}
 }

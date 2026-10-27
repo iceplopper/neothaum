@@ -73,11 +73,18 @@ public class ArcaneFurnaceRenderer implements BlockEntityRenderer<ArcaneFurnaceB
 			ps.popPose();
 		}
 
-		// Render Bottom face, Top face & Chimney
+		// Render Bottom face
 		collector.submitCustomGeometry(ps, RenderTypes.cutoutMovingBlock(), (pose, vc) -> {
 			renderBottom(pose, vc, atlas, light);
+		});
+
+		// Render Top face & Chimney (aligned with facing)
+		ps.pushPose();
+		ps.rotateDegrees(Axis.YP, -s.facing.toYRot());
+		collector.submitCustomGeometry(ps, RenderTypes.cutoutMovingBlock(), (pose, vc) -> {
 			renderTopAndChimney(pose, vc, atlas, light);
 		});
+		ps.popPose();
 
 		ps.popPose();
 	}
@@ -85,6 +92,7 @@ public class ArcaneFurnaceRenderer implements BlockEntityRenderer<ArcaneFurnaceB
 	private static void renderHorizontalSide(PoseStack.Pose pose, VertexConsumer vc, boolean isFront, TextureAtlas atlas, int light) {
 		// Face plane is at z = 1.5, x from -1.5 to 1.5, y from -1.5 to 1.5
 		float z = 1.5001F;
+		TextureAtlasSprite wall = atlas.getSprite(Thaumvibe.id("blocks/furnace6"));
 		for (int row = 0; row < 3; row++) {
 			float y0 = -1.5F + row;
 			float y1 = y0 + 1.0F;
@@ -97,13 +105,39 @@ public class ArcaneFurnaceRenderer implements BlockEntityRenderer<ArcaneFurnaceB
 					TextureAtlasSprite bars = atlas.getSprite(Thaumvibe.id("blocks/furnace13"));
 					TextureAtlasSprite dark = atlas.getSprite(Thaumvibe.id("blocks/furnace15"));
 					TextureAtlasSprite fire = atlas.getSprite(Identifier.parse("minecraft:block/fire_0"));
+					TextureAtlasSprite lava = atlas.getSprite(Identifier.parse("minecraft:block/lava_still"));
 
 					// Recessed iron bars
 					quad(pose, vc, x0, x1, y0, y1, z - 0.15F, bars, light, 0.0F, 0.0F, 1.0F);
-					// Dark interior
+					// Dark interior grin
 					quad(pose, vc, x0, x1, y0, y1, z - 0.45F, dark, light, 0.0F, 0.0F, 1.0F);
 					// Fire
 					quad(pose, vc, x0, x1, y0, y1, z - 0.35F, fire, 0xF000F0, 0.0F, 0.0F, 1.0F);
+
+					// Mouth tunnel (from z = 0.5 to 1.5, y from -0.5 to 0.5)
+					// Tunnel left wall (facing +X)
+					quadZ(pose, vc, 1.5F, 0.5F, y0, y1, x0, wall, light, 1.0F, 0.0F, 0.0F);
+					// Tunnel right wall (facing -X)
+					quadZ(pose, vc, 0.5F, 1.5F, y0, y1, x1, wall, light, -1.0F, 0.0F, 0.0F);
+					// Tunnel floor (facing +Y)
+					quadY(pose, vc, x0, x1, 0.5F, 1.5F, y0, wall, light, 0.0F, 1.0F, 0.0F, false);
+					// Tunnel ceiling (facing -Y)
+					quadY(pose, vc, x0, x1, 0.5F, 1.5F, y1, wall, light, 0.0F, -1.0F, 0.0F, true);
+
+					// Central chamber (z from -0.5 to 0.5, y from -0.5 to 0.5)
+					// Chamber back wall (facing +Z)
+					quad(pose, vc, x0, x1, y0, y1, -0.5F, wall, light, 0.0F, 0.0F, 1.0F);
+					// Chamber left wall (facing +X)
+					quadZ(pose, vc, 0.5F, -0.5F, y0, y1, x0, wall, light, 1.0F, 0.0F, 0.0F);
+					// Chamber right wall (facing -X)
+					quadZ(pose, vc, -0.5F, 0.5F, y0, y1, x1, wall, light, -1.0F, 0.0F, 0.0F);
+					// Chamber floor (facing +Y)
+					quadY(pose, vc, x0, x1, -0.5F, 0.5F, y0, wall, light, 0.0F, 1.0F, 0.0F, false);
+
+					// Chamber lava pool at y = -0.25 (facing +Y)
+					quadY(pose, vc, x0, x1, -0.5F, 0.5F, -0.25F, lava, 0xF000F0, 0.0F, 1.0F, 0.0F, false);
+					// Lava front step at z = 0.5 (facing +Z)
+					quad(pose, vc, x0, x1, -0.5F, -0.25F, 0.5F, lava, 0xF000F0, 0.0F, 0.0F, 1.0F);
 				} else {
 					int iconIdx;
 					if (isFront) {
@@ -184,14 +218,14 @@ public class ArcaneFurnaceRenderer implements BlockEntityRenderer<ArcaneFurnaceB
 		float hx0 = -0.5F, hx1 = 0.5F;
 		float hz0 = -0.5F, hz1 = 0.5F;
 
-		// North inner wall
+		// Back (North) inner wall - facing +Z (inward)
 		quad(pose, vc, hx0, hx1, cy0, cy1, hz0, wall, light, 0.0F, 0.0F, 1.0F);
-		// South inner wall
-		quad(pose, vc, hx1, hx0, cy0, cy1, hz1, wall, light, 0.0F, 0.0F, -1.0F);
-		// West inner wall
-		quadZ(pose, vc, hz0, hz1, cy0, cy1, hx0, wall, light, 1.0F, 0.0F, 0.0F);
-		// East inner wall
-		quadZ(pose, vc, hz1, hz0, cy0, cy1, hx1, wall, light, -1.0F, 0.0F, 0.0F);
+		// Front (South) inner wall - facing -Z (inward) above the mouth opening
+		quad(pose, vc, hx1, hx0, 0.5F, cy1, hz1, wall, light, 0.0F, 0.0F, -1.0F);
+		// Left (West) inner wall - facing +X (inward)
+		quadZ(pose, vc, hz1, hz0, cy0, cy1, hx0, wall, light, 1.0F, 0.0F, 0.0F);
+		// Right (East) inner wall - facing -X (inward)
+		quadZ(pose, vc, hz0, hz1, cy0, cy1, hx1, wall, light, -1.0F, 0.0F, 0.0F);
 
 		// Lava pool at bottom of chimney
 		TextureAtlasSprite lava = atlas.getSprite(Identifier.parse("minecraft:block/lava_still"));
