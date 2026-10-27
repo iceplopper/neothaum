@@ -1941,5 +1941,12 @@
   "tc.handmirrorlinked": "The hand mirror is now linked to this mirror.",
   "tc.handmirrorerror": "The linked mirror could not be reached.",
   "tc.mirrorlinkedalready": "That mirror is already linked to a valid destination.",
-  "tc.doorfail": "The door refuses to budge."
+  "tc.doorfail": "The door refuses to budge.",
+  "block.thaumvibe.alchemical_construct": "Alchemical Construct",
+  "item.thaumvibe.alchemical_construct": "Alchemical Construct",
+  "block.thaumvibe.thaumatorium": "Thaumatorium",
+  "block.thaumvibe.thaumatorium_top": "Thaumatorium",
+  "block.thaumvibe.mnemonic_matrix": "Mnemonic Matrix",
+  "item.thaumvibe.mnemonic_matrix": "Mnemonic Matrix",
+  "gui.thaumatorium": "Thaumatorium"
 }

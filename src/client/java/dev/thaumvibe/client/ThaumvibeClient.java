@@ -128,6 +128,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.CENTRIFUGE, dev.thaumvibe.client.render.CentrifugeRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.CRYSTALLIZER, dev.thaumvibe.client.render.CrystallizerRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.RESERVOIR, dev.thaumvibe.client.render.ReservoirRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.THAUMATORIUM, dev.thaumvibe.client.render.ThaumatoriumRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.NODE, NodeRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR_NODE, dev.thaumvibe.client.render.JarNodeRenderer::new);
 		dev.thaumvibe.items.JarNodeItem.DISCOVERED = a -> {
@@ -181,6 +182,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		MenuScreens.register(TVMenus.FOCUS_POUCH, dev.thaumvibe.client.gui.FocusPouchScreen::new);
 		MenuScreens.register(TVMenus.HOVER_HARNESS, dev.thaumvibe.client.gui.HoverHarnessScreen::new);
 		MenuScreens.register(TVMenus.HAND_MIRROR, dev.thaumvibe.client.gui.HandMirrorScreen::new);
+		MenuScreens.register(TVMenus.THAUMATORIUM, dev.thaumvibe.client.gui.ThaumatoriumScreen::new);
 		HudElementRegistry.addLast(Thaumvibe.id("notifications"), Notifications::render);
 		HudElementRegistry.addLast(Thaumvibe.id("research_popup"), ResearchPopup::render);
 		HudElementRegistry.addLast(Thaumvibe.id("runic_shield"), dev.thaumvibe.client.hud.RunicShieldHud::render);

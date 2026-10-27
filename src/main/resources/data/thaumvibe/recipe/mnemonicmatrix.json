@@ -1,0 +1,22 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "THAUMATORIUM",
+  "aspects": {
+    "ignis": 5,
+    "aqua": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    "IAI",
+    "ABA",
+    "IAI"
+  ],
+  "key": {
+    "B": "thaumvibe:zombie_brain",
+    "A": "thaumvibe:amber",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "thaumvibe:mnemonic_matrix"
+  }
+}

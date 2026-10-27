@@ -283,6 +283,14 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 8).noOcclusion(), false);
 	public static final Block MAGIC_MIRROR = register("magic_mirror", dev.thaumvibe.blocks.MagicMirrorBlock::new, mirror(), false);
 	public static final Block ESSENTIA_MIRROR = register("essentia_mirror", dev.thaumvibe.blocks.EssentiaMirrorBlock::new, mirror(), false);
+	public static final Block ALCHEMICAL_CONSTRUCT = register("alchemical_construct", dev.thaumvibe.blocks.AlchemicalConstructBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.5F).sound(SoundType.METAL), true);
+	public static final Block THAUMATORIUM = register("thaumatorium", dev.thaumvibe.blocks.ThaumatoriumBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.5F).sound(SoundType.METAL).noOcclusion(), false);
+	public static final Block THAUMATORIUM_TOP = register("thaumatorium_top", dev.thaumvibe.blocks.ThaumatoriumTopBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.5F).sound(SoundType.METAL).noOcclusion(), false);
+	public static final Block MNEMONIC_MATRIX = register("mnemonic_matrix", dev.thaumvibe.blocks.MnemonicMatrixBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 10.0F).sound(SoundType.METAL).noOcclusion(), true);
 
 	private static BlockBehaviour.Properties mirror() {
 		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()

@@ -33,6 +33,8 @@ public final class TVMenus {
 
 	public static final ExtendedMenuType<dev.thaumvibe.menu.FocalManipulatorMenu, BlockPos> FOCAL_MANIPULATOR = Registry.register(BuiltInRegistries.MENU,
 		Thaumvibe.id("focal_manipulator"), new ExtendedMenuType<>(dev.thaumvibe.menu.FocalManipulatorMenu::new, BlockPos.STREAM_CODEC));
+	public static final ExtendedMenuType<dev.thaumvibe.menu.ThaumatoriumMenu, BlockPos> THAUMATORIUM = Registry.register(BuiltInRegistries.MENU,
+		Thaumvibe.id("thaumatorium"), new ExtendedMenuType<>(dev.thaumvibe.menu.ThaumatoriumMenu::new, BlockPos.STREAM_CODEC));
 
 	public static void init() {
 	}

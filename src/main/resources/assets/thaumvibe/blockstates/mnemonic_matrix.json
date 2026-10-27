@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "thaumvibe:block/mnemonic_matrix" },
+    "facing=south": { "model": "thaumvibe:block/mnemonic_matrix", "y": 180 },
+    "facing=west":  { "model": "thaumvibe:block/mnemonic_matrix", "y": 270 },
+    "facing=east":  { "model": "thaumvibe:block/mnemonic_matrix", "y": 90 }
+  }
+}

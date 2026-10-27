@@ -41,6 +41,10 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Alchemical Centrifuge:** splits compound essentia back into one of its component aspects; directional suction (128 empty, 64 running from below, outputs split component above); animated spinning rotor and counterweight flasks.
   - **Essentia Crystallizer:** condenses liquid essentia drawn through tubes into solid crystallized essence items (`crystal_essence`), with rotating aspect-colored crystal formation geometry and auto-ejection into adjacent containers.
   - **Essentia Reservoir:** holds up to 256 essentia of any mix; 24 suction when not full; wand-configurable connection face; comparator signal proportional to fill level; interior liquid render with smoothly transitioning aspect tints and creaking audio; infusion crafting recipe.
+  - **Thaumatorium & Mnemonic Matrix:**
+    - **Thaumatorium:** 2-block multiblock machine formed by wand-right clicking 2 Alchemical Constructs placed over a Crucible (consuming 15 Fire, 30 Order, 30 Water vis). Automated crucible alchemy: draws essentia via connected tubes (128 suction for required aspect) or remote mirrors, processes catalyst items in slot 0 without creating flux or slurry, vents steam with extinguish sounds, ejects products into front containers or into the world with velocity; front plate 3D cycling preview of active recipes; dedicated GUI (`ThaumatoriumMenu` / `ThaumatoriumScreen`) displaying recipe catalog, toggle buttons, progress bars, and aspect requirements.
+    - **Alchemical Construct:** solid machine block (`alchemyblock` texture); arcane crafting recipe (Greatwood planks, tubes, valve, vis filter).
+    - **Mnemonic Matrix:** attachable upgrade block (`brainbox` texture with connector neck) placing onto Thaumatorium sides; increases active recipe capacity by +2 per matrix; arcane crafting recipe (Zombie brain, amber, iron).
   - **Node in a Jar Aspect Viewing:** trapped aura nodes now display floating 3D aspect tags when worn with Goggles of Revealing or inspected with Thaumometer, fully scannable and visible in HUD.
 - **Infusion:** the matrix, pedestals, pillars, stabilisers and instability, and infusion enchanting (partial, see below).
 - **Equipment:**
@@ -82,7 +86,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 ## Still to do
 
 ### Alchemy and essentia, the rest (M)
-- **Machines:** the Thaumatorium (multi-recipe alchemy).
 - **Storage:** the advanced alchemical furnace.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 

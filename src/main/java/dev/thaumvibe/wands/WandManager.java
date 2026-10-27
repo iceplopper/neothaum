@@ -170,7 +170,47 @@ public final class WandManager {
 		if (state.is(Blocks.GLASS) && ResearchManager.isResearchComplete(player, "NODEJAR")) {
 			return createNodeJar(wand, player, level, pos);
 		}
+		if (state.is(TVBlocks.ALCHEMICAL_CONSTRUCT) && ResearchManager.isResearchComplete(player, "THAUMATORIUM")) {
+			return createThaumatorium(wand, player, level, pos, side);
+		}
 		return false;
+	}
+
+	/** Wand trigger: 2 Alchemical Constructs over a Crucible becomes a Thaumatorium, for 15 Fire + 30 Order + 30 Water vis. */
+	public static boolean createThaumatorium(ItemStack wand, Player player, Level level, BlockPos pos, Direction side) {
+		BlockPos basePos = null;
+		if (level.getBlockState(pos.above()).is(TVBlocks.ALCHEMICAL_CONSTRUCT)
+			&& level.getBlockState(pos.below()).is(TVBlocks.CRUCIBLE)) {
+			basePos = pos;
+		} else if (level.getBlockState(pos.below()).is(TVBlocks.ALCHEMICAL_CONSTRUCT)
+			&& level.getBlockState(pos.below(2)).is(TVBlocks.CRUCIBLE)) {
+			basePos = pos.below();
+		}
+		if (basePos == null) {
+			return false;
+		}
+
+		AspectList cost = new AspectList().add(Aspect.FIRE, 15).add(Aspect.ORDER, 30).add(Aspect.WATER, 30);
+		if (!WandItem.consumeAllVisCrafting(wand, player, cost, true)) {
+			return false;
+		}
+
+		if (!level.isClientSide()) {
+			Direction facing = side.getAxis().isHorizontal() ? side : player.getDirection().getOpposite();
+			level.setBlock(basePos, TVBlocks.THAUMATORIUM.defaultBlockState().setValue(dev.thaumvibe.blocks.ThaumatoriumBlock.FACING, facing), 3);
+			level.setBlock(basePos.above(), TVBlocks.THAUMATORIUM_TOP.defaultBlockState(), 3);
+
+			if (level.getBlockEntity(basePos) instanceof dev.thaumvibe.tiles.ThaumatoriumBlockEntity be) {
+				be.setFacing(facing);
+			}
+
+			level.playSound(null, basePos, TVSounds.WAND, net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+			if (level instanceof net.minecraft.server.level.ServerLevel sl) {
+				sl.sendParticles(net.minecraft.core.particles.ParticleTypes.ENCHANTED_HIT,
+					basePos.getX() + 0.5, basePos.getY() + 1.0, basePos.getZ() + 0.5, 30, 0.4, 0.8, 0.4, 0.1);
+			}
+		}
+		return true;
 	}
 
 	/** Wand trigger: 3x3x3 Nether Bricks, Obsidian, Lava and Iron Bars becomes an Infernal Furnace, for 50 Fire + 50 Earth vis. */

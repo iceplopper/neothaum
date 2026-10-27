@@ -101,6 +101,10 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.MagicMirrorBlockEntity::new, TVBlocks.MAGIC_MIRROR);
 	public static final BlockEntityType<dev.thaumvibe.tiles.EssentiaMirrorBlockEntity> ESSENTIA_MIRROR = register("essentia_mirror",
 		dev.thaumvibe.tiles.EssentiaMirrorBlockEntity::new, TVBlocks.ESSENTIA_MIRROR);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ThaumatoriumBlockEntity> THAUMATORIUM = register("thaumatorium",
+		dev.thaumvibe.tiles.ThaumatoriumBlockEntity::new, TVBlocks.THAUMATORIUM);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ThaumatoriumTopBlockEntity> THAUMATORIUM_TOP = register("thaumatorium_top",
+		dev.thaumvibe.tiles.ThaumatoriumTopBlockEntity::new, TVBlocks.THAUMATORIUM_TOP);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));
