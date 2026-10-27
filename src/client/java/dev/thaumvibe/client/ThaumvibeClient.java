@@ -133,6 +133,8 @@ public class ThaumvibeClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_BORE_BASE, dev.thaumvibe.client.render.ArcaneBoreBaseRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_BORE, dev.thaumvibe.client.render.ArcaneBoreRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.MANA_POD, dev.thaumvibe.client.render.ManaPodRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.FLUX_SCRUBBER, dev.thaumvibe.client.render.FluxScrubberRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.BANNER, dev.thaumvibe.client.render.BannerRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.NODE, NodeRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR_NODE, dev.thaumvibe.client.render.JarNodeRenderer::new);
 		dev.thaumvibe.items.JarNodeItem.DISCOVERED = a -> {

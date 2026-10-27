@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "BANNERS",
+  "aspects": {
+    "aqua": 5,
+    "terra": 5
+  },
+  "pattern": [
+    "WS",
+    "WS",
+    "WB"
+  ],
+  "key": {
+    "W": "#minecraft:wool",
+    "S": "minecraft:stick",
+    "B": "#minecraft:wooden_slabs"
+  },
+  "result": {
+    "id": "thaumvibe:banner"
+  }
+}

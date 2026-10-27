@@ -94,14 +94,14 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Aspect Breeding & Dynamics:** Cross-breeds aspects from adjacent horizontal mana pods at stage 3, producing compound aspect beans from parental combinations (`Aspect.getCombination`). Right-clicking a mature pod or harvesting yields aspect-infused Mana Beans.
   - **Rendering:** Exact 1:1 TC4 visual model with hanging stem, pulsing glowing inner core at stage 3+ with sine-wave scale animation, and translucent outer pod shell blending from pale green to aspect-specific color.
   - **Worldgen:** Generates naturally hanging from logs throughout the Magical Forest biome (`TCBiomeDecorFeature.generateManaPods`).
+- **Flux Scrubber & Banners:**
+  - **Flux Scrubber:** Directional artifice device (`FluxScrubberBlock` / `FluxScrubberBlockEntity` / `FluxScrubberRenderer`). Connects to Aer centivis via vis network (5 cv/cleansing action), scans 16-block cuboid for `FLUX_GOO` and `FLUX_GAS` blocks, dissolves flux with sparkle effects, accumulates charges, converts every 4 charges into Praecantatio liquid essentia (up to 4), and outputs into tube networks via suction nozzle. 3D OBJ model (`obelisk_cap.obj`) with animated bobbing floating tip.
+  - **Banners:** Decorative hanging flags (`BannerBlock` / `BannerBlockEntity` / `BannerRenderer` / `BannerItem`). Mounts on floors with 16 rotation angles or walls with directional facing. Shift-right-click clears aspect, essentia phial stamps aspect insignia with cloth audio, drops `BannerItem` preserving dye color and aspect. Features 16 Thaumcraft dye colors plus the Cultist Banner. Animated cloth swaying in wind.
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
 
 ## Still to do
-
-### Artifice and utility blocks (M)
-- **Misc:** the flux scrubber and banners (cultist and the Thaumcraft colours).
 
 ### Remaining Equipment and gear (M)
 - **Void fortress robes** (infusion upgrade).

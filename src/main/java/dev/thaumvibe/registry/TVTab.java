@@ -64,7 +64,7 @@ public final class TVTab {
 		TVBlocks.NODE_TRANSDUCER, TVBlocks.FOCAL_MANIPULATOR, TVBlocks.VIS_RELAY, TVBlocks.VIS_CHARGE_RELAY, TVBlocks.ARCANE_LAMP, TVBlocks.LAMP_OF_GROWTH, TVBlocks.LAMP_OF_FERTILITY,
 		TVBlocks.ARCANE_DOOR, TVBlocks.WARDED_GLASS, TVBlocks.PAVING_STONE_OF_TRAVEL, TVBlocks.PAVING_STONE_OF_WARDING, TVBlocks.ARCANE_PRESSURE_PLATE, TVBlocks.ARCANE_EAR, TVBlocks.ARCANE_LEVITATOR, TVBlocks.ITEM_GRATE, TVBlocks.ALCHEMICAL_CENTRIFUGE, TVBlocks.ESSENTIA_CRYSTALLIZER, TVBlocks.ESSENTIA_RESERVOIR,
 		TVBlocks.MAGIC_MIRROR, TVBlocks.ESSENTIA_MIRROR, TVBlocks.ALCHEMICAL_CONSTRUCT, TVBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT, TVBlocks.MNEMONIC_MATRIX, TVBlocks.ARCANE_SPA, TVBlocks.DECONSTRUCTION_TABLE,
-		TVBlocks.ARCANE_BORE_BASE, TVBlocks.ARCANE_BORE);
+		TVBlocks.ARCANE_BORE_BASE, TVBlocks.ARCANE_BORE, TVBlocks.FLUX_SCRUBBER, TVBlocks.BANNER);
 
 	public static Category categoryOf(Item item) {
 		if (ESSENTIA.contains(item)) {
@@ -149,6 +149,10 @@ public final class TVTab {
 						jar.set(TVComponents.ASPECTS, new dev.thaumvibe.api.aspects.AspectList().add(dev.thaumvibe.api.aspects.Aspect.ENERGY, 64));
 						fueled.set(TVComponents.HARNESS_JAR, jar);
 						out.accept(fueled);
+					} else if (item == TVItems.BANNER) {
+						for (int c = 0; c < 16; c++) {
+							out.accept(dev.thaumvibe.items.BannerItem.ofColor(c));
+						}
 					} else {
 						out.accept(item);
 					}

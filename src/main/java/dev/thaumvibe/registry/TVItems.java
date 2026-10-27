@@ -159,6 +159,8 @@ public final class TVItems {
 	public static final Item CRIMSON_RITES = register("crimson_rites", dev.thaumvibe.items.eldritch.CrimsonRitesItem::new, new Item.Properties());
 	public static final Item ELDRITCH_EYE = register("eldritch_eye", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item RUNED_TABLET = register("runed_tablet", Item::new, new Item.Properties().rarity(Rarity.RARE));
+	public static final Item BANNER = register("banner", props -> new dev.thaumvibe.items.BannerItem(props, false), new Item.Properties().stacksTo(16));
+	public static final Item CULTIST_BANNER = register("cultist_banner", props -> new dev.thaumvibe.items.BannerItem(props, true), new Item.Properties().stacksTo(16));
 	public static final Item GOLD_COIN = simple("gold_coin");
 	/** ItemResource 13; once a phial has marked it, it carries the aspect in ASPECT_FILTER. */
 	public static final Item JAR_LABEL = simple("jar_label");

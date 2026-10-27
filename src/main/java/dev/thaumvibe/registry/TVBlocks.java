@@ -305,6 +305,10 @@ public final class TVBlocks {
 		wood(2.5F).noOcclusion(), true);
 	public static final Block MANA_POD = register("mana_pod", dev.thaumvibe.blocks.ManaPodBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.5F).sound(SoundType.GRASS).noOcclusion().randomTicks().lightLevel(s -> s.getValue(dev.thaumvibe.blocks.ManaPodBlock.AGE)), false);
+	public static final Block FLUX_SCRUBBER = register("flux_scrubber", dev.thaumvibe.blocks.FluxScrubberBlock::new,
+		stone(3.0F, 17.0F).sound(SoundType.STONE).noOcclusion(), true);
+	public static final Block BANNER = register("banner", dev.thaumvibe.blocks.BannerBlock::new,
+		wood(1.0F).sound(SoundType.WOOD).noOcclusion(), false);
 
 	private static BlockBehaviour.Properties mirror() {
 		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()

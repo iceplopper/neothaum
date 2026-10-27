@@ -170,6 +170,12 @@ public final class WandManager {
 				return true;
 			}
 		}
+		if (state.is(TVBlocks.FLUX_SCRUBBER)) {
+			if (level.getBlockState(pos).getBlock() instanceof dev.thaumvibe.blocks.FluxScrubberBlock scrubberBlock) {
+				scrubberBlock.rotateFacing(level, pos, side);
+				return true;
+			}
+		}
 		if (state.is(TVBlocks.NODE_IN_A_JAR)) {
 			if (!level.isClientSide() && level.getBlockEntity(pos) instanceof dev.thaumvibe.tiles.JarNodeBlockEntity jar) {
 				jar.release();

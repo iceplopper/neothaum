@@ -119,6 +119,10 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.ArcaneBoreBlockEntity::new, TVBlocks.ARCANE_BORE);
 	public static final BlockEntityType<dev.thaumvibe.tiles.ManaPodBlockEntity> MANA_POD = register("mana_pod",
 		dev.thaumvibe.tiles.ManaPodBlockEntity::new, TVBlocks.MANA_POD);
+	public static final BlockEntityType<dev.thaumvibe.tiles.FluxScrubberBlockEntity> FLUX_SCRUBBER = register("flux_scrubber",
+		dev.thaumvibe.tiles.FluxScrubberBlockEntity::new, TVBlocks.FLUX_SCRUBBER);
+	public static final BlockEntityType<dev.thaumvibe.tiles.BannerBlockEntity> BANNER = register("banner",
+		dev.thaumvibe.tiles.BannerBlockEntity::new, TVBlocks.BANNER);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));

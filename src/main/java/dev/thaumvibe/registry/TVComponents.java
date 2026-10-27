@@ -64,6 +64,8 @@ public final class TVComponents {
 	public static final DataComponentType<Boolean> GOGGLES = register("goggles", b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 	/** ItemFortressArmor mask (0: Grinning Devil, 1: Angry Ghost, 2: Sipping Fiend). */
 	public static final DataComponentType<Integer> MASK = register("mask", b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	/** TileBanner color (-1: Cultist, 0..15: Thaumcraft colors). */
+	public static final DataComponentType<Integer> BANNER_COLOR = register("banner_color", b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
 	/** ItemHoverHarness fuel jar. */
 	public static final DataComponentType<net.minecraft.world.item.ItemStack> HARNESS_JAR = register("harness_jar",
