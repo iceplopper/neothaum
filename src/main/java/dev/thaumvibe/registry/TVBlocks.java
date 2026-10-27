@@ -291,6 +291,8 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.5F).sound(SoundType.METAL).noOcclusion(), false);
 	public static final Block MNEMONIC_MATRIX = register("mnemonic_matrix", dev.thaumvibe.blocks.MnemonicMatrixBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 10.0F).sound(SoundType.METAL).noOcclusion(), true);
+	public static final Block ARCANE_SPA = register("arcane_spa", dev.thaumvibe.blocks.ArcaneSpaBlock::new,
+		stone(2.0F, 10.0F).noOcclusion(), true);
 
 	private static BlockBehaviour.Properties mirror() {
 		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()

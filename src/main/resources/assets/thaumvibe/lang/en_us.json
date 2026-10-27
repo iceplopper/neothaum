@@ -1948,5 +1948,8 @@
   "block.thaumvibe.thaumatorium_top": "Thaumatorium",
   "block.thaumvibe.mnemonic_matrix": "Mnemonic Matrix",
   "item.thaumvibe.mnemonic_matrix": "Mnemonic Matrix",
-  "gui.thaumatorium": "Thaumatorium"
+  "gui.thaumatorium": "Thaumatorium",
+  "block.thaumvibe.arcane_spa": "Arcane Spa",
+  "item.thaumvibe.arcane_spa": "Arcane Spa",
+  "gui.spa": "Arcane Spa"
 }
