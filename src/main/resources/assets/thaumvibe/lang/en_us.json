@@ -1920,5 +1920,11 @@
   "block.thaumvibe.essentia_reservoir": "Essentia Reservoir",
   "item.thaumvibe.essentia_reservoir": "Essentia Reservoir",
   "container.thaumvibe.essentia_reservoir": "Essentia Reservoir",
+  "block.thaumvibe.liquid_death": "Liquid Death",
+  "block.thaumvibe.purifying_fluid": "Purifying Fluid",
+  "item.thaumvibe.bucket_of_liquid_death": "Bucket of Liquid Death",
+  "item.thaumvibe.bucket_of_purifying_fluid": "Bucket of Purifying Fluid",
+  "item.thaumvibe.purifying_bath_salts": "Purifying Bath Salts",
+  "item.thaumvibe.sanitizing_soap": "Sanitizing Soap",
   "tc.doorfail": "The door refuses to budge."
 }

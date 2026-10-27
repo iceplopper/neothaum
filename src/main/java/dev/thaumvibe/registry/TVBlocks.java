@@ -12,8 +12,10 @@ import dev.thaumvibe.blocks.CentrifugeBlock;
 import dev.thaumvibe.blocks.CrystallizerBlock;
 import dev.thaumvibe.blocks.ReservoirBlock;
 import dev.thaumvibe.blocks.ItemGrateBlock;
+import dev.thaumvibe.blocks.LiquidDeathBlock;
 import dev.thaumvibe.blocks.PavingStoneOfTravelBlock;
 import dev.thaumvibe.blocks.PavingStoneOfWardingBlock;
+import dev.thaumvibe.blocks.PurifyingFluidBlock;
 import dev.thaumvibe.blocks.WardedGlassBlock;
 import dev.thaumvibe.blocks.WardingAuraBlock;
 import dev.thaumvibe.blocks.LampOfGrowthBlock;
@@ -275,6 +277,10 @@ public final class TVBlocks {
 		stone(2.0F, 10.0F).noOcclusion(), true);
 	public static final Block ESSENTIA_RESERVOIR = register("essentia_reservoir", ReservoirBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 17.0F).sound(SoundType.METAL).noOcclusion(), true);
+	public static final Block LIQUID_DEATH = register("liquid_death", LiquidDeathBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 4).noOcclusion(), false);
+	public static final Block PURIFYING_FLUID = register("purifying_fluid", PurifyingFluidBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 8).noOcclusion(), false);
 
 	/** Config.fluxGoomaterial: a liquid you wade through, lit like the fluid's luminosity 7. */
 	private static BlockBehaviour.Properties flux() {

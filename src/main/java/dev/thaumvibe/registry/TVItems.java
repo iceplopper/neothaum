@@ -33,7 +33,10 @@ import net.minecraft.core.Holder;
 import java.util.Map;
 import java.util.EnumMap;
 import dev.thaumvibe.items.ArcaneKeyItem;
+import dev.thaumvibe.items.BathSaltsItem;
+import dev.thaumvibe.items.FluidBucketItem;
 import dev.thaumvibe.items.RobeArmorItem;
+import dev.thaumvibe.items.SanitizingSoapItem;
 import dev.thaumvibe.baubles.BaubleType;
 import dev.thaumvibe.items.BaubleBlankItem;
 import dev.thaumvibe.items.EssentiaPhialItem;
@@ -284,6 +287,11 @@ public final class TVItems {
 	public static final Item TRIPLE_MEAT_TREAT = register("triple_meat_treat", Item::new, new Item.Properties().food(
 		new FoodProperties.Builder().nutrition(6).saturationModifier(0.8F).alwaysEdible().build(),
 		Consumables.defaultFood().onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0), 0.66F)).build()));
+
+	public static final Item BUCKET_OF_LIQUID_DEATH = register("bucket_of_liquid_death", p -> new FluidBucketItem(() -> TVBlocks.LIQUID_DEATH, p), new Item.Properties());
+	public static final Item BUCKET_OF_PURIFYING_FLUID = register("bucket_of_purifying_fluid", p -> new FluidBucketItem(() -> TVBlocks.PURIFYING_FLUID, p), new Item.Properties());
+	public static final Item PURIFYING_BATH_SALTS = register("purifying_bath_salts", BathSaltsItem::new, new Item.Properties());
+	public static final Item SANITIZING_SOAP = register("sanitizing_soap", SanitizingSoapItem::new, new Item.Properties());
 
 	private static ArmorMaterial armor(int durability, int head, int chest, int legs, int feet, Holder<SoundEvent> sound, TagKey<Item> repair,
 		String asset) {

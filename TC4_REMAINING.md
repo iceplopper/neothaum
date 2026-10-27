@@ -63,6 +63,11 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - taint spore, swarmer, swarm and crawler
   - taintacle (small, normal and giant)
   - tainted chicken, cow, pig, sheep, villager and creeper
+- **Curatives & Fluids:**
+  - **Liquid Death:** corrosive magenta fluid dealing 4 magic damage on touch, lavapop sound and witch particles, scooped via bucket (`bucket_of_liquid_death`), crucible recipe (mortuus 32, venenum 32, perditio 32).
+  - **Purifying Fluid:** restorative silvery water granting Warp Ward when stepped into (duration scaled inversely to permanent warp), scooped via bucket (`bucket_of_purifying_fluid`).
+  - **Purifying Bath Salts:** dissolves when used or tossed into water source blocks, transforming them into Purifying Fluid with bubbling sounds; crucible recipe.
+  - **Sanitizing Soap:** washable bar that clears all temporary warp, and has a 33% chance (+25% with Warp Ward, +25% in Purifying Fluid) to reduce sticky warp; crucible recipe.
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
@@ -73,8 +78,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Machines:** the Thaumatorium (multi-recipe alchemy).
 - **Storage:** the advanced alchemical furnace.
 - **Mirrors:** the magic mirror, essentia mirror and hand mirror.
-- **Fluid buckets:** bucket of death and bucket of pure (liquid death, purifying fluid).
-- **Cures:** sanitizing soap and bath salts.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)

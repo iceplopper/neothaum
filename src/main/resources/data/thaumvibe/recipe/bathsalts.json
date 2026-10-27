@@ -1,0 +1,14 @@
+{
+  "type": "thaumvibe:crucible",
+  "research": "BATHSALTS",
+  "catalyst": "thaumvibe:salis_mundus",
+  "aspects": {
+    "cognitio": 6,
+    "auram": 6,
+    "ordo": 6,
+    "sano": 6
+  },
+  "result": {
+    "id": "thaumvibe:purifying_bath_salts"
+  }
+}
