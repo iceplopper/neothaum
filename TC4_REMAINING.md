@@ -70,6 +70,11 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Purifying Fluid:** restorative silvery water granting Warp Ward when stepped into (duration scaled inversely to permanent warp), scooped via bucket (`bucket_of_purifying_fluid`).
   - **Purifying Bath Salts:** dissolves when used or tossed into water source blocks, transforming them into Purifying Fluid with bubbling sounds; crucible recipe.
   - **Sanitizing Soap:** washable bar that clears all temporary warp, and has a 33% chance (+25% with Warp Ward, +25% in Purifying Fluid) to reduce sticky warp; crucible recipe.
+- **Mirrors & Dimensional Transport:**
+  - **Magic Mirror:** 6-face wall/floor/ceiling mounting, 1-pixel thin frame; paired linkage via right-clicking placed mirror with an unlinked mirror item. Transports dropped item entities and hopper-inserted stacks across dimensions to destination mirror with portal particles and sound (`portal.travel`); destination mirror queues and dispenses items outward.
+  - **Essentia Mirror:** 6-face mounting, paired linkage; implements `AspectSource`, remotely querying and draining essentia via `EssentiaHandler.drainEssentia` within an 8-block radius of the destination mirror across dimensions for Infusion Altar matrices and Crucible alchemy.
+  - **Hand Mirror:** paired to a Magic Mirror; right-clicking in air opens 1-slot GUI (`HandMirrorMenu` / `HandMirrorScreen`) allowing items placed in the slot to be transported directly home to the linked Magic Mirror anywhere in the world.
+  - Infusion recipes for Magic Mirror, Essentia Mirror, and Hand Mirror.
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
@@ -79,7 +84,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 ### Alchemy and essentia, the rest (M)
 - **Machines:** the Thaumatorium (multi-recipe alchemy).
 - **Storage:** the advanced alchemical furnace.
-- **Mirrors:** the magic mirror, essentia mirror and hand mirror.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)

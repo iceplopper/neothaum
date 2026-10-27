@@ -265,6 +265,9 @@ public final class TVItems {
 	public static final Item BOTTLED_TAINT = register("bottled_taint", BottledTaintItem::new, new Item.Properties().stacksTo(16));
 	public static final Item IRON_ARCANE_KEY = register("iron_arcane_key", p -> new ArcaneKeyItem(false, p), new Item.Properties().stacksTo(1));
 	public static final Item GOLD_ARCANE_KEY = register("gold_arcane_key", p -> new ArcaneKeyItem(true, p), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+	public static final Item MAGIC_MIRROR = register("magic_mirror", p -> new dev.thaumvibe.items.MirrorItem(TVBlocks.MAGIC_MIRROR, false, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item ESSENTIA_MIRROR = register("essentia_mirror", p -> new dev.thaumvibe.items.MirrorItem(TVBlocks.ESSENTIA_MIRROR, true, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item MAGIC_HAND_MIRROR = register("magic_hand_mirror", dev.thaumvibe.items.HandMirrorItem::new, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
 
 	public static final TagKey<Item> VOID_INGOTS = TagKey.create(Registries.ITEM, Thaumvibe.id("void_metal_ingots"));
 	public static final ToolMaterial VOID_TOOLS = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 150, 8.0F, 3.0F, 10, VOID_INGOTS);

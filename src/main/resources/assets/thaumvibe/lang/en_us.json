@@ -1932,5 +1932,14 @@
   "item.thaumvibe.thaumostatic_harness": "Thaumostatic Harness",
   "key.thaumvibe.harness": "Activate Hover Harness",
   "container.hoverharness": "Thaumostatic Harness",
+  "block.thaumvibe.magic_mirror": "Magic Mirror",
+  "item.thaumvibe.magic_mirror": "Magic Mirror",
+  "block.thaumvibe.essentia_mirror": "Essentia Mirror",
+  "item.thaumvibe.essentia_mirror": "Essentia Mirror",
+  "item.thaumvibe.magic_hand_mirror": "Magic Hand Mirror",
+  "container.handmirror": "Magic Hand Mirror",
+  "tc.handmirrorlinked": "The hand mirror is now linked to this mirror.",
+  "tc.handmirrorerror": "The linked mirror could not be reached.",
+  "tc.mirrorlinkedalready": "That mirror is already linked to a valid destination.",
   "tc.doorfail": "The door refuses to budge."
 }

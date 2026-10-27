@@ -97,6 +97,10 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.ArcaneLevitatorBlockEntity::new, TVBlocks.ARCANE_LEVITATOR);
 	public static final BlockEntityType<dev.thaumvibe.tiles.WardingStoneBlockEntity> WARDING_STONE = register("warding_stone",
 		dev.thaumvibe.tiles.WardingStoneBlockEntity::new, TVBlocks.PAVING_STONE_OF_WARDING);
+	public static final BlockEntityType<dev.thaumvibe.tiles.MagicMirrorBlockEntity> MAGIC_MIRROR = register("magic_mirror",
+		dev.thaumvibe.tiles.MagicMirrorBlockEntity::new, TVBlocks.MAGIC_MIRROR);
+	public static final BlockEntityType<dev.thaumvibe.tiles.EssentiaMirrorBlockEntity> ESSENTIA_MIRROR = register("essentia_mirror",
+		dev.thaumvibe.tiles.EssentiaMirrorBlockEntity::new, TVBlocks.ESSENTIA_MIRROR);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));

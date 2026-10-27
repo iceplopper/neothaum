@@ -281,6 +281,13 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 4).noOcclusion(), false);
 	public static final Block PURIFYING_FLUID = register("purifying_fluid", PurifyingFluidBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 8).noOcclusion(), false);
+	public static final Block MAGIC_MIRROR = register("magic_mirror", dev.thaumvibe.blocks.MagicMirrorBlock::new, mirror(), false);
+	public static final Block ESSENTIA_MIRROR = register("essentia_mirror", dev.thaumvibe.blocks.EssentiaMirrorBlock::new, mirror(), false);
+
+	private static BlockBehaviour.Properties mirror() {
+		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()
+			.lightLevel(s -> s.getValue(dev.thaumvibe.blocks.MirrorBlock.OPEN) ? 8 : 0);
+	}
 
 	/** Config.fluxGoomaterial: a liquid you wade through, lit like the fluid's luminosity 7. */
 	private static BlockBehaviour.Properties flux() {

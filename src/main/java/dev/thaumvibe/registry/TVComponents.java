@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import dev.thaumvibe.Thaumvibe;
 import dev.thaumvibe.api.aspects.AspectList;
 import dev.thaumvibe.research.ResearchNoteData;
@@ -87,6 +88,23 @@ public final class TVComponents {
 	/** Imprinted arcane key destination and type (0: door, 1: pressure plate). */
 	public static final DataComponentType<KeyData> KEY_DATA = register("key_data",
 		b -> b.persistent(KeyData.CODEC).networkSynchronized(KeyData.STREAM_CODEC));
+
+	public record MirrorLink(Identifier dimension, BlockPos pos) {
+		public static final Codec<MirrorLink> CODEC = RecordCodecBuilder.create(i -> i.group(
+			Identifier.CODEC.fieldOf("dim").forGetter(MirrorLink::dimension),
+			BlockPos.CODEC.fieldOf("pos").forGetter(MirrorLink::pos)
+		).apply(i, MirrorLink::new));
+		public static final StreamCodec<ByteBuf, MirrorLink> STREAM_CODEC = StreamCodec.composite(
+			Identifier.STREAM_CODEC, MirrorLink::dimension,
+			BlockPos.STREAM_CODEC, MirrorLink::pos,
+			MirrorLink::new);
+		public net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> levelKey() {
+			return net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DIMENSION, dimension);
+		}
+	}
+	/** Magic mirror and hand mirror link destination. */
+	public static final DataComponentType<MirrorLink> MIRROR_LINK = register("mirror_link",
+		b -> b.persistent(MirrorLink.CODEC).networkSynchronized(MirrorLink.STREAM_CODEC));
 
 	private static <T> DataComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> builder) {
 		return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, Thaumvibe.id(name), builder.apply(DataComponentType.builder()).build());
