@@ -17,8 +17,8 @@
     "thaumvibe:void_pickaxe",
     "thaumvibe:void_shovel",
     "thaumvibe:primal_charm",
-    "thaumvibe:elemental_pickaxe",
-    "thaumvibe:elemental_shovel"
+    "thaumvibe:pickaxe_of_the_core",
+    "thaumvibe:shovel_of_the_earthmover"
   ],
   "result": {
     "id": "thaumvibe:primal_crusher"
