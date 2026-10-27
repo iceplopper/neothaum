@@ -20,6 +20,7 @@ echo.
   --seconds-per-day 4 ^
   --title "Thaumvibe 4 - Port Timeline (Claude Code & Gemini)" ^
   --file-idle-time 0 ^
+  --hide filenames ^
   --highlight-users ^
   --font-size 18 ^
   --camera-mode overview
