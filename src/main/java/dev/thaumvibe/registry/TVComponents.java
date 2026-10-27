@@ -76,6 +76,9 @@ public final class TVComponents {
 	/** ItemHoverHarness hover mode active. */
 	public static final DataComponentType<Boolean> HARNESS_ACTIVE = register("harness_active",
 		b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+	/** Generic active state (e.g. Sinister Lodestone pointing to a sinister node). */
+	public static final DataComponentType<Boolean> ACTIVE = register("active",
+		b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
 	public record KeyData(BlockPos pos, int type) {
 		public static final Codec<KeyData> CODEC = RecordCodecBuilder.create(i -> i.group(

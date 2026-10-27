@@ -82,6 +82,8 @@ public final class TVEntities {
 		dev.thaumvibe.entity.projectile.PrimalArrowEntity::new);
 	public static final EntityType<dev.thaumvibe.entity.projectile.BottleTaint> BOTTLE_TAINT = projectile("bottle_taint",
 		dev.thaumvibe.entity.projectile.BottleTaint::new);
+	public static final EntityType<dev.thaumvibe.entity.projectile.AlumentumEntity> ALUMENTUM = projectile("alumentum",
+		dev.thaumvibe.entity.projectile.AlumentumEntity::new);
 	public static final EntityType<ThaumicSlime> THAUMIC_SLIME = mob("thaumic_slime", ThaumicSlime::new, MobCategory.MONSTER, 0.5F, 0.5F,
 		ThaumicSlime::createAttributes, b -> b, 16761087, 16744703);
 	public static final EntityType<TaintSpider> TAINT_SPIDER = mob("taint_spider", TaintSpider::new, MobCategory.MONSTER, 0.4F, 0.3F,

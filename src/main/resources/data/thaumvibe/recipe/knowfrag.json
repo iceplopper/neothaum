@@ -2,12 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "KKK",
-    "KKK",
-    "KKK"
+    "###",
+    "###",
+    "###"
   ],
   "key": {
-    "K": "thaumvibe:knowledge_fragment"
+    "#": "thaumvibe:knowledge_fragment"
   },
   "result": {
     "id": "thaumvibe:research_notes"

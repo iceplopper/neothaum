@@ -105,15 +105,21 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Flux Scrubber & Banners:**
   - **Flux Scrubber:** Directional artifice device (`FluxScrubberBlock` / `FluxScrubberBlockEntity` / `FluxScrubberRenderer`). Connects to Aer centivis via vis network (5 cv/cleansing action), scans 16-block cuboid for `FLUX_GOO` and `FLUX_GAS` blocks, dissolves flux with sparkle effects, accumulates charges, converts every 4 charges into Praecantatio liquid essentia (up to 4), and outputs into tube networks via suction nozzle. 3D OBJ model (`obelisk_cap.obj`) with animated bobbing floating tip.
   - **Banners:** Decorative hanging flags (`BannerBlock` / `BannerBlockEntity` / `BannerRenderer` / `BannerItem`). Mounts on floors with 16 rotation angles or walls with directional facing. Shift-right-click clears aspect, essentia phial stamps aspect insignia with cloth audio, drops `BannerItem` preserving dye color and aspect. Features 16 Thaumcraft dye colors plus the Cultist Banner. Animated cloth swaying in wind.
+- **Void Fortress Robes, Cultist Gear, Crimson Blade & Primal Arrows:**
+  - **Void Fortress Robes:** Void Thaumaturge Hood, Robe, Leggings (`VoidRobeArmorItem`). 5% vis discount and 2 warp per piece, passive self-repair (1 hp / 20 ticks), dyeable with cauldron washing, built-in Goggles of Revealing on hood (`showNodes`), augmentable with runic shielding. Infusion crafting recipes with instability 6.
+  - **Cultist Equipment:** Cultist Robes (`CultistRobeArmorItem`: hood, robe, leggings; 1% discount, 1 warp), Cultist Boots (`CultistBootsItem`: 1% discount, 1 warp), Cultist Plate (`CultistPlateArmorItem`: knight helm, chest, greaves; iron defense, runic shielding), Cultist Leader Armor (`CultistLeaderArmorItem`: praetor helm, chest, greaves; thaumium fortress defense, runic shielding).
+  - **Crimson Blade:** Jagged eldritch void sword (`CrimsonSwordItem`), 3.5 bonus damage, self-repairing, inflicts Weakness (3s) and Hunger (6s) on strike, 2 permanent warp, and "Greater Sapping" lore tooltip.
+  - **Primal Arrows:** Six elemental arrows (`PrimalArrowItem` / `PrimalArrowEntity` / `PrimalArrowRenderer`): Air (armor piercing), Fire (5s ignite), Water (Slowness IV), Earth (1.5x damage), Order (Weakness IV), Entropy (Wither 5s). Aspect trail particles, `#minecraft:arrows` tag, arcane shaped crafting recipes.
+- **Throwables & Small Items:**
+  - **Throwing Alumentum:** `AlumentumEntity` throwable projectile extending `ThrowableItemProjectile` (velocity 0.75F, trailing wisp and sparkle particles, 1.66F explosion on impact respecting `mobGriefing`). Thrown via `AlumentumItem` with bow sound, and compatible with vanilla dispensers via `ProjectileItem`. Retains 6,400 tick cooking fuel.
+  - **Loot Bags:** Common, Uncommon, and Rare treasure bags (`LootBagItem`). Dropped by champions, cultists, and eldritch guardians. Right-click drops 8-12 items from TC4's authentic weighted loot table (gold coins, eldritch eyes, nether stars, gems, baubles, enchanted books, golden apples, potions, and enchanted gear) with `coins` sound.
+  - **Knowledge Fragments:** Right-click consumes 1 fragment and grants 1-2 points to all 6 primal aspect pools in the player's research pool (`KnowledgeFragmentItem`). 9 fragments crafted 3x3 into `research_notes` (`knowfrag.json`).
+  - **Sinister Lodestone:** Attuned stone compass (`SinisterLodestoneItem`). Tracks Sinister nodes within 256 blocks, testing the player's view cone (0.66F aperture ≈ 38°); dynamically switches model to glowing active state (`sinister_stone_active`) via `TVComponents.ACTIVE`. Harbors 1 point of permanent warp. Infusion recipe (`sinstone.json`).
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
 
 ## Still to do
-
-### Remaining Gear & Items (S)
-- **Throwables:** throwing alumentum.
-- **Small items:** the loot bag, the stone compass, and using knowledge fragments.
 
 ### Golemancy (L)
 - **Golems:** all material types, with cores, upgrades and decorations.

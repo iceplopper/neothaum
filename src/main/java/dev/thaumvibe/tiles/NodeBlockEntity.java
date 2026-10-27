@@ -67,6 +67,9 @@ public class NodeBlockEntity extends TVBlockEntity {
 		change = this.handleHungryNodeFirst(change);
 		this.count++;
 		this.checkLock();
+		if (this.nodeType == NodeType.DARK && this.count % 50 == 0) {
+			dev.thaumvibe.items.SinisterLodestoneItem.trackSinisterNode(this.level, this.worldPosition);
+		}
 		if (!this.level.isClientSide()) {
 			change = this.handleDischarge(change);
 			change = this.handleRecharge(change);

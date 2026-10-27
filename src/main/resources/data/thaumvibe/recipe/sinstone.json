@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "SINSTONE",
+  "instability": 5,
+  "aspects": {
+    "sensus": 8,
+    "tenebrae": 8,
+    "alienis": 8,
+    "auram": 8
+  },
+  "central": "minecraft:flint",
+  "components": [
+    "thaumvibe:nitor",
+    "thaumvibe:order_shard",
+    "thaumvibe:knowledge_fragment",
+    "thaumvibe:entropy_shard"
+  ],
+  "result": {
+    "id": "thaumvibe:sinister_lodestone"
+  }
+}

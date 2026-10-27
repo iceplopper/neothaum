@@ -23,6 +23,7 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.PRIMAL_ORB, FocusProjectileRenderers.PrimalOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.PRIMAL_ARROW, dev.thaumvibe.client.render.PrimalArrowRenderer::new);
 		EntityRendererRegistry.register(TVEntities.BOTTLE_TAINT, ThrownItemRenderer::new);
+		EntityRendererRegistry.register(TVEntities.ALUMENTUM, ThrownItemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TAINT_SPIDER, TaintSpiderRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TAINT_SPORE, TaintSporeRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TAINT_SPORE_SWARMER, TaintSporeRenderer::new);

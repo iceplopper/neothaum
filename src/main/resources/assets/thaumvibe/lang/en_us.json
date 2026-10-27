@@ -2007,5 +2007,10 @@
   "item.thaumvibe.primal_arrow_earth": "Earth Arrow",
   "item.thaumvibe.primal_arrow_order": "Order Arrow",
   "item.thaumvibe.primal_arrow_entropy": "Entropy Arrow",
-  "entity.thaumvibe.primal_arrow": "Primal Arrow"
+  "entity.thaumvibe.primal_arrow": "Primal Arrow",
+  "item.thaumvibe.loot_bag_common": "Common Treasure",
+  "item.thaumvibe.loot_bag_uncommon": "Uncommon Treasure",
+  "item.thaumvibe.loot_bag_rare": "Rare Treasure",
+  "item.thaumvibe.sinister_lodestone": "Sinister Lodestone",
+  "entity.thaumvibe.alumentum": "Alumentum"
 }

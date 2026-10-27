@@ -32,11 +32,15 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Holder;
 import java.util.Map;
 import java.util.EnumMap;
+import dev.thaumvibe.items.AlumentumItem;
 import dev.thaumvibe.items.ArcaneKeyItem;
 import dev.thaumvibe.items.BathSaltsItem;
 import dev.thaumvibe.items.FluidBucketItem;
+import dev.thaumvibe.items.KnowledgeFragmentItem;
+import dev.thaumvibe.items.LootBagItem;
 import dev.thaumvibe.items.RobeArmorItem;
 import dev.thaumvibe.items.SanitizingSoapItem;
+import dev.thaumvibe.items.SinisterLodestoneItem;
 import dev.thaumvibe.items.equipment.FortressArmorItem;
 import dev.thaumvibe.baubles.BaubleType;
 import dev.thaumvibe.items.BaubleBlankItem;
@@ -136,15 +140,15 @@ public final class TVItems {
 	public static final Item RESEARCH_NOTES = register("research_notes", ResearchNotesItem::new, new Item.Properties().stacksTo(1));
 
 	// ItemResource
-	/** EventHandlerWorld.getBurnTime: alumentum burns for 6400 ticks (and the alchemical furnace runs twice as fast on it). */
-	public static final Item ALUMENTUM = register("alumentum", Item::new, new Item.Properties().component(DataComponents.COOKING_FUEL, fuel(6400)));
+	/** EventHandlerWorld.getBurnTime: alumentum burns for 6400 ticks (and the alchemical furnace runs twice as fast on it). Thrown with velocity 0.75. */
+	public static final Item ALUMENTUM = register("alumentum", AlumentumItem::new, new Item.Properties().component(DataComponents.COOKING_FUEL, fuel(6400)));
 	public static final Item NITOR = register("nitor", NitorItem::new, new Item.Properties());
 	public static final Item THAUMIUM_INGOT = simple("thaumium_ingot");
 	public static final Item QUICKSILVER = simple("quicksilver");
 	public static final Item MAGIC_TALLOW = simple("magic_tallow");
 	public static final Item AMBER = simple("amber");
 	public static final Item ENCHANTED_FABRIC = simple("enchanted_fabric");
-	public static final Item KNOWLEDGE_FRAGMENT = simple("knowledge_fragment");
+	public static final Item KNOWLEDGE_FRAGMENT = register("knowledge_fragment", KnowledgeFragmentItem::new, new Item.Properties());
 	public static final Item SALIS_MUNDUS = simple("salis_mundus");
 	public static final Item ZOMBIE_BRAIN = simple("zombie_brain");
 	public static final Item VIS_FILTER = simple("vis_filter");
@@ -269,6 +273,10 @@ public final class TVItems {
 	public static final Item RESONATOR = register("essentia_resonator", ResonatorItem::new, new Item.Properties().stacksTo(1));
 	public static final Item SANITY_CHECKER = register("sanity_checker", Item::new, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
 	public static final Item BOTTLED_TAINT = register("bottled_taint", BottledTaintItem::new, new Item.Properties().stacksTo(16));
+	public static final Item SINISTER_LODESTONE = register("sinister_lodestone", SinisterLodestoneItem::new, new Item.Properties().stacksTo(1).rarity(Rarity.RARE));
+	public static final Item LOOT_BAG_COMMON = register("loot_bag_common", p -> new LootBagItem(0, p), new Item.Properties().stacksTo(16).rarity(Rarity.COMMON));
+	public static final Item LOOT_BAG_UNCOMMON = register("loot_bag_uncommon", p -> new LootBagItem(1, p), new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+	public static final Item LOOT_BAG_RARE = register("loot_bag_rare", p -> new LootBagItem(2, p), new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
 	public static final Item IRON_ARCANE_KEY = register("iron_arcane_key", p -> new ArcaneKeyItem(false, p), new Item.Properties().stacksTo(1));
 	public static final Item GOLD_ARCANE_KEY = register("gold_arcane_key", p -> new ArcaneKeyItem(true, p), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
 	public static final Item MAGIC_MIRROR = register("magic_mirror", p -> new dev.thaumvibe.items.MirrorItem(TVBlocks.MAGIC_MIRROR, false, p), new Item.Properties().rarity(Rarity.UNCOMMON));
