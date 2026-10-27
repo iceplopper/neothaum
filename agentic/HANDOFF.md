@@ -118,7 +118,26 @@ The master backlog is cataloged in [`agentic/TODO.md`](file:///C:/Users/harri/Do
 - Affected mobs: Eldritch Guardian, Crimson Knight, Crimson Cleric, Crimson Praetor, Shambling Husk, Eldritch Warden, Eldritch Golem.
 - Fix UV definitions in each entity model's `createBodyLayer()` to match the original TC4 texture maps in `original/decompiled/assets/thaumcraft/textures/models/`.
 
-### 16. Staves Architecture & Implementation
+### 16. Eldritch Obelisk Custom Model & Floating Capstone
+- **Symptom:** Eldritch Obelisk currently uses an incorrect basic block model and textures.
+- **TC4 Design:** A 4-block multiblock pillar topped by a floating, bobbing runic capstone suspended over a swirling dark particle/void vortex.
+- **Reference:** `original/decompiled/thaumcraft/client/renderers/tile/TileEldritchObeliskRenderer.java`, `textures/models/obelisk_cap.obj`, `obelisk_cap.png`, `obelisk_side.png`, `tunnel.png`.
+
+### 17. Land Validation for Structure Spawns (Open Water Fix)
+- **Symptom:** Structures generate floating in open water (oceans, lakes, and rivers).
+- **Cause:** `heightAt()` in `TCWorldFeature.java` uses `MOTION_BLOCKING_NO_LEAVES`, stopping on water fluid surfaces.
+- **Fix:** Validate that the target position and surrounding footprint are solid blocks and not water/fluids (`!world.getFluidState(pos).is(FluidTags.WATER) && world.getBlockState(pos).isSolid()`).
+
+### 18. Wizard Tower Bottom Floor Doorway Clearance
+- **Symptom:** The bottom floor blocks the door with wooden planks.
+- **Cause:** `WizardTowerFeature.java` line 58 places oak planks across the interior at `y = 1` (`cy + 1`), which is the exact height of the bottom half of the door.
+- **Fix:** In TC4 (`ComponentWizardTower.java` line 59), foundation planks are placed at `y = 0` (`cy`), and `y = 1` to `y = 4` is open air. Place the ground planks at `y = 0`, keeping `y = 1` clear.
+
+### 19. Authentic Randomized TC4 Structure Loot Tables
+- **Symptom:** Loot in structures is hardcoded with identical item layouts across all spawns.
+- **Fix:** Implement dedicated loot tables in `data/neothaum/loot_table/chests/` for `wizard_tower.json`, `barrow_mound.json`, `banker_house.json`, and `eldritch_ring.json` based on original TC4 `ChestGenHooks` pools.
+
+### 20. Staves Architecture & Implementation
 - **Original TC4 Mechanics Explained:**
   - Staves in TC4 are not just craftable sticks; they are heavy combat/casting variants of the wand.
   - **Crafting:** In the Arcane Worktable, craft a **Staff Core** using 2 wand rods of the same type + primal charms/inert cores. Combine the Staff Core with 2 wand caps.

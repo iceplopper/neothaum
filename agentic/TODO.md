@@ -76,6 +76,12 @@
   - **Root Cause:** `assets/neothaum/models/block/eldritch_altar.json` and `eldritch_capstone.json` have misconfigured texture variables (`#all`, `#texture`) or invalid UV bounds outside 0–16.
   - **Files to check:** `assets/neothaum/models/block/eldritch_altar.json`, `eldritch_capstone.json`, and `EldritchAltarRenderer.java`.
 
+- [ ] **2.2 Eldritch Obelisk Custom Model & Textures**
+  - **Issue:** The Eldritch Obelisk does not have the correct textures or model.
+  - **Original TC4 Appearance:** A 4-block high multiblock pillar topped with a floating, bobbing runic capstone suspended above an eerie swirling dark void / particle field.
+  - **Reference Files:** `original/decompiled/thaumcraft/client/renderers/tile/TileEldritchObeliskRenderer.java`, `textures/models/obelisk_cap.obj`, `obelisk_cap.png`, `obelisk_side.png`, `tunnel.png`.
+  - **Files to check:** `EldritchObeliskBlock.java`, `EldritchObeliskBlockEntity.java`, and create/update its dedicated Block Entity Renderer or baked model.
+
 ---
 
 ## 👾 3. Entity Models, Textures & Audio
@@ -144,6 +150,24 @@
   - **Fixes:**
     - Increase spacing and separation in `data/neothaum/worldgen/structure_set/*.json`.
     - Move the Thaumcraft Village House into vanilla village Jigsaw template pools (`village/plains/houses`, `village/desert/houses`, etc.) so it exclusively generates as part of a village.
+
+- [ ] **6.2 Solid Land Validation for Structure Spawns**
+  - **Issue:** Structures are generating on open water bodies (oceans, lakes, and rivers).
+  - **Root Cause:** `TCWorldFeature.java` determines structure height using `world.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z)`, which stops on water fluid surfaces.
+  - **Fix:** In `TCWorldFeature.java`, verify that the placement position is solid ground and NOT water/fluid (`!world.getFluidState(pos).is(FluidTags.WATER) && world.getBlockState(pos).isSolid()`) across the structure footprint before triggering generation.
+
+- [ ] **6.3 Wizard Tower Bottom Floor Doorway Fix**
+  - **Issue:** Wizard Tower bottom floor blocks the door with wooden planks.
+  - **Root Cause:** In `WizardTowerFeature.java` line 58, the interior floor is generated at `y = 1` (`cy + 1`), placing solid oak planks across the ground level right where the door is placed at `cy + 1`. In original TC4 (`ComponentWizardTower.java` line 59), the floor planks are at `y = 0` (`cy`), and `y = 1` through `y = 4` is open air so the doorway is completely unobstructed.
+  - **Fix:** Move the ground floor oak planks down to `y = 0` (or `cy`), leaving `y = 1` clear for the entryway.
+
+- [ ] **6.4 Authentic Randomized TC4 Structure Loot Tables**
+  - **Issue:** Loot in all generated structures is identical in items and layout (or using vanilla generic tables).
+  - **Fix:** Replace hardcoded `chest.setItem(...)` slots with dedicated JSON loot tables in `data/neothaum/loot_table/chests/` mirroring original TC4 `ChestGenHooks`:
+    - `chests/wizard_tower.json`: Paper, Gold Nuggets, Glass Bottles, Potions, Knowledge Fragments, Alumentum, Nitor, Thaumium Ingots, Thaumonomicon.
+    - `chests/barrow_mound.json`: Eldritch artifacts, amber, coins, cursed trinkets.
+    - `chests/banker_house.json`: Coins, emeralds, arcane gold keys, ledgers.
+    - `chests/eldritch_ring.json`: Eldritch Eyes, void seeds, primordial pearl fragments.
 
 ---
 
