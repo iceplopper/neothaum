@@ -22,6 +22,9 @@
 		],
 		"jade": [
 			"dev.neothaum.client.addon.jade.NeoThaumJadePlugin"
+		],
+		"modmenu": [
+			"dev.neothaum.client.addon.modmenu.NeoThaumModMenu"
 		]
 	},
 	"depends": {
@@ -32,7 +35,8 @@
 	},
 	"suggests": {
 		"jei": "*",
-		"jade": "*"
+		"jade": "*",
+		"modmenu": "*"
 	},
 	"mixins": [
 		"neothaum.mixins.json",

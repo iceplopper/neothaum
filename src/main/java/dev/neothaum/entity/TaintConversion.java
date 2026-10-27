@@ -23,6 +23,9 @@ import net.minecraft.world.entity.player.Player;
 public final class TaintConversion {
 	public static void init() {
 		ServerLivingEntityEvents.ALLOW_DEATH.register((entity, source, amount) -> {
+			if (!dev.neothaum.config.NeoThaumConfig.current.corruptExistingMobs) {
+				return true;
+			}
 			if (!(entity.level() instanceof ServerLevel level) || entity instanceof TaintedMob || entity instanceof Player
 				|| !entity.hasEffect(TVMobEffects.FLUX_TAINT)) {
 				return true;

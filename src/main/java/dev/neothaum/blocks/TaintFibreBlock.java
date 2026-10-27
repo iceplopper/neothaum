@@ -153,6 +153,9 @@ public class TaintFibreBlock extends Block {
 
 	@Override
 	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (!dev.neothaum.config.NeoThaumConfig.current.taintSpread) {
+			return;
+		}
 		int md = state.getValue(TYPE);
 		taintBiomeSpread(level, pos, random);
 		if (md == 0 && isOnlyAdjacentToTaint(level, pos) || !TVBiomes.is(level, pos, TVBiomes.TAINTED_LAND)) {
@@ -207,7 +210,7 @@ public class TaintFibreBlock extends Block {
 
 	/** BlockTaintFibres.taintBiomeSpread: now and then the tainted land itself creeps a block further. */
 	public static void taintBiomeSpread(ServerLevel level, BlockPos pos, RandomSource rand) {
-		int taintSpreadRate = 200;
+		int taintSpreadRate = Math.max(1, dev.neothaum.config.NeoThaumConfig.current.taintSpreadRate);
 		int xx = rand.nextInt(3) - 1;
 		int zz = rand.nextInt(3) - 1;
 		BlockPos p = pos.offset(xx, 0, zz);
@@ -255,7 +258,7 @@ public class TaintFibreBlock extends Block {
 		if (!level.isClientSide() && entity instanceof LivingEntity le && !le.isInvertedHealAndHarm()) {
 			if (entity instanceof Player && level.getRandom().nextInt(1000) == 0) {
 				le.addEffect(new MobEffectInstance(TVMobEffects.FLUX_TAINT, 80, 0));
-			} else if (!(entity instanceof Player) && level.getRandom().nextInt(500) == 0) {
+			} else if (!(entity instanceof Player) && dev.neothaum.config.NeoThaumConfig.current.corruptExistingMobs && level.getRandom().nextInt(500) == 0) {
 				le.addEffect(new MobEffectInstance(TVMobEffects.FLUX_TAINT, 160, 0));
 			}
 		}

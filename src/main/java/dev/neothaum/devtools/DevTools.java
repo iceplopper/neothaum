@@ -59,7 +59,11 @@ public final class DevTools {
 		FabricCreativeModeTab.builder()
 			.title(Component.translatable("itemGroup.neothaum.f_dev_tools"))
 			.icon(() -> new ItemStack(NODE_EDITOR))
-			.displayItems((params, out) -> ITEMS.forEach(out::accept))
+			.displayItems((params, out) -> {
+				if (dev.neothaum.config.NeoThaumConfig.current.showCreativeDebugTab) {
+					ITEMS.forEach(out::accept);
+				}
+			})
 			.build());
 
 	private static Item register(String name, Function<Item.Properties, Item> factory) {

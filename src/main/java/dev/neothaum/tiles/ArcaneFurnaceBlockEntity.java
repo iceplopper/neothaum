@@ -79,7 +79,9 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 	}
 
 	public int calcCookTime() {
-		return (this.speedyTime > 0 ? 80 : 140) - 20 * this.getBellows();
+		int base = (this.speedyTime > 0 ? 80 : 140) - 20 * this.getBellows();
+		float speedMult = Math.max(0.1F, dev.neothaum.config.NeoThaumConfig.current.infernalFurnaceSpeedMultiplier);
+		return Math.max(1, Math.round(base / speedMult));
 	}
 
 	public boolean canSmelt(ServerLevel serverLevel, ItemStack stack) {
@@ -211,13 +213,14 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 		if (bonus != null && !bonus.isEmpty()) {
 			int bellows = this.getBellows();
 			int bonusCount = 0;
+			float bonusMult = Math.max(0.0F, dev.neothaum.config.NeoThaumConfig.current.infernalFurnaceBonusMultiplier);
 			if (bellows == 0) {
-				if (random.nextInt(4) == 0) {
+				if (random.nextFloat() < (0.25F * bonusMult)) {
 					bonusCount++;
 				}
 			} else {
 				for (int a = 0; a < bellows; a++) {
-					if (random.nextFloat() < 0.44F) {
+					if (random.nextFloat() < (0.44F * bonusMult)) {
 						bonusCount++;
 					}
 				}

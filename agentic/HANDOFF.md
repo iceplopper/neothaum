@@ -37,6 +37,18 @@
 3. **Client Startup Crash Resolution (`d099a66`):**
    - `EldritchAltarRenderer`: Converted `eyeStack` to lazy initialization so it does not instantiate `new ItemStack(...)` before Minecraft item components are bound during client resource reload.
    - Jade Config Keys: Added `config.jade.plugin_neothaum.crucible`, `jar`, `aura_node`, and `runic_matrix` to `en_us.json`.
+4. **Editable Configurations & ModMenu Integration (v1.0.1):**
+   - Implemented full in-game configuration GUI (`NeoThaumConfigScreen.java`) integrated via `ModMenuApi` (`NeoThaumModMenu.java`).
+   - Added all requested settings in `NeoThaumConfig.java` reading/writing `config/neothaum.json`:
+     - Node generation rarity, variant rarity, and individual node type/modifier weights.
+     - Biome generation toggles and size percentage slices for Magical Forest and Tainted Land.
+     - Individual generation rarities for Eldritch Ring, Barrow Mound, Hilltop Stones, Wizard Tower, and Banker House.
+     - Taint spread toggles and tick rate.
+     - `corruptExistingMobs` toggle (converting dying mobs vs. spawn-only).
+     - `fluxMultiplier` scaling spilled flux from crucibles/furnaces.
+     - Infernal furnace speed multiplier and bonus item yield multiplier.
+     - `showCreativeDebugTab` toggle hiding the dev tools creative tab when disabled.
+   - Recompiled as `neothaum-1.0.1.jar` and packaged into `NeoThaum-1.0.1.mrpack` with `modmenu-21.0.0.jar`.
 
 ---
 

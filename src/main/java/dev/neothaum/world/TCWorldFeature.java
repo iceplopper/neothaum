@@ -63,13 +63,14 @@ public record TCWorldFeature(boolean nether) implements Feature {
 	}
 
 	private void generateStructures(WorldGenLevel world, RandomSource random, int cx, int cz) {
-		if (random.nextInt(66) == 0) {
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		if (cfg.eldritchRingRarity > 0 && random.nextInt(cfg.eldritchRingRarity) == 0) {
 			int x = cx + random.nextInt(16);
 			int z = cz + random.nextInt(16);
 			int y = heightAt(world, x, z);
 			EldritchRingFeature.generate(world, random, new BlockPos(x, y - 1, z));
 		}
-		if (random.nextInt(150) == 0) {
+		if (cfg.barrowMoundRarity > 0 && random.nextInt(cfg.barrowMoundRarity) == 0) {
 			int x = cx + random.nextInt(16);
 			int z = cz + random.nextInt(16);
 			int y = heightAt(world, x, z);
@@ -78,15 +79,15 @@ public record TCWorldFeature(boolean nether) implements Feature {
 		int sx = cx + random.nextInt(16);
 		int sz = cz + random.nextInt(16);
 		int sy = heightAt(world, sx, sz);
-		if (sy >= 85 && random.nextInt(40) == 0) {
+		if (sy >= 85 && cfg.hilltopStonesRarity > 0 && random.nextInt(cfg.hilltopStonesRarity) == 0) {
 			HilltopStonesFeature.generate(world, random, new BlockPos(sx, sy, sz));
 		}
-		if (random.nextInt(120) == 0) {
+		if (cfg.wizardTowerRarity > 0 && random.nextInt(cfg.wizardTowerRarity) == 0) {
 			int x = cx + random.nextInt(16);
 			int z = cz + random.nextInt(16);
 			int y = heightAt(world, x, z);
 			WizardTowerFeature.generate(world, random, new BlockPos(x, y - 1, z));
-		} else if (random.nextInt(140) == 0) {
+		} else if (cfg.bankerHomeRarity > 0 && random.nextInt(cfg.bankerHomeRarity) == 0) {
 			int x = cx + random.nextInt(16);
 			int z = cz + random.nextInt(16);
 			int y = heightAt(world, x, z);
@@ -230,9 +231,10 @@ public record TCWorldFeature(boolean nether) implements Feature {
 		}
 	}
 
-	/** generateWildNodes (Config.nodeRarity = 36). */
+	/** generateWildNodes configurable via NeoThaumConfig.nodeRarity. */
 	private void generateWildNodes(WorldGenLevel world, RandomSource random, int cx, int cz) {
-		if (random.nextInt(36) != 0) {
+		int rarity = dev.neothaum.config.NeoThaumConfig.current.nodeRarity;
+		if (rarity <= 0 || random.nextInt(rarity) != 0) {
 			return;
 		}
 		int x = cx + random.nextInt(16);

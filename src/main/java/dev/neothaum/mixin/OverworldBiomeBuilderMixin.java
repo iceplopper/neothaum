@@ -33,24 +33,23 @@ public abstract class OverworldBiomeBuilderMixin {
 		long lo = humidity.min();
 		long hi = humidity.max();
 		long span = hi - lo;
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
 		if (weirdness.max() >= 0L) {
-			// the weird side: the driest 30% of the forest is magical forest
-			long m1 = lo + span * 30 / 100;
-			neothaum$add(biomes, temperature, new Climate.Parameter(lo, m1), continentalness, erosion, weirdness, offset, TVBiomes.MAGICAL_FOREST);
-			neothaum$add(biomes, temperature, new Climate.Parameter(m1, hi), continentalness, erosion, weirdness, offset, Biomes.FOREST);
-			ci.cancel();
+			if (cfg.magicalForestGenerate && cfg.magicalForestSize > 0) {
+				int pct = Math.clamp(cfg.magicalForestSize, 1, 100);
+				long m1 = lo + span * pct / 100;
+				neothaum$add(biomes, temperature, new Climate.Parameter(lo, m1), continentalness, erosion, weirdness, offset, TVBiomes.MAGICAL_FOREST);
+				neothaum$add(biomes, temperature, new Climate.Parameter(m1, hi), continentalness, erosion, weirdness, offset, Biomes.FOREST);
+				ci.cancel();
+			}
 		} else {
-			// Tainted land must be rare and localized:
-			// 1. Only deep inland (continentalness >= 0.03F), never bordering coast, beaches, or ocean/coastal water.
-			// 2. Only in deep negative weirdness (<= -0.4F), avoiding the common low/mid slices near normal terrain.
-			// 3. Narrow 5% humidity slice so tainted biomes are small, tight pockets rather than massive sprawling regions.
-			if (continentalness.min() >= MID_INLAND_MIN && weirdness.max() <= RARE_WEIRDNESS_MAX) {
-				long m2 = hi - span * 5 / 100;
+			if (cfg.taintedLandGenerate && cfg.taintedLandSize > 0 && continentalness.min() >= MID_INLAND_MIN && weirdness.max() <= RARE_WEIRDNESS_MAX) {
+				int pct = Math.clamp(cfg.taintedLandSize, 1, 100);
+				long m2 = hi - span * pct / 100;
 				neothaum$add(biomes, temperature, new Climate.Parameter(lo, m2), continentalness, erosion, weirdness, offset, Biomes.FOREST);
 				neothaum$add(biomes, temperature, new Climate.Parameter(m2, hi), continentalness, erosion, weirdness, offset, TVBiomes.TAINTED_LAND);
 				ci.cancel();
 			}
-			// Otherwise, let vanilla Forest generate normally without interception.
 		}
 	}
 

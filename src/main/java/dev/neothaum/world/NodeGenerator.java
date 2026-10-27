@@ -117,19 +117,27 @@ public final class NodeGenerator {
 				basicAspects.add(as);
 			}
 		}
-		int specialNodeRarity = 18;
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		int specialNodeRarity = Math.max(1, cfg.nodeVariantRarity);
 		NodeType type = NodeType.NORMAL;
 		if (silverwood) {
 			type = NodeType.PURE;
 		} else if (eerie) {
 			type = NodeType.DARK;
 		} else if (random.nextInt(specialNodeRarity) == 0) {
-			switch (random.nextInt(10)) {
-				case 0, 1, 2 -> type = NodeType.DARK;
-				case 3, 4, 5 -> type = NodeType.UNSTABLE;
-				case 6, 7, 8 -> type = NodeType.PURE;
-				case 9 -> type = NodeType.HUNGRY;
-				default -> {
+			int total = cfg.darkNodeWeight + cfg.unstableNodeWeight + cfg.pureNodeWeight + cfg.hungryNodeWeight + cfg.taintedNodeWeight;
+			if (total > 0) {
+				int r = random.nextInt(total);
+				if ((r -= cfg.darkNodeWeight) < 0) {
+					type = NodeType.DARK;
+				} else if ((r -= cfg.unstableNodeWeight) < 0) {
+					type = NodeType.UNSTABLE;
+				} else if ((r -= cfg.pureNodeWeight) < 0) {
+					type = NodeType.PURE;
+				} else if ((r -= cfg.hungryNodeWeight) < 0) {
+					type = NodeType.HUNGRY;
+				} else {
+					type = NodeType.TAINTED;
 				}
 			}
 		}
@@ -137,12 +145,16 @@ public final class NodeGenerator {
 			type = forcedType;
 		}
 		NodeModifier modifier = null;
-		if (forcedType == null && random.nextInt(specialNodeRarity / 2) == 0) {
-			switch (random.nextInt(3)) {
-				case 0 -> modifier = NodeModifier.BRIGHT;
-				case 1 -> modifier = NodeModifier.PALE;
-				default -> modifier = NodeModifier.FADING;
-			}
+		int modTotal = cfg.brightNodeWeight + cfg.paleNodeWeight + cfg.fadingNodeWeight;
+		if (forcedType == null && modTotal > 0 && random.nextInt(Math.max(1, specialNodeRarity / 2)) == 0) {
+			int r = random.nextInt(modTotal);
+			if ((r -= cfg.brightNodeWeight) < 0) {
+				modifier = NodeModifier.BRIGHT;
+				} else if ((r -= cfg.paleNodeWeight) < 0) {
+					modifier = NodeModifier.PALE;
+				} else {
+					modifier = NodeModifier.FADING;
+				}
 		}
 		Holder<Biome> bg = world.getBiome(pos);
 		int baura = getBiomeAura(bg);

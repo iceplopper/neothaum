@@ -168,7 +168,8 @@ public class CrucibleBlockEntity extends TVBlockEntity implements dev.neothaum.a
 	public void spillRemnants() {
 		if (this.water > 0 || this.aspects.visSize() > 0) {
 			this.water = 0;
-			for (int a = 0; a < this.aspects.visSize() / 2; a++) {
+			int count = Math.round((this.aspects.visSize() / 2.0F) * Math.max(0.0F, dev.neothaum.config.NeoThaumConfig.current.fluxMultiplier));
+			for (int a = 0; a < count; a++) {
 				this.spill();
 			}
 			this.aspects = new AspectList();
