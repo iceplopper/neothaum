@@ -1926,5 +1926,8 @@
   "item.thaumvibe.bucket_of_purifying_fluid": "Bucket of Purifying Fluid",
   "item.thaumvibe.purifying_bath_salts": "Purifying Bath Salts",
   "item.thaumvibe.sanitizing_soap": "Sanitizing Soap",
+  "item.thaumvibe.thaumium_fortress_helm": "Thaumium Fortress Helm",
+  "item.thaumvibe.thaumium_fortress_cuirass": "Thaumium Fortress Cuirass",
+  "item.thaumvibe.thaumium_fortress_thigh_guards": "Thaumium Fortress Thigh Guards",
   "tc.doorfail": "The door refuses to budge."
 }

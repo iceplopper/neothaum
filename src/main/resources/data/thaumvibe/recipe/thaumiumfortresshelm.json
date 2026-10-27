@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ARMORFORTRESS",
+  "instability": 3,
+  "aspects": {
+    "metallum": 24,
+    "tutamen": 16,
+    "praecantatio": 16
+  },
+  "central": "thaumvibe:thaumium_helmet",
+  "components": [
+    "thaumvibe:thaumium_ingot",
+    "thaumvibe:thaumium_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:emerald"
+  ],
+  "result": {
+    "id": "thaumvibe:thaumium_fortress_helm"
+  }
+}

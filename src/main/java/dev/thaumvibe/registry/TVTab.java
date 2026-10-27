@@ -130,6 +130,16 @@ public final class TVTab {
 							jar.set(TVComponents.NODE_TYPE, t.ordinal());
 							out.accept(jar);
 						}
+					} else if (item == TVItems.THAUMIUM_FORTRESS_HELM) {
+						out.accept(item);
+						ItemStack gog = new ItemStack(item);
+						gog.set(TVComponents.GOGGLES, true);
+						out.accept(gog);
+						for (int m = 0; m < 3; m++) {
+							ItemStack mask = new ItemStack(item);
+							mask.set(TVComponents.MASK, m);
+							out.accept(mask);
+						}
 					} else {
 						out.accept(item);
 					}

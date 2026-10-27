@@ -37,6 +37,7 @@ import dev.thaumvibe.items.BathSaltsItem;
 import dev.thaumvibe.items.FluidBucketItem;
 import dev.thaumvibe.items.RobeArmorItem;
 import dev.thaumvibe.items.SanitizingSoapItem;
+import dev.thaumvibe.items.equipment.FortressArmorItem;
 import dev.thaumvibe.baubles.BaubleType;
 import dev.thaumvibe.items.BaubleBlankItem;
 import dev.thaumvibe.items.EssentiaPhialItem;
@@ -278,6 +279,14 @@ public final class TVItems {
 	public static final Item VOID_CHESTPLATE = register("void_chestplate", VoidGear.Armor::new, new Item.Properties().humanoidArmor(VOID_ARMOR, ArmorType.CHESTPLATE));
 	public static final Item VOID_LEGGINGS = register("void_leggings", VoidGear.Armor::new, new Item.Properties().humanoidArmor(VOID_ARMOR, ArmorType.LEGGINGS));
 	public static final Item VOID_BOOTS = register("void_boots", VoidGear.Armor::new, new Item.Properties().humanoidArmor(VOID_ARMOR, ArmorType.BOOTS));
+
+	public static final ArmorMaterial FORTRESS_ARMOR = armor(40, 3, 7, 6, 3, SoundEvents.ARMOR_EQUIP_IRON, THAUMIUM_INGOTS, "fortress");
+	public static final Item THAUMIUM_FORTRESS_HELM = register("thaumium_fortress_helm", p -> new FortressArmorItem(EquipmentSlot.HEAD, p),
+		new Item.Properties().humanoidArmor(FORTRESS_ARMOR, ArmorType.HELMET).rarity(Rarity.RARE));
+	public static final Item THAUMIUM_FORTRESS_CUIRASS = register("thaumium_fortress_cuirass", p -> new FortressArmorItem(EquipmentSlot.CHEST, p),
+		new Item.Properties().humanoidArmor(FORTRESS_ARMOR, ArmorType.CHESTPLATE).rarity(Rarity.RARE));
+	public static final Item THAUMIUM_FORTRESS_THIGH_GUARDS = register("thaumium_fortress_thigh_guards", p -> new FortressArmorItem(EquipmentSlot.LEGS, p),
+		new Item.Properties().humanoidArmor(FORTRESS_ARMOR, ArmorType.LEGGINGS).rarity(Rarity.RARE));
 
 	// ItemNuggetEdible (1, 0.3) and ItemTripleMeatTreat (6, 0.8, always edible, 66% chance of 5 s of regeneration)
 	public static final Item CHICKEN_NUGGET = food("chicken_nugget");

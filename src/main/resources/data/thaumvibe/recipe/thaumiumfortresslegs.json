@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ARMORFORTRESS",
+  "instability": 3,
+  "aspects": {
+    "metallum": 24,
+    "tutamen": 20,
+    "praecantatio": 16
+  },
+  "central": "thaumvibe:thaumium_leggings",
+  "components": [
+    "thaumvibe:thaumium_ingot",
+    "thaumvibe:thaumium_ingot",
+    "thaumvibe:thaumium_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:leather"
+  ],
+  "result": {
+    "id": "thaumvibe:thaumium_fortress_thigh_guards"
+  }
+}

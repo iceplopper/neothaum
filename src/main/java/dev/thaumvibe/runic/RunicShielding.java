@@ -132,6 +132,45 @@ public final class RunicShielding {
 
 	/** LivingHurtEvent: the shield takes what it can of the blow, before armour. */
 	public static float onHurt(LivingEntity entity, DamageSource source, float amount) {
+		// Sipping Fiend mask (Mask 2): when attacker strikes with mask 2
+		if (source.getEntity() instanceof Player attacker && attacker.level() instanceof ServerLevel sl) {
+			ItemStack helm = attacker.getItemBySlot(EquipmentSlot.HEAD);
+			if (helm.is(dev.thaumvibe.registry.TVItems.THAUMIUM_FORTRESS_HELM) && Integer.valueOf(2).equals(helm.get(dev.thaumvibe.registry.TVComponents.MASK))) {
+				if (sl.getRandom().nextFloat() < amount / 12.0F) {
+					attacker.heal(1.0F);
+				}
+			}
+		}
+
+		// Angry Ghost mask (Mask 1): when defender is struck with mask 1
+		if (entity instanceof Player defender && defender.level() instanceof ServerLevel sl) {
+			ItemStack helm = defender.getItemBySlot(EquipmentSlot.HEAD);
+			if (helm.is(dev.thaumvibe.registry.TVItems.THAUMIUM_FORTRESS_HELM) && Integer.valueOf(1).equals(helm.get(dev.thaumvibe.registry.TVComponents.MASK))) {
+				if (source.getEntity() instanceof LivingEntity attacker && sl.getRandom().nextFloat() < amount / 10.0F) {
+					attacker.addEffect(new MobEffectInstance(MobEffects.WITHER, 80));
+				}
+			}
+		}
+
+		// Fortress armor set bonus damage reduction
+		if (entity instanceof Player player) {
+			int fortressPieces = 0;
+			boolean hasMask = false;
+			for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS}) {
+				ItemStack piece = player.getItemBySlot(slot);
+				if (piece.getItem() instanceof dev.thaumvibe.items.equipment.FortressArmorItem) {
+					fortressPieces++;
+					if (piece.has(dev.thaumvibe.registry.TVComponents.MASK)) {
+						hasMask = true;
+					}
+				}
+			}
+			if (fortressPieces > 0) {
+				float reduction = 1.0F - (fortressPieces * 0.05F + (hasMask ? 0.03F : 0.0F));
+				amount *= Math.max(0.7F, reduction);
+			}
+		}
+
 		if (!(entity instanceof ServerPlayer player) || !(entity.level() instanceof ServerLevel level)) {
 			return amount;
 		}
