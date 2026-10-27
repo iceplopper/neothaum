@@ -19,7 +19,7 @@ public final class SmeltingBonus {
 			return new ItemStack(Items.GOLD_NUGGET);
 		}
 		if (input.is(Items.RAW_COPPER) || input.is(Items.COPPER_ORE) || input.is(Items.DEEPSLATE_COPPER_ORE)) {
-			return new ItemStack(TVItems.COPPER_NUGGET);
+			return new ItemStack(Items.COPPER_NUGGET);
 		}
 		if (input.is(TVBlocks.CINNABAR_ORE.asItem())) {
 			return new ItemStack(TVItems.QUICKSILVER);
@@ -31,7 +31,7 @@ public final class SmeltingBonus {
 			return new ItemStack(Items.GOLD_NUGGET);
 		}
 		if (input.is(TVItems.NATIVE_COPPER_CLUSTER)) {
-			return new ItemStack(TVItems.COPPER_NUGGET);
+			return new ItemStack(Items.COPPER_NUGGET);
 		}
 		if (input.is(TVItems.NATIVE_CINNABAR_CLUSTER)) {
 			return new ItemStack(TVItems.QUICKSILVER);
@@ -57,7 +57,7 @@ public final class SmeltingBonus {
 			return new ItemStack(Items.GOLD_NUGGET);
 		}
 		if (path.contains("copper") && (path.contains("ore") || path.contains("raw"))) {
-			return new ItemStack(TVItems.COPPER_NUGGET);
+			return new ItemStack(Items.COPPER_NUGGET);
 		}
 		if (path.contains("cinnabar") || path.contains("mercury")) {
 			return new ItemStack(TVItems.QUICKSILVER);

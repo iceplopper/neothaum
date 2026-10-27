@@ -63,6 +63,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 
@@ -169,7 +170,8 @@ public final class TVItems {
 	public static final Item RAW_CINNABAR = simple("raw_cinnabar");
 	public static final Item THAUMIUM_NUGGET = simple("thaumium_nugget");
 	public static final Item VOID_METAL_NUGGET = simple("void_metal_nugget");
-	public static final Item COPPER_NUGGET = simple("copper_nugget");
+	/** Merged into vanilla Items.COPPER_NUGGET (Minecraft 26.3 provides copper nuggets natively). */
+	public static final Item COPPER_NUGGET = Items.COPPER_NUGGET;
 	public static final Item NATIVE_IRON_CLUSTER = simple("native_iron_cluster");
 	public static final Item NATIVE_COPPER_CLUSTER = simple("native_copper_cluster");
 	public static final Item NATIVE_GOLD_CLUSTER = simple("native_gold_cluster");
