@@ -115,17 +115,23 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Loot Bags:** Common, Uncommon, and Rare treasure bags (`LootBagItem`). Dropped by champions, cultists, and eldritch guardians. Right-click drops 8-12 items from TC4's authentic weighted loot table (gold coins, eldritch eyes, nether stars, gems, baubles, enchanted books, golden apples, potions, and enchanted gear) with `coins` sound.
   - **Knowledge Fragments:** Right-click consumes 1 fragment and grants 1-2 points to all 6 primal aspect pools in the player's research pool (`KnowledgeFragmentItem`). 9 fragments crafted 3x3 into `research_notes` (`knowfrag.json`).
   - **Sinister Lodestone:** Attuned stone compass (`SinisterLodestoneItem`). Tracks Sinister nodes within 256 blocks, testing the player's view cone (0.66F aperture ≈ 38°); dynamically switches model to glowing active state (`sinister_stone_active`) via `TVComponents.ACTIVE`. Harbors 1 point of permanent warp. Infusion recipe (`sinstone.json`).
+- **Golemancy:**
+  - **Golems & Cores:** Straw, Wood, Tallow, Clay, Flesh, Stone, Iron, and Thaumium golems with material-specific stats (HP, armor, fire immunity, speed, carrying capacity). Animation cores (Blank, Fill, Empty, Gather, Harvest, Guard, Decanting, Alchemy, Chop, Use, Butcher, Sorting, Fishing).
+  - **Upgrades & Accessories:** Primal elemental upgrades (Air, Earth, Fire, Water, Order, Entropy) and cosmetic accessories with functional attributes (Top Hat, Spectacles, Bowtie, Fez, Dart Launcher with ranged darts, Visor, Iron Plating, Mace Arm with heavy knockback).
+  - **Rendering & Visuals:** Exact 1:1 `ModelGolem` (128x128 texture, walking swing, carrying poses, bootup sequence), `golem_decoration.png` accessory overlay, cracked damage layer proportional to health loss, held item rendering.
+  - **Configuration GUI:** `guigolem.png` interface with 6 filter ghost slots per page, slot syncing, Order upgrade color markers (16 dye colors), scroll tabs, Guard checkbuttons, Fill amount selector, Use toggles, and localized blurbs.
+  - **AI Behaviors:** Item pickup/delivery, crop harvesting/replanting, tree lumberjacking, guard targeting (hostiles/animals/players/creepers) with ranged dart shooting and mace melee, butcher preserving pairs, chest restocking/emptying, and home container returning.
+  - **Tools:** Golemancer's Bell (`GolemBellItem`) for linking golems to home containers and directional faces, marker placement, and picking up golems.
+  - **Traveling Trunk:** Sentient companion chest (`TravelingTrunkEntity`) with 75 HP, fire and fall damage immunity, following/teleporting owner, 27/36 slot inventory (`GENERIC_9x3` / `GENERIC_9x4`), upgrade traits (Air speed, Earth extra row, Fire guard, Water lock & damage reduction, Order item preservation on pickup, Entropy vacuum suction), food feeding healing, and animated chest lid. Spawner item (`traveling_trunk` / `trunk_spawner`).
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
 
 ## Still to do
 
-### Golemancy (L)
-- **Golems:** all material types, with cores, upgrades and decorations.
-- **Tools:** the golem bell and the golem's markers.
-- **Behaviour:** the full golem AI set (gather, fill, empty, harvest, guard, fish, sort, liquid and essentia work).
-- **Travelling trunk.**
+### Warp, fully (M)
+- **Warp events:** whispers, fake explosions, spider and guardian ambushes, nightmares, blindness and hunger.
+- **Sticky and temporary warp decay**, plus the research that grants and needs warp.
 
 ### Eldritch and the Outer Lands (L)
 - **The Outer Lands dimension:** maze generation, rooms, locks, nests and boss rooms.
@@ -135,9 +141,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Items:** the primordial pearl, crimson rites, eldritch eye and runed tablet.
 - **Champion mobs:** the champion modifiers TC4 adds to some mobs (the giant taintacle uses one).
 - **Research:** eldritch minor and major, forbidden knowledge.
-
-### Warp, fully (M)
-- **Warp events:** whispers, fake explosions, spider and guardian ambushes, nightmares, blindness and hunger.
 - **Sticky and temporary warp decay**, plus the research that grants and needs warp.
 
 ### World generation, the rest (M)

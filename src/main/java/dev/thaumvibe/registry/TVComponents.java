@@ -80,6 +80,24 @@ public final class TVComponents {
 	public static final DataComponentType<Boolean> ACTIVE = register("active",
 		b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
+	/** Golem placer & entity data components. */
+	public static final DataComponentType<Integer> GOLEM_TYPE = register("golem_type",
+		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	public static final DataComponentType<Boolean> GOLEM_ADVANCED = register("golem_advanced",
+		b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+	public static final DataComponentType<Integer> GOLEM_CORE = register("golem_core",
+		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	public static final DataComponentType<java.util.List<Integer>> GOLEM_UPGRADES = register("golem_upgrades",
+		b -> b.persistent(Codec.INT.listOf()).networkSynchronized(ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list())));
+	public static final DataComponentType<String> GOLEM_DECORATION = register("golem_decoration",
+		b -> b.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+	public static final DataComponentType<Integer> GOLEM_BELL_ID = register("golem_bell_id",
+		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	public static final DataComponentType<Integer> GOLEM_BELL_FACE = register("golem_bell_face",
+		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	public static final DataComponentType<BlockPos> GOLEM_BELL_POS = register("golem_bell_pos",
+		b -> b.persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC));
+
 	public record KeyData(BlockPos pos, int type) {
 		public static final Codec<KeyData> CODEC = RecordCodecBuilder.create(i -> i.group(
 			BlockPos.CODEC.fieldOf("pos").forGetter(KeyData::pos),

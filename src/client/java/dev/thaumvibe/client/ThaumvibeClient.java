@@ -192,6 +192,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		MenuScreens.register(TVMenus.SPA, dev.thaumvibe.client.gui.SpaScreen::new);
 		MenuScreens.register(TVMenus.DECONSTRUCTION_TABLE, dev.thaumvibe.client.gui.DeconstructionTableScreen::new);
 		MenuScreens.register(TVMenus.ARCANE_BORE, dev.thaumvibe.client.gui.ArcaneBoreScreen::new);
+		MenuScreens.register(TVMenus.GOLEM, dev.thaumvibe.client.gui.GolemScreen::new);
 		HudElementRegistry.addLast(Thaumvibe.id("notifications"), Notifications::render);
 		HudElementRegistry.addLast(Thaumvibe.id("research_popup"), ResearchPopup::render);
 		HudElementRegistry.addLast(Thaumvibe.id("runic_shield"), dev.thaumvibe.client.hud.RunicShieldHud::render);

@@ -1,8 +1,9 @@
 # THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 4.6
-**Timestamp:** 2026-10-27 06:00 AM Eastern  
+**Timestamp:** 2026-10-27 08:45 AM Eastern  
 **Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
-**Latest Git Commit:** `0365110` (`feat: Add Deconstruction Table with item breakdown, primal aspect pool rewards, and GUI`)  
-**Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Working directory is clean.
+**Latest Feature Completed:** Feature 7: Golemancy (Complete: 7A, 7B, 7C, 7D, 7E)  
+**Next Feature In Progress:** Feature 8: Warp Events & Warp Mechanics  
+**Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors.
 
 ---
 
@@ -16,118 +17,78 @@
   ```powershell
   cd "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini"
   ./gradlew compileJava compileClientJava
+  ./gradlew build -x test
   ```
 
 ---
 
-## 2. Key Architecture & 1.21.4 Fabric Implementation Rules
+## 2. Feature 7: Golemancy (COMPLETED)
 
-### Aspects, Research & Knowledge
-- **Aspects:** `dev.thaumvibe.api.aspects.Aspect` and `dev.thaumvibe.api.aspects.AspectList`.
-- **Item Aspects Lookup:** `dev.thaumvibe.aspects.ObjectAspects.getAspects(ItemStack stack)` (returns null or `AspectList`).
-- **Reducing Aspects to Primals:** `dev.thaumvibe.research.ResearchManager.reduceToPrimals(AspectList al)`.
-- **Modifying Player Research Aspect Pool:**
-  ```java
-  PlayerKnowledge k = ResearchManager.knowledge(serverPlayer).copy();
-  if (k.addAspectPool(aspect, amount)) {
-      ResearchManager.setKnowledge(serverPlayer, k);
-      TVNetwork.sendAspectPool(serverPlayer, aspect, amount, k.getAspectPool(aspect));
-  }
-  ```
-
-### Registries (`dev.thaumvibe.registry`)
-- `TVBlocks.java`: Blocks and their items.
-- `TVBlockEntities.java`: `BlockEntityType`.
-- `TVItems.java`: Standalone items and armor.
-- `TVMenus.java`: Container menus (`ExtendedMenuType<Menu, BlockPos>` for tile entity menus).
-- `TVTab.java`: Creative tab categories (`ESSENTIA`, `TOOLS`, `BUILDING`, `NATURAL`). Add new blocks to `BUILDING` or appropriate set.
-- `TVSounds.java`: Registered custom sounds (`TVSounds.CAMERACLACK`, `TVSounds.HHOFF`, `TVSounds.WAND`, etc.).
-- `TVClient.java` / `ThaumvibeClient.java`: Screen registration (`MenuScreens.register(...)`) and BER registration (`BlockEntityRendererRegistry.register(...)`).
-
-### Block Entities & Worldly Containers
-- **Base class:** Always extend `dev.thaumvibe.tiles.TVBlockEntity` (provides `markForUpdate()` which calls `setChanged()` and `sendBlockUpdated`).
-- **NBT Serialization in 1.21.4 Loom:**
-  - Save: `protected void saveAdditional(ValueOutput output)`
-    - `output.putInt(key, val)`, `output.putString(key, str)`, `output.store("item", ItemStack.OPTIONAL_CODEC, stack)`.
-  - Load: `protected void loadAdditional(ValueInput input)`
-    - `input.getIntOr(key, def)`, `input.getStringOr(key, def)`, `input.read("item", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY)`.
-- **Item Drops:** `Containers.dropContents(level, pos, container)` in `playerWillDestroy(...)`.
-- **Dimension Check:** Use `level.dimension() == Level.NETHER` (do not call `ultraWarm()`).
-- **Random:** Use `level.getRandom().nextInt(...)` (do not access `level.random` directly).
-
-### GUI Screens (`src/client/java/dev/thaumvibe/client/gui/`)
-- Extends `AbstractContainerScreen<Menu>`.
-- Constructor: `super(menu, inv, title, imageWidth, imageHeight);`.
-- Background rendering:
-  ```java
-  @Override
-  public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
-      super.extractBackground(g, mouseX, mouseY, a);
-      int k = (this.width - this.imageWidth) / 2;
-      int l = (this.height - this.imageHeight) / 2;
-      g.blit(RenderPipelines.GUI_TEXTURED, TEX, k, l, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
-  }
-  ```
-- Drawing Aspect Tags in GUI: `GuiUtil.drawTag(g, x, y, aspect);`.
-- Tooltips:
-  ```java
-  @Override
-  protected void extractTooltip(GuiGraphicsExtractor g, int mouseX, int mouseY) {
-      super.extractTooltip(g, mouseX, mouseY);
-      g.setTooltipForNextFrame(this.font, component, mouseX, mouseY);
-      // or for multi-line:
-      g.setTooltipForNextFrame(listOfFormattedCharSequence, mouseX, mouseY);
-  }
-  ```
-- Mouse Clicks:
-  ```java
-  @Override
-  public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-      double mouseX = event.x();
-      double mouseY = event.y();
-      // click logic...
-      minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, buttonId);
-      return super.mouseClicked(event, doubleClick);
-  }
-  ```
+All components of TC4 Golemancy are implemented, wired, and verified:
+1. **7A: Golem Core, Types, Items, and Basic Entity:**
+   - Enums: `GolemType`, `GolemCoreType`, `GolemUpgradeType`, `GolemDecorationType`.
+   - Data Components registered in `TVComponents.java`: `GOLEM_TYPE`, `GOLEM_ADVANCED`, `GOLEM_CORE`, `GOLEM_UPGRADES`, `GOLEM_DECORATION`, `GOLEM_BELL_ID`, `GOLEM_BELL_FACE`, `GOLEM_BELL_POS`.
+   - Entity: `GolemEntity` extending `AbstractGolem`, registered in `TVEntities.GOLEM`.
+   - Items: 8 Placers (`GolemPlacerItem`), 13 Cores (`GolemCoreItem`), 6 Upgrades (`GolemUpgradeItem`), 8 Accessories (`GolemDecorationItem`), Golem Bell (`GolemBellItem`).
+   - JSON definitions, item models, and textures installed for all items.
+2. **7B: Golem Entity Model & Renderer:**
+   - `GolemRenderer.java`:
+     - `GolemModel`: 128x128 texture mesh matching TC4 `ModelGolem.java` with ground alignment ($Y = 24.0F$), triangle-wave walking, carry poses, and bootup animation.
+     - `GolemDecorationModel`: Separate layer rendering `golem_decoration.png` for all 8 accessories (Fez, Top Hat, Rim, Glasses, Visor, Bowtie, Iron Plating, Dartgun, Mace, Evil Eyes, Brain Jar) with synchronized limb rotations.
+     - `GolemDamageLayer`: Translucent cracked overlay with `golem_damage.png` proportional to missing health.
+     - `CarriedItemLayer`: Held item rendering in front of chest.
+3. **7C: Golem Configuration GUI & Screen:**
+   - Networking: `GolemButton(golemId, buttonId, value)` custom payload in `TVNetwork.java`.
+   - Menu: `GolemMenu.java` registered in `TVMenus.GOLEM` via `ExtendedMenuType<GolemMenu, Integer>` passing entity ID. 6 ghost filter slots per page, slot syncing, and non-consuming click/quickMove logic.
+   - Screen: `GolemScreen.java` registered in `ThaumvibeClient.java`. Renders `guigolem.png`, golem type slot frames, Order upgrade marker tabs with 16 color indicators, page scrolls, Guard checkboxes, Fill amount toggle, Use toggles, and Sorting options. Blurb text from `golemblurb.<core>.text`.
+4. **7D: Golem AI Tasks:**
+   - `GolemReturnHomeGoal`: Returns golem to home container when distant or idle.
+   - `GolemItemPickupGoal` (Gather Core 2): Scans `ItemEntity` within range, matches filter, moves to pickup, carries back to home container and deposits.
+   - `GolemHarvestCropsGoal` (Harvest Core 3): Finds mature crops (`CropBlock.isMaxAge()`, `NetherWartBlock`), breaks crop, and replants seed.
+   - `GolemHarvestLogsGoal` (Chop Core 7): Finds logs (`BlockTags.LOGS`), cuts tree, and drops logs/saplings.
+   - `GolemAttackGoal` (Guard Core 4 & Butcher Core 9): Targets hostiles, animals, players, or creepers based on configuration flags. Supports ranged dart shooting with Dart Launcher ("R") using arrow projectiles and sounds, and melee with Mace ("M") bonus damage and knockback. Butcher core preserves 2 breeding adults.
+   - `GolemFillGoal` (Fill Core 0 & Empty Core 1): Keeps home container stocked from nearby chests, or empties home container to destination chests.
+5. **7E: Traveling Trunk:**
+   - `TravelingTrunkEntity.java`: 75 HP, fire and fall damage immunity, 27/36 slot inventory (`GENERIC_9x3` / `GENERIC_9x4`), upgrade installation, food healing, following/teleporting owner, vacuuming items with Entropy upgrade, water upgrade owner protection.
+   - `TrunkSpawnerItem.java`: Spawns and picks up trunk preserving `DataComponents.CONTAINER` items and upgrades. Registered as both `traveling_trunk` and `trunk_spawner`.
+   - `TravelingTrunkRenderer.java`: BER with animated chest lid and normal/angry textures (`trunk.png`, `trunkangry.png`).
+   - Custom 16x16 sprite `traveling_trunk.png` generated and model definitions created.
 
 ---
 
-## 3. Features Completed Overnight (Checkpoints on `main`)
+## 3. Next Feature: Feature 8 - Warp System & Warp Events
 
-1. **`997f7c4`:** Node in a Jar Aspect Viewing, Paving Stone of Travel, Item Grate, Alchemical Centrifuge, and Essentia Crystallizer (`crystal_essence`).
-2. **`b1815f4`:** Essentia Reservoir (256 capacity, tube connection, comparator output, 3D dynamic aspect liquid rendering).
-3. **`2365b21`:** Curatives & Fluids (Liquid Death, Purifying Fluid, Bath Salts, Sanitizing Soap).
-4. **`b3509ff`:** Thaumium Fortress Armor & 3 Masks (Grinning Devil, Angry Ghost withering retaliation, Sipping Fiend lifesteal).
-5. **`2db4d8c`:** Thaumostatic Harness & Girdle (Potentia essentia fuel jar GUI, 'H' flight keybind, buzzing/activation audio, speed scaling).
-6. **`c27ebf0`:** Magic Mirror, Essentia Mirror & Hand Mirror (cross-dimensional item transport, remote essentia suction, 1-slot portable send GUI).
-7. **`6c75390`:** Thaumatorium Multiblock & Mnemonic Matrix (Crucible alchemy multiblock, automated tube/mirror suction, front plate 3D preview, GUI recipe catalogue).
-8. **`4ededa8`:** Arcane Spa (5000 mB fluid tank, Bath Salts mixing, automated 5x5 pool pump, bucket interactions, GUI).
-9. **`0365110`:** Deconstruction Table (item breakdown into primal aspect research pool points, claimable rune GUI, arcane crafting recipe).
-
----
-
-## 4. Next Tasks on Roadmap
-
-### Task 1: Advanced Alchemical Furnace (Multiblock)
-- **TC4 Source:** `TileAlchemyFurnaceAdvanced.java`, `TileAlchemyFurnaceAdvancedNozzle.java`, `BlockStoneDevice.java` (metas 3, 4).
-- **Construction:** 3x3x3 multiblock constructed with Alchemical Constructs, Arcane Stone, and a central Crucible, activated with wand.
-- **Functionality:** High-speed essentia distillation without producing flux slurry; connects directly to vis relays / tubes; nozzles provide 128 suction for essentia extraction.
-
-### Task 2: Arcane Bore & Base
-- **TC4 Source:** `TileArcaneBore.java`, `TileArcaneBoreBase.java`, `ItemArcaneBore.java`, `ModelBore.java`.
-- **Components:** Arcane Bore Base block on ground, Arcane Bore entity/machine on top.
-- **Functionality:** Accepts an Excavation Focus and Pickaxe; powered by redstone; rotates and excavates a cylindrical shaft; collects blocks and auto-ejects into chest behind base.
-
-### Task 3: Mana Pods & Log Planting
-- **TC4 Source:** `BlockManaPod.java`, `ItemManaBean.java`.
-- **Functionality:** Right-clicking Mana Beans onto sides of Greatwood or Silverwood logs plants a Mana Pod (stages 0–2). Drops beans of matching or mutated aspects when mature.
-
-### Task 4: Flux Scrubber & Banners
-- **TC4 Source:** Cleanses flux gas / vitium from local aura; Thaumcraft decorative banners.
-
-### Task 5: Cultist Armor & Crimson Weapons
-- **TC4 Source:** Cultist Robes, Cultist Plate Armor, Cultist Leader Armor, Crimson Blade (lifesteal/warp), and Primal Arrows.
+### Target Folders & Files
+- **Logic & Events:**
+  - `src/main/java/dev/thaumvibe/warp/WarpEvents.java` (to create, based directly on `original/decompiled/thaumcraft/common/lib/WarpEvents.java`).
+  - `src/main/java/dev/thaumvibe/warp/Warp.java` (update hooks).
+- **Player Tick Hook:**
+  - `src/main/java/dev/thaumvibe/Thaumvibe.java` or event listener (`ServerTickEvents` / player tick): invoke `WarpEvents.checkWarpEvent(player)` every 2,000 ticks (100 seconds) if player does not have `TVMobEffects.WARP_WARD`.
+- **Eldritch Research Milestones:**
+  - In `WarpEvents.checkWarpEvent`:
+    - If actual warp (perm + sticky) > 10 and !hasResearch("ELDRITCHMINOR") -> grant `ELDRITCHMINOR` research.
+    - If actual warp > 25 and !hasResearch("ELDRITCHWARPED") -> grant `ELDRITCHWARPED` research.
+    - If actual warp > 50 and !hasResearch("ELDRITCHMAJOR") -> grant `ELDRITCHMAJOR` research.
+- **Warp Decay:**
+  - At the end of every 2,000 tick check, decay 1 temporary warp: `Warp.addWarpToPlayer(player, -1, true)`.
+- **Hallucinations & Events:**
+  - Strange whispers (`warp.text.3`) -> grants primal research aspect pool points.
+  - Ghost sounds (`warp.text.11`, `warp.text.12`, `warp.text.13`).
+  - Vis Exhaustion (`potionVisExhaustID`).
+  - Thaumarhia (`potionThaumarhiaID`) -> flux slimes spawn.
+  - Unnatural Hunger (`potionUnHungerID`) -> hunger effect curable by rotten flesh or zombie brains (`warp.text.2`).
+  - Sun Scorned (`potionSunScornedID`) -> ignite in sunlight (`warp.text.5`).
+  - Sudden Blindness / Nightmares (`warp.text.10`).
+  - Moment of clarity (`warp.text.14`) -> decreases sticky warp by 1.
+  - Mind Spiders ("Suddenly Spiders", `warp.text.7`) -> spawns temporary Mind Spiders attacking player (harmless hallucinations or real).
+  - Eldritch Mist (`warp.text.6`) -> spawns Eldritch Mist particles and Eldritch Guardians.
 
 ---
-*All code compiles cleanly. Follow the established patterns above for immediate smooth progress.*
+
+## 4. Key 1.21.4 Implementation Rules to Remember
+- `Containers.dropContents(level, pos, container)` for dropping items on break.
+- `ValueOutput` / `ValueInput` for block/entity NBT serialization.
+- `ContainerInput` (`PICKUP`, `QUICK_MOVE`, `SWAP`) in 1.21.4 instead of `ClickType`.
+- Projectile arrows reside in `net.minecraft.world.entity.projectile.arrow.Arrow`.
+- Item hover text is `appendHoverText(ItemStack, Item.TooltipContext, TooltipDisplay, Consumer<Component>, TooltipFlag)`.
+- Always verify with `./gradlew compileJava compileClientJava` after making code changes.

@@ -114,6 +114,12 @@ public final class TVEntities {
 		TaintSheep::createAttributes, b -> b, 16761087, 8421504);
 	public static final EntityType<TaintVillager> TAINTED_VILLAGER = mob("tainted_villager", TaintVillager::new, MobCategory.MONSTER, 0.6F, 1.8F,
 		TaintVillager::createAttributes, b -> b, 16761087, 65535);
+	public static final EntityType<dev.thaumvibe.golem.GolemEntity> GOLEM = mob("golem",
+		dev.thaumvibe.golem.GolemEntity::new, MobCategory.MISC, 0.4F, 0.95F,
+		dev.thaumvibe.golem.GolemEntity::createAttributes, b -> b, 0, 0);
+	public static final EntityType<dev.thaumvibe.golem.TravelingTrunkEntity> TRAVELING_TRUNK = mob("traveling_trunk",
+		dev.thaumvibe.golem.TravelingTrunkEntity::new, MobCategory.CREATURE, 0.8F, 0.8F,
+		dev.thaumvibe.golem.TravelingTrunkEntity::createAttributes, b -> b, 0, 0, true);
 
 	private static <T extends Mob> EntityType<T> mob(String name, EntityType.EntityFactory<T> factory, MobCategory category, float w, float h,
 		Supplier<AttributeSupplier.Builder> attributes, UnaryOperator<FabricEntityType.Builder.Mob<T>> extra, int egg1, int egg2) {

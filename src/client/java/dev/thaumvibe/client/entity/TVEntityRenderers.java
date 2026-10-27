@@ -38,6 +38,8 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.TAINTED_PIG, TaintedAnimalRenderers.Pig::new);
 		EntityRendererRegistry.register(TVEntities.TAINTED_SHEEP, TaintedAnimalRenderers.Sheep::new);
 		EntityRendererRegistry.register(TVEntities.TAINTED_VILLAGER, TaintedAnimalRenderers.VillagerRenderer::new);
+		EntityRendererRegistry.register(TVEntities.GOLEM, GolemRenderer::new);
+		EntityRendererRegistry.register(TVEntities.TRAVELING_TRUNK, TravelingTrunkRenderer::new);
 	}
 
 	private TVEntityRenderers() {

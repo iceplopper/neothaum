@@ -254,6 +254,20 @@ public final class TVNetwork {
 		}
 	}
 
+	public record GolemButton(int golemId, int buttonId, int value) implements CustomPacketPayload {
+		public static final Type<GolemButton> TYPE = new Type<>(Thaumvibe.id("golem_button"));
+		public static final StreamCodec<ByteBuf, GolemButton> CODEC = StreamCodec.composite(
+			ByteBufCodecs.VAR_INT, GolemButton::golemId,
+			ByteBufCodecs.VAR_INT, GolemButton::buttonId,
+			ByteBufCodecs.VAR_INT, GolemButton::value,
+			GolemButton::new);
+
+		@Override
+		public Type<GolemButton> type() {
+			return TYPE;
+		}
+	}
+
 	// ------------------------------------------------------------------ client hooks (installed by the client entrypoint)
 
 	public static Consumer<CustomPacketPayload> clientSender = p -> {
@@ -282,6 +296,13 @@ public final class TVNetwork {
 		c2s.register(ToggleHarness.TYPE, ToggleHarness.CODEC);
 		c2s.register(FocusChange.TYPE, FocusChange.CODEC);
 		c2s.register(WandMisc.TYPE, WandMisc.CODEC);
+		c2s.register(GolemButton.TYPE, GolemButton.CODEC);
+		ServerPlayNetworking.registerGlobalReceiver(GolemButton.TYPE, (p, ctx) -> {
+			if (ctx.player().level().getEntity(p.golemId()) instanceof dev.thaumvibe.golem.GolemEntity golem
+				&& ctx.player().distanceToSqr(golem) < 64) {
+				golem.handleButton(p.buttonId(), p.value());
+			}
+		});
 		ServerPlayNetworking.registerGlobalReceiver(FocusChange.TYPE, (p, ctx) -> {
 			var held = ctx.player().getMainHandItem();
 			// KeyHandler: a sceptre takes no focus

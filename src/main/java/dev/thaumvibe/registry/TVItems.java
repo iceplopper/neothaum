@@ -32,6 +32,15 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.Holder;
 import java.util.Map;
 import java.util.EnumMap;
+import dev.thaumvibe.golem.GolemBellItem;
+import dev.thaumvibe.golem.GolemCoreItem;
+import dev.thaumvibe.golem.GolemCoreType;
+import dev.thaumvibe.golem.GolemDecorationItem;
+import dev.thaumvibe.golem.GolemDecorationType;
+import dev.thaumvibe.golem.GolemPlacerItem;
+import dev.thaumvibe.golem.GolemType;
+import dev.thaumvibe.golem.GolemUpgradeItem;
+import dev.thaumvibe.golem.GolemUpgradeType;
 import dev.thaumvibe.items.AlumentumItem;
 import dev.thaumvibe.items.ArcaneKeyItem;
 import dev.thaumvibe.items.BathSaltsItem;
@@ -282,6 +291,50 @@ public final class TVItems {
 	public static final Item MAGIC_MIRROR = register("magic_mirror", p -> new dev.thaumvibe.items.MirrorItem(TVBlocks.MAGIC_MIRROR, false, p), new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item ESSENTIA_MIRROR = register("essentia_mirror", p -> new dev.thaumvibe.items.MirrorItem(TVBlocks.ESSENTIA_MIRROR, true, p), new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item MAGIC_HAND_MIRROR = register("magic_hand_mirror", dev.thaumvibe.items.HandMirrorItem::new, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+
+	// Golemancy
+	public static final Item GOLEM_BELL = register("golem_bell", GolemBellItem::new, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+
+	public static final Item GOLEM_STRAW = register("golem_straw", p -> new GolemPlacerItem(GolemType.STRAW, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLEM_WOOD = register("golem_wood", p -> new GolemPlacerItem(GolemType.WOOD, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLEM_TALLOW = register("golem_tallow", p -> new GolemPlacerItem(GolemType.TALLOW, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLEM_CLAY = register("golem_clay", p -> new GolemPlacerItem(GolemType.CLAY, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLEM_FLESH = register("golem_flesh", p -> new GolemPlacerItem(GolemType.FLESH, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLEM_STONE = register("golem_stone", p -> new GolemPlacerItem(GolemType.STONE, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLEM_IRON = register("golem_iron", p -> new GolemPlacerItem(GolemType.IRON, p), new Item.Properties().stacksTo(1));
+	public static final Item GOLEM_THAUMIUM = register("golem_thaumium", p -> new GolemPlacerItem(GolemType.THAUMIUM, p), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+
+	public static final Item GOLEM_CORE_BLANK = register("golem_core_blank", p -> new GolemCoreItem(GolemCoreType.BLANK, p), new Item.Properties());
+	public static final Item GOLEM_CORE_FILL = register("golem_core_fill", p -> new GolemCoreItem(GolemCoreType.FILL, p), new Item.Properties());
+	public static final Item GOLEM_CORE_EMPTY = register("golem_core_empty", p -> new GolemCoreItem(GolemCoreType.EMPTY, p), new Item.Properties());
+	public static final Item GOLEM_CORE_GATHER = register("golem_core_gather", p -> new GolemCoreItem(GolemCoreType.GATHER, p), new Item.Properties());
+	public static final Item GOLEM_CORE_HARVEST = register("golem_core_harvest", p -> new GolemCoreItem(GolemCoreType.HARVEST, p), new Item.Properties());
+	public static final Item GOLEM_CORE_GUARD = register("golem_core_guard", p -> new GolemCoreItem(GolemCoreType.GUARD, p), new Item.Properties());
+	public static final Item GOLEM_CORE_DECANT = register("golem_core_liquid", p -> new GolemCoreItem(GolemCoreType.DECANT, p), new Item.Properties());
+	public static final Item GOLEM_CORE_ALCHEMY = register("golem_core_essentia", p -> new GolemCoreItem(GolemCoreType.ALCHEMY, p), new Item.Properties());
+	public static final Item GOLEM_CORE_CHOP = register("golem_core_lumber", p -> new GolemCoreItem(GolemCoreType.CHOP, p), new Item.Properties());
+	public static final Item GOLEM_CORE_USE = register("golem_core_use", p -> new GolemCoreItem(GolemCoreType.USE, p), new Item.Properties());
+	public static final Item GOLEM_CORE_BUTCHER = register("golem_core_butcher", p -> new GolemCoreItem(GolemCoreType.BUTCHER, p), new Item.Properties());
+	public static final Item GOLEM_CORE_SORT = register("golem_core_sorting", p -> new GolemCoreItem(GolemCoreType.SORT, p), new Item.Properties());
+	public static final Item GOLEM_CORE_FISH = register("golem_core_fish", p -> new GolemCoreItem(GolemCoreType.FISH, p), new Item.Properties());
+
+	public static final Item GOLEM_UPGRADE_AIR = register("golem_upgrade_air", p -> new GolemUpgradeItem(GolemUpgradeType.AIR, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item GOLEM_UPGRADE_EARTH = register("golem_upgrade_earth", p -> new GolemUpgradeItem(GolemUpgradeType.EARTH, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item GOLEM_UPGRADE_FIRE = register("golem_upgrade_fire", p -> new GolemUpgradeItem(GolemUpgradeType.FIRE, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item GOLEM_UPGRADE_WATER = register("golem_upgrade_water", p -> new GolemUpgradeItem(GolemUpgradeType.WATER, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item GOLEM_UPGRADE_ORDER = register("golem_upgrade_order", p -> new GolemUpgradeItem(GolemUpgradeType.ORDER, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item GOLEM_UPGRADE_ENTROPY = register("golem_upgrade_entropy", p -> new GolemUpgradeItem(GolemUpgradeType.ENTROPY, p), new Item.Properties().rarity(Rarity.UNCOMMON));
+
+	public static final Item GOLEM_DECO_TOPHAT = register("golem_deco_tophat", p -> new GolemDecorationItem(GolemDecorationType.TOP_HAT, p), new Item.Properties());
+	public static final Item GOLEM_DECO_GLASSES = register("golem_deco_glasses", p -> new GolemDecorationItem(GolemDecorationType.GLASSES, p), new Item.Properties());
+	public static final Item GOLEM_DECO_BOWTIE = register("golem_deco_bowtie", p -> new GolemDecorationItem(GolemDecorationType.BOWTIE, p), new Item.Properties());
+	public static final Item GOLEM_DECO_FEZ = register("golem_deco_fez", p -> new GolemDecorationItem(GolemDecorationType.FEZ, p), new Item.Properties());
+	public static final Item GOLEM_DECO_DART = register("golem_deco_dart", p -> new GolemDecorationItem(GolemDecorationType.DARTGUN, p), new Item.Properties());
+	public static final Item GOLEM_DECO_VISOR = register("golem_deco_visor", p -> new GolemDecorationItem(GolemDecorationType.VISOR, p), new Item.Properties());
+	public static final Item GOLEM_DECO_ARMOR = register("golem_deco_armor", p -> new GolemDecorationItem(GolemDecorationType.ARMOR, p), new Item.Properties());
+	public static final Item GOLEM_DECO_MACE = register("golem_deco_mace", p -> new GolemDecorationItem(GolemDecorationType.MACE, p), new Item.Properties());
+	public static final Item TRAVELING_TRUNK = register("traveling_trunk", dev.thaumvibe.golem.TrunkSpawnerItem::new, new Item.Properties().stacksTo(1));
+	public static final Item TRUNK_SPAWNER = TRAVELING_TRUNK;
 
 	public static final TagKey<Item> VOID_INGOTS = TagKey.create(Registries.ITEM, Thaumvibe.id("void_metal_ingots"));
 	public static final ToolMaterial VOID_TOOLS = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 150, 8.0F, 3.0F, 10, VOID_INGOTS);

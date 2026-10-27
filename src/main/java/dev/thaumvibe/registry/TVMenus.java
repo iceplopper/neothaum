@@ -21,6 +21,8 @@ public final class TVMenus {
 		Thaumvibe.id("alchemy_furnace"), new ExtendedMenuType<>(AlchemyFurnaceMenu::new, BlockPos.STREAM_CODEC));
 	public static final ExtendedMenuType<dev.thaumvibe.menu.PechMenu, Integer> PECH = Registry.register(BuiltInRegistries.MENU, Thaumvibe.id("pech"),
 		new ExtendedMenuType<>(dev.thaumvibe.menu.PechMenu::new, net.minecraft.network.codec.ByteBufCodecs.VAR_INT.cast()));
+	public static final ExtendedMenuType<dev.thaumvibe.golem.menu.GolemMenu, Integer> GOLEM = Registry.register(BuiltInRegistries.MENU, Thaumvibe.id("golem"),
+		new ExtendedMenuType<>(dev.thaumvibe.golem.menu.GolemMenu::new, net.minecraft.network.codec.ByteBufCodecs.VAR_INT.cast()));
 	public static final MenuType<BaublesMenu> BAUBLES = Registry.register(BuiltInRegistries.MENU, Thaumvibe.id("baubles"),
 		new MenuType<>(BaublesMenu::new, FeatureFlags.VANILLA_SET));
 
