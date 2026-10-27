@@ -109,6 +109,10 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.SpaBlockEntity::new, TVBlocks.ARCANE_SPA);
 	public static final BlockEntityType<dev.thaumvibe.tiles.DeconstructionTableBlockEntity> DECONSTRUCTION_TABLE = register("deconstruction_table",
 		dev.thaumvibe.tiles.DeconstructionTableBlockEntity::new, TVBlocks.DECONSTRUCTION_TABLE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.AdvancedAlchemyFurnaceBlockEntity> ADVANCED_ALCHEMY_FURNACE = register("advanced_alchemy_furnace",
+		dev.thaumvibe.tiles.AdvancedAlchemyFurnaceBlockEntity::new, TVBlocks.ADVANCED_ALCHEMICAL_FURNACE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.AdvancedAlchemyFurnaceNozzleBlockEntity> ADVANCED_ALCHEMY_FURNACE_NOZZLE = register("advanced_alchemy_furnace_nozzle",
+		dev.thaumvibe.tiles.AdvancedAlchemyFurnaceNozzleBlockEntity::new, TVBlocks.ADVANCED_ALCHEMICAL_FURNACE);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));

@@ -173,7 +173,111 @@ public final class WandManager {
 		if (state.is(TVBlocks.ALCHEMICAL_CONSTRUCT) && ResearchManager.isResearchComplete(player, "THAUMATORIUM")) {
 			return createThaumatorium(wand, player, level, pos, side);
 		}
+		if ((state.is(TVBlocks.ALCHEMICAL_FURNACE) || state.is(TVBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT)
+			|| state.is(TVBlocks.ALCHEMICAL_CONSTRUCT) || state.is(TVBlocks.ARCANE_ALEMBIC))
+			&& ResearchManager.isResearchComplete(player, "ADVALCHEMYFURNACE")) {
+			if (createAdvancedAlchemicalFurnace(wand, player, level, pos)) {
+				return true;
+			}
+		}
 		return false;
+	}
+
+	/**
+	 * Wand trigger: 3x3x2 Advanced Alchemical Furnace.
+	 * Layer 0: Alchemical Furnace center, 8 Advanced Alchemical Constructs.
+	 * Layer 1: Air center, 4 Alchemical Constructs (sides), 4 Arcane Alembics (corners).
+	 * Cost: 50 Fire + 50 Water + 50 Order vis.
+	 */
+	public static boolean createAdvancedAlchemicalFurnace(ItemStack wand, Player player, Level level, BlockPos pos) {
+		BlockPos corePos = null;
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dy = -1; dy <= 0; dy++) {
+				for (int dz = -1; dz <= 1; dz++) {
+					BlockPos p = pos.offset(dx, dy, dz);
+					if (level.getBlockState(p).is(TVBlocks.ALCHEMICAL_FURNACE)) {
+						corePos = p;
+						break;
+					}
+				}
+				if (corePos != null) break;
+			}
+			if (corePos != null) break;
+		}
+		if (corePos == null) {
+			return false;
+		}
+
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dz = -1; dz <= 1; dz++) {
+				BlockPos p0 = corePos.offset(dx, 0, dz);
+				BlockState s0 = level.getBlockState(p0);
+				if (dx == 0 && dz == 0) {
+					if (!s0.is(TVBlocks.ALCHEMICAL_FURNACE)) return false;
+				} else {
+					if (!s0.is(TVBlocks.ADVANCED_ALCHEMICAL_CONSTRUCT)) return false;
+				}
+			}
+		}
+
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dz = -1; dz <= 1; dz++) {
+				BlockPos p1 = corePos.offset(dx, 1, dz);
+				BlockState s1 = level.getBlockState(p1);
+				if (dx == 0 && dz == 0) {
+					if (!s1.isAir()) return false;
+				} else if (dx == 0 || dz == 0) {
+					if (!s1.is(TVBlocks.ALCHEMICAL_CONSTRUCT)) return false;
+				} else {
+					if (!s1.is(TVBlocks.ARCANE_ALEMBIC)) return false;
+				}
+			}
+		}
+
+		AspectList cost = new AspectList().add(Aspect.FIRE, 50).add(Aspect.WATER, 50).add(Aspect.ORDER, 50);
+		if (!WandItem.consumeAllVisCrafting(wand, player, cost, true)) {
+			return false;
+		}
+
+		if (!level.isClientSide()) {
+			Block furnaceBlock = TVBlocks.ADVANCED_ALCHEMICAL_FURNACE;
+			for (int dx = -1; dx <= 1; dx++) {
+				for (int dz = -1; dz <= 1; dz++) {
+					BlockPos p0 = corePos.offset(dx, 0, dz);
+					if (dx == 0 && dz == 0) {
+						level.setBlock(p0, furnaceBlock.defaultBlockState().setValue(dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.PART, dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.FurnacePart.CORE), 3);
+					} else if (dx == 0 || dz == 0) {
+						Direction dir = dx > 0 ? Direction.EAST : dx < 0 ? Direction.WEST : dz > 0 ? Direction.SOUTH : Direction.NORTH;
+						level.setBlock(p0, furnaceBlock.defaultBlockState()
+							.setValue(dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.PART, dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.FurnacePart.NOZZLE)
+							.setValue(dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.FACING, dir), 3);
+					} else {
+						level.setBlock(p0, furnaceBlock.defaultBlockState().setValue(dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.PART, dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.FurnacePart.BOTTOM_CORNER), 3);
+					}
+					TVNetwork.sendBlockSparkle(level, p0, -9999);
+				}
+			}
+
+			for (int dx = -1; dx <= 1; dx++) {
+				for (int dz = -1; dz <= 1; dz++) {
+					if (dx == 0 && dz == 0) continue;
+					BlockPos p1 = corePos.offset(dx, 1, dz);
+					if (dx == 0 || dz == 0) {
+						Direction dir = dx > 0 ? Direction.EAST : dx < 0 ? Direction.WEST : dz > 0 ? Direction.SOUTH : Direction.NORTH;
+						level.setBlock(p1, furnaceBlock.defaultBlockState()
+							.setValue(dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.PART, dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.FurnacePart.TOP_SIDE)
+							.setValue(dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.FACING, dir), 3);
+					} else {
+						level.setBlock(p1, furnaceBlock.defaultBlockState().setValue(dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.PART, dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock.FurnacePart.TOP_CORNER), 3);
+					}
+					TVNetwork.sendBlockSparkle(level, p1, -9999);
+				}
+			}
+
+			level.playSound(null, corePos, TVSounds.WAND, SoundSource.BLOCKS, 1.0F, 1.0F);
+		}
+
+		return true;
 	}
 
 	/** Wand trigger: 2 Alchemical Constructs over a Crucible becomes a Thaumatorium, for 15 Fire + 30 Order + 30 Water vis. */

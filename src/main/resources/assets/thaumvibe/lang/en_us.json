@@ -659,8 +659,8 @@
   "death.attack.dissolve": "%1$s was dissolved",
   "death.attack.dissolve.player": "%1$s was dissolved whilst fighting %2$s",
   "tc.handmirrorlinkedto": "Linked to",
-  "tc.handmirrorlinked": "Link established.",
-  "tc.handmirrorerror": "Destination mirror is missing or misplaced. Link broken.",
+  "tc.handmirrorlinked": "The hand mirror is now linked to this mirror.",
+  "tc.handmirrorerror": "The linked mirror could not be reached.",
   "tc.researcherror": "You lack the required knowledge to understand this.",
   "tc.discoveryerror": "To understand this you need to study %1$s.",
   "tc.discoveryunknown": "Unknown theory",
@@ -1938,8 +1938,6 @@
   "item.thaumvibe.essentia_mirror": "Essentia Mirror",
   "item.thaumvibe.magic_hand_mirror": "Magic Hand Mirror",
   "container.handmirror": "Magic Hand Mirror",
-  "tc.handmirrorlinked": "The hand mirror is now linked to this mirror.",
-  "tc.handmirrorerror": "The linked mirror could not be reached.",
   "tc.mirrorlinkedalready": "That mirror is already linked to a valid destination.",
   "tc.doorfail": "The door refuses to budge.",
   "block.thaumvibe.alchemical_construct": "Alchemical Construct",
@@ -1954,5 +1952,11 @@
   "gui.spa": "Arcane Spa",
   "block.thaumvibe.deconstruction_table": "Deconstruction Table",
   "item.thaumvibe.deconstruction_table": "Deconstruction Table",
-  "tile.blockTable.14.name": "Deconstruction Table"
+  "block.thaumvibe.advanced_alchemical_construct": "Advanced Alchemical Construct",
+  "item.thaumvibe.advanced_alchemical_construct": "Advanced Alchemical Construct",
+  "block.thaumvibe.advanced_alchemical_furnace": "Advanced Alchemical Furnace",
+  "item.thaumvibe.primordial_pearl": "Primordial Pearl",
+  "item.thaumvibe.crimson_rites": "Crimson Rites",
+  "item.thaumvibe.eldritch_eye": "Eldritch Eye",
+  "item.thaumvibe.runed_tablet": "Runed Tablet"
 }

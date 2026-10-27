@@ -129,6 +129,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.CRYSTALLIZER, dev.thaumvibe.client.render.CrystallizerRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.RESERVOIR, dev.thaumvibe.client.render.ReservoirRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.THAUMATORIUM, dev.thaumvibe.client.render.ThaumatoriumRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ADVANCED_ALCHEMY_FURNACE, dev.thaumvibe.client.render.AdvancedAlchemyFurnaceRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.NODE, NodeRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR_NODE, dev.thaumvibe.client.render.JarNodeRenderer::new);
 		dev.thaumvibe.items.JarNodeItem.DISCOVERED = a -> {

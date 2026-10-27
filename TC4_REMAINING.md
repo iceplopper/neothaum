@@ -45,6 +45,10 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
     - **Thaumatorium:** 2-block multiblock machine formed by wand-right clicking 2 Alchemical Constructs placed over a Crucible (consuming 15 Fire, 30 Order, 30 Water vis). Automated crucible alchemy: draws essentia via connected tubes (128 suction for required aspect) or remote mirrors, processes catalyst items in slot 0 without creating flux or slurry, vents steam with extinguish sounds, ejects products into front containers or into the world with velocity; front plate 3D cycling preview of active recipes; dedicated GUI (`ThaumatoriumMenu` / `ThaumatoriumScreen`) displaying recipe catalog, toggle buttons, progress bars, and aspect requirements.
     - **Alchemical Construct:** solid machine block (`alchemyblock` texture); arcane crafting recipe (Greatwood planks, tubes, valve, vis filter).
     - **Mnemonic Matrix:** attachable upgrade block (`brainbox` texture with connector neck) placing onto Thaumatorium sides; increases active recipe capacity by +2 per matrix; arcane crafting recipe (Zombie brain, amber, iron).
+  - **Advanced Alchemical Furnace & Constructs:**
+    - **Advanced Alchemical Furnace:** 3x3x2 multiblock structure formed by wand-right clicking the structure (1 Alchemical Furnace, 8 Advanced Alchemical Constructs on bottom layer; 4 Alchemical Constructs on sides, 4 Arcane Alembics on corners, center empty on top layer) consuming 50 Fire, 50 Water, 50 Order vis. High-speed distillation powered by centivis drained directly from energized nodes via the aura grid: Ignis (heat), Perditio (breakdown), and Aqua (stabilizing). 500-vis internal essentia capacity, 100% breakdown efficiency without flux slurry, and auto-smelts any items thrown down its central chimney; 4 outward-facing suction nozzles connect to tubes and jars; comparator signal output; 3D OBJ model (`adv_alch_furnace.obj`) with dynamic base texture switching (`alch_furnace_on`) and animated liquid tanks (`alch_furnace_tank_on`).
+    - **Advanced Alchemical Construct:** casing block (`alchemyblockadv` texture); arcane recipe (`advalchemyconstruct.json`) using Void Ingot, Alchemical Construct, and Primordial Pearl.
+    - **Eldritch Items:** Primordial Pearl (`primordial_pearl`, epic rarity, tooltip lore), Crimson Rites (`crimson_rites`, right-click research grant), Eldritch Eye (`eldritch_eye`), and Runed Tablet (`runed_tablet`).
   - **Node in a Jar Aspect Viewing:** trapped aura nodes now display floating 3D aspect tags when worn with Goggles of Revealing or inspected with Thaumometer, fully scannable and visible in HUD.
 - **Infusion:** the matrix, pedestals, pillars, stabilisers and instability, and infusion enchanting (partial, see below).
 - **Equipment:**
@@ -88,7 +92,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 ## Still to do
 
 ### Alchemy and essentia, the rest (M)
-- **Storage:** the advanced alchemical furnace.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)

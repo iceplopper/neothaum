@@ -293,6 +293,10 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 10.0F).sound(SoundType.METAL).noOcclusion(), true);
 	public static final Block ARCANE_SPA = register("arcane_spa", dev.thaumvibe.blocks.ArcaneSpaBlock::new,
 		stone(2.0F, 10.0F).noOcclusion(), true);
+	public static final Block ADVANCED_ALCHEMICAL_CONSTRUCT = register("advanced_alchemical_construct", dev.thaumvibe.blocks.AdvancedAlchemicalConstructBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.5F).sound(SoundType.METAL), true);
+	public static final Block ADVANCED_ALCHEMICAL_FURNACE = register("advanced_alchemical_furnace", dev.thaumvibe.blocks.AdvancedAlchemyFurnaceBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.0F, 17.5F).sound(SoundType.METAL).noOcclusion(), false);
 	public static final Block DECONSTRUCTION_TABLE = register("deconstruction_table", dev.thaumvibe.blocks.DeconstructionTableBlock::new,
 		wood(2.5F).noOcclusion(), true);
 

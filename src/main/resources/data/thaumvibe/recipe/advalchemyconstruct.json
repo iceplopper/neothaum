@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "ADVALCHEMYFURNACE",
+  "aspects": {
+    "aqua": 10,
+    "ordo": 30,
+    "terra": 10
+  },
+  "pattern": [
+    "VAV",
+    "APA",
+    "VAV"
+  ],
+  "key": {
+    "A": "thaumvibe:alchemical_construct",
+    "V": "thaumvibe:void_metal_ingot",
+    "P": "thaumvibe:primordial_pearl"
+  },
+  "result": {
+    "count": 4,
+    "id": "thaumvibe:advanced_alchemical_construct"
+  }
+}
