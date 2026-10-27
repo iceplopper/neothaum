@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": "minecraft:cinnabar",
+  "result": {
+    "id": "neothaum:quicksilver_bead"
+  }
+}

@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumium_boots",
-    "thaumvibe:thaumaturges_boots",
-    "thaumvibe:boots_of_the_traveller",
-    "thaumvibe:cultist_boots"
+    "neothaum:thaumium_boots",
+    "neothaum:thaumaturges_boots",
+    "neothaum:boots_of_the_traveller",
+    "neothaum:cultist_boots"
   ]
 }

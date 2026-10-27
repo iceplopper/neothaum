@@ -1,0 +1,24 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ENCHFABRIC",
+  "aspects": {
+    "aer": 1,
+    "terra": 1,
+    "ignis": 1,
+    "aqua": 1,
+    "ordo": 1,
+    "perditio": 1
+  },
+  "pattern": [
+    " S ",
+    "SCS",
+    " S "
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "C": "#minecraft:wool"
+  },
+  "result": {
+    "id": "neothaum:enchanted_fabric"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "DECONSTRUCTOR",
+  "aspects": {
+    "perditio": 20
+  },
+  "pattern": [
+    " S ",
+    "ATP"
+  ],
+  "key": {
+    "S": "neothaum:thaumometer",
+    "A": "minecraft:golden_axe",
+    "T": "neothaum:table",
+    "P": "minecraft:golden_pickaxe"
+  },
+  "result": {
+    "id": "neothaum:deconstruction_table"
+  }
+}

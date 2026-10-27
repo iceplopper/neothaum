@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "ALUMENTUM",
+  "catalyst": "#minecraft:coals",
+  "aspects": {
+    "potentia": 3,
+    "ignis": 3,
+    "perditio": 3
+  },
+  "result": {
+    "id": "neothaum:alumentum"
+  }
+}

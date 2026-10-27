@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:efficiency",
+  "instability": 2,
+  "aspects": {
+    "praecantatio": 4,
+    "instrumentum": 4,
+    "ordo": 4
+  },
+  "components": [
+    "minecraft:iron_pickaxe",
+    "neothaum:salis_mundus"
+  ]
+}

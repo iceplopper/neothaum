@@ -1,0 +1,42 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "neothaum:block/tallow_candle_0"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_1"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_2"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_3"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_4"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_5"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_6"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_7"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_8"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_9"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_10"
+      },
+      {
+        "model": "neothaum:block/tallow_candle_11"
+      }
+    ]
+  }
+}

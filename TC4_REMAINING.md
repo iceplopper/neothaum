@@ -1,4 +1,4 @@
-# Thaumcraft 4.2.3.5 features not yet in Thaumvibe 4
+# Thaumcraft 4.2.3.5 features not yet in NeoThaum 4
 
 Last updated: 2026-10-26, after Lamps, JEI integration, Doors & Warding, Infernal Furnace, Boots Overhaul, TNC Audit, and Worldgen Fixes.
 Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
@@ -143,10 +143,10 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Aspect orbs:** `AspectOrbEntity` with aspect-tinted billboard glow, gravitation toward player, filling wand vis & knowledge pools, dropped by mobs on kill via `AspectOrbEvents` and unstable node bleed.
   - **Node lightning strikes:** uncontained unstable, hungry, and dark nodes strike nearby living entities with electric bolts and magic damage.
   - **Shovel of the Earthmover:** G key orientation cycling (parallel, vertical, horizontal) with chat display and click sound; connected texture warded glass placement preview in `ArchitectOverlay`.
-  - **Configuration:** `config/thaumvibe.json` managed by `ThaumvibeConfig` (taint spread, hard nodes, node rarity, aspect orb drop rate, warp toggle, wisp spawn rate, champion mobs).
+  - **Configuration:** `config/neothaum.json` managed by `NeoThaumConfig` (taint spread, hard nodes, node rarity, aspect orb drop rate, warp toggle, wisp spawn rate, champion mobs).
   - **Advancements:** authentic TC4 advancement tree (`root`, `goggles`, `crucible`, `infusion`, `golem`, `warp`, `eldritch`).
 - **Other items:** mana beans, ethereal essence.
-- **Addon features (in `dev.thaumvibe.addon`):**
+- **Addon features (in `dev.neothaum.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
 
 ## Still to do

@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "JARVOID",
+  "aspects": {
+    "aqua": 5,
+    "perditio": 15
+  },
+  "pattern": [
+    "O",
+    "J",
+    "P"
+  ],
+  "key": {
+    "O": "minecraft:obsidian",
+    "P": "minecraft:blaze_powder",
+    "J": "neothaum:warded_jar"
+  },
+  "result": {
+    "id": "neothaum:void_jar"
+  }
+}

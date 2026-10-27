@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "thaumvibe:items/focus_trade_orn",
-    "layer1": "thaumvibe:items/focus_trade"
-  }
-}

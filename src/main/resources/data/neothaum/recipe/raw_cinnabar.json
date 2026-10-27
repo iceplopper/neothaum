@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "neothaum:raw_cinnabar_block"
+  ],
+  "result": {
+    "id": "neothaum:raw_cinnabar",
+    "count": 9
+  }
+}

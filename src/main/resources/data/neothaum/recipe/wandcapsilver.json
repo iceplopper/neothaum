@@ -1,0 +1,17 @@
+{
+  "type": "neothaum:infusion",
+  "research": "CAP_silver",
+  "instability": 4,
+  "aspects": {
+    "potentia": 8,
+    "auram": 4
+  },
+  "central": "neothaum:silver_cap_inert",
+  "components": [
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus"
+  ],
+  "result": {
+    "id": "neothaum:silver_cap"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ELEMENTALHOE",
+  "instability": 1,
+  "aspects": {
+    "meto": 8,
+    "herba": 8,
+    "terra": 8
+  },
+  "central": "neothaum:thaumium_hoe",
+  "components": [
+    "neothaum:order_shard",
+    "neothaum:entropy_shard",
+    "minecraft:diamond",
+    "neothaum:greatwood_log"
+  ],
+  "result": {
+    "id": "neothaum:hoe_of_growth"
+  }
+}

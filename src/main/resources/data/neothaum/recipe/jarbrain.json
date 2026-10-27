@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "JARBRAIN",
+  "instability": 4,
+  "aspects": {
+    "cognitio": 10,
+    "sensus": 10,
+    "exanimis": 20
+  },
+  "central": "neothaum:warded_jar",
+  "components": [
+    "neothaum:zombie_brain",
+    "minecraft:spider_eye",
+    "minecraft:water_bucket",
+    "minecraft:spider_eye"
+  ],
+  "result": {
+    "id": "neothaum:brain_in_a_jar"
+  }
+}

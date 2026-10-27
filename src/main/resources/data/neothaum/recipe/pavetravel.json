@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "PAVETRAVEL",
+  "aspects": {
+    "aer": 10,
+    "terra": 10
+  },
+  "pattern": [
+    "SAS",
+    "SBS"
+  ],
+  "key": {
+    "S": "neothaum:arcane_stone_bricks",
+    "A": "neothaum:air_shard",
+    "B": "neothaum:earth_shard"
+  },
+  "result": {
+    "id": "neothaum:paving_stone_of_travel",
+    "count": 4
+  }
+}

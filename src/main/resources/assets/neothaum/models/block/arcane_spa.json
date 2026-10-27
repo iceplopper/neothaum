@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "neothaum:blocks/spa_top",
+    "bottom": "neothaum:blocks/spa_side",
+    "side": "neothaum:blocks/spa_side",
+    "particle": "neothaum:blocks/spa_side"
+  }
+}

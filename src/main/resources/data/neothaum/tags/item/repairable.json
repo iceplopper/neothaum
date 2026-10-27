@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "neothaum:goggles_of_revealing",
+    "neothaum:thaumium_sword",
+    "neothaum:thaumium_shovel",
+    "neothaum:thaumium_pickaxe",
+    "neothaum:thaumium_axe",
+    "neothaum:thaumium_hoe",
+    "neothaum:thaumium_helmet",
+    "neothaum:thaumium_chestplate",
+    "neothaum:thaumium_leggings",
+    "neothaum:thaumium_boots",
+    "neothaum:thaumaturges_robe",
+    "neothaum:thaumaturges_leggings",
+    "neothaum:thaumaturges_boots",
+    "neothaum:shovel_of_the_earthmover",
+    "neothaum:pickaxe_of_the_core",
+    "neothaum:sword_of_the_zephyr",
+    "neothaum:axe_of_the_stream",
+    "neothaum:hoe_of_growth",
+    "neothaum:thaumostatic_harness"
+  ]
+}

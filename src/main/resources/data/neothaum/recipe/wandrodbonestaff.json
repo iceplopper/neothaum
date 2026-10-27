@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ROD_bone_staff",
+  "aspects": {
+    "ordo": 14
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "neothaum:primal_charm",
+    "G": "neothaum:bone_rod"
+  },
+  "result": {
+    "id": "neothaum:bone_staff_core"
+  }
+}

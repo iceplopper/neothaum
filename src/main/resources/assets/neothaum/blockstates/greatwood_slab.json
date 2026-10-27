@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "neothaum:block/greatwood_slab"
+    },
+    "type=top": {
+      "model": "neothaum:block/greatwood_slab_top"
+    },
+    "type=double": {
+      "model": "neothaum:block/greatwood_planks"
+    }
+  }
+}

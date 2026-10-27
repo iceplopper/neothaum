@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/runic_matrix",
+    "model": {
+      "type": "neothaum:runic_matrix"
+    }
+  }
+}

@@ -1,11 +1,11 @@
 {
 	"schemaVersion": 1,
-	"id": "thaumvibe-visual-tests",
+	"id": "neothaum-visual-tests",
 	"version": "1.0.0",
-	"name": "Thaumvibe visual tests",
+	"name": "NeoThaum visual tests",
 	"environment": "*",
 	"entrypoints": {
-		"fabric-client-gametest": ["dev.thaumvibe.gametest.VisualTests"]
+		"fabric-client-gametest": ["dev.neothaum.gametest.VisualTests"]
 	},
-	"depends": {"thaumvibe": "*"}
+	"depends": {"neothaum": "*"}
 }

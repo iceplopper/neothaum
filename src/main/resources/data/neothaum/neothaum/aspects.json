@@ -1,0 +1,3194 @@
+{
+ "objects": [
+  {
+   "tag": "c:stones",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "tag": "c:cobblestones",
+   "aspects": {
+    "terra": 1,
+    "perditio": 1
+   }
+  },
+  {
+   "tag": "minecraft:logs",
+   "aspects": {
+    "arbor": 4
+   }
+  },
+  {
+   "tag": "minecraft:planks",
+   "aspects": {
+    "arbor": 1
+   }
+  },
+  {
+   "tag": "minecraft:wooden_slabs",
+   "aspects": {
+    "arbor": 1
+   }
+  },
+  {
+   "tag": "minecraft:wooden_stairs",
+   "aspects": {
+    "arbor": 1
+   }
+  },
+  {
+   "item": "minecraft:stick",
+   "aspects": {
+    "arbor": 1
+   }
+  },
+  {
+   "tag": "minecraft:saplings",
+   "aspects": {
+    "arbor": 1,
+    "herba": 2
+   }
+  },
+  {
+   "tag": "minecraft:leaves",
+   "aspects": {
+    "herba": 1
+   }
+  },
+  {
+   "tag": "c:dyes/black",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:ink_sac",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/red",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/green",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/brown",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:cocoa_beans",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/blue",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:lapis_lazuli",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/purple",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/cyan",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/light_gray",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/gray",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/pink",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/lime",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/yellow",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/light_blue",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/magenta",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/orange",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:dyes/white",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:bone_meal",
+   "aspects": {
+    "sensus": 1
+   }
+  },
+  {
+   "tag": "c:ores/lapis",
+   "aspects": {
+    "terra": 1,
+    "sensus": 3
+   }
+  },
+  {
+   "tag": "c:ores/diamond",
+   "aspects": {
+    "terra": 1,
+    "lucrum": 3,
+    "vitreus": 3
+   }
+  },
+  {
+   "item": "minecraft:diamond",
+   "aspects": {
+    "vitreus": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "tag": "c:ores/redstone",
+   "aspects": {
+    "terra": 1,
+    "potentia": 2,
+    "machina": 2
+   }
+  },
+  {
+   "item": "minecraft:redstone_ore",
+   "aspects": {
+    "terra": 1,
+    "potentia": 3,
+    "machina": 2
+   }
+  },
+  {
+   "tag": "c:ores/emerald",
+   "aspects": {
+    "terra": 1,
+    "lucrum": 4,
+    "vitreus": 3
+   }
+  },
+  {
+   "item": "minecraft:emerald",
+   "aspects": {
+    "vitreus": 4,
+    "lucrum": 5
+   }
+  },
+  {
+   "tag": "c:ores/quartz",
+   "aspects": {
+    "terra": 1,
+    "vitreus": 3
+   }
+  },
+  {
+   "item": "minecraft:quartz",
+   "aspects": {
+    "vitreus": 1,
+    "potentia": 1
+   }
+  },
+  {
+   "item": "minecraft:gold_nugget",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "item": "minecraft:iron_nugget",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "tag": "c:ores/iron",
+   "aspects": {
+    "terra": 1,
+    "metallum": 3
+   }
+  },
+  {
+   "tag": "c:dusts/iron",
+   "aspects": {
+    "metallum": 3,
+    "perditio": 1
+   }
+  },
+  {
+   "item": "minecraft:iron_ingot",
+   "aspects": {
+    "metallum": 4
+   }
+  },
+  {
+   "tag": "c:ores/gold",
+   "aspects": {
+    "terra": 1,
+    "metallum": 2,
+    "lucrum": 1
+   }
+  },
+  {
+   "tag": "c:dusts/gold",
+   "aspects": {
+    "metallum": 2,
+    "perditio": 1,
+    "lucrum": 1
+   }
+  },
+  {
+   "item": "minecraft:gold_ingot",
+   "aspects": {
+    "metallum": 3,
+    "lucrum": 2
+   }
+  },
+  {
+   "item": "minecraft:coal_ore",
+   "aspects": {
+    "terra": 1,
+    "potentia": 2,
+    "ignis": 1
+   }
+  },
+  {
+   "tag": "minecraft:coals",
+   "aspects": {
+    "potentia": 2,
+    "ignis": 2
+   }
+  },
+  {
+   "item": "minecraft:redstone",
+   "aspects": {
+    "potentia": 2,
+    "machina": 1
+   }
+  },
+  {
+   "item": "minecraft:glowstone_dust",
+   "aspects": {
+    "sensus": 1,
+    "lux": 2
+   }
+  },
+  {
+   "item": "minecraft:glowstone",
+   "aspects": {
+    "sensus": 3,
+    "lux": 10
+   }
+  },
+  {
+   "item": "minecraft:copper_nugget",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "item": "minecraft:copper_ingot",
+   "aspects": {
+    "metallum": 3,
+    "permutatio": 1
+   }
+  },
+  {
+   "tag": "c:dusts/copper",
+   "aspects": {
+    "metallum": 2,
+    "perditio": 1,
+    "permutatio": 1
+   }
+  },
+  {
+   "tag": "c:ores/copper",
+   "aspects": {
+    "metallum": 2,
+    "terra": 1,
+    "permutatio": 1
+   }
+  },
+  {
+   "item": "neothaum:native_copper_cluster",
+   "aspects": {
+    "ordo": 1,
+    "metallum": 5,
+    "terra": 1,
+    "permutatio": 2
+   }
+  },
+  {
+   "tag": "c:nuggets/tin",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "tag": "c:ingots/tin",
+   "aspects": {
+    "metallum": 3,
+    "vitreus": 1
+   }
+  },
+  {
+   "tag": "c:dusts/tin",
+   "aspects": {
+    "metallum": 2,
+    "perditio": 1,
+    "vitreus": 1
+   }
+  },
+  {
+   "tag": "c:ores/tin",
+   "aspects": {
+    "metallum": 3,
+    "perditio": 1,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "neothaum:native_tin_cluster",
+   "aspects": {
+    "ordo": 1,
+    "metallum": 5,
+    "terra": 1,
+    "vitreus": 2
+   }
+  },
+  {
+   "tag": "c:nuggets/silver",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "tag": "c:ingots/silver",
+   "aspects": {
+    "metallum": 3,
+    "lucrum": 1
+   }
+  },
+  {
+   "tag": "c:dusts/silver",
+   "aspects": {
+    "metallum": 2,
+    "perditio": 1,
+    "lucrum": 1
+   }
+  },
+  {
+   "tag": "c:ores/silver",
+   "aspects": {
+    "metallum": 3,
+    "perditio": 1,
+    "lucrum": 1
+   }
+  },
+  {
+   "item": "neothaum:native_silver_cluster",
+   "aspects": {
+    "ordo": 1,
+    "metallum": 5,
+    "terra": 1,
+    "lucrum": 2
+   }
+  },
+  {
+   "tag": "c:nuggets/lead",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "tag": "c:ingots/lead",
+   "aspects": {
+    "metallum": 3,
+    "ordo": 1
+   }
+  },
+  {
+   "tag": "c:dusts/lead",
+   "aspects": {
+    "metallum": 2,
+    "perditio": 1,
+    "ordo": 1
+   }
+  },
+  {
+   "tag": "c:ores/lead",
+   "aspects": {
+    "metallum": 3,
+    "perditio": 1,
+    "ordo": 1
+   }
+  },
+  {
+   "item": "neothaum:native_lead_cluster",
+   "aspects": {
+    "ordo": 3,
+    "metallum": 5,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:bedrock",
+   "aspects": {
+    "vacuos": 16,
+    "perditio": 16,
+    "terra": 16,
+    "tenebrae": 16
+   }
+  },
+  {
+   "item": "minecraft:dirt",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:coarse_dirt",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:podzol",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:podzol",
+   "aspects": {
+    "terra": 1,
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:farmland",
+   "aspects": {
+    "terra": 1,
+    "meto": 2
+   }
+  },
+  {
+   "tag": "minecraft:sand",
+   "aspects": {
+    "terra": 1,
+    "perditio": 1
+   }
+  },
+  {
+   "item": "minecraft:grass_block",
+   "aspects": {
+    "terra": 1,
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:clay_ball",
+   "aspects": {
+    "aqua": 1,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:end_stone",
+   "aspects": {
+    "terra": 1,
+    "tenebrae": 1
+   }
+  },
+  {
+   "item": "minecraft:gravel",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:mycelium",
+   "aspects": {
+    "terra": 1,
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:clay",
+   "aspects": {
+    "terra": 3,
+    "aqua": 3
+   }
+  },
+  {
+   "item": "minecraft:terracotta",
+   "aspects": {
+    "terra": 4,
+    "ignis": 1
+   }
+  },
+  {
+   "tag": "minecraft:terracotta",
+   "aspects": {
+    "terra": 3,
+    "ignis": 1,
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:brick",
+   "aspects": {
+    "terra": 1,
+    "ignis": 1
+   }
+  },
+  {
+   "item": "minecraft:nether_brick",
+   "aspects": {
+    "ignis": 1
+   }
+  },
+  {
+   "item": "minecraft:soul_sand",
+   "aspects": {
+    "terra": 1,
+    "vinculum": 1,
+    "spiritus": 1
+   }
+  },
+  {
+   "item": "minecraft:netherrack",
+   "aspects": {
+    "terra": 2,
+    "ignis": 1
+   }
+  },
+  {
+   "item": "minecraft:nether_bricks",
+   "aspects": {
+    "terra": 2,
+    "ignis": 1
+   }
+  },
+  {
+   "item": "minecraft:glass",
+   "aspects": {
+    "vitreus": 1
+   }
+  },
+  {
+   "tag": "c:glass_blocks",
+   "aspects": {
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "minecraft:mossy_cobblestone",
+   "aspects": {
+    "terra": 1,
+    "herba": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "minecraft:obsidian",
+   "aspects": {
+    "terra": 2,
+    "ignis": 2,
+    "tenebrae": 1
+   }
+  },
+  {
+   "item": "minecraft:infested_stone",
+   "aspects": {
+    "terra": 2,
+    "bestia": 1,
+    "vinculum": 1
+   }
+  },
+  {
+   "item": "minecraft:infested_cobblestone",
+   "aspects": {
+    "terra": 2,
+    "bestia": 1,
+    "vinculum": 1
+   }
+  },
+  {
+   "item": "minecraft:infested_stone_bricks",
+   "aspects": {
+    "terra": 2,
+    "bestia": 1,
+    "vinculum": 1
+   }
+  },
+  {
+   "item": "minecraft:infested_mossy_stone_bricks",
+   "aspects": {
+    "terra": 2,
+    "bestia": 1,
+    "vinculum": 1
+   }
+  },
+  {
+   "item": "minecraft:infested_cracked_stone_bricks",
+   "aspects": {
+    "terra": 2,
+    "bestia": 1,
+    "vinculum": 1
+   }
+  },
+  {
+   "item": "minecraft:infested_chiseled_stone_bricks",
+   "aspects": {
+    "terra": 2,
+    "bestia": 1,
+    "vinculum": 1
+   }
+  },
+  {
+   "item": "minecraft:stone_bricks",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:mossy_stone_bricks",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:cracked_stone_bricks",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:chiseled_stone_bricks",
+   "aspects": {
+    "terra": 2
+   }
+  },
+  {
+   "item": "minecraft:mossy_stone_bricks",
+   "aspects": {
+    "terra": 1,
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:cracked_stone_bricks",
+   "aspects": {
+    "terra": 1,
+    "perditio": 1
+   }
+  },
+  {
+   "item": "minecraft:chiseled_stone_bricks",
+   "aspects": {
+    "terra": 1,
+    "ordo": 1
+   }
+  },
+  {
+   "item": "minecraft:sandstone",
+   "aspects": {},
+   "complex": true
+  },
+  {
+   "item": "minecraft:chiseled_sandstone",
+   "aspects": {},
+   "complex": true
+  },
+  {
+   "item": "minecraft:cut_sandstone",
+   "aspects": {},
+   "complex": true
+  },
+  {
+   "item": "minecraft:chiseled_sandstone",
+   "aspects": {
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "minecraft:cut_sandstone",
+   "aspects": {
+    "ordo": 1
+   }
+  },
+  {
+   "item": "minecraft:short_grass",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:fern",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:sunflower",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:lilac",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:tall_grass",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:large_fern",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:rose_bush",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:peony",
+   "aspects": {
+    "herba": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:lily_pad",
+   "aspects": {
+    "herba": 2,
+    "aqua": 1
+   }
+  },
+  {
+   "item": "minecraft:dead_bush",
+   "aspects": {
+    "herba": 1,
+    "perditio": 1
+   }
+  },
+  {
+   "item": "minecraft:vine",
+   "aspects": {
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:wheat_seeds",
+   "aspects": {
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:melon_seeds",
+   "aspects": {
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:pumpkin_seeds",
+   "aspects": {
+    "herba": 1
+   }
+  },
+  {
+   "item": "minecraft:melon_slice",
+   "aspects": {
+    "fames": 1
+   }
+  },
+  {
+   "item": "minecraft:nether_wart",
+   "aspects": {
+    "herba": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "tag": "minecraft:small_flowers",
+   "aspects": {
+    "herba": 1,
+    "victus": 1,
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:dandelion",
+   "aspects": {
+    "herba": 1,
+    "victus": 1,
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:cactus",
+   "aspects": {
+    "herba": 3,
+    "aqua": 1,
+    "perditio": 1
+   }
+  },
+  {
+   "item": "minecraft:brown_mushroom",
+   "aspects": {
+    "herba": 1,
+    "tenebrae": 1,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:red_mushroom",
+   "aspects": {
+    "herba": 1,
+    "tenebrae": 1,
+    "ignis": 1
+   }
+  },
+  {
+   "item": "minecraft:brown_mushroom_block",
+   "aspects": {
+    "herba": 2,
+    "tenebrae": 1,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:mushroom_stem",
+   "aspects": {
+    "herba": 2,
+    "tenebrae": 1,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:red_mushroom_block",
+   "aspects": {
+    "herba": 2,
+    "tenebrae": 1,
+    "ignis": 1
+   }
+  },
+  {
+   "item": "minecraft:sugar_cane",
+   "aspects": {
+    "herba": 1,
+    "aqua": 1,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:wheat",
+   "aspects": {
+    "messis": 2,
+    "fames": 1
+   }
+  },
+  {
+   "item": "minecraft:apple",
+   "aspects": {
+    "messis": 2,
+    "fames": 1
+   }
+  },
+  {
+   "item": "minecraft:carrot",
+   "aspects": {
+    "messis": 1,
+    "fames": 1,
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:potato",
+   "aspects": {
+    "messis": 1,
+    "fames": 1,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:baked_potato",
+   "aspects": {
+    "messis": 1,
+    "fames": 2
+   }
+  },
+  {
+   "item": "minecraft:poisonous_potato",
+   "aspects": {
+    "messis": 1,
+    "venenum": 2
+   }
+  },
+  {
+   "item": "minecraft:pumpkin",
+   "aspects": {
+    "messis": 2
+   }
+  },
+  {
+   "item": "minecraft:carved_pumpkin",
+   "aspects": {
+    "messis": 2
+   }
+  },
+  {
+   "item": "minecraft:melon",
+   "aspects": {
+    "messis": 2
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:name_tag",
+   "aspects": {
+    "cognitio": 2,
+    "bestia": 2
+   }
+  },
+  {
+   "item": "minecraft:iron_horse_armor",
+   "aspects": {
+    "tutamen": 2,
+    "bestia": 2
+   }
+  },
+  {
+   "item": "minecraft:golden_horse_armor",
+   "aspects": {
+    "tutamen": 4,
+    "bestia": 2
+   }
+  },
+  {
+   "item": "minecraft:diamond_horse_armor",
+   "aspects": {
+    "tutamen": 6,
+    "bestia": 2
+   }
+  },
+  {
+   "item": "minecraft:fire",
+   "aspects": {
+    "ignis": 4
+   }
+  },
+  {
+   "item": "minecraft:water",
+   "aspects": {
+    "aqua": 4
+   }
+  },
+  {
+   "item": "minecraft:lava",
+   "aspects": {
+    "ignis": 3,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:ice",
+   "aspects": {
+    "gelum": 4
+   }
+  },
+  {
+   "item": "minecraft:packed_ice",
+   "aspects": {
+    "gelum": 3,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:snowball",
+   "aspects": {
+    "gelum": 1
+   }
+  },
+  {
+   "item": "minecraft:cookie",
+   "aspects": {
+    "fames": 1
+   }
+  },
+  {
+   "item": "minecraft:potion",
+   "aspects": {
+    "aqua": 1,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "minecraft:torch",
+   "aspects": {
+    "lux": 1
+   }
+  },
+  {
+   "item": "minecraft:cobweb",
+   "aspects": {
+    "vinculum": 2,
+    "pannus": 1
+   }
+  },
+  {
+   "item": "minecraft:flint",
+   "aspects": {
+    "terra": 1,
+    "instrumentum": 1
+   }
+  },
+  {
+   "item": "minecraft:string",
+   "aspects": {
+    "bestia": 1,
+    "pannus": 1
+   }
+  },
+  {
+   "item": "minecraft:slime_ball",
+   "aspects": {
+    "limus": 2
+   }
+  },
+  {
+   "item": "minecraft:leather",
+   "aspects": {
+    "pannus": 2,
+    "bestia": 1,
+    "tutamen": 1
+   }
+  },
+  {
+   "item": "minecraft:rotten_flesh",
+   "aspects": {
+    "humanus": 1,
+    "corpus": 2
+   }
+  },
+  {
+   "item": "minecraft:feather",
+   "aspects": {
+    "volatus": 2,
+    "aer": 1
+   }
+  },
+  {
+   "item": "minecraft:bone",
+   "aspects": {
+    "mortuus": 2,
+    "corpus": 1
+   }
+  },
+  {
+   "item": "minecraft:egg",
+   "aspects": {
+    "limus": 1,
+    "victus": 1,
+    "bestia": 1
+   }
+  },
+  {
+   "item": "minecraft:spider_eye",
+   "aspects": {
+    "sensus": 2,
+    "bestia": 2,
+    "venenum": 2
+   }
+  },
+  {
+   "item": "minecraft:gunpowder",
+   "aspects": {
+    "ignis": 4,
+    "perditio": 4
+   }
+  },
+  {
+   "tag": "minecraft:wool",
+   "aspects": {
+    "pannus": 4,
+    "fabrico": 1
+   }
+  },
+  {
+   "tag": "minecraft:fishes",
+   "aspects": {
+    "corpus": 3,
+    "victus": 1,
+    "aqua": 1
+   }
+  },
+  {
+   "item": "minecraft:cooked_cod",
+   "aspects": {
+    "fabrico": 1,
+    "corpus": 4,
+    "fames": 3
+   }
+  },
+  {
+   "item": "minecraft:cooked_salmon",
+   "aspects": {
+    "fabrico": 1,
+    "corpus": 4,
+    "fames": 3
+   }
+  },
+  {
+   "item": "minecraft:chicken",
+   "aspects": {
+    "corpus": 3,
+    "victus": 2,
+    "bestia": 1
+   }
+  },
+  {
+   "item": "minecraft:cooked_chicken",
+   "aspects": {
+    "fabrico": 1,
+    "corpus": 4,
+    "fames": 3
+   }
+  },
+  {
+   "item": "minecraft:porkchop",
+   "aspects": {
+    "corpus": 3,
+    "victus": 1,
+    "bestia": 1
+   }
+  },
+  {
+   "item": "minecraft:cooked_porkchop",
+   "aspects": {
+    "fabrico": 1,
+    "corpus": 3,
+    "fames": 3
+   }
+  },
+  {
+   "item": "minecraft:beef",
+   "aspects": {
+    "corpus": 4,
+    "victus": 2,
+    "bestia": 1
+   }
+  },
+  {
+   "item": "minecraft:cooked_beef",
+   "aspects": {
+    "fabrico": 1,
+    "corpus": 4,
+    "fames": 4
+   }
+  },
+  {
+   "item": "minecraft:blaze_rod",
+   "aspects": {
+    "ignis": 4,
+    "praecantatio": 2
+   }
+  },
+  {
+   "item": "minecraft:saddle",
+   "aspects": {
+    "bestia": 2,
+    "pannus": 3,
+    "iter": 3
+   }
+  },
+  {
+   "item": "minecraft:ender_pearl",
+   "aspects": {
+    "alienis": 4,
+    "praecantatio": 2,
+    "iter": 4
+   }
+  },
+  {
+   "item": "minecraft:ghast_tear",
+   "aspects": {
+    "aqua": 1,
+    "exanimis": 4,
+    "spiritus": 4
+   }
+  },
+  {
+   "item": "minecraft:skeleton_skull",
+   "aspects": {
+    "mortuus": 4,
+    "spiritus": 4,
+    "exanimis": 4
+   }
+  },
+  {
+   "item": "minecraft:wither_skeleton_skull",
+   "aspects": {
+    "mortuus": 4,
+    "spiritus": 4,
+    "exanimis": 4,
+    "venenum": 4
+   }
+  },
+  {
+   "item": "minecraft:zombie_head",
+   "aspects": {
+    "mortuus": 4,
+    "spiritus": 4,
+    "corpus": 4
+   }
+  },
+  {
+   "item": "minecraft:player_head",
+   "aspects": {
+    "mortuus": 4,
+    "spiritus": 4,
+    "humanus": 4
+   }
+  },
+  {
+   "item": "minecraft:creeper_head",
+   "aspects": {
+    "mortuus": 4,
+    "spiritus": 4,
+    "perditio": 2,
+    "ignis": 2
+   }
+  },
+  {
+   "item": "minecraft:music_disc_11",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_13",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "aqua": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_cat",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "bestia": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_chirp",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "terra": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_far",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "alienis": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_mall",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "humanus": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_mellohi",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "fabrico": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_stal",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "tenebrae": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_strad",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "machina": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_ward",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "praecantatio": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_blocks",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "instrumentum": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:music_disc_wait",
+   "aspects": {
+    "sensus": 4,
+    "aer": 4,
+    "vinculum": 4,
+    "lucrum": 4
+   }
+  },
+  {
+   "item": "minecraft:nether_star",
+   "aspects": {
+    "alienis": 8,
+    "praecantatio": 8,
+    "ordo": 8,
+    "lux": 8
+   }
+  },
+  {
+   "item": "minecraft:chainmail_helmet",
+   "aspects": {
+    "metallum": 8
+   }
+  },
+  {
+   "item": "minecraft:chainmail_chestplate",
+   "aspects": {
+    "metallum": 12
+   }
+  },
+  {
+   "item": "minecraft:chainmail_leggings",
+   "aspects": {
+    "metallum": 11
+   }
+  },
+  {
+   "item": "minecraft:chainmail_boots",
+   "aspects": {
+    "metallum": 7
+   }
+  },
+  {
+   "item": "minecraft:paper",
+   "aspects": {
+    "cognitio": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:book",
+   "aspects": {
+    "cognitio": 3
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:enchanted_book",
+   "aspects": {
+    "cognitio": 3
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:bookshelf",
+   "aspects": {
+    "cognitio": 8
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:dragon_egg",
+   "aspects": {
+    "alienis": 8,
+    "bestia": 8,
+    "praecantatio": 8
+   }
+  },
+  {
+   "item": "minecraft:nether_portal",
+   "aspects": {
+    "ignis": 4,
+    "iter": 4
+   }
+  },
+  {
+   "item": "minecraft:end_portal",
+   "aspects": {
+    "alienis": 4,
+    "iter": 4
+   }
+  },
+  {
+   "item": "minecraft:end_portal_frame",
+   "aspects": {
+    "alienis": 4,
+    "machina": 4,
+    "iter": 4
+   }
+  },
+  {
+   "item": "minecraft:spawner",
+   "aspects": {
+    "bestia": 4,
+    "iter": 4,
+    "exanimis": 4,
+    "praecantatio": 4
+   }
+  },
+  {
+   "item": "minecraft:ender_eye",
+   "aspects": {
+    "sensus": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:arrow",
+   "aspects": {
+    "telum": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:glass_bottle",
+   "aspects": {
+    "vacuos": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:chest",
+   "aspects": {
+    "vacuos": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:golden_apple",
+   "aspects": {
+    "praecantatio": 2,
+    "sano": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:enchanted_golden_apple",
+   "aspects": {
+    "praecantatio": 4,
+    "sano": 8
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:bowl",
+   "aspects": {
+    "vacuos": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:mushroom_stew",
+   "aspects": {
+    "fames": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:minecart",
+   "aspects": {
+    "machina": 2,
+    "iter": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:iron_door",
+   "aspects": {
+    "machina": 2,
+    "motus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:oak_door",
+   "aspects": {
+    "machina": 1,
+    "motus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:oak_boat",
+   "aspects": {
+    "aqua": 4,
+    "iter": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:flint_and_steel",
+   "aspects": {
+    "ignis": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:fishing_rod",
+   "aspects": {
+    "aqua": 1,
+    "instrumentum": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:bucket",
+   "aspects": {
+    "metallum": 8,
+    "vacuos": 1
+   }
+  },
+  {
+   "item": "minecraft:water_bucket",
+   "aspects": {
+    "metallum": 8,
+    "vacuos": 1,
+    "aqua": 4
+   }
+  },
+  {
+   "item": "minecraft:lava_bucket",
+   "aspects": {
+    "metallum": 8,
+    "vacuos": 1,
+    "ignis": 4,
+    "terra": 1
+   }
+  },
+  {
+   "item": "minecraft:milk_bucket",
+   "aspects": {
+    "metallum": 8,
+    "vacuos": 1,
+    "fames": 2,
+    "sano": 2,
+    "aqua": 2
+   }
+  },
+  {
+   "item": "minecraft:cake",
+   "aspects": {
+    "aqua": 4,
+    "fames": 4,
+    "victus": 4
+   }
+  },
+  {
+   "item": "minecraft:brewing_stand",
+   "aspects": {
+    "fabrico": 2,
+    "aqua": 2
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:stone_button",
+   "aspects": {
+    "machina": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:rail",
+   "aspects": {
+    "metallum": 1,
+    "iter": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:detector_rail",
+   "aspects": {
+    "machina": 1,
+    "sensus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:powered_rail",
+   "aspects": {
+    "machina": 1,
+    "potentia": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:activator_rail",
+   "aspects": {
+    "machina": 2
+   },
+   "complex": true
+  },
+  {
+   "tag": "minecraft:fence_gates",
+   "aspects": {
+    "machina": 1,
+    "iter": 1
+   },
+   "complex": true
+  },
+  {
+   "tag": "minecraft:wooden_pressure_plates",
+   "aspects": {
+    "machina": 1,
+    "sensus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:stone_pressure_plate",
+   "aspects": {
+    "machina": 1,
+    "sensus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:light_weighted_pressure_plate",
+   "aspects": {
+    "machina": 1,
+    "sensus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:heavy_weighted_pressure_plate",
+   "aspects": {
+    "machina": 1,
+    "sensus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:lever",
+   "aspects": {
+    "machina": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:redstone_torch",
+   "aspects": {
+    "machina": 2
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:piston",
+   "aspects": {
+    "machina": 2,
+    "motus": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:sticky_piston",
+   "aspects": {
+    "machina": 2,
+    "motus": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:jukebox",
+   "aspects": {
+    "sensus": 4,
+    "machina": 2,
+    "aer": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:note_block",
+   "aspects": {
+    "sensus": 4,
+    "machina": 1,
+    "aer": 4
+   },
+   "complex": true
+  },
+  {
+   "tag": "minecraft:wooden_trapdoors",
+   "aspects": {
+    "motus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:furnace",
+   "aspects": {
+    "ignis": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:furnace",
+   "aspects": {
+    "ignis": 2
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:enchanting_table",
+   "aspects": {
+    "praecantatio": 8,
+    "fabrico": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:crafting_table",
+   "aspects": {
+    "fabrico": 4
+   }
+  },
+  {
+   "item": "minecraft:clock",
+   "aspects": {
+    "machina": 2
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:anvil",
+   "aspects": {
+    "metallum": 64,
+    "fabrico": 2,
+    "instrumentum": 2
+   }
+  },
+  {
+   "item": "minecraft:chipped_anvil",
+   "aspects": {
+    "metallum": 64,
+    "fabrico": 2,
+    "instrumentum": 2
+   }
+  },
+  {
+   "item": "minecraft:damaged_anvil",
+   "aspects": {
+    "metallum": 64,
+    "fabrico": 2,
+    "instrumentum": 2
+   }
+  },
+  {
+   "item": "minecraft:beacon",
+   "aspects": {
+    "auram": 2,
+    "praecantatio": 2,
+    "permutatio": 2
+   },
+   "complex": true
+  },
+  {
+   "tag": "minecraft:wooden_buttons",
+   "aspects": {
+    "machina": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:carrot_on_a_stick",
+   "aspects": {
+    "iter": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:flower_pot",
+   "aspects": {
+    "vacuos": 1,
+    "herba": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:golden_carrot",
+   "aspects": {
+    "sensus": 2
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:ender_chest",
+   "aspects": {
+    "permutatio": 2,
+    "iter": 2,
+    "vacuos": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:hopper",
+   "aspects": {
+    "machina": 1,
+    "permutatio": 1,
+    "vacuos": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:dropper",
+   "aspects": {
+    "machina": 1,
+    "permutatio": 1,
+    "vacuos": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:dispenser",
+   "aspects": {
+    "machina": 1,
+    "permutatio": 1,
+    "vacuos": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "minecraft:tripwire_hook",
+   "aspects": {
+    "sensus": 1,
+    "machina": 1,
+    "vinculum": 1
+   }
+  },
+  {
+   "item": "minecraft:daylight_detector",
+   "aspects": {
+    "sensus": 2,
+    "lux": 3,
+    "machina": 3
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:table",
+   "aspects": {
+    "instrumentum": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:arcane_worktable",
+   "aspects": {
+    "instrumentum": 1,
+    "fabrico": 4
+   }
+  },
+  {
+   "item": "neothaum:research_table",
+   "aspects": {
+    "instrumentum": 1,
+    "cognitio": 4
+   }
+  },
+  {
+   "item": "neothaum:native_iron_cluster",
+   "aspects": {
+    "ordo": 1,
+    "metallum": 6,
+    "terra": 1
+   }
+  },
+  {
+   "item": "neothaum:native_gold_cluster",
+   "aspects": {
+    "ordo": 1,
+    "metallum": 4,
+    "terra": 1,
+    "lucrum": 2
+   }
+  },
+  {
+   "item": "neothaum:native_cinnabar_cluster",
+   "aspects": {
+    "ordo": 1,
+    "metallum": 4,
+    "terra": 1,
+    "permutatio": 4,
+    "venenum": 2
+   }
+  },
+  {
+   "item": "neothaum:quicksilver_drop",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "item": "neothaum:thaumium_nugget",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "item": "neothaum:cinnabar_ore",
+   "aspects": {
+    "terra": 1,
+    "metallum": 2,
+    "permutatio": 2,
+    "venenum": 1
+   }
+  },
+  {
+   "item": "neothaum:amber_bearing_stone",
+   "aspects": {
+    "terra": 1,
+    "vinculum": 3,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:air_infused_stone",
+   "aspects": {
+    "terra": 1,
+    "aer": 3,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:fire_infused_stone",
+   "aspects": {
+    "terra": 1,
+    "ignis": 3,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:water_infused_stone",
+   "aspects": {
+    "terra": 1,
+    "aqua": 3,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:earth_infused_stone",
+   "aspects": {
+    "terra": 4,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:order_infused_stone",
+   "aspects": {
+    "terra": 1,
+    "ordo": 3,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:entropy_infused_stone",
+   "aspects": {
+    "terra": 1,
+    "perditio": 3,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:crusted_taint",
+   "aspects": {
+    "arbor": 1,
+    "vitium": 3
+   }
+  },
+  {
+   "item": "neothaum:tainted_soil",
+   "aspects": {
+    "terra": 1,
+    "vitium": 3
+   }
+  },
+  {
+   "item": "neothaum:fibrous_taint",
+   "aspects": {
+    "victus": 1,
+    "vitium": 2
+   }
+  },
+  {
+   "item": "neothaum:tainted_grass",
+   "aspects": {
+    "herba": 1,
+    "vitium": 1
+   }
+  },
+  {
+   "item": "neothaum:tainted_plant",
+   "aspects": {
+    "herba": 1,
+    "vitium": 1
+   }
+  },
+  {
+   "item": "neothaum:spore_stalk",
+   "aspects": {
+    "bestia": 1,
+    "herba": 1,
+    "vitium": 2
+   }
+  },
+  {
+   "item": "neothaum:mature_spore_stalk",
+   "aspects": {
+    "bestia": 1,
+    "herba": 1,
+    "vitium": 2
+   }
+  },
+  {
+   "item": "neothaum:obsidian_totem",
+   "aspects": {
+    "terra": 4,
+    "tenebrae": 2,
+    "alienis": 2
+   }
+  },
+  {
+   "item": "neothaum:greatwood_log",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:silverwood_log",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1,
+    "ordo": 1
+   }
+  },
+  {
+   "item": "neothaum:greatwood_leaves",
+   "aspects": {
+    "herba": 1
+   }
+  },
+  {
+   "item": "neothaum:silverwood_leaves",
+   "aspects": {
+    "herba": 1
+   }
+  },
+  {
+   "item": "neothaum:greatwood_sapling",
+   "aspects": {
+    "herba": 2,
+    "arbor": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:silverwood_sapling",
+   "aspects": {
+    "herba": 2,
+    "arbor": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:shimmerleaf",
+   "aspects": {
+    "herba": 2,
+    "permutatio": 2,
+    "praecantatio": 2
+   }
+  },
+  {
+   "item": "neothaum:cinderpearl",
+   "aspects": {
+    "herba": 2,
+    "ignis": 2,
+    "praecantatio": 2
+   }
+  },
+  {
+   "item": "neothaum:vishroom",
+   "aspects": {
+    "herba": 2,
+    "venenum": 1,
+    "praecantatio": 2
+   }
+  },
+  {
+   "item": "neothaum:arcane_stone_block",
+   "aspects": {
+    "terra": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:arcane_stone_bricks",
+   "aspects": {
+    "terra": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:quicksilver",
+   "aspects": {
+    "metallum": 3,
+    "venenum": 1,
+    "permutatio": 2
+   }
+  },
+  {
+   "item": "neothaum:zombie_brain",
+   "aspects": {
+    "corpus": 2,
+    "cognitio": 4,
+    "exanimis": 2
+   }
+  },
+  {
+   "item": "neothaum:amber",
+   "aspects": {
+    "vinculum": 2,
+    "vitreus": 2
+   }
+  },
+  {
+   "item": "neothaum:knowledge_fragment",
+   "aspects": {
+    "cognitio": 8
+   }
+  },
+  {
+   "item": "neothaum:tainted_goo",
+   "aspects": {
+    "vitium": 3,
+    "limus": 1
+   }
+  },
+  {
+   "item": "neothaum:taint_tendril",
+   "aspects": {
+    "vitium": 2,
+    "lucrum": 1,
+    "fames": 1
+   }
+  },
+  {
+   "item": "neothaum:gold_coin",
+   "aspects": {
+    "lucrum": 1
+   }
+  },
+  {
+   "item": "neothaum:common_treasure",
+   "aspects": {
+    "lucrum": 8
+   }
+  },
+  {
+   "item": "neothaum:uncommon_treasure",
+   "aspects": {
+    "lucrum": 16
+   }
+  },
+  {
+   "item": "neothaum:rare_treasure",
+   "aspects": {
+    "lucrum": 32
+   }
+  },
+  {
+   "item": "neothaum:beef_nugget",
+   "aspects": {
+    "fames": 1
+   }
+  },
+  {
+   "item": "neothaum:chicken_nugget",
+   "aspects": {
+    "fames": 1
+   }
+  },
+  {
+   "item": "neothaum:pork_nugget",
+   "aspects": {
+    "fames": 1
+   }
+  },
+  {
+   "item": "neothaum:fish_nugget",
+   "aspects": {
+    "fames": 1
+   }
+  },
+  {
+   "item": "neothaum:triple_meat_treat",
+   "aspects": {
+    "sano": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:air_shard",
+   "aspects": {
+    "praecantatio": 1,
+    "aer": 2,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "neothaum:fire_shard",
+   "aspects": {
+    "praecantatio": 1,
+    "ignis": 2,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "neothaum:water_shard",
+   "aspects": {
+    "praecantatio": 1,
+    "aqua": 2,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "neothaum:earth_shard",
+   "aspects": {
+    "praecantatio": 1,
+    "terra": 2,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "neothaum:order_shard",
+   "aspects": {
+    "praecantatio": 1,
+    "ordo": 2,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "neothaum:entropy_shard",
+   "aspects": {
+    "praecantatio": 1,
+    "perditio": 2,
+    "vitreus": 1
+   }
+  },
+  {
+   "item": "neothaum:salis_mundus",
+   "aspects": {
+    "praecantatio": 2
+   }
+  },
+  {
+   "item": "neothaum:crucible",
+   "aspects": {
+    "fabrico": 4,
+    "praecantatio": 4
+   }
+  },
+  {
+   "item": "neothaum:white_tallow_candle",
+   "aspects": {
+    "lux": 2,
+    "corpus": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:glimmer_of_light",
+   "aspects": {
+    "lux": 1
+   }
+  },
+  {
+   "item": "neothaum:glimmer_of_light_2",
+   "aspects": {
+    "lux": 1
+   }
+  },
+  {
+   "item": "neothaum:thaumonomicon",
+   "aspects": {
+    "cognitio": 8,
+    "praecantatio": 2
+   }
+  },
+  {
+   "item": "neothaum:advanced_alchemical_furnace",
+   "aspects": {
+    "praecantatio": 8,
+    "aqua": 8,
+    "fabrico": 8
+   }
+  },
+  {
+   "item": "neothaum:glass_phial",
+   "aspects": {
+    "vacuos": 1
+   }
+  },
+  {
+   "item": "neothaum:phial_of_essentia",
+   "aspects": {}
+  },
+  {
+   "item": "neothaum:ethereal_essence",
+   "aspects": {
+    "auram": 2
+   }
+  },
+  {
+   "item": "neothaum:crystallized_essence",
+   "aspects": {}
+  },
+  {
+   "item": "neothaum:air_arrow",
+   "aspects": {
+    "telum": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:goggles_of_revealing",
+   "aspects": {
+    "sensus": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:arcane_ear",
+   "aspects": {
+    "sensus": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:apprentices_ring",
+   "aspects": {
+    "praecantatio": 5
+   }
+  },
+  {
+   "item": "neothaum:focus_pech",
+   "aspects": {
+    "praecantatio": 5,
+    "venenum": 5,
+    "perditio": 5,
+    "alienis": 5,
+    "telum": 5
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_chestplate",
+   "aspects": {
+    "metallum": 5,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_robe",
+   "aspects": {
+    "metallum": 3,
+    "pannus": 2,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:crimson_praetor_chestplate",
+   "aspects": {
+    "metallum": 5,
+    "alienis": 2
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_greaves",
+   "aspects": {
+    "metallum": 5,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:crimson_praetor_greaves",
+   "aspects": {
+    "metallum": 5,
+    "alienis": 2
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_leggings",
+   "aspects": {
+    "metallum": 3,
+    "pannus": 2,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_helm",
+   "aspects": {
+    "metallum": 5,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:crimson_praetor_helm",
+   "aspects": {
+    "metallum": 5,
+    "alienis": 2
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_hood",
+   "aspects": {
+    "metallum": 3,
+    "pannus": 2,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_boots",
+   "aspects": {
+    "metallum": 4,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:crimson_cult_banner",
+   "aspects": {
+    "alienis": 1,
+    "arbor": 2,
+    "pannus": 3
+   }
+  },
+  {
+   "item": "neothaum:eldritch_eye",
+   "aspects": {
+    "alienis": 5,
+    "auram": 3,
+    "praecantatio": 3,
+    "sensus": 3,
+    "spiritus": 3
+   }
+  },
+  {
+   "item": "neothaum:crimson_rites",
+   "aspects": {
+    "cognitio": 5,
+    "praecantatio": 3,
+    "alienis": 3,
+    "spiritus": 3
+   }
+  },
+  {
+   "item": "neothaum:runed_tablet",
+   "aspects": {
+    "vinculum": 4,
+    "cognitio": 4,
+    "machina": 4
+   }
+  },
+  {
+   "item": "neothaum:primordial_pearl",
+   "aspects": {
+    "aer": 16,
+    "terra": 16,
+    "ignis": 16,
+    "aqua": 16,
+    "ordo": 16,
+    "perditio": 16
+   }
+  },
+  {
+   "item": "neothaum:eldritch_altar",
+   "aspects": {
+    "vacuos": 8,
+    "alienis": 8,
+    "sensus": 4
+   }
+  },
+  {
+   "item": "neothaum:eldritch_portal",
+   "aspects": {
+    "vacuos": 8,
+    "alienis": 8,
+    "iter": 8
+   }
+  },
+  {
+   "item": "neothaum:eldritch_capstone",
+   "aspects": {
+    "vacuos": 4,
+    "alienis": 4
+   }
+  },
+  {
+   "item": "neothaum:glowing_crusted_stone",
+   "aspects": {
+    "lux": 1,
+    "terra": 1,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:glyphed_stone",
+   "aspects": {
+    "cognitio": 2,
+    "terra": 1,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:ancient_stone",
+   "aspects": {
+    "terra": 1,
+    "alienis": 1
+   }
+  },
+  {
+   "item": "neothaum:ancient_rock",
+   "aspects": {
+    "terra": 1,
+    "alienis": 1
+   }
+  }
+ ],
+ "entities": [
+  {
+   "entity": "minecraft:zombie",
+   "aspects": {
+    "exanimis": 2,
+    "humanus": 1,
+    "terra": 1
+   }
+  },
+  {
+   "entity": "minecraft:giant",
+   "aspects": {
+    "exanimis": 4,
+    "humanus": 3,
+    "terra": 3
+   }
+  },
+  {
+   "entity": "minecraft:skeleton",
+   "aspects": {
+    "exanimis": 3,
+    "humanus": 1,
+    "terra": 1
+   }
+  },
+  {
+   "entity": "minecraft:wither_skeleton",
+   "aspects": {
+    "exanimis": 4,
+    "humanus": 1,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "minecraft:creeper",
+   "aspects": {
+    "herba": 2,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "minecraft:creeper",
+   "aspects": {
+    "herba": 3,
+    "ignis": 3,
+    "potentia": 3
+   },
+   "nbt": {
+    "powered": 1
+   }
+  },
+  {
+   "entity": "minecraft:horse",
+   "aspects": {
+    "bestia": 4,
+    "terra": 1,
+    "aer": 1
+   }
+  },
+  {
+   "entity": "minecraft:pig",
+   "aspects": {
+    "bestia": 2,
+    "terra": 2
+   }
+  },
+  {
+   "entity": "minecraft:experience_orb",
+   "aspects": {
+    "cognitio": 5
+   }
+  },
+  {
+   "entity": "minecraft:sheep",
+   "aspects": {
+    "bestia": 2,
+    "terra": 2
+   }
+  },
+  {
+   "entity": "minecraft:cow",
+   "aspects": {
+    "bestia": 3,
+    "terra": 3
+   }
+  },
+  {
+   "entity": "minecraft:mooshroom",
+   "aspects": {
+    "bestia": 3,
+    "herba": 1,
+    "terra": 2
+   }
+  },
+  {
+   "entity": "minecraft:snow_golem",
+   "aspects": {
+    "gelum": 3,
+    "aqua": 1
+   }
+  },
+  {
+   "entity": "minecraft:ocelot",
+   "aspects": {
+    "bestia": 3,
+    "perditio": 3
+   }
+  },
+  {
+   "entity": "minecraft:chicken",
+   "aspects": {
+    "bestia": 2,
+    "volatus": 2,
+    "aer": 1
+   }
+  },
+  {
+   "entity": "minecraft:squid",
+   "aspects": {
+    "bestia": 2,
+    "aqua": 2
+   }
+  },
+  {
+   "entity": "minecraft:wolf",
+   "aspects": {
+    "bestia": 3,
+    "terra": 3
+   }
+  },
+  {
+   "entity": "minecraft:bat",
+   "aspects": {
+    "bestia": 1,
+    "volatus": 1,
+    "aer": 1
+   }
+  },
+  {
+   "entity": "minecraft:oak_boat",
+   "aspects": {
+    "machina": 2,
+    "aqua": 2
+   }
+  },
+  {
+   "entity": "minecraft:spider",
+   "aspects": {
+    "bestia": 3,
+    "perditio": 2
+   }
+  },
+  {
+   "entity": "minecraft:slime",
+   "aspects": {
+    "limus": 2,
+    "aqua": 2
+   }
+  },
+  {
+   "entity": "minecraft:ghast",
+   "aspects": {
+    "exanimis": 3,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "minecraft:zombified_piglin",
+   "aspects": {
+    "exanimis": 4,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "minecraft:enderman",
+   "aspects": {
+    "alienis": 4,
+    "iter": 2,
+    "aer": 2
+   }
+  },
+  {
+   "entity": "minecraft:cave_spider",
+   "aspects": {
+    "bestia": 2,
+    "venenum": 2,
+    "terra": 1
+   }
+  },
+  {
+   "entity": "minecraft:silverfish",
+   "aspects": {
+    "bestia": 1,
+    "terra": 1
+   }
+  },
+  {
+   "entity": "minecraft:blaze",
+   "aspects": {
+    "alienis": 4,
+    "ignis": 1
+   }
+  },
+  {
+   "entity": "minecraft:magma_cube",
+   "aspects": {
+    "limus": 3,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "minecraft:ender_dragon",
+   "aspects": {
+    "alienis": 20,
+    "bestia": 20,
+    "perditio": 20
+   }
+  },
+  {
+   "entity": "minecraft:wither",
+   "aspects": {
+    "exanimis": 20,
+    "perditio": 20,
+    "ignis": 15
+   }
+  },
+  {
+   "entity": "minecraft:witch",
+   "aspects": {
+    "humanus": 3,
+    "praecantatio": 2,
+    "ignis": 1
+   }
+  },
+  {
+   "entity": "minecraft:villager",
+   "aspects": {
+    "humanus": 3,
+    "aer": 2
+   }
+  },
+  {
+   "entity": "minecraft:iron_golem",
+   "aspects": {
+    "metallum": 4,
+    "terra": 3
+   }
+  },
+  {
+   "entity": "minecraft:minecart",
+   "aspects": {
+    "machina": 3,
+    "aer": 2
+   }
+  },
+  {
+   "entity": "minecraft:chest_minecart",
+   "aspects": {
+    "machina": 3,
+    "aer": 1,
+    "vacuos": 1
+   }
+  },
+  {
+   "entity": "minecraft:furnace_minecart",
+   "aspects": {
+    "machina": 3,
+    "aer": 1,
+    "ignis": 1
+   }
+  },
+  {
+   "entity": "minecraft:tnt_minecart",
+   "aspects": {
+    "machina": 3,
+    "aer": 1,
+    "ignis": 1
+   }
+  },
+  {
+   "entity": "minecraft:hopper_minecart",
+   "aspects": {
+    "machina": 3,
+    "aer": 1,
+    "permutatio": 1
+   }
+  },
+  {
+   "entity": "minecraft:spawner_minecart",
+   "aspects": {
+    "machina": 3,
+    "aer": 1,
+    "praecantatio": 1
+   }
+  },
+  {
+   "entity": "minecraft:end_crystal",
+   "aspects": {
+    "alienis": 3,
+    "praecantatio": 3,
+    "sano": 3
+   }
+  },
+  {
+   "entity": "minecraft:item_frame",
+   "aspects": {
+    "sensus": 3,
+    "pannus": 1
+   }
+  },
+  {
+   "entity": "minecraft:painting",
+   "aspects": {
+    "sensus": 5,
+    "pannus": 3
+   }
+  },
+  {
+   "entity": "neothaum:primal_orb",
+   "aspects": {
+    "aer": 5,
+    "perditio": 10,
+    "praecantatio": 10,
+    "potentia": 10
+   }
+  },
+  {
+   "entity": "neothaum:firebat",
+   "aspects": {
+    "bestia": 2,
+    "volatus": 1,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "neothaum:pech",
+   "aspects": {
+    "humanus": 2,
+    "praecantatio": 2,
+    "permutatio": 2,
+    "lucrum": 2
+   },
+   "nbt": {
+    "PechType": 0
+   }
+  },
+  {
+   "entity": "neothaum:pech",
+   "aspects": {
+    "humanus": 2,
+    "praecantatio": 2,
+    "permutatio": 2,
+    "telum": 2
+   },
+   "nbt": {
+    "PechType": 1
+   }
+  },
+  {
+   "entity": "neothaum:pech",
+   "aspects": {
+    "humanus": 2,
+    "praecantatio": 4,
+    "permutatio": 2
+   },
+   "nbt": {
+    "PechType": 2
+   }
+  },
+  {
+   "entity": "neothaum:thaum_slime",
+   "aspects": {
+    "limus": 2,
+    "praecantatio": 1,
+    "aqua": 1
+   }
+  },
+  {
+   "entity": "neothaum:brainy_zombie",
+   "aspects": {
+    "exanimis": 3,
+    "humanus": 1,
+    "cognitio": 1,
+    "terra": 1
+   }
+  },
+  {
+   "entity": "neothaum:giant_brainy_zombie",
+   "aspects": {
+    "exanimis": 4,
+    "humanus": 2,
+    "cognitio": 1,
+    "terra": 2
+   }
+  },
+  {
+   "entity": "neothaum:taintacle",
+   "aspects": {
+    "vitium": 3,
+    "aqua": 2
+   }
+  },
+  {
+   "entity": "neothaum:taintacle_tiny",
+   "aspects": {
+    "vitium": 1,
+    "aqua": 1
+   }
+  },
+  {
+   "entity": "neothaum:taint_spider",
+   "aspects": {
+    "vitium": 1,
+    "terra": 1
+   }
+  },
+  {
+   "entity": "neothaum:taint_spore",
+   "aspects": {
+    "vitium": 2,
+    "aer": 2
+   }
+  },
+  {
+   "entity": "neothaum:taint_swarmer",
+   "aspects": {
+    "vitium": 2,
+    "aer": 2
+   }
+  },
+  {
+   "entity": "neothaum:taint_swarm",
+   "aspects": {
+    "vitium": 3,
+    "aer": 3
+   }
+  },
+  {
+   "entity": "neothaum:tainted_pig",
+   "aspects": {
+    "vitium": 2,
+    "terra": 2
+   }
+  },
+  {
+   "entity": "neothaum:tainted_sheep",
+   "aspects": {
+    "vitium": 2,
+    "terra": 2
+   }
+  },
+  {
+   "entity": "neothaum:tainted_cow",
+   "aspects": {
+    "vitium": 3,
+    "terra": 3
+   }
+  },
+  {
+   "entity": "neothaum:tainted_chicken",
+   "aspects": {
+    "vitium": 2,
+    "volatus": 2,
+    "aer": 1
+   }
+  },
+  {
+   "entity": "neothaum:tainted_villager",
+   "aspects": {
+    "vitium": 3,
+    "aer": 2
+   }
+  },
+  {
+   "entity": "neothaum:tainted_creeper",
+   "aspects": {
+    "vitium": 2,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "neothaum:mind_spider",
+   "aspects": {
+    "vitium": 2,
+    "ignis": 2
+   }
+  },
+  {
+   "entity": "neothaum:eldritch_guardian",
+   "aspects": {
+    "alienis": 4,
+    "mortuus": 2,
+    "exanimis": 4
+   }
+  },
+  {
+   "entity": "neothaum:eldritch_orb",
+   "aspects": {
+    "alienis": 2,
+    "mortuus": 2
+   }
+  },
+  {
+   "entity": "neothaum:cultist_knight",
+   "aspects": {
+    "alienis": 1,
+    "humanus": 2,
+    "perditio": 1
+   }
+  },
+  {
+   "entity": "neothaum:cultist_cleric",
+   "aspects": {
+    "alienis": 1,
+    "humanus": 2,
+    "perditio": 1
+   }
+  },
+  {
+   "entity": "neothaum:golem",
+   "aspects": {
+    "aer": 2,
+    "terra": 2,
+    "praecantatio": 2
+   }
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/essentia_crystallizer",
+    "model": {
+      "type": "neothaum:crystallizer"
+    }
+  }
+}

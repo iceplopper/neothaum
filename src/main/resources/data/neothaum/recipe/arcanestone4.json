@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "KKK"
+  ],
+  "key": {
+    "K": "neothaum:arcane_stone_bricks"
+  },
+  "result": {
+    "id": "neothaum:arcane_stone_slab",
+    "count": 6
+  }
+}

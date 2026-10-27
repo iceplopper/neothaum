@@ -1,0 +1,11 @@
+{
+  "type": "neothaum:crucible",
+  "research": "VOIDMETAL",
+  "catalyst": "neothaum:void_seed",
+  "aspects": {
+    "metallum": 8
+  },
+  "result": {
+    "id": "neothaum:void_metal_ingot"
+  }
+}

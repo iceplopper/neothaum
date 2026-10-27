@@ -1,0 +1,16 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:aqua_affinity",
+  "instability": 2,
+  "aspects": {
+    "praecantatio": 4,
+    "motus": 8,
+    "aqua": 8
+  },
+  "components": [
+    "minecraft:sugar_cane",
+    "minecraft:slime_ball",
+    "neothaum:salis_mundus"
+  ]
+}

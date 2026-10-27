@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:amber_bearing_stone",
-    "thaumvibe:deepslate_amber_bearing_stone"
+    "neothaum:amber_bearing_stone",
+    "neothaum:deepslate_amber_bearing_stone"
   ]
 }

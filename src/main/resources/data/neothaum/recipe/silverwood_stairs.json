@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "K  ",
+    "KK ",
+    "KKK"
+  ],
+  "key": {
+    "K": "neothaum:silverwood_planks"
+  },
+  "result": {
+    "id": "neothaum:silverwood_stairs",
+    "count": 4
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "CAP_copper",
+  "aspects": {
+    "ordo": 2,
+    "ignis": 2,
+    "aer": 2
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": "minecraft:copper_nugget"
+  },
+  "result": {
+    "id": "neothaum:copper_cap"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:infusion",
+  "research": "RUNICCHARGED",
+  "instability": 6,
+  "aspects": {
+    "tutamen": 16,
+    "praecantatio": 16,
+    "potentia": 64
+  },
+  "central": "neothaum:ring_of_runic_shielding",
+  "components": [
+    "neothaum:balanced_shard",
+    "neothaum:fire_shard",
+    "neothaum:fire_shard",
+    "minecraft:potion",
+    "neothaum:fire_shard",
+    "neothaum:fire_shard"
+  ],
+  "result": {
+    "id": "neothaum:charged_ring_of_shielding"
+  }
+}

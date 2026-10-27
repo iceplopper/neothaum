@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ESSENTIACRYSTAL",
+  "aspects": {
+    "aqua": 5,
+    "terra": 15,
+    "ordo": 5
+  },
+  "pattern": [
+    "IDI",
+    "QCQ",
+    "WTW"
+  ],
+  "key": {
+    "T": "neothaum:essentia_tube",
+    "D": "minecraft:dispenser",
+    "Q": "neothaum:balanced_shard",
+    "I": "minecraft:iron_ingot",
+    "W": "#minecraft:planks",
+    "C": "neothaum:alchemical_construct"
+  },
+  "result": {
+    "id": "neothaum:essentia_crystallizer"
+  }
+}

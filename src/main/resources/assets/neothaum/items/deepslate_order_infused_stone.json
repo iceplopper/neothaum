@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "neothaum:block/deepslate_order_infused_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1127169
+      }
+    ]
+  }
+}

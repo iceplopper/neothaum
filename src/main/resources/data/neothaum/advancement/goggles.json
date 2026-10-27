@@ -1,0 +1,30 @@
+{
+  "parent": "neothaum:root",
+  "display": {
+    "icon": {
+      "id": "neothaum:goggles_of_revealing"
+    },
+    "title": {
+      "translate": "advancements.neothaum.goggles.title"
+    },
+    "description": {
+      "translate": "advancements.neothaum.goggles.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_goggles": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "neothaum:goggles_of_revealing"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "TUBES",
+  "aspects": {
+    "aqua": 5,
+    "aer": 5
+  },
+  "pattern": [
+    "I I",
+    "INI",
+    " S "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "N": "minecraft:quartz",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "neothaum:essentia_resonator"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/vis_relay",
+    "model": {
+      "type": "neothaum:vis_device",
+      "kind": "relay"
+    }
+  }
+}

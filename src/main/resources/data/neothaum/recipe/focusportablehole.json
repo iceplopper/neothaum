@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:infusion",
+  "research": "FOCUSPORTABLEHOLE",
+  "instability": 3,
+  "aspects": {
+    "iter": 25,
+    "alienis": 10,
+    "permutatio": 10,
+    "perditio": 25
+  },
+  "central": "minecraft:ender_pearl",
+  "components": [
+    "minecraft:quartz",
+    "neothaum:earth_shard",
+    "minecraft:quartz",
+    "neothaum:air_shard",
+    "minecraft:quartz",
+    "neothaum:entropy_shard"
+  ],
+  "result": {
+    "id": "neothaum:focus_portable_hole"
+  }
+}

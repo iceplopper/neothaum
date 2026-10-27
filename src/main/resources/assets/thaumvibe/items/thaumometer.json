@@ -1,9 +1,0 @@
-{
-  "model": {
-    "type": "minecraft:special",
-    "base": "thaumvibe:item/thaumometer",
-    "model": {
-      "type": "thaumvibe:thaumometer"
-    }
-  }
-}

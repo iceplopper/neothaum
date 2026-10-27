@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "ALCHEMICALMANUFACTURE",
+  "catalyst": "minecraft:string",
+  "aspects": {
+    "vinculum": 2,
+    "pannus": 2
+  },
+  "result": {
+    "id": "minecraft:cobweb"
+  }
+}

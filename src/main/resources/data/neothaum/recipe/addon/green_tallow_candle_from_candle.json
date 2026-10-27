@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "neothaum_candle_exchange",
+  "ingredients": [
+    "minecraft:green_candle"
+  ],
+  "result": {
+    "id": "neothaum:green_tallow_candle"
+  }
+}

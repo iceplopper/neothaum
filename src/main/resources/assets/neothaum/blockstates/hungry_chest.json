@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "neothaum:block/hungry_chest"
+    },
+    "facing=south": {
+      "model": "neothaum:block/hungry_chest",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "neothaum:block/hungry_chest",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "neothaum:block/hungry_chest",
+      "y": 90
+    }
+  }
+}

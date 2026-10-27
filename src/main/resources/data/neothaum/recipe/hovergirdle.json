@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:infusion",
+  "research": "HOVERGIRDLE",
+  "instability": 8,
+  "aspects": {
+    "volatus": 16,
+    "potentia": 32,
+    "aer": 32,
+    "iter": 16
+  },
+  "central": "neothaum:mundane_belt",
+  "components": [
+    "neothaum:air_shard",
+    "minecraft:feather",
+    "minecraft:gold_ingot",
+    "neothaum:earth_shard",
+    "minecraft:feather",
+    "minecraft:gold_ingot"
+  ],
+  "result": {
+    "id": "neothaum:thaumostatic_girdle"
+  }
+}

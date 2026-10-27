@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/block",
-  "textures": {
-    "table": "thaumvibe:models/restable",
-    "scroll": "thaumvibe:models/restable2",
-    "particle": "thaumvibe:blocks/woodplain"
-  },
-  "elements": []
-}

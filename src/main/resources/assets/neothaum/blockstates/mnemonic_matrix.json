@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "neothaum:block/mnemonic_matrix" },
+    "facing=south": { "model": "neothaum:block/mnemonic_matrix", "y": 180 },
+    "facing=west":  { "model": "neothaum:block/mnemonic_matrix", "y": 270 },
+    "facing=east":  { "model": "neothaum:block/mnemonic_matrix", "y": 90 }
+  }
+}

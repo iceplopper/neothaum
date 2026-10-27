@@ -1,0 +1,16 @@
+﻿{
+  "model": {
+    "type": "minecraft:model",
+    "model": "neothaum:item/void_robe_legs",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": 6961280
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
+  }
+}

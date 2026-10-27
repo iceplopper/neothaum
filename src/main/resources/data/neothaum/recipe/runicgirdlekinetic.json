@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:infusion",
+  "research": "RUNICKINETIC",
+  "instability": 7,
+  "aspects": {
+    "tutamen": 33,
+    "praecantatio": 55,
+    "aer": 64
+  },
+  "central": "neothaum:girdle_of_runic_shielding",
+  "components": [
+    "neothaum:balanced_shard",
+    "neothaum:air_shard",
+    "neothaum:air_shard",
+    "minecraft:potion",
+    "neothaum:air_shard",
+    "neothaum:air_shard"
+  ],
+  "result": {
+    "id": "neothaum:kinetic_girdle_of_shielding"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:projectile_protection",
+  "instability": 1,
+  "aspects": {
+    "praecantatio": 4,
+    "tutamen": 4,
+    "volatus": 4
+  },
+  "components": [
+    "minecraft:iron_ingot",
+    "minecraft:arrow",
+    "neothaum:salis_mundus"
+  ]
+}

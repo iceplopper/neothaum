@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "neothaum:item/tainted_sheep_spawn_egg"
+  }
+}

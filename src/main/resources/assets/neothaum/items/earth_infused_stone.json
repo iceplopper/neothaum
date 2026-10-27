@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "neothaum:block/earth_infused_stone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -16736256
+      }
+    ]
+  }
+}

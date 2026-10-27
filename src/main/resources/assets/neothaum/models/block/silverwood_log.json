@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "neothaum:blocks/silverwoodside",
+    "end": "neothaum:blocks/silverwoodtop"
+  }
+}

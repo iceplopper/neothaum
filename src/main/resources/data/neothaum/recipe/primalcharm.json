@@ -1,0 +1,30 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "BASICARTIFACE",
+  "aspects": {
+    "terra": 25,
+    "ignis": 25,
+    "aer": 25,
+    "aqua": 25,
+    "ordo": 25,
+    "perditio": 25
+  },
+  "pattern": [
+    "123",
+    "ISI",
+    "456"
+  ],
+  "key": {
+    "S": "neothaum:balanced_shard",
+    "I": "minecraft:gold_ingot",
+    "1": "neothaum:air_shard",
+    "2": "neothaum:fire_shard",
+    "3": "neothaum:water_shard",
+    "4": "neothaum:earth_shard",
+    "5": "neothaum:order_shard",
+    "6": "neothaum:entropy_shard"
+  },
+  "result": {
+    "id": "neothaum:primal_charm"
+  }
+}

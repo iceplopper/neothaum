@@ -1,0 +1,34 @@
+{
+  "textures": {
+    "particle": "neothaum:blocks/taint_fibres",
+    "t": "neothaum:blocks/taint_over_1"
+  },
+  "render_type": "translucent",
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0.32
+      ],
+      "to": [
+        16,
+        16,
+        0.32
+      ],
+      "shade": false,
+      "faces": {
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#t"
+        }
+      },
+      "light_emission": 12
+    }
+  ]
+}

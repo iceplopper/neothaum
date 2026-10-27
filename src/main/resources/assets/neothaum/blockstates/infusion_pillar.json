@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "corner=2,half=lower": {
+      "model": "neothaum:block/infusion_pillar"
+    },
+    "corner=2,half=upper": {
+      "model": "neothaum:block/infusion_pillar"
+    },
+    "corner=3,half=lower": {
+      "model": "neothaum:block/infusion_pillar"
+    },
+    "corner=3,half=upper": {
+      "model": "neothaum:block/infusion_pillar"
+    },
+    "corner=4,half=lower": {
+      "model": "neothaum:block/infusion_pillar"
+    },
+    "corner=4,half=upper": {
+      "model": "neothaum:block/infusion_pillar"
+    },
+    "corner=5,half=lower": {
+      "model": "neothaum:block/infusion_pillar"
+    },
+    "corner=5,half=upper": {
+      "model": "neothaum:block/infusion_pillar"
+    }
+  }
+}

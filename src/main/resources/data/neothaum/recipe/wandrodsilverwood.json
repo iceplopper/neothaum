@@ -1,0 +1,27 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ROD_silverwood",
+  "instability": 5,
+  "aspects": {
+    "aer": 9,
+    "ignis": 9,
+    "aqua": 9,
+    "terra": 9,
+    "ordo": 9,
+    "perditio": 9,
+    "praecantatio": 9
+  },
+  "central": "neothaum:silverwood_log",
+  "components": [
+    "neothaum:balanced_shard",
+    "neothaum:air_shard",
+    "neothaum:fire_shard",
+    "neothaum:water_shard",
+    "neothaum:earth_shard",
+    "neothaum:order_shard",
+    "neothaum:entropy_shard"
+  ],
+  "result": {
+    "id": "neothaum:silverwood_rod"
+  }
+}

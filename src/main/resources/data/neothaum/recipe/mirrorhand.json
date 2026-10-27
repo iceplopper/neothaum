@@ -1,0 +1,18 @@
+{
+  "type": "neothaum:infusion",
+  "research": "MIRRORHAND",
+  "instability": 5,
+  "aspects": {
+    "instrumentum": 16,
+    "iter": 16
+  },
+  "central": "neothaum:magic_mirror",
+  "components": [
+    "minecraft:stick",
+    "minecraft:compass",
+    "minecraft:map"
+  ],
+  "result": {
+    "id": "neothaum:magic_hand_mirror"
+  }
+}

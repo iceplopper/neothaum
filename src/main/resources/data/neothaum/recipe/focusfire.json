@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "FOCUSFIRE",
+  "aspects": {
+    "ignis": 20,
+    "perditio": 10
+  },
+  "pattern": [
+    "CQC",
+    "Q#Q",
+    "CQC"
+  ],
+  "key": {
+    "#": "minecraft:fire_charge",
+    "Q": "minecraft:quartz",
+    "C": "neothaum:fire_shard"
+  },
+  "result": {
+    "id": "neothaum:focus_fire"
+  }
+}

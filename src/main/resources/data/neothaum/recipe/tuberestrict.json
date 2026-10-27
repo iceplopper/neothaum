@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:arcane_shapeless",
+  "research": "TUBEFILTER",
+  "aspects": {
+    "aqua": 5,
+    "terra": 16
+  },
+  "ingredients": [
+    "neothaum:essentia_tube",
+    "#c:stones"
+  ],
+  "result": {
+    "id": "neothaum:restricted_essentia_tube"
+  }
+}

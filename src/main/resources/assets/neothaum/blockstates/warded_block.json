@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "light=0": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=1": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=2": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=3": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=4": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=5": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=6": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=7": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=8": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=9": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=10": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=11": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=12": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=13": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=14": {
+      "model": "neothaum:block/warded_block"
+    },
+    "light=15": {
+      "model": "neothaum:block/warded_block"
+    }
+  }
+}

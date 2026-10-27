@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "neothaum:block/arcane_bellows"
+    },
+    "facing=up": {
+      "model": "neothaum:block/arcane_bellows"
+    },
+    "facing=north": {
+      "model": "neothaum:block/arcane_bellows"
+    },
+    "facing=south": {
+      "model": "neothaum:block/arcane_bellows"
+    },
+    "facing=west": {
+      "model": "neothaum:block/arcane_bellows"
+    },
+    "facing=east": {
+      "model": "neothaum:block/arcane_bellows"
+    }
+  }
+}

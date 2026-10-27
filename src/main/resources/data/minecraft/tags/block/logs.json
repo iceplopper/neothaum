@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:greatwood_log",
-    "thaumvibe:silverwood_log"
+    "neothaum:greatwood_log",
+    "neothaum:silverwood_log"
   ]
 }

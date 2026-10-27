@@ -1,0 +1,18 @@
+{
+  "type": "neothaum:infusion",
+  "research": "CAP_thaumium",
+  "instability": 5,
+  "aspects": {
+    "potentia": 12,
+    "auram": 6
+  },
+  "central": "neothaum:thaumium_cap_inert",
+  "components": [
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus"
+  ],
+  "result": {
+    "id": "neothaum:thaumium_cap"
+  }
+}

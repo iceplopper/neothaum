@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "neothaum:thaumium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "neothaum:thaumium"
+      }
+    ]
+  }
+}

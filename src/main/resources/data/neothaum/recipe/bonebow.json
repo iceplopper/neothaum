@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "BONEBOW",
+  "aspects": {
+    "aer": 16,
+    "perditio": 32
+  },
+  "pattern": [
+    "SB ",
+    "SEB",
+    "SB "
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "B": "minecraft:bone",
+    "E": "neothaum:entropy_shard"
+  },
+  "result": {
+    "id": "neothaum:bow_of_bone"
+  }
+}

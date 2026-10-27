@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ELEMENTALSWORD",
+  "instability": 1,
+  "aspects": {
+    "aer": 8,
+    "motus": 8,
+    "potentia": 8
+  },
+  "central": "neothaum:thaumium_sword",
+  "components": [
+    "neothaum:air_shard",
+    "neothaum:air_shard",
+    "minecraft:diamond",
+    "neothaum:greatwood_log"
+  ],
+  "result": {
+    "id": "neothaum:sword_of_the_zephyr"
+  }
+}

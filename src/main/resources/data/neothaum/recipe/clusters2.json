@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "neothaum:water_shard",
+    "neothaum:water_shard",
+    "neothaum:water_shard",
+    "neothaum:water_shard",
+    "neothaum:water_shard",
+    "neothaum:water_shard"
+  ],
+  "result": {
+    "id": "neothaum:water_crystal_cluster"
+  }
+}

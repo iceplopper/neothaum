@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "table": "neothaum:models/restable",
+    "scroll": "neothaum:models/restable2",
+    "particle": "neothaum:blocks/woodplain"
+  },
+  "elements": []
+}

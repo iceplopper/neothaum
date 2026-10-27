@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "W"
+  ],
+  "key": {
+    "W": "neothaum:silverwood_log"
+  },
+  "result": {
+    "id": "neothaum:silverwood_planks",
+    "count": 4
+  }
+}

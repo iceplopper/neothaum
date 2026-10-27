@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:infusion",
+  "research": "VISAMULET",
+  "instability": 6,
+  "aspects": {
+    "auram": 24,
+    "potentia": 64,
+    "praecantatio": 64,
+    "vacuos": 24
+  },
+  "central": "neothaum:mundane_amulet",
+  "components": [
+    "neothaum:primal_charm",
+    "neothaum:mixed_crystal_cluster",
+    "neothaum:mixed_crystal_cluster",
+    "neothaum:primal_charm",
+    "neothaum:mixed_crystal_cluster",
+    "neothaum:mixed_crystal_cluster"
+  ],
+  "result": {
+    "id": "neothaum:amulet_of_vis_storage"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ARMORFORTRESS",
+  "instability": 3,
+  "aspects": {
+    "metallum": 24,
+    "tutamen": 16,
+    "praecantatio": 16
+  },
+  "central": "neothaum:thaumium_helmet",
+  "components": [
+    "neothaum:thaumium_ingot",
+    "neothaum:thaumium_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:emerald"
+  ],
+  "result": {
+    "id": "neothaum:thaumium_fortress_helm"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:greatwood_slab",
-    "thaumvibe:silverwood_slab"
+    "neothaum:greatwood_slab",
+    "neothaum:silverwood_slab"
   ]
 }

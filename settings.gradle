@@ -5,4 +5,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'thaumvibe4'
+rootProject.name = 'neothaum'

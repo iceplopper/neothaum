@@ -1,0 +1,30 @@
+{
+  "parent": "neothaum:infusion",
+  "display": {
+    "icon": {
+      "id": "neothaum:golem_bell"
+    },
+    "title": {
+      "translate": "advancements.neothaum.golem.title"
+    },
+    "description": {
+      "translate": "advancements.neothaum.golem.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_bell": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "neothaum:golem_bell"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "neothaum:repair",
+  "instability": 4,
+  "aspects": {
+    "praecantatio": 8,
+    "fabrico": 10,
+    "ordo": 10
+  },
+  "components": [
+    "minecraft:anvil",
+    "neothaum:salis_mundus"
+  ]
+}

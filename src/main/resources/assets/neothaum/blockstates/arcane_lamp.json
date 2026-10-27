@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "neothaum:block/arcane_lamp"
+    },
+    "facing=up": {
+      "model": "neothaum:block/arcane_lamp",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "neothaum:block/arcane_lamp",
+      "x": 270
+    },
+    "facing=south": {
+      "model": "neothaum:block/arcane_lamp",
+      "x": 90
+    },
+    "facing=west": {
+      "model": "neothaum:block/arcane_lamp",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east": {
+      "model": "neothaum:block/arcane_lamp",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:greatwood_stairs",
-    "thaumvibe:silverwood_stairs"
+    "neothaum:greatwood_stairs",
+    "neothaum:silverwood_stairs"
   ]
 }

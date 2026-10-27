@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "neothaum:haste",
+  "instability": 3,
+  "aspects": {
+    "praecantatio": 4,
+    "iter": 8,
+    "volatus": 8
+  },
+  "components": [
+    "neothaum:nitor",
+    "neothaum:salis_mundus"
+  ]
+}

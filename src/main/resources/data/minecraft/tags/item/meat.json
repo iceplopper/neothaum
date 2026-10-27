@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:chicken_nugget",
-    "thaumvibe:beef_nugget",
-    "thaumvibe:pork_nugget"
+    "neothaum:chicken_nugget",
+    "neothaum:beef_nugget",
+    "neothaum:pork_nugget"
   ]
 }

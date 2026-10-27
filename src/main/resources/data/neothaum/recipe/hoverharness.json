@@ -1,0 +1,26 @@
+{
+  "type": "neothaum:infusion",
+  "research": "HOVERHARNESS",
+  "instability": 6,
+  "aspects": {
+    "volatus": 32,
+    "potentia": 32,
+    "machina": 32,
+    "iter": 16
+  },
+  "central": "minecraft:leather_chestplate",
+  "components": [
+    "neothaum:air_shard",
+    "neothaum:air_shard",
+    "neothaum:arcane_bellows",
+    "neothaum:arcane_bellows",
+    "minecraft:comparator",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:iron_ingot",
+    "minecraft:iron_ingot"
+  ],
+  "result": {
+    "id": "neothaum:thaumostatic_harness"
+  }
+}

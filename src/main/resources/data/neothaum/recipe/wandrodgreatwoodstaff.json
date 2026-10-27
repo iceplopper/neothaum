@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ROD_greatwood_staff",
+  "aspects": {
+    "ordo": 8
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "neothaum:primal_charm",
+    "G": "neothaum:greatwood_rod"
+  },
+  "result": {
+    "id": "neothaum:greatwood_staff_core"
+  }
+}

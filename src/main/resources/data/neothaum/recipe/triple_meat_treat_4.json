@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:sugar",
+    "neothaum:fish_nugget",
+    "neothaum:chicken_nugget",
+    "neothaum:pork_nugget"
+  ],
+  "result": {
+    "id": "neothaum:triple_meat_treat"
+  }
+}

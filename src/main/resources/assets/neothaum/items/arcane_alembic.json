@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/arcane_alembic",
+    "model": {
+      "type": "neothaum:alembic"
+    }
+  }
+}

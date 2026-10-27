@@ -1,9 +1,0 @@
-{
-  "model": {
-    "type": "minecraft:special",
-    "base": "thaumvibe:item/alchemical_centrifuge",
-    "model": {
-      "type": "thaumvibe:centrifuge"
-    }
-  }
-}

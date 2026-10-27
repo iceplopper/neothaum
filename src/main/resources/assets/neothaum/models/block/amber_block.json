@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "neothaum:blocks/amberblock",
+    "end": "neothaum:blocks/amberblock_top"
+  }
+}

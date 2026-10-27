@@ -1,0 +1,18 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "neothaum:block/node_in_a_jar"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "neothaum:block/node_in_a_jar",
+        "model": {
+          "type": "neothaum:jar_node"
+        }
+      }
+    ]
+  }
+}

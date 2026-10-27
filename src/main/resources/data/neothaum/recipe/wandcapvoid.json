@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:infusion",
+  "research": "CAP_void",
+  "instability": 8,
+  "aspects": {
+    "potentia": 18,
+    "vacuos": 18,
+    "alienis": 18,
+    "auram": 18
+  },
+  "central": "neothaum:void_cap_inert",
+  "components": [
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus"
+  ],
+  "result": {
+    "id": "neothaum:void_cap"
+  }
+}

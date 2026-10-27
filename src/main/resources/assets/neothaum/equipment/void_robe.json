@@ -1,0 +1,26 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "neothaum:void_robe",
+        "dyeable": {
+          "color_when_undyed": 6961280
+        }
+      },
+      {
+        "texture": "neothaum:void_robe_overlay"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "neothaum:void_robe",
+        "dyeable": {
+          "color_when_undyed": 6961280
+        }
+      },
+      {
+        "texture": "neothaum:void_robe_overlay"
+      }
+    ]
+  }
+}

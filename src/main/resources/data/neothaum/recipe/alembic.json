@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "DISTILESSENTIA",
+  "aspects": {
+    "aer": 5,
+    "aqua": 5
+  },
+  "pattern": [
+    "FIG",
+    "IBI",
+    "I I"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "B": "minecraft:bucket",
+    "G": "minecraft:gold_ingot",
+    "F": "neothaum:vis_filter"
+  },
+  "result": {
+    "id": "neothaum:arcane_alembic"
+  }
+}

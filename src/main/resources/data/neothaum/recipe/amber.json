@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": "neothaum:amber_block"
+  },
+  "result": {
+    "id": "neothaum:amber",
+    "count": 4
+  }
+}

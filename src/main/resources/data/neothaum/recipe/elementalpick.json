@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ELEMENTALPICK",
+  "instability": 1,
+  "aspects": {
+    "ignis": 8,
+    "perfodio": 8,
+    "sensus": 8
+  },
+  "central": "neothaum:thaumium_pickaxe",
+  "components": [
+    "neothaum:fire_shard",
+    "neothaum:fire_shard",
+    "minecraft:diamond",
+    "neothaum:greatwood_log"
+  ],
+  "result": {
+    "id": "neothaum:pickaxe_of_the_core"
+  }
+}

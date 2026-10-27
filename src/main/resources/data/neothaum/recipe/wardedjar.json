@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "DISTILESSENTIA",
+  "aspects": {
+    "aqua": 1
+  },
+  "pattern": [
+    "GWG",
+    "G G",
+    "GGG"
+  ],
+  "key": {
+    "W": "#minecraft:wooden_slabs",
+    "G": "minecraft:glass_pane"
+  },
+  "result": {
+    "id": "neothaum:warded_jar"
+  }
+}

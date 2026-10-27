@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "VISPOWER",
+  "aspects": {
+    "ignis": 8,
+    "ordo": 8
+  },
+  "pattern": [
+    " I ",
+    "ISI",
+    " I "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "S": "neothaum:balanced_shard"
+  },
+  "result": {
+    "id": "neothaum:vis_relay",
+    "count": 2
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "neothaum:crucible",
+  "display": {
+    "icon": {
+      "id": "neothaum:runic_matrix"
+    },
+    "title": {
+      "translate": "advancements.neothaum.infusion.title"
+    },
+    "description": {
+      "translate": "advancements.neothaum.infusion.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_matrix": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "neothaum:runic_matrix"
+          }
+        ]
+      }
+    }
+  }
+}

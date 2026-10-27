@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "neothaum:earth_shard",
+          "modifier": [
+            {
+              "type": "minecraft:set_count",
+              "count": 6
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "neothaum:blocks/earth_crystal_cluster"
+}

@@ -1,7 +1,7 @@
-# Claude Code Project Guide - Thaumvibe 4
+# Claude Code Project Guide - NeoThaum 4
 
 > **For Claude Opus 5.5 (running in Claude Code CLI):**  
-> This file is the primary context and operating guide for collaborating on the Thaumvibe 4 codebase.
+> This file is the primary context and operating guide for collaborating on the NeoThaum 4 codebase.
 
 ---
 
@@ -20,14 +20,14 @@
    - `BUILDING` (Building & Functional Blocks): furniture, tables, planks, arcane stone, essentia distillation blocks (furnace, alembic, jars, tubes, bellows), candles.
    - `OTHER`: raw materials, food, dev tools.
 3. **Client Launching:** Never use `--quickPlaySingleplayer`; launch to the main menu using `start-test-client.bat` or `./gradlew runClient`. Unprompted launches are suspended—only launch when the user explicitly requests it.
-4. **Addons:** Non-TC4 features and modern QoL extensions go in `dev.thaumvibe.addon`.
+4. **Addons:** Non-TC4 features and modern QoL extensions go in `dev.neothaum.addon`.
 5. **Thaumonomicon as Source of Truth:** The Thaumonomicon serves as the visible in-game source of truth for what features have been implemented so far. Do NOT create custom non-TC4 pages; ensure original TC4 research entries and their recipe pages are activated as soon as their underlying feature/item is added.
 
 ---
 
 ## 2. Essential Commands
 
-All commands run in PowerShell in the repository root (`C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini`):
+All commands run in PowerShell in the repository root (`C:\Users\harri\Documents\Phoenix Code\neothaum-4-gemini`):
 
 ```powershell
 # Fast compilation check (Server + Client):
@@ -46,13 +46,13 @@ All commands run in PowerShell in the repository root (`C:\Users\harri\Documents
 ---
 
 ## 3. Directory Layout & Architecture
-- **Root:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini`
-- **Main Server / Common Code:** `src/main/java/dev/thaumvibe/`
+- **Root:** `C:\Users\harri\Documents\Phoenix Code\neothaum-4-gemini`
+- **Main Server / Common Code:** `src/main/java/dev/neothaum/`
   - `api/`: Aspect, node, wand, and golem API interfaces.
   - `addon/`: Addon modules (`VanillaCandles`, QoL and mini-map integrations).
   - `aspects/`: Aspect definitions, combinations, and item registration mappings.
   - `blocks/`: Block classes (machinery, multiblock parts, world blocks).
-  - `config/`: `ThaumvibeConfig` reading/writing `config/thaumvibe.json`.
+  - `config/`: `NeoThaumConfig` reading/writing `config/neothaum.json`.
   - `entity/`: Entities (`AspectOrbEntity`, cultists, eldritch bosses, wisps, golems).
   - `events/`: Event handlers (`AspectOrbEvents`, death callbacks).
   - `golem/`: Golemancy system, cores, upgrades, AI goals, screens, and renderer.
@@ -63,14 +63,14 @@ All commands run in PowerShell in the repository root (`C:\Users\harri\Documents
   - `tiles/`: Block entities (`NodeBlockEntity`, `CrucibleBlockEntity`, `InfusionMatrixBlockEntity`, etc.).
   - `warp/`: Warp system, hallucination events, corruption ticking.
   - `world/`: Biomes, features, worldgen decorators (`TCWorldFeature`, `TVBiomes`).
-- **Client Code:** `src/client/java/dev/thaumvibe/client/`
+- **Client Code:** `src/client/java/dev/neothaum/client/`
   - `entity/`: Mob and orb renderers (`AspectOrbRenderer`, `CultistRenderer`, `EldritchWardenRenderer`, etc.).
   - `gui/`: Thaumonomicon (`ResearchScreen`, `ResearchPagesScreen`), focal manipulator, golem GUI.
   - `hud/`: Goggles overlay, runic shield hud, focus radial menu (`FocusRadial`), sanity checker gauge.
   - `render/`: Multiblock BERs, `ArchitectOverlay` (warded glass preview), `NodeRenderer`.
 - **Resources:**
-  - `src/main/resources/assets/thaumvibe/`: textures, models, blockstates, lang files (`en_us.json`).
-  - `src/main/resources/data/thaumvibe/`: recipes, research (`research.json`), advancements (`advancement/`).
+  - `src/main/resources/assets/neothaum/`: textures, models, blockstates, lang files (`en_us.json`).
+  - `src/main/resources/data/neothaum/`: recipes, research (`research.json`), advancements (`advancement/`).
 
 ---
 

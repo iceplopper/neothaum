@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "VISCHARGERELAY",
+  "aspects": {
+    "ignis": 16,
+    "ordo": 16,
+    "aer": 16
+  },
+  "pattern": [
+    " R ",
+    "W W",
+    "I I"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "neothaum:vis_relay",
+    "W": "neothaum:greatwood_rod"
+  },
+  "result": {
+    "id": "neothaum:vis_charge_relay"
+  }
+}

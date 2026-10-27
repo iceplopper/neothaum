@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "PUREGOLD",
+  "catalyst": "#neothaum:purifiable/gold",
+  "aspects": {
+    "metallum": 1,
+    "ordo": 1
+  },
+  "result": {
+    "id": "neothaum:native_gold_cluster"
+  }
+}

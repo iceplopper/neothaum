@@ -1,9 +1,0 @@
-{
-  "model": {
-    "type": "minecraft:special",
-    "base": "thaumvibe:item/essentia_crystallizer",
-    "model": {
-      "type": "thaumvibe:crystallizer"
-    }
-  }
-}

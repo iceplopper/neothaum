@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "neothaum:air_shard",
+    "neothaum:fire_shard",
+    "neothaum:water_shard",
+    "neothaum:earth_shard",
+    "neothaum:order_shard",
+    "neothaum:entropy_shard",
+    "neothaum:balanced_shard"
+  ]
+}

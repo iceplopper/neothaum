@@ -4,7 +4,7 @@ if not exist "%GOURCE_EXE%" set GOURCE_EXE=C:\Users\harri\Documents\Phoenix Code
 
 cd /d "%~dp0"
 echo ===================================================
-echo  Thaumvibe 4 - Gource Development Visualization
+echo  NeoThaum 4 - Gource Development Visualization
 echo ===================================================
 echo Launching Gource...
 echo.
@@ -23,7 +23,7 @@ echo.
 "%GOURCE_EXE%" -1280x720 ^
   --auto-skip-seconds 1 ^
   --seconds-per-day 4 ^
-  --title "Thaumvibe 4 - Port Timeline (Claude Code & Gemini)" ^
+  --title "NeoThaum 4 - Port Timeline (Claude Code & Gemini)" ^
   --file-idle-time 0 ^
   --hide filenames ^
   --highlight-users ^

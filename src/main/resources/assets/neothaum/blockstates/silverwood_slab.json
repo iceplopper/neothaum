@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "neothaum:block/silverwood_slab"
+    },
+    "type=top": {
+      "model": "neothaum:block/silverwood_slab_top"
+    },
+    "type=double": {
+      "model": "neothaum:block/silverwood_planks"
+    }
+  }
+}

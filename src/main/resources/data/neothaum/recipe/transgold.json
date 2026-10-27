@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "TRANSGOLD",
+  "catalyst": "minecraft:gold_nugget",
+  "aspects": {
+    "metallum": 2,
+    "lucrum": 1
+  },
+  "result": {
+    "id": "minecraft:gold_nugget",
+    "count": 3
+  }
+}

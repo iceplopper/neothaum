@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "NITOR",
+  "catalyst": "minecraft:glowstone_dust",
+  "aspects": {
+    "potentia": 3,
+    "ignis": 3,
+    "lux": 3
+  },
+  "result": {
+    "id": "neothaum:nitor"
+  }
+}

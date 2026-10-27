@@ -1,0 +1,16 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:flame",
+  "instability": 3,
+  "aspects": {
+    "praecantatio": 4,
+    "telum": 4,
+    "ignis": 8
+  },
+  "components": [
+    "minecraft:bow",
+    "minecraft:blaze_powder",
+    "neothaum:salis_mundus"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumium_pickaxe",
-    "thaumvibe:pickaxe_of_the_core"
+    "neothaum:thaumium_pickaxe",
+    "neothaum:pickaxe_of_the_core"
   ]
 }

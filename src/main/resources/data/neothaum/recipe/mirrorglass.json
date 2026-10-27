@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:arcane_shapeless",
+  "research": "BASICARTIFACE",
+  "aspects": {
+    "ignis": 10,
+    "terra": 10
+  },
+  "ingredients": [
+    "neothaum:quicksilver",
+    "minecraft:glass_pane"
+  ],
+  "result": {
+    "id": "neothaum:mirrored_glass"
+  }
+}

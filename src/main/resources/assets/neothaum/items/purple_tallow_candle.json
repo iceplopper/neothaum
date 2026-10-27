@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "neothaum:block/tallow_candle",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8704066
+      }
+    ]
+  }
+}

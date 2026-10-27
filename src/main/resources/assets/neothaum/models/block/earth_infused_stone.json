@@ -1,0 +1,93 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "stone": "neothaum:blocks/infusedorestone",
+    "overlay": "neothaum:blocks/infusedore",
+    "particle": "neothaum:blocks/infusedorestone"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stone",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#stone",
+          "cullface": "south"
+        },
+        "east": {
+          "texture": "#stone",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#stone",
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#stone",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#stone",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "light_emission": 10,
+      "faces": {
+        "north": {
+          "texture": "#overlay",
+          "tintindex": 0,
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#overlay",
+          "tintindex": 0,
+          "cullface": "south"
+        },
+        "east": {
+          "texture": "#overlay",
+          "tintindex": 0,
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#overlay",
+          "tintindex": 0,
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#overlay",
+          "tintindex": 0,
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#overlay",
+          "tintindex": 0,
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

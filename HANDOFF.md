@@ -1,6 +1,6 @@
-# THAUMVIBE 4 - COMPREHENSIVE HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
+# NEOTHAUM 4 - COMPREHENSIVE HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
 **Timestamp:** 2026-10-27 1:15 PM Eastern  
-**Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
+**Repository:** `C:\Users\harri\Documents\Phoenix Code\neothaum-4-gemini` (branch `main`)  
 **Build Status:** `./gradlew compileJava compileClientJava` passes in 6s with 0 errors. Test client launch capability is 100% operational.  
 **Branch Status:** Clean working tree on `main`.
 
@@ -11,7 +11,7 @@
 When taking over this project inside Claude Code CLI:
 1. Ensure your working directory is the repository root:
    ```powershell
-   cd "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini"
+   cd "C:\Users\harri\Documents\Phoenix Code\neothaum-4-gemini"
    ```
 2. Check git status and verify compilation:
    ```powershell
@@ -129,7 +129,7 @@ Below is the complete chronological record of all features, systems, multiblocks
     - Aspect Orbs: Primal aspect orbs dropped on monster death, research table breakdown, and node harvesting.
     - Node Lightning FX: Ambient lightning particle arcs between vis relays and aura nodes.
     - Shovel of the Earthmover: Directional placement preview hologram and orientation alignment.
-    - `ThaumvibeConfig`: Global JSON config file for toggling mob spawning, champion mobs, warp mechanics, and difficulty.
+    - `NeoThaumConfig`: Global JSON config file for toggling mob spawning, champion mobs, warp mechanics, and difficulty.
     - Custom Thaumcraft Advancements tree.
     - Jade / WTHIT Integration: Goggles of Revealing gated aspect tooltips for jars, alembics, nodes, and alchemical machines.
     - JEI Aspect Combination Category: Research aspect synthesis lookup locked behind research discovery.
@@ -152,7 +152,7 @@ Below is the complete chronological record of all features, systems, multiblocks
     - Spawning: 2.5% chance on hostile spawns, colored nameplates, +30 HP, guaranteed Loot Bag and Aspect Orb drops.
     - Ethereal Bloom Block & Tile: Purifies tainted soil/eerie biomes into plains, dissipates crusted taint and flux goo/gas in an 8-block radius.
 23. **Feature 11 & TC4 Audit Features (Staged in `feature11_staging/`):**
-    - Outer Lands Dimension (`thaumvibe:outer_lands`): Void sky, bedrock shell, ambient lighting, flight prohibition.
+    - Outer Lands Dimension (`neothaum:outer_lands`): Void sky, bedrock shell, ambient lighting, flight prohibition.
     - Cellular Maze Generation (`OuterMazeHandler.java`): 16x16 cellular corridors, return portal room, key room with Runed Tablet, crab nests, library, and 4 Boss Chambers (Warden, Golem, Cultist Portal, Giant Taintacle) with Primordial Pearl reward chest.
     - Breakable Loot Urns & Crates (`LootBlock.java`): Common, Uncommon, and Rare tiers with shatter sounds and dungeon loot.
     - Eldritch Floor Trap (`EldritchTrapBlock.java`): Proximity magic zap, warp infliction, and electrical arcs.
@@ -171,49 +171,49 @@ To merge into the main repository:
 
 ### Step 1: Copy Staged Files
 ```powershell
-Copy-Item -Path "C:\Users\harri\.gemini\antigravity\scratch\feature11_staging\src\*" -Destination "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini\src\" -Recurse -Force
+Copy-Item -Path "C:\Users\harri\.gemini\antigravity\scratch\feature11_staging\src\*" -Destination "C:\Users\harri\Documents\Phoenix Code\neothaum-4-gemini\src\" -Recurse -Force
 ```
 
 ### Step 2: Wire Registrations
-1. In `src/main/java/dev/thaumvibe/registry/TVBlocks.java`:
+1. In `src/main/java/dev/neothaum/registry/TVBlocks.java`:
    ```java
-   public static final Block LOOT_URN = register("loot_urn", p -> new dev.thaumvibe.blocks.LootBlock(dev.thaumvibe.blocks.LootBlock.Type.URN, p),
-       stone(0.15F, 1.0F).sound(dev.thaumvibe.blocks.LootBlock.URN_SOUND).noOcclusion(), true);
-   public static final Block LOOT_CRATE = register("loot_crate", p -> new dev.thaumvibe.blocks.LootBlock(dev.thaumvibe.blocks.LootBlock.Type.CRATE, p),
+   public static final Block LOOT_URN = register("loot_urn", p -> new dev.neothaum.blocks.LootBlock(dev.neothaum.blocks.LootBlock.Type.URN, p),
+       stone(0.15F, 1.0F).sound(dev.neothaum.blocks.LootBlock.URN_SOUND).noOcclusion(), true);
+   public static final Block LOOT_CRATE = register("loot_crate", p -> new dev.neothaum.blocks.LootBlock(dev.neothaum.blocks.LootBlock.Type.CRATE, p),
        wood(0.15F).sound(SoundType.WOOD).noOcclusion(), true);
-   public static final Block ELDRITCH_TRAP = register("eldritch_trap", dev.thaumvibe.blocks.eldritch.EldritchTrapBlock::new,
+   public static final Block ELDRITCH_TRAP = register("eldritch_trap", dev.neothaum.blocks.eldritch.EldritchTrapBlock::new,
        stone(-1.0F, 3600000.0F), true);
-   public static final Block ELDRITCH_CRAB_SPAWNER = register("eldritch_crab_spawner", dev.thaumvibe.blocks.eldritch.EldritchCrabSpawnerBlock::new,
+   public static final Block ELDRITCH_CRAB_SPAWNER = register("eldritch_crab_spawner", dev.neothaum.blocks.eldritch.EldritchCrabSpawnerBlock::new,
        stone(20.0F, 100.0F), true);
-   public static final Block ELDRITCH_LOCK = register("eldritch_lock", dev.thaumvibe.blocks.eldritch.EldritchLockBlock::new,
+   public static final Block ELDRITCH_LOCK = register("eldritch_lock", dev.neothaum.blocks.eldritch.EldritchLockBlock::new,
        stone(-1.0F, 3600000.0F), true);
    public static final Block ELDRITCH_BARRIER = register("eldritch_barrier", Block::new,
        stone(-1.0F, 3600000.0F).noOcclusion(), true);
    public static final Block ELDRITCH_STAIRS = register("eldritch_stairs", p -> stairs(ELDRITCH_STONE, p),
        stone(20.0F, 100.0F), true);
    ```
-2. In `src/main/java/dev/thaumvibe/registry/TVBlockEntities.java`:
+2. In `src/main/java/dev/neothaum/registry/TVBlockEntities.java`:
    ```java
-   public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchLockBlockEntity> ELDRITCH_LOCK = register("eldritch_lock",
-       dev.thaumvibe.tiles.eldritch.EldritchLockBlockEntity::new, TVBlocks.ELDRITCH_LOCK);
-   public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchTrapBlockEntity> ELDRITCH_TRAP = register("eldritch_trap",
-       dev.thaumvibe.tiles.eldritch.EldritchTrapBlockEntity::new, TVBlocks.ELDRITCH_TRAP);
-   public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchCrabSpawnerBlockEntity> ELDRITCH_CRAB_SPAWNER = register("eldritch_crab_spawner",
-       dev.thaumvibe.tiles.eldritch.EldritchCrabSpawnerBlockEntity::new, TVBlocks.ELDRITCH_CRAB_SPAWNER);
+   public static final BlockEntityType<dev.neothaum.tiles.eldritch.EldritchLockBlockEntity> ELDRITCH_LOCK = register("eldritch_lock",
+       dev.neothaum.tiles.eldritch.EldritchLockBlockEntity::new, TVBlocks.ELDRITCH_LOCK);
+   public static final BlockEntityType<dev.neothaum.tiles.eldritch.EldritchTrapBlockEntity> ELDRITCH_TRAP = register("eldritch_trap",
+       dev.neothaum.tiles.eldritch.EldritchTrapBlockEntity::new, TVBlocks.ELDRITCH_TRAP);
+   public static final BlockEntityType<dev.neothaum.tiles.eldritch.EldritchCrabSpawnerBlockEntity> ELDRITCH_CRAB_SPAWNER = register("eldritch_crab_spawner",
+       dev.neothaum.tiles.eldritch.EldritchCrabSpawnerBlockEntity::new, TVBlocks.ELDRITCH_CRAB_SPAWNER);
    ```
-3. In `src/main/java/dev/thaumvibe/registry/TVTab.java`:
+3. In `src/main/java/dev/neothaum/registry/TVTab.java`:
    Add `TVBlocks.LOOT_URN, TVBlocks.LOOT_CRATE, TVBlocks.ELDRITCH_TRAP, TVBlocks.ELDRITCH_CRAB_SPAWNER, TVBlocks.ELDRITCH_LOCK, TVBlocks.ELDRITCH_BARRIER, TVBlocks.ELDRITCH_STAIRS` to `BLOCKS`.
-4. In `src/main/java/dev/thaumvibe/Thaumvibe.java`:
-   Add `dev.thaumvibe.world.outer.OuterLandsDimension.init();` in `onInitialize()`.
-5. In `src/main/resources/assets/thaumvibe/lang/en_us.json`:
+4. In `src/main/java/dev/neothaum/NeoThaum.java`:
+   Add `dev.neothaum.world.outer.OuterLandsDimension.init();` in `onInitialize()`.
+5. In `src/main/resources/assets/neothaum/lang/en_us.json`:
    ```json
-   "block.thaumvibe.loot_urn": "Loot Urn",
-   "block.thaumvibe.loot_crate": "Loot Crate",
-   "block.thaumvibe.eldritch_trap": "Eldritch Trap",
-   "block.thaumvibe.eldritch_crab_spawner": "Crab Vent",
-   "block.thaumvibe.eldritch_lock": "Ancient Locking Mechanism",
-   "block.thaumvibe.eldritch_barrier": "Eldritch Barrier",
-   "block.thaumvibe.eldritch_stairs": "Ancient Stairs"
+   "block.neothaum.loot_urn": "Loot Urn",
+   "block.neothaum.loot_crate": "Loot Crate",
+   "block.neothaum.eldritch_trap": "Eldritch Trap",
+   "block.neothaum.eldritch_crab_spawner": "Crab Vent",
+   "block.neothaum.eldritch_lock": "Ancient Locking Mechanism",
+   "block.neothaum.eldritch_barrier": "Eldritch Barrier",
+   "block.neothaum.eldritch_stairs": "Ancient Stairs"
    ```
 
 ### Step 3: Build & Test

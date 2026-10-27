@@ -1,27 +1,27 @@
 {
 	"schemaVersion": 1,
-	"id": "thaumvibe",
+	"id": "neothaum",
 	"version": "${version}",
-	"name": "Thaumvibe 4",
+	"name": "NeoThaum",
 	"description": "A private Fabric recreation of Thaumcraft 4 by Azanor.",
 	"authors": [
 		"Azanor (original Thaumcraft 4)"
 	],
 	"license": "All-Rights-Reserved",
-	"icon": "assets/thaumvibe/icon.png",
+	"icon": "assets/neothaum/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"dev.thaumvibe.Thaumvibe"
+			"dev.neothaum.NeoThaum"
 		],
 		"client": [
-			"dev.thaumvibe.client.ThaumvibeClient"
+			"dev.neothaum.client.NeoThaumClient"
 		],
 		"jei_mod_plugin": [
-			"dev.thaumvibe.client.jei.ThaumvibeJeiPlugin"
+			"dev.neothaum.client.jei.NeoThaumJeiPlugin"
 		],
 		"jade": [
-			"dev.thaumvibe.client.addon.jade.ThaumvibeJadePlugin"
+			"dev.neothaum.client.addon.jade.NeoThaumJadePlugin"
 		]
 	},
 	"depends": {
@@ -35,9 +35,9 @@
 		"jade": "*"
 	},
 	"mixins": [
-		"thaumvibe.mixins.json",
+		"neothaum.mixins.json",
 		{
-			"config": "thaumvibe.client.mixins.json",
+			"config": "neothaum.client.mixins.json",
 			"environment": "client"
 		}
 	]

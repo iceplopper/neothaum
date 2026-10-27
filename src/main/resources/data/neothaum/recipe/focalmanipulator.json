@@ -1,0 +1,28 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "FOCALMANIPULATION",
+  "aspects": {
+    "ignis": 32,
+    "aer": 32,
+    "perditio": 32,
+    "terra": 32,
+    "aqua": 32,
+    "ordo": 32
+  },
+  "pattern": [
+    "IQI",
+    "SPS",
+    "GTG"
+  ],
+  "key": {
+    "Q": "neothaum:arcane_stone_slab",
+    "S": "neothaum:arcane_stone_block",
+    "T": "neothaum:table",
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:gold_ingot",
+    "P": "neothaum:primal_charm"
+  },
+  "result": {
+    "id": "neothaum:focal_manipulator"
+  }
+}

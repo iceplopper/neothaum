@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "neothaum:air_shard",
+    "neothaum:air_shard",
+    "neothaum:air_shard",
+    "neothaum:air_shard",
+    "neothaum:air_shard",
+    "neothaum:air_shard"
+  ],
+  "result": {
+    "id": "neothaum:air_crystal_cluster"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "DISTILESSENTIA",
+  "aspects": {
+    "ignis": 5,
+    "aqua": 5
+  },
+  "pattern": [
+    "SCS",
+    "SFS",
+    "SSS"
+  ],
+  "key": {
+    "C": "neothaum:crucible",
+    "F": "minecraft:furnace",
+    "S": "neothaum:arcane_stone_block"
+  },
+  "result": {
+    "id": "neothaum:alchemical_furnace"
+  }
+}

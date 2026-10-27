@@ -1,0 +1,30 @@
+{
+  "parent": "neothaum:root",
+  "display": {
+    "icon": {
+      "id": "neothaum:sanitizing_soap"
+    },
+    "title": {
+      "translate": "advancements.neothaum.warp.title"
+    },
+    "description": {
+      "translate": "advancements.neothaum.warp.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_soap": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "neothaum:sanitizing_soap"
+          }
+        ]
+      }
+    }
+  }
+}

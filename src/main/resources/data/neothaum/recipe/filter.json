@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "DISTILESSENTIA",
+  "aspects": {
+    "ordo": 5,
+    "aqua": 5
+  },
+  "pattern": [
+    "GWG"
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "W": "neothaum:silverwood_planks"
+  },
+  "result": {
+    "id": "neothaum:vis_filter",
+    "count": 2
+  }
+}

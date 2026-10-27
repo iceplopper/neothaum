@@ -1,0 +1,24 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "FLUXSCRUB",
+  "aspects": {
+    "aqua": 16,
+    "ordo": 16,
+    "aer": 8
+  },
+  "pattern": [
+    " B ",
+    "GOG",
+    "STS"
+  ],
+  "key": {
+    "B": "neothaum:arcane_bellows",
+    "G": "minecraft:iron_bars",
+    "O": "neothaum:nitor",
+    "T": "neothaum:essentia_tube",
+    "S": "neothaum:arcane_stone_bricks"
+  },
+  "result": {
+    "id": "neothaum:flux_scrubber"
+  }
+}

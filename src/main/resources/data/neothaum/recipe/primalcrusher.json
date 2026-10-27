@@ -1,0 +1,26 @@
+{
+  "type": "neothaum:infusion",
+  "research": "PRIMALCRUSHER",
+  "instability": 6,
+  "aspects": {
+    "perfodio": 24,
+    "instrumentum": 24,
+    "perditio": 16,
+    "vacuos": 16,
+    "telum": 16,
+    "alienis": 16,
+    "lucrum": 16
+  },
+  "central": "neothaum:primal_charm",
+  "components": [
+    "neothaum:primal_charm",
+    "neothaum:void_pickaxe",
+    "neothaum:void_shovel",
+    "neothaum:primal_charm",
+    "neothaum:pickaxe_of_the_core",
+    "neothaum:shovel_of_the_earthmover"
+  ],
+  "result": {
+    "id": "neothaum:primal_crusher"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "neothaum:warded_jar",
+          "modifier": [
+            {
+              "source": "block_entity",
+              "include": [
+                "neothaum:aspects",
+                "neothaum:aspect_filter"
+              ],
+              "type": "minecraft:copy_components"
+            }
+          ]
+        }
+      ],
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
+    }
+  ],
+  "random_sequence": "neothaum:blocks/warded_jar"
+}

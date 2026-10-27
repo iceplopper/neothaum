@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "neothaum:block/vis_relay"
+    },
+    "facing=up": {
+      "model": "neothaum:block/vis_relay"
+    },
+    "facing=north": {
+      "model": "neothaum:block/vis_relay"
+    },
+    "facing=south": {
+      "model": "neothaum:block/vis_relay"
+    },
+    "facing=west": {
+      "model": "neothaum:block/vis_relay"
+    },
+    "facing=east": {
+      "model": "neothaum:block/vis_relay"
+    }
+  }
+}

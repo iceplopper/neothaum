@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:infusion",
+  "research": "SINSTONE",
+  "instability": 5,
+  "aspects": {
+    "sensus": 8,
+    "tenebrae": 8,
+    "alienis": 8,
+    "auram": 8
+  },
+  "central": "minecraft:flint",
+  "components": [
+    "neothaum:nitor",
+    "neothaum:order_shard",
+    "neothaum:knowledge_fragment",
+    "neothaum:entropy_shard"
+  ],
+  "result": {
+    "id": "neothaum:sinister_lodestone"
+  }
+}

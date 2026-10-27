@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "neothaum:items/focus_trade_orn",
+    "layer1": "neothaum:items/focus_trade"
+  }
+}

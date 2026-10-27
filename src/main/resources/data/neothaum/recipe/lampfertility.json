@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:infusion",
+  "research": "LAMPFERTILITY",
+  "instability": 4,
+  "aspects": {
+    "bestia": 16,
+    "victus": 16,
+    "lux": 8
+  },
+  "central": "neothaum:arcane_lamp",
+  "components": [
+    "minecraft:gold_ingot",
+    "minecraft:wheat",
+    "neothaum:fire_shard",
+    "minecraft:gold_ingot",
+    "minecraft:carrot",
+    "neothaum:fire_shard"
+  ],
+  "result": {
+    "id": "neothaum:lamp_of_fertility"
+  }
+}

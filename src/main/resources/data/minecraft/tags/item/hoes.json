@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumium_hoe",
-    "thaumvibe:hoe_of_growth"
+    "neothaum:thaumium_hoe",
+    "neothaum:hoe_of_growth"
   ]
 }

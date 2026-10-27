@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "PURECOPPER",
+  "catalyst": "#neothaum:purifiable/copper",
+  "aspects": {
+    "metallum": 1,
+    "ordo": 1
+  },
+  "result": {
+    "id": "neothaum:native_copper_cluster"
+  }
+}

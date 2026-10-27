@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:magical_forest",
-    "thaumvibe:tainted_land",
-    "thaumvibe:eerie"
+    "neothaum:magical_forest",
+    "neothaum:tainted_land",
+    "neothaum:eerie"
   ]
 }

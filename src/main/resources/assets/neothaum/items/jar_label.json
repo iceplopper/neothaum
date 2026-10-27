@@ -1,0 +1,24 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "minecraft:has_component",
+    "component": "neothaum:aspect_filter",
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "neothaum:item/jar_label_marked",
+      "tints": [
+        {
+          "type": "minecraft:constant",
+          "value": -1
+        },
+        {
+          "type": "neothaum:aspect"
+        }
+      ]
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "neothaum:item/jar_label"
+    }
+  }
+}

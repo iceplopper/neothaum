@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "neothaum:block/arcane_stone_slab"
+    },
+    "type=top": {
+      "model": "neothaum:block/arcane_stone_slab_top"
+    },
+    "type=double": {
+      "model": "neothaum:block/arcane_stone_bricks"
+    }
+  }
+}

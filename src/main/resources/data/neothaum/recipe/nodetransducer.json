@@ -1,0 +1,24 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "VISPOWER",
+  "aspects": {
+    "ignis": 32,
+    "aer": 32,
+    "perditio": 32
+  },
+  "pattern": [
+    "RCR",
+    "ISI",
+    "RAR"
+  ],
+  "key": {
+    "S": "neothaum:node_stabilizer",
+    "C": "minecraft:comparator",
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone_block",
+    "A": "neothaum:nitor"
+  },
+  "result": {
+    "id": "neothaum:node_transducer"
+  }
+}

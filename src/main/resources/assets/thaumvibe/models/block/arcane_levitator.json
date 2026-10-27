@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "thaumvibe:blocks/liftertop",
-    "bottom": "thaumvibe:blocks/arcane_stone",
-    "side": "thaumvibe:blocks/lifterside"
-  }
-}

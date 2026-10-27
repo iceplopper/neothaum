@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "WANDPED",
+  "instability": 3,
+  "aspects": {
+    "auram": 10,
+    "praecantatio": 15,
+    "permutatio": 15
+  },
+  "central": "neothaum:arcane_pedestal",
+  "components": [
+    "minecraft:gold_ingot",
+    "minecraft:diamond",
+    "neothaum:primal_charm",
+    "minecraft:diamond"
+  ],
+  "result": {
+    "id": "neothaum:wand_recharge_pedestal"
+  }
+}

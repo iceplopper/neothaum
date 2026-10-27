@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "TRANSCOPPER",
+  "catalyst": "minecraft:copper_nugget",
+  "aspects": {
+    "metallum": 2,
+    "permutatio": 1
+  },
+  "result": {
+    "id": "minecraft:copper_nugget",
+    "count": 3
+  }
+}

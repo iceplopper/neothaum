@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/tinted_cross",
-  "render_type": "cutout",
-  "textures": {
-    "cross": "thaumvibe:blocks/taint_spore_stalk_1"
-  }
-}

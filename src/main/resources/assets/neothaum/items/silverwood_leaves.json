@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "neothaum:block/silverwood_leaves",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7824982
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:arcane_shapeless",
+  "research": "TUBES",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5
+  },
+  "ingredients": [
+    "neothaum:essentia_tube",
+    "minecraft:lever"
+  ],
+  "result": {
+    "id": "neothaum:essentia_valve"
+  }
+}

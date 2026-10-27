@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ARMORVOIDFORTRESS",
+  "instability": 6,
+  "aspects": {
+    "metallum": 20,
+    "tutamen": 20,
+    "pannus": 20,
+    "praecantatio": 16,
+    "alienis": 16,
+    "vacuos": 20
+  },
+  "central": "neothaum:void_leggings",
+  "components": [
+    "neothaum:thaumaturges_leggings",
+    "neothaum:void_metal_ingot",
+    "neothaum:thaumium_ingot",
+    "neothaum:salis_mundus",
+    "neothaum:enchanted_fabric",
+    "minecraft:leather"
+  ],
+  "result": {
+    "id": "neothaum:void_robe_legs"
+  }
+}

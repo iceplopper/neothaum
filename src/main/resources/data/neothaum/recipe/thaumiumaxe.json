@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "II",
+    "SI",
+    "S "
+  ],
+  "key": {
+    "I": "neothaum:thaumium_ingot",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "neothaum:thaumium_axe"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "ENTROPICPROCESSING",
+  "catalyst": "minecraft:bone",
+  "aspects": {
+    "perditio": 1
+  },
+  "result": {
+    "id": "minecraft:bone_meal",
+    "count": 4
+  }
+}

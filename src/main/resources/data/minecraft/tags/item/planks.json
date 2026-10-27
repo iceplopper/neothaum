@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:greatwood_planks",
-    "thaumvibe:silverwood_planks"
+    "neothaum:greatwood_planks",
+    "neothaum:silverwood_planks"
   ]
 }

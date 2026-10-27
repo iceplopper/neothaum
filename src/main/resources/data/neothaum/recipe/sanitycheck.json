@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:infusion",
+  "research": "SANITYCHECK",
+  "instability": 4,
+  "aspects": {
+    "cognitio": 24,
+    "sensus": 24,
+    "alienis": 8
+  },
+  "central": "neothaum:thaumometer",
+  "components": [
+    "neothaum:mirrored_glass",
+    "neothaum:zombie_brain",
+    "minecraft:diamond"
+  ],
+  "result": {
+    "id": "neothaum:sanity_checker"
+  }
+}

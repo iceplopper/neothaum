@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "CENTRIFUGE",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    "PVP",
+    "T T",
+    "PRP"
+  ],
+  "key": {
+    "T": "neothaum:essentia_tube",
+    "V": "neothaum:essentia_valve",
+    "R": "neothaum:restricted_essentia_tube",
+    "P": "neothaum:glass_phial"
+  },
+  "result": {
+    "id": "neothaum:essentia_buffer"
+  }
+}

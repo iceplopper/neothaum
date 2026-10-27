@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "neothaum:blocks/al_furnace_side",
+    "up": "neothaum:blocks/al_furnace_top_filled",
+    "north": "neothaum:blocks/al_furnace_front_on",
+    "south": "#north",
+    "west": "#north",
+    "east": "#north",
+    "particle": "neothaum:blocks/al_furnace_side"
+  }
+}

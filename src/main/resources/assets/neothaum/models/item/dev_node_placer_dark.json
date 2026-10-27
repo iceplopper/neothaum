@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "neothaum:item/dev/dev_node_placer_dark"
+  }
+}

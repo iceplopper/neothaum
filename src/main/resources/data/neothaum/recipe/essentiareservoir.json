@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ESSENTIARESERVOIR",
+  "instability": 6,
+  "aspects": {
+    "aqua": 8,
+    "vacuos": 8,
+    "praecantatio": 8,
+    "permutatio": 8
+  },
+  "central": "neothaum:essentia_buffer",
+  "components": [
+    "neothaum:void_metal_ingot",
+    "neothaum:warded_jar",
+    "neothaum:warded_jar",
+    "neothaum:void_metal_ingot",
+    "neothaum:warded_jar",
+    "neothaum:warded_jar"
+  ],
+  "result": {
+    "id": "neothaum:essentia_reservoir"
+  }
+}

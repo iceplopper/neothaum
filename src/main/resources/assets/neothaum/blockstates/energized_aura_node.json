@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "neothaum:block/energized_aura_node"
+    }
+  }
+}

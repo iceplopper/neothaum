@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dyes/yellow",
+    "neothaum:white_tallow_candle"
+  ],
+  "result": {
+    "id": "neothaum:yellow_tallow_candle"
+  }
+}

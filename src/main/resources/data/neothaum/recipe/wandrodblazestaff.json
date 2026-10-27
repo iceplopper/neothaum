@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ROD_blaze_staff",
+  "aspects": {
+    "ordo": 14
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "neothaum:primal_charm",
+    "G": "neothaum:blazing_rod"
+  },
+  "result": {
+    "id": "neothaum:blazing_staff_core"
+  }
+}

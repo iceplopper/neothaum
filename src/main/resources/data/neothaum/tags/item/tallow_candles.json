@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "neothaum:white_tallow_candle",
+    "neothaum:orange_tallow_candle",
+    "neothaum:magenta_tallow_candle",
+    "neothaum:light_blue_tallow_candle",
+    "neothaum:yellow_tallow_candle",
+    "neothaum:lime_tallow_candle",
+    "neothaum:pink_tallow_candle",
+    "neothaum:gray_tallow_candle",
+    "neothaum:light_gray_tallow_candle",
+    "neothaum:cyan_tallow_candle",
+    "neothaum:purple_tallow_candle",
+    "neothaum:blue_tallow_candle",
+    "neothaum:brown_tallow_candle",
+    "neothaum:green_tallow_candle",
+    "neothaum:red_tallow_candle",
+    "neothaum:black_tallow_candle"
+  ]
+}

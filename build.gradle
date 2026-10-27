@@ -2,7 +2,7 @@ plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 }
 
-base { archivesName = 'thaumvibe4' }
+base { archivesName = 'neothaum' }
 
 repositories {
 	maven { name = 'Jared (JEI)'; url = 'https://maven.blamejared.com/' }
@@ -11,7 +11,7 @@ repositories {
 loom {
 	splitEnvironmentSourceSets()
 	mods {
-		"thaumvibe" {
+		"neothaum" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
@@ -22,7 +22,7 @@ loom {
 fabricApi {
 	configureTests {
 		createSourceSet = true
-		modId = "thaumvibe-visual-tests"
+		modId = "neothaum-visual-tests"
 		enableGameTests = false
 		enableClientGameTests = true
 		eula = true

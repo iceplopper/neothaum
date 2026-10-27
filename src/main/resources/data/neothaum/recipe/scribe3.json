@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "neothaum:scribing_tools",
+    "#neothaum:dyes/black"
+  ],
+  "result": {
+    "id": "neothaum:scribing_tools"
+  }
+}

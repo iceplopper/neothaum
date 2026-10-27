@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": "neothaum:thaumium_ingot"
+  },
+  "result": {
+    "id": "neothaum:thaumium_nugget",
+    "count": 9
+  }
+}

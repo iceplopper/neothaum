@@ -1,0 +1,24 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ARCANESPA",
+  "aspects": {
+    "aqua": 16,
+    "ordo": 8,
+    "terra": 4
+  },
+  "pattern": [
+    "QIQ",
+    "SJS",
+    "SPS"
+  ],
+  "key": {
+    "Q": "minecraft:quartz_block",
+    "I": "minecraft:iron_bars",
+    "S": "neothaum:arcane_stone_block",
+    "J": "neothaum:warded_jar",
+    "P": "minecraft:piston"
+  },
+  "result": {
+    "id": "neothaum:arcane_spa"
+  }
+}

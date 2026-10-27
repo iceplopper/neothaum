@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "INFUSION",
+  "aspects": {
+    "aer": 5
+  },
+  "pattern": [
+    "SSS",
+    " S ",
+    "SSS"
+  ],
+  "key": {
+    "S": "neothaum:arcane_stone_block"
+  },
+  "result": {
+    "id": "neothaum:arcane_pedestal",
+    "count": 2
+  }
+}

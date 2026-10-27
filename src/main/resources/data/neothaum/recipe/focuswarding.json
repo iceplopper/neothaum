@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:infusion",
+  "research": "FOCUSWARDING",
+  "instability": 4,
+  "aspects": {
+    "terra": 25,
+    "tutamen": 25,
+    "ordo": 25,
+    "cognitio": 10
+  },
+  "central": "minecraft:nether_star",
+  "components": [
+    "neothaum:quicksilver",
+    "neothaum:earth_shard",
+    "minecraft:quartz",
+    "neothaum:order_shard",
+    "neothaum:quicksilver",
+    "neothaum:earth_shard",
+    "minecraft:quartz",
+    "neothaum:order_shard"
+  ],
+  "result": {
+    "id": "neothaum:focus_warding"
+  }
+}

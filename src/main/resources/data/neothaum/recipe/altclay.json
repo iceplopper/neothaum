@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "ALCHEMICALDUPLICATION",
+  "catalyst": "minecraft:clay_ball",
+  "aspects": {
+    "aqua": 1,
+    "terra": 2
+  },
+  "result": {
+    "id": "minecraft:clay_ball",
+    "count": 2
+  }
+}

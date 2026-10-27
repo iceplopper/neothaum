@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "thaumvibe:item/taint_spider_spawn_egg"
-  }
-}

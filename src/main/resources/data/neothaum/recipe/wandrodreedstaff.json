@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ROD_reed_staff",
+  "aspects": {
+    "ordo": 14
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "neothaum:primal_charm",
+    "G": "neothaum:reed_rod"
+  },
+  "result": {
+    "id": "neothaum:reed_staff_core"
+  }
+}

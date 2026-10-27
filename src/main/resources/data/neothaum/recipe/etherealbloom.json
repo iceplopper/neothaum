@@ -1,0 +1,14 @@
+{
+  "type": "neothaum:crucible",
+  "research": "ETHEREALBLOOM",
+  "catalyst": "neothaum:shimmerleaf",
+  "aspects": {
+    "praecantatio": 16,
+    "herba": 16,
+    "sano": 16,
+    "vitium": 8
+  },
+  "result": {
+    "id": "neothaum:ethereal_bloom"
+  }
+}

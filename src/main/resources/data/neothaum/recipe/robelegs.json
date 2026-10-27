@@ -1,0 +1,18 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ENCHFABRIC",
+  "aspects": {
+    "aqua": 5
+  },
+  "pattern": [
+    "III",
+    "I I",
+    "I I"
+  ],
+  "key": {
+    "I": "neothaum:enchanted_fabric"
+  },
+  "result": {
+    "id": "neothaum:thaumaturges_leggings"
+  }
+}

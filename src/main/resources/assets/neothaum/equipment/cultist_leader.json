@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "neothaum:cultist_leader"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "neothaum:cultist_leader"
+      }
+    ]
+  }
+}

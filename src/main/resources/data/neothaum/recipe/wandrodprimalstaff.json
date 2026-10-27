@@ -1,0 +1,28 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ROD_primal_staff",
+  "instability": 8,
+  "aspects": {
+    "aer": 32,
+    "ignis": 32,
+    "aqua": 32,
+    "terra": 32,
+    "ordo": 32,
+    "perditio": 32,
+    "praecantatio": 64
+  },
+  "central": "neothaum:silverwood_rod",
+  "components": [
+    "neothaum:primal_charm",
+    "neothaum:obsidian_rod",
+    "neothaum:icy_rod",
+    "neothaum:quartz_rod",
+    "neothaum:primal_charm",
+    "neothaum:reed_rod",
+    "neothaum:blazing_rod",
+    "neothaum:bone_rod"
+  ],
+  "result": {
+    "id": "neothaum:primal_staff_core"
+  }
+}

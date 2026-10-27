@@ -1,0 +1,24 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "WARDEDARCANA",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 10,
+    "terra": 5,
+    "ignis": 5
+  },
+  "pattern": [
+    "GGG",
+    "WBW",
+    "GGG"
+  ],
+  "key": {
+    "G": "minecraft:glass",
+    "B": "neothaum:zombie_brain",
+    "W": "neothaum:greatwood_planks"
+  },
+  "result": {
+    "id": "neothaum:warded_glass",
+    "count": 8
+  }
+}

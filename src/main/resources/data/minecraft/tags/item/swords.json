@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumium_sword",
-    "thaumvibe:sword_of_the_zephyr",
-    "thaumvibe:crimson_blade"
+    "neothaum:thaumium_sword",
+    "neothaum:sword_of_the_zephyr",
+    "neothaum:crimson_blade"
   ]
 }

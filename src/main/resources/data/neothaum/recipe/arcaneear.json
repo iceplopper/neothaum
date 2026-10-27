@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ARCANEEAR",
+  "aspects": {
+    "aer": 10,
+    "ordo": 10
+  },
+  "pattern": [
+    "GIG",
+    "GBG",
+    "WRW"
+  ],
+  "key": {
+    "W": "neothaum:greatwood_planks",
+    "R": "minecraft:redstone",
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:gold_ingot",
+    "B": "neothaum:zombie_brain"
+  },
+  "result": {
+    "id": "neothaum:arcane_ear"
+  }
+}

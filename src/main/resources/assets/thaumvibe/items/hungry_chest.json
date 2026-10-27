@@ -1,9 +1,0 @@
-{
-  "model": {
-    "type": "minecraft:special",
-    "base": "thaumvibe:item/hungry_chest",
-    "model": {
-      "type": "thaumvibe:hungry_chest"
-    }
-  }
-}

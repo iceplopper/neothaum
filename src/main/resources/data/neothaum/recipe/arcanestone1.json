@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ARCANESTONE",
+  "aspects": {
+    "terra": 1,
+    "ignis": 1
+  },
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SSS"
+  ],
+  "key": {
+    "S": "#c:stones",
+    "C": "#neothaum:shards"
+  },
+  "result": {
+    "id": "neothaum:arcane_stone_block",
+    "count": 9
+  }
+}

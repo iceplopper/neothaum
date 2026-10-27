@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "WARDEDARCANA",
+  "aspects": {
+    "aqua": 20,
+    "ordo": 10,
+    "ignis": 5,
+    "terra": 10
+  },
+  "pattern": [
+    " B ",
+    "TDT"
+  ],
+  "key": {
+    "T": "neothaum:thaumium_ingot",
+    "B": "neothaum:zombie_brain",
+    "D": "neothaum:greatwood_planks"
+  },
+  "result": {
+    "id": "neothaum:arcane_pressure_plate"
+  }
+}

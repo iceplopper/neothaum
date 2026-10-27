@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumaturges_robe",
-    "thaumvibe:thaumaturges_leggings",
-    "thaumvibe:thaumaturges_boots",
-    "thaumvibe:void_robe_helm",
-    "thaumvibe:void_robe_chest",
-    "thaumvibe:void_robe_legs"
+    "neothaum:thaumaturges_robe",
+    "neothaum:thaumaturges_leggings",
+    "neothaum:thaumaturges_boots",
+    "neothaum:void_robe_helm",
+    "neothaum:void_robe_chest",
+    "neothaum:void_robe_legs"
   ]
 }

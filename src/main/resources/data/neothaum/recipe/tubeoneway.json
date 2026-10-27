@@ -1,0 +1,16 @@
+{
+  "type": "neothaum:arcane_shapeless",
+  "research": "TUBEFILTER",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 8,
+    "perditio": 8
+  },
+  "ingredients": [
+    "neothaum:essentia_tube",
+    "#neothaum:dyes/blue"
+  ],
+  "result": {
+    "id": "neothaum:directional_essentia_tube"
+  }
+}

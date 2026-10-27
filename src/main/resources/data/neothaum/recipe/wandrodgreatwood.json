@@ -1,0 +1,17 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ROD_greatwood",
+  "aspects": {
+    "perditio": 3
+  },
+  "pattern": [
+    " G",
+    "G "
+  ],
+  "key": {
+    "G": "neothaum:greatwood_log"
+  },
+  "result": {
+    "id": "neothaum:greatwood_rod"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "neothaum:crucible",
+  "research": "ENTROPICPROCESSING",
+  "catalyst": "minecraft:stone_bricks",
+  "aspects": {
+    "perditio": 2
+  },
+  "result": {
+    "id": "minecraft:cracked_stone_bricks"
+  }
+}

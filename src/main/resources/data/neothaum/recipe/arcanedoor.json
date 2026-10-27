@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "WARDEDARCANA",
+  "aspects": {
+    "aqua": 20,
+    "ordo": 10,
+    "terra": 10,
+    "ignis": 5
+  },
+  "pattern": [
+    "TDT",
+    "DBD",
+    "TDT"
+  ],
+  "key": {
+    "T": "neothaum:thaumium_ingot",
+    "D": "neothaum:greatwood_planks",
+    "B": "neothaum:zombie_brain"
+  },
+  "result": {
+    "id": "neothaum:arcane_door"
+  }
+}

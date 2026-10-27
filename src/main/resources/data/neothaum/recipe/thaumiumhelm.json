@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "I I"
+  ],
+  "key": {
+    "I": "neothaum:thaumium_ingot"
+  },
+  "result": {
+    "id": "neothaum:thaumium_helmet"
+  }
+}

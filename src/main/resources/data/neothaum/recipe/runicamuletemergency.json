@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:infusion",
+  "research": "RUNICEMERGENCY",
+  "instability": 7,
+  "aspects": {
+    "tutamen": 20,
+    "praecantatio": 35,
+    "terra": 32,
+    "vacuos": 32
+  },
+  "central": "neothaum:amulet_of_runic_shielding",
+  "components": [
+    "neothaum:balanced_shard",
+    "neothaum:earth_shard",
+    "neothaum:earth_shard",
+    "minecraft:potion",
+    "neothaum:earth_shard",
+    "neothaum:earth_shard"
+  ],
+  "result": {
+    "id": "neothaum:amulet_of_emergency_shielding"
+  }
+}

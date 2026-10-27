@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumium_axe",
-    "thaumvibe:axe_of_the_stream"
+    "neothaum:thaumium_axe",
+    "neothaum:axe_of_the_stream"
   ]
 }

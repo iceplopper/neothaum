@@ -1,0 +1,119 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "cutout",
+  "textures": {
+    "arm": "neothaum:blocks/pipe_buffer",
+    "particle": "neothaum:blocks/pipe_buffer"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        8,
+        7
+      ],
+      "to": [
+        9,
+        16,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            0,
+            9,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            0,
+            9,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            0,
+            9,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            0,
+            9,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        16,
+        7
+      ],
+      "to": [
+        9,
+        22,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            10,
+            9,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            10,
+            9,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            10,
+            9,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            10,
+            9,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ]
+        }
+      }
+    }
+  ]
+}

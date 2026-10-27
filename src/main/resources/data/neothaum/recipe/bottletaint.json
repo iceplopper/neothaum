@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "BOTTLETAINT",
+  "catalyst": "minecraft:glass_bottle",
+  "aspects": {
+    "vitium": 8,
+    "praecantatio": 8
+  },
+  "result": {
+    "id": "neothaum:bottled_taint"
+  }
+}

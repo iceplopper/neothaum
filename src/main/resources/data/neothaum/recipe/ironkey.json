@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "WARDEDARCANA",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    "NNI",
+    "N  "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "N": "minecraft:iron_nugget"
+  },
+  "result": {
+    "id": "neothaum:iron_arcane_key",
+    "count": 2
+  }
+}

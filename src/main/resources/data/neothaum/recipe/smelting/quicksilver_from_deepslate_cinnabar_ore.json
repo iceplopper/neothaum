@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredient": "neothaum:deepslate_cinnabar_ore",
+  "result": {
+    "id": "neothaum:quicksilver"
+  }
+}

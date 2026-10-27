@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "thaumvibe:block/thaumatorium" },
-    "facing=south": { "model": "thaumvibe:block/thaumatorium", "y": 180 },
-    "facing=west": { "model": "thaumvibe:block/thaumatorium", "y": 270 },
-    "facing=east": { "model": "thaumvibe:block/thaumatorium", "y": 90 }
-  }
-}

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:haste",
-    "thaumvibe:repair"
+    "neothaum:haste",
+    "neothaum:repair"
   ]
 }

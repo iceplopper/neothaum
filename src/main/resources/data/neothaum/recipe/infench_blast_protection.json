@@ -1,0 +1,16 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:blast_protection",
+  "instability": 1,
+  "aspects": {
+    "praecantatio": 4,
+    "tutamen": 4,
+    "perditio": 4
+  },
+  "components": [
+    "minecraft:iron_ingot",
+    "minecraft:gunpowder",
+    "neothaum:salis_mundus"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ROD_silverwood_staff",
+  "aspects": {
+    "ordo": 24
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "neothaum:primal_charm",
+    "G": "neothaum:silverwood_rod"
+  },
+  "result": {
+    "id": "neothaum:silverwood_staff_core"
+  }
+}

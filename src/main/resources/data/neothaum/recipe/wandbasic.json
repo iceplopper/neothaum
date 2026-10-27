@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "  I",
+    " S ",
+    "I  "
+  ],
+  "key": {
+    "I": "neothaum:iron_cap",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "neothaum:wand",
+    "components": {
+      "neothaum:wand_cap": "iron",
+      "neothaum:wand_rod": "wood"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ARCANELAMP",
+  "aspects": {
+    "ignis": 8,
+    "aer": 8,
+    "aqua": 4,
+    "perditio": 4
+  },
+  "pattern": [
+    " S ",
+    "IAI",
+    " N "
+  ],
+  "key": {
+    "A": "neothaum:amber_block",
+    "S": "minecraft:daylight_detector",
+    "N": "neothaum:nitor",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "neothaum:arcane_lamp"
+  }
+}

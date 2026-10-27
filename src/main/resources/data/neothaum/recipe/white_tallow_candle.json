@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bone_meal",
+    "#neothaum:tallow_candles"
+  ],
+  "result": {
+    "id": "neothaum:white_tallow_candle"
+  }
+}

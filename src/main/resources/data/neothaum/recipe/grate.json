@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "#",
+    "T"
+  ],
+  "key": {
+    "#": "minecraft:iron_bars",
+    "T": "#minecraft:wooden_trapdoors"
+  },
+  "result": {
+    "id": "neothaum:item_grate",
+    "count": 1
+  }
+}

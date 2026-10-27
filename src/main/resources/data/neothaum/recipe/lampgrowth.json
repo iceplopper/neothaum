@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:infusion",
+  "research": "LAMPGROWTH",
+  "instability": 4,
+  "aspects": {
+    "herba": 16,
+    "lux": 8,
+    "victus": 16
+  },
+  "central": "neothaum:arcane_lamp",
+  "components": [
+    "minecraft:gold_ingot",
+    "minecraft:bone_meal",
+    "neothaum:earth_shard",
+    "minecraft:gold_ingot",
+    "minecraft:bone_meal",
+    "neothaum:earth_shard"
+  ],
+  "result": {
+    "id": "neothaum:lamp_of_growth"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " 1 ",
+    "IGI",
+    " 1 "
+  ],
+  "key": {
+    "I": "minecraft:gold_ingot",
+    "G": "minecraft:glass",
+    "1": "#neothaum:shards"
+  },
+  "result": {
+    "id": "neothaum:thaumometer"
+  }
+}

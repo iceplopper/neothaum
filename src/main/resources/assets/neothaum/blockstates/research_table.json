@@ -1,0 +1,84 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "main": "true"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "main": "false"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table_other",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "main": "true"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "main": "false"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table_other",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "main": "true"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "main": "false"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table_other",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "main": "true"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "main": "false"
+      },
+      "apply": {
+        "model": "neothaum:block/research_table_other",
+        "y": 0
+      }
+    }
+  ]
+}

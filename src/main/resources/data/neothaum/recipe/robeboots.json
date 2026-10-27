@@ -1,0 +1,17 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ENCHFABRIC",
+  "aspects": {
+    "terra": 3
+  },
+  "pattern": [
+    "I I",
+    "I I"
+  ],
+  "key": {
+    "I": "neothaum:enchanted_fabric"
+  },
+  "result": {
+    "id": "neothaum:thaumaturges_boots"
+  }
+}

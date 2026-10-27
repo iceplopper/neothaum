@@ -1,0 +1,26 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ARMORVOIDFORTRESS",
+  "instability": 6,
+  "aspects": {
+    "metallum": 16,
+    "sensus": 16,
+    "tutamen": 16,
+    "pannus": 16,
+    "praecantatio": 16,
+    "alienis": 16,
+    "vacuos": 16
+  },
+  "central": "neothaum:void_helm",
+  "components": [
+    "neothaum:goggles_of_revealing",
+    "neothaum:enchanted_fabric",
+    "neothaum:enchanted_fabric",
+    "neothaum:salis_mundus",
+    "neothaum:enchanted_fabric",
+    "neothaum:enchanted_fabric"
+  ],
+  "result": {
+    "id": "neothaum:void_robe_helm"
+  }
+}

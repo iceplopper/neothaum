@@ -1,0 +1,69 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "cutout",
+  "textures": {
+    "arm": "neothaum:blocks/pipe_restrict",
+    "particle": "neothaum:blocks/pipe_restrict"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        7,
+        8
+      ],
+      "to": [
+        9,
+        9,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            0,
+            9,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            8,
+            9,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#arm",
+          "uv": [
+            8,
+            7,
+            16,
+            9
+          ]
+        },
+        "east": {
+          "texture": "#arm",
+          "uv": [
+            0,
+            7,
+            8,
+            9
+          ]
+        },
+        "south": {
+          "texture": "#arm",
+          "uv": [
+            7,
+            7,
+            9,
+            9
+          ]
+        }
+      }
+    }
+  ]
+}

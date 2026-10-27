@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    "S S",
+    " I "
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "I": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "neothaum:mundane_amulet"
+  }
+}

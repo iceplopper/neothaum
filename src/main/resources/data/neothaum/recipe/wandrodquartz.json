@@ -1,0 +1,18 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ROD_quartz",
+  "instability": 3,
+  "aspects": {
+    "ordo": 12,
+    "praecantatio": 6,
+    "vitreus": 6
+  },
+  "central": "minecraft:quartz_block",
+  "components": [
+    "neothaum:balanced_shard",
+    "neothaum:order_shard"
+  ],
+  "result": {
+    "id": "neothaum:quartz_rod"
+  }
+}

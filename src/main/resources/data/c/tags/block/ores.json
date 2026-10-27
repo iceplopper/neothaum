@@ -3,17 +3,17 @@
   "values": [
     "#c:ores/cinnabar",
     "#c:ores/amber",
-    "thaumvibe:air_infused_stone",
-    "thaumvibe:deepslate_air_infused_stone",
-    "thaumvibe:fire_infused_stone",
-    "thaumvibe:deepslate_fire_infused_stone",
-    "thaumvibe:water_infused_stone",
-    "thaumvibe:deepslate_water_infused_stone",
-    "thaumvibe:earth_infused_stone",
-    "thaumvibe:deepslate_earth_infused_stone",
-    "thaumvibe:order_infused_stone",
-    "thaumvibe:deepslate_order_infused_stone",
-    "thaumvibe:entropy_infused_stone",
-    "thaumvibe:deepslate_entropy_infused_stone"
+    "neothaum:air_infused_stone",
+    "neothaum:deepslate_air_infused_stone",
+    "neothaum:fire_infused_stone",
+    "neothaum:deepslate_fire_infused_stone",
+    "neothaum:water_infused_stone",
+    "neothaum:deepslate_water_infused_stone",
+    "neothaum:earth_infused_stone",
+    "neothaum:deepslate_earth_infused_stone",
+    "neothaum:order_infused_stone",
+    "neothaum:deepslate_order_infused_stone",
+    "neothaum:entropy_infused_stone",
+    "neothaum:deepslate_entropy_infused_stone"
   ]
 }

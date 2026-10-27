@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ARCANEBORE",
+  "instability": 4,
+  "aspects": {
+    "potentia": 16,
+    "perfodio": 32,
+    "machina": 32,
+    "vacuos": 16,
+    "motus": 16
+  },
+  "central": "minecraft:piston",
+  "components": [
+    "neothaum:greatwood_planks",
+    "minecraft:gold_ingot",
+    "minecraft:diamond_pickaxe",
+    "minecraft:gold_ingot",
+    "neothaum:greatwood_planks",
+    "minecraft:diamond_shovel",
+    "neothaum:air_shard"
+  ],
+  "result": {
+    "id": "neothaum:arcane_bore"
+  }
+}

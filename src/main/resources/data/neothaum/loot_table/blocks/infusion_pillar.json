@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "neothaum:arcane_stone_bricks",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "neothaum:infusion_pillar",
+                "state": {
+                  "half": "lower"
+                }
+              }
+            },
+            {
+              "type": "minecraft:item",
+              "name": "neothaum:arcane_stone_block"
+            }
+          ]
+        }
+      ],
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
+    }
+  ],
+  "random_sequence": "neothaum:blocks/infusion_pillar"
+}

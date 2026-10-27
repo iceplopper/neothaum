@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#neothaum:dyes/black",
+    "minecraft:slime_ball",
+    "minecraft:paper",
+    "minecraft:paper",
+    "minecraft:paper",
+    "minecraft:paper"
+  ],
+  "result": {
+    "id": "neothaum:jar_label",
+    "count": 4
+  }
+}

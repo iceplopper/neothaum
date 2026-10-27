@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:greatwood_leaves",
-    "thaumvibe:silverwood_leaves",
-    "thaumvibe:flesh_block"
+    "neothaum:greatwood_leaves",
+    "neothaum:silverwood_leaves",
+    "neothaum:flesh_block"
   ]
 }

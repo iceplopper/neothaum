@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:arcane_shapeless",
+  "research": "TUBEFILTER",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 16
+  },
+  "ingredients": [
+    "neothaum:essentia_tube",
+    "neothaum:vis_filter"
+  ],
+  "result": {
+    "id": "neothaum:filtered_essentia_tube"
+  }
+}

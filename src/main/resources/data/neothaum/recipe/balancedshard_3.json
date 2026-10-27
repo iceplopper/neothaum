@@ -1,0 +1,9 @@
+{
+  "type": "neothaum:crucible",
+  "research": "CRUCIBLE",
+  "catalyst": "neothaum:earth_shard",
+  "aspects": {},
+  "result": {
+    "id": "neothaum:balanced_shard"
+  }
+}

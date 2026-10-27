@@ -1,0 +1,24 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "CENTRIFUGE",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5,
+    "perditio": 5
+  },
+  "pattern": [
+    " T ",
+    "ACP",
+    " T "
+  ],
+  "key": {
+    "T": "neothaum:essentia_tube",
+    "P": "minecraft:piston",
+    "A": "neothaum:arcane_alembic",
+    "C": "neothaum:alchemical_furnace"
+  },
+  "result": {
+    "id": "neothaum:alchemical_centrifuge",
+    "count": 1
+  }
+}

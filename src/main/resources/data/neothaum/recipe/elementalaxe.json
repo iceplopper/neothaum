@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ELEMENTALAXE",
+  "instability": 1,
+  "aspects": {
+    "aqua": 16,
+    "arbor": 8
+  },
+  "central": "neothaum:thaumium_axe",
+  "components": [
+    "neothaum:water_shard",
+    "neothaum:water_shard",
+    "minecraft:diamond",
+    "neothaum:greatwood_log"
+  ],
+  "result": {
+    "id": "neothaum:axe_of_the_stream"
+  }
+}

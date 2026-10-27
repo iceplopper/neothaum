@@ -1,0 +1,23 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "LEVITATOR",
+  "aspects": {
+    "aer": 10,
+    "terra": 5
+  },
+  "pattern": [
+    "WEW",
+    "BNB",
+    "WAW"
+  ],
+  "key": {
+    "W": "neothaum:greatwood_planks",
+    "E": "neothaum:earth_shard",
+    "A": "neothaum:air_shard",
+    "N": "neothaum:nitor",
+    "B": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "neothaum:arcane_levitator"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "LIQUIDDEATH",
+  "catalyst": "minecraft:bucket",
+  "aspects": {
+    "mortuus": 32,
+    "venenum": 32,
+    "perditio": 32
+  },
+  "result": {
+    "id": "neothaum:bucket_of_liquid_death"
+  }
+}

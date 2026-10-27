@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "K  ",
+    "KK ",
+    "KKK"
+  ],
+  "key": {
+    "K": "neothaum:greatwood_planks"
+  },
+  "result": {
+    "id": "neothaum:greatwood_stairs",
+    "count": 4
+  }
+}

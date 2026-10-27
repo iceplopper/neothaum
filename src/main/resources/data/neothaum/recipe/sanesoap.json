@@ -1,0 +1,14 @@
+{
+  "type": "neothaum:crucible",
+  "research": "SANESOAP",
+  "catalyst": "neothaum:tallow_block",
+  "aspects": {
+    "cognitio": 16,
+    "alienis": 16,
+    "ordo": 16,
+    "sano": 16
+  },
+  "result": {
+    "id": "neothaum:sanitizing_soap"
+  }
+}

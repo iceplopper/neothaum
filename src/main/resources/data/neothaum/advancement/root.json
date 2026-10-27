@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "neothaum:thaumonomicon"
+    },
+    "title": {
+      "translate": "advancements.neothaum.root.title"
+    },
+    "description": {
+      "translate": "advancements.neothaum.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has_thaumonomicon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "neothaum:thaumonomicon"
+          }
+        ]
+      }
+    }
+  }
+}

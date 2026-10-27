@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "neothaum:block/thaumatorium" },
+    "facing=south": { "model": "neothaum:block/thaumatorium", "y": 180 },
+    "facing=west": { "model": "neothaum:block/thaumatorium", "y": 270 },
+    "facing=east": { "model": "neothaum:block/thaumatorium", "y": 90 }
+  }
+}

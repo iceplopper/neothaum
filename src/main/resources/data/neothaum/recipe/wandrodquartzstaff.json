@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "ROD_quartz_staff",
+  "aspects": {
+    "ordo": 14
+  },
+  "pattern": [
+    "  S",
+    " G ",
+    "G  "
+  ],
+  "key": {
+    "S": "neothaum:primal_charm",
+    "G": "neothaum:quartz_rod"
+  },
+  "result": {
+    "id": "neothaum:quartz_staff_core"
+  }
+}

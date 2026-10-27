@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "FOCUSPRIMAL",
+  "aspects": {
+    "terra": 25,
+    "perditio": 25,
+    "ordo": 25,
+    "aer": 25,
+    "ignis": 25,
+    "aqua": 25
+  },
+  "pattern": [
+    "CQC",
+    "Q#Q",
+    "CQC"
+  ],
+  "key": {
+    "#": "neothaum:primal_charm",
+    "Q": "minecraft:quartz",
+    "C": "minecraft:diamond"
+  },
+  "result": {
+    "id": "neothaum:focus_primal"
+  }
+}

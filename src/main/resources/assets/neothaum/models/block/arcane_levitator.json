@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "neothaum:blocks/liftertop",
+    "bottom": "neothaum:blocks/arcane_stone",
+    "side": "neothaum:blocks/lifterside"
+  }
+}

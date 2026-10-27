@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "neothaum:items/phial",
+    "layer1": "neothaum:items/essence"
+  }
+}

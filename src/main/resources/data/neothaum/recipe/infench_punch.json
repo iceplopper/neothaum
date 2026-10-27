@@ -1,0 +1,15 @@
+{
+  "type": "neothaum:infusion_enchantment",
+  "research": "INFUSIONENCHANTMENT",
+  "enchantment": "minecraft:punch",
+  "instability": 2,
+  "aspects": {
+    "praecantatio": 4,
+    "telum": 3,
+    "motus": 3
+  },
+  "components": [
+    "minecraft:piston",
+    "neothaum:salis_mundus"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "III",
+    "I I"
+  ],
+  "key": {
+    "I": "neothaum:void_metal_ingot"
+  },
+  "result": {
+    "id": "neothaum:void_helm"
+  }
+}

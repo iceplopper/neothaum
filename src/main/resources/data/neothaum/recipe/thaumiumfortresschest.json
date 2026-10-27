@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ARMORFORTRESS",
+  "instability": 3,
+  "aspects": {
+    "metallum": 24,
+    "tutamen": 24,
+    "praecantatio": 16
+  },
+  "central": "neothaum:thaumium_chestplate",
+  "components": [
+    "neothaum:thaumium_ingot",
+    "neothaum:thaumium_ingot",
+    "neothaum:thaumium_ingot",
+    "neothaum:thaumium_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:leather"
+  ],
+  "result": {
+    "id": "neothaum:thaumium_fortress_cuirass"
+  }
+}

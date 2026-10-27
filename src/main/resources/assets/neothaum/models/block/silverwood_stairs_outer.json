@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "neothaum:blocks/planks_silverwood",
+    "top": "neothaum:blocks/planks_silverwood",
+    "side": "neothaum:blocks/planks_silverwood"
+  }
+}

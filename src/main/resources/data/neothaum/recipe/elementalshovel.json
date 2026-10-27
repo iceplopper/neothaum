@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ELEMENTALSHOVEL",
+  "instability": 1,
+  "aspects": {
+    "terra": 16,
+    "fabrico": 8
+  },
+  "central": "neothaum:thaumium_shovel",
+  "components": [
+    "neothaum:earth_shard",
+    "neothaum:earth_shard",
+    "minecraft:diamond",
+    "neothaum:greatwood_log"
+  ],
+  "result": {
+    "id": "neothaum:shovel_of_the_earthmover"
+  }
+}

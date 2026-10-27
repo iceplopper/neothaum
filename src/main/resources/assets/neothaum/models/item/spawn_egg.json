@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "neothaum:items/spawn_egg",
+    "layer1": "neothaum:items/spawn_egg_overlay"
+  }
+}

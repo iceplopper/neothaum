@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:infusion",
+  "research": "NODESTABILIZERADV",
+  "instability": 10,
+  "aspects": {
+    "auram": 32,
+    "praecantatio": 16,
+    "ordo": 16,
+    "potentia": 16
+  },
+  "central": "neothaum:node_stabilizer",
+  "components": [
+    "neothaum:nitor",
+    "minecraft:redstone_block",
+    "neothaum:alumentum",
+    "minecraft:redstone_block",
+    "neothaum:nitor",
+    "minecraft:redstone_block",
+    "neothaum:alumentum",
+    "minecraft:redstone_block"
+  ],
+  "result": {
+    "id": "neothaum:advanced_node_stabilizer"
+  }
+}

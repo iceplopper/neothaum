@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ARMORVOIDFORTRESS",
+  "instability": 6,
+  "aspects": {
+    "metallum": 24,
+    "tutamen": 24,
+    "pannus": 24,
+    "praecantatio": 16,
+    "alienis": 16,
+    "vacuos": 24
+  },
+  "central": "neothaum:void_chestplate",
+  "components": [
+    "neothaum:thaumaturges_robe",
+    "neothaum:void_metal_ingot",
+    "neothaum:thaumium_ingot",
+    "neothaum:salis_mundus",
+    "neothaum:enchanted_fabric",
+    "minecraft:leather"
+  ],
+  "result": {
+    "id": "neothaum:void_robe_chest"
+  }
+}

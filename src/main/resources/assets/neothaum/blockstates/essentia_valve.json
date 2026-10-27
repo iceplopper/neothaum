@@ -1,0 +1,108 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "down": "tube"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_down_tube"
+      }
+    },
+    {
+      "when": {
+        "down": "extended"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_down_extended"
+      }
+    },
+    {
+      "when": {
+        "up": "tube"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_up_tube"
+      }
+    },
+    {
+      "when": {
+        "up": "extended"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_up_extended"
+      }
+    },
+    {
+      "when": {
+        "north": "tube"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_north_tube"
+      }
+    },
+    {
+      "when": {
+        "north": "extended"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_north_extended"
+      }
+    },
+    {
+      "when": {
+        "south": "tube"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_south_tube"
+      }
+    },
+    {
+      "when": {
+        "south": "extended"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_south_extended"
+      }
+    },
+    {
+      "when": {
+        "west": "tube"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_west_tube"
+      }
+    },
+    {
+      "when": {
+        "west": "extended"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_west_extended"
+      }
+    },
+    {
+      "when": {
+        "east": "tube"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_east_tube"
+      }
+    },
+    {
+      "when": {
+        "east": "extended"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_east_extended"
+      }
+    },
+    {
+      "when": {
+        "node": "true"
+      },
+      "apply": {
+        "model": "neothaum:block/essentia_valve_node"
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:greatwood_sapling",
-    "thaumvibe:silverwood_sapling"
+    "neothaum:greatwood_sapling",
+    "neothaum:silverwood_sapling"
   ]
 }

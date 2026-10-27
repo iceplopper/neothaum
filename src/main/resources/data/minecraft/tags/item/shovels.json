@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:thaumium_shovel",
-    "thaumvibe:shovel_of_the_earthmover"
+    "neothaum:thaumium_shovel",
+    "neothaum:shovel_of_the_earthmover"
   ]
 }

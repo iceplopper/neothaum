@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:infusion",
+  "research": "RUNICARMOR",
+  "instability": 3,
+  "aspects": {
+    "tutamen": 10,
+    "praecantatio": 25,
+    "potentia": 25
+  },
+  "central": "neothaum:mundane_ring",
+  "components": [
+    "neothaum:primal_charm",
+    "neothaum:amber",
+    "neothaum:enchanted_fabric",
+    "neothaum:nitor",
+    "neothaum:scribing_tools"
+  ],
+  "result": {
+    "id": "neothaum:ring_of_runic_shielding"
+  }
+}

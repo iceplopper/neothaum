@@ -1,0 +1,30 @@
+{
+  "parent": "neothaum:root",
+  "display": {
+    "icon": {
+      "id": "neothaum:crucible"
+    },
+    "title": {
+      "translate": "advancements.neothaum.crucible.title"
+    },
+    "description": {
+      "translate": "advancements.neothaum.crucible.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_crucible": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "neothaum:crucible"
+          }
+        ]
+      }
+    }
+  }
+}

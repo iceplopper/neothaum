@@ -1,18 +1,18 @@
 {
   "replace": false,
   "values": [
-    "thaumvibe:greatwood_log",
-    "thaumvibe:silverwood_log",
-    "thaumvibe:greatwood_planks",
-    "thaumvibe:silverwood_planks",
-    "thaumvibe:table",
-    "thaumvibe:arcane_worktable",
-    "thaumvibe:research_table",
-    "thaumvibe:greatwood_stairs",
-    "thaumvibe:greatwood_slab",
-    "thaumvibe:silverwood_stairs",
-    "thaumvibe:silverwood_slab",
-    "thaumvibe:arcane_bellows",
-    "thaumvibe:hungry_chest"
+    "neothaum:greatwood_log",
+    "neothaum:silverwood_log",
+    "neothaum:greatwood_planks",
+    "neothaum:silverwood_planks",
+    "neothaum:table",
+    "neothaum:arcane_worktable",
+    "neothaum:research_table",
+    "neothaum:greatwood_stairs",
+    "neothaum:greatwood_slab",
+    "neothaum:silverwood_stairs",
+    "neothaum:silverwood_slab",
+    "neothaum:arcane_bellows",
+    "neothaum:hungry_chest"
   ]
 }

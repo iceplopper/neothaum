@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "neothaum:glass_phial",
+    "minecraft:feather",
+    "#neothaum:dyes/black"
+  ],
+  "result": {
+    "id": "neothaum:scribing_tools"
+  }
+}

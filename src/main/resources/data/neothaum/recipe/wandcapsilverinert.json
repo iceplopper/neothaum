@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "CAP_silver",
+  "aspects": {
+    "ordo": 4,
+    "ignis": 4,
+    "aer": 4
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": "#c:nuggets/silver"
+  },
+  "result": {
+    "id": "neothaum:silver_cap_inert"
+  }
+}
