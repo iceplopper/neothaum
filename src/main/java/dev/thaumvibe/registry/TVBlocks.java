@@ -10,6 +10,7 @@ import dev.thaumvibe.blocks.ArcaneLevitatorBlock;
 import dev.thaumvibe.blocks.ArcanePressurePlateBlock;
 import dev.thaumvibe.blocks.CentrifugeBlock;
 import dev.thaumvibe.blocks.CrystallizerBlock;
+import dev.thaumvibe.blocks.ReservoirBlock;
 import dev.thaumvibe.blocks.ItemGrateBlock;
 import dev.thaumvibe.blocks.PavingStoneOfTravelBlock;
 import dev.thaumvibe.blocks.PavingStoneOfWardingBlock;
@@ -272,6 +273,8 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 10.0F).sound(SoundType.METAL).noOcclusion(), true);
 	public static final Block ESSENTIA_CRYSTALLIZER = register("essentia_crystallizer", CrystallizerBlock::new,
 		stone(2.0F, 10.0F).noOcclusion(), true);
+	public static final Block ESSENTIA_RESERVOIR = register("essentia_reservoir", ReservoirBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 17.0F).sound(SoundType.METAL).noOcclusion(), true);
 
 	/** Config.fluxGoomaterial: a liquid you wade through, lit like the fluid's luminosity 7. */
 	private static BlockBehaviour.Properties flux() {

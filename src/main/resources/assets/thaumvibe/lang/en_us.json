@@ -1917,5 +1917,8 @@
   "block.thaumvibe.essentia_crystallizer": "Essentia Crystallizer",
   "item.thaumvibe.essentia_crystallizer": "Essentia Crystallizer",
   "item.thaumvibe.crystal_essence": "Crystallized Essence",
+  "block.thaumvibe.essentia_reservoir": "Essentia Reservoir",
+  "item.thaumvibe.essentia_reservoir": "Essentia Reservoir",
+  "container.thaumvibe.essentia_reservoir": "Essentia Reservoir",
   "tc.doorfail": "The door refuses to budge."
 }

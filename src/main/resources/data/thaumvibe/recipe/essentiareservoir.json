@@ -1,0 +1,23 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "ESSENTIARESERVOIR",
+  "instability": 6,
+  "aspects": {
+    "aqua": 8,
+    "vacuos": 8,
+    "praecantatio": 8,
+    "permutatio": 8
+  },
+  "central": "thaumvibe:essentia_buffer",
+  "components": [
+    "thaumvibe:void_metal_ingot",
+    "thaumvibe:warded_jar",
+    "thaumvibe:warded_jar",
+    "thaumvibe:void_metal_ingot",
+    "thaumvibe:warded_jar",
+    "thaumvibe:warded_jar"
+  ],
+  "result": {
+    "id": "thaumvibe:essentia_reservoir"
+  }
+}
