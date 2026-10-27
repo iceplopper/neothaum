@@ -120,6 +120,12 @@ public final class TVEntities {
 	public static final EntityType<dev.thaumvibe.golem.TravelingTrunkEntity> TRAVELING_TRUNK = mob("traveling_trunk",
 		dev.thaumvibe.golem.TravelingTrunkEntity::new, MobCategory.CREATURE, 0.8F, 0.8F,
 		dev.thaumvibe.golem.TravelingTrunkEntity::createAttributes, b -> b, 0, 0, true);
+	public static final EntityType<dev.thaumvibe.entity.monster.MindSpiderEntity> MIND_SPIDER = mob("mind_spider",
+		dev.thaumvibe.entity.monster.MindSpiderEntity::new, MobCategory.MONSTER, 0.3F, 0.3F,
+		dev.thaumvibe.entity.monster.MindSpiderEntity::createAttributes, b -> b, 11184810, 4210752);
+	public static final EntityType<dev.thaumvibe.entity.monster.EldritchGuardianEntity> ELDRITCH_GUARDIAN = mob("eldritch_guardian",
+		dev.thaumvibe.entity.monster.EldritchGuardianEntity::new, MobCategory.MONSTER, 0.8F, 2.25F,
+		dev.thaumvibe.entity.monster.EldritchGuardianEntity::createAttributes, b -> b, 2236962, 4210752);
 
 	private static <T extends Mob> EntityType<T> mob(String name, EntityType.EntityFactory<T> factory, MobCategory category, float w, float h,
 		Supplier<AttributeSupplier.Builder> attributes, UnaryOperator<FabricEntityType.Builder.Mob<T>> extra, int egg1, int egg2) {

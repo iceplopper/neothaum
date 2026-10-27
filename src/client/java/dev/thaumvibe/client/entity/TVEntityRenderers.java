@@ -40,6 +40,8 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.TAINTED_VILLAGER, TaintedAnimalRenderers.VillagerRenderer::new);
 		EntityRendererRegistry.register(TVEntities.GOLEM, GolemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TRAVELING_TRUNK, TravelingTrunkRenderer::new);
+		EntityRendererRegistry.register(TVEntities.MIND_SPIDER, MindSpiderRenderer::new);
+		EntityRendererRegistry.register(TVEntities.ELDRITCH_GUARDIAN, EldritchGuardianRenderer::new);
 	}
 
 	private TVEntityRenderers() {

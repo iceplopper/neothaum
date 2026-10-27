@@ -123,25 +123,26 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **AI Behaviors:** Item pickup/delivery, crop harvesting/replanting, tree lumberjacking, guard targeting (hostiles/animals/players/creepers) with ranged dart shooting and mace melee, butcher preserving pairs, chest restocking/emptying, and home container returning.
   - **Tools:** Golemancer's Bell (`GolemBellItem`) for linking golems to home containers and directional faces, marker placement, and picking up golems.
   - **Traveling Trunk:** Sentient companion chest (`TravelingTrunkEntity`) with 75 HP, fire and fall damage immunity, following/teleporting owner, 27/36 slot inventory (`GENERIC_9x3` / `GENERIC_9x4`), upgrade traits (Air speed, Earth extra row, Fire guard, Water lock & damage reduction, Order item preservation on pickup, Entropy vacuum suction), food feeding healing, and animated chest lid. Spawner item (`traveling_trunk` / `trunk_spawner`).
+- **Warp System & Mechanics:**
+  - **Periodic Warp Check:** Server-tick evaluator running every 2,000 ticks (100s) on active players without Warp Ward (`WarpEvents.checkWarpEvent`). Total warp calculates permanent + sticky + temporary + held/worn `WarpingGear`.
+  - **Counter & Decay:** Dynamic `warpCounter` with square-root threshold triggering; decays by $\max(5, \lfloor\sqrt{\text{warpCounter}}\times 2\rfloor)$. Automatic passive temporary warp decay (-1 per 2,000 ticks).
+  - **Hallucinations & Afflictions:** Whispers granting primal research aspects (`warp.text.3`), ambient paranoia sounds (`warp.text.11`, `warp.text.12`, `warp.text.13`), Vis Exhaustion, Thaumarhia, Unnatural Hunger (curable with rotten flesh/zombie brain), Sun Scorned (ignites in sunlight), Death Gaze (withers looking entities), Blurred Vision, Nightmares, and moments of clarity (cures 1 sticky warp).
+  - **Entities:** Mind Spiders (`MindSpiderEntity`, 0.3 scale, harmless hallucinations visible only to afflicted player or real), and Eldritch Guardians (`EldritchGuardianEntity`, 50 HP, magic resistance, ranged wither blast, and screech attack).
+  - **Research Milestones:** Automatic unlocking of `ELDRITCHMINOR` (>10 actual warp), `ELDRITCHWARPED` (>25 actual warp), and `ELDRITCHMAJOR` (>50 actual warp).
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
 
 ## Still to do
 
-### Warp, fully (M)
-- **Warp events:** whispers, fake explosions, spider and guardian ambushes, nightmares, blindness and hunger.
-- **Sticky and temporary warp decay**, plus the research that grants and needs warp.
-
 ### Eldritch and the Outer Lands (L)
 - **The Outer Lands dimension:** maze generation, rooms, locks, nests and boss rooms.
 - **Overworld structures:** eldritch obelisks, altars and rings, the eldritch portal and keys.
-- **Mobs:** eldritch guardian, eldritch warden, eldritch golem (bosses), eldritch crab, mind spider, inhabited zombie, and the watcher.
+- **Mobs:** eldritch warden, eldritch golem (bosses), eldritch crab, inhabited zombie, and the watcher.
 - **Cultists:** crimson knight, cleric and leader (boss), and the cultist portal.
 - **Items:** the primordial pearl, crimson rites, eldritch eye and runed tablet.
 - **Champion mobs:** the champion modifiers TC4 adds to some mobs (the giant taintacle uses one).
 - **Research:** eldritch minor and major, forbidden knowledge.
-- **Sticky and temporary warp decay**, plus the research that grants and needs warp.
 
 ### World generation, the rest (M)
 - **Structures:** barrow mounds with loot urns and crates, hilltop stones, and eldritch rings.

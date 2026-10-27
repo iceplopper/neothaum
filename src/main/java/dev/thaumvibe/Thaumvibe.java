@@ -57,6 +57,7 @@ public class Thaumvibe implements ModInitializer {
 		dev.thaumvibe.runic.RunicShielding.init();
 		dev.thaumvibe.baubles.Baubles.initTicking();
 		dev.thaumvibe.items.BathSaltsItem.init();
+		dev.thaumvibe.warp.WarpEvents.init();
 		LOGGER.info("Thaumvibe 4 initialized: {} aspects", Aspect.aspects.size());
 	}
 }

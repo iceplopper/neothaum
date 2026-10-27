@@ -109,6 +109,14 @@ public final class TVClientNetwork {
 			}
 			dev.thaumvibe.client.hud.Notifications.add(net.minecraft.network.chat.Component.translatable(key).getString());
 		});
+		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.MiscEvent.TYPE, (p, ctx) -> {
+			var player = ctx.client().player;
+			if (player == null) return;
+			switch (p.eventType()) {
+				case 0 -> player.playSound(TVSounds.HEARTBEAT, 1.0F, 1.0F);
+				case 1, 2 -> player.playSound(TVSounds.WIND, 0.8F, 0.8F);
+			}
+		});
 		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.EntityFx.TYPE, (p, ctx) -> {
 			var level = ctx.client().level;
 			var src = level.getEntity(p.source());

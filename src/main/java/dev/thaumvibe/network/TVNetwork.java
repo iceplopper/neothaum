@@ -212,6 +212,17 @@ public final class TVNetwork {
 		}
 	}
 
+	/** PacketMiscEvent: 0 = warp heartbeat, 1 = long fog/mist, 2 = short fog/mist. */
+	public record MiscEvent(short eventType) implements CustomPacketPayload {
+		public static final Type<MiscEvent> TYPE = new Type<>(Thaumvibe.id("misc_event"));
+		public static final StreamCodec<ByteBuf, MiscEvent> CODEC = ByteBufCodecs.SHORT.map(MiscEvent::new, MiscEvent::eventType);
+
+		@Override
+		public Type<MiscEvent> type() {
+			return TYPE;
+		}
+	}
+
 	/** PacketFocusChangeToServer: fit the focus with this sorting key ("REMOVE" stows the current one). */
 	public record FocusChange(String key) implements CustomPacketPayload {
 		public static final Type<FocusChange> TYPE = new Type<>(Thaumvibe.id("focus_change"));
@@ -287,6 +298,7 @@ public final class TVNetwork {
 		s2c.register(RunicCharge.TYPE, RunicCharge.CODEC);
 		s2c.register(Shield.TYPE, Shield.CODEC);
 		s2c.register(EntityFx.TYPE, EntityFx.CODEC);
+		s2c.register(MiscEvent.TYPE, MiscEvent.CODEC);
 		var c2s = PayloadTypeRegistry.serverboundPlay();
 		c2s.register(Scan.TYPE, Scan.CODEC);
 		c2s.register(StartResearch.TYPE, StartResearch.CODEC);
