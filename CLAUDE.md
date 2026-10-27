@@ -74,16 +74,20 @@ All commands run in PowerShell in the repository root (`C:\Users\harri\Documents
 
 ---
 
-## 4. Most Recent Progress (Feature 10 & Addons Complete)
-- **Feature 10 (Eldritch Overworld Structures, Altars, Obelisks, Portals & Cultist Portal Boss) Completed (Commit `81c2d30`):**
+## 4. Most Recent Progress (Features 10, 12, 13 Complete)
+- **Feature 10 (Eldritch Overworld Structures, Altars, Obelisks, Portals & Cultist Portal Boss) (Commit `81c2d30`):**
   - Eldritch Blocks: Obsidian Tile, Eldritch Stone (smooth, cracked, glyph variants), Eldritch Altar, Eldritch Capstone, Eldritch Obelisk, and Eldritch Portal.
   - Eldritch Altar Ritual: Accepts 1 to 4 Eldritch Eyes. Summons cultist/guardian defenders when armed. 100-primal vis wand strike triggers lightning, opens Eldritch Portal above.
   - Eldritch Obelisk: Monolith shaft buffing eldritch mobs with Strength and Resistance within 6 blocks.
   - Eldritch Portal: Swirling dark dimensional tear with animated vortex BER, ambient audio loop, granting `ENTEROUTER` research upon contact.
   - Cultist Portal Boss: 500 HP stationary boss mob with boss bar, proximity zap defenses, 12 summoning waves (Knights, Clerics, cardinal Crimson Banners), summoning the Crimson Praetor, and dropping Primordial Pearl and Crimson Rites upon defeat.
-  - Overworld Generation: `EldritchRingFeature` hooked into `TCWorldFeature` (1/66 chunk chance) generating authentic 7x7 obsidian tile ring with perimeter pillars, central altar, hovering sinister node, cap, and obelisk shaft.
-- **Addon Integrations (Jade/WTHIT, JEI, Minimap Radar):**
-  - Jade block tooltips for Nodes, Crucibles, Jars, and Matrix (strictly gated behind Goggles of Revealing).
-  - JEI Aspect Decomposition recipe category (obscures undiscovered aspects as runes).
-  - Xaero's Minimap node radar (color-coded waypoints strictly visible only while wearing Goggles of Revealing).
+  - Overworld Generation: `EldritchRingFeature` hooked into `TCWorldFeature` (1/66 chunk chance).
+- **Feature 12 (Remaining Overworld Structures & Villages) (Commit `4a4d172`):**
+  - `BarrowMoundFeature`: 18x18 subterranean vault, Zombie/Skeleton spawners, 2 dungeon chests, hovering Sinister aura node.
+  - `HilltopStonesFeature`: High altitude (`y >= 85`) 7x7 Arcane Stone circle, trapped chest, Wisp spawner, hovering aura node.
+  - `WizardTowerFeature`: 5x5 three-story stone brick tower, entrance door, ladder shaft, bookshelves, arcane worktable, wizard chest.
+  - `BankerHomeFeature`: Village banker house with banking counter, chest, and furnishings.
+- **Feature 13 (Champion Mobs System & Ethereal Bloom) (Commit `48f4d0a`):**
+  - `EtherealBloomBlock` & `EtherealBloomBlockEntity`: Light level 12 flower cleanses 8-block radius: converts Tainted Land & Eerie biomes to Plains, purifies tainted soil, destroys crusted taint & taint fibres, dissipates flux fluids. Crucible recipe unlocked by `ETHEREALBLOOM` research.
+  - `ChampionEvents` & `ChampionModifier`: 13 TC4 modifiers (Bold, Spined, Armored, Mighty, Grim, Warded, Warp, Undying, Fiery, Sickly, Venomous, Vampiric, Infested). 2.5% spawn rate on hostile mobs, +30 Max HP, colored custom nameplate, combat triggers, undying revival, guaranteed loot bag drop + 2-4 aspect orbs + extra XP.
 - **Next Task:** Feature 11 (The Outer Lands Dimension).

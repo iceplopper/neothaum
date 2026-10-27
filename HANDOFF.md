@@ -1,9 +1,11 @@
 # THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
-**Timestamp:** 2026-10-27 12:15 PM Eastern  
+**Timestamp:** 2026-10-27 12:40 PM Eastern  
 **Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
-**Latest Feature Completed:** Feature 10: Eldritch Overworld Structures, Altars, Obelisks, Portals & Cultist Portal Boss (Commit: `81c2d30`)  
+**Latest Features Completed:**
+- Feature 12: Remaining Overworld Structures & Villages (Commit: `4a4d172`)
+- Feature 13: Champion Mobs System & Ethereal Bloom Purifying Plant (Commit: `48f4d0a`)  
 **Next Feature Up:** Feature 11: The Outer Lands Dimension (Dimension Registration, Maze Generator, Eldritch Lock & Runed Tablet, Eldritch Crab Spawner, The Watcher / Eye Turret Mob, and Boss Arenas)  
-**Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` builds cleanly.
+**Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` builds cleanly in 9s.
 
 ---
 
@@ -24,39 +26,59 @@ When taking over this session within Claude Code:
 
 ---
 
-## 2. Summary of Completed Feature 10 (Commit: `81c2d30`)
+## 2. Summary of Completed Features
 
-1. **Eldritch Blocks & Block Entities (`dev.thaumvibe.blocks.eldritch.*` / `dev.thaumvibe.tiles.eldritch.*`):**
-   - `OBSIDIAN_TILE`: Blast-resistant foundation block (50.0 hardness, 2000.0 resistance).
-   - `ELDRITCH_STONE` (Smooth, Cracked, Glyph variants): Ancient dark masonry blocks forming monolith pillars and temple ruins.
-   - `ELDRITCH_ALTAR` & `EldritchAltarBlockEntity`:
-     - Pedestal accepting 1 to 4 slotted Eldritch Eyes (`insertEye`).
-     - Spawner functionality: periodically summons Crimson Cultists (Knights and Clerics) or Eldritch Guardians to defend the ring.
-     - Wand activation: When 4 eyes are slotted, striking the altar with a wand containing 100 of each primal vis triggers a dramatic lightning strike, consumes the vis, and manifests the `ELDRITCH_PORTAL` directly above the altar.
-   - `ELDRITCH_CAP` & `EldritchCapBlockEntity`: Ancient capstone floating between the altar and the obelisk spire.
-   - `ELDRITCH_OBELISK` & `EldritchObeliskBlockEntity`: Monolith pillar radiating Strength and Resistance buffs to all nearby Eldritch and Cultist mobs in a 6-block radius, with purple void particles.
-   - `ELDRITCH_PORTAL` & `EldritchPortalBlockEntity`: Swirling black-and-purple void tear. Ambient evil portal hum loop (`TVSounds.EVILPORTAL` every 250 ticks), granting `ENTEROUTER` research upon player contact.
+### Feature 12: Remaining Overworld Structures & Villages (Commit: `4a4d172`)
+1. **`BarrowMoundFeature.java` (`dev.thaumvibe.world.BarrowMoundFeature`):**
+   - 1:1 port of `WorldGenMound`.
+   - 18x18 earth mound dome with subterranean cobblestone/mossy vault.
+   - Dual monster spawners (Skeleton and Zombie), 2 dungeon loot chests, and hovering central Sinister aura node.
+2. **`HilltopStonesFeature.java` (`dev.thaumvibe.world.HilltopStonesFeature`):**
+   - 1:1 port of `WorldGenHilltopStones`.
+   - High-altitude (`y >= 85`) 7x7 outer Arcane Stone and Obsidian circle with hanging vines.
+   - Trapped central dungeon chest, Wisp spawner, and hovering aura node.
+3. **`WizardTowerFeature.java` (`dev.thaumvibe.world.WizardTowerFeature`):**
+   - 1:1 port of `ComponentWizardTower`.
+   - 5x5 three-story stone brick tower, oak entrance door, ladder shaft, bookshelves, arcane worktable, and wizard chest containing Thaumonomicon, amber, shards, scribing tools, and paper.
+4. **`BankerHomeFeature.java` (`dev.thaumvibe.world.BankerHomeFeature`):**
+   - 1:1 port of `ComponentBankerHome`.
+   - Village banker residence featuring a banking counter table, chest, and villager furnishings.
+5. **Registration (`TCWorldFeature.java`):**
+   - Barrow Mounds (1/150 chunks), Hilltop Stones (1/40 chunks where `y >= 85`), Wizard Tower (1/120 chunks), Banker Home (1/140 chunks).
 
-2. **Cultist Portal Boss (`CultistPortalEntity`):**
-   - 500 HP stationary boss mob with custom boss bar (`BossEvent.BossBarColor.RED`).
-   - Proximity defense: electrical zap arcs deal 8.0 damage to nearby non-creative players (`TVSounds.ZAP`).
-   - Summoning phases:
-     - Spawns 4 Cardinal Crimson Banners at stage 0.
-     - Waves 1-11: Summons Crimson Knights and Crimson Clerics with teleport whooshes (`TVSounds.WANDFAIL`).
-     - Wave 12: Summons the colossal Crimson Praetor (`TVEntities.CULTIST_LEADER`).
-   - Drops: Primordial Pearl, Crimson Rites, Rare Treasure Bag on death with 2.5F mob explosion.
-
-3. **Overworld World Generation (`EldritchRingFeature`):**
-   - 1:1 port of `WorldGenEldritchRing`.
-   - Generates 7x7 circular stone ring of obsidian tiles with perimeter monolith pillars (smooth, cracked, and glyph variants).
-   - Central pillar structure: Altar + Sinister Aura Node hovering at y+1 + Capstone at y+2 + 4-block Obelisk Spire at y+3..6.
-   - 40% chance of Cultist Spawner with 4 oriented Crimson Banners; 20% chance of Eldritch Guardian spawner.
-   - Hooked into `TCWorldFeature.java` with 1/66 chunk rarity.
-
-4. **Client Renderers:**
-   - `EldritchAltarRenderer`: Renders 0 to 4 slotted 3D Eldritch Eyes hovering symmetrically at 90° intervals around the altar pedestal.
-   - `EldritchPortalRenderer`: Animated billboard void vortex using `textures/misc/eldritch_portal.png` with 16 rotating frames and scale transition.
-   - `CultistPortalRenderer`: Animated billboard crimson rift using `textures/misc/cultist_portal.png` with pulsing scale based on boss activity.
+### Feature 13: Champion Mobs & Ethereal Bloom (Commit: `48f4d0a`)
+1. **Ethereal Bloom Block & BlockEntity (`dev.thaumvibe.blocks.EtherealBloomBlock`, `dev.thaumvibe.tiles.EtherealBloomBlockEntity`):**
+   - Light level 12 flower planted on grass, dirt, or tainted soil. Plays `TVSounds.ROOTS` on placement.
+   - Cleansing cycle every 20 ticks: purifies land in an 8-block radius:
+     - Converts `TAINTED_LAND` and `EERIE` biomes to `minecraft:plains` using `TVBiomes.setBiomeAt`.
+     - Reverts `TAINTED_SOIL` to vanilla `DIRT`/`GRASS_BLOCK`.
+     - Dissipates `CRUSTED_TAINT`, `TAINT_FIBRES`, `FLUX_GOO`, and `FLUX_GAS`.
+   - Registered in `TVBlocks.ETHEREAL_BLOOM`, `TVBlockEntities.ETHEREAL_BLOOM`, added to `TVTab.Category.NATURAL`.
+   - Crucible Recipe (`src/main/resources/data/thaumvibe/recipe/etherealbloom.json`): Shimmerleaf catalyst + 16 Praecantatio, 16 Herba, 16 Sano, 8 Vitium (unlocked by `ETHEREALBLOOM` research).
+   - Textures: `purifier_seed.png`, `purifier_leaves.png`, `purifier_stalk.png` in `textures/blocks/` and `ethereal_bloom.png` in `textures/item/`.
+2. **Champion Mobs System (`dev.thaumvibe.entity.champion.*`):**
+   - Full port of TC4's 13 Champion Modifiers (`ChampionModifier.java`):
+     - `BOLD` (0): +20% movement speed, +0.5 knockback resistance.
+     - `SPINED` (1): 3.0 magic thorns damage back to attackers.
+     - `ARMORED` (2): +8 armor, +4 toughness.
+     - `MIGHTY` (3): +50% attack damage boost.
+     - `GRIM` (4): Wither II for 5s on attack.
+     - `WARDED` (5): 10 absorption hearts (20.0F absorption).
+     - `WARP` (6): Blindness, Nausea, and temporary Warp infliction on attack.
+     - `UNDYING` (7): Cancels fatal damage once, heals to 50% max HP with regeneration and zap audio.
+     - `FIERY` (8): 4s fire on attack, fire immune.
+     - `SICKLY` (9): Hunger II and Weakness II on attack.
+     - `VENOMOUS` (10): Poison II on attack.
+     - `VAMPIRIC` (11): Heals 40% of damage dealt on attack.
+     - `INFESTED` (12): 35% chance to spawn defensive Silverfish or Cave Spider minions on hurt.
+   - Champion spawning (`ChampionEvents.java`):
+     - 2.5% chance on hostile mob spawn (`ServerEntityEvents.ENTITY_LOAD`).
+     - +30 Max HP, colored modifier nameplate (e.g. `§cMighty §rZombie`), persistence enabled.
+     - Controlled by `ThaumvibeConfig.current.championMobs`.
+   - Death rewards (`ServerLivingEntityEvents.AFTER_DEATH`):
+     - Guaranteed Loot Bag drop (`LOOT_BAG_COMMON`, `LOOT_BAG_UNCOMMON`, `LOOT_BAG_RARE` based on roll & looting).
+     - 2-4 primal Aspect Orbs (`AspectOrbEntity`).
+     - Extra Experience Orbs.
 
 ---
 
@@ -65,28 +87,26 @@ When taking over this session within Claude Code:
 ### Summary of What Needs to Be Done:
 1. **Dimension Registration:**
    - Register the Outer Lands dimension type, dimension key (`thaumvibe:outer_lands`), and chunk generator.
-   - Sky properties: pitch black void, constant eerie lighting, no daylight cycle, no weather.
+   - Dimension properties: pitch black void, fixed ceiling/floor of indestructible bedrock, constant eerie ambient lighting, no daylight cycle, no weather.
 2. **Outer Lands Maze Generator:**
    - 1:1 port of `MazeHandler.java` and `WorldProviderOuter.java`.
-   - 16x16 chunk grid maze with corridors constructed from Eldritch Stone, cracked stone, and glyph stone.
-   - Interstitial rooms: runed locks, spawner rooms (Eldritch Crabs, Mind Spiders), treasure rooms with Eldritch Urns, and exit portals.
-3. **Runed Tablet & Eldritch Lock:**
-   - `RunedTabletItem`: Crafted from 4 Eldritch Eyes or found in maze urns; keys to the central boss sanctum.
-   - `EldritchLockBlock` / `EldritchLockBlockEntity`: Consumes 4 runed tablets to unlock the door into the Inner Sanctum.
-4. **The Watcher Entity:**
-   - `WatcherEntity` / `WatcherRenderer`: Eyeball turret mob suspended in the ceiling of maze corridors, shooting eldritch energy blasts at intruders.
-5. **Boss Arenas:**
-   - Four distinct boss sanctums:
-     - Crimson Praetor arena with Crimson Clerics and Knights.
-     - Eldritch Warden arena.
-     - Eldritch Golem arena.
-     - Taintacle Giant arena.
-   - Boss reward: Primordial Pearl and return portal.
+   - Grid-based 16x16 chunk cellular maze corridors formed from `OBSIDIAN_TILE`, `ELDRITCH_STONE`, and `CRACKED_ELDRITCH_STONE`.
+   - Corridor variations: archways, pillars, elevation changes, trapped intersections with Eldritch Crabs.
+3. **Eldritch Doors & Runed Tablets:**
+   - `ELDRITCH_LOCK` block entity: Keystone socket requiring a `RUNED_TABLET` to unlock.
+   - When unlocked, opening sequence disintegrates the sealing Eldritch barrier blocks with dark energy particles.
+4. **Eldritch Mobs & Spawners:**
+   - `EldritchCrabSpawner`: Spawns Eldritch Crabs hanging from corridor ceilings that drop onto invading players.
+   - The Watcher / Eye Turret (`EntityEldritchWatcher`): Wall/ceiling mounted eldritch eye entity firing tracking eldritch energy darts.
+5. **Outer Lands Boss Arenas (4 Boss Chambers):**
+   - Champions & Boss Sanctums:
+     - Crimson Praetor Throne Room (surrounded by Crimson Knights and Clerics).
+     - Eldritch Construct Arena.
+     - Eldritch Warden Arena (Warded barrier, runic shields, soul-draining gaze).
+     - Primordial Pearl Alter Room rewarding the player with the `PRIMORDIAL_PEARL`.
 
-### Target Folders & Files for Feature 11:
-- `src/main/java/dev/thaumvibe/world/dim/` (Dimension, Biome, ChunkGenerator, MazeGenerator)
-- `src/main/java/dev/thaumvibe/blocks/eldritch/` (`EldritchLockBlock`, `EldritchCrabSpawnerBlock`, `EldritchUrnBlock`)
-- `src/main/java/dev/thaumvibe/tiles/eldritch/` (`EldritchLockBlockEntity`, `EldritchCrabSpawnerBlockEntity`, `EldritchUrnBlockEntity`)
-- `src/main/java/dev/thaumvibe/entity/monster/` (`WatcherEntity`)
-- `src/client/java/dev/thaumvibe/client/entity/` (`WatcherRenderer`)
-- `src/client/java/dev/thaumvibe/client/render/` (`EldritchLockRenderer`, `EldritchUrnRenderer`)
+### Where Claude Opus 5.5 Should Work:
+- Dimension & Worldgen: `src/main/java/dev/thaumvibe/world/outer/` (create if needed)
+- Outer Blocks & Tiles: `src/main/java/dev/thaumvibe/blocks/eldritch/` and `src/main/java/dev/thaumvibe/tiles/eldritch/`
+- Entities: `src/main/java/dev/thaumvibe/entity/eldritch/`
+- Dimension JSONs: `src/main/resources/data/thaumvibe/dimension/` and `dimension_type/`
