@@ -37,6 +37,8 @@ public final class TVMenus {
 		Thaumvibe.id("thaumatorium"), new ExtendedMenuType<>(dev.thaumvibe.menu.ThaumatoriumMenu::new, BlockPos.STREAM_CODEC));
 	public static final ExtendedMenuType<dev.thaumvibe.menu.SpaMenu, BlockPos> SPA = Registry.register(BuiltInRegistries.MENU,
 		Thaumvibe.id("spa"), new ExtendedMenuType<>(dev.thaumvibe.menu.SpaMenu::new, BlockPos.STREAM_CODEC));
+	public static final ExtendedMenuType<dev.thaumvibe.menu.DeconstructionTableMenu, BlockPos> DECONSTRUCTION_TABLE = Registry.register(BuiltInRegistries.MENU,
+		Thaumvibe.id("deconstruction_table"), new ExtendedMenuType<>(dev.thaumvibe.menu.DeconstructionTableMenu::new, BlockPos.STREAM_CODEC));
 
 	public static void init() {
 	}

@@ -107,6 +107,8 @@ public final class TVBlockEntities {
 		dev.thaumvibe.tiles.ThaumatoriumTopBlockEntity::new, TVBlocks.THAUMATORIUM_TOP);
 	public static final BlockEntityType<dev.thaumvibe.tiles.SpaBlockEntity> SPA = register("spa",
 		dev.thaumvibe.tiles.SpaBlockEntity::new, TVBlocks.ARCANE_SPA);
+	public static final BlockEntityType<dev.thaumvibe.tiles.DeconstructionTableBlockEntity> DECONSTRUCTION_TABLE = register("deconstruction_table",
+		dev.thaumvibe.tiles.DeconstructionTableBlockEntity::new, TVBlocks.DECONSTRUCTION_TABLE);
 
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));

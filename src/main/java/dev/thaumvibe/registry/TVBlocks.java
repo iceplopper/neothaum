@@ -293,6 +293,8 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 10.0F).sound(SoundType.METAL).noOcclusion(), true);
 	public static final Block ARCANE_SPA = register("arcane_spa", dev.thaumvibe.blocks.ArcaneSpaBlock::new,
 		stone(2.0F, 10.0F).noOcclusion(), true);
+	public static final Block DECONSTRUCTION_TABLE = register("deconstruction_table", dev.thaumvibe.blocks.DeconstructionTableBlock::new,
+		wood(2.5F).noOcclusion(), true);
 
 	private static BlockBehaviour.Properties mirror() {
 		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()

@@ -1951,5 +1951,8 @@
   "gui.thaumatorium": "Thaumatorium",
   "block.thaumvibe.arcane_spa": "Arcane Spa",
   "item.thaumvibe.arcane_spa": "Arcane Spa",
-  "gui.spa": "Arcane Spa"
+  "gui.spa": "Arcane Spa",
+  "block.thaumvibe.deconstruction_table": "Deconstruction Table",
+  "item.thaumvibe.deconstruction_table": "Deconstruction Table",
+  "tile.blockTable.14.name": "Deconstruction Table"
 }

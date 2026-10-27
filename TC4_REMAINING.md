@@ -69,11 +69,13 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - taint spore, swarmer, swarm and crawler
   - taintacle (small, normal and giant)
   - tainted chicken, cow, pig, sheep, villager and creeper
-- **Curatives & Fluids:**
+- **Curatives, Fluids & Arcane Spa:**
   - **Liquid Death:** corrosive magenta fluid dealing 4 magic damage on touch, lavapop sound and witch particles, scooped via bucket (`bucket_of_liquid_death`), crucible recipe (mortuus 32, venenum 32, perditio 32).
   - **Purifying Fluid:** restorative silvery water granting Warp Ward when stepped into (duration scaled inversely to permanent warp), scooped via bucket (`bucket_of_purifying_fluid`).
   - **Purifying Bath Salts:** dissolves when used or tossed into water source blocks, transforming them into Purifying Fluid with bubbling sounds; crucible recipe.
   - **Sanitizing Soap:** washable bar that clears all temporary warp, and has a 33% chance (+25% with Warp Ward, +25% in Purifying Fluid) to reduce sticky warp; crucible recipe.
+  - **Arcane Spa:** block with 5,000 mB fluid tank, bath salts slot, and mix toggle (`SpaBlockEntity` / `SpaMenu` / `SpaScreen`). Mixes water with bath salts to produce Purifying Fluid, automatically pumping it out to create a 5x5 rejuvenating bath pool above the spa; arcane crafting recipe (`arcanespa.json`).
+  - **Deconstruction Table:** table machine (`DeconstructionTableBlock` / `DeconstructionTableBlockEntity` / `DeconstructionTableMenu` / `DeconstructionTableScreen`). Slot 0 takes items and breaks them down tick-by-tick (40 ticks) into primal aspects based on the item's vis breakdown, displaying a claimable primal aspect rune in GUI which clicks into the player's research aspect pool (`TVNetwork.sendAspectPool`); arcane crafting recipe (`deconstructor.json`).
 - **Mirrors & Dimensional Transport:**
   - **Magic Mirror:** 6-face wall/floor/ceiling mounting, 1-pixel thin frame; paired linkage via right-clicking placed mirror with an unlinked mirror item. Transports dropped item entities and hopper-inserted stacks across dimensions to destination mirror with portal particles and sound (`portal.travel`); destination mirror queues and dispenses items outward.
   - **Essentia Mirror:** 6-face mounting, paired linkage; implements `AspectSource`, remotely querying and draining essentia via `EssentiaHandler.drainEssentia` within an 8-block radius of the destination mirror across dimensions for Infusion Altar matrices and Crucible alchemy.
@@ -91,7 +93,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ### Artifice and utility blocks (M)
 - **Big machines:** the arcane bore and its base.
-- **Spa and deconstruction:** the arcane spa and the deconstruction table.
 - **Misc:** the flux scrubber and banners (cultist and the Thaumcraft colours).
 
 ### Remaining Equipment and gear (M)
