@@ -1,8 +1,8 @@
 # THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
-**Timestamp:** 2026-10-27 11:05 AM Eastern  
+**Timestamp:** 2026-10-27 11:35 AM Eastern  
 **Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
-**Latest Feature Completed:** Feature 14: Final Polish & Immersion Details (Aspect Orbs, Node Lightning, Earthmover Shovel Preview & Keybind, Configuration, Advancements)  
-**Next Feature Up:** Addon Package & Integrations (or Feature 10: Eldritch Overworld Structures & Outer Lands)  
+**Latest Feature Completed:** Modern QoL & Minimap Addon Integrations (Jade/WTHIT, JEI Aspect Decomposition, Xaero's Minimap Node Radar)  
+**Next Feature Up:** Feature 10: Eldritch Overworld Structures & Portals (Obelisks, Altars, Eldritch Portal, Cultist Spawners)  
 **Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` builds cleanly.
 
 ---
@@ -24,48 +24,53 @@ When taking over this session within Claude Code:
 
 ---
 
-## 2. Summary of Feature 14 (Completed & Committed)
+## 2. Summary of Completed Addon Integrations (Committed: `c84c62a`)
 
-Commit `96de46e` implemented the full Feature 14 polish suite:
-1. **Aspect Orbs:**
-   - `AspectOrbEntity.java`: Floating primal vis orbs with physics, player gravitation, wand vis charging, and research knowledge pool filling.
-   - `TVEntities.ASPECT_ORB`: Registered entity.
-   - `AspectOrbRenderer.java`: Billboard particle renderer with aspect colors and pulsation.
-   - `AspectOrbEvents.java`: Server-side mob kill drop hook (`ServerLivingEntityEvents.AFTER_DEATH`) governed by configurable drop chance.
-   - Unstable node aspect bleeding: Unstable uncontained nodes bleed primal aspect orbs directly into the world.
-2. **Node Lightning Strikes:**
-   - Uncontained Unstable, Hungry, and Sinister (Dark) aura nodes periodically zap nearby entities within a 6-block radius.
-   - Triggers `TVNetwork.sendZap` lightning beam packets, `TVSounds.ZAP` audio, and magic damage.
-3. **Shovel of the Earthmover Polish:**
-   - Connected-texture warded glass ghost placement preview hooked into `ArchitectOverlay.java`.
-   - Misc Key (`G`) orientation cycling (Parallel, Vertical slice, Horizontal slice) handled in `TVNetwork.java`, updating player action bar and playing click sounds.
-4. **Configuration System:**
-   - `dev.thaumvibe.config.ThaumvibeConfig` loads/saves `config/thaumvibe.json`.
-   - Settings: `taintSpread`, `hardNodes`, `nodeRarity`, `aspectOrbDropChance`, `allowWarp`, `wispSpawnRate`, `championMobs`.
-5. **Advancements:**
-   - Built modern Fabric advancements in `src/main/resources/data/thaumvibe/advancement/`:
-     - `root.json`: Thaumaturgy (Thaumonomicon trigger)
-     - `goggles.json`: Goggles of Revealing
-     - `crucible.json`: Crucible Alchemy
-     - `infusion.json`: Infusion Enchanting
-     - `golem.json`: Golemancy (Golem Bell trigger)
-     - `warp.json`: A Subtle Madness (Sanitizing Soap trigger)
-     - `eldritch.json`: The Outer Lands (Eldritch Eye trigger)
-   - Added complete localization strings to `en_us.json`.
+1. **Jade / WTHIT Integration (`ThaumvibeJadePlugin`):**
+   - Registered under `"jade"` entrypoint in `fabric.mod.json`.
+   - Tooltip providers for:
+     - `TVBlocks.AURA_NODE`: Live node type, modifier, total vis capacity, and individual primal vis levels with authentic aspect colors.
+     - `TVBlocks.CRUCIBLE`: Water level in mB, boiling/heating status, and dissolved essentia aspect breakdown with exact counts.
+     - `TVBlocks.WARDED_JAR` & `TVBlocks.VOID_JAR`: Stored aspect, amount (x/64), label filter, and voiding indicator.
+     - `TVBlocks.RUNIC_MATRIX`: Active crafting status and altar state.
+   - **Goggles Restriction:** All arcane data is strictly hidden unless the player is wearing Goggles of Revealing (`GogglesItem.isWearingGoggles(player)`).
 
----
+2. **JEI Aspect Combination Category (`AspectDecompCategory`):**
+   - Registered `ThaumvibeJeiPlugin.ASPECT_DECOMP` displaying `Target Aspect = Component 1 + Component 2`.
+   - Catalysts: Thaumometer and Research Table.
+   - **Research Locking:** Inspects player's research knowledge (`PlayerKnowledge.hasDiscoveredAspect`). Undiscovered aspects render as obscured dark runes with `???` and tooltip stating research discovery is required.
 
-## 3. Recommended Next Work: Modular Addon Package (`dev.thaumvibe.addon`) & Integrations
+3. **Minimap Integration (`MinimapIntegration` & `XaeroMinimapHandler`):**
+   - Soft-integration with Xaero's Minimap.
+   - When player wears Goggles of Revealing (`GogglesItem.isWearingGoggles(player)`):
+     - Scans nearby loaded chunks (48-block radius) for `NodeBlockEntity`.
+     - Adds colored waypoints (`✦`) to Xaero's custom waypoint map matching the node type (Magenta for Tainted, Red for Hungry, Dark Gray for Sinister, Green for Pure, Gold for Unstable, Cyan/White for Normal/Bright).
+     - **Strict Rule:** Gated purely on wearing Goggles of Revealing. Holding a thaumometer alone will NOT show the radar blips.
+     - Removing the goggles immediately clears all node waypoints from the minimap.
 
-The user requested a planned proposal (suggest, do not implement until approved) for:
-1. Bug fixes & enhancements to vanilla TC4 mechanics.
-2. Ported features from later Thaumcraft versions (TC5/TC6) that make sense in a modern port.
-3. Integration with popular modern minimap mods (JourneyMap, Xaero's) and Quality of Life (QoL) mods (EMI, Jade/WTHIT).
-4. All packaged cleanly under `dev.thaumvibe.addon` so it can be extracted into an independent mod or disabled via config.
+4. **Testing Client Setup:**
+   - Both `Jade-mc26.3-Fabric-26.3.5.jar` and `xaerominimap-fabric-26.3-26.6.2.jar` (and `xaeroworldmap-fabric-26.3-1.47.2.jar`) are installed in `run/mods/`.
+   - Running `./gradlew runClient` or `start-test-client.bat` boots the client with Jade and Xaero's Minimap active.
 
 ---
 
-## 4. Verification & Clean State
-- Running `./gradlew compileJava compileClientJava` exits with code 0.
-- Running `./gradlew build -x test` exits with code 0.
-- All modified and new files are tracked and committed on `main`.
+## 3. Next Feature: Feature 10 - Eldritch Overworld Structures & Portals
+
+### Target Folders & Files
+- **World Generation:**
+  - `src/main/java/dev/thaumvibe/world/feature/`
+    - `EldritchObeliskFeature.java` (massive black eldritch obelisk with sinister node inside, glyph rings, and pedestal altar below).
+    - `EldritchAltarFeature.java` (central altar holding 4 Eldritch Eye sockets to open the portal).
+    - `EldritchRingFeature.java` (stone henge ring with central sinister altar).
+- **Portal & Blocks:**
+  - `EldritchPortalBlock.java` & `EldritchAltarBlock.java`.
+  - Inserting 4 Eldritch Eyes into the altar initiates the summoning ritual, strikes lightning, and opens the spinning black Eldritch Portal.
+- **Cultist Spawner / Portal:**
+  - `CultistPortalBlock.java` or `CultistPortalEntity.java` (spinning crimson portal summoning Crimson Knights and Clerics in overworld).
+
+---
+
+## 4. Verification Checklist for Opus
+- Always run `./gradlew compileJava compileClientJava` before declaring a feature complete.
+- Verify `./gradlew build -x test` builds the jar cleanly.
+- Maintain 1:1 TC4 parity and creative tab registration rules in `TVTab.java`.
