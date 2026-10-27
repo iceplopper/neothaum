@@ -10,9 +10,14 @@ echo Launching Gource...
 echo.
 echo Controls:
 echo  - Space: Pause / Resume
+echo  - + / - : Speed up / Slow down simulation
+echo  - Mouse at bottom of window: Timeline slider to seek/scrub/rewind
+echo  - Arrow keys / Left-drag: Pan camera
+echo  - Mouse wheel / PgUp / PgDn: Zoom in / out
+echo  - V: Toggle camera mode (Overview / Tracking)
+echo  - Tab: Cycle focused user (Claude / Gemini)
+echo  - F: Toggle Fullscreen
 echo  - Esc: Exit
-echo  - Up/Down: Adjust playback speed
-echo  - Left/Right: Fast-forward / Rewind
 echo.
 
 "%GOURCE_EXE%" -1280x720 ^
