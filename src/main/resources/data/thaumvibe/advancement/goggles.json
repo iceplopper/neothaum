@@ -1,0 +1,30 @@
+{
+  "parent": "thaumvibe:root",
+  "display": {
+    "icon": {
+      "id": "thaumvibe:goggles_of_revealing"
+    },
+    "title": {
+      "translate": "advancements.thaumvibe.goggles.title"
+    },
+    "description": {
+      "translate": "advancements.thaumvibe.goggles.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_goggles": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "thaumvibe:goggles_of_revealing"
+          }
+        ]
+      }
+    }
+  }
+}

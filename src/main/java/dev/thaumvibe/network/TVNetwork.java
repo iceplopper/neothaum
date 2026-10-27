@@ -29,6 +29,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -326,6 +328,16 @@ public final class TVNetwork {
 			var held = ctx.player().getMainHandItem();
 			if (held.getItem() instanceof dev.thaumvibe.items.WandItem) {
 				dev.thaumvibe.wands.WandFoci.toggleMisc(held, ctx.player());
+			} else if (held.getItem() instanceof dev.thaumvibe.items.equipment.ElementalShovelItem) {
+				int o = (dev.thaumvibe.items.equipment.ElementalShovelItem.getOrientation(held) + 1) % 3;
+				dev.thaumvibe.items.equipment.ElementalShovelItem.setOrientation(held, o);
+				String key = switch (o) {
+					case 0 -> "item.thaumvibe.shovel_of_the_earthmover.orient.0";
+					case 1 -> "item.thaumvibe.shovel_of_the_earthmover.orient.1";
+					default -> "item.thaumvibe.shovel_of_the_earthmover.orient.2";
+				};
+				ctx.player().sendSystemMessage(Component.translatable(key), true);
+				ctx.player().level().playSound(null, ctx.player().blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.0f);
 			}
 		});
 

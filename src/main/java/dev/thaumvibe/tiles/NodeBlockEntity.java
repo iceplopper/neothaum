@@ -8,8 +8,10 @@ import dev.thaumvibe.blocks.TaintFibreBlock;
 import dev.thaumvibe.entity.TVEntities;
 import dev.thaumvibe.entity.monster.GiantBrainyZombie;
 import dev.thaumvibe.items.WandItem;
+import dev.thaumvibe.network.TVNetwork;
 import dev.thaumvibe.registry.TVBlockEntities;
 import dev.thaumvibe.registry.TVBlocks;
+import dev.thaumvibe.registry.TVSounds;
 import dev.thaumvibe.research.ResearchManager;
 import dev.thaumvibe.world.TVBiomes;
 import java.util.ArrayList;
@@ -17,9 +19,11 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -78,6 +82,7 @@ public class NodeBlockEntity extends TVBlockEntity {
 			change = this.handleDarkNode(change);
 			change = this.handlePureNode(change);
 			change = this.handleHungryNodeSecond(change);
+			this.handleNodeBolts();
 			if (change) {
 				this.markForUpdate();
 			}
@@ -487,7 +492,11 @@ public class NodeBlockEntity extends TVBlockEntity {
 				if (this.nodeLock == 0) {
 					Aspect aspect = this.takeRandomPrimalFromSource();
 					if (aspect != null) {
-						// EntityAspectOrb arrives with the essentia phase; the aspect still bleeds away.
+						if (!this.level.isClientSide()) {
+							dev.thaumvibe.entity.AspectOrbEntity orb = new dev.thaumvibe.entity.AspectOrbEntity(
+								this.level, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5, aspect, 1);
+							this.level.addFreshEntity(orb);
+						}
 						change = true;
 					}
 				} else if (rand.nextInt(10000 / this.nodeLock) == 42) {
@@ -501,6 +510,29 @@ public class NodeBlockEntity extends TVBlockEntity {
 			}
 		}
 		return change;
+	}
+
+	private void handleNodeBolts() {
+		if (this.level.isClientSide() || this.nodeLock > 0 || !(this.level instanceof ServerLevel sl)) {
+			return;
+		}
+		if (this.nodeType != NodeType.UNSTABLE && this.nodeType != NodeType.HUNGRY && this.nodeType != NodeType.DARK) {
+			return;
+		}
+		if (this.count % 80 == 0 && this.level.getRandom().nextInt(3) == 0) {
+			List<LivingEntity> targets = this.level.getEntitiesOfClass(LivingEntity.class, new AABB(this.worldPosition).inflate(6.0));
+			for (LivingEntity target : targets) {
+				if (target instanceof Player p && (p.isCreative() || p.isSpectator())) {
+					continue;
+				}
+				if (target.isAlive()) {
+					target.hurtServer(sl, sl.damageSources().magic(), 2.0F + this.level.getRandom().nextInt(3));
+					TVNetwork.sendZap(sl, this.worldPosition, target.blockPosition());
+					sl.playSound(null, this.worldPosition, TVSounds.ZAP, SoundSource.BLOCKS, 0.6F, 0.9F + this.level.getRandom().nextFloat() * 0.2F);
+					break;
+				}
+			}
+		}
 	}
 
 	/** Config.hardNode (TC4's "hard_mode_nodes", on by default): tainted nodes also sprout fibres, and sinister nodes call up giant zombies. */

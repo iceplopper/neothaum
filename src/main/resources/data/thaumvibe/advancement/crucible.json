@@ -1,0 +1,30 @@
+{
+  "parent": "thaumvibe:root",
+  "display": {
+    "icon": {
+      "id": "thaumvibe:crucible"
+    },
+    "title": {
+      "translate": "advancements.thaumvibe.crucible.title"
+    },
+    "description": {
+      "translate": "advancements.thaumvibe.crucible.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_crucible": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "thaumvibe:crucible"
+          }
+        ]
+      }
+    }
+  }
+}

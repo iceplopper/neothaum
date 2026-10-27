@@ -30,6 +30,7 @@ public class Thaumvibe implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		dev.thaumvibe.config.ThaumvibeConfig.load();
 		Aspect.bootstrap();
 		TVSounds.init();
 		TVComponents.init();
@@ -58,6 +59,7 @@ public class Thaumvibe implements ModInitializer {
 		dev.thaumvibe.baubles.Baubles.initTicking();
 		dev.thaumvibe.items.BathSaltsItem.init();
 		dev.thaumvibe.warp.WarpEvents.init();
+		dev.thaumvibe.events.AspectOrbEvents.init();
 		LOGGER.info("Thaumvibe 4 initialized: {} aspects", Aspect.aspects.size());
 	}
 }

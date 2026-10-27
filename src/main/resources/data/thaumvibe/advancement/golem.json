@@ -1,0 +1,30 @@
+{
+  "parent": "thaumvibe:infusion",
+  "display": {
+    "icon": {
+      "id": "thaumvibe:golem_bell"
+    },
+    "title": {
+      "translate": "advancements.thaumvibe.golem.title"
+    },
+    "description": {
+      "translate": "advancements.thaumvibe.golem.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_bell": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "thaumvibe:golem_bell"
+          }
+        ]
+      }
+    }
+  }
+}

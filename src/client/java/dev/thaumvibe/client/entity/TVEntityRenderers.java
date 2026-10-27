@@ -50,6 +50,7 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.INHABITED_ZOMBIE, net.minecraft.client.renderer.entity.ZombieRenderer::new);
 		EntityRendererRegistry.register(TVEntities.ELDRITCH_WARDEN, EldritchWardenRenderer::new);
 		EntityRendererRegistry.register(TVEntities.ELDRITCH_GOLEM, EldritchGolemRenderer::new);
+		EntityRendererRegistry.register(TVEntities.ASPECT_ORB, AspectOrbRenderer::new);
 	}
 
 	private TVEntityRenderers() {

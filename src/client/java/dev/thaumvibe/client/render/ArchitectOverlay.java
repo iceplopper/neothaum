@@ -46,16 +46,24 @@ public final class ArchitectOverlay {
 			return;
 		}
 		ItemStack wand = player.getMainHandItem();
+		boolean isShovel = wand.getItem() instanceof dev.thaumvibe.items.equipment.ElementalShovelItem;
 		ItemStack fs = WandItem.getFocusStack(wand);
-		if (!(wand.getItem() instanceof WandItem) || !(fs.getItem() instanceof FocusItem focus) || !(focus instanceof Architect af)
-			|| !focus.isUpgradedWith(fs, FocusUpgradeType.architect)) {
+		boolean isWand = (wand.getItem() instanceof WandItem) && (fs.getItem() instanceof FocusItem focus) && (focus instanceof Architect af)
+			&& focus.isUpgradedWith(fs, FocusUpgradeType.architect);
+		if (!isShovel && !isWand) {
 			return;
 		}
 		int ticks = player.tickCount;
-		int hc = (target.getBlockPos().toShortString() + target.getDirection() + ticks / 5).hashCode();
+		int hc = (target.getBlockPos().toShortString() + target.getDirection() + ticks / 5 + (isShovel ? dev.thaumvibe.items.equipment.ElementalShovelItem.getOrientation(wand) : 0)).hashCode();
 		if (hc != lastHash) {
 			lastHash = hc;
-			blocks = af.getArchitectBlocks(wand, mc.level, target.getBlockPos(), target.getDirection(), player);
+			if (isShovel) {
+				blocks = dev.thaumvibe.items.equipment.ElementalShovelItem.architectBlocks(wand, mc.level, target.getBlockPos(), target.getDirection(), player);
+			} else {
+				FocusItem focus = (FocusItem) fs.getItem();
+				Architect af = (Architect) focus;
+				blocks = af.getArchitectBlocks(wand, mc.level, target.getBlockPos(), target.getDirection(), player);
+			}
 			blockSet = new HashSet<>(blocks);
 		}
 		if (blocks.isEmpty()) {
@@ -64,9 +72,13 @@ public final class ArchitectOverlay {
 		Vec3 cam = mc.gameRenderer.mainCamera().position();
 		PoseStack ps = ctx.poseStack();
 		BlockPos t = target.getBlockPos();
-		drawAxis(ctx, ps, cam, t, ticks, af.showAxis(wand, mc.level, player, target.getDirection(), Architect.Axis.X),
-			af.showAxis(wand, mc.level, player, target.getDirection(), Architect.Axis.Y),
-			af.showAxis(wand, mc.level, player, target.getDirection(), Architect.Axis.Z));
+		if (isWand) {
+			FocusItem focus = (FocusItem) fs.getItem();
+			Architect af = (Architect) focus;
+			drawAxis(ctx, ps, cam, t, ticks, af.showAxis(wand, mc.level, player, target.getDirection(), Architect.Axis.X),
+				af.showAxis(wand, mc.level, player, target.getDirection(), Architect.Axis.Y),
+				af.showAxis(wand, mc.level, player, target.getDirection(), Architect.Axis.Z));
+		}
 		var atlas = mc.getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS);
 		for (BlockPos p : blocks) {
 			float r = Mth.sin(ticks / 2.0F + p.getX()) * 0.2F + 0.3F;

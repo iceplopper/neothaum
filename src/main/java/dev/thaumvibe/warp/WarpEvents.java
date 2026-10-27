@@ -44,7 +44,9 @@ public final class WarpEvents {
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 				if (player.isAlive()) {
 					if (player.tickCount > 0 && player.tickCount % 2000 == 0 && !player.hasEffect(TVMobEffects.WARP_WARD)) {
-						checkWarpEvent(player);
+						if (dev.thaumvibe.config.ThaumvibeConfig.current.allowWarp) {
+							checkWarpEvent(player);
+						}
 					}
 					if (player.tickCount % 10 == 0 && player.hasEffect(TVMobEffects.DEATH_GAZE)) {
 						checkDeathGaze(player);
