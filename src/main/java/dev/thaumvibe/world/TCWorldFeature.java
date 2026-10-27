@@ -56,9 +56,19 @@ public record TCWorldFeature(boolean nether) implements Feature {
 			return true;
 		}
 		generateVegetation(world, random, cx, cz);
+		generateStructures(world, random, cx, cz);
 		generateOres(world, random, cx, cz);
 		generateWildNodes(world, random, cx, cz);
 		return true;
+	}
+
+	private void generateStructures(WorldGenLevel world, RandomSource random, int cx, int cz) {
+		if (random.nextInt(66) == 0) {
+			int x = cx + random.nextInt(16);
+			int z = cz + random.nextInt(16);
+			int y = heightAt(world, x, z);
+			EldritchRingFeature.generate(world, random, new BlockPos(x, y - 1, z));
+		}
 	}
 
 	private static int heightAt(WorldGenLevel world, int x, int z) {

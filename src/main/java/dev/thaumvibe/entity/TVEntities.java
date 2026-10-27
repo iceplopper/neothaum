@@ -148,6 +148,9 @@ public final class TVEntities {
 	public static final EntityType<CrimsonLeaderEntity> CULTIST_LEADER = mob("cultist_leader",
 		CrimsonLeaderEntity::new, MobCategory.MONSTER, 0.75F, 2.25F,
 		CrimsonLeaderEntity::createAttributes, b -> b, 5898240, 16766720);
+	public static final EntityType<dev.thaumvibe.entity.monster.boss.CultistPortalEntity> CULTIST_PORTAL = mob("cultist_portal",
+		dev.thaumvibe.entity.monster.boss.CultistPortalEntity::new, MobCategory.MONSTER, 1.5F, 3.0F,
+		dev.thaumvibe.entity.monster.boss.CultistPortalEntity::createAttributes, b -> b, 8060928, 16711680, true);
 	public static final EntityType<EldritchCrabEntity> ELDRITCH_CRAB = mob("eldritch_crab",
 		EldritchCrabEntity::new, MobCategory.MONSTER, 0.8F, 0.6F,
 		EldritchCrabEntity::createAttributes, b -> b, 2763306, 9109504);

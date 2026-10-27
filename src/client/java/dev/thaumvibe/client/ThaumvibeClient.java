@@ -156,6 +156,8 @@ public class ThaumvibeClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.RESEARCH_TABLE, dev.thaumvibe.client.render.ResearchTableRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.CRYSTAL, dev.thaumvibe.client.render.CrystalRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.HUNGRY_CHEST, dev.thaumvibe.client.render.HungryChestRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_ALTAR, dev.thaumvibe.client.render.EldritchAltarRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_PORTAL, dev.thaumvibe.client.render.EldritchPortalRenderer::new);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("crystal"), dev.thaumvibe.client.render.CrystalRenderer.Unbaked.CODEC);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("thaumometer"), dev.thaumvibe.client.render.ThaumometerRenderer.Unbaked.CODEC);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("wand"), dev.thaumvibe.client.render.WandRenderer.Unbaked.CODEC);

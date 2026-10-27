@@ -124,6 +124,16 @@ public final class TVBlockEntities {
 	public static final BlockEntityType<dev.thaumvibe.tiles.BannerBlockEntity> BANNER = register("banner",
 		dev.thaumvibe.tiles.BannerBlockEntity::new, TVBlocks.BANNER);
 
+	// ---- Eldritch Block Entities ----
+	public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchAltarBlockEntity> ELDRITCH_ALTAR = register("eldritch_altar",
+		dev.thaumvibe.tiles.eldritch.EldritchAltarBlockEntity::new, TVBlocks.ELDRITCH_ALTAR);
+	public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchCapBlockEntity> ELDRITCH_CAP = register("eldritch_cap",
+		dev.thaumvibe.tiles.eldritch.EldritchCapBlockEntity::new, TVBlocks.ELDRITCH_CAP);
+	public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchObeliskBlockEntity> ELDRITCH_OBELISK = register("eldritch_obelisk",
+		dev.thaumvibe.tiles.eldritch.EldritchObeliskBlockEntity::new, TVBlocks.ELDRITCH_OBELISK);
+	public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchPortalBlockEntity> ELDRITCH_PORTAL = register("eldritch_portal",
+		dev.thaumvibe.tiles.eldritch.EldritchPortalBlockEntity::new, TVBlocks.ELDRITCH_PORTAL);
+
 	private static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.BlockEntitySupplier<T> factory, Block... blocks) {
 		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Thaumvibe.id(name), new BlockEntityType<>(factory, Set.of(blocks)));
 	}

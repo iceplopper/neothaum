@@ -310,6 +310,24 @@ public final class TVBlocks {
 	public static final Block BANNER = register("banner", dev.thaumvibe.blocks.BannerBlock::new,
 		wood(1.0F).sound(SoundType.WOOD).noOcclusion(), false);
 
+	// ---- Eldritch Blocks ----
+	public static final Block OBSIDIAN_TILE = register("obsidian_tile", dev.thaumvibe.blocks.eldritch.ObsidianTileBlock::new,
+		stone(50.0F, 2000.0F), true);
+	public static final Block ELDRITCH_STONE = register("eldritch_stone", p -> new dev.thaumvibe.blocks.eldritch.EldritchStoneBlock(dev.thaumvibe.blocks.eldritch.EldritchStoneBlock.Variant.SMOOTH, p),
+		stone(20.0F, 100.0F), true);
+	public static final Block ELDRITCH_STONE_CRACKED = register("eldritch_stone_cracked", p -> new dev.thaumvibe.blocks.eldritch.EldritchStoneBlock(dev.thaumvibe.blocks.eldritch.EldritchStoneBlock.Variant.CRACKED, p),
+		stone(20.0F, 100.0F), true);
+	public static final Block ELDRITCH_STONE_GLYPH = register("eldritch_stone_glyph", p -> new dev.thaumvibe.blocks.eldritch.EldritchStoneBlock(dev.thaumvibe.blocks.eldritch.EldritchStoneBlock.Variant.GLYPH, p),
+		stone(20.0F, 100.0F), true);
+	public static final Block ELDRITCH_ALTAR = register("eldritch_altar", dev.thaumvibe.blocks.eldritch.EldritchAltarBlock::new,
+		stone(20.0F, 100.0F).noOcclusion(), true);
+	public static final Block ELDRITCH_CAP = register("eldritch_cap", dev.thaumvibe.blocks.eldritch.EldritchCapBlock::new,
+		stone(20.0F, 100.0F).noOcclusion(), true);
+	public static final Block ELDRITCH_OBELISK = register("eldritch_obelisk", dev.thaumvibe.blocks.eldritch.EldritchObeliskBlock::new,
+		stone(20.0F, 100.0F).noOcclusion(), true);
+	public static final Block ELDRITCH_PORTAL = register("eldritch_portal", dev.thaumvibe.blocks.eldritch.EldritchPortalBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(-1.0F, 3600000.0F).noCollision().lightLevel(s -> 15), false);
+
 	private static BlockBehaviour.Properties mirror() {
 		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()
 			.lightLevel(s -> s.getValue(dev.thaumvibe.blocks.MirrorBlock.OPEN) ? 8 : 0);
