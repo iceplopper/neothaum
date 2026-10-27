@@ -39,6 +39,12 @@ public class GogglesItem extends Item implements VisDiscountGear, RevealerGear, 
 				.build());
 	}
 
+	public static boolean isWearingGoggles(Player player) {
+		if (player == null) return false;
+		ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+		return head.getItem() instanceof RevealerGear r && r.showNodes(head);
+	}
+
 	@Override
 	public int getVisDiscount(ItemStack stack, Player player, Aspect aspect) {
 		return 5;

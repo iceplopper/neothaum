@@ -2093,5 +2093,6 @@
   "advancements.thaumvibe.warp.title": "A Subtle Madness",
   "advancements.thaumvibe.warp.description": "Feel the chilling grasp of eldritch knowledge on your mortal mind",
   "advancements.thaumvibe.eldritch.title": "The Outer Lands",
-  "advancements.thaumvibe.eldritch.description": "Gaze into the Void and discover the ancient secrets of the Eldritch Eye"
+  "advancements.thaumvibe.eldritch.description": "Gaze into the Void and discover the ancient secrets of the Eldritch Eye",
+  "recipe.type.aspect_decomp": "Aspect Combination"
 }

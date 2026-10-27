@@ -36,6 +36,9 @@ dependencies {
 
 	compileOnly "mezz.jei:jei-26.3-fabric-api:${project.jei_version}"
 	runtimeOnly "mezz.jei:jei-26.3-fabric:${project.jei_version}"
+
+	compileOnly files("run/mods/Jade-mc26.3-Fabric-26.3.5.jar")
+	compileOnly files("run/mods/xaerominimap-fabric-26.3-26.6.2.jar")
 }
 
 processResources {

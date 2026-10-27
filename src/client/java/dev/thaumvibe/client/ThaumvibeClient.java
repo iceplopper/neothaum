@@ -316,6 +316,8 @@ public class ThaumvibeClient implements ClientModInitializer {
 				return 0xFF999999;
 			}
 		}), TVBlocks.RESEARCH_TABLE);
+
+		dev.thaumvibe.client.addon.minimap.MinimapIntegration.init();
 	}
 
 	static {

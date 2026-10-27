@@ -19,6 +19,9 @@
 		],
 		"jei_mod_plugin": [
 			"dev.thaumvibe.client.jei.ThaumvibeJeiPlugin"
+		],
+		"jade": [
+			"dev.thaumvibe.client.addon.jade.ThaumvibeJadePlugin"
 		]
 	},
 	"depends": {
@@ -28,7 +31,8 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"jei": "*"
+		"jei": "*",
+		"jade": "*"
 	},
 	"mixins": [
 		"thaumvibe.mixins.json",

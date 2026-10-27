@@ -1,6 +1,7 @@
 package dev.thaumvibe.client.jei;
 
 import dev.thaumvibe.Thaumvibe;
+import dev.thaumvibe.api.aspects.Aspect;
 import dev.thaumvibe.client.TVClientNetwork;
 import dev.thaumvibe.client.gui.ArcaneWorkbenchScreen;
 import dev.thaumvibe.crafting.ArcaneRecipe;
@@ -9,6 +10,7 @@ import dev.thaumvibe.crafting.InfusionEnchantmentRecipe;
 import dev.thaumvibe.crafting.InfusionRecipe;
 import dev.thaumvibe.menu.ArcaneWorkbenchMenu;
 import dev.thaumvibe.registry.TVBlocks;
+import dev.thaumvibe.registry.TVItems;
 import dev.thaumvibe.registry.TVMenus;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -38,6 +40,8 @@ public class ThaumvibeJeiPlugin implements IModPlugin {
 	public static final IRecipeType<InfusionRecipe> INFUSION = IRecipeType.create("thaumvibe", "infusion", InfusionRecipe.class);
 	public static final IRecipeType<InfusionEnchantmentRecipe> INFUSION_ENCHANTMENT = IRecipeType.create("thaumvibe", "infusion_enchantment",
 		InfusionEnchantmentRecipe.class);
+	public static final IRecipeType<AspectDecompRecipe> ASPECT_DECOMP = IRecipeType.create("thaumvibe", "aspect_decomp",
+		AspectDecompRecipe.class);
 
 	private static IJeiRuntime jeiRuntime;
 
@@ -53,7 +57,8 @@ public class ThaumvibeJeiPlugin implements IModPlugin {
 			new ArcaneRecipeCategory(helper),
 			new CrucibleRecipeCategory(helper),
 			new InfusionRecipeCategory(helper),
-			new InfusionEnchantmentRecipeCategory(helper)
+			new InfusionEnchantmentRecipeCategory(helper),
+			new AspectDecompCategory(helper)
 		);
 	}
 
@@ -89,6 +94,16 @@ public class ThaumvibeJeiPlugin implements IModPlugin {
 		if (!infusionEnch.isEmpty()) {
 			registration.addRecipes(INFUSION_ENCHANTMENT, infusionEnch);
 		}
+
+		List<AspectDecompRecipe> decomps = new ArrayList<>();
+		for (Aspect a : Aspect.aspects.values()) {
+			if (!a.isPrimal() && a.getComponents() != null && a.getComponents().length >= 2) {
+				decomps.add(new AspectDecompRecipe(a, a.getComponents()[0], a.getComponents()[1]));
+			}
+		}
+		if (!decomps.isEmpty()) {
+			registration.addRecipes(ASPECT_DECOMP, decomps);
+		}
 	}
 
 	@Override
@@ -98,6 +113,7 @@ public class ThaumvibeJeiPlugin implements IModPlugin {
 		registration.addCraftingStation(CRUCIBLE, TVBlocks.CRUCIBLE);
 		registration.addCraftingStation(INFUSION, TVBlocks.RUNIC_MATRIX, TVBlocks.ARCANE_PEDESTAL);
 		registration.addCraftingStation(INFUSION_ENCHANTMENT, TVBlocks.RUNIC_MATRIX, TVBlocks.ARCANE_PEDESTAL);
+		registration.addCraftingStation(ASPECT_DECOMP, TVItems.THAUMOMETER, TVBlocks.RESEARCH_TABLE);
 	}
 
 	@Override
