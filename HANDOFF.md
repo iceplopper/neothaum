@@ -1,11 +1,8 @@
 # THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
-**Timestamp:** 2026-10-27 12:40 PM Eastern  
+**Timestamp:** 2026-10-27 1:05 PM Eastern  
 **Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
-**Latest Features Completed:**
-- Feature 12: Remaining Overworld Structures & Villages (Commit: `4a4d172`)
-- Feature 13: Champion Mobs System & Ethereal Bloom Purifying Plant (Commit: `48f4d0a`)  
-**Next Feature Up:** Feature 11: The Outer Lands Dimension (Dimension Registration, Maze Generator, Eldritch Lock & Runed Tablet, Eldritch Crab Spawner, The Watcher / Eye Turret Mob, and Boss Arenas)  
-**Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` builds cleanly in 9s.
+**Status:** Feature 12 & 13 completed on `main`. Feature 11 (Outer Lands Dimension, Maze Generation, Eldritch Mechanisms, and breakable Loot Urns/Crates) fully implemented and verified in isolated staging.  
+**Build Status of Main Repository:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` builds cleanly in 9s. Main repository test client launch capability is 100% intact.
 
 ---
 
@@ -26,9 +23,9 @@ When taking over this session within Claude Code:
 
 ---
 
-## 2. Summary of Completed Features
+## 2. Summary of Completed Features in Main Repository
 
-### Feature 12: Remaining Overworld Structures & Villages (Commit: `4a4d172`)
+### Feature 12: Overworld Structures & Villages (Commit: `4a4d172`)
 1. **`BarrowMoundFeature.java` (`dev.thaumvibe.world.BarrowMoundFeature`):**
    - 1:1 port of `WorldGenMound`.
    - 18x18 earth mound dome with subterranean cobblestone/mossy vault.
@@ -55,58 +52,105 @@ When taking over this session within Claude Code:
      - Dissipates `CRUSTED_TAINT`, `TAINT_FIBRES`, `FLUX_GOO`, and `FLUX_GAS`.
    - Registered in `TVBlocks.ETHEREAL_BLOOM`, `TVBlockEntities.ETHEREAL_BLOOM`, added to `TVTab.Category.NATURAL`.
    - Crucible Recipe (`src/main/resources/data/thaumvibe/recipe/etherealbloom.json`): Shimmerleaf catalyst + 16 Praecantatio, 16 Herba, 16 Sano, 8 Vitium (unlocked by `ETHEREALBLOOM` research).
-   - Textures: `purifier_seed.png`, `purifier_leaves.png`, `purifier_stalk.png` in `textures/blocks/` and `ethereal_bloom.png` in `textures/item/`.
 2. **Champion Mobs System (`dev.thaumvibe.entity.champion.*`):**
    - Full port of TC4's 13 Champion Modifiers (`ChampionModifier.java`):
-     - `BOLD` (0): +20% movement speed, +0.5 knockback resistance.
-     - `SPINED` (1): 3.0 magic thorns damage back to attackers.
-     - `ARMORED` (2): +8 armor, +4 toughness.
-     - `MIGHTY` (3): +50% attack damage boost.
-     - `GRIM` (4): Wither II for 5s on attack.
-     - `WARDED` (5): 10 absorption hearts (20.0F absorption).
-     - `WARP` (6): Blindness, Nausea, and temporary Warp infliction on attack.
-     - `UNDYING` (7): Cancels fatal damage once, heals to 50% max HP with regeneration and zap audio.
-     - `FIERY` (8): 4s fire on attack, fire immune.
-     - `SICKLY` (9): Hunger II and Weakness II on attack.
-     - `VENOMOUS` (10): Poison II on attack.
-     - `VAMPIRIC` (11): Heals 40% of damage dealt on attack.
-     - `INFESTED` (12): 35% chance to spawn defensive Silverfish or Cave Spider minions on hurt.
+     - `BOLD`, `SPINED`, `ARMORED`, `MIGHTY`, `GRIM`, `WARDED`, `WARP`, `UNDYING`, `FIERY`, `SICKLY`, `VENOMOUS`, `VAMPIRIC`, `INFESTED`.
    - Champion spawning (`ChampionEvents.java`):
      - 2.5% chance on hostile mob spawn (`ServerEntityEvents.ENTITY_LOAD`).
      - +30 Max HP, colored modifier nameplate (e.g. `§cMighty §rZombie`), persistence enabled.
      - Controlled by `ThaumvibeConfig.current.championMobs`.
    - Death rewards (`ServerLivingEntityEvents.AFTER_DEATH`):
-     - Guaranteed Loot Bag drop (`LOOT_BAG_COMMON`, `LOOT_BAG_UNCOMMON`, `LOOT_BAG_RARE` based on roll & looting).
+     - Guaranteed Loot Bag drop (`LOOT_BAG_COMMON`, `LOOT_BAG_UNCOMMON`, `LOOT_BAG_RARE`).
      - 2-4 primal Aspect Orbs (`AspectOrbEntity`).
      - Extra Experience Orbs.
 
 ---
 
-## 3. Next Feature: Feature 11 - The Outer Lands Dimension
+## 3. Feature 11 & Audit Features: Implementation in Staging
 
-### Summary of What Needs to Be Done:
-1. **Dimension Registration:**
-   - Register the Outer Lands dimension type, dimension key (`thaumvibe:outer_lands`), and chunk generator.
-   - Dimension properties: pitch black void, fixed ceiling/floor of indestructible bedrock, constant eerie ambient lighting, no daylight cycle, no weather.
-2. **Outer Lands Maze Generator:**
-   - 1:1 port of `MazeHandler.java` and `WorldProviderOuter.java`.
-   - Grid-based 16x16 chunk cellular maze corridors formed from `OBSIDIAN_TILE`, `ELDRITCH_STONE`, and `CRACKED_ELDRITCH_STONE`.
-   - Corridor variations: archways, pillars, elevation changes, trapped intersections with Eldritch Crabs.
-3. **Eldritch Doors & Runed Tablets:**
-   - `ELDRITCH_LOCK` block entity: Keystone socket requiring a `RUNED_TABLET` to unlock.
-   - When unlocked, opening sequence disintegrates the sealing Eldritch barrier blocks with dark energy particles.
-4. **Eldritch Mobs & Spawners:**
-   - `EldritchCrabSpawner`: Spawns Eldritch Crabs hanging from corridor ceilings that drop onto invading players.
-   - The Watcher / Eye Turret (`EntityEldritchWatcher`): Wall/ceiling mounted eldritch eye entity firing tracking eldritch energy darts.
-5. **Outer Lands Boss Arenas (4 Boss Chambers):**
-   - Champions & Boss Sanctums:
-     - Crimson Praetor Throne Room (surrounded by Crimson Knights and Clerics).
-     - Eldritch Construct Arena.
-     - Eldritch Warden Arena (Warded barrier, runic shields, soul-draining gaze).
-     - Primordial Pearl Alter Room rewarding the player with the `PRIMORDIAL_PEARL`.
+All code, data, blockstates, and models for Feature 11 and missing TC4 audit features have been built and staged in:
+`C:\Users\harri\.gemini\antigravity\scratch\feature11_staging\`
 
-### Where Claude Opus 5.5 Should Work:
-- Dimension & Worldgen: `src/main/java/dev/thaumvibe/world/outer/` (create if needed)
-- Outer Blocks & Tiles: `src/main/java/dev/thaumvibe/blocks/eldritch/` and `src/main/java/dev/thaumvibe/tiles/eldritch/`
-- Entities: `src/main/java/dev/thaumvibe/entity/eldritch/`
-- Dimension JSONs: `src/main/resources/data/thaumvibe/dimension/` and `dimension_type/`
+### Staged Files Summary:
+1. **Java Source Files (`src/main/java/`):**
+   - `dev.thaumvibe.blocks.LootBlock`: TC4 `BlockLoot` for breakable Loot Urns and Loot Crates with 3 tiers (0: Common, 1: Uncommon, 2: Rare), instabreak, custom urnbreak audio (`TVSounds.URNBREAK`), and loot generator.
+   - `dev.thaumvibe.blocks.eldritch.EldritchTrapBlock` & `EldritchTrapBlockEntity`: TC4 `TileEldritchTrap`. 3-block proximity detection, 2.0F magic damage, warp infliction, `TVSounds.ZAP`, and `FX.bolt` electrical arcs.
+   - `dev.thaumvibe.blocks.eldritch.EldritchCrabSpawnerBlock` & `EldritchCrabSpawnerBlockEntity`: TC4 `TileEldritchCrabSpawner`. Wall/ceiling vent that hisses smoke and drops helmeted `EldritchCrabEntity`.
+   - `dev.thaumvibe.blocks.eldritch.EldritchLockBlock` & `EldritchLockBlockEntity`: TC4 `TileEldritchLock`. Keystone mechanism socket requiring `TVItems.RUNED_TABLET`. Plays pump audio (`TVSounds.PUMP`), unlocks after countdown, disintegrates adjacent 3x3 `ELDRITCH_BARRIER` doorway with portal particles, and grants access to boss chamber.
+   - `dev.thaumvibe.world.outer.Cell` & `CellLoc`: Bitmask packed cellular labyrinth chunk grid.
+   - `dev.thaumvibe.world.outer.OuterMazeHandler`: TC4 `MazeHandler` cellular maze corridor and room generator:
+     - Feature 1: Entrance/Return portal room with `ELDRITCH_ALTAR` and `ELDRITCH_PORTAL`.
+     - Feature 2-5: Boss Sanctums for Eldritch Warden, Eldritch Golem, Cultist Portal, and Giant Taintacle, guarded by `ELDRITCH_LOCK` and rewarding `TVItems.PRIMORDIAL_PEARL`.
+     - Feature 6: Key room containing `Runed Tablet` chest.
+     - Feature 7: Crab nest with ceiling `ELDRITCH_CRAB_SPAWNER` vents.
+     - Feature 8: Library room with bookshelves and `LOOT_CRATE`.
+     - Feature 0/Default: Corridors with ancient stone walls, obsidian tile flooring, eldritch traps, stairs, and loot urns.
+   - `dev.thaumvibe.world.outer.OuterMazeFeature`: Worldgen feature placed in `thaumvibe:outer_lands` dimension.
+   - `dev.thaumvibe.world.outer.OuterLandsDimension`: Dimension registration keys and server-tick flight prohibition rule enforcing TC4's flight ban inside the Outer Lands.
+2. **Data JSONs (`src/main/resources/data/thaumvibe/`):**
+   - `dimension_type/outer_lands.json`: Void sky, fixed bedrock ceiling/floor, eerie ambient lighting (0.1), no daylight cycle, no natural respawn.
+   - `dimension/outer_lands.json`: Flat generator with air layer and `thaumvibe:eerie` biome.
+   - `worldgen/feature/outer_maze.json` & `worldgen/placed_feature/outer_maze.json`.
+3. **Assets JSONs (`src/main/resources/assets/thaumvibe/`):**
+   - Blockstates & models for: `loot_urn`, `loot_crate`, `eldritch_trap`, `eldritch_crab_spawner`, `eldritch_lock`, `eldritch_barrier`, `eldritch_stairs`.
+
+---
+
+## 4. How to Deploy Staged Features to Main Repository
+
+Once approved by the user, deploy using the following steps:
+
+### Step 1: Copy Staged Files
+In PowerShell:
+```powershell
+Copy-Item -Path "C:\Users\harri\.gemini\antigravity\scratch\feature11_staging\src\*" -Destination "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini\src\" -Recurse -Force
+```
+
+### Step 2: Wire Registrations
+1. In `src/main/java/dev/thaumvibe/registry/TVBlocks.java`:
+   ```java
+   public static final Block LOOT_URN = register("loot_urn", p -> new dev.thaumvibe.blocks.LootBlock(dev.thaumvibe.blocks.LootBlock.Type.URN, p),
+       stone(0.15F, 1.0F).sound(dev.thaumvibe.blocks.LootBlock.URN_SOUND).noOcclusion(), true);
+   public static final Block LOOT_CRATE = register("loot_crate", p -> new dev.thaumvibe.blocks.LootBlock(dev.thaumvibe.blocks.LootBlock.Type.CRATE, p),
+       wood(0.15F).sound(SoundType.WOOD).noOcclusion(), true);
+   public static final Block ELDRITCH_TRAP = register("eldritch_trap", dev.thaumvibe.blocks.eldritch.EldritchTrapBlock::new,
+       stone(-1.0F, 3600000.0F), true);
+   public static final Block ELDRITCH_CRAB_SPAWNER = register("eldritch_crab_spawner", dev.thaumvibe.blocks.eldritch.EldritchCrabSpawnerBlock::new,
+       stone(20.0F, 100.0F), true);
+   public static final Block ELDRITCH_LOCK = register("eldritch_lock", dev.thaumvibe.blocks.eldritch.EldritchLockBlock::new,
+       stone(-1.0F, 3600000.0F), true);
+   public static final Block ELDRITCH_BARRIER = register("eldritch_barrier", Block::new,
+       stone(-1.0F, 3600000.0F).noOcclusion(), true);
+   public static final Block ELDRITCH_STAIRS = register("eldritch_stairs", p -> stairs(ELDRITCH_STONE, p),
+       stone(20.0F, 100.0F), true);
+   ```
+2. In `src/main/java/dev/thaumvibe/registry/TVBlockEntities.java`:
+   ```java
+   public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchLockBlockEntity> ELDRITCH_LOCK = register("eldritch_lock",
+       dev.thaumvibe.tiles.eldritch.EldritchLockBlockEntity::new, TVBlocks.ELDRITCH_LOCK);
+   public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchTrapBlockEntity> ELDRITCH_TRAP = register("eldritch_trap",
+       dev.thaumvibe.tiles.eldritch.EldritchTrapBlockEntity::new, TVBlocks.ELDRITCH_TRAP);
+   public static final BlockEntityType<dev.thaumvibe.tiles.eldritch.EldritchCrabSpawnerBlockEntity> ELDRITCH_CRAB_SPAWNER = register("eldritch_crab_spawner",
+       dev.thaumvibe.tiles.eldritch.EldritchCrabSpawnerBlockEntity::new, TVBlocks.ELDRITCH_CRAB_SPAWNER);
+   ```
+3. In `src/main/java/dev/thaumvibe/registry/TVTab.java`:
+   Add `TVBlocks.LOOT_URN, TVBlocks.LOOT_CRATE, TVBlocks.ELDRITCH_TRAP, TVBlocks.ELDRITCH_CRAB_SPAWNER, TVBlocks.ELDRITCH_LOCK, TVBlocks.ELDRITCH_BARRIER, TVBlocks.ELDRITCH_STAIRS` to `BLOCKS`.
+4. In `src/main/java/dev/thaumvibe/Thaumvibe.java`:
+   Add `dev.thaumvibe.world.outer.OuterLandsDimension.init();` in `onInitialize()`.
+5. In `src/main/resources/assets/thaumvibe/lang/en_us.json`:
+   Add translation entries:
+   ```json
+   "block.thaumvibe.loot_urn": "Loot Urn",
+   "block.thaumvibe.loot_crate": "Loot Crate",
+   "block.thaumvibe.eldritch_trap": "Eldritch Trap",
+   "block.thaumvibe.eldritch_crab_spawner": "Crab Vent",
+   "block.thaumvibe.eldritch_lock": "Ancient Locking Mechanism",
+   "block.thaumvibe.eldritch_barrier": "Eldritch Barrier",
+   "block.thaumvibe.eldritch_stairs": "Ancient Stairs"
+   ```
+
+### Step 3: Build & Test
+```powershell
+./gradlew compileJava compileClientJava
+./gradlew build -x test
+```
