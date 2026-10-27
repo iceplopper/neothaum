@@ -1,5 +1,7 @@
 {
+  "parent": "minecraft:block/block",
   "ambientocclusion": true,
+  "render_type": "cutout",
   "textures": {
     "particle": "thaumvibe:blocks/crucible3",
     "top": "thaumvibe:blocks/crucible1",

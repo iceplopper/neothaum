@@ -59,7 +59,7 @@ public class HungryChestRenderer implements BlockEntityRenderer<HungryChestBlock
 		ps.mulPose(ChestRenderer.modelTransformation(s.facing));
 		float f = 1.0F - s.openness;
 		f = 1.0F - f * f * f;
-		collector.submitModel(this.model, f, ps, TEXTURE, s.lightCoords, OverlayTexture.NO_OVERLAY, -1);
+		collector.submitModel(this.model, f, ps, TEXTURE, s.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 		ps.popPose();
 	}
 
@@ -68,7 +68,7 @@ public class HungryChestRenderer implements BlockEntityRenderer<HungryChestBlock
 		public void submit(PoseStack ps, SubmitNodeCollector collector, int light, int overlay, boolean glint, int outline) {
 			ps.pushPose();
 			ps.mulPose(ChestRenderer.modelTransformation(Direction.NORTH));
-			collector.submitModel(this.model, 0.0F, ps, TEXTURE, light, overlay, -1);
+			collector.submitModel(this.model, 0.0F, ps, TEXTURE, light, overlay, outline);
 			ps.popPose();
 		}
 
