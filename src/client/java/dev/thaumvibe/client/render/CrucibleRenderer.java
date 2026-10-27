@@ -57,13 +57,30 @@ public class CrucibleRenderer implements BlockEntityRenderer<CrucibleBlockEntity
 		float g = (WATER_COLOR >> 8 & 255) / 255.0F * (1.0F - s.recolor);
 		float b = (WATER_COLOR & 255) / 255.0F * (1.0F - s.recolor / 2.0F);
 		int ri = (int) (r * 255), gi = (int) (g * 255), bi = (int) (b * 255);
+		int alpha = (int) net.minecraft.util.Mth.lerp(s.recolor, 180.0F, 220.0F);
 		float y = s.height;
 		int light = s.lightCoords;
-		collector.submitCustomGeometry(ps, RenderTypes.entityTranslucent(TextureAtlas.LOCATION_BLOCKS), (pose, vc) -> {
-			vc.addVertex(pose, 0, y, 0).setColor(ri, gi, bi, 255).setUv(sprite.getU0(), sprite.getV0()).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
-			vc.addVertex(pose, 0, y, 1).setColor(ri, gi, bi, 255).setUv(sprite.getU0(), sprite.getV1()).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
-			vc.addVertex(pose, 1, y, 1).setColor(ri, gi, bi, 255).setUv(sprite.getU1(), sprite.getV1()).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
-			vc.addVertex(pose, 1, y, 0).setColor(ri, gi, bi, 255).setUv(sprite.getU1(), sprite.getV0()).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+		float x0 = 2.0F / 16.0F;
+		float x1 = 14.0F / 16.0F;
+		float z0 = 2.0F / 16.0F;
+		float z1 = 14.0F / 16.0F;
+		float u0 = sprite.getU(2.0F);
+		float u1 = sprite.getU(14.0F);
+		float v0 = sprite.getV(2.0F);
+		float v1 = sprite.getV(14.0F);
+
+		collector.submitCustomGeometry(ps, RenderTypes.translucentMovingBlock(), (pose, vc) -> {
+			// Top surface (viewed from above looking down)
+			vc.addVertex(pose, x0, y, z0).setColor(ri, gi, bi, alpha).setUv(u0, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+			vc.addVertex(pose, x0, y, z1).setColor(ri, gi, bi, alpha).setUv(u0, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+			vc.addVertex(pose, x1, y, z1).setColor(ri, gi, bi, alpha).setUv(u1, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+			vc.addVertex(pose, x1, y, z0).setColor(ri, gi, bi, alpha).setUv(u1, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+
+			// Bottom surface (viewed from below looking up)
+			vc.addVertex(pose, x0, y, z0).setColor(ri, gi, bi, alpha).setUv(u0, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+			vc.addVertex(pose, x1, y, z0).setColor(ri, gi, bi, alpha).setUv(u1, v0).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+			vc.addVertex(pose, x1, y, z1).setColor(ri, gi, bi, alpha).setUv(u1, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+			vc.addVertex(pose, x0, y, z1).setColor(ri, gi, bi, alpha).setUv(u0, v1).setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
 		});
 	}
 }
