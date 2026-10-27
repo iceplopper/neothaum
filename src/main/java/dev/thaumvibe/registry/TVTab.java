@@ -140,6 +140,13 @@ public final class TVTab {
 							mask.set(TVComponents.MASK, m);
 							out.accept(mask);
 						}
+					} else if (item == TVItems.THAUMOSTATIC_HARNESS) {
+						out.accept(item);
+						ItemStack fueled = new ItemStack(item);
+						ItemStack jar = new ItemStack(TVBlocks.WARDED_JAR);
+						jar.set(TVComponents.ASPECTS, new dev.thaumvibe.api.aspects.AspectList().add(dev.thaumvibe.api.aspects.Aspect.ENERGY, 64));
+						fueled.set(TVComponents.HARNESS_JAR, jar);
+						out.accept(fueled);
 					} else {
 						out.accept(item);
 					}

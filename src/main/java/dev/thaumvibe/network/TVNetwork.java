@@ -244,6 +244,16 @@ public final class TVNetwork {
 		}
 	}
 
+	public record ToggleHarness() implements CustomPacketPayload {
+		public static final Type<ToggleHarness> TYPE = new Type<>(Thaumvibe.id("toggle_harness"));
+		public static final StreamCodec<ByteBuf, ToggleHarness> CODEC = StreamCodec.unit(new ToggleHarness());
+
+		@Override
+		public Type<ToggleHarness> type() {
+			return TYPE;
+		}
+	}
+
 	// ------------------------------------------------------------------ client hooks (installed by the client entrypoint)
 
 	public static Consumer<CustomPacketPayload> clientSender = p -> {
@@ -269,6 +279,7 @@ public final class TVNetwork {
 		c2s.register(PlaceAspect.TYPE, PlaceAspect.CODEC);
 		c2s.register(CombineAspects.TYPE, CombineAspects.CODEC);
 		c2s.register(OpenBaubles.TYPE, OpenBaubles.CODEC);
+		c2s.register(ToggleHarness.TYPE, ToggleHarness.CODEC);
 		c2s.register(FocusChange.TYPE, FocusChange.CODEC);
 		c2s.register(WandMisc.TYPE, WandMisc.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(FocusChange.TYPE, (p, ctx) -> {
@@ -299,6 +310,13 @@ public final class TVNetwork {
 		});
 		ServerPlayNetworking.registerGlobalReceiver(OpenBaubles.TYPE, (p, ctx) -> ctx.player().openMenu(
 			new SimpleMenuProvider((id, inv, pl) -> new BaublesMenu(id, inv), Component.translatable("container.inventory"))));
+		ServerPlayNetworking.registerGlobalReceiver(ToggleHarness.TYPE, (p, ctx) -> {
+			var player = ctx.player();
+			var chest = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST);
+			if (chest.getItem() instanceof dev.thaumvibe.items.equipment.ThaumostaticHarnessItem harness) {
+				harness.toggleHover(player, chest);
+			}
+		});
 	}
 
 	private static void handleScan(Scan p, ServerPlayer player) {

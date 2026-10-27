@@ -64,6 +64,16 @@ public final class TVComponents {
 	/** ItemFortressArmor mask (0: Grinning Devil, 1: Angry Ghost, 2: Sipping Fiend). */
 	public static final DataComponentType<Integer> MASK = register("mask", b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
+	/** ItemHoverHarness fuel jar. */
+	public static final DataComponentType<net.minecraft.world.item.ItemStack> HARNESS_JAR = register("harness_jar",
+		b -> b.persistent(net.minecraft.world.item.ItemStack.CODEC).networkSynchronized(net.minecraft.world.item.ItemStack.STREAM_CODEC));
+	/** ItemHoverHarness charge counter (0..360). */
+	public static final DataComponentType<Integer> HARNESS_CHARGE = register("harness_charge",
+		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	/** ItemHoverHarness hover mode active. */
+	public static final DataComponentType<Boolean> HARNESS_ACTIVE = register("harness_active",
+		b -> b.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
 	public record KeyData(BlockPos pos, int type) {
 		public static final Codec<KeyData> CODEC = RecordCodecBuilder.create(i -> i.group(
 			BlockPos.CODEC.fieldOf("pos").forGetter(KeyData::pos),

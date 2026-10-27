@@ -46,6 +46,7 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Equipment:**
   - runic shielding and runic baubles, vis amulets, the hover girdle, elemental tools, thaumium tools and armour, and thaumaturge's robes.
   - **Thaumium Fortress Armor:** helm, cuirass, and thigh guards with heavy physical protection (40 durability, [3,7,6,3] defense), 25 enchantability, up to 25% cumulative damage reduction, Revealer Goggles upgrade attachment, and three mystical masks: Grinning Devil, Angry Ghost (withering retaliation on hit), and Sipping Fiend (lifesteal on melee strikes); infusion recipes.
+  - **Thaumostatic Harness:** flight harness (`thaumostatic_harness`) fueled by Potentia essentia from an inserted warded jar via dedicated single-slot GUI (`HoverHarnessMenu`), 'H' keybind toggle with activation sounds (`hhon`/`hhoff`) and ambient buzzing (`jacobs`), flight speed scaling with Haste enchantment and the Thaumostatic Girdle, and infusion recipe (`hoverharness.json`).
   - **Void metal:** void tools (sword, shovel, pickaxe, axe, hoe) and void armour (helm, chestplate, leggings, boots) with warp, self-repair, and weakening strikes.
   - **Boots of the Traveler:** step-height boost (+0.5), slow falling (-0.25/tick), runic augmentable, and client movement speed boost.
   - **Bow of Bone:** fast draw, auto-release at 18 ticks, and +0.5 base arrow damage bonus.
@@ -88,7 +89,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ### Remaining Equipment and gear (M)
 - **Void fortress robes** (infusion upgrade).
-- **The thaumostatic harness.**
 - **Weapons:** the crimson blade and primal arrows.
 - **Cultist gear:** cultist robes, plate and leader armour, and cultist boots.
 - **Throwables:** throwing alumentum.

@@ -26,6 +26,8 @@ public final class TVMenus {
 
 	public static final MenuType<dev.thaumvibe.menu.FocusPouchMenu> FOCUS_POUCH = Registry.register(BuiltInRegistries.MENU, Thaumvibe.id("focus_pouch"),
 		new MenuType<>(dev.thaumvibe.menu.FocusPouchMenu::new, FeatureFlags.VANILLA_SET));
+	public static final MenuType<dev.thaumvibe.menu.HoverHarnessMenu> HOVER_HARNESS = Registry.register(BuiltInRegistries.MENU, Thaumvibe.id("hover_harness"),
+		new MenuType<>(dev.thaumvibe.menu.HoverHarnessMenu::new, FeatureFlags.VANILLA_SET));
 
 	public static final ExtendedMenuType<dev.thaumvibe.menu.FocalManipulatorMenu, BlockPos> FOCAL_MANIPULATOR = Registry.register(BuiltInRegistries.MENU,
 		Thaumvibe.id("focal_manipulator"), new ExtendedMenuType<>(dev.thaumvibe.menu.FocalManipulatorMenu::new, BlockPos.STREAM_CODEC));

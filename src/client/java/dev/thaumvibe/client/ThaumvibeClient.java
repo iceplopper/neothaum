@@ -47,6 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ThaumvibeClient implements ClientModInitializer {
 	public static KeyMapping baublesKey;
+	public static KeyMapping harnessKey;
 
 	@Override
 	public void onInitializeClient() {
@@ -178,6 +179,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.thaumvibe.client.render.ArchitectOverlay::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.thaumvibe.client.fx.BeamFX::tick);
 		MenuScreens.register(TVMenus.FOCUS_POUCH, dev.thaumvibe.client.gui.FocusPouchScreen::new);
+		MenuScreens.register(TVMenus.HOVER_HARNESS, dev.thaumvibe.client.gui.HoverHarnessScreen::new);
 		HudElementRegistry.addLast(Thaumvibe.id("notifications"), Notifications::render);
 		HudElementRegistry.addLast(Thaumvibe.id("research_popup"), ResearchPopup::render);
 		HudElementRegistry.addLast(Thaumvibe.id("runic_shield"), dev.thaumvibe.client.hud.RunicShieldHud::render);
@@ -185,6 +187,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
 			if (mc.player != null && !mc.isPaused()) {
 				dev.thaumvibe.items.equipment.TravellerBootsItem.clientTick(mc.player);
+				dev.thaumvibe.items.equipment.ThaumostaticHarnessItem.clientTick(mc.player);
 			}
 		});
 
@@ -211,12 +214,22 @@ public class ThaumvibeClient implements ClientModInitializer {
 
 		baublesKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.thaumvibe.baubles", InputConstants.KEY_B,
 			KeyMapping.Category.INVENTORY));
+		harnessKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.thaumvibe.harness", InputConstants.KEY_H,
+			KeyMapping.Category.MISC));
 		ClientTickEvents.END_CLIENT_TICK.register(ThaumometerInventoryScan::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.thaumvibe.client.fx.SourceFX::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (baublesKey.consumeClick()) {
 				if (client.player != null && client.gui.screen() == null) {
 					TVNetwork.clientSender.accept(new TVNetwork.OpenBaubles());
+				}
+			}
+			while (harnessKey.consumeClick()) {
+				if (client.player != null && client.gui.screen() == null) {
+					var chest = client.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST);
+					if (chest.getItem() instanceof dev.thaumvibe.items.equipment.ThaumostaticHarnessItem) {
+						TVNetwork.clientSender.accept(new TVNetwork.ToggleHarness());
+					}
 				}
 			}
 		});

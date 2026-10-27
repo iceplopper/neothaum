@@ -244,6 +244,10 @@ public final class TVItems {
 
 	public static final ArmorMaterial TRAVELLER_ARMOR = armor(25, 1, 3, 2, 1, SoundEvents.ARMOR_EQUIP_LEATHER,
 		TagKey.create(Registries.ITEM, Thaumvibe.id("enchanted_fabrics")), "bootstraveler");
+	public static final ArmorMaterial HARNESS_ARMOR = armor(26, 2, 6, 5, 2, SoundEvents.ARMOR_EQUIP_IRON,
+		net.minecraft.tags.ItemTags.REPAIRS_GOLD_ARMOR, "thaumostatic_harness");
+	public static final Item THAUMOSTATIC_HARNESS = register("thaumostatic_harness", dev.thaumvibe.items.equipment.ThaumostaticHarnessItem::new,
+		new Item.Properties().humanoidArmor(HARNESS_ARMOR, ArmorType.CHESTPLATE).durability(400).rarity(Rarity.EPIC));
 	public static final Item BOOTS_OF_THE_TRAVELLER = register("boots_of_the_traveller", TravellerBootsItem::new,
 		new Item.Properties().humanoidArmor(TRAVELLER_ARMOR, ArmorType.BOOTS).durability(350).rarity(Rarity.RARE)
 			.attributes(ItemAttributeModifiers.builder()

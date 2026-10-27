@@ -1,0 +1,26 @@
+{
+  "type": "thaumvibe:infusion",
+  "research": "HOVERHARNESS",
+  "instability": 6,
+  "aspects": {
+    "volatus": 32,
+    "potentia": 32,
+    "machina": 32,
+    "iter": 16
+  },
+  "central": "minecraft:leather_chestplate",
+  "components": [
+    "thaumvibe:air_shard",
+    "thaumvibe:air_shard",
+    "thaumvibe:arcane_bellows",
+    "thaumvibe:arcane_bellows",
+    "minecraft:comparator",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:iron_ingot",
+    "minecraft:iron_ingot"
+  ],
+  "result": {
+    "id": "thaumvibe:thaumostatic_harness"
+  }
+}

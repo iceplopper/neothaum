@@ -1929,5 +1929,8 @@
   "item.thaumvibe.thaumium_fortress_helm": "Thaumium Fortress Helm",
   "item.thaumvibe.thaumium_fortress_cuirass": "Thaumium Fortress Cuirass",
   "item.thaumvibe.thaumium_fortress_thigh_guards": "Thaumium Fortress Thigh Guards",
+  "item.thaumvibe.thaumostatic_harness": "Thaumostatic Harness",
+  "key.thaumvibe.harness": "Activate Hover Harness",
+  "container.hoverharness": "Thaumostatic Harness",
   "tc.doorfail": "The door refuses to budge."
 }
