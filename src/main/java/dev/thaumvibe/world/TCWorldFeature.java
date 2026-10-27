@@ -69,6 +69,29 @@ public record TCWorldFeature(boolean nether) implements Feature {
 			int y = heightAt(world, x, z);
 			EldritchRingFeature.generate(world, random, new BlockPos(x, y - 1, z));
 		}
+		if (random.nextInt(150) == 0) {
+			int x = cx + random.nextInt(16);
+			int z = cz + random.nextInt(16);
+			int y = heightAt(world, x, z);
+			BarrowMoundFeature.generate(world, random, new BlockPos(x - 9, y - 8, z - 9));
+		}
+		int sx = cx + random.nextInt(16);
+		int sz = cz + random.nextInt(16);
+		int sy = heightAt(world, sx, sz);
+		if (sy >= 85 && random.nextInt(40) == 0) {
+			HilltopStonesFeature.generate(world, random, new BlockPos(sx, sy, sz));
+		}
+		if (random.nextInt(120) == 0) {
+			int x = cx + random.nextInt(16);
+			int z = cz + random.nextInt(16);
+			int y = heightAt(world, x, z);
+			WizardTowerFeature.generate(world, random, new BlockPos(x, y - 1, z));
+		} else if (random.nextInt(140) == 0) {
+			int x = cx + random.nextInt(16);
+			int z = cz + random.nextInt(16);
+			int y = heightAt(world, x, z);
+			BankerHomeFeature.generate(world, random, new BlockPos(x, y - 1, z));
+		}
 	}
 
 	private static int heightAt(WorldGenLevel world, int x, int z) {
