@@ -1,107 +1,175 @@
-# THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
-**Timestamp:** 2026-10-27 1:05 PM Eastern  
+# THAUMVIBE 4 - COMPREHENSIVE HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
+**Timestamp:** 2026-10-27 1:15 PM Eastern  
 **Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
-**Status:** Feature 12 & 13 completed on `main`. Feature 11 (Outer Lands Dimension, Maze Generation, Eldritch Mechanisms, and breakable Loot Urns/Crates) fully implemented and verified in isolated staging.  
-**Build Status of Main Repository:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` builds cleanly in 9s. Main repository test client launch capability is 100% intact.
+**Build Status:** `./gradlew compileJava compileClientJava` passes in 6s with 0 errors. Test client launch capability is 100% operational.  
+**Branch Status:** Clean working tree on `main`.
 
 ---
 
 ## 1. Quick Takeover Guide for Claude Code CLI
 
-When taking over this session within Claude Code:
-1. Ensure your working directory is:
+When taking over this project inside Claude Code CLI:
+1. Ensure your working directory is the repository root:
    ```powershell
    cd "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini"
    ```
-2. Verify the project state with git and gradle:
+2. Check git status and verify compilation:
    ```powershell
    git status
    ./gradlew compileJava compileClientJava
    ```
-3. Check `TC4_REMAINING.md` for overall progress against the original TC4 4.2.3.5 specification.
-4. Check `CLAUDE.md` for project architecture, rules, and creative tab guidelines.
+3. Check `CLAUDE.md` for project architecture, coding rules, and creative tab guidelines.
+4. Check `TC4_REMAINING.md` for remaining audit parity items.
 
 ---
 
-## 2. Summary of Completed Features in Main Repository
+## 2. Complete Summary of ALL Features Implemented Since Takeover (Oct 26 Afternoon – Oct 27)
 
-### Feature 12: Overworld Structures & Villages (Commit: `4a4d172`)
-1. **`BarrowMoundFeature.java` (`dev.thaumvibe.world.BarrowMoundFeature`):**
-   - 1:1 port of `WorldGenMound`.
-   - 18x18 earth mound dome with subterranean cobblestone/mossy vault.
-   - Dual monster spawners (Skeleton and Zombie), 2 dungeon loot chests, and hovering central Sinister aura node.
-2. **`HilltopStonesFeature.java` (`dev.thaumvibe.world.HilltopStonesFeature`):**
-   - 1:1 port of `WorldGenHilltopStones`.
-   - High-altitude (`y >= 85`) 7x7 outer Arcane Stone and Obsidian circle with hanging vines.
-   - Trapped central dungeon chest, Wisp spawner, and hovering aura node.
-3. **`WizardTowerFeature.java` (`dev.thaumvibe.world.WizardTowerFeature`):**
-   - 1:1 port of `ComponentWizardTower`.
-   - 5x5 three-story stone brick tower, oak entrance door, ladder shaft, bookshelves, arcane worktable, and wizard chest containing Thaumonomicon, amber, shards, scribing tools, and paper.
-4. **`BankerHomeFeature.java` (`dev.thaumvibe.world.BankerHomeFeature`):**
-   - 1:1 port of `ComponentBankerHome`.
-   - Village banker residence featuring a banking counter table, chest, and villager furnishings.
-5. **Registration (`TCWorldFeature.java`):**
-   - Barrow Mounds (1/150 chunks), Hilltop Stones (1/40 chunks where `y >= 85`), Wizard Tower (1/120 chunks), Banker Home (1/140 chunks).
+Below is the complete chronological record of all features, systems, multiblocks, mechanics, and integrations implemented across 45+ commits since taking over from Claude yesterday afternoon:
 
-### Feature 13: Champion Mobs & Ethereal Bloom (Commit: `48f4d0a`)
-1. **Ethereal Bloom Block & BlockEntity (`dev.thaumvibe.blocks.EtherealBloomBlock`, `dev.thaumvibe.tiles.EtherealBloomBlockEntity`):**
-   - Light level 12 flower planted on grass, dirt, or tainted soil. Plays `TVSounds.ROOTS` on placement.
-   - Cleansing cycle every 20 ticks: purifies land in an 8-block radius:
-     - Converts `TAINTED_LAND` and `EERIE` biomes to `minecraft:plains` using `TVBiomes.setBiomeAt`.
-     - Reverts `TAINTED_SOIL` to vanilla `DIRT`/`GRASS_BLOCK`.
-     - Dissipates `CRUSTED_TAINT`, `TAINT_FIBRES`, `FLUX_GOO`, and `FLUX_GAS`.
-   - Registered in `TVBlocks.ETHEREAL_BLOOM`, `TVBlockEntities.ETHEREAL_BLOOM`, added to `TVTab.Category.NATURAL`.
-   - Crucible Recipe (`src/main/resources/data/thaumvibe/recipe/etherealbloom.json`): Shimmerleaf catalyst + 16 Praecantatio, 16 Herba, 16 Sano, 8 Vitium (unlocked by `ETHEREALBLOOM` research).
-2. **Champion Mobs System (`dev.thaumvibe.entity.champion.*`):**
-   - Full port of TC4's 13 Champion Modifiers (`ChampionModifier.java`):
-     - `BOLD`, `SPINED`, `ARMORED`, `MIGHTY`, `GRIM`, `WARDED`, `WARP`, `UNDYING`, `FIERY`, `SICKLY`, `VENOMOUS`, `VAMPIRIC`, `INFESTED`.
-   - Champion spawning (`ChampionEvents.java`):
-     - 2.5% chance on hostile mob spawn (`ServerEntityEvents.ENTITY_LOAD`).
-     - +30 Max HP, colored modifier nameplate (e.g. `§cMighty §rZombie`), persistence enabled.
-     - Controlled by `ThaumvibeConfig.current.championMobs`.
-   - Death rewards (`ServerLivingEntityEvents.AFTER_DEATH`):
-     - Guaranteed Loot Bag drop (`LOOT_BAG_COMMON`, `LOOT_BAG_UNCOMMON`, `LOOT_BAG_RARE`).
-     - 2-4 primal Aspect Orbs (`AspectOrbEntity`).
-     - Extra Experience Orbs.
+### Phase A: Gear, Baubles, Runic Shielding & Artifice (Oct 26 Afternoon)
+1. **Baubles, Hover Girdle, Runic Shielding & Tallow Candles (Commit `876abd6`):**
+   - Ported TC4 Baubles inventory integration and tick loops.
+   - Implemented Hover Girdle accessory providing fall damage immunity and floating locomotion.
+   - Implemented full Runic Shielding system (`RunicShielding.java`): recharging kinetic shields absorbing physical and magical damage before player health, HUD shield bar rendering, and recharging vis ticks.
+   - Added Vanilla Tallow Candles addon allowing vanilla candles to function as infusion stabilizing symmetry elements.
+2. **Void Metal Tools & Armor, Bow of Bone & Primal Crusher (Commit `bc2959b`):**
+   - Implemented Void Metal gear suite (Pickaxe, Axe, Shovel, Sword, Hoe, Armor) with self-repairing vis durability and passive Warp infliction.
+   - Bow of Bone: Rapid-fire bone bow providing native projectile damage and arrow efficiency.
+   - Primal Crusher: Hybrid shovel/pickaxe tool with 3x3 area mining mode.
+   - Sanity Checker: Dynamic HUD warp inspection instrument displaying temporary, sticky, and permanent warp.
+   - Bottled Taint: Throwable flask creating localized taint infestations.
+3. **Artifice Lamps with Essentia Suction (Commit `7fc006e`):**
+   - Arcane Lamp: Light level 15 mobile light source placing invisible secondary light nodes to prevent mob spawns in a 16-block radius.
+   - Lamp of Growth: Connects to tube networks, consumes *Herba* essentia, and dramatically accelerates crop/sapling growth in an 8-block radius.
+   - Lamp of Fertility: Connects to tube networks, consumes *Victus* essentia, and automates animal breeding up to population caps.
+4. **JEI Plugin Integration (Commit `7c649da`):**
+   - Custom JEI categories for Arcane Crafting, Crucible Alchemy, Infusion Crafting, and Infusion Enchanting.
+   - Recipe transfer handlers and animated catalysts.
+5. **Doors, Warding & Redstone (Commit `99499c5`):**
+   - Arcane Door & Arcane Keys: Unbreakable warded door paired with enchanted Arcane Keys (skeleton, master, and recipient keys).
+   - Warded Glass: Blast-resistant, mining-immune transparent structural glass.
+   - Paving Stone of Warding: Repels non-player hostile entities from crossing boundary lines.
+   - Arcane Pressure Plate: Configurable pressure plate filtering players vs mobs.
+   - Arcane Ear: Listens for specific Note Block musical pitches and emits redstone signals.
+   - Arcane Levitator: Vis-powered vertical levitation column elevating players and entities up to 16 blocks high.
+6. **Infernal Furnace Multiblock & Traveler Boots Overhaul (Commit `3b8b557`):**
+   - 3x3x3 multiblock of Netherrack, Obsidian, and Iron Bars activated via wand strike.
+   - Animated glowing BER interior, item drop chute, automatic smelting, bonus metal nuggets, and bellows efficiency boosting.
+   - Overhauled Boots of the Traveler with step-assist, sprint speed multipliers, and jump boosting.
+7. **Thaumonomicon Parity & Recipe Audits (Commit `d017cec`, `559d960`, `65cc3db`):**
+   - Added `IMAGE` page rendering support in the Thaumonomicon research viewer.
+   - Added missing TC4 recipe datapack JSONs.
+   - Fixed biome tree generation over open water bodies and balanced Tainted Land rarity.
 
 ---
 
-## 3. Feature 11 & Audit Features: Implementation in Staging
+### Phase B: Advanced Machines, Multiblocks & Essentia Logistics (Oct 26 Night)
+8. **Hungry Chest (Commit `b28d250`, `00baf23`):**
+   - Animated hungry jaws opening and snapping shut.
+   - Proximity vacuuming pulling dropped ground items directly into inventory.
+9. **Essentia Logistics & Node Viewing (Commit `997f7c4`, `b1815f4`):**
+   - Node in a Jar: Aspect viewing HUD overlay revealing contained aspect composition through the glass.
+   - Paving Stone of Travel: High-speed sprint runway providing Speed and Jump Boost.
+   - Item Grate: One-way filter dropping items downward while preventing entity passage.
+   - Alchemical Centrifuge: Multi-tiered essentia separator breaking compound essentia into constituent primal components.
+   - Essentia Crystallizer: Converts liquid tube essentia into solid crystallized aspect items.
+   - Essentia Reservoir: 256-vis high-capacity multiblock tank with tube suction points, comparator redstone level outputs, and custom BER rendering.
+10. **Alchemical Fluids & Bath Salts (Commit `2365b21`):**
+    - Liquid Death: Corrosive fluid rapidly dissolving living entities into Vitium and Mortuus essentia.
+    - Purifying Fluid: Sanctified fluid clearing warp, purging negative status effects, and converting tainted soil back to dirt.
+    - Bath Salts & Sanitizing Soap: Dissolvable salts creating relaxation pools that alleviate temporary warp and mind warp effects.
+11. **Thaumium Fortress Armor & Thaumostatic Harness (Commit `b3509ff`, `2db4d8c`):**
+    - Thaumium Fortress Armor: Heavy battle plate with Goggles of Revealing integration and 3 specialized mask upgrades: Mask of the Cruel, Mask of the Evil Eye, and Mask of the Grinning Devil.
+    - Thaumostatic Harness: Vis-driven flight chestplate powered by Potentia jars with custom GUI, throttle controls, and Hover Girdle speed synergy (+50% flight speed).
+12. **Magic Mirrors, Thaumatorium Multiblock & Arcane Spa (Commit `c27ebf0`, `6c75390`, `4ededa8`):**
+    - Magic Mirror & Hand Mirror: Pairable inter-dimensional item transport portals with particle rings.
+    - Essentia Mirror: Remote wireless essentia piping transporting liquid essentia across dimensions directly to alchemy machines.
+    - Thaumatorium Multiblock: Automated crucible crafting machine with Alchemical Constructs, Mnemonic Matrix expansion, and automated recipe selection GUI.
+    - Arcane Spa: Automated fluid mixing machine pumping heated Purifying Fluid or Bath Salt water into hollow bathing pools.
+13. **Deconstruction Table & Advanced Alchemical Furnace (Commit `0365110`, `3f2fbe5`):**
+    - Deconstruction Table: Breaks items down into constituent aspects with GUI roll chances rewarding primal aspect research points.
+    - Advanced Alchemical Furnace: 3x3x3 multiblock structure with Alchemical Brass nozzles, extreme item distillation throughput, and near-zero flux generation.
+14. **Arcane Bore, Mana Pods, Flux Scrubber & Banners (Commit `9cbd9c7`, `90433c7`, `87a6397`):**
+    - Arcane Bore & Base: Directional automated quarry drill powered by Excavation wand foci, mining tunnels and collecting blocks with Fortune/Silk Touch capabilities.
+    - Mana Pods: Cultivatable aspect pods planted on Greatwood/Silverwood logs with crossbreeding genetics yielding rare aspect beans.
+    - Flux Scrubber: Wand-activated atmospheric purifier dissipating flux goo and flux gas from the aura.
+    - Thaumcraft Banners: Wall and floor cloth decorative banners with TC4 heraldry.
+15. **Void Fortress Gear, Cultist Armor & Alumentum (Commit `b419726`, `5d5c416`):**
+    - Void Fortress Robes: Eldritch-infused master robes granting high armor, runic shielding, and self-repair.
+    - Cultist Robes, Cultist Plate, and Crimson Blade: Drops and equipment of Crimson Cultists.
+    - Primal Arrows: Elemental arrows applying Air, Fire, Water, Earth, Order, and Entropy combat effects.
+    - Throwing Alumentum: Throwable bouncing explosive grenade.
+    - Loot Bags: Common, Uncommon, and Rare bags dropping randomized loot pools.
+    - Knowledge Fragments: Research fragment notes combining into lost research papers.
+    - Sinister Lodestone: Compass pointing toward nearby Eldritch structures and nodes.
 
-All code, data, blockstates, and models for Feature 11 and missing TC4 audit features have been built and staged in:
+---
+
+### Phase C: Golemancy, Warp, Eldritch Entities & Polish (Oct 27 Morning)
+16. **Golemancy System (Feature 7 - Commit `88d537c`):**
+    - 8 Golem Material Types: Straw, Wood, Clay, Flesh, Tallow, Iron, Thaumium, and Stone.
+    - 9 Golem Animation Cores: Gather, Harvest, Guard, Decant, Fill, Empty, Use, Butcher, Sort.
+    - 6 Elemental Upgrades: Air (speed), Earth (carry capacity), Fire (combat/range), Water (vision), Order (intelligence), Entropy (haste).
+    - Accessories: Top Hat, Bow Tie, Fez, Dart Gun, Iron Plating.
+    - Golem Bell: Wand tool for binding golems to chests, inventories, and task areas.
+    - Traveling Trunk: Mobile hungry chest pet that follows the player, jumps obstacles, and stores items.
+17. **Warp System & Mental Hallucinations (Feature 8 - Commit `c40a0ea`):**
+    - Warp tracking: Temporary, Sticky, and Permanent warp storage per player.
+    - Warp Events: Phantom heartbeats, whispering audio, hallucinated spiders, Death Gaze effect (increased damage and blindness), sudden Mind Spider swarms, and Eldritch Guardian assassin spawns.
+    - Warp Milestones: Automatically triggers forbidden eldritch researches in the Thaumonomicon as warp increases.
+18. **Eldritch Mobs & Vanilla Copper Golem Integration (Feature 9 - Commit `1f7046a`):**
+    - Eldritch Guardian, Crimson Knights, Crimson Clerics, Crimson Praetor, and Eldritch Crabs.
+    - Copper Golems into Golemancy (User Options 1, 2, 4):
+      - Integrated vanilla copper golem model with Golemancy core slots, wand charging, and upgrade attachments.
+      - Disabled vanilla crafting in favor of TC4 golem crafting.
+      - Full Thaumonomicon research page with lore and progression.
+      - Waxing mechanics: Vanilla Beeswax (wears off over time) or Tallow (permanent waxing).
+19. **Feature 14 Polish & Modern Quality of Life (Commit `96de46e`, `c84c62a`):**
+    - Aspect Orbs: Primal aspect orbs dropped on monster death, research table breakdown, and node harvesting.
+    - Node Lightning FX: Ambient lightning particle arcs between vis relays and aura nodes.
+    - Shovel of the Earthmover: Directional placement preview hologram and orientation alignment.
+    - `ThaumvibeConfig`: Global JSON config file for toggling mob spawning, champion mobs, warp mechanics, and difficulty.
+    - Custom Thaumcraft Advancements tree.
+    - Jade / WTHIT Integration: Goggles of Revealing gated aspect tooltips for jars, alembics, nodes, and alchemical machines.
+    - JEI Aspect Combination Category: Research aspect synthesis lookup locked behind research discovery.
+    - Xaero's Minimap Node Radar: Displays aura nodes on minimap/worldmap, strictly visible only when wearing Goggles of Revealing.
+
+---
+
+### Phase D: Structures, Champions, Purifying Flora & Dimension (Oct 27 Midday)
+20. **Feature 10: Overworld Eldritch Structures & Cultist Portal Boss (Commit `81c2d30`, `864f94e`):**
+    - Eldritch Ring: Massive 25x25 obsidian megalith stone circle with central Eldritch Altar, hovering Eldritch Obelisk, and 4 socketed Eldritch Eyes.
+    - Eldritch Portal: Swirling 3D dimensional void vortex opening the bridge to the Outer Lands.
+    - Cultist Portal Boss: Spawns waves of Crimson Knights, Clerics, and Praetor minibosses.
+21. **Feature 12: Remaining Overworld Structures & Villages (Commit `4a4d172`):**
+    - Barrow Mounds (vault with dual spawners and hovering sinister node).
+    - Hilltop Stones (high-altitude obsidian circle with wisp spawner).
+    - Wizard Towers (3-story tower with wizard chest and arcane worktable).
+    - Banker Homes (village banker residence).
+22. **Feature 13: Champion Mobs & Ethereal Bloom (Commit `48f4d0a`, `8315d86`):**
+    - 13 Champion Modifiers: `BOLD`, `SPINED`, `ARMORED`, `MIGHTY`, `GRIM`, `WARDED`, `WARP`, `UNDYING`, `FIERY`, `SICKLY`, `VENOMOUS`, `VAMPIRIC`, `INFESTED`.
+    - Spawning: 2.5% chance on hostile spawns, colored nameplates, +30 HP, guaranteed Loot Bag and Aspect Orb drops.
+    - Ethereal Bloom Block & Tile: Purifies tainted soil/eerie biomes into plains, dissipates crusted taint and flux goo/gas in an 8-block radius.
+23. **Feature 11 & TC4 Audit Features (Staged in `feature11_staging/`):**
+    - Outer Lands Dimension (`thaumvibe:outer_lands`): Void sky, bedrock shell, ambient lighting, flight prohibition.
+    - Cellular Maze Generation (`OuterMazeHandler.java`): 16x16 cellular corridors, return portal room, key room with Runed Tablet, crab nests, library, and 4 Boss Chambers (Warden, Golem, Cultist Portal, Giant Taintacle) with Primordial Pearl reward chest.
+    - Breakable Loot Urns & Crates (`LootBlock.java`): Common, Uncommon, and Rare tiers with shatter sounds and dungeon loot.
+    - Eldritch Floor Trap (`EldritchTrapBlock.java`): Proximity magic zap, warp infliction, and electrical arcs.
+    - Eldritch Crab Spawner Vent (`EldritchCrabSpawnerBlock.java`): Wall/ceiling vent hissing smoke and dropping crabs.
+    - Eldritch Lock Mechanism (`EldritchLockBlock.java`): Socket accepting Runed Tablet, opening countdown, and disintegrating 3x3 barrier doorway.
+    - Eldritch Stairs & Barrier: Matching stone stairs and warded doorway barrier blocks.
+
+---
+
+## 3. How to Deploy the Staged Features (Feature 11 & Audit)
+
+All staged files reside in:
 `C:\Users\harri\.gemini\antigravity\scratch\feature11_staging\`
 
-### Staged Files Summary:
-1. **Java Source Files (`src/main/java/`):**
-   - `dev.thaumvibe.blocks.LootBlock`: TC4 `BlockLoot` for breakable Loot Urns and Loot Crates with 3 tiers (0: Common, 1: Uncommon, 2: Rare), instabreak, custom urnbreak audio (`TVSounds.URNBREAK`), and loot generator.
-   - `dev.thaumvibe.blocks.eldritch.EldritchTrapBlock` & `EldritchTrapBlockEntity`: TC4 `TileEldritchTrap`. 3-block proximity detection, 2.0F magic damage, warp infliction, `TVSounds.ZAP`, and `FX.bolt` electrical arcs.
-   - `dev.thaumvibe.blocks.eldritch.EldritchCrabSpawnerBlock` & `EldritchCrabSpawnerBlockEntity`: TC4 `TileEldritchCrabSpawner`. Wall/ceiling vent that hisses smoke and drops helmeted `EldritchCrabEntity`.
-   - `dev.thaumvibe.blocks.eldritch.EldritchLockBlock` & `EldritchLockBlockEntity`: TC4 `TileEldritchLock`. Keystone mechanism socket requiring `TVItems.RUNED_TABLET`. Plays pump audio (`TVSounds.PUMP`), unlocks after countdown, disintegrates adjacent 3x3 `ELDRITCH_BARRIER` doorway with portal particles, and grants access to boss chamber.
-   - `dev.thaumvibe.world.outer.Cell` & `CellLoc`: Bitmask packed cellular labyrinth chunk grid.
-   - `dev.thaumvibe.world.outer.OuterMazeHandler`: TC4 `MazeHandler` cellular maze corridor and room generator:
-     - Feature 1: Entrance/Return portal room with `ELDRITCH_ALTAR` and `ELDRITCH_PORTAL`.
-     - Feature 2-5: Boss Sanctums for Eldritch Warden, Eldritch Golem, Cultist Portal, and Giant Taintacle, guarded by `ELDRITCH_LOCK` and rewarding `TVItems.PRIMORDIAL_PEARL`.
-     - Feature 6: Key room containing `Runed Tablet` chest.
-     - Feature 7: Crab nest with ceiling `ELDRITCH_CRAB_SPAWNER` vents.
-     - Feature 8: Library room with bookshelves and `LOOT_CRATE`.
-     - Feature 0/Default: Corridors with ancient stone walls, obsidian tile flooring, eldritch traps, stairs, and loot urns.
-   - `dev.thaumvibe.world.outer.OuterMazeFeature`: Worldgen feature placed in `thaumvibe:outer_lands` dimension.
-   - `dev.thaumvibe.world.outer.OuterLandsDimension`: Dimension registration keys and server-tick flight prohibition rule enforcing TC4's flight ban inside the Outer Lands.
-2. **Data JSONs (`src/main/resources/data/thaumvibe/`):**
-   - `dimension_type/outer_lands.json`: Void sky, fixed bedrock ceiling/floor, eerie ambient lighting (0.1), no daylight cycle, no natural respawn.
-   - `dimension/outer_lands.json`: Flat generator with air layer and `thaumvibe:eerie` biome.
-   - `worldgen/feature/outer_maze.json` & `worldgen/placed_feature/outer_maze.json`.
-3. **Assets JSONs (`src/main/resources/assets/thaumvibe/`):**
-   - Blockstates & models for: `loot_urn`, `loot_crate`, `eldritch_trap`, `eldritch_crab_spawner`, `eldritch_lock`, `eldritch_barrier`, `eldritch_stairs`.
-
----
-
-## 4. How to Deploy Staged Features to Main Repository
-
-Once approved by the user, deploy using the following steps:
+To merge into the main repository:
 
 ### Step 1: Copy Staged Files
-In PowerShell:
 ```powershell
 Copy-Item -Path "C:\Users\harri\.gemini\antigravity\scratch\feature11_staging\src\*" -Destination "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini\src\" -Recurse -Force
 ```
@@ -138,7 +206,6 @@ Copy-Item -Path "C:\Users\harri\.gemini\antigravity\scratch\feature11_staging\sr
 4. In `src/main/java/dev/thaumvibe/Thaumvibe.java`:
    Add `dev.thaumvibe.world.outer.OuterLandsDimension.init();` in `onInitialize()`.
 5. In `src/main/resources/assets/thaumvibe/lang/en_us.json`:
-   Add translation entries:
    ```json
    "block.thaumvibe.loot_urn": "Loot Urn",
    "block.thaumvibe.loot_crate": "Loot Crate",
