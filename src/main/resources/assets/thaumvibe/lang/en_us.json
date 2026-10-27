@@ -1902,6 +1902,8 @@
   "block.thaumvibe.arcane_pressure_plate": "Arcane Pressure Plate",
   "block.thaumvibe.arcane_ear": "Arcane Ear",
   "block.thaumvibe.arcane_levitator": "Arcane Levitator",
+  "block.thaumvibe.hungry_chest": "Hungry Chest",
+  "container.thaumvibe.hungry_chest": "Hungry Chest",
   "item.thaumvibe.iron_arcane_key": "Iron Arcane Key",
   "item.thaumvibe.gold_arcane_key": "Gold Arcane Key",
   "tc.doorfail": "The door refuses to budge."

@@ -41,6 +41,8 @@ public final class TVBlockEntities {
 	public static final BlockEntityType<AlembicBlockEntity> ALEMBIC = register("alembic", AlembicBlockEntity::new, TVBlocks.ARCANE_ALEMBIC);
 	public static final BlockEntityType<BufferBlockEntity> BUFFER = register("buffer", BufferBlockEntity::new, TVBlocks.ESSENTIA_BUFFER);
 	public static final BlockEntityType<BellowsBlockEntity> BELLOWS = register("bellows", BellowsBlockEntity::new, TVBlocks.ARCANE_BELLOWS);
+	public static final BlockEntityType<dev.thaumvibe.tiles.HungryChestBlockEntity> HUNGRY_CHEST = register("hungry_chest",
+		dev.thaumvibe.tiles.HungryChestBlockEntity::new, TVBlocks.HUNGRY_CHEST);
 	public static final BlockEntityType<BrainJarBlockEntity> BRAIN_JAR = register("brain_jar", BrainJarBlockEntity::new, TVBlocks.BRAIN_IN_A_JAR);
 	public static final BlockEntityType<dev.thaumvibe.tiles.JarNodeBlockEntity> JAR_NODE = register("jar_node", dev.thaumvibe.tiles.JarNodeBlockEntity::new,
 		TVBlocks.NODE_IN_A_JAR);

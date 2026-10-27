@@ -1,0 +1,21 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "HUNGRYCHEST",
+  "aspects": {
+    "aer": 5,
+    "ordo": 3,
+    "perditio": 3
+  },
+  "pattern": [
+    " T ",
+    "WWW",
+    "WWW"
+  ],
+  "key": {
+    "T": "#minecraft:wooden_trapdoors",
+    "W": "#minecraft:planks"
+  },
+  "result": {
+    "id": "thaumvibe:hungry_chest"
+  }
+}

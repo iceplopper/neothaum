@@ -230,6 +230,7 @@ public final class TVBlocks {
 	public static final Block TAINT_FIBRES = register("taint_fibres", dev.thaumvibe.blocks.TaintFibreBlock::new, taint(1.0F, 5.0F).noCollision()
 		.noOcclusion().replaceable().lightLevel(dev.thaumvibe.blocks.TaintFibreBlock::lightLevel).pushReaction(PushReaction.POPPED), true);
 	public static final Block ARCANE_BELLOWS = register("arcane_bellows", BellowsBlock::new, wood(1.0F), true);
+	public static final Block HUNGRY_CHEST = register("hungry_chest", dev.thaumvibe.blocks.HungryChestBlock::new, wood(2.5F).noOcclusion(), true);
 
 	public static final Block ARCANE_FURNACE = register("arcane_furnace", dev.thaumvibe.blocks.ArcaneFurnaceBlock::new, stone(10.0F, 500.0F).sound(SoundType.STONE).noOcclusion().lightLevel(s -> s.getValue(dev.thaumvibe.blocks.ArcaneFurnaceBlock.PART) == dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.CORE || s.getValue(dev.thaumvibe.blocks.ArcaneFurnaceBlock.PART) == dev.thaumvibe.blocks.ArcaneFurnaceBlock.FurnacePart.MOUTH ? 13 : 0), false);
 	public static final Block ALCHEMICAL_FURNACE = register("alchemical_furnace", AlchemyFurnaceBlock::new,

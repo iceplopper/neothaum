@@ -144,6 +144,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_WORKTABLE, ArcaneWorktableRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.RESEARCH_TABLE, dev.thaumvibe.client.render.ResearchTableRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.CRYSTAL, dev.thaumvibe.client.render.CrystalRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.HUNGRY_CHEST, dev.thaumvibe.client.render.HungryChestRenderer::new);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("crystal"), dev.thaumvibe.client.render.CrystalRenderer.Unbaked.CODEC);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("thaumometer"), dev.thaumvibe.client.render.ThaumometerRenderer.Unbaked.CODEC);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("wand"), dev.thaumvibe.client.render.WandRenderer.Unbaked.CODEC);
@@ -152,6 +153,7 @@ public class ThaumvibeClient implements ClientModInitializer {
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("alembic"), dev.thaumvibe.client.render.AlembicRenderer.Unbaked.CODEC);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("bellows"), dev.thaumvibe.client.render.BellowsRenderer.Unbaked.CODEC);
 		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("runic_matrix"), dev.thaumvibe.client.render.RunicMatrixRenderer.Unbaked.CODEC);
+		dev.thaumvibe.client.mixin.SpecialModelRenderersAccessor.thaumvibe$idMapper().put(Thaumvibe.id("hungry_chest"), dev.thaumvibe.client.render.HungryChestRenderer.Unbaked.CODEC);
 
 		registerTints();
 		net.minecraft.client.color.item.ItemTintSources.ID_MAPPER.put(Thaumvibe.id("aspect"), dev.thaumvibe.client.render.AspectTint.MAP_CODEC);
