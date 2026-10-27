@@ -155,6 +155,39 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 				world.setBlock(ground.above(), TVBlocks.VISHROOM.defaultBlockState(), Block.UPDATE_CLIENTS);
 			}
 		}
+
+		// TC4 WorldGenManaPods: 10 attempts per chunk hanging from logs
+		for (int p = 0; p < 10; p++) {
+			int px = x + random.nextInt(16) + 8;
+			int pz = z + random.nextInt(16) + 8;
+			generateManaPods(world, random, px, 64, pz);
+		}
+	}
+
+	private static void generateManaPods(WorldGenLevel world, RandomSource random, int startX, int startY, int startZ) {
+		int x = startX;
+		int z = startZ;
+		int maxY = Math.min(128, height(world, x, z));
+		int y = startY;
+
+		while (y < maxY) {
+			BlockPos p = new BlockPos(x, y, z);
+			if (world.isEmptyBlock(p) && world.isEmptyBlock(p.below())) {
+				BlockPos above = p.above();
+				if (world.getBlockState(above).is(BlockTags.LOGS)) {
+					int age = 2 + random.nextInt(5);
+					world.setBlock(p, TVBlocks.MANA_POD.defaultBlockState().setValue(dev.thaumvibe.blocks.ManaPodBlock.AGE, age), Block.UPDATE_CLIENTS);
+					if (world.getBlockEntity(p) instanceof dev.thaumvibe.tiles.ManaPodBlockEntity be) {
+						be.checkGrowth(age);
+					}
+					break;
+				}
+			} else {
+				x = startX + random.nextInt(4) - random.nextInt(4);
+				z = startZ + random.nextInt(4) - random.nextInt(4);
+			}
+			y++;
+		}
 	}
 
 	private static boolean adjacentToWood(WorldGenLevel world, BlockPos pos) {

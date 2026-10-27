@@ -89,14 +89,16 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
     - **Arcane Bore Base:** Turret mount oriented by wand or placement, with suction 128 pulling Perditio essentia through tube network, and ejection nozzle directing mined block drops into adjacent inventories (chests/hoppers) or dispensing forward into the world.
     - **Arcane Bore:** Redstone-activated rotating drilling turret mounted above or below the base. Holds an Excavation Focus and Pickaxe tool (`ArcaneBoreMenu` / `ArcaneBoreScreen`). Casts an excavation ray with spiral dig pattern up to 64 blocks, harvesting dropped items, degrading tool durability based on block hardness, and applying tool enchantments (Fortune, Silk Touch, Efficiency, and Native Clusters). Wand right-click reorients yaw/pitch smoothly with animated turret rotation.
     - Arcane shaped recipe for Arcane Bore Base and Infusion recipe for Arcane Bore.
+- **Mana Pods & Log Planting:**
+  - **Mana Pods:** Hanging plant block (`ManaPodBlock` / `ManaPodBlockEntity` / `ManaPodRenderer`) growing from the underside of logs in magical biomes across 8 growth stages (0..7), emitting light matching its age. Right-clicking the underside of logs with Mana Beans plants them.
+  - **Aspect Breeding & Dynamics:** Cross-breeds aspects from adjacent horizontal mana pods at stage 3, producing compound aspect beans from parental combinations (`Aspect.getCombination`). Right-clicking a mature pod or harvesting yields aspect-infused Mana Beans.
+  - **Rendering:** Exact 1:1 TC4 visual model with hanging stem, pulsing glowing inner core at stage 3+ with sine-wave scale animation, and translucent outer pod shell blending from pale green to aspect-specific color.
+  - **Worldgen:** Generates naturally hanging from logs throughout the Magical Forest biome (`TCBiomeDecorFeature.generateManaPods`).
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
 
 ## Still to do
-
-### Alchemy and essentia, the rest (M)
-- **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)
 - **Misc:** the flux scrubber and banners (cultist and the Thaumcraft colours).

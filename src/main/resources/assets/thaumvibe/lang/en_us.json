@@ -1963,5 +1963,6 @@
   "item.thaumvibe.arcane_bore_base": "Arcane Bore Base",
   "block.thaumvibe.arcane_bore": "Arcane Bore",
   "item.thaumvibe.arcane_bore": "Arcane Bore",
-  "gui.bore": "Arcane Bore"
+  "gui.bore": "Arcane Bore",
+  "block.thaumvibe.mana_pod": "Mana Pod"
 }

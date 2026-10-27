@@ -303,6 +303,8 @@ public final class TVBlocks {
 		wood(2.5F).noOcclusion(), true);
 	public static final Block ARCANE_BORE = register("arcane_bore", dev.thaumvibe.blocks.ArcaneBoreBlock::new,
 		wood(2.5F).noOcclusion(), true);
+	public static final Block MANA_POD = register("mana_pod", dev.thaumvibe.blocks.ManaPodBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.5F).sound(SoundType.GRASS).noOcclusion().randomTicks().lightLevel(s -> s.getValue(dev.thaumvibe.blocks.ManaPodBlock.AGE)), false);
 
 	private static BlockBehaviour.Properties mirror() {
 		return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(1.0F, 10.0F).sound(SoundType.GLASS).noOcclusion()

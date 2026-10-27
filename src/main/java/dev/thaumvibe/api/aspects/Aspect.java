@@ -166,6 +166,21 @@ public class Aspect {
 		return compounds;
 	}
 
+	public static Aspect getCombination(Aspect a, Aspect b) {
+		if (a == null || b == null) {
+			return null;
+		}
+		for (Aspect candidate : aspects.values()) {
+			Aspect[] comps = candidate.getComponents();
+			if (comps != null && comps.length == 2) {
+				if ((comps[0] == a && comps[1] == b) || (comps[0] == b && comps[1] == a)) {
+					return candidate;
+				}
+			}
+		}
+		return null;
+	}
+
 	public String getChatcolor() {
 		return this.chatcolor;
 	}
