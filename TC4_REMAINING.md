@@ -22,6 +22,7 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Arcane Lamp:** attaches to 6 faces (floor, ceiling, wall); emits light 15 and places invisible `Blocks.LIGHT` up to 16 blocks away where light < 9; cleans up placed light blocks when broken/removed.
   - **Lamp of Growth:** attaches to 6 faces (tubes, walls, floors); draws Herba essentia via `EssentiaTransport` (1 Herba = 100 charges); scans 6-block radius and accelerates crop/plant growth with green bonemeal sparkles; dynamic lighting (15 powered, 8 unpowered).
   - **Lamp of Fertility:** attaches to 6 faces (tubes, walls, floors); draws Victus essentia via `EssentiaTransport` (up to 4 charges); breeds animal pairs in 7-block radius every 300 ticks when population <= 7; dynamic lighting (15 powered, 8 unpowered).
+  - **Hungry Chest:** 27-slot sentient wooden chest with sharp chomping teeth along the seam; scans volume above and collision bounds to automatically consume dropped items; plays eating crunch sounds and snappy jaw animation; arcane worktable recipe (wooden trapdoor + planks + 5 Aer, 3 Ordo, 3 Perditio); 3D special item model rendering.
 - **Doors, warding and redstone:**
   - arcane door (`arcane_door` block & item, unbreakable/unopenable to non-permitted, access list sync)
   - warded glass (`warded_glass`, translucent glass unbreakable to non-owners)
@@ -72,7 +73,6 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ### Artifice and utility blocks (M)
 - **Big machines:** the arcane bore and its base.
-- **Storage:** the hungry chest.
 - **Spa and deconstruction:** the arcane spa and the deconstruction table.
 - **Misc:** the flux scrubber, the grate, and banners (cultist and the Thaumcraft colours).
 
