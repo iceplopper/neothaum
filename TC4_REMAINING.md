@@ -72,6 +72,7 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)
+- **Paving Stone of Travel:** gives Speed II and Jump Boost II (+33% move speed & +1 block step height/jump) to entities walking on it; crafting recipe and artifice research.
 - **Big machines:** the arcane bore and its base.
 - **Spa and deconstruction:** the arcane spa and the deconstruction table.
 - **Misc:** the flux scrubber, the grate, and banners (cultist and the Thaumcraft colours).
@@ -109,6 +110,7 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Ethereal bloom** (a taint-cleansing plant).
 
 ### Polish and integration (S to M)
+- **Node in a Jar aspect viewing:** show node aspects, node type, and node modifier in HUD overlay when looking at a placed jarred node in the world with Goggles of Revealing or Thaumometer (parity with wild nodes and jar item tooltip).
 - **Aspect orbs** dropped by mobs on death and by the primal charm.
 - **Lightning** from nodes to players (nodeBolt).
 - **The stone compass's** pull toward sinister nodes (TC4 records them from the node tick; nothing reads that yet).
