@@ -2,8 +2,17 @@ package dev.thaumvibe.entity;
 
 import dev.thaumvibe.Thaumvibe;
 import dev.thaumvibe.entity.monster.BrainyZombie;
+import dev.thaumvibe.entity.monster.CrimsonClericEntity;
+import dev.thaumvibe.entity.monster.CrimsonKnightEntity;
+import dev.thaumvibe.entity.monster.CrimsonLeaderEntity;
+import dev.thaumvibe.entity.monster.EldritchCrabEntity;
+import dev.thaumvibe.entity.monster.EldritchGolemEntity;
+import dev.thaumvibe.entity.monster.EldritchGuardianEntity;
+import dev.thaumvibe.entity.monster.EldritchWardenEntity;
 import dev.thaumvibe.entity.monster.FireBat;
 import dev.thaumvibe.entity.monster.GiantBrainyZombie;
+import dev.thaumvibe.entity.monster.InhabitedZombieEntity;
+import dev.thaumvibe.entity.monster.MindSpiderEntity;
 import dev.thaumvibe.entity.monster.Pech;
 import dev.thaumvibe.entity.projectile.PechBlast;
 import dev.thaumvibe.entity.monster.TaintChicken;
@@ -84,6 +93,8 @@ public final class TVEntities {
 		dev.thaumvibe.entity.projectile.BottleTaint::new);
 	public static final EntityType<dev.thaumvibe.entity.projectile.AlumentumEntity> ALUMENTUM = projectile("alumentum",
 		dev.thaumvibe.entity.projectile.AlumentumEntity::new);
+	public static final EntityType<dev.thaumvibe.entity.projectile.GolemOrbEntity> GOLEM_ORB = projectile("golem_orb",
+		dev.thaumvibe.entity.projectile.GolemOrbEntity::new);
 	public static final EntityType<ThaumicSlime> THAUMIC_SLIME = mob("thaumic_slime", ThaumicSlime::new, MobCategory.MONSTER, 0.5F, 0.5F,
 		ThaumicSlime::createAttributes, b -> b, 16761087, 16744703);
 	public static final EntityType<TaintSpider> TAINT_SPIDER = mob("taint_spider", TaintSpider::new, MobCategory.MONSTER, 0.4F, 0.3F,
@@ -126,6 +137,27 @@ public final class TVEntities {
 	public static final EntityType<dev.thaumvibe.entity.monster.EldritchGuardianEntity> ELDRITCH_GUARDIAN = mob("eldritch_guardian",
 		dev.thaumvibe.entity.monster.EldritchGuardianEntity::new, MobCategory.MONSTER, 0.8F, 2.25F,
 		dev.thaumvibe.entity.monster.EldritchGuardianEntity::createAttributes, b -> b, 2236962, 4210752);
+	public static final EntityType<CrimsonKnightEntity> CULTIST_KNIGHT = mob("cultist_knight",
+		CrimsonKnightEntity::new, MobCategory.MONSTER, 0.6F, 1.95F,
+		CrimsonKnightEntity::createAttributes, b -> b, 8060928, 12951641);
+	public static final EntityType<CrimsonClericEntity> CULTIST_CLERIC = mob("cultist_cleric",
+		CrimsonClericEntity::new, MobCategory.MONSTER, 0.6F, 1.95F,
+		CrimsonClericEntity::createAttributes, b -> b, 8060928, 4849715);
+	public static final EntityType<CrimsonLeaderEntity> CULTIST_LEADER = mob("cultist_leader",
+		CrimsonLeaderEntity::new, MobCategory.MONSTER, 0.75F, 2.25F,
+		CrimsonLeaderEntity::createAttributes, b -> b, 5898240, 16766720);
+	public static final EntityType<EldritchCrabEntity> ELDRITCH_CRAB = mob("eldritch_crab",
+		EldritchCrabEntity::new, MobCategory.MONSTER, 0.8F, 0.6F,
+		EldritchCrabEntity::createAttributes, b -> b, 2763306, 9109504);
+	public static final EntityType<InhabitedZombieEntity> INHABITED_ZOMBIE = mob("inhabited_zombie",
+		InhabitedZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.95F,
+		InhabitedZombieEntity::createAttributes, b -> b, 4877128, 9109504);
+	public static final EntityType<EldritchWardenEntity> ELDRITCH_WARDEN = mob("eldritch_warden",
+		EldritchWardenEntity::new, MobCategory.MONSTER, 1.2F, 3.5F,
+		EldritchWardenEntity::createAttributes, b -> b, 1381653, 10162462);
+	public static final EntityType<EldritchGolemEntity> ELDRITCH_GOLEM = mob("eldritch_golem",
+		EldritchGolemEntity::new, MobCategory.MONSTER, 1.4F, 2.8F,
+		EldritchGolemEntity::createAttributes, b -> b, 2829110, 4251856);
 
 	private static <T extends Mob> EntityType<T> mob(String name, EntityType.EntityFactory<T> factory, MobCategory category, float w, float h,
 		Supplier<AttributeSupplier.Builder> attributes, UnaryOperator<FabricEntityType.Builder.Mob<T>> extra, int egg1, int egg2) {

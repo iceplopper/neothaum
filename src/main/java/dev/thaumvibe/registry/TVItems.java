@@ -303,6 +303,7 @@ public final class TVItems {
 	public static final Item GOLEM_STONE = register("golem_stone", p -> new GolemPlacerItem(GolemType.STONE, p), new Item.Properties().stacksTo(1));
 	public static final Item GOLEM_IRON = register("golem_iron", p -> new GolemPlacerItem(GolemType.IRON, p), new Item.Properties().stacksTo(1));
 	public static final Item GOLEM_THAUMIUM = register("golem_thaumium", p -> new GolemPlacerItem(GolemType.THAUMIUM, p), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+	public static final Item GOLEM_COPPER = register("golem_copper", p -> new GolemPlacerItem(GolemType.COPPER, p), new Item.Properties().stacksTo(1));
 
 	public static final Item GOLEM_CORE_BLANK = register("golem_core_blank", p -> new GolemCoreItem(GolemCoreType.BLANK, p), new Item.Properties());
 	public static final Item GOLEM_CORE_FILL = register("golem_core_fill", p -> new GolemCoreItem(GolemCoreType.FILL, p), new Item.Properties());

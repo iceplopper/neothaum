@@ -1,8 +1,8 @@
 # THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 4.6
-**Timestamp:** 2026-10-27 09:00 AM Eastern  
+**Timestamp:** 2026-10-27 10:15 AM Eastern  
 **Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
-**Latest Feature Completed:** Feature 8: Warp System & Warp Events (Complete: 8A, 8B, 8C)  
-**Next Feature In Progress:** Feature 9: Eldritch Mobs & Cultists (Crimson Knight, Cleric, Leader, Eldritch Crab, Inhabited Zombie, Eldritch Golem, Warden)  
+**Latest Feature Completed:** Feature 9: Eldritch Mobs & Cultists + Vanilla Copper Golem Integration (Options 1, 2, 4)  
+**Next Feature In Progress:** Feature 10: Eldritch Overworld Structures & Cultist Portals (Obelisks, Altars, Eldritch Portal, Cultist Spawners)  
 **Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` successful.
 
 ---
@@ -22,71 +22,78 @@
 
 ---
 
-## 2. Feature 8: Warp System & Warp Events (COMPLETED)
+## 2. Feature 9: Eldritch Mobs & Cultists (COMPLETED)
 
-All components of TC4 Warp Events and mechanics are implemented, wired, and verified:
-1. **Periodic Tick & Warp Calculation:**
-   - Server tick hook in `WarpEvents.init()` running on `ServerTickEvents.END_SERVER_TICK`.
-   - Checks every 2,000 ticks (100 seconds) if player does not have `TVMobEffects.WARP_WARD`.
-   - Calculates total warp: permanent + sticky + temporary + worn/held `WarpingGear` (hands, armor, baubles).
-   - Warp counter trigger threshold: random roll $r \le \sqrt{\text{warpCounter}}$.
-   - Decay of `warpCounter`: decreases by $\max(5, \lfloor\sqrt{\text{warpCounter}}\times 2\rfloor)$.
-   - Fortress Armor Grinning Devil mask reduction: decreases effect roll `eff` by $2 + \text{rand}(4)$.
-2. **Hallucinations & Warp Effects:**
-   - Whispers (`warp.text.3`): grants random primal aspect points to player's research pool.
-   - Ambient paranoia sounds (`warp.text.11`, `warp.text.12`, `warp.text.13`) with clatter and wind audio.
-   - Status effects:
-     - Vis Exhaustion (`TVMobEffects.VIS_EXHAUST`, `warp.text.1`).
-     - Thaumarhia (`TVMobEffects.THAUMARHIA`, `warp.text.15`).
-     - Unnatural Hunger (`TVMobEffects.UNNATURAL_HUNGER`, `warp.text.2`) curable with rotten flesh / zombie brain.
-     - Sun Scorned (`TVMobEffects.SUN_SCORNED`, `warp.text.5`).
-     - Death Gaze (`TVMobEffects.DEATH_GAZE`, `warp.text.4`): withers looking entities every 10 ticks.
-     - Blurred Vision (`TVMobEffects.BLURRED_VISION`).
-     - Mining fatigue (`warp.text.9`).
-     - Blindness & Night Vision (`warp.text.10`).
-     - Moment of clarity (`warp.text.14`): removes 1 sticky warp!
-3. **Entities & Encounters:**
-   - **Mind Spider (`MindSpiderEntity`):** Tiny 0.3-scale spider (`TVEntities.MIND_SPIDER`, egg `11184810, 4210752`). "Suddenly Spiders" spawns hallucinated harmless spiders (visible only to the afflicted player, 0 damage, 60s lifespan) or real dangerous ones. `MindSpiderRenderer` configured with spider eyes layer.
-   - **Eldritch Guardian (`EldritchGuardianEntity`):** 50 HP tall outer lands guardian (`TVEntities.ELDRITCH_GUARDIAN`, egg `2236962, 4210752`). 50% magic resistance, melee weakness/wither, ranged wither projectile blast, screech attack with sonic particles and temporary warp affliction. `EldritchGuardianRenderer` with custom 128x64 animated robed model.
-4. **Research Milestones & Decay:**
-   - Automatically unlocks `ELDRITCHMINOR` when actual warp > 10.
-   - Automatically unlocks `ELDRITCHWARPED` when actual warp > 25.
-   - Automatically unlocks `ELDRITCHMAJOR` when actual warp > 50.
-   - Automatic passive temporary warp decay: -1 temporary warp every 2,000 ticks.
-5. **Networking:**
-   - Added `MiscEvent` (heartbeat & mist sound/effects) in `TVNetwork.java` and `TVClientNetwork.java`.
+All 7 TC4 Eldritch mobs and projectiles have been implemented, registered, and given custom renderers:
+1. **Crimson Knight (`CrimsonKnightEntity`):**
+   - 36 HP armored melee cultist with door opening, cultist alliance check, and fragment/void seed/gold coin/crimson rites drops.
+   - Renderer: `CultistRenderer.knight` with `PLAYER_ARMOR` layer.
+2. **Crimson Cleric (`CrimsonClericEntity`):**
+   - 30 HP caster cultist firing `SmallFireball` and `GolemOrbEntity`, with ritualist chanting sounds.
+   - Renderer: `CultistRenderer.cleric`.
+3. **Crimson Praetor / Cultist Leader (`CrimsonLeaderEntity`):**
+   - 125 HP boss with boss bar, title generation ("Alberic", "Bastian", etc.), Strength II cultist aura, damage cap at 35 with enrage phase, and Rare Loot Bag drop.
+   - Renderer: `CultistRenderer.leader` with 1.25x scale.
+4. **Eldritch Crab (`EldritchCrabEntity`):**
+   - 20 HP arthropod with helmet armor (+5 defense) popping off with iron item particles at <= 50% HP, face-hugger riding leap, poison immunity, and claw attack.
+   - Renderer: `EldritchCrabRenderer`.
+5. **Inhabited Zombie (`InhabitedZombieEntity`):**
+   - 30 HP zombie wearing cultist plate armor, bursts into helmeted Eldritch Crab on death with explosion particles.
+   - Renderer: `ZombieRenderer`.
+6. **Eldritch Warden (`EldritchWardenEntity`):**
+   - 200 HP Outer Lands boss with purple boss bar, Lovecraftian titles ("Aphoom-Zhah", etc.), runic shielding, sonic screech with temporary warp affliction, and Primordial Pearl drop.
+   - Renderer: `EldritchWardenRenderer` with 1.5x scale.
+7. **Eldritch Golem (`EldritchGolemEntity`):**
+   - 250 HP Outer Lands boss with red boss bar, knockback immunity, throw melee, headless phase transition on lethal hit with electric neck-beam barrages, and Primordial Pearl drop.
+   - Renderer: `EldritchGolemRenderer` with headless neck beam support.
+8. **Golem Orb (`GolemOrbEntity`):**
+   - Homing projectile with magic shock damage and trail particles.
+   - Renderer: `FocusProjectileRenderers.GolemOrbRenderer`.
 
 ---
 
-## 3. Next Feature: Feature 9 - Eldritch Mobs & Cultists
+## 3. Copper Golem Integration (Options 1, 2, 4) (COMPLETED)
+
+Vanilla Copper Golems have been integrated into Thaumcraft 4 Golemancy:
+1. **Vanilla Crafting Disabled:** Mixin on `CarvedPumpkinBlock.getOrCreateCopperGolemBase` and `getOrCreateCopperGolemFull` to return `null`.
+2. **Material Tier (`GolemType.COPPER`):**
+   - Oxidation stages: Unaffected (0), Exposed (1), Weathered (2), Oxidized (3), scaling movement speed.
+   - Weathering decay: advances oxidation every ~24,000 ticks when unwaxed.
+   - Beeswax Honeycomb: temporary waxing (48,000 ticks) with `WAX_ON` particles.
+   - Magic Tallow: permanent waxing with enchanting sparkle particles.
+   - Axe Scraping: removes wax or de-oxidizes by 1 stage.
+   - Option 2 (Redstone Affinity): when fitted with a Use Core, automatically presses nearby unpowered buttons and switches.
+   - Option 4 (Mobile Static/Vis Battery): lightning rod behavior in thunderstorms; charges held and nearby pedestal wands with primal vis (100 cv per pulse); supercharged electric spark trail.
+3. **Placer Item & Crucible Recipe:**
+   - `TVItems.GOLEM_COPPER` placer item with 16x16 custom sprite.
+   - Crucible recipe (`golemcopper.json`): Copper Block catalyst + 4 Humanus, 4 Motus, 4 Spiritus, 4 Machina, 4 Potentia.
+4. **Thaumonomicon Entry (`GOLEMCOPPER`):**
+   - Authentic TC4 lore pages explaining attributes, oxidation/waxing mechanics, redstone button usage, and wand charging.
+5. **GUI & Rendering:**
+   - `GolemScreen`: Title bar displays live copper status `[Oxidation • Wax Status ⚡]`.
+   - `GolemRenderer`: Dynamic vanilla textures for each oxidation level (`copper_golem.png`, `_exposed.png`, `_weathered.png`, `_oxidized.png`).
+   - Slotted Chest Core Gem: 3D glowing core gem rendered on the golem's chest with signature core colors (Gather amber, Fill blue, Guard red, etc.).
+   - Magic Tallow shimmer and charged antenna sparks.
+
+---
+
+## 4. Next Feature: Feature 10 - Eldritch Overworld Structures & Portals
 
 ### Target Folders & Files
-- **Entity Implementations:**
-  - `src/main/java/dev/thaumvibe/entity/monster/`
-    - `CrimsonKnightEntity.java` (iron/crimson plate armored melee cultist with sword and shield).
-    - `CrimsonClericEntity.java` (crimson robe caster cultist with fireballs, lightning, and healing).
-    - `CrimsonLeaderEntity.java` (boss Praetor cultist with heavy fortress plate, high HP, runic shielding, and whirl attacks).
-    - `EldritchCrabEntity.java` (skittering face-hugging crab from nests).
-    - `InhabitedZombieEntity.java` (zombie hosting an eldritch crab that erupts on death).
-    - `EldritchWardenEntity.java` & `EldritchGolemEntity.java` (bosses of the Outer Lands).
-- **Entity Registries:**
-  - `src/main/java/dev/thaumvibe/entity/TVEntities.java`: register entity types and spawn eggs.
-  - `src/client/java/dev/thaumvibe/client/entity/TVEntityRenderers.java`: register client renderers.
-- **Models & Renderers:**
-  - `src/client/java/dev/thaumvibe/client/entity/`
-    - `CultistRenderer.java` (for Knights, Clerics, and Leader with TC4 cultist armor layers).
-    - `EldritchCrabRenderer.java` (animated crab legs).
-- **Parity Reference Sources:**
-  - `original/decompiled/thaumcraft/common/entities/monster/EntityCultist*.java`
-  - `original/decompiled/thaumcraft/common/entities/monster/EntityEldritchCrab.java`
-  - `original/decompiled/thaumcraft/common/entities/monster/boss/EntityEldritchWarden.java`
-  - `original/decompiled/thaumcraft/common/entities/monster/boss/EntityEldritchGolem.java`
+- **World Generation:**
+  - `src/main/java/dev/thaumvibe/world/feature/`
+    - `EldritchObeliskFeature.java` (massive black eldritch obelisk towering with sinister node inside, glyph rings, and pedestal altar below).
+    - `EldritchAltarFeature.java` (central altar holding Eldritch Eye sockets to open the portal).
+    - `EldritchRingFeature.java` (stone henge ring with central sinister altar).
+- **Portal & Mechanics:**
+  - `src/main/java/dev/thaumvibe/block/EldritchPortalBlock.java` & `EldritchAltarBlock.java`.
+  - Inserting 4 Eldritch Eyes into the altar initiates the summoning ritual, strikes lightning, and opens the spinning black Eldritch Portal.
+- **Cultist Spawner / Portal:**
+  - `CultistPortalBlock.java` or `CultistPortalEntity.java` (spinning crimson portal summoning Crimson Knights and Clerics in overworld).
 
 ---
 
-## 4. Key 1.21.4 Implementation Rules to Remember
-- `EquipmentSlot` iteration: use `for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD})`.
-- `player.getItemBySlot(EquipmentSlot.HEAD)` for helmet/mask access.
-- `ValueOutput` / `ValueInput` for block/entity NBT serialization.
-- Projectile arrows reside in `net.minecraft.world.entity.projectile.arrow.Arrow`.
-- Always verify with `./gradlew compileJava compileClientJava` after making code changes.
+## 5. Verification Checklist for Opus
+- Always run `./gradlew compileJava compileClientJava` before declaring a feature complete.
+- Verify `./gradlew build -x test` builds the jar cleanly.
+- Ensure all new JSONs (recipes, research, lang) are valid JSON.

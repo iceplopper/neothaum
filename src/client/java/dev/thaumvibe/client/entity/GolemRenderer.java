@@ -45,6 +45,10 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 		public final ItemStackRenderState carriedItem = new ItemStackRenderState();
 		public boolean hasCarriedItem = false;
 		public int carryLimit = 1;
+		public int oxidationLevel = 0;
+		public boolean waxed = false;
+		public boolean permanentlyWaxed = false;
+		public boolean charged = false;
 	}
 
 	public static class GolemModel extends EntityModel<State> {
@@ -166,6 +170,7 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 		public final ModelPart plate;
 		public final ModelPart plateLeft;
 		public final ModelPart plateRight;
+		public final ModelPart coreGem;
 
 		public final ModelPart mace;
 		public final ModelPart dartgun;
@@ -190,6 +195,7 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 			this.plate = this.body.getChild("plate");
 			this.plateLeft = this.body.getChild("plate_left");
 			this.plateRight = this.body.getChild("plate_right");
+			this.coreGem = this.body.getChild("core_gem");
 
 			this.mace = this.rightArm.getChild("mace");
 			this.dartgun = this.leftArm.getChild("dartgun");
@@ -214,6 +220,7 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 			body.addOrReplaceChild("plate", CubeListBuilder.create().texOffs(32, 40).addBox(-6.5F, -1.0F, -7.0F, 13, 12, 13), PartPose.ZERO);
 			body.addOrReplaceChild("plate_left", CubeListBuilder.create().texOffs(0, 44).addBox(-8.5F, -4.0F, -6.5F, 3, 6, 12), PartPose.ZERO);
 			body.addOrReplaceChild("plate_right", CubeListBuilder.create().texOffs(0, 44).mirror().addBox(5.5F, -4.0F, -6.5F, 3, 6, 12), PartPose.ZERO);
+			body.addOrReplaceChild("core_gem", CubeListBuilder.create().texOffs(64, 0).addBox(-2.5F, 1.5F, -6.6F, 5, 5, 1), PartPose.ZERO);
 
 			PartDefinition rightArm = r.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.offset(0.0F, -7.0F, 0.0F));
 			rightArm.addOrReplaceChild("mace", CubeListBuilder.create().texOffs(80, 26).addBox(-13.0F, 15.0F, -5.0F, 6, 8, 10), PartPose.ZERO);
@@ -253,6 +260,7 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 			this.plateRight.visible = deco.contains("P");
 			this.dartgun.visible = deco.contains("R");
 			this.mace.visible = deco.contains("M");
+			this.coreGem.visible = s.core != null && s.core != GolemCoreType.BLANK;
 
 			this.brain.visible = s.advanced;
 			this.jar.visible = s.advanced;
@@ -308,6 +316,39 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 				}
 			}
 		});
+
+		// Core Gem layer (visible core gem slotted into the golem's chest)
+		this.addLayer(new RenderLayer<>(this) {
+			@Override
+			public void submit(PoseStack ps, SubmitNodeCollector collector, int light, State state, float yRot, float xRot) {
+				if (!state.isInvisible && state.core != null && state.core != GolemCoreType.BLANK) {
+					GolemRenderer.this.decorationModel.syncAngles(GolemRenderer.this.getModel(), state);
+					int color = getCoreColor(state.core);
+					collector.order(3).submitModel(GolemRenderer.this.decorationModel, state, ps,
+						RenderTypes.entityTranslucentEmissive(DECORATION_TEXTURE), 0xF000F0,
+						OverlayTexture.NO_OVERLAY, 0xFF000000 | color);
+				}
+			}
+		});
+	}
+
+	public static int getCoreColor(GolemCoreType core) {
+		if (core == null) return 0xFFFFFF;
+		return switch (core) {
+			case FILL -> 0x00A0FF;
+			case EMPTY -> 0xFF9000;
+			case GATHER -> 0xFFCC00;
+			case HARVEST -> 0x22CC22;
+			case GUARD -> 0xDD1111;
+			case DECANT -> 0x9922EE;
+			case ALCHEMY -> 0x00DDAA;
+			case CHOP -> 0x995522;
+			case USE -> 0xAAEE22;
+			case BUTCHER -> 0x880022;
+			case SORT -> 0xDDDDFF;
+			case FISH -> 0x3388EE;
+			default -> 0x888888;
+		};
 	}
 
 	@Override
@@ -326,6 +367,10 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 		state.bootup = entity.getBootup();
 		state.inactive = entity.isInactive();
 		state.healthPercent = Math.max(0.0F, Math.min(1.0F, entity.getHealth() / entity.getMaxHealth()));
+		state.oxidationLevel = entity.getOxidationLevel();
+		state.waxed = entity.isWaxed();
+		state.permanentlyWaxed = entity.isPermanentlyWaxed();
+		state.charged = entity.isCharged();
 
 		ItemStack carried = entity.getCarried();
 		if (!carried.isEmpty()) {
@@ -339,6 +384,14 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 
 	@Override
 	public Identifier getTextureLocation(State state) {
+		if (state.golemType == GolemType.COPPER) {
+			return switch (state.oxidationLevel) {
+				case 0 -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem.png");
+				case 1 -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem_exposed.png");
+				case 2 -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem_weathered.png");
+				default -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem_oxidized.png");
+			};
+		}
 		String name = state.golemType != null ? state.golemType.name().toLowerCase() : "straw";
 		return Thaumvibe.id("textures/entity/golem/golem_" + name + ".png");
 	}

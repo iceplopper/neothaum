@@ -116,13 +116,23 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Knowledge Fragments:** Right-click consumes 1 fragment and grants 1-2 points to all 6 primal aspect pools in the player's research pool (`KnowledgeFragmentItem`). 9 fragments crafted 3x3 into `research_notes` (`knowfrag.json`).
   - **Sinister Lodestone:** Attuned stone compass (`SinisterLodestoneItem`). Tracks Sinister nodes within 256 blocks, testing the player's view cone (0.66F aperture ≈ 38°); dynamically switches model to glowing active state (`sinister_stone_active`) via `TVComponents.ACTIVE`. Harbors 1 point of permanent warp. Infusion recipe (`sinstone.json`).
 - **Golemancy:**
-  - **Golems & Cores:** Straw, Wood, Tallow, Clay, Flesh, Stone, Iron, and Thaumium golems with material-specific stats (HP, armor, fire immunity, speed, carrying capacity). Animation cores (Blank, Fill, Empty, Gather, Harvest, Guard, Decanting, Alchemy, Chop, Use, Butcher, Sorting, Fishing).
+  - **Golems & Cores:** Straw, Wood, Tallow, Clay, Flesh, Stone, Iron, Thaumium, and Copper golems with material-specific stats (HP, armor, fire immunity, speed, carrying capacity). Animation cores (Blank, Fill, Empty, Gather, Harvest, Guard, Decanting, Alchemy, Chop, Use, Butcher, Sorting, Fishing).
+  - **Copper Golem Specialization:** Dedicated metallic tier with dynamic oxidation (Unaffected, Exposed, Weathered, Oxidized) scaling movement speed; temporary waxing with beeswax (decays over time) and permanent mystical sealing with Magic Tallow; axe scraping to de-oxidize or strip wax; redstone button/lever interaction with Use Core; mobile vis accumulator charging held and pedestal wands during thunderstorms or while supercharged; vanilla spawning disabled via block pattern mixin; authentic Thaumonomicon entry (`GOLEMCOPPER`), crucible recipe, and live GUI title status (`[Oxidation • Wax Status ⚡]`).
   - **Upgrades & Accessories:** Primal elemental upgrades (Air, Earth, Fire, Water, Order, Entropy) and cosmetic accessories with functional attributes (Top Hat, Spectacles, Bowtie, Fez, Dart Launcher with ranged darts, Visor, Iron Plating, Mace Arm with heavy knockback).
-  - **Rendering & Visuals:** Exact 1:1 `ModelGolem` (128x128 texture, walking swing, carrying poses, bootup sequence), `golem_decoration.png` accessory overlay, cracked damage layer proportional to health loss, held item rendering.
+  - **Rendering & Visuals:** Exact 1:1 `ModelGolem` (128x128 texture, walking swing, carrying poses, bootup sequence), `golem_decoration.png` accessory overlay, slotted chest core gem layer glowing with signature core colors, cracked damage layer proportional to health loss, held item rendering.
   - **Configuration GUI:** `guigolem.png` interface with 6 filter ghost slots per page, slot syncing, Order upgrade color markers (16 dye colors), scroll tabs, Guard checkbuttons, Fill amount selector, Use toggles, and localized blurbs.
   - **AI Behaviors:** Item pickup/delivery, crop harvesting/replanting, tree lumberjacking, guard targeting (hostiles/animals/players/creepers) with ranged dart shooting and mace melee, butcher preserving pairs, chest restocking/emptying, and home container returning.
   - **Tools:** Golemancer's Bell (`GolemBellItem`) for linking golems to home containers and directional faces, marker placement, and picking up golems.
   - **Traveling Trunk:** Sentient companion chest (`TravelingTrunkEntity`) with 75 HP, fire and fall damage immunity, following/teleporting owner, 27/36 slot inventory (`GENERIC_9x3` / `GENERIC_9x4`), upgrade traits (Air speed, Earth extra row, Fire guard, Water lock & damage reduction, Order item preservation on pickup, Entropy vacuum suction), food feeding healing, and animated chest lid. Spawner item (`traveling_trunk` / `trunk_spawner`).
+- **Eldritch Mobs & Cultists:**
+  - **Crimson Knight:** Melee armored cultist (`CrimsonKnightEntity` / `CultistRenderer.knight`) with heavy cultist plate, sword, door opening, and alliance mechanics.
+  - **Crimson Cleric:** Caster cultist (`CrimsonClericEntity` / `CultistRenderer.cleric`) launching fireballs, homing eldritch orbs, and chanting ritual buffs.
+  - **Crimson Praetor (Cultist Leader):** Colossal 125 HP boss (`CrimsonLeaderEntity` / `CultistRenderer.leader`), unique historical titles, boss bar, Strength II cultist aura, 35-damage cap with enrage phase, and Rare Loot Bag drop.
+  - **Eldritch Crab:** 20 HP skittering arthropod (`EldritchCrabEntity` / `EldritchCrabRenderer`), helmet armor (+5 defense) popping off at <= 50% HP, face-hugger head leaping, and crab claw attacks.
+  - **Inhabited Zombie:** 30 HP cultist-armored zombie (`InhabitedZombieEntity` / `ZombieRenderer`), erupting into a helmeted Eldritch Crab on death with explosive particles.
+  - **Eldritch Warden:** 200 HP Outer Lands boss (`EldritchWardenEntity` / `EldritchWardenRenderer`), Lovecraftian titles, runic shielding, sonic screech with temporary warp affliction, and Primordial Pearl drop.
+  - **Eldritch Golem:** 250 HP Outer Lands boss (`EldritchGolemEntity` / `EldritchGolemRenderer`), knockback immunity, fling attacks, headless phase transition on near-death with electric neck-beam barrages, and Primordial Pearl drop.
+  - **Golem Orb:** Homing eldritch projectile (`GolemOrbEntity` / `FocusProjectileRenderers.GolemOrbRenderer`) with magic shock damage and colored particle trails.
 - **Warp System & Mechanics:**
   - **Periodic Warp Check:** Server-tick evaluator running every 2,000 ticks (100s) on active players without Warp Ward (`WarpEvents.checkWarpEvent`). Total warp calculates permanent + sticky + temporary + held/worn `WarpingGear`.
   - **Counter & Decay:** Dynamic `warpCounter` with square-root threshold triggering; decays by $\max(5, \lfloor\sqrt{\text{warpCounter}}\times 2\rfloor)$. Automatic passive temporary warp decay (-1 per 2,000 ticks).
@@ -138,9 +148,8 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 ### Eldritch and the Outer Lands (L)
 - **The Outer Lands dimension:** maze generation, rooms, locks, nests and boss rooms.
 - **Overworld structures:** eldritch obelisks, altars and rings, the eldritch portal and keys.
-- **Mobs:** eldritch warden, eldritch golem (bosses), eldritch crab, inhabited zombie, and the watcher.
-- **Cultists:** crimson knight, cleric and leader (boss), and the cultist portal.
-- **Items:** the primordial pearl, crimson rites, eldritch eye and runed tablet.
+- **Cultist Portal:** portal block and summoning ritual spawning crimson cultists.
+- **The Watcher:** eldritch eye turret entity in the Outer Lands maze.
 - **Champion mobs:** the champion modifiers TC4 adds to some mobs (the giant taintacle uses one).
 - **Research:** eldritch minor and major, forbidden knowledge.
 

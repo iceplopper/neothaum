@@ -14,7 +14,8 @@ public enum GolemType implements StringRepresentable {
 	FLESH("flesh", 15, 6, 0.35F, false, 2, 4, 40, 1),
 	STONE("stone", 30, 12, 0.32F, true, 1, 16, 100, 3),
 	IRON("iron", 35, 15, 0.31F, true, 1, 32, 125, 4),
-	THAUMIUM("thaumium", 40, 15, 0.32F, true, 2, 32, 100, 4);
+	THAUMIUM("thaumium", 40, 15, 0.32F, true, 2, 32, 100, 4),
+	COPPER("copper", 25, 9, 0.31F, true, 1, 8, 80, 2);
 
 	private final String name;
 	public final int health;

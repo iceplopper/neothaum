@@ -62,6 +62,10 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 	private static final EntityDataAccessor<BlockPos> HOME_POS = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.BLOCK_POS);
 	private static final EntityDataAccessor<Integer> HOME_FACING = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<ItemStack> CARRIED_ITEM = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.ITEM_STACK);
+	private static final EntityDataAccessor<Integer> OXIDATION = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> WAXED_TICKS = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> PERM_WAXED = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> CHARGED_TICKS = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.INT);
 
 	private List<Integer> upgrades = new ArrayList<>();
 	private UUID ownerId;
@@ -100,6 +104,10 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 		builder.define(HOME_POS, BlockPos.ZERO);
 		builder.define(HOME_FACING, Direction.UP.get3DDataValue());
 		builder.define(CARRIED_ITEM, ItemStack.EMPTY);
+		builder.define(OXIDATION, 0);
+		builder.define(WAXED_TICKS, 0);
+		builder.define(PERM_WAXED, false);
+		builder.define(CHARGED_TICKS, 0);
 	}
 
 	@Override
@@ -200,6 +208,46 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 	public void setHomeArea(BlockPos pos, Direction facing) {
 		this.entityData.set(HOME_POS, pos.immutable());
 		this.entityData.set(HOME_FACING, facing.get3DDataValue());
+	}
+
+	public int getOxidationLevel() {
+		return this.entityData.get(OXIDATION);
+	}
+
+	public void setOxidationLevel(int level) {
+		this.entityData.set(OXIDATION, Math.max(0, Math.min(3, level)));
+	}
+
+	public int getWaxedTicks() {
+		return this.entityData.get(WAXED_TICKS);
+	}
+
+	public void setWaxedTicks(int ticks) {
+		this.entityData.set(WAXED_TICKS, Math.max(0, ticks));
+	}
+
+	public boolean isPermanentlyWaxed() {
+		return this.entityData.get(PERM_WAXED);
+	}
+
+	public void setPermanentlyWaxed(boolean perm) {
+		this.entityData.set(PERM_WAXED, perm);
+	}
+
+	public boolean isWaxed() {
+		return this.isPermanentlyWaxed() || this.getWaxedTicks() > 0;
+	}
+
+	public int getChargedTicks() {
+		return this.entityData.get(CHARGED_TICKS);
+	}
+
+	public void setChargedTicks(int ticks) {
+		this.entityData.set(CHARGED_TICKS, Math.max(0, ticks));
+	}
+
+	public boolean isCharged() {
+		return this.getChargedTicks() > 0;
 	}
 
 	public ItemStack getCarriedItem() {
@@ -380,6 +428,83 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 			if (type.fireResist && this.isOnFire()) {
 				this.clearFire();
 			}
+
+			// Copper Golem: oxidation, static discharge, wand charging, and button affinity
+			if (type == GolemType.COPPER) {
+				if (this.getWaxedTicks() > 0) {
+					this.setWaxedTicks(this.getWaxedTicks() - 1);
+				} else if (!this.isPermanentlyWaxed()) {
+					if (this.random.nextInt(24000) == 0 && this.getOxidationLevel() < 3) {
+						this.setOxidationLevel(this.getOxidationLevel() + 1);
+					}
+				}
+
+				if (this.getChargedTicks() > 0) {
+					this.setChargedTicks(this.getChargedTicks() - 1);
+				}
+
+				// Thunderstorm attraction
+				if (this.level().isThundering() && this.level().canSeeSky(this.blockPosition()) && this.random.nextInt(1200) == 0) {
+					this.setChargedTicks(600);
+					this.setOxidationLevel(0);
+					if (this.level() instanceof ServerLevel sl) {
+						sl.playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.SHOCK, SoundSource.NEUTRAL, 1.0F, 1.2F);
+						sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, this.getX(), this.getY() + 0.8, this.getZ(), 20, 0.3, 0.3, 0.3, 0.1);
+					}
+				}
+
+				// Wand charging (Option 4)
+				if (this.isCharged() || this.level().isThundering()) {
+					if (this.tickCount % 20 == 0 && this.level() instanceof ServerLevel sl) {
+						for (Player p : this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(6.0))) {
+							for (InteractionHand h : InteractionHand.values()) {
+								ItemStack item = p.getItemInHand(h);
+								if (item.getItem() instanceof dev.thaumvibe.items.WandItem) {
+									for (dev.thaumvibe.api.aspects.Aspect a : dev.thaumvibe.api.aspects.Aspect.getPrimalAspects()) {
+										dev.thaumvibe.items.WandItem.addVis(item, a, 100, true);
+									}
+									sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, p.getX(), p.getY() + 1.0, p.getZ(), 3, 0.1, 0.1, 0.1, 0.02);
+								}
+							}
+						}
+					}
+				}
+
+				// Button / redstone pulsing with Use Core (Option 2)
+				if (this.getCore() == dev.thaumvibe.golem.GolemCoreType.USE.id && this.tickCount % 100 == 0) {
+					int rad = 8;
+					for (BlockPos p : BlockPos.betweenClosed(this.blockPosition().offset(-rad, -2, -rad), this.blockPosition().offset(rad, 2, rad))) {
+						var state = this.level().getBlockState(p);
+						if (state.getBlock() instanceof net.minecraft.world.level.block.ButtonBlock btn) {
+							if (!state.getValue(net.minecraft.world.level.block.ButtonBlock.POWERED)) {
+								btn.press(state, this.level(), p, null);
+								this.level().playSound(null, p, net.minecraft.sounds.SoundEvents.COPPER_BULB_TURN_ON, SoundSource.BLOCKS, 1.0F, 1.0F);
+								break;
+							}
+						}
+					}
+				}
+
+				// Movement speed scaling by oxidation level
+				var speedAttr = this.getAttribute(Attributes.MOVEMENT_SPEED);
+				if (speedAttr != null) {
+					float baseSpeed = switch (this.getOxidationLevel()) {
+						case 0 -> 0.31F;
+						case 1 -> 0.28F;
+						case 2 -> 0.25F;
+						default -> 0.21F;
+					};
+					if (this.isCharged()) {
+						baseSpeed *= 1.3F;
+					}
+					speedAttr.setBaseValue(baseSpeed);
+				}
+			}
+		}
+
+		if (this.level().isClientSide() && this.getGolemType() == GolemType.COPPER && this.isCharged() && this.random.nextInt(3) == 0) {
+			this.level().addParticle(ParticleTypes.ELECTRIC_SPARK, this.getX() + (this.random.nextDouble() - 0.5) * 0.4,
+				this.getY() + 0.8, this.getZ() + (this.random.nextDouble() - 0.5) * 0.4, 0, 0.02, 0);
 		}
 	}
 
@@ -406,6 +531,59 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 			return InteractionResult.SUCCESS;
 		}
 
+		// Copper Golem waxing with Beeswax Honeycomb (temporary):
+		if (this.getGolemType() == GolemType.COPPER && held.is(Items.HONEYCOMB)) {
+			if (!this.isPermanentlyWaxed()) {
+				if (!player.getAbilities().instabuild) {
+					held.shrink(1);
+				}
+				this.setWaxedTicks(48000);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), net.minecraft.sounds.SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.WAX_ON, this.getX(), this.getY() + 0.5, this.getZ(), 10, 0.2, 0.2, 0.2, 0.0);
+				}
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		// Copper Golem waxing with Magic Tallow (permanent):
+		if (this.getGolemType() == GolemType.COPPER && held.is(TVItems.MAGIC_TALLOW)) {
+			if (!this.isPermanentlyWaxed()) {
+				if (!player.getAbilities().instabuild) {
+					held.shrink(1);
+				}
+				this.setPermanentlyWaxed(true);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.UPGRADE, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.ENCHANT, this.getX(), this.getY() + 0.5, this.getZ(), 15, 0.3, 0.3, 0.3, 0.05);
+					sl.sendParticles(ParticleTypes.GLOW, this.getX(), this.getY() + 0.5, this.getZ(), 5, 0.2, 0.2, 0.2, 0.02);
+				}
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		// Copper Golem scraping with Axe (removes wax or removes oxidation stage):
+		if (this.getGolemType() == GolemType.COPPER && held.is(net.minecraft.tags.ItemTags.AXES)) {
+			if (this.isWaxed()) {
+				this.setPermanentlyWaxed(false);
+				this.setWaxedTicks(0);
+				held.hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), net.minecraft.sounds.SoundEvents.AXE_WAX_OFF, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.WAX_OFF, this.getX(), this.getY() + 0.5, this.getZ(), 10, 0.2, 0.2, 0.2, 0.0);
+				}
+				return InteractionResult.SUCCESS;
+			} else if (this.getOxidationLevel() > 0) {
+				this.setOxidationLevel(this.getOxidationLevel() - 1);
+				held.hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), net.minecraft.sounds.SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.SCRAPE, this.getX(), this.getY() + 0.5, this.getZ(), 10, 0.2, 0.2, 0.2, 0.0);
+				}
+				return InteractionResult.SUCCESS;
+			}
+		}
+
 		// Shears: remove all decorations
 		if (held.is(Items.SHEARS) && !this.getDecoration().isEmpty()) {
 			if (!this.level().isClientSide()) {
@@ -421,6 +599,59 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.CAMERACLACK, SoundSource.NEUTRAL, 1.0F, 1.0F);
 			}
 			return InteractionResult.SUCCESS;
+		}
+
+		// Copper Golem waxing with Beeswax Honeycomb (temporary):
+		if (this.getGolemType() == GolemType.COPPER && held.is(Items.HONEYCOMB)) {
+			if (!this.isPermanentlyWaxed()) {
+				if (!player.getAbilities().instabuild) {
+					held.shrink(1);
+				}
+				this.setWaxedTicks(48000);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), net.minecraft.sounds.SoundEvents.HONEYCOMB_WAX_ON, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.WAX_ON, this.getX(), this.getY() + 0.5, this.getZ(), 10, 0.2, 0.2, 0.2, 0.0);
+				}
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		// Copper Golem waxing with Magic Tallow (permanent):
+		if (this.getGolemType() == GolemType.COPPER && held.is(TVItems.MAGIC_TALLOW)) {
+			if (!this.isPermanentlyWaxed()) {
+				if (!player.getAbilities().instabuild) {
+					held.shrink(1);
+				}
+				this.setPermanentlyWaxed(true);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.UPGRADE, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.ENCHANT, this.getX(), this.getY() + 0.5, this.getZ(), 15, 0.3, 0.3, 0.3, 0.05);
+					sl.sendParticles(ParticleTypes.GLOW, this.getX(), this.getY() + 0.5, this.getZ(), 5, 0.2, 0.2, 0.2, 0.02);
+				}
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		// Copper Golem scraping with Axe (removes wax or removes oxidation stage):
+		if (this.getGolemType() == GolemType.COPPER && held.is(net.minecraft.tags.ItemTags.AXES)) {
+			if (this.isWaxed()) {
+				this.setPermanentlyWaxed(false);
+				this.setWaxedTicks(0);
+				held.hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), net.minecraft.sounds.SoundEvents.AXE_WAX_OFF, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.WAX_OFF, this.getX(), this.getY() + 0.5, this.getZ(), 10, 0.2, 0.2, 0.2, 0.0);
+				}
+				return InteractionResult.SUCCESS;
+			} else if (this.getOxidationLevel() > 0) {
+				this.setOxidationLevel(this.getOxidationLevel() - 1);
+				held.hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), net.minecraft.sounds.SoundEvents.AXE_SCRAPE, SoundSource.PLAYERS, 1.0F, 1.0F);
+				if (this.level() instanceof ServerLevel sl) {
+					sl.sendParticles(ParticleTypes.SCRAPE, this.getX(), this.getY() + 0.5, this.getZ(), 10, 0.2, 0.2, 0.2, 0.0);
+				}
+				return InteractionResult.SUCCESS;
+			}
 		}
 
 		// Core installation:
@@ -488,6 +719,7 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 			case STONE -> new ItemStack(TVItems.GOLEM_STONE);
 			case IRON -> new ItemStack(TVItems.GOLEM_IRON);
 			case THAUMIUM -> new ItemStack(TVItems.GOLEM_THAUMIUM);
+			case COPPER -> new ItemStack(TVItems.GOLEM_COPPER);
 		};
 
 		if (this.isAdvanced()) {
@@ -535,6 +767,10 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 		output.putInt("HomeY", this.getHomePos().getY());
 		output.putInt("HomeZ", this.getHomePos().getZ());
 		output.putInt("HomeFacing", this.entityData.get(HOME_FACING));
+		output.putInt("Oxidation", this.getOxidationLevel());
+		output.putInt("WaxedTicks", this.getWaxedTicks());
+		output.putBoolean("PermWaxed", this.isPermanentlyWaxed());
+		output.putInt("ChargedTicks", this.getChargedTicks());
 		output.store("CarriedItem", ItemStack.OPTIONAL_CODEC, this.getCarriedItem());
 		output.store("Upgrades", com.mojang.serialization.Codec.INT.listOf(), this.upgrades);
 		if (this.ownerId != null) {
@@ -561,6 +797,10 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 		int hz = input.getIntOr("HomeZ", 0);
 		int hf = input.getIntOr("HomeFacing", Direction.UP.get3DDataValue());
 		this.setHomeArea(new BlockPos(hx, hy, hz), Direction.from3DDataValue(hf));
+		this.setOxidationLevel(input.getIntOr("Oxidation", 0));
+		this.setWaxedTicks(input.getIntOr("WaxedTicks", 0));
+		this.setPermanentlyWaxed(input.getBooleanOr("PermWaxed", false));
+		this.setChargedTicks(input.getIntOr("ChargedTicks", 0));
 		this.setCarriedItem(input.read("CarriedItem", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
 		this.setUpgrades(input.read("Upgrades", com.mojang.serialization.Codec.INT.listOf()).orElse(List.of()));
 		input.child("FilterItems").ifPresent(c -> ContainerHelper.loadAllItems(c, this.filterItems));

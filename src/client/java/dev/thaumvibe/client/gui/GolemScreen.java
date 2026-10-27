@@ -124,6 +124,25 @@ public class GolemScreen extends AbstractContainerScreen<GolemMenu> {
 	protected void extractLabels(GuiGraphicsExtractor g, int mouseX, int mouseY) {
 		if (this.golem == null) return;
 
+		// Copper Golem status indicator in title header
+		if (this.golem.getGolemType() == dev.thaumvibe.golem.GolemType.COPPER) {
+			String oxStr = switch (this.golem.getOxidationLevel()) {
+				case 0 -> "Unaffected";
+				case 1 -> "Exposed";
+				case 2 -> "Weathered";
+				default -> "Oxidized";
+			};
+			int oxColor = switch (this.golem.getOxidationLevel()) {
+				case 0 -> 0xDE7744;
+				case 1 -> 0xA87755;
+				case 2 -> 0x669988;
+				default -> 0x44AA88;
+			};
+			String waxStr = this.golem.isPermanentlyWaxed() ? "Tallow Waxed" : (this.golem.isWaxed() ? "Waxed" : "Unwaxed");
+			String fullStatus = oxStr + " • " + waxStr + (this.golem.isCharged() ? " ⚡" : "");
+			g.text(this.font, Component.literal(fullStatus), 55, 6, oxColor, false);
+		}
+
 		int core = this.golem.getCore();
 
 		// Blurb or Threat message on left side

@@ -6,7 +6,8 @@
 		"FurnaceAccessor",
 		"LivingEntityHurtMixin",
 		"NoteBlockMixin",
-		"OverworldBiomeBuilderMixin"
+		"OverworldBiomeBuilderMixin",
+		"CarvedPumpkinBlockMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
