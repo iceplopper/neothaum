@@ -64,10 +64,10 @@ public class CrucibleRenderer implements BlockEntityRenderer<CrucibleBlockEntity
 		float x1 = 14.0F / 16.0F;
 		float z0 = 2.0F / 16.0F;
 		float z1 = 14.0F / 16.0F;
-		float u0 = sprite.getU(2.0F);
-		float u1 = sprite.getU(14.0F);
-		float v0 = sprite.getV(2.0F);
-		float v1 = sprite.getV(14.0F);
+		float u0 = sprite.getU(x0);
+		float u1 = sprite.getU(x1);
+		float v0 = sprite.getV(z0);
+		float v1 = sprite.getV(z1);
 
 		collector.submitCustomGeometry(ps, RenderTypes.translucentMovingBlock(), (pose, vc) -> {
 			// Top surface (viewed from above looking down)
