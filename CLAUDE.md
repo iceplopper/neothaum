@@ -74,12 +74,16 @@ All commands run in PowerShell in the repository root (`C:\Users\harri\Documents
 
 ---
 
-## 4. Most Recent Progress (Feature 14 Complete)
-- **Aspect Orbs:** `AspectOrbEntity` (gravity, wand vis filling, research knowledge pool filling), `AspectOrbRenderer` (aspect-tinted billboard glow), `AspectOrbEvents` (dropped on mob kills by players).
-- **Node Lightning Strikes:** Uncontained unstable, hungry, and sinister aura nodes periodically discharge `TVNetwork.sendZap` lightning bolts at nearby living entities dealing magic damage.
-- **Shovel of the Earthmover Polish:**
-  - `ArchitectOverlay` hooked for `ElementalShovelItem` to render the authentic shifting warded glass 3x3 placement preview.
-  - Misc key (`G`) toggles placement orientation (Parallel, Vertical, Horizontal) with action bar notifications and click audio.
-- **Config System:** `ThaumvibeConfig` reads and writes `config/thaumvibe.json` (controls taint spread, node rarity, mob spawn chances, aspect orb drop chance, warp toggles).
-- **Advancement Tree:** Authentic TC4 advancements in `data/thaumvibe/advancement/` (`root`, `goggles`, `crucible`, `infusion`, `golem`, `warp`, `eldritch`) with full localizations.
-- **Full Verification:** Zero compiler errors, clean Gradle build.
+## 4. Most Recent Progress (Feature 10 & Addons Complete)
+- **Feature 10 (Eldritch Overworld Structures, Altars, Obelisks, Portals & Cultist Portal Boss) Completed (Commit `81c2d30`):**
+  - Eldritch Blocks: Obsidian Tile, Eldritch Stone (smooth, cracked, glyph variants), Eldritch Altar, Eldritch Capstone, Eldritch Obelisk, and Eldritch Portal.
+  - Eldritch Altar Ritual: Accepts 1 to 4 Eldritch Eyes. Summons cultist/guardian defenders when armed. 100-primal vis wand strike triggers lightning, opens Eldritch Portal above.
+  - Eldritch Obelisk: Monolith shaft buffing eldritch mobs with Strength and Resistance within 6 blocks.
+  - Eldritch Portal: Swirling dark dimensional tear with animated vortex BER, ambient audio loop, granting `ENTEROUTER` research upon contact.
+  - Cultist Portal Boss: 500 HP stationary boss mob with boss bar, proximity zap defenses, 12 summoning waves (Knights, Clerics, cardinal Crimson Banners), summoning the Crimson Praetor, and dropping Primordial Pearl and Crimson Rites upon defeat.
+  - Overworld Generation: `EldritchRingFeature` hooked into `TCWorldFeature` (1/66 chunk chance) generating authentic 7x7 obsidian tile ring with perimeter pillars, central altar, hovering sinister node, cap, and obelisk shaft.
+- **Addon Integrations (Jade/WTHIT, JEI, Minimap Radar):**
+  - Jade block tooltips for Nodes, Crucibles, Jars, and Matrix (strictly gated behind Goggles of Revealing).
+  - JEI Aspect Decomposition recipe category (obscures undiscovered aspects as runes).
+  - Xaero's Minimap node radar (color-coded waypoints strictly visible only while wearing Goggles of Revealing).
+- **Next Task:** Feature 11 (The Outer Lands Dimension).
