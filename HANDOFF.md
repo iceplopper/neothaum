@@ -1,99 +1,71 @@
-# THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 4.6
-**Timestamp:** 2026-10-27 10:15 AM Eastern  
+# THAUMVIBE 4 - HANDOFF TO CLAUDE OPUS 5.5 (CLAUDE CODE)
+**Timestamp:** 2026-10-27 11:05 AM Eastern  
 **Repository:** `C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini` (branch `main`)  
-**Latest Feature Completed:** Feature 9: Eldritch Mobs & Cultists + Vanilla Copper Golem Integration (Options 1, 2, 4)  
-**Next Feature In Progress:** Feature 10: Eldritch Overworld Structures & Cultist Portals (Obelisks, Altars, Eldritch Portal, Cultist Spawners)  
-**Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` successful.
+**Latest Feature Completed:** Feature 14: Final Polish & Immersion Details (Aspect Orbs, Node Lightning, Earthmover Shovel Preview & Keybind, Configuration, Advancements)  
+**Next Feature Up:** Addon Package & Integrations (or Feature 10: Eldritch Overworld Structures & Outer Lands)  
+**Build Status:** `./gradlew compileJava compileClientJava` passes with 0 errors. Full `./gradlew build -x test` builds cleanly.
 
 ---
 
-## 1. Quick Reference & Context
+## 1. Quick Takeover Guide for Claude Code CLI
 
-- **Goal:** Re-create Thaumcraft 4.2.3.5 for Minecraft 1.21.4 (Fabric) with exact 1:1 parity (logic, visual presentation, sound, math, recipes, research).
-- **Decompiled TC4 Sources:** `original/decompiled/` contains the full decompiled TC4 source (`thaumcraft.*`).
-- **Extracted TC4 Assets:** `original/extracted/` contains the original textures, models, and audio.
-- **Master Roadmap:** [TC4_REMAINING.md](TC4_REMAINING.md) — keep this file updated as features are finished.
-- **Build & Verification Command:**
-  ```powershell
-  cd "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini"
-  ./gradlew compileJava compileClientJava
-  ./gradlew build -x test
-  ```
-
----
-
-## 2. Feature 9: Eldritch Mobs & Cultists (COMPLETED)
-
-All 7 TC4 Eldritch mobs and projectiles have been implemented, registered, and given custom renderers:
-1. **Crimson Knight (`CrimsonKnightEntity`):**
-   - 36 HP armored melee cultist with door opening, cultist alliance check, and fragment/void seed/gold coin/crimson rites drops.
-   - Renderer: `CultistRenderer.knight` with `PLAYER_ARMOR` layer.
-2. **Crimson Cleric (`CrimsonClericEntity`):**
-   - 30 HP caster cultist firing `SmallFireball` and `GolemOrbEntity`, with ritualist chanting sounds.
-   - Renderer: `CultistRenderer.cleric`.
-3. **Crimson Praetor / Cultist Leader (`CrimsonLeaderEntity`):**
-   - 125 HP boss with boss bar, title generation ("Alberic", "Bastian", etc.), Strength II cultist aura, damage cap at 35 with enrage phase, and Rare Loot Bag drop.
-   - Renderer: `CultistRenderer.leader` with 1.25x scale.
-4. **Eldritch Crab (`EldritchCrabEntity`):**
-   - 20 HP arthropod with helmet armor (+5 defense) popping off with iron item particles at <= 50% HP, face-hugger riding leap, poison immunity, and claw attack.
-   - Renderer: `EldritchCrabRenderer`.
-5. **Inhabited Zombie (`InhabitedZombieEntity`):**
-   - 30 HP zombie wearing cultist plate armor, bursts into helmeted Eldritch Crab on death with explosion particles.
-   - Renderer: `ZombieRenderer`.
-6. **Eldritch Warden (`EldritchWardenEntity`):**
-   - 200 HP Outer Lands boss with purple boss bar, Lovecraftian titles ("Aphoom-Zhah", etc.), runic shielding, sonic screech with temporary warp affliction, and Primordial Pearl drop.
-   - Renderer: `EldritchWardenRenderer` with 1.5x scale.
-7. **Eldritch Golem (`EldritchGolemEntity`):**
-   - 250 HP Outer Lands boss with red boss bar, knockback immunity, throw melee, headless phase transition on lethal hit with electric neck-beam barrages, and Primordial Pearl drop.
-   - Renderer: `EldritchGolemRenderer` with headless neck beam support.
-8. **Golem Orb (`GolemOrbEntity`):**
-   - Homing projectile with magic shock damage and trail particles.
-   - Renderer: `FocusProjectileRenderers.GolemOrbRenderer`.
+When taking over this session within Claude Code:
+1. Ensure your working directory is:
+   ```powershell
+   cd "C:\Users\harri\Documents\Phoenix Code\thaumvibe-4-gemini"
+   ```
+2. Verify the project state with git and gradle:
+   ```powershell
+   git status
+   ./gradlew compileJava compileClientJava
+   ```
+3. Check `TC4_REMAINING.md` for overall progress against the original TC4 4.2.3.5 specification.
+4. Check `CLAUDE.md` for project architecture, rules, and creative tab guidelines.
 
 ---
 
-## 3. Copper Golem Integration (Options 1, 2, 4) (COMPLETED)
+## 2. Summary of Feature 14 (Completed & Committed)
 
-Vanilla Copper Golems have been integrated into Thaumcraft 4 Golemancy:
-1. **Vanilla Crafting Disabled:** Mixin on `CarvedPumpkinBlock.getOrCreateCopperGolemBase` and `getOrCreateCopperGolemFull` to return `null`.
-2. **Material Tier (`GolemType.COPPER`):**
-   - Oxidation stages: Unaffected (0), Exposed (1), Weathered (2), Oxidized (3), scaling movement speed.
-   - Weathering decay: advances oxidation every ~24,000 ticks when unwaxed.
-   - Beeswax Honeycomb: temporary waxing (48,000 ticks) with `WAX_ON` particles.
-   - Magic Tallow: permanent waxing with enchanting sparkle particles.
-   - Axe Scraping: removes wax or de-oxidizes by 1 stage.
-   - Option 2 (Redstone Affinity): when fitted with a Use Core, automatically presses nearby unpowered buttons and switches.
-   - Option 4 (Mobile Static/Vis Battery): lightning rod behavior in thunderstorms; charges held and nearby pedestal wands with primal vis (100 cv per pulse); supercharged electric spark trail.
-3. **Placer Item & Crucible Recipe:**
-   - `TVItems.GOLEM_COPPER` placer item with 16x16 custom sprite.
-   - Crucible recipe (`golemcopper.json`): Copper Block catalyst + 4 Humanus, 4 Motus, 4 Spiritus, 4 Machina, 4 Potentia.
-4. **Thaumonomicon Entry (`GOLEMCOPPER`):**
-   - Authentic TC4 lore pages explaining attributes, oxidation/waxing mechanics, redstone button usage, and wand charging.
-5. **GUI & Rendering:**
-   - `GolemScreen`: Title bar displays live copper status `[Oxidation • Wax Status ⚡]`.
-   - `GolemRenderer`: Dynamic vanilla textures for each oxidation level (`copper_golem.png`, `_exposed.png`, `_weathered.png`, `_oxidized.png`).
-   - Slotted Chest Core Gem: 3D glowing core gem rendered on the golem's chest with signature core colors (Gather amber, Fill blue, Guard red, etc.).
-   - Magic Tallow shimmer and charged antenna sparks.
-
----
-
-## 4. Next Feature: Feature 10 - Eldritch Overworld Structures & Portals
-
-### Target Folders & Files
-- **World Generation:**
-  - `src/main/java/dev/thaumvibe/world/feature/`
-    - `EldritchObeliskFeature.java` (massive black eldritch obelisk towering with sinister node inside, glyph rings, and pedestal altar below).
-    - `EldritchAltarFeature.java` (central altar holding Eldritch Eye sockets to open the portal).
-    - `EldritchRingFeature.java` (stone henge ring with central sinister altar).
-- **Portal & Mechanics:**
-  - `src/main/java/dev/thaumvibe/block/EldritchPortalBlock.java` & `EldritchAltarBlock.java`.
-  - Inserting 4 Eldritch Eyes into the altar initiates the summoning ritual, strikes lightning, and opens the spinning black Eldritch Portal.
-- **Cultist Spawner / Portal:**
-  - `CultistPortalBlock.java` or `CultistPortalEntity.java` (spinning crimson portal summoning Crimson Knights and Clerics in overworld).
+Commit `96de46e` implemented the full Feature 14 polish suite:
+1. **Aspect Orbs:**
+   - `AspectOrbEntity.java`: Floating primal vis orbs with physics, player gravitation, wand vis charging, and research knowledge pool filling.
+   - `TVEntities.ASPECT_ORB`: Registered entity.
+   - `AspectOrbRenderer.java`: Billboard particle renderer with aspect colors and pulsation.
+   - `AspectOrbEvents.java`: Server-side mob kill drop hook (`ServerLivingEntityEvents.AFTER_DEATH`) governed by configurable drop chance.
+   - Unstable node aspect bleeding: Unstable uncontained nodes bleed primal aspect orbs directly into the world.
+2. **Node Lightning Strikes:**
+   - Uncontained Unstable, Hungry, and Sinister (Dark) aura nodes periodically zap nearby entities within a 6-block radius.
+   - Triggers `TVNetwork.sendZap` lightning beam packets, `TVSounds.ZAP` audio, and magic damage.
+3. **Shovel of the Earthmover Polish:**
+   - Connected-texture warded glass ghost placement preview hooked into `ArchitectOverlay.java`.
+   - Misc Key (`G`) orientation cycling (Parallel, Vertical slice, Horizontal slice) handled in `TVNetwork.java`, updating player action bar and playing click sounds.
+4. **Configuration System:**
+   - `dev.thaumvibe.config.ThaumvibeConfig` loads/saves `config/thaumvibe.json`.
+   - Settings: `taintSpread`, `hardNodes`, `nodeRarity`, `aspectOrbDropChance`, `allowWarp`, `wispSpawnRate`, `championMobs`.
+5. **Advancements:**
+   - Built modern Fabric advancements in `src/main/resources/data/thaumvibe/advancement/`:
+     - `root.json`: Thaumaturgy (Thaumonomicon trigger)
+     - `goggles.json`: Goggles of Revealing
+     - `crucible.json`: Crucible Alchemy
+     - `infusion.json`: Infusion Enchanting
+     - `golem.json`: Golemancy (Golem Bell trigger)
+     - `warp.json`: A Subtle Madness (Sanitizing Soap trigger)
+     - `eldritch.json`: The Outer Lands (Eldritch Eye trigger)
+   - Added complete localization strings to `en_us.json`.
 
 ---
 
-## 5. Verification Checklist for Opus
-- Always run `./gradlew compileJava compileClientJava` before declaring a feature complete.
-- Verify `./gradlew build -x test` builds the jar cleanly.
-- Ensure all new JSONs (recipes, research, lang) are valid JSON.
+## 3. Recommended Next Work: Modular Addon Package (`dev.thaumvibe.addon`) & Integrations
+
+The user requested a planned proposal (suggest, do not implement until approved) for:
+1. Bug fixes & enhancements to vanilla TC4 mechanics.
+2. Ported features from later Thaumcraft versions (TC5/TC6) that make sense in a modern port.
+3. Integration with popular modern minimap mods (JourneyMap, Xaero's) and Quality of Life (QoL) mods (EMI, Jade/WTHIT).
+4. All packaged cleanly under `dev.thaumvibe.addon` so it can be extracted into an independent mod or disabled via config.
+
+---
+
+## 4. Verification & Clean State
+- Running `./gradlew compileJava compileClientJava` exits with code 0.
+- Running `./gradlew build -x test` exits with code 0.
+- All modified and new files are tracked and committed on `main`.

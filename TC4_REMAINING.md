@@ -139,6 +139,12 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Hallucinations & Afflictions:** Whispers granting primal research aspects (`warp.text.3`), ambient paranoia sounds (`warp.text.11`, `warp.text.12`, `warp.text.13`), Vis Exhaustion, Thaumarhia, Unnatural Hunger (curable with rotten flesh/zombie brain), Sun Scorned (ignites in sunlight), Death Gaze (withers looking entities), Blurred Vision, Nightmares, and moments of clarity (cures 1 sticky warp).
   - **Entities:** Mind Spiders (`MindSpiderEntity`, 0.3 scale, harmless hallucinations visible only to afflicted player or real), and Eldritch Guardians (`EldritchGuardianEntity`, 50 HP, magic resistance, ranged wither blast, and screech attack).
   - **Research Milestones:** Automatic unlocking of `ELDRITCHMINOR` (>10 actual warp), `ELDRITCHWARPED` (>25 actual warp), and `ELDRITCHMAJOR` (>50 actual warp).
+- **Polish and immersion details:**
+  - **Aspect orbs:** `AspectOrbEntity` with aspect-tinted billboard glow, gravitation toward player, filling wand vis & knowledge pools, dropped by mobs on kill via `AspectOrbEvents` and unstable node bleed.
+  - **Node lightning strikes:** uncontained unstable, hungry, and dark nodes strike nearby living entities with electric bolts and magic damage.
+  - **Shovel of the Earthmover:** G key orientation cycling (parallel, vertical, horizontal) with chat display and click sound; connected texture warded glass placement preview in `ArchitectOverlay`.
+  - **Configuration:** `config/thaumvibe.json` managed by `ThaumvibeConfig` (taint spread, hard nodes, node rarity, aspect orb drop rate, warp toggle, wisp spawn rate, champion mobs).
+  - **Advancements:** authentic TC4 advancement tree (`root`, `goggles`, `crucible`, `infusion`, `golem`, `warp`, `eldritch`).
 - **Other items:** mana beans, ethereal essence.
 - **Addon features (in `dev.thaumvibe.addon`):**
   - Vanilla candles as tallow candles (interchangeable for infusion altar stabilization, 1:1 color exchange crafting recipes, Thaumonomicon entry in tallow node).
@@ -158,13 +164,12 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Villages:** the Thaumcraft villages' wizard tower and banker (moneychanger) houses.
 - **Ethereal bloom** (a taint-cleansing plant).
 
-### Polish and integration (S to M)
-- **Aspect orbs** dropped by mobs on death and by the primal charm.
-- **Lightning** from nodes to players (nodeBolt).
-- **The stone compass's** pull toward sinister nodes (TC4 records them from the node tick; nothing reads that yet).
-- **Shovel of the Earthmover:** the orientation keybind and placement preview.
-- **Config file:** the TC4 options (spawn toggles, taint spread rate, biome weights and so on).
-- **Achievements and advancements.**
+### Polish and integration (COMPLETED)
+- **Aspect orbs** dropped by mobs on death and by unstable nodes. (DONE)
+- **Lightning** from nodes to players (nodeBolt). (DONE)
+- **Shovel of the Earthmover:** the orientation keybind and placement preview. (DONE)
+- **Config file:** the TC4 options (spawn toggles, taint spread rate, biome weights, etc.). (DONE)
+- **Achievements and advancements:** modern Fabric data advancements. (DONE)
 
 ### Test coverage still missing
 - **Gametests** for the elemental tools and baubles, and Pech trading. (Taint conversion, peaceful rules, wands, foci and the vis network have scenes now.)
