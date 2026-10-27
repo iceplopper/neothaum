@@ -5,6 +5,7 @@ import dev.thaumvibe.api.aspects.Aspect;
 import dev.thaumvibe.blocks.CrystalClusterBlock;
 import dev.thaumvibe.blocks.TallowCandleBlock;
 import dev.thaumvibe.entity.TVEntities;
+import dev.thaumvibe.items.CrystalEssenceItem;
 import dev.thaumvibe.items.EssentiaPhialItem;
 import dev.thaumvibe.items.EtherealEssenceItem;
 import dev.thaumvibe.items.WandItem;
@@ -30,7 +31,7 @@ import net.minecraft.world.level.block.Block;
 public final class TVTab {
 	public enum Category { ESSENTIA, TOOLS, NATURAL, BUILDING, OTHER }
 
-	private static final Set<Item> ESSENTIA = Set.of(TVItems.GLASS_PHIAL, TVItems.PHIAL_OF_ESSENTIA, TVItems.ETHEREAL_ESSENCE, TVItems.MANA_BEAN, TVItems.AIR_SHARD,
+	private static final Set<Item> ESSENTIA = Set.of(TVItems.GLASS_PHIAL, TVItems.PHIAL_OF_ESSENTIA, TVItems.ETHEREAL_ESSENCE, TVItems.CRYSTAL_ESSENCE, TVItems.MANA_BEAN, TVItems.AIR_SHARD,
 		TVItems.FIRE_SHARD, TVItems.WATER_SHARD, TVItems.EARTH_SHARD, TVItems.ORDER_SHARD, TVItems.ENTROPY_SHARD, TVItems.BALANCED_SHARD);
 	private static final Set<Item> TOOLS = Set.of(TVItems.THAUMONOMICON, TVItems.WAND, TVItems.IRON_CAP, TVItems.GOLD_CAP, TVItems.COPPER_CAP,
 		TVItems.THAUMIUM_CAP_INERT, TVItems.THAUMIUM_CAP, TVItems.GREATWOOD_ROD, TVItems.SILVERWOOD_ROD,
@@ -60,7 +61,7 @@ public final class TVTab {
 		TVBlocks.RUNIC_MATRIX, TVBlocks.ARCANE_BELLOWS, TVBlocks.HUNGRY_CHEST, TVBlocks.ALCHEMICAL_FURNACE, TVBlocks.ARCANE_ALEMBIC,
 		TVBlocks.WAND_RECHARGE_PEDESTAL, TVBlocks.COMPOUND_RECHARGE_FOCUS, TVBlocks.NODE_STABILIZER, TVBlocks.ADVANCED_NODE_STABILIZER,
 		TVBlocks.NODE_TRANSDUCER, TVBlocks.FOCAL_MANIPULATOR, TVBlocks.VIS_RELAY, TVBlocks.VIS_CHARGE_RELAY, TVBlocks.ARCANE_LAMP, TVBlocks.LAMP_OF_GROWTH, TVBlocks.LAMP_OF_FERTILITY,
-		TVBlocks.ARCANE_DOOR, TVBlocks.WARDED_GLASS, TVBlocks.PAVING_STONE_OF_WARDING, TVBlocks.ARCANE_PRESSURE_PLATE, TVBlocks.ARCANE_EAR, TVBlocks.ARCANE_LEVITATOR);
+		TVBlocks.ARCANE_DOOR, TVBlocks.WARDED_GLASS, TVBlocks.PAVING_STONE_OF_TRAVEL, TVBlocks.PAVING_STONE_OF_WARDING, TVBlocks.ARCANE_PRESSURE_PLATE, TVBlocks.ARCANE_EAR, TVBlocks.ARCANE_LEVITATOR, TVBlocks.ITEM_GRATE, TVBlocks.ALCHEMICAL_CENTRIFUGE, TVBlocks.ESSENTIA_CRYSTALLIZER);
 
 	public static Category categoryOf(Item item) {
 		if (ESSENTIA.contains(item)) {
@@ -111,6 +112,10 @@ public final class TVTab {
 					} else if (item == TVItems.ETHEREAL_ESSENCE) {
 						for (Aspect a : Aspect.aspects.values()) {
 							out.accept(EtherealEssenceItem.of(a));
+						}
+					} else if (item == TVItems.CRYSTAL_ESSENCE) {
+						for (Aspect a : Aspect.aspects.values()) {
+							out.accept(CrystalEssenceItem.of(a));
 						}
 					} else if (item == TVItems.NODE_IN_A_JAR) {
 						// not in TC4's tabs (only a wand makes one); one jarred node of each type, so creative players can place them

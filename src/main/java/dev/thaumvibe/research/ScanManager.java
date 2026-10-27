@@ -152,6 +152,26 @@ public final class ScanManager {
 				default -> {
 				}
 			}
+		} else if (level.getBlockEntity(pos) instanceof dev.thaumvibe.tiles.JarNodeBlockEntity jnb) {
+			AspectList ta = jnb.getAspects();
+			for (Aspect a : ta.getAspectsSorted()) {
+				tags.merge(a, Math.max(4, ta.getAmount(a) / 10));
+			}
+			switch (jnb.getNodeType()) {
+				case UNSTABLE -> tags.merge(Aspect.ENTROPY, 4);
+				case HUNGRY -> tags.merge(Aspect.HUNGER, 4);
+				case TAINTED -> tags.merge(Aspect.TAINT, 4);
+				case PURE -> {
+					tags.merge(Aspect.HEAL, 2);
+					tags.add(Aspect.ORDER, 2);
+				}
+				case DARK -> {
+					tags.merge(Aspect.DEATH, 2);
+					tags.add(Aspect.DARKNESS, 2);
+				}
+				default -> {
+				}
+			}
 		}
 		return tags.size() > 0 ? tags : null;
 	}

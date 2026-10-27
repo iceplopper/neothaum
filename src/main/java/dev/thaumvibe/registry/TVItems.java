@@ -124,6 +124,8 @@ public final class TVItems {
 	public static final Item PHIAL_OF_ESSENTIA = register("phial_of_essentia", p -> new EssentiaPhialItem(true, p), new Item.Properties().stacksTo(64));
 	/** ItemWispEssence: its aspect in the ASPECTS component. */
 	public static final Item ETHEREAL_ESSENCE = register("ethereal_essence", dev.thaumvibe.items.EtherealEssenceItem::new, new Item.Properties());
+	/** ItemCrystalEssence: a solid crystal of essentia with its aspect in the ASPECTS component. */
+	public static final Item CRYSTAL_ESSENCE = register("crystal_essence", dev.thaumvibe.items.CrystalEssenceItem::new, new Item.Properties());
 	/** ItemManaBean: its aspect in the ASPECTS component; ItemFood(1, 0.5), always edible, eaten in half a second. */
 	public static final Item MANA_BEAN = register("mana_bean", dev.thaumvibe.items.ManaBeanItem::new, new Item.Properties().food(
 		new FoodProperties.Builder().nutrition(1).saturationModifier(0.5F).alwaysEdible().build(), Consumables.defaultFood().consumeSeconds(0.5F).build()));

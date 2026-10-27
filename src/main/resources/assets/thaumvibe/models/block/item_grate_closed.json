@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "cutout",
+  "textures": {
+    "particle": "thaumvibe:blocks/grate",
+    "texture": "thaumvibe:blocks/grate",
+    "hatch": "thaumvibe:blocks/grate_hatch"
+  },
+  "elements": [
+    {
+      "from": [0, 13, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "up": { "uv": [0, 0, 16, 16], "texture": "#texture" },
+        "down": { "uv": [0, 0, 16, 16], "texture": "#texture" },
+        "north": { "uv": [0, 0, 16, 3], "texture": "#texture" },
+        "south": { "uv": [0, 0, 16, 3], "texture": "#texture" },
+        "west": { "uv": [0, 0, 16, 3], "texture": "#texture" },
+        "east": { "uv": [0, 0, 16, 3], "texture": "#texture" }
+      }
+    },
+    {
+      "from": [1, 14, 1],
+      "to": [15, 15, 15],
+      "faces": {
+        "up": { "uv": [1, 1, 15, 15], "texture": "#hatch" },
+        "down": { "uv": [1, 1, 15, 15], "texture": "#hatch" },
+        "north": { "uv": [1, 0, 15, 1], "texture": "#hatch" },
+        "south": { "uv": [1, 0, 15, 1], "texture": "#hatch" },
+        "west": { "uv": [1, 0, 15, 1], "texture": "#hatch" },
+        "east": { "uv": [1, 0, 15, 1], "texture": "#hatch" }
+      }
+    }
+  ]
+}

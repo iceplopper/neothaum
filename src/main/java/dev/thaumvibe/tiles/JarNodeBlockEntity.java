@@ -1,5 +1,7 @@
 package dev.thaumvibe.tiles;
 
+import dev.thaumvibe.api.aspects.Aspect;
+import dev.thaumvibe.api.aspects.AspectContainer;
 import dev.thaumvibe.api.aspects.AspectList;
 import dev.thaumvibe.api.nodes.NodeModifier;
 import dev.thaumvibe.api.nodes.NodeType;
@@ -17,7 +19,7 @@ import net.minecraft.world.level.storage.ValueOutput;
  * Port of TileJarNode: a node trapped in a jar. It is frozen as it was when caught, so it neither recharges nor gives up vis; a wand frees it
  * again (WandManager.releaseNodeJar).
  */
-public class JarNodeBlockEntity extends TVBlockEntity {
+public class JarNodeBlockEntity extends TVBlockEntity implements AspectContainer {
 	private AspectList aspects = new AspectList();
 	private NodeType nodeType = NodeType.NORMAL;
 	private NodeModifier nodeModifier = null;
@@ -28,12 +30,62 @@ public class JarNodeBlockEntity extends TVBlockEntity {
 		super(TVBlockEntities.JAR_NODE, pos, state);
 	}
 
+	@Override
 	public AspectList getAspects() {
 		return this.aspects;
 	}
 
+	@Override
 	public void setAspects(AspectList aspects) {
 		this.aspects = aspects;
+	}
+
+	@Override
+	public boolean doesContainerAccept(Aspect tag) {
+		return false;
+	}
+
+	@Override
+	public int addToContainer(Aspect tag, int amount) {
+		return amount;
+	}
+
+	@Override
+	public boolean takeFromContainer(Aspect tag, int amount) {
+		if (this.aspects != null && this.aspects.getAmount(tag) >= amount) {
+			this.aspects.remove(tag, amount);
+			this.setChanged();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean takeFromContainer(AspectList list) {
+		return false;
+	}
+
+	@Override
+	public boolean doesContainerContainAmount(Aspect tag, int amount) {
+		return this.aspects != null && this.aspects.getAmount(tag) >= amount;
+	}
+
+	@Override
+	public boolean doesContainerContain(AspectList list) {
+		if (this.aspects == null) {
+			return false;
+		}
+		for (Aspect a : list.getAspects()) {
+			if (this.aspects.getAmount(a) < list.getAmount(a)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public int containerContains(Aspect tag) {
+		return this.aspects == null ? 0 : this.aspects.getAmount(tag);
 	}
 
 	public NodeType getNodeType() {

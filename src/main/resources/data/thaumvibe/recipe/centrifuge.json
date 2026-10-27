@@ -1,0 +1,24 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "CENTRIFUGE",
+  "aspects": {
+    "aqua": 5,
+    "ordo": 5,
+    "perditio": 5
+  },
+  "pattern": [
+    " T ",
+    "ACP",
+    " T "
+  ],
+  "key": {
+    "T": "thaumvibe:essentia_tube",
+    "P": "minecraft:piston",
+    "A": "thaumvibe:arcane_alembic",
+    "C": "thaumvibe:alchemical_furnace"
+  },
+  "result": {
+    "id": "thaumvibe:alchemical_centrifuge",
+    "count": 1
+  }
+}

@@ -8,6 +8,10 @@ import dev.thaumvibe.blocks.ArcaneEarBlock;
 import dev.thaumvibe.blocks.ArcaneLampBlock;
 import dev.thaumvibe.blocks.ArcaneLevitatorBlock;
 import dev.thaumvibe.blocks.ArcanePressurePlateBlock;
+import dev.thaumvibe.blocks.CentrifugeBlock;
+import dev.thaumvibe.blocks.CrystallizerBlock;
+import dev.thaumvibe.blocks.ItemGrateBlock;
+import dev.thaumvibe.blocks.PavingStoneOfTravelBlock;
 import dev.thaumvibe.blocks.PavingStoneOfWardingBlock;
 import dev.thaumvibe.blocks.WardedGlassBlock;
 import dev.thaumvibe.blocks.WardingAuraBlock;
@@ -250,6 +254,8 @@ public final class TVBlocks {
 	public static final Block WARDED_GLASS = register("warded_glass", WardedGlassBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.NONE).strength(15.0F, 100.0F).sound(SoundType.GLASS).noOcclusion()
 			.isValidSpawn((s, l, p, e) -> false).isSuffocating((s, l, p) -> false).isViewBlocking((s, l, p, a) -> false), true);
+	public static final Block PAVING_STONE_OF_TRAVEL = register("paving_stone_of_travel", PavingStoneOfTravelBlock::new,
+		stone(4.0F, 10.0F), true);
 	public static final Block PAVING_STONE_OF_WARDING = register("paving_stone_of_warding", PavingStoneOfWardingBlock::new,
 		stone(4.0F, 100.0F).noOcclusion(), true);
 	public static final Block WARDING_AURA = register("warding_aura", WardingAuraBlock::new,
@@ -260,6 +266,12 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(1.5F, 5.0F).sound(SoundType.WOOD).noOcclusion(), true);
 	public static final Block ARCANE_LEVITATOR = register("arcane_levitator", ArcaneLevitatorBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F, 5.0F).sound(SoundType.WOOD).noOcclusion(), true);
+	public static final Block ITEM_GRATE = register("item_grate", ItemGrateBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 10.0F).sound(SoundType.METAL).noOcclusion(), true);
+	public static final Block ALCHEMICAL_CENTRIFUGE = register("alchemical_centrifuge", CentrifugeBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 10.0F).sound(SoundType.METAL).noOcclusion(), true);
+	public static final Block ESSENTIA_CRYSTALLIZER = register("essentia_crystallizer", CrystallizerBlock::new,
+		stone(2.0F, 10.0F).noOcclusion(), true);
 
 	/** Config.fluxGoomaterial: a liquid you wade through, lit like the fluid's luminosity 7. */
 	private static BlockBehaviour.Properties flux() {

@@ -1897,6 +1897,8 @@
   "block.thaumvibe.arcane_door": "Arcane Door",
   "item.thaumvibe.arcane_door": "Arcane Door",
   "block.thaumvibe.warded_glass": "Warded Glass",
+  "block.thaumvibe.paving_stone_of_travel": "Paving Stone of Travel",
+  "item.thaumvibe.paving_stone_of_travel": "Paving Stone of Travel",
   "block.thaumvibe.paving_stone_of_warding": "Paving Stone of Warding",
   "block.thaumvibe.warding_aura": "Warding Aura",
   "block.thaumvibe.arcane_pressure_plate": "Arcane Pressure Plate",
@@ -1906,5 +1908,14 @@
   "container.thaumvibe.hungry_chest": "Hungry Chest",
   "item.thaumvibe.iron_arcane_key": "Iron Arcane Key",
   "item.thaumvibe.gold_arcane_key": "Gold Arcane Key",
+  "block.thaumvibe.item_grate": "Item Grate",
+  "item.thaumvibe.item_grate": "Item Grate",
+  "container.thaumvibe.item_grate": "Item Grate",
+  "block.thaumvibe.alchemical_centrifuge": "Alchemical Centrifuge",
+  "item.thaumvibe.alchemical_centrifuge": "Alchemical Centrifuge",
+  "container.thaumvibe.alchemical_centrifuge": "Alchemical Centrifuge",
+  "block.thaumvibe.essentia_crystallizer": "Essentia Crystallizer",
+  "item.thaumvibe.essentia_crystallizer": "Essentia Crystallizer",
+  "item.thaumvibe.crystal_essence": "Crystallized Essence",
   "tc.doorfail": "The door refuses to budge."
 }

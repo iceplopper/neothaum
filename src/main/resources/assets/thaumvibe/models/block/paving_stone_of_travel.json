@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "thaumvibe:blocks/paving_stone_travel",
+    "bottom": "thaumvibe:blocks/arcane_stone",
+    "side": "thaumvibe:blocks/arcane_stone"
+  }
+}

@@ -77,9 +77,21 @@ public final class AspectOverlays {
 			name = target.getDisplayName();
 		} else if (mc.hitResult instanceof net.minecraft.world.phys.BlockHitResult bhr && mc.hitResult.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) {
 			var pos = bhr.getBlockPos();
-			if (mc.level.getBlockEntity(pos) instanceof dev.thaumvibe.tiles.NodeBlockEntity) {
+			if (mc.level.getBlockEntity(pos) instanceof dev.thaumvibe.tiles.NodeBlockEntity nbe) {
 				sr = ScanManager.ScanResult.node(pos);
-				name = Component.translatable("block.thaumvibe.aura_node");
+				net.minecraft.network.chat.MutableComponent n = Component.translatable("nodetype." + nbe.getNodeType() + ".name");
+				if (nbe.getNodeModifier() != null) {
+					n.append(", ").append(Component.translatable("nodemod." + nbe.getNodeModifier() + ".name"));
+				}
+				name = n;
+			} else if (mc.level.getBlockEntity(pos) instanceof dev.thaumvibe.tiles.JarNodeBlockEntity jbe) {
+				sr = ScanManager.ScanResult.node(pos);
+				net.minecraft.network.chat.MutableComponent n = Component.translatable("block.thaumvibe.node_in_a_jar");
+				n.append(": ").append(Component.translatable("nodetype." + jbe.getNodeType() + ".name"));
+				if (jbe.getNodeModifier() != null) {
+					n.append(", ").append(Component.translatable("nodemod." + jbe.getNodeModifier() + ".name"));
+				}
+				name = n;
 			} else {
 				var item = mc.level.getBlockState(pos).getBlock().asItem();
 				if (item != net.minecraft.world.item.Items.AIR) {
@@ -96,7 +108,16 @@ public final class AspectOverlays {
 		boolean scanned = ScanManager.hasBeenScanned(p, sr);
 		g.text(mc.font, name, cx + 12, cy - 4, 0xFFFFFFFF, true);
 		if (scanned) {
-			AspectList tags = ScanManager.getScanAspects(sr, mc.level);
+			AspectList tags = null;
+			if (mc.hitResult instanceof net.minecraft.world.phys.BlockHitResult bhr
+				&& mc.level.getBlockEntity(bhr.getBlockPos()) instanceof dev.thaumvibe.tiles.NodeBlockEntity nbe) {
+				tags = nbe.getAspects();
+			} else if (mc.hitResult instanceof net.minecraft.world.phys.BlockHitResult bhr
+				&& mc.level.getBlockEntity(bhr.getBlockPos()) instanceof dev.thaumvibe.tiles.JarNodeBlockEntity jbe) {
+				tags = jbe.getAspects();
+			} else {
+				tags = ScanManager.getScanAspects(sr, mc.level);
+			}
 			if (tags != null) {
 				drawAspectRow(g, tags, cx + 12, cy + 8, ResearchManager.knowledge(p));
 			}

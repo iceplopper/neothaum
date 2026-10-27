@@ -1,0 +1,25 @@
+{
+  "type": "thaumvibe:arcane_shaped",
+  "research": "ESSENTIACRYSTAL",
+  "aspects": {
+    "aqua": 5,
+    "terra": 15,
+    "ordo": 5
+  },
+  "pattern": [
+    "IDI",
+    "QCQ",
+    "WTW"
+  ],
+  "key": {
+    "T": "thaumvibe:essentia_tube",
+    "D": "minecraft:dispenser",
+    "Q": "thaumvibe:balanced_shard",
+    "I": "minecraft:iron_ingot",
+    "W": "#minecraft:planks",
+    "C": "thaumvibe:alchemical_construct"
+  },
+  "result": {
+    "id": "thaumvibe:essentia_crystallizer"
+  }
+}

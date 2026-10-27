@@ -23,7 +23,9 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - **Lamp of Growth:** attaches to 6 faces (tubes, walls, floors); draws Herba essentia via `EssentiaTransport` (1 Herba = 100 charges); scans 6-block radius and accelerates crop/plant growth with green bonemeal sparkles; dynamic lighting (15 powered, 8 unpowered).
   - **Lamp of Fertility:** attaches to 6 faces (tubes, walls, floors); draws Victus essentia via `EssentiaTransport` (up to 4 charges); breeds animal pairs in 7-block radius every 300 ticks when population <= 7; dynamic lighting (15 powered, 8 unpowered).
   - **Hungry Chest:** 27-slot sentient wooden chest with sharp chomping teeth along the seam; scans volume above and collision bounds to automatically consume dropped items; plays eating crunch sounds and snappy jaw animation; arcane worktable recipe (wooden trapdoor + planks + 5 Aer, 3 Ordo, 3 Perditio); 3D special item model rendering.
-- **Doors, warding and redstone:**
+- **Doors, warding, travel and utility:**
+  - paving stone of travel (`paving_stone_of_travel`, grants Speed II and Jump Boost I, sparkle effects on step)
+  - item grate (`item_grate`, open/closed hatch impassable to players/mobs but dropped items fall right through, hopper auto-eject downwards)
   - arcane door (`arcane_door` block & item, unbreakable/unopenable to non-permitted, access list sync)
   - warded glass (`warded_glass`, translucent glass unbreakable to non-owners)
   - paving stone of warding (`paving_stone_of_warding` + invisible `warding_aura` barrier, repels mobs while letting players pass, deactivated by redstone)
@@ -36,6 +38,9 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
   - every tube kind and the buffer
   - the alembic, alchemical furnace and bellows
   - phials, plus your suction priority rules
+  - **Alchemical Centrifuge:** splits compound essentia back into one of its component aspects; directional suction (128 empty, 64 running from below, outputs split component above); animated spinning rotor and counterweight flasks.
+  - **Essentia Crystallizer:** condenses liquid essentia drawn through tubes into solid crystallized essence items (`crystal_essence`), with rotating aspect-colored crystal formation geometry and auto-ejection into adjacent containers.
+  - **Node in a Jar Aspect Viewing:** trapped aura nodes now display floating 3D aspect tags when worn with Goggles of Revealing or inspected with Thaumometer, fully scannable and visible in HUD.
 - **Infusion:** the matrix, pedestals, pillars, stabilisers and instability, and infusion enchanting (partial, see below).
 - **Equipment:**
   - runic shielding and runic baubles, vis amulets, the hover girdle, elemental tools, thaumium tools and armour, and thaumaturge's robes.
@@ -64,7 +69,7 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 ## Still to do
 
 ### Alchemy and essentia, the rest (M)
-- **Machines:** the Thaumatorium (multi-recipe alchemy), the alchemical centrifuge and the essentia crystallizer.
+- **Machines:** the Thaumatorium (multi-recipe alchemy).
 - **Storage:** the essentia reservoir and the advanced alchemical furnace.
 - **Mirrors:** the magic mirror, essentia mirror and hand mirror.
 - **Fluid buckets:** bucket of death and bucket of pure (liquid death, purifying fluid).
@@ -72,10 +77,9 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 - **Mana pods** (block and worldgen), and planting mana beans on logs to grow them.
 
 ### Artifice and utility blocks (M)
-- **Paving Stone of Travel:** gives Speed II and Jump Boost II (+33% move speed & +1 block step height/jump) to entities walking on it; crafting recipe and artifice research.
 - **Big machines:** the arcane bore and its base.
 - **Spa and deconstruction:** the arcane spa and the deconstruction table.
-- **Misc:** the flux scrubber, the grate, and banners (cultist and the Thaumcraft colours).
+- **Misc:** the flux scrubber and banners (cultist and the Thaumcraft colours).
 
 ### Remaining Equipment and gear (M)
 - **Fortress armour:** its custom model, masks and goggles upgrades, and void fortress robes.

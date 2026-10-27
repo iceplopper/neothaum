@@ -43,6 +43,12 @@ public final class TVBlockEntities {
 	public static final BlockEntityType<BellowsBlockEntity> BELLOWS = register("bellows", BellowsBlockEntity::new, TVBlocks.ARCANE_BELLOWS);
 	public static final BlockEntityType<dev.thaumvibe.tiles.HungryChestBlockEntity> HUNGRY_CHEST = register("hungry_chest",
 		dev.thaumvibe.tiles.HungryChestBlockEntity::new, TVBlocks.HUNGRY_CHEST);
+	public static final BlockEntityType<dev.thaumvibe.tiles.ItemGrateBlockEntity> ITEM_GRATE = register("item_grate",
+		dev.thaumvibe.tiles.ItemGrateBlockEntity::new, TVBlocks.ITEM_GRATE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.CentrifugeBlockEntity> CENTRIFUGE = register("centrifuge",
+		dev.thaumvibe.tiles.CentrifugeBlockEntity::new, TVBlocks.ALCHEMICAL_CENTRIFUGE);
+	public static final BlockEntityType<dev.thaumvibe.tiles.CrystallizerBlockEntity> CRYSTALLIZER = register("essentia_crystallizer",
+		dev.thaumvibe.tiles.CrystallizerBlockEntity::new, TVBlocks.ESSENTIA_CRYSTALLIZER);
 	public static final BlockEntityType<BrainJarBlockEntity> BRAIN_JAR = register("brain_jar", BrainJarBlockEntity::new, TVBlocks.BRAIN_IN_A_JAR);
 	public static final BlockEntityType<dev.thaumvibe.tiles.JarNodeBlockEntity> JAR_NODE = register("jar_node", dev.thaumvibe.tiles.JarNodeBlockEntity::new,
 		TVBlocks.NODE_IN_A_JAR);

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=true": {
+      "model": "thaumvibe:block/item_grate"
+    },
+    "open=false": {
+      "model": "thaumvibe:block/item_grate_closed"
+    }
+  }
+}

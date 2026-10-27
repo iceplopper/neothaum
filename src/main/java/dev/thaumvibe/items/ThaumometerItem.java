@@ -141,7 +141,7 @@ public class ThaumometerItem extends Item {
 		BlockHitResult mop = pickBlock(level, p);
 		if (mop != null) {
 			BlockPos pos = mop.getBlockPos();
-			if (level.getBlockEntity(pos) instanceof NodeBlockEntity) {
+			if (level.getBlockEntity(pos) instanceof NodeBlockEntity || level.getBlockEntity(pos) instanceof dev.thaumvibe.tiles.JarNodeBlockEntity) {
 				ScanResult sr = ScanResult.node(pos);
 				if (ScanManager.isValidScanTarget(p, sr, "@")) {
 					FX.blockSparkle(level, pos, 0x9900CC);
