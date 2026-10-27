@@ -138,8 +138,15 @@ public class CrucibleBlockEntity extends TVBlockEntity implements dev.thaumvibe.
 		var rand = this.level.getRandom();
 		int x0 = this.worldPosition.getX(), y0 = this.worldPosition.getY(), z0 = this.worldPosition.getZ();
 		if (this.heat > 150) {
-			FX.wisp(this.level, x0 + 0.2F + rand.nextFloat() * 0.6F, y0 + this.getFluidHeight(), z0 + 0.2F + rand.nextFloat() * 0.6F, 0.25F, 0.8F, 0.8F,
-				0.9F, false, true, -0.002F);
+			FX.crucibleFroth(this.level, x0 + 0.2F + rand.nextFloat() * 0.6F, y0 + this.getFluidHeight(), z0 + 0.2F + rand.nextFloat() * 0.6F);
+			if (this.tagAmount() > 100) {
+				for (int a = 0; a < 2; a++) {
+					FX.crucibleFrothDown(this.level, x0, y0 + 1.0F, z0 + rand.nextFloat());
+					FX.crucibleFrothDown(this.level, x0 + 1.0F, y0 + 1.0F, z0 + rand.nextFloat());
+					FX.crucibleFrothDown(this.level, x0 + rand.nextFloat(), y0 + 1.0F, z0);
+					FX.crucibleFrothDown(this.level, x0 + rand.nextFloat(), y0 + 1.0F, z0 + 1.0F);
+				}
+			}
 		}
 		if (rand.nextInt(6) == 0 && this.aspects.size() > 0) {
 			int color = this.aspects.getAspects()[rand.nextInt(this.aspects.size())].getColor();

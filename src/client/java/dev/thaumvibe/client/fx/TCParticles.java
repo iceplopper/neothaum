@@ -213,6 +213,15 @@ public final class TCParticles {
 			this.zd /= 5.0;
 		}
 
+		public void setFroth2() {
+			this.particleScale *= 0.75F;
+			this.lifetime = 12 + this.random.nextInt(12);
+			this.bubblespeed = -0.005;
+			this.xd /= 5.0;
+			this.yd /= 10.0;
+			this.zd /= 5.0;
+		}
+
 		private void updateUV() {
 			float u = this.particle % 16 / 16.0F;
 			float v = this.particle / 16 / 16.0F;

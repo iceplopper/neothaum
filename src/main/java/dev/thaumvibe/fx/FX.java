@@ -20,6 +20,10 @@ public final class FX {
 
 		void crucibleBubble(Level level, double x, double y, double z, float r, float g, float b);
 
+		void crucibleFroth(Level level, float x, float y, float z);
+
+		void crucibleFrothDown(Level level, float x, float y, float z);
+
 		void crucibleBoil(Level level, BlockPos pos, float height);
 
 		void essentiaTrail(Level level, double x, double y, double z, double tx, double ty, double tz, int count, int color, float scale);
@@ -100,6 +104,18 @@ public final class FX {
 	public static void crucibleBubble(Level level, double x, double y, double z, float r, float g, float b) {
 		if (impl != null && level.isClientSide()) {
 			impl.crucibleBubble(level, x, y, z, r, g, b);
+		}
+	}
+
+	public static void crucibleFroth(Level level, float x, float y, float z) {
+		if (impl != null && level.isClientSide()) {
+			impl.crucibleFroth(level, x, y, z);
+		}
+	}
+
+	public static void crucibleFrothDown(Level level, float x, float y, float z) {
+		if (impl != null && level.isClientSide()) {
+			impl.crucibleFrothDown(level, x, y, z);
 		}
 	}
 

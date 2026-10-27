@@ -67,6 +67,22 @@ public final class FXImpl implements FX.Impl {
 	}
 
 	@Override
+	public void crucibleFroth(Level level, float x, float y, float z) {
+		TCParticles.Bubble fb = new TCParticles.Bubble((ClientLevel) level, x, y, z, 0.0, 0.0, 0.0, -4);
+		fb.setColor(0.5F, 0.5F, 0.7F);
+		fb.setFroth();
+		add(fb);
+	}
+
+	@Override
+	public void crucibleFrothDown(Level level, float x, float y, float z) {
+		TCParticles.Bubble fb = new TCParticles.Bubble((ClientLevel) level, x, y, z, 0.0, 0.0, 0.0, -4);
+		fb.setColor(0.5F, 0.5F, 0.7F);
+		fb.setFroth2();
+		add(fb);
+	}
+
+	@Override
 	public void crucibleBoil(Level level, BlockPos pos, float strength) {
 		if (!(level.getBlockEntity(pos) instanceof CrucibleBlockEntity tile)) {
 			return;

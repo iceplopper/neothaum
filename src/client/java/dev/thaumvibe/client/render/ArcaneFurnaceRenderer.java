@@ -60,27 +60,26 @@ public class ArcaneFurnaceRenderer implements BlockEntityRenderer<ArcaneFurnaceB
 		var atlas = Minecraft.getInstance().getAtlasManager().getAtlasOrThrow(AtlasIds.BLOCKS);
 		int light = s.lightCoords;
 
-		collector.submitCustomGeometry(ps, RenderTypes.cutoutMovingBlock(), (pose, vc) -> {
-			// Center at (0.5, 0.5, 0.5)
+		ps.pushPose();
+		ps.translate(0.5F, 0.5F, 0.5F);
+
+		// Render 4 horizontal sides
+		for (Direction dir : Direction.Plane.HORIZONTAL) {
 			ps.pushPose();
-			ps.translate(0.5F, 0.5F, 0.5F);
-
-			// Render 4 horizontal sides
-			for (Direction dir : Direction.Plane.HORIZONTAL) {
-				ps.pushPose();
-				ps.rotateDegrees(Axis.YP, -dir.toYRot());
-				renderHorizontalSide(ps.last(), vc, dir == s.facing, atlas, light);
-				ps.popPose();
-			}
-
-			// Render Bottom face
-			renderBottom(ps.last(), vc, atlas, light);
-
-			// Render Top face & Chimney
-			renderTopAndChimney(ps.last(), vc, atlas, light);
-
+			ps.rotateDegrees(Axis.YP, -dir.toYRot());
+			collector.submitCustomGeometry(ps, RenderTypes.cutoutMovingBlock(), (pose, vc) -> {
+				renderHorizontalSide(pose, vc, dir == s.facing, atlas, light);
+			});
 			ps.popPose();
+		}
+
+		// Render Bottom face, Top face & Chimney
+		collector.submitCustomGeometry(ps, RenderTypes.cutoutMovingBlock(), (pose, vc) -> {
+			renderBottom(pose, vc, atlas, light);
+			renderTopAndChimney(pose, vc, atlas, light);
 		});
+
+		ps.popPose();
 	}
 
 	private static void renderHorizontalSide(PoseStack.Pose pose, VertexConsumer vc, boolean isFront, TextureAtlas atlas, int light) {
