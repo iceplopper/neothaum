@@ -211,15 +211,15 @@ public class ThaumvibeClient implements ClientModInitializer {
 				ScreenEvents.afterExtract(screen).register((s, g, mx, my, a) -> AspectOverlays.renderInGui(acs, g, mx, my));
 			}
 			// Baubles' inventory button, beside the top of the player portrait
-			Component baubles = Component.translatable("key.thaumvibe.baubles");
+			Component baubles = Component.translatable("container.baubles");
 			if (screen instanceof InventoryScreen inv) {
-				Screens.getWidgets(screen).add(new dev.thaumvibe.client.gui.BaublesButton(inv, 66, 9, baubles, () -> true,
+				Screens.getWidgets(screen).add(new dev.thaumvibe.client.gui.BaublesButton(inv, 64, 9, dev.thaumvibe.client.gui.BaublesButton.BAUBLES_ICON, baubles, () -> true,
 					() -> TVNetwork.clientSender.accept(new TVNetwork.OpenBaubles())));
 			} else if (screen instanceof net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen creative) {
-				Screens.getWidgets(screen).add(new dev.thaumvibe.client.gui.BaublesButton(creative, 96, 6, baubles, creative::isInventoryOpen,
+				Screens.getWidgets(screen).add(new dev.thaumvibe.client.gui.BaublesButton(creative, 96, 6, dev.thaumvibe.client.gui.BaublesButton.BAUBLES_ICON, baubles, creative::isInventoryOpen,
 					() -> TVNetwork.clientSender.accept(new TVNetwork.OpenBaubles())));
 			} else if (screen instanceof BaublesScreen bs) {
-				Screens.getWidgets(screen).add(new dev.thaumvibe.client.gui.BaublesButton(bs, 66, 9, Component.translatable("container.inventory"),
+				Screens.getWidgets(screen).add(new dev.thaumvibe.client.gui.BaublesButton(bs, 64, 9, dev.thaumvibe.client.gui.BaublesButton.INVENTORY_ICON, Component.translatable("container.inventory"),
 					() -> true, () -> {
 						client.player.closeContainer();
 						client.gui.setScreen(new InventoryScreen(client.player));

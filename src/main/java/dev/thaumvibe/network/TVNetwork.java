@@ -354,7 +354,7 @@ public final class TVNetwork {
 			}
 		});
 		ServerPlayNetworking.registerGlobalReceiver(OpenBaubles.TYPE, (p, ctx) -> ctx.player().openMenu(
-			new SimpleMenuProvider((id, inv, pl) -> new BaublesMenu(id, inv), Component.translatable("container.inventory"))));
+			new SimpleMenuProvider((id, inv, pl) -> new BaublesMenu(id, inv), Component.translatable("container.baubles"))));
 		ServerPlayNetworking.registerGlobalReceiver(ToggleHarness.TYPE, (p, ctx) -> {
 			var player = ctx.player();
 			var chest = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST);

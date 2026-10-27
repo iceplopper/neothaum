@@ -14,22 +14,30 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 /**
- * Baubles' GuiBaublesButton: the small button at the top right of the player portrait that swaps between the normal inventory and the
- * bauble slots. It follows the screen's left edge, which moves when the recipe book opens.
+ * Baubles' GuiBaublesButton: small beveled button at the top-right of the player portrait that swaps between
+ * the normal inventory and the bauble slots. It follows the screen's left edge, which moves when the recipe book opens.
  */
 public class BaublesButton extends AbstractButton {
-	private static final Identifier ICON = Thaumvibe.id("textures/items/bauble_amulet.png");
+	public static final Identifier BAUBLES_ICON = Thaumvibe.id("textures/items/bauble_amulet.png");
+	public static final Identifier INVENTORY_ICON = Thaumvibe.id("textures/gui/icon_inventory.png");
+
 	private final AbstractContainerScreen<?> screen;
 	private final int offsetX;
 	private final int offsetY;
+	private final Identifier icon;
 	private final BooleanSupplier shown;
 	private final Runnable action;
 
 	public BaublesButton(AbstractContainerScreen<?> screen, int offsetX, int offsetY, Component tooltip, BooleanSupplier shown, Runnable action) {
+		this(screen, offsetX, offsetY, BAUBLES_ICON, tooltip, shown, action);
+	}
+
+	public BaublesButton(AbstractContainerScreen<?> screen, int offsetX, int offsetY, Identifier icon, Component tooltip, BooleanSupplier shown, Runnable action) {
 		super(0, 0, 10, 10, tooltip);
 		this.screen = screen;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
+		this.icon = icon != null ? icon : BAUBLES_ICON;
 		this.shown = shown;
 		this.action = action;
 		this.setTooltip(Tooltip.create(tooltip));
@@ -56,10 +64,21 @@ public class BaublesButton extends AbstractButton {
 		}
 		int x = this.getX();
 		int y = this.getY();
-		int edge = this.isHoveredOrFocused() ? 0xFFFFFFFF : 0xFF373737;
-		g.fill(x, y, x + 10, y + 10, edge);
-		g.fill(x + 1, y + 1, x + 9, y + 9, this.isHoveredOrFocused() ? 0xFFA8A8C8 : 0xFF8B8B8B);
-		g.blit(RenderPipelines.GUI_TEXTURED, ICON, x + 1, y + 1, 0.0F, 0.0F, 8, 8, 16, 16, 16, 16);
+		boolean hovered = this.isHoveredOrFocused();
+
+		// Clean vanilla beveled button styling matching Minecraft's inventory interface
+		int topLight = hovered ? 0xFFFFFFFF : 0xFFE0E0E0;
+		int botDark = hovered ? 0xFF555555 : 0xFF373737;
+		int bg = hovered ? 0xFFA0A0C8 : 0xFF8B8B8B;
+
+		g.fill(x, y, x + 10, y + 10, bg);
+		g.fill(x, y, x + 10, y + 1, topLight);
+		g.fill(x, y, x + 1, y + 10, topLight);
+		g.fill(x, y + 9, x + 10, y + 10, botDark);
+		g.fill(x + 9, y, x + 10, y + 10, botDark);
+
+		// Render the full 16x16 icon cleanly scaled into the 8x8 interior without clipping
+		GuiUtil.blitFull(g, RenderPipelines.GUI_TEXTURED, this.icon, x + 1, y + 1, 8, 8, hovered ? 0xFFFFFFFF : 0xFFE0E0E0);
 	}
 
 	@Override
