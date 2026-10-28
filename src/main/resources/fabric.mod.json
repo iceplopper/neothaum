@@ -3,9 +3,9 @@
 	"id": "neothaum",
 	"version": "${version}",
 	"name": "NeoThaum",
-	"description": "A private Fabric recreation of Thaumcraft 4 by Azanor.",
+	"description": "A modern Fabric recreation of Thaumcraft 4",
 	"authors": [
-		"Azanor (original Thaumcraft 4)"
+		"Ice Plopper"
 	],
 	"license": "All-Rights-Reserved",
 	"icon": "assets/neothaum/icon.png",

@@ -26,6 +26,7 @@
 3. **Client Launching:** Never use `--quickPlaySingleplayer`; launch to the main menu using `start-test-client.bat` or `./gradlew runClient`. Unprompted launches are suspended—only launch when the user explicitly requests it.
 4. **Addons:** Non-TC4 features and modern QoL extensions go in `dev.neothaum.addon`.
 5. **Thaumonomicon as Source of Truth:** The Thaumonomicon serves as the visible in-game source of truth for what features have been implemented so far. Do NOT create custom non-TC4 pages; ensure original TC4 research entries and their recipe pages are activated as soon as their underlying feature/item is added.
+6. **Continuous GitHub Sync:** The repository remote \origin\ is linked to \https://github.com/iceplopper/neothaum.git\. After making commits for each completed task or milestone, push your branch to GitHub (\git push origin <branch>\) so the user's remote repository stays continuously up to date.
 
 ---
 

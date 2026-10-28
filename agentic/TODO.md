@@ -212,3 +212,11 @@ Root causes differed from the handoff's guesses in several places; what was actu
 - Thaumostatic harness still uses the vanilla armour model (ModelHoverHarness not ported).
 - **Branding (queued for after the next checkpoint):** some items (e.g. golems) still show "TC" instead of "NeoThaum". Known spot: the creative tab names in `en_us.json` ("TC: Tools & Utilities" etc.); audit item names/tooltips for any other "TC"/"Thaumcraft" labels that should read NeoThaum, keeping TC4's own item names (e.g. "Thaumonomicon").
 - **Golemancer's Bell (queued):** doesn't behave as its Thaumonomicon (TNC) entry describes; port ItemGolemBell's behaviour from TC4 (NeoThaum's bell has an invented "linking" mechanic).
+
+## 🧩 Mod integrations to support eventually (addon code in `dev.neothaum.addon` / `client.addon`; all optional "suggests" deps)
+- [ ] **Trinkets / Accessories** — put amulets, rings, belts, Hover Girdle and Vis Amulet in the shared accessory slots (the modern Baubles).
+- [ ] **EMI and REI** — crucible, arcane worktable, infusion and item-aspect pages, like the existing JEI plugin.
+- [ ] **Sodium / Iris** — compatibility pass: check every custom renderer (nodes, jars, infusion, tubes, golems, eldritch portal) with Sodium and with Iris shaders on.
+- [ ] **WTHIT** — node, jar and device info, matching the Jade plugin (same scanned + goggles/thaumometer gating).
+- [ ] **Xaero's Minimap / JourneyMap** — JourneyMap gets the scanned-node layer on its fullscreen map; check the Xaero World Map toggle and waypoint buttons with Xaero's Minimap installed.
+- [ ] **AppleSkin** — food values for NeoThaum foods (zombie brain, mana beans, etc.).

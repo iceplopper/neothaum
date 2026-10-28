@@ -15,7 +15,10 @@
    - Update `agentic/TODO.md` as items are completed.
 2. **Checkpoint After Each Task:**
    - Stop after completing each task or logical group. Summarize your changes, verify compilation, and ask the user before moving to the next.
-3. **Creative Tab Placement:**
+3. **GitHub Remote & Continuous Sync:**
+   - The remote \origin\ is configured to \https://github.com/iceplopper/neothaum.git\.
+   - After completing each task/checkpoint and committing, push your branch (\git push origin <branch>\) to keep GitHub in sync.
+4. **Creative Tab Placement:**
    - Every item/block MUST be registered in one of `TVTab.java`'s 5 creative tabs: `ESSENTIA`, `TOOLS`, `NATURAL`, `BUILDING`, `OTHER`.
 4. **Client Launching:**
    - Never use `--quickPlaySingleplayer`.

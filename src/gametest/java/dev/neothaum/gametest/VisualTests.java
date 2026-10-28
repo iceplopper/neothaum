@@ -963,12 +963,27 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.runOnClient(mc -> NeoThaum.LOGGER.info("[visual-test] worldmap: screen={}", mc.gui.screen() == null ? null : mc.gui.screen().getClass().getName()));
 		shot(ctx, "worldmap_nodes");
 		ctx.runOnClient(mc -> {
-			if (mc.gui.screen() != null) {
-				for (var w : mc.gui.screen().children()) {
-					if (w instanceof net.minecraft.client.gui.components.Button b && b.getMessage().getString().equals("✦")) {
-						b.onPress(new net.minecraft.client.input.KeyEvent(0, 0, 0));
+			var screen = mc.gui.screen();
+			if (screen != null) {
+				// a real click in the middle of the node button's slot, through the map screen's own mouse handling
+				int x = screen.width - 10, y = screen.height - 190;
+				for (var w : screen.children()) {
+					if (w.isMouseOver(x, y)) {
+						NeoThaum.LOGGER.info("[visual-test] worldmap: listener under the node slot: {} {}", w.getClass().getName(),
+							w instanceof net.minecraft.client.gui.components.AbstractWidget b ? b.getX() + "," + b.getY() + " active=" + b.active
+								+ " visible=" + b.visible + " isActive=" + b.isActive() : "");
 					}
 				}
+				// Xaero's waypoints button in the bottom-right corner, which the old toggle used to cover
+				NeoThaum.LOGGER.info("[visual-test] worldmap: widgets over the waypoints button: {}",
+					screen.children().stream().filter(w -> w.isMouseOver(screen.width - 10, screen.height - 10)).count());
+				boolean before = dev.neothaum.config.NeoThaumConfig.current.worldMapNodes;
+				var click = new net.minecraft.client.input.MouseButtonEvent(x, y, new net.minecraft.client.input.MouseButtonInfo(1, 0)); // 1 is the left button in 26.3
+				boolean handled = screen.mouseClicked(click, false);
+				boolean afterPress = dev.neothaum.config.NeoThaumConfig.current.worldMapNodes;
+				screen.mouseReleased(click);
+				NeoThaum.LOGGER.info("[visual-test] worldmap: node toggle {} -> {} on press (handled {}) -> {} on release", before, afterPress, handled,
+					dev.neothaum.config.NeoThaumConfig.current.worldMapNodes);
 			}
 		});
 		ctx.waitTicks(5);
