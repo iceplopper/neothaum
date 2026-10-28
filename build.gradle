@@ -38,7 +38,6 @@ dependencies {
 	runtimeOnly "mezz.jei:jei-26.3-fabric:${project.jei_version}"
 
 	compileOnly files("run/mods/Jade-mc26.3-Fabric-26.3.5.jar")
-	compileOnly files("run/mods/xaerominimap-fabric-26.3-26.6.2.jar")
 	compileOnly files("run/mods/modmenu-21.0.0.jar")
 }
 
@@ -58,4 +57,11 @@ java {
 tasks.register('printClasspath') {
 	def cp = sourceSets.client.compileClasspath
 	doLast { file("${rootDir}/original/classpath.txt").text = cp.files.join(File.pathSeparator) }
+}
+
+// NEOTHAUM_TEST_XAERO=1 loads Xaero's World Map into the client gametest run, for the "worldmap" scene
+if (System.getenv("NEOTHAUM_TEST_XAERO") != null) {
+	loom.runs.matching { it.name == "clientGameTest" }.configureEach {
+		vmArg "-Dfabric.addMods=${file('run/mods/xaeroworldmap-fabric-26.3-1.47.2.jar').absolutePath}"
+	}
 }

@@ -22,6 +22,14 @@ public class EldritchCapBlock extends BaseEntityBlock {
 
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
-		return RenderShape.MODEL;
+		return RenderShape.INVISIBLE;
+	}
+
+	/** BlockEldritch.breakBlock. */
+	@Override
+	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos,
+		boolean movedByPiston) {
+		EldritchObeliskBlock.collapse(level, pos);
+		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
 	}
 }

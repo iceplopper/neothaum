@@ -1,0 +1,12 @@
+{
+	"required": false,
+	"package": "dev.neothaum.client.mixin.xaero",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ScreenWidgetAccessor",
+		"XaeroGuiMapMixin"
+	],
+	"injectors": {
+		"defaultRequire": 0
+	}
+}

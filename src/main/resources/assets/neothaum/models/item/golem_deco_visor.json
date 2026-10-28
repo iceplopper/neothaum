@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "neothaum:item/golemdecovisor"
+    "layer0": "neothaum:items/golemdecovisor"
   }
 }

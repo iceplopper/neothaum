@@ -35,7 +35,7 @@ public class EldritchAltarBlock extends BaseEntityBlock {
 
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
-		return RenderShape.MODEL;
+		return RenderShape.INVISIBLE;
 	}
 
 	@Override
@@ -54,5 +54,13 @@ public class EldritchAltarBlock extends BaseEntityBlock {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
 		return createTickerHelper(type, TVBlockEntities.ELDRITCH_ALTAR, EldritchAltarBlockEntity::tick);
+	}
+
+	/** BlockEldritch.breakBlock. */
+	@Override
+	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos,
+		boolean movedByPiston) {
+		EldritchObeliskBlock.collapse(level, pos);
+		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
 	}
 }

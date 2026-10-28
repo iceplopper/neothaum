@@ -210,11 +210,10 @@ public class TaintFibreBlock extends Block {
 
 	/** BlockTaintFibres.taintBiomeSpread: now and then the tainted land itself creeps a block further. */
 	public static void taintBiomeSpread(ServerLevel level, BlockPos pos, RandomSource rand) {
-		int taintSpreadRate = Math.max(1, dev.neothaum.config.NeoThaumConfig.current.taintSpreadRate);
 		int xx = rand.nextInt(3) - 1;
 		int zz = rand.nextInt(3) - 1;
 		BlockPos p = pos.offset(xx, 0, zz);
-		if (!TVBiomes.is(level, p, TVBiomes.TAINTED_LAND) && rand.nextInt(taintSpreadRate * 5) == 0 && getAdjacentTaint(level, pos) >= 2) {
+		if (!TVBiomes.is(level, p, TVBiomes.TAINTED_LAND) && dev.neothaum.config.NeoThaumConfig.roll(rand, dev.neothaum.config.NeoThaumConfig.TC4_TAINT_SPREAD_RATE * 5, dev.neothaum.config.NeoThaumConfig.current.taintSpreadMultiplier) && getAdjacentTaint(level, pos) >= 2) {
 			TVBiomes.setBiomeAt(level, p.getX(), p.getZ(), TVBiomes.TAINTED_LAND);
 			level.blockEvent(pos, level.getBlockState(pos).getBlock(), 1, 0);
 		}

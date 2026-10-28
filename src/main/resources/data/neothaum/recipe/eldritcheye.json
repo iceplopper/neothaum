@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:infusion",
+  "research": "OCULUS",
+  "instability": 5,
+  "aspects": {
+    "alienis": 64,
+    "vacuos": 16,
+    "tenebrae": 16,
+    "iter": 16
+  },
+  "central": "minecraft:ender_eye",
+  "components": [
+    "neothaum:void_seed",
+    "minecraft:gold_ingot"
+  ],
+  "result": {
+    "id": "neothaum:eldritch_eye"
+  }
+}

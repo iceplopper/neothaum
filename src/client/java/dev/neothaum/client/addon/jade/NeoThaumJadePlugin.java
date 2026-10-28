@@ -13,6 +13,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import snownee.jade.api.BlockAccessor;
+import dev.neothaum.items.ThaumometerItem;
+import dev.neothaum.research.ScanManager;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.IWailaClientRegistration;
@@ -34,7 +36,11 @@ public class NeoThaumJadePlugin implements IWailaPlugin {
 
 			@Override
 			public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-				if (!GogglesItem.isWearingGoggles(accessor.getPlayer())) {
+				// only a node the player has scanned, seen through goggles or a thaumometer in hand
+				var player = accessor.getPlayer();
+				boolean seeing = GogglesItem.isWearingGoggles(player) || player.getMainHandItem().getItem() instanceof ThaumometerItem
+					|| player.getOffhandItem().getItem() instanceof ThaumometerItem;
+				if (!seeing || !ScanManager.hasBeenScanned(player, ScanManager.ScanResult.node(accessor.getPosition()))) {
 					return;
 				}
 				if (accessor.getBlockEntity() instanceof NodeBlockEntity node) {

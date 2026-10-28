@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:infusion",
+  "research": "TRAVELTRUNK",
+  "instability": 3,
+  "aspects": {
+    "motus": 4,
+    "spiritus": 4,
+    "iter": 4,
+    "vacuos": 16
+  },
+  "central": "neothaum:hungry_chest",
+  "components": [
+    "minecraft:iron_ingot",
+    "neothaum:greatwood_planks",
+    "neothaum:golem_wood",
+    "neothaum:greatwood_planks"
+  ],
+  "result": {
+    "id": "neothaum:traveling_trunk"
+  }
+}

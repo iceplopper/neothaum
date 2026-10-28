@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/banner",
+    "model": {
+      "type": "neothaum:device",
+      "device": "banner"
+    }
+  }
+}

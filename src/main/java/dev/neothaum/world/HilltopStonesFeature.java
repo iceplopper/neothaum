@@ -1,93 +1,104 @@
 package dev.neothaum.world;
 
-import dev.neothaum.entity.TVEntities;
 import dev.neothaum.registry.TVBlocks;
+import dev.neothaum.entity.TVEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.VineBlock;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 /**
- * 1:1 Port of WorldGenHilltopStones.
- * Generates an ancient megalith stone circle on hilltops (y >= 85) made of Arcane Stone
- * and Obsidian Tiles, a central Wisp spawner beneath a trapped chest, and a floating aura node.
+ * Port of WorldGenHilltopStones: on high ground (y 85 and up) a seven-wide floor of obsidian and obsidian tile, ringed by eight obsidian
+ * totems one to four high, vine-hung outside snowy places. In its middle a dungeon chest stands on a tile over a wisp spawner. The ground
+ * under the floor is filled in where it was air or plants.
  */
 public final class HilltopStonesFeature {
+	private static final Block[] VALID = {Blocks.STONE, Blocks.GRASS_BLOCK, Blocks.DIRT};
 
-	private HilltopStonesFeature() {}
+	private HilltopStonesFeature() {
+	}
 
-	public static boolean generate(WorldGenLevel world, RandomSource random, BlockPos origin) {
-		int i = origin.getX();
-		int j = origin.getY();
-		int k = origin.getZ();
+	private static boolean validSpawn(WorldGenLevel world, int i, int j, int k) {
+		return j >= 85 && TCSpawnCheck.valid(world, i, j, k, VALID);
+	}
 
-		if (j < 85) {
+	public static boolean generate(WorldGenLevel world, RandomSource rand, BlockPos origin) {
+		int i = origin.getX(), j = origin.getY(), k = origin.getZ();
+		if (!(validSpawn(world, i - 2, j, k - 2) && validSpawn(world, i, j, k) && validSpawn(world, i + 2, j, k) && validSpawn(world, i + 2, j, k + 2)
+			&& validSpawn(world, i, j, k + 2))) {
 			return false;
 		}
-
-		// Lay 7x7 stone foundation and standing monoliths
-		for (int x = -3; x <= 3; x++) {
-			for (int z = -3; z <= 3; z++) {
-				if (Math.abs(x) == 3 && Math.abs(z) == 3) {
-					continue; // skip corners
+		// the biome's top block fills holes under the floor; vines only where it does not snow
+		var biome = world.getBiome(origin).value();
+		BlockState replace = biome.getBaseTemperature() > 1.0F && !biome.hasPrecipitation() ? Blocks.SAND.defaultBlockState()
+			: Blocks.GRASS_BLOCK.defaultBlockState();
+		boolean genVines = !biome.coldEnoughToSnow(origin, world.getSeaLevel());
+		BlockState tile = TVBlocks.OBSIDIAN_TILE.defaultBlockState();
+		for (int x = i - 3; x <= i + 3; x++) {
+			for (int z = k - 3; z <= k + 3; z++) {
+				if ((x == i - 3 || x == i + 3) && (z == k - 3 || z == k + 3)) {
+					continue;
 				}
-
-				BlockPos ground = new BlockPos(i + x, j, k + z);
-				BlockState tile = (random.nextBoolean()) ? TVBlocks.OBSIDIAN_TILE.defaultBlockState() : Blocks.OBSIDIAN.defaultBlockState();
-				world.setBlock(ground, tile, 3);
-
-				// Fill underneath if floating
-				for (int dy = 1; dy <= 4; dy++) {
-					BlockPos below = ground.below(dy);
-					if (world.isEmptyBlock(below) || !world.getBlockState(below).isSolid()) {
-						world.setBlock(below, Blocks.STONE.defaultBlockState(), 3);
+				set(world, x, j, z, rand.nextBoolean() ? tile : Blocks.OBSIDIAN.defaultBlockState());
+				boolean stop = false;
+				for (int y = 1; y < 5; y++) {
+					if (j - y < world.getMinY()) {
+						continue;
 					}
-				}
-
-				// Standing pillars on outer ring
-				if (((Math.abs(x) == 3 && Math.abs(z) % 2 == 1) || (Math.abs(z) == 3 && Math.abs(x) % 2 == 1))) {
-					int pillarHeight = 2 + random.nextInt(3);
-					for (int y = 1; y <= pillarHeight; y++) {
-						BlockPos pillarPos = ground.above(y);
-						world.setBlock(pillarPos, TVBlocks.ARCANE_STONE_BLOCK.defaultBlockState(), 3);
-
-						// Hanging vines
-						for (Direction dir : Direction.Plane.HORIZONTAL) {
-							if (random.nextInt(3) == 0) {
-								BlockPos vinePos = pillarPos.relative(dir);
-								if (world.isEmptyBlock(vinePos)) {
-									world.setBlock(vinePos, Blocks.VINE.defaultBlockState().setValue(VineBlock.getPropertyForFace(dir.getOpposite()), true), 3);
-								}
+					BlockState below = world.getBlockState(new BlockPos(x, j - y, z));
+					if (below.is(Blocks.SNOW) || below.is(BlockTags.SMALL_FLOWERS) || below.is(Blocks.SHORT_GRASS) || below.isAir()) {
+						set(world, x, j - y, z, replace);
+					}
+					if (x == i && z == k && y == 1) {
+						set(world, x, j + 1, z, tile);
+						BlockPos chest = new BlockPos(x, j + 2, z);
+						set(world, x, j + 2, z, Blocks.CHEST.defaultBlockState());
+						RandomizableContainer.setBlockEntityLootTable(world, rand, chest, BuiltInLootTables.SIMPLE_DUNGEON);
+						BlockPos sp = new BlockPos(x, j, z);
+						set(world, x, j, z, Blocks.SPAWNER.defaultBlockState());
+						if (world.getBlockEntity(sp) instanceof SpawnerBlockEntity spawner) {
+							spawner.setEntityId(TVEntities.WISP, rand);
+						}
+					}
+					if (!stop && ((x == i - 3 || x == i + 3) && Math.abs((z - k) % 2) == 1 || (z == k - 3 || z == k + 3) && Math.abs((x - i) % 2) == 1)) {
+						set(world, x, j + y, z, TVBlocks.OBSIDIAN_TOTEM.defaultBlockState());
+						if (y >= 2 && rand.nextBoolean()) {
+							stop = true;
+							if (genVines) {
+								vines(world, rand, x - 1, j + y, z, VineBlock.EAST);
+								vines(world, rand, x + 1, j + y, z, VineBlock.WEST);
+								vines(world, rand, x, j + y, z - 1, VineBlock.SOUTH);
+								vines(world, rand, x, j + y, z + 1, VineBlock.NORTH);
 							}
 						}
 					}
 				}
 			}
 		}
-
-		// Center: Wisp spawner under trapped chest
-		BlockPos spawnerPos = new BlockPos(i, j + 1, k);
-		world.setBlock(spawnerPos, Blocks.SPAWNER.defaultBlockState(), 3);
-		if (world.getBlockEntity(spawnerPos) instanceof SpawnerBlockEntity sbe) {
-			sbe.setEntityId(TVEntities.WISP, random);
-		}
-
-		BlockPos chestPos = new BlockPos(i, j + 2, k);
-		world.setBlock(chestPos, Blocks.TRAPPED_CHEST.defaultBlockState(), 3);
-		if (world.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
-			chest.setLootTable(BuiltInLootTables.SIMPLE_DUNGEON, random.nextLong());
-		}
-
-		// Hovering aura node above chest
-		BlockPos nodePos = new BlockPos(i, j + 4, k);
-		NodeGenerator.createRandomNodeAt(world, nodePos, random, false, false, false, true);
-
 		return true;
+	}
+
+	/** One time in three, if there is room, a vine on the totem's face hanging down up to four more blocks (growVines). */
+	private static void vines(WorldGenLevel world, RandomSource rand, int x, int y, int z, BooleanProperty side) {
+		if (rand.nextInt(3) != 0 || !world.isEmptyBlock(new BlockPos(x, y, z))) {
+			return;
+		}
+		BlockState vine = Blocks.VINE.defaultBlockState().setValue(side, true);
+		set(world, x, y, z, vine);
+		for (int n = 4; n > 0 && world.isEmptyBlock(new BlockPos(x, --y, z)); n--) {
+			set(world, x, y, z, vine);
+		}
+	}
+
+	private static void set(WorldGenLevel world, int x, int y, int z, BlockState s) {
+		world.setBlock(new BlockPos(x, y, z), s, Block.UPDATE_CLIENTS);
 	}
 }

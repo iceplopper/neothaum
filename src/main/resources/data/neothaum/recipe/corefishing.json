@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "COREFISHING",
+  "instability": 3,
+  "aspects": {
+    "aqua": 16,
+    "meto": 16,
+    "bestia": 16
+  },
+  "central": "neothaum:golem_core_harvest",
+  "components": [
+    "minecraft:fishing_rod",
+    "minecraft:cod",
+    "minecraft:cod",
+    "minecraft:cod"
+  ],
+  "result": {
+    "id": "neothaum:golem_core_fish"
+  }
+}

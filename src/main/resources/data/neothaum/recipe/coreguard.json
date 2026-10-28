@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "COREGUARD",
+  "catalyst": "neothaum:golem_core_blank",
+  "aspects": {
+    "telum": 5,
+    "vinculum": 5
+  },
+  "result": {
+    "id": "neothaum:golem_core_guard"
+  }
+}

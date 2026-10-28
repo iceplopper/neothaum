@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "TINYHAMMER",
+  "aspects": {
+    "terra": 4,
+    "ignis": 4
+  },
+  "pattern": [
+    "III",
+    "III",
+    " I "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "neothaum:golem_deco_mace"
+  }
+}

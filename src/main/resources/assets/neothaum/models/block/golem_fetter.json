@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "neothaum:blocks/golem_stone_top",
+    "bottom": "neothaum:blocks/arcane_stone",
+    "side": "neothaum:blocks/golem_stone_side"
+  }
+}

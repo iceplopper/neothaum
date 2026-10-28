@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "neothaum:item/golem_tallow"
+    "layer0": "neothaum:items/golem_tallow"
   }
 }

@@ -1,6 +1,10 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "neothaum:block/eldritch_obelisk"
+    "type": "minecraft:special",
+    "base": "neothaum:item/eldritch_obelisk",
+    "model": {
+      "type": "neothaum:device",
+      "device": "eldritch_obelisk"
+    }
   }
 }

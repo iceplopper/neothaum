@@ -108,6 +108,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.ContainerTags::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.BoltFX::tick);
 		dev.neothaum.client.entity.TVEntityRenderers.init();
+		dev.neothaum.client.render.armor.TCArmorRenderers.init();
 		ClientBridge.openNodeEditor = pos -> Minecraft.getInstance().gui.setScreen(new dev.neothaum.client.devtools.NodeEditorScreen(pos));
 
 		MenuScreens.register(TVMenus.ARCANE_WORKBENCH, ArcaneWorkbenchScreen::new);
@@ -117,6 +118,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		MenuScreens.register(TVMenus.PECH, dev.neothaum.client.gui.PechScreen::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR, dev.neothaum.client.render.JarRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ALEMBIC, dev.neothaum.client.render.AlembicRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ETHEREAL_BLOOM, dev.neothaum.client.render.EtherealBloomRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.TUBE, dev.neothaum.client.render.TubeRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.BUFFER, dev.neothaum.client.render.BufferRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.BELLOWS, dev.neothaum.client.render.BellowsRenderer::new);
@@ -157,6 +159,8 @@ public class NeoThaumClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.CRYSTAL, dev.neothaum.client.render.CrystalRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.HUNGRY_CHEST, dev.neothaum.client.render.HungryChestRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_ALTAR, dev.neothaum.client.render.EldritchAltarRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_CAP, dev.neothaum.client.render.EldritchObeliskRenderer.CapRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_OBELISK, dev.neothaum.client.render.EldritchObeliskRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_PORTAL, dev.neothaum.client.render.EldritchPortalRenderer::new);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("crystal"), dev.neothaum.client.render.CrystalRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("thaumometer"), dev.neothaum.client.render.ThaumometerRenderer.Unbaked.CODEC);
@@ -164,6 +168,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("jar_node"), dev.neothaum.client.render.JarNodeRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("vis_device"), dev.neothaum.client.render.VisDeviceRenderers.DeviceUnbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("alembic"), dev.neothaum.client.render.AlembicRenderer.Unbaked.CODEC);
+		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("device"), dev.neothaum.client.render.DeviceItemRenderers.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("bellows"), dev.neothaum.client.render.BellowsRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("runic_matrix"), dev.neothaum.client.render.RunicMatrixRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("hungry_chest"), dev.neothaum.client.render.HungryChestRenderer.Unbaked.CODEC);

@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "GOLEMBELL",
+  "aspects": {
+    "ordo": 5
+  },
+  "pattern": [
+    " QQ",
+    " QQ",
+    "S  "
+  ],
+  "key": {
+    "S": "minecraft:stick",
+    "Q": "minecraft:quartz"
+  },
+  "result": {
+    "id": "neothaum:golem_bell"
+  }
+}

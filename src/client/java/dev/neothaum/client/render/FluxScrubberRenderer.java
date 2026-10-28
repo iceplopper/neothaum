@@ -62,10 +62,14 @@ public class FluxScrubberRenderer implements BlockEntityRenderer<FluxScrubberBlo
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
+		draw(ps, collector, s.facing, s.gameTime + s.count, s.lightCoords);
+	}
+
+	static void draw(PoseStack ps, SubmitNodeCollector collector, Direction facing, float time, int light) {
 		ps.pushPose();
 		ps.translate(0.5F, 0.5F, 0.5F);
 
-		switch (s.facing) {
+		switch (facing) {
 			case DOWN -> ps.rotateDegrees(Axis.XP, -90.0F);
 			case UP -> ps.rotateDegrees(Axis.XP, 90.0F);
 			case SOUTH -> ps.rotateDegrees(Axis.YP, 180.0F);
@@ -77,15 +81,15 @@ public class FluxScrubberRenderer implements BlockEntityRenderer<FluxScrubberBlo
 
 		// Render stationary Cap
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(TEXTURE), (pose, vc) -> {
-			model().renderPart("Cap", pose, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			model().renderPart("Cap", pose, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 
 		// Render bobbing Tip
-		float bob = Mth.sin((s.gameTime + s.count) / 8.0F) * 0.075F + 0.075F;
+		float bob = Mth.sin(time / 8.0F) * 0.075F + 0.075F;
 		ps.pushPose();
 		ps.translate(0.0F, 0.0F, -bob);
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(TEXTURE), (pose, vc) -> {
-			model().renderPart("Tip", pose, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			model().renderPart("Tip", pose, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 		ps.popPose();
 

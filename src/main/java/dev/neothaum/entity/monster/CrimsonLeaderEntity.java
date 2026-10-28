@@ -48,7 +48,7 @@ import net.minecraft.world.phys.AABB;
  * CrimsonLeaderEntity: Crimson Praetor boss leading the cultists.
  * Heavy fortress armor, radiates Strength II to cultists, fires homing orbs, caps damage at 35, and drops Rare Loot Bag.
  */
-public class CrimsonLeaderEntity extends Monster implements RangedAttackMob {
+public class CrimsonLeaderEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob {
 	public static final String[] TITLES = new String[]{
 		"Alberic", "Anselm", "Bastian", "Beturian", "Chabier", "Chorache",
 		"Chuse", "Dodorol", "Ebardo", "Ferrando", "Fertus", "Guillen",

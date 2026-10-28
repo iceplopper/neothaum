@@ -1,6 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "neothaum:models/obelisk_cap"
+    "particle": "neothaum:models/obelisk_cap"
   }
 }

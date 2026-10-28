@@ -73,6 +73,8 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 	private int regenTimer = 0;
 	private float bootup = 0.0F;
 	private boolean paused = false;
+	/** Standing on a lit golem fetter: checked every tick on both sides, as EntityGolemBase.onLivingUpdate did. */
+	private boolean fettered = false;
 
 	private final NonNullList<ItemStack> filterItems = NonNullList.withSize(36, ItemStack.EMPTY);
 	private final byte[] filterColors = new byte[36];
@@ -271,7 +273,7 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 	}
 
 	public boolean isInactive() {
-		return this.paused;
+		return this.paused || this.fettered;
 	}
 
 	public void setInactive(boolean inactive) {
@@ -406,6 +408,7 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 	@Override
 	public void aiStep() {
 		super.aiStep();
+		this.fettered = this.getBlockY() > 0 && dev.neothaum.blocks.GolemFetterBlock.holds(this.level(), this.blockPosition());
 		if (this.bootup < 1.0F) {
 			this.bootup += 0.05F;
 			if (this.level().isClientSide() && this.tickCount % 4 == 0) {

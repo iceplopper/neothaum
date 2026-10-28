@@ -385,12 +385,9 @@ public class GolemRenderer extends MobRenderer<GolemEntity, GolemRenderer.State,
 	@Override
 	public Identifier getTextureLocation(State state) {
 		if (state.golemType == GolemType.COPPER) {
-			return switch (state.oxidationLevel) {
-				case 0 -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem.png");
-				case 1 -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem_exposed.png");
-				case 2 -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem_weathered.png");
-				default -> Identifier.withDefaultNamespace("textures/entity/copper_golem/copper_golem_oxidized.png");
-			};
+			// TC4's golem skin in copper, greening with its oxidation (vanilla's copper golem skin does not fit this model)
+			String[] stage = {"", "_exposed", "_weathered", "_oxidized"};
+			return NeoThaum.id("textures/entity/golem/golem_copper" + stage[Math.max(0, Math.min(3, state.oxidationLevel))] + ".png");
 		}
 		String name = state.golemType != null ? state.golemType.name().toLowerCase() : "straw";
 		return NeoThaum.id("textures/entity/golem/golem_" + name + ".png");

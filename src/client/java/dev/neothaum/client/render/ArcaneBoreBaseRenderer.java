@@ -79,6 +79,10 @@ public class ArcaneBoreBaseRenderer implements BlockEntityRenderer<ArcaneBoreBas
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
+		draw(ps, collector, s.facing, s.lightCoords);
+	}
+
+	static void draw(PoseStack ps, SubmitNodeCollector collector, Direction facing, int light) {
 		init();
 		ps.pushPose();
 		ps.translate(0.5F, 0.0F, 0.5F);
@@ -87,12 +91,12 @@ public class ArcaneBoreBaseRenderer implements BlockEntityRenderer<ArcaneBoreBas
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(TEXTURE), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			basePart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			basePart.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 
 		// Render Nozzle rotated to facing
 		ps.pushPose();
-		float yaw = switch (s.facing) {
+		float yaw = switch (facing) {
 			case NORTH -> 90.0F;
 			case SOUTH -> 270.0F;
 			case WEST -> 180.0F;
@@ -104,7 +108,7 @@ public class ArcaneBoreBaseRenderer implements BlockEntityRenderer<ArcaneBoreBas
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(TEXTURE), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			nozzlePart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			nozzlePart.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 		ps.popPose();
 

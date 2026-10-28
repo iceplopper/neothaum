@@ -2558,7 +2558,7 @@
       "row": 8,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:crimson_cult_banner"
+        "item": "neothaum:cultist_banner"
       },
       "pages": [
         {
@@ -2589,7 +2589,7 @@
       ],
       "item_triggers": [
         {
-          "item": "neothaum:crimson_cult_banner"
+          "item": "neothaum:cultist_banner"
         }
       ],
       "flags": [
@@ -5413,7 +5413,7 @@
       "row": 2,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:straw_golem"
+        "item": "neothaum:golem_straw"
       },
       "pages": [
         {
@@ -5457,7 +5457,7 @@
       "row": 4,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:wood_golem"
+        "item": "neothaum:golem_wood"
       },
       "pages": [
         {
@@ -5492,7 +5492,7 @@
       "row": 6,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:tallow_golem"
+        "item": "neothaum:golem_tallow"
       },
       "pages": [
         {
@@ -5533,7 +5533,7 @@
       "row": 6,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:clay_golem"
+        "item": "neothaum:golem_clay"
       },
       "pages": [
         {
@@ -5613,7 +5613,7 @@
       "row": 4,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:flesh_golem"
+        "item": "neothaum:golem_flesh"
       },
       "pages": [
         {
@@ -5654,7 +5654,7 @@
       "row": 8,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:stone_golem"
+        "item": "neothaum:golem_stone"
       },
       "pages": [
         {
@@ -5689,7 +5689,7 @@
       "row": 10,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:iron_golem"
+        "item": "neothaum:golem_iron"
       },
       "pages": [
         {
@@ -5725,7 +5725,7 @@
       "row": 10,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:thaumium_golem"
+        "item": "neothaum:golem_thaumium"
       },
       "pages": [
         {
@@ -5761,7 +5761,7 @@
       "row": 0,
       "complexity": 0,
       "icon": {
-        "item": "neothaum:golemancers_bell"
+        "item": "neothaum:golem_bell"
       },
       "pages": [
         {
@@ -6026,7 +6026,7 @@
       "row": 7,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:golem_core_fishing"
+        "item": "neothaum:golem_core_fish"
       },
       "pages": [
         {
@@ -6082,7 +6082,7 @@
       "row": 7,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:golem_core_chop"
+        "item": "neothaum:golem_core_lumber"
       },
       "pages": [
         {
@@ -6192,7 +6192,7 @@
       "row": 4,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:golem_core_decanting"
+        "item": "neothaum:golem_core_liquid"
       },
       "pages": [
         {
@@ -6231,7 +6231,7 @@
       "row": 3,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:golem_core_alchemy"
+        "item": "neothaum:golem_core_essentia"
       },
       "pages": [
         {
@@ -6469,7 +6469,7 @@
       "row": 0,
       "complexity": 2,
       "icon": {
-        "item": "neothaum:straw_golem"
+        "item": "neothaum:golem_straw"
       },
       "pages": [
         {
@@ -6506,7 +6506,7 @@
       "row": 10,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_top_hat"
+        "item": "neothaum:golem_deco_tophat"
       },
       "pages": [
         {
@@ -6545,7 +6545,7 @@
       "row": 10,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_spectacles"
+        "item": "neothaum:golem_deco_glasses"
       },
       "pages": [
         {
@@ -6584,7 +6584,7 @@
       "row": 10,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_bowtie"
+        "item": "neothaum:golem_deco_bowtie"
       },
       "pages": [
         {
@@ -6623,7 +6623,7 @@
       "row": 10,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_fez"
+        "item": "neothaum:golem_deco_fez"
       },
       "pages": [
         {
@@ -6662,7 +6662,7 @@
       "row": 11,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_dart_launcher"
+        "item": "neothaum:golem_deco_dart"
       },
       "pages": [
         {
@@ -6696,7 +6696,7 @@
       "row": 11,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_visor"
+        "item": "neothaum:golem_deco_visor"
       },
       "pages": [
         {
@@ -6730,7 +6730,7 @@
       "row": 11,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_iron_plating"
+        "item": "neothaum:golem_deco_armor"
       },
       "pages": [
         {
@@ -6764,7 +6764,7 @@
       "row": 11,
       "complexity": 1,
       "icon": {
-        "item": "neothaum:golem_mace_arm"
+        "item": "neothaum:golem_deco_mace"
       },
       "pages": [
         {

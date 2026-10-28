@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "COREUSE",
+  "instability": 3,
+  "aspects": {
+    "instrumentum": 20,
+    "machina": 20,
+    "humanus": 20
+  },
+  "central": "neothaum:golem_core_empty",
+  "components": [
+    "minecraft:comparator",
+    "minecraft:flint_and_steel",
+    "minecraft:shears",
+    "minecraft:lever"
+  ],
+  "result": {
+    "id": "neothaum:golem_core_use"
+  }
+}

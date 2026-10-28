@@ -14,7 +14,7 @@ public final class AspectOrbEvents {
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
 			if (entity.level().isClientSide()) return;
 			if (source != null && source.getEntity() instanceof Player) {
-				float chance = dev.neothaum.config.NeoThaumConfig.current.aspectOrbDropChance;
+				float chance = dev.neothaum.config.NeoThaumConfig.ASPECT_ORB_CHANCE * dev.neothaum.config.NeoThaumConfig.current.aspectOrbMultiplier;
 				if (chance > 0 && entity.level().getRandom().nextFloat() < chance) {
 					Aspect[] primals = Aspect.getPrimalAspects().toArray(new Aspect[0]);
 					Aspect a = primals[entity.level().getRandom().nextInt(primals.length)];

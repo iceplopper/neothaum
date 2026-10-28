@@ -22,8 +22,11 @@ public final class TVWorldGen {
 		// ConfigEntities.initEntitySpawns: angry zombies wherever monsters spawn, wisps in the nether
 		BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld().and(BiomeSelectors.excludeByKey(TVBiomes.TAINTED_LAND)),
 			net.minecraft.world.entity.MobCategory.MONSTER, dev.neothaum.entity.TVEntities.BRAINY_ZOMBIE, 10, 1, 1);
-		BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether(), net.minecraft.world.entity.MobCategory.MONSTER,
-			dev.neothaum.entity.TVEntities.WISP, 5, 1, 1);
+		int wisps = dev.neothaum.config.NeoThaumConfig.scale(dev.neothaum.config.NeoThaumConfig.WISP_SPAWN_WEIGHT, dev.neothaum.config.NeoThaumConfig.current.wispSpawnMultiplier);
+		if (wisps > 0) {
+			BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether(), net.minecraft.world.entity.MobCategory.MONSTER,
+				dev.neothaum.entity.TVEntities.WISP, wisps, 1, 1);
+		}
 		BiomeModifications.addSpawn(BiomeSelectors.foundInTheNether(), net.minecraft.world.entity.MobCategory.MONSTER,
 			dev.neothaum.entity.TVEntities.FIREBAT, 10, 1, 2);
 		// and on Halloween, firebats everywhere

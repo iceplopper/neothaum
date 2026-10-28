@@ -112,22 +112,26 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
+		float rot = s.onWall ? s.facing.toYRot() : s.rotation * 360.0F / 16.0F;
+		float f3 = s.pos.getX() * 7 + s.pos.getY() * 9 + s.pos.getZ() * 13 + (float) s.gameTime;
+		draw(ps, collector, s.color, s.color == -1 && s.aspect == null, s.onWall, rot, f3, s.lightCoords);
+	}
+
+	static void draw(PoseStack ps, SubmitNodeCollector collector, int color, boolean cultist, boolean onWall, float rot, float f3, int light) {
 		init();
-		Identifier tex = (s.color == -1 && s.aspect == null) ? TEX_CULTIST : TEX_BLANK;
+		Identifier tex = cultist ? TEX_CULTIST : TEX_BLANK;
 
 		ps.pushPose();
 		ps.translate(0.5F, 1.5F, 0.5F);
 		ps.rotateDegrees(Axis.XP, 180.0F);
 		ps.rotateDegrees(Axis.YP, 180.0F);
-
-		float rot = s.onWall ? s.facing.toYRot() : s.rotation * 360.0F / 16.0F;
 		ps.rotateDegrees(Axis.YP, rot);
 
-		if (!s.onWall) {
+		if (!onWall) {
 			collector.submitCustomGeometry(ps, RenderTypes.entityCutout(tex), (pose, vc) -> {
 				PoseStack local = new PoseStack();
 				local.last().set(pose);
-				polePart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+				polePart.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 			});
 		} else {
 			ps.translate(0.0F, 0.0F, -0.4125F);
@@ -137,20 +141,19 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(tex), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			beamPart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			beamPart.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 
 		// Tabs with color
-		int colorTint = (s.color >= 0 && s.color < 16) ? TC_COLORS[s.color] : 0xFFFFFFFF;
+		int colorTint = (color >= 0 && color < 16) ? TC_COLORS[color] : 0xFFFFFFFF;
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(tex), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			tab1Part.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, colorTint);
-			tab2Part.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, colorTint);
+			tab1Part.render(local, vc, light, OverlayTexture.NO_OVERLAY, colorTint);
+			tab2Part.render(local, vc, light, OverlayTexture.NO_OVERLAY, colorTint);
 		});
 
 		// Flutter sway
-		float f3 = s.pos.getX() * 7 + s.pos.getY() * 9 + s.pos.getZ() * 13 + (float) s.gameTime;
 		float rx = (0.005F + 0.005F * Mth.cos(f3 * (float) Math.PI * 0.02F)) * (float) Math.PI;
 
 		ps.pushPose();
@@ -160,7 +163,7 @@ public class BannerRenderer implements BlockEntityRenderer<BannerBlockEntity, Ba
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(tex), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			bannerClothPart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, colorTint);
+			bannerClothPart.render(local, vc, light, OverlayTexture.NO_OVERLAY, colorTint);
 		});
 
 		ps.popPose();

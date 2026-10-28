@@ -62,36 +62,29 @@ public record TCWorldFeature(boolean nether) implements Feature {
 		return true;
 	}
 
+	/**
+	 * ThaumcraftWorldGenerator.generateSurface: one try a chunk, 9 below the surface at a random spot, for a barrow mound, else an eldritch ring,
+	 * else hilltop stones; each made brings a node with it. Not in flat worlds. (The wizard's tower and banker's house are village buildings:
+	 * see TCVillages.)
+	 */
 	private void generateStructures(WorldGenLevel world, RandomSource random, int cx, int cz) {
 		var cfg = dev.neothaum.config.NeoThaumConfig.current;
-		if (cfg.eldritchRingRarity > 0 && random.nextInt(cfg.eldritchRingRarity) == 0) {
-			int x = cx + random.nextInt(16);
-			int z = cz + random.nextInt(16);
-			int y = heightAt(world, x, z);
-			EldritchRingFeature.generate(world, random, new BlockPos(x, y - 1, z));
+		if (world.getLevel().getChunkSource().getGenerator() instanceof net.minecraft.world.level.levelgen.FlatLevelSource) {
+			return;
 		}
-		if (cfg.barrowMoundRarity > 0 && random.nextInt(cfg.barrowMoundRarity) == 0) {
-			int x = cx + random.nextInt(16);
-			int z = cz + random.nextInt(16);
-			int y = heightAt(world, x, z);
-			BarrowMoundFeature.generate(world, random, new BlockPos(x - 9, y - 8, z - 9));
-		}
-		int sx = cx + random.nextInt(16);
-		int sz = cz + random.nextInt(16);
-		int sy = heightAt(world, sx, sz);
-		if (sy >= 85 && cfg.hilltopStonesRarity > 0 && random.nextInt(cfg.hilltopStonesRarity) == 0) {
-			HilltopStonesFeature.generate(world, random, new BlockPos(sx, sy, sz));
-		}
-		if (cfg.wizardTowerRarity > 0 && random.nextInt(cfg.wizardTowerRarity) == 0) {
-			int x = cx + random.nextInt(16);
-			int z = cz + random.nextInt(16);
-			int y = heightAt(world, x, z);
-			WizardTowerFeature.generate(world, random, new BlockPos(x, y - 1, z));
-		} else if (cfg.bankerHomeRarity > 0 && random.nextInt(cfg.bankerHomeRarity) == 0) {
-			int x = cx + random.nextInt(16);
-			int z = cz + random.nextInt(16);
-			int y = heightAt(world, x, z);
-			BankerHomeFeature.generate(world, random, new BlockPos(x, y - 1, z));
+		int x = cx + random.nextInt(16);
+		int z = cz + random.nextInt(16);
+		int y = heightAt(world, x, z) - 9;
+		if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_BARROW_MOUND_RARITY, cfg.barrowMoundMultiplier)) {
+			if (BarrowMoundFeature.generate(world, random, new BlockPos(x, y, z))) {
+				NodeGenerator.createRandomNodeAt(world, new BlockPos(x + 9, y + 8, z + 9), random, false, true, false, true);
+			}
+		} else if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_ELDRITCH_RING_RARITY, cfg.eldritchRingMultiplier)) {
+			EldritchRingFeature.generate(world, random, new BlockPos(x, y + 8, z));
+		} else if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_HILLTOP_STONES_RARITY, cfg.hilltopStonesMultiplier)) {
+			if (HilltopStonesFeature.generate(world, random, new BlockPos(x, y + 9, z))) {
+				NodeGenerator.createRandomNodeAt(world, new BlockPos(x, y + 14, z), random, false, true, false, true);
+			}
 		}
 	}
 
@@ -231,10 +224,9 @@ public record TCWorldFeature(boolean nether) implements Feature {
 		}
 	}
 
-	/** generateWildNodes configurable via NeoThaumConfig.nodeRarity. */
+	/** generateWildNodes: a node in 1 chunk in 36, scaled by the node multiplier. */
 	private void generateWildNodes(WorldGenLevel world, RandomSource random, int cx, int cz) {
-		int rarity = dev.neothaum.config.NeoThaumConfig.current.nodeRarity;
-		if (rarity <= 0 || random.nextInt(rarity) != 0) {
+		if (!dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_NODE_RARITY, dev.neothaum.config.NeoThaumConfig.current.nodeMultiplier)) {
 			return;
 		}
 		int x = cx + random.nextInt(16);

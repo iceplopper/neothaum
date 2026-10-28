@@ -16,57 +16,65 @@ public class NeoThaumConfig {
 	public static ConfigData current = new ConfigData();
 
 	public static class ConfigData {
+		// --- Addons ---
+		/** Whether the aura nodes you have seen are drawn on Xaero's World Map (toggled by the button on the map). Default: true. */
+		public boolean worldMapNodes = true;
+
+		// Every number below is a multiplier on TC4's own setting, from 0 to 10 in steps of 0.1: 1 is TC4, 3 is three times as much (as many
+		// nodes, as large a forest, taint spreading three times as fast), 0 turns it off. The TC4 values are the constants in NeoThaumConfig.
+
 		// --- Node Generation & Variants ---
-		/** 1 in N chunks generates a wild aura node (lower = more frequent, 0 = disabled). Default: 36. */
-		public int nodeRarity = 36;
-		/** 1 in N wild nodes will be a special variant (Dark, Unstable, Pure, Hungry, Tainted). Default: 18. */
-		public int nodeVariantRarity = 18;
-		public int darkNodeWeight = 3;
-		public int unstableNodeWeight = 3;
-		public int pureNodeWeight = 3;
-		public int hungryNodeWeight = 1;
-		public int taintedNodeWeight = 1;
-		public int brightNodeWeight = 1;
-		public int paleNodeWeight = 1;
-		public int fadingNodeWeight = 1;
+		/** How often wild aura nodes generate (TC4: 1 chunk in 36). */
+		public float nodeMultiplier = 1.0f;
+		/** How often a wild node is one of the special types (TC4: 1 in 18; modifiers half as rare). */
+		public float nodeVariantMultiplier = 1.0f;
+		/** The odds of each special type and modifier relative to the others (TC4 weights: dark, unstable, pure 3; the rest 1). */
+		public float darkNodeMultiplier = 1.0f;
+		public float unstableNodeMultiplier = 1.0f;
+		public float pureNodeMultiplier = 1.0f;
+		public float hungryNodeMultiplier = 1.0f;
+		public float taintedNodeMultiplier = 1.0f;
+		public float brightNodeMultiplier = 1.0f;
+		public float paleNodeMultiplier = 1.0f;
+		public float fadingNodeMultiplier = 1.0f;
 
 		// --- Biomes (Size & Generation) ---
 		/** Whether Magical Forest generates in the overworld. Default: true. */
 		public boolean magicalForestGenerate = true;
-		/** Percentage size of Magical Forest within forest regions (1-100). Default: 30. */
-		public int magicalForestSize = 30;
+		/** How much of forest country is Magical Forest (TC4-like: 30%). */
+		public float magicalForestSizeMultiplier = 1.0f;
 		/** Whether Tainted Land generates naturally at worldgen. Default: true. */
 		public boolean taintedLandGenerate = true;
-		/** Percentage size of Tainted Land inland pockets (1-100). Default: 5. */
-		public int taintedLandSize = 5;
+		/** How large the inland pockets of Tainted Land are (5% of their region). */
+		public float taintedLandSizeMultiplier = 1.0f;
 
-		// --- Structures (Generation Frequency per Type) ---
-		/** 1 in N chunks generates an Eldritch Ring (lower = more frequent, 0 = disabled). Default: 66. */
-		public int eldritchRingRarity = 66;
-		/** 1 in N chunks generates a Barrow Mound (lower = more frequent, 0 = disabled). Default: 150. */
-		public int barrowMoundRarity = 150;
-		/** 1 in N chunks generates Hilltop Stones above y=85 (lower = more frequent, 0 = disabled). Default: 40. */
-		public int hilltopStonesRarity = 40;
-		/** 1 in N chunks generates a Wizard Tower (lower = more frequent, 0 = disabled). Default: 120. */
-		public int wizardTowerRarity = 120;
-		/** 1 in N chunks generates a Banker/Thaumaturge House (lower = more frequent, 0 = disabled). Default: 140. */
-		public int bankerHomeRarity = 140;
+		// --- Structures ---
+		/** How often each structure generates (TC4: eldritch ring 1 chunk in 66, barrow mound 1 in 150, hilltop stones 1 in 40). */
+		public float eldritchRingMultiplier = 1.0f;
+		public float barrowMoundMultiplier = 1.0f;
+		public float hilltopStonesMultiplier = 1.0f;
+		/** Whether wizard towers and bankers' houses are among the buildings villages can have (TC4 built them nowhere else). Default: true. */
+		public boolean villageBuildings = true;
 
 		// --- Taint Mechanics ---
 		/** Whether fibrous taint and taint biomes can spread. Default: true. */
 		public boolean taintSpread = true;
-		/** Rate of taint biome spread (higher = slower, default: 200). */
-		public int taintSpreadRate = 200;
+		/** How fast tainted land creeps outward (TC4: 1 in 200x5 tries). */
+		public float taintSpreadMultiplier = 1.0f;
 		/** Whether taint corrupts dying regular mobs into tainted variants, or only naturally spawned variants exist. Default: true. */
 		public boolean corruptExistingMobs = true;
 
-		// --- Alchemy & Magic Multipliers ---
-		/** Multiplier for flux generated / spilled from crucibles, furnaces, and infusion instability. Default: 1.0. */
+		// --- Alchemy & Magic ---
+		/** Flux spilled by crucibles. */
 		public float fluxMultiplier = 1.0f;
-		/** Smelting speed multiplier for the Infernal Furnace (higher = faster). Default: 1.0. */
+		/** Infernal Furnace smelting speed. */
 		public float infernalFurnaceSpeedMultiplier = 1.0f;
-		/** Bonus nugget/item yield multiplier for the Infernal Furnace. Default: 1.0. */
+		/** Infernal Furnace bonus nuggets. */
 		public float infernalFurnaceBonusMultiplier = 1.0f;
+		/** Chance of an aspect orb from a mob you kill (25%). */
+		public float aspectOrbMultiplier = 1.0f;
+		/** How often wisps spawn in the nether (weight 5; takes effect on restart). */
+		public float wispSpawnMultiplier = 1.0f;
 
 		// --- Creative & Debug ---
 		/** Toggle to show or hide the Creative Mode "TC: Dev Tools" tab. Default: true. */
@@ -74,10 +82,30 @@ public class NeoThaumConfig {
 
 		// --- Other TC4 Options ---
 		public boolean hardNodes = true;
-		public float aspectOrbDropChance = 0.25f;
 		public boolean allowWarp = true;
-		public float wispSpawnRate = 1.0f;
 		public boolean championMobs = true;
+	}
+
+	// TC4's values, which the multipliers above scale
+	public static final int TC4_NODE_RARITY = 36;
+	public static final int TC4_NODE_VARIANT_RARITY = 18;
+	public static final int TC4_ELDRITCH_RING_RARITY = 66;
+	public static final int TC4_BARROW_MOUND_RARITY = 150;
+	public static final int TC4_HILLTOP_STONES_RARITY = 40;
+	public static final int TC4_TAINT_SPREAD_RATE = 200;
+	public static final int MAGICAL_FOREST_PERCENT = 30;
+	public static final int TAINTED_LAND_PERCENT = 5;
+	public static final float ASPECT_ORB_CHANCE = 0.25f;
+	public static final int WISP_SPAWN_WEIGHT = 5;
+
+	/** A "1 in {@code oneIn}" roll made {@code multiplier} times as likely (never, at 0). */
+	public static boolean roll(net.minecraft.util.RandomSource random, int oneIn, float multiplier) {
+		return multiplier > 0.0f && random.nextFloat() * oneIn < multiplier;
+	}
+
+	/** A weight or amount scaled by its multiplier, kept to whole numbers. */
+	public static int scale(int base, float multiplier) {
+		return Math.max(0, Math.round(base * multiplier));
 	}
 
 	public static void load() {

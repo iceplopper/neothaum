@@ -34,7 +34,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 /** EntityEldritchGuardian: mysterious, robed outer lands guardian summoned by deep warp hallucinations or ancient portals. */
-public class EldritchGuardianEntity extends Monster {
+public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.EldritchMob {
 	private static final EntityDataAccessor<Byte> ATTACK_STATE = SynchedEntityData.defineId(EldritchGuardianEntity.class, EntityDataSerializers.BYTE);
 
 	public float armLiftL = 0.0F;

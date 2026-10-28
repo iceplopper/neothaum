@@ -105,8 +105,25 @@ public class PechMenu extends AbstractContainerMenu {
 		return this.pech.loot.stream().anyMatch(s -> !s.isEmpty());
 	}
 
+	/**
+	 * mergeItemStack(stack, 1, 5): stacks onto matching payout slots, then fills empty ones. Written out because moveItemStackTo asks the
+	 * payout slots' mayPlace, and they refuse anything put in by hand, so every payout was lost.
+	 */
 	private void give(ItemStack stack) {
-		this.moveItemStackTo(stack, 1, 5, false);
+		for (int i = 1; i < 5 && !stack.isEmpty(); i++) {
+			ItemStack in = this.inventory.getItem(i);
+			if (!in.isEmpty() && ItemStack.isSameItemSameComponents(in, stack) && in.getCount() < in.getMaxStackSize()) {
+				int n = Math.min(stack.getCount(), in.getMaxStackSize() - in.getCount());
+				in.grow(n);
+				stack.shrink(n);
+			}
+		}
+		for (int i = 1; i < 5 && !stack.isEmpty(); i++) {
+			if (this.inventory.getItem(i).isEmpty()) {
+				this.inventory.setItem(i, stack.copy());
+				stack.setCount(0);
+			}
+		}
 	}
 
 	private void generateContents() {

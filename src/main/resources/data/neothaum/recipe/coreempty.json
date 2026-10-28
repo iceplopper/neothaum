@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "COREEMPTY",
+  "catalyst": "neothaum:golem_core_blank",
+  "aspects": {
+    "lucrum": 5,
+    "vacuos": 5
+  },
+  "result": {
+    "id": "neothaum:golem_core_empty"
+  }
+}

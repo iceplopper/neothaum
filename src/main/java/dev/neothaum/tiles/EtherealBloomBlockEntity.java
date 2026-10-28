@@ -32,6 +32,7 @@ public class EtherealBloomBlockEntity extends BlockEntity {
 			level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, TVSounds.ROOTS, SoundSource.BLOCKS, 1.0F, 0.6F, false);
 		}
 		this.growthCounter++;
+		this.counter++;
 	}
 
 	public void serverTick(ServerLevel level, BlockPos pos, BlockState state) {

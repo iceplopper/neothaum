@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "TINYFEZ",
+  "aspects": {
+    "aqua": 4,
+    "terra": 4
+  },
+  "pattern": [
+    "CCS",
+    "CCS",
+    "  S"
+  ],
+  "key": {
+    "C": "minecraft:white_wool",
+    "S": "minecraft:string"
+  },
+  "result": {
+    "id": "neothaum:golem_deco_fez"
+  }
+}

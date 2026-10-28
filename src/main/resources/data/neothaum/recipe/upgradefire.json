@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "UPGRADEFIRE",
+  "aspects": {
+    "ignis": 10
+  },
+  "pattern": [
+    "NNN",
+    "NCN",
+    "NNN"
+  ],
+  "key": {
+    "N": "minecraft:gold_nugget",
+    "C": "neothaum:fire_shard"
+  },
+  "result": {
+    "id": "neothaum:golem_upgrade_fire"
+  }
+}

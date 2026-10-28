@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "neothaum:block/essentiareservoir"
+    "particle": "neothaum:blocks/essentiareservoir"
   },
   "display": {
     "gui": {

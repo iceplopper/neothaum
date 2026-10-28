@@ -118,23 +118,25 @@ public final class NodeGenerator {
 			}
 		}
 		var cfg = dev.neothaum.config.NeoThaumConfig.current;
-		int specialNodeRarity = Math.max(1, cfg.nodeVariantRarity);
 		NodeType type = NodeType.NORMAL;
 		if (silverwood) {
 			type = NodeType.PURE;
 		} else if (eerie) {
 			type = NodeType.DARK;
-		} else if (random.nextInt(specialNodeRarity) == 0) {
-			int total = cfg.darkNodeWeight + cfg.unstableNodeWeight + cfg.pureNodeWeight + cfg.hungryNodeWeight + cfg.taintedNodeWeight;
+		} else if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_NODE_VARIANT_RARITY, cfg.nodeVariantMultiplier)) {
+			// TC4's weights, 3 3 3 1 1, each scaled by its multiplier
+			int dark = dev.neothaum.config.NeoThaumConfig.scale(3, cfg.darkNodeMultiplier), unstable = dev.neothaum.config.NeoThaumConfig.scale(3, cfg.unstableNodeMultiplier);
+			int pure = dev.neothaum.config.NeoThaumConfig.scale(3, cfg.pureNodeMultiplier), hungry = dev.neothaum.config.NeoThaumConfig.scale(1, cfg.hungryNodeMultiplier);
+			int total = dark + unstable + pure + hungry + dev.neothaum.config.NeoThaumConfig.scale(1, cfg.taintedNodeMultiplier);
 			if (total > 0) {
 				int r = random.nextInt(total);
-				if ((r -= cfg.darkNodeWeight) < 0) {
+				if ((r -= dark) < 0) {
 					type = NodeType.DARK;
-				} else if ((r -= cfg.unstableNodeWeight) < 0) {
+				} else if ((r -= unstable) < 0) {
 					type = NodeType.UNSTABLE;
-				} else if ((r -= cfg.pureNodeWeight) < 0) {
+				} else if ((r -= pure) < 0) {
 					type = NodeType.PURE;
-				} else if ((r -= cfg.hungryNodeWeight) < 0) {
+				} else if ((r -= hungry) < 0) {
 					type = NodeType.HUNGRY;
 				} else {
 					type = NodeType.TAINTED;
@@ -145,12 +147,13 @@ public final class NodeGenerator {
 			type = forcedType;
 		}
 		NodeModifier modifier = null;
-		int modTotal = cfg.brightNodeWeight + cfg.paleNodeWeight + cfg.fadingNodeWeight;
-		if (forcedType == null && modTotal > 0 && random.nextInt(Math.max(1, specialNodeRarity / 2)) == 0) {
+		int bright = dev.neothaum.config.NeoThaumConfig.scale(1, cfg.brightNodeMultiplier), pale = dev.neothaum.config.NeoThaumConfig.scale(1, cfg.paleNodeMultiplier);
+		int modTotal = bright + pale + dev.neothaum.config.NeoThaumConfig.scale(1, cfg.fadingNodeMultiplier);
+		if (forcedType == null && modTotal > 0 && dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_NODE_VARIANT_RARITY / 2, cfg.nodeVariantMultiplier)) {
 			int r = random.nextInt(modTotal);
-			if ((r -= cfg.brightNodeWeight) < 0) {
+			if ((r -= bright) < 0) {
 				modifier = NodeModifier.BRIGHT;
-				} else if ((r -= cfg.paleNodeWeight) < 0) {
+				} else if ((r -= pale) < 0) {
 					modifier = NodeModifier.PALE;
 				} else {
 					modifier = NodeModifier.FADING;
@@ -172,7 +175,7 @@ public final class NodeGenerator {
 		}
 		for (int a = 0; a < 3; a++) {
 			if (random.nextBoolean()) {
-				if (random.nextInt(specialNodeRarity) == 0) {
+				if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_NODE_VARIANT_RARITY, cfg.nodeVariantMultiplier)) {
 					al.merge(complexAspects.get(random.nextInt(complexAspects.size())), 1);
 				} else {
 					al.merge(basicAspects.get(random.nextInt(basicAspects.size())), 1);

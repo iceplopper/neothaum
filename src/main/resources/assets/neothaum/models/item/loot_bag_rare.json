@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "neothaum:item/lootbagrare"
+    "layer0": "neothaum:items/lootbagrare"
   }
 }

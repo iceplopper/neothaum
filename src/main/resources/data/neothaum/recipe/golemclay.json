@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "GOLEMCLAY",
+  "catalyst": "minecraft:bricks",
+  "aspects": {
+    "humanus": 4,
+    "motus": 4,
+    "spiritus": 4
+  },
+  "result": {
+    "id": "neothaum:golem_clay"
+  }
+}

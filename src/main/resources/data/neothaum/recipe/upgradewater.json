@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "UPGRADEWATER",
+  "aspects": {
+    "aqua": 10
+  },
+  "pattern": [
+    "NNN",
+    "NCN",
+    "NNN"
+  ],
+  "key": {
+    "N": "minecraft:gold_nugget",
+    "C": "neothaum:water_shard"
+  },
+  "result": {
+    "id": "neothaum:golem_upgrade_water"
+  }
+}

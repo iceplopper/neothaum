@@ -1,6 +1,10 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "neothaum:block/eldritch_altar"
+    "type": "minecraft:special",
+    "base": "neothaum:item/eldritch_altar",
+    "model": {
+      "type": "neothaum:device",
+      "device": "eldritch_altar"
+    }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "TINYBOWTIE",
+  "aspects": {
+    "aer": 4,
+    "ordo": 4
+  },
+  "pattern": [
+    "CSC",
+    "C C"
+  ],
+  "key": {
+    "C": "minecraft:white_wool",
+    "S": "minecraft:string"
+  },
+  "result": {
+    "id": "neothaum:golem_deco_bowtie"
+  }
+}

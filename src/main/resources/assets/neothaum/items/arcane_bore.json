@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/arcane_bore",
+    "model": {
+      "type": "neothaum:device",
+      "device": "arcane_bore"
+    }
+  }
+}

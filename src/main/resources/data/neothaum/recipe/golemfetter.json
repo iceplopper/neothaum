@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "GOLEMFETTER",
+  "aspects": {
+    "terra": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    "SSS",
+    "IRI",
+    "BBB"
+  ],
+  "key": {
+    "S": "neothaum:arcane_stone_block",
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone_block",
+    "B": "neothaum:arcane_stone_bricks"
+  },
+  "result": {
+    "id": "neothaum:golem_fetter"
+  }
+}

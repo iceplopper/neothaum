@@ -41,14 +41,14 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.GOLEM, GolemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TRAVELING_TRUNK, TravelingTrunkRenderer::new);
 		EntityRendererRegistry.register(TVEntities.MIND_SPIDER, MindSpiderRenderer::new);
-		EntityRendererRegistry.register(TVEntities.ELDRITCH_GUARDIAN, EldritchGuardianRenderer::new);
+		EntityRendererRegistry.register(TVEntities.ELDRITCH_GUARDIAN, EldritchGuardianRenderer::guardian);
 		EntityRendererRegistry.register(TVEntities.GOLEM_ORB, FocusProjectileRenderers.GolemOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.CULTIST_KNIGHT, CultistRenderer::knight);
 		EntityRendererRegistry.register(TVEntities.CULTIST_CLERIC, CultistRenderer::cleric);
 		EntityRendererRegistry.register(TVEntities.CULTIST_LEADER, CultistRenderer::leader);
 		EntityRendererRegistry.register(TVEntities.ELDRITCH_CRAB, EldritchCrabRenderer::new);
-		EntityRendererRegistry.register(TVEntities.INHABITED_ZOMBIE, net.minecraft.client.renderer.entity.ZombieRenderer::new);
-		EntityRendererRegistry.register(TVEntities.ELDRITCH_WARDEN, EldritchWardenRenderer::new);
+		EntityRendererRegistry.register(TVEntities.INHABITED_ZOMBIE, InhabitedZombieRenderer::new);
+		EntityRendererRegistry.register(TVEntities.ELDRITCH_WARDEN, EldritchGuardianRenderer::warden);
 		EntityRendererRegistry.register(TVEntities.ELDRITCH_GOLEM, EldritchGolemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.ASPECT_ORB, AspectOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.CULTIST_PORTAL, CultistPortalRenderer::new);

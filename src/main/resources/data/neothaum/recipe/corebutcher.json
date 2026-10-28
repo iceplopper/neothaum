@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "COREBUTCHER",
+  "catalyst": "neothaum:golem_core_guard",
+  "aspects": {
+    "corpus": 5,
+    "bestia": 5
+  },
+  "result": {
+    "id": "neothaum:golem_core_butcher"
+  }
+}

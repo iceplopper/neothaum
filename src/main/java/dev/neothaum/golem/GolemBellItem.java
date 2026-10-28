@@ -87,7 +87,6 @@ public class GolemBellItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
-		builder.accept(Component.translatable("item.GolemBell.desc").withStyle(ChatFormatting.GRAY));
 		if (stack.has(TVComponents.GOLEM_BELL_ID)) {
 			builder.accept(Component.translatable("tc.bell.has_linked").withStyle(ChatFormatting.YELLOW));
 		}

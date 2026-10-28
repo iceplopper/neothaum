@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "GOLEMWOOD",
+  "catalyst": "neothaum:greatwood_log",
+  "aspects": {
+    "humanus": 4,
+    "motus": 4,
+    "spiritus": 4
+  },
+  "result": {
+    "id": "neothaum:golem_wood"
+  }
+}

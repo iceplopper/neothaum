@@ -158,6 +158,5 @@ public class GolemPlacerItem extends Item {
 				builder.accept(decoComp);
 			}
 		}
-		builder.accept(Component.translatable("golem.traits." + this.golemType.getSerializedName()).withStyle(ChatFormatting.GRAY));
 	}
 }

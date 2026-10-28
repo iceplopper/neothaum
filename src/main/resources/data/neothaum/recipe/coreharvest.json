@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "COREHARVEST",
+  "catalyst": "neothaum:golem_core_blank",
+  "aspects": {
+    "meto": 5,
+    "messis": 5
+  },
+  "result": {
+    "id": "neothaum:golem_core_harvest"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "CORELUMBER",
+  "instability": 2,
+  "aspects": {
+    "instrumentum": 16,
+    "arbor": 16,
+    "meto": 16
+  },
+  "central": "neothaum:golem_core_harvest",
+  "components": [
+    "neothaum:axe_of_the_stream",
+    "minecraft:iron_axe",
+    "minecraft:iron_axe",
+    "minecraft:iron_axe"
+  ],
+  "result": {
+    "id": "neothaum:golem_core_lumber"
+  }
+}

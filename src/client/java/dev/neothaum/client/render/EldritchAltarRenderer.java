@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * 1:1 Port of TileEldritchCapRenderer (altar portion).
- * Renders slotted Eldritch Eyes around the 4 sockets of the Eldritch Altar.
+ * Renders the altar's cap and the slotted Eldritch Eyes around its 4 sockets.
  */
 public class EldritchAltarRenderer implements BlockEntityRenderer<EldritchAltarBlockEntity, EldritchAltarRenderer.State> {
 	public static class State extends BlockEntityRenderState {
@@ -53,6 +53,11 @@ public class EldritchAltarRenderer implements BlockEntityRenderer<EldritchAltarB
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
+		ps.pushPose();
+		ps.translate(0.5F, 0.0F, 0.5F);
+		ps.rotateDegrees(Axis.XP, -90.0F);
+		EldritchObeliskRenderer.cap(ps, collector, EldritchObeliskRenderer.CAP_ALTAR, s.lightCoords);
+		ps.popPose();
 		if (s.eyes <= 0 || s.eyeItem.isEmpty()) {
 			return;
 		}

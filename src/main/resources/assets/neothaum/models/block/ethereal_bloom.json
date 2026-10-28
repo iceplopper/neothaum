@@ -1,7 +1,5 @@
 {
-  "parent": "minecraft:block/cross",
-  "render_type": "cutout",
   "textures": {
-    "cross": "neothaum:blocks/purifier_seed"
+    "particle": "neothaum:blocks/purifier_seed"
   }
 }

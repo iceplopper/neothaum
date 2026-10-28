@@ -173,7 +173,7 @@ public class ThaumicSlime extends Monster implements TaintedMob {
 					FX.slimeJump(this, i);
 				}
 			}
-			if (this.getSlimeSize() > 5) {
+			if (this.getSlimeSize() > 2) {
 				this.playSound(this.slimeSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
 			}
 			this.squishAmount = -0.5F;
@@ -243,9 +243,8 @@ public class ThaumicSlime extends Monster implements TaintedMob {
 				this.slimeJumpDelay /= 3;
 			}
 			this.getJumpControl().jump();
-			if (this.getSlimeSize() > 3) {
-				this.playSound(this.slimeSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
-			}
+			this.playSound(this.getSlimeSize() > 3 ? SoundEvents.SLIME_JUMP : SoundEvents.SLIME_JUMP_SMALL, this.getSoundVolume(),
+				((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) * 0.8F);
 			this.xxa = 1.0F - this.random.nextFloat() * 2.0F;
 			this.zza = (float) Math.sqrt(this.getSlimeSize());
 		} else if (this.onGround()) {
@@ -297,9 +296,14 @@ public class ThaumicSlime extends Monster implements TaintedMob {
 		return this.getSlimeSize() > 3 ? SoundEvents.SLIME_DEATH : SoundEvents.SLIME_DEATH_SMALL;
 	}
 
+	/**
+	 * A deliberate change from TC4, by request: TC4 played its slimes at 0.1 * sqrt(size), jumping silently below size 4 and landing silently
+	 * below size 6, so small ones were all but mute. These sound like vanilla slimes (EntitySlime: 0.4 per size, a squish on every hop and
+	 * on landing above size 2), capped at full volume.
+	 */
 	@Override
 	protected float getSoundVolume() {
-		return 0.1F * (float) Math.sqrt(this.getSlimeSize());
+		return Math.min(1.0F, 0.4F * this.getSlimeSize());
 	}
 
 	@Override

@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "UPGRADEEARTH",
+  "aspects": {
+    "terra": 10
+  },
+  "pattern": [
+    "NNN",
+    "NCN",
+    "NNN"
+  ],
+  "key": {
+    "N": "minecraft:gold_nugget",
+    "C": "neothaum:earth_shard"
+  },
+  "result": {
+    "id": "neothaum:golem_upgrade_earth"
+  }
+}

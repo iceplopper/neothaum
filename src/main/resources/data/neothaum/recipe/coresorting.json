@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:infusion",
+  "research": "CORESORTING",
+  "instability": 3,
+  "aspects": {
+    "vacuos": 16,
+    "permutatio": 16,
+    "fames": 16,
+    "lucrum": 16
+  },
+  "central": "neothaum:zombie_brain",
+  "components": [
+    "neothaum:golem_core_fill",
+    "minecraft:comparator",
+    "neothaum:golem_core_empty",
+    "minecraft:paper"
+  ],
+  "result": {
+    "id": "neothaum:golem_core_sorting"
+  }
+}

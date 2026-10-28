@@ -48,7 +48,7 @@ import net.minecraft.world.phys.Vec3;
  * EldritchWardenEntity: massive eldritch guardian boss of the Outer Lands.
  * Runic shielding, sonic screech with temporary warp, wither blasts, and primordial pearl drop.
  */
-public class EldritchWardenEntity extends Monster implements RangedAttackMob {
+public class EldritchWardenEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob {
 	public static final String[] TITLES = new String[]{
 		"Aphoom-Zhah", "Basatan", "Chaugnar Faugn", "Mnomquah", "Nyogtha",
 		"Oorn", "Shaikorth", "Rhan-Tegoth", "Rhogog", "Shudde M'ell",
@@ -61,6 +61,12 @@ public class EldritchWardenEntity extends Monster implements RangedAttackMob {
 		BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS);
 	private int screechCooldown = 100;
 	private int frenzyTicks = 0;
+	/** Client-side arm raise after each blast (entity events 15, 16, 17), as on the guardian. */
+	public float armLiftL = 0.0F;
+	public float armLiftR = 0.0F;
+	/** The warden rises out of the ground over its first 150 ticks (entity event 18). */
+	public int spawnTimer = 0;
+	private boolean lastBlast = false;
 
 	public EldritchWardenEntity(EntityType<? extends EldritchWardenEntity> type, Level level) {
 		super(type, level);
@@ -114,12 +120,27 @@ public class EldritchWardenEntity extends Monster implements RangedAttackMob {
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, net.minecraft.world.entity.EntitySpawnReason spawnReason,
 		SpawnGroupData spawnGroupData) {
 		this.setTitleIndex(level.getRandom().nextInt(TITLES.length));
+		this.spawnTimer = 150;
 		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
 
 	@Override
 	public void tick() {
+		if (this.spawnTimer == 150 && !this.level().isClientSide()) {
+			this.level().broadcastEntityEvent(this, (byte) 18);
+		}
+		if (this.spawnTimer > 0) {
+			this.spawnTimer--;
+		}
 		super.tick();
+		if (this.level().isClientSide()) {
+			if (this.armLiftL > 0.0F) {
+				this.armLiftL -= 0.05F;
+			}
+			if (this.armLiftR > 0.0F) {
+				this.armLiftR -= 0.05F;
+			}
+		}
 
 		if (!this.level().isClientSide()) {
 			this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
@@ -204,12 +225,28 @@ public class EldritchWardenEntity extends Monster implements RangedAttackMob {
 		double dy = target.getY(0.5) - this.getY(0.5);
 		double dz = target.getZ() - this.getZ();
 
+		this.lastBlast = !this.lastBlast;
+		this.level().broadcastEntityEvent(this, (byte) (this.lastBlast ? 16 : 15));
 		GolemOrbEntity orb = new GolemOrbEntity(this.level(), this, target, false);
 		orb.setPos(this.getX(), this.getY(0.7), this.getZ());
 		orb.heading(dx, dy + 2.0, dz, 0.66F, 3.0F);
 		this.level().playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.EGATTACK, SoundSource.HOSTILE, 1.0F,
 			1.0F + this.random.nextFloat() * 0.1F);
 		this.level().addFreshEntity(orb);
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		switch (id) {
+			case 15 -> this.armLiftL = 0.5F;
+			case 16 -> this.armLiftR = 0.5F;
+			case 17 -> {
+				this.armLiftL = 0.9F;
+				this.armLiftR = 0.9F;
+			}
+			case 18 -> this.spawnTimer = 150;
+			default -> super.handleEntityEvent(id);
+		}
 	}
 
 	@Override

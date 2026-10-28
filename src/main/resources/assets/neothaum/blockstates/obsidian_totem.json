@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "face=0,part=single": {
+      "model": "neothaum:block/obsidian_totem_single"
+    },
+    "face=1,part=single": {
+      "model": "neothaum:block/obsidian_totem_single"
+    },
+    "face=2,part=single": {
+      "model": "neothaum:block/obsidian_totem_single"
+    },
+    "face=3,part=single": {
+      "model": "neothaum:block/obsidian_totem_single"
+    },
+    "face=0,part=below": {
+      "model": "neothaum:block/obsidian_totem_below"
+    },
+    "face=1,part=below": {
+      "model": "neothaum:block/obsidian_totem_below"
+    },
+    "face=2,part=below": {
+      "model": "neothaum:block/obsidian_totem_below"
+    },
+    "face=3,part=below": {
+      "model": "neothaum:block/obsidian_totem_below"
+    },
+    "face=0,part=top": {
+      "model": "neothaum:block/obsidian_totem_top_0"
+    },
+    "face=1,part=top": {
+      "model": "neothaum:block/obsidian_totem_top_1"
+    },
+    "face=2,part=top": {
+      "model": "neothaum:block/obsidian_totem_top_2"
+    },
+    "face=3,part=top": {
+      "model": "neothaum:block/obsidian_totem_top_3"
+    }
+  }
+}

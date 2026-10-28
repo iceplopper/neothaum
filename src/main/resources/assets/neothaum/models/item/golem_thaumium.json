@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "neothaum:item/golem_thaumium"
+    "layer0": "neothaum:items/golem_thaumium"
   }
 }

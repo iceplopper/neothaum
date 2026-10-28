@@ -43,6 +43,10 @@
 		{
 			"config": "neothaum.client.mixins.json",
 			"environment": "client"
+		},
+		{
+			"config": "neothaum.xaero.mixins.json",
+			"environment": "client"
 		}
 	]
 }

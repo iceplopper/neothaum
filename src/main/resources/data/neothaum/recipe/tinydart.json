@@ -1,0 +1,21 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "TINYDART",
+  "aspects": {
+    "aer": 4,
+    "ignis": 4
+  },
+  "pattern": [
+    "AIA",
+    "ADA",
+    "AIA"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "D": "minecraft:dispenser",
+    "A": "minecraft:arrow"
+  },
+  "result": {
+    "id": "neothaum:golem_deco_dart"
+  }
+}

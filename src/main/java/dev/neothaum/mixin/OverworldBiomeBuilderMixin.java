@@ -35,16 +35,16 @@ public abstract class OverworldBiomeBuilderMixin {
 		long span = hi - lo;
 		var cfg = dev.neothaum.config.NeoThaumConfig.current;
 		if (weirdness.max() >= 0L) {
-			if (cfg.magicalForestGenerate && cfg.magicalForestSize > 0) {
-				int pct = Math.clamp(cfg.magicalForestSize, 1, 100);
+			int pct = Math.min(100, dev.neothaum.config.NeoThaumConfig.scale(dev.neothaum.config.NeoThaumConfig.MAGICAL_FOREST_PERCENT, cfg.magicalForestSizeMultiplier));
+			if (cfg.magicalForestGenerate && pct > 0) {
 				long m1 = lo + span * pct / 100;
 				neothaum$add(biomes, temperature, new Climate.Parameter(lo, m1), continentalness, erosion, weirdness, offset, TVBiomes.MAGICAL_FOREST);
 				neothaum$add(biomes, temperature, new Climate.Parameter(m1, hi), continentalness, erosion, weirdness, offset, Biomes.FOREST);
 				ci.cancel();
 			}
 		} else {
-			if (cfg.taintedLandGenerate && cfg.taintedLandSize > 0 && continentalness.min() >= MID_INLAND_MIN && weirdness.max() <= RARE_WEIRDNESS_MAX) {
-				int pct = Math.clamp(cfg.taintedLandSize, 1, 100);
+			int pct = Math.min(100, dev.neothaum.config.NeoThaumConfig.scale(dev.neothaum.config.NeoThaumConfig.TAINTED_LAND_PERCENT, cfg.taintedLandSizeMultiplier));
+			if (cfg.taintedLandGenerate && pct > 0 && continentalness.min() >= MID_INLAND_MIN && weirdness.max() <= RARE_WEIRDNESS_MAX) {
 				long m2 = hi - span * pct / 100;
 				neothaum$add(biomes, temperature, new Climate.Parameter(lo, m2), continentalness, erosion, weirdness, offset, Biomes.FOREST);
 				neothaum$add(biomes, temperature, new Climate.Parameter(m2, hi), continentalness, erosion, weirdness, offset, TVBiomes.TAINTED_LAND);

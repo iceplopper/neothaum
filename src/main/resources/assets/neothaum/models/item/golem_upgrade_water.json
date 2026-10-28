@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "neothaum:item/golem_upgrade_water"
+    "layer0": "neothaum:items/golem_upgrade_water"
   }
 }

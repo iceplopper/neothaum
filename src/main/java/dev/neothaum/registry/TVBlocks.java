@@ -126,6 +126,20 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(4.0F, 10.0F).sound(SoundType.METAL).requiresCorrectToolForDrops(), true);
 	public static final Block TALLOW_BLOCK = register("tallow_block", Block::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE).strength(2.0F, 10.0F).sound(SoundType.STONE), true);
+	public static final Block LOOT_URN_COMMON = register("loot_urn_common", p -> new dev.neothaum.blocks.LootBlock(true, 0, p),
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.STONE).noOcclusion(), true);
+	public static final Block LOOT_URN_UNCOMMON = register("loot_urn_uncommon", p -> new dev.neothaum.blocks.LootBlock(true, 1, p),
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.STONE).noOcclusion(), true);
+	public static final Block LOOT_URN_RARE = register("loot_urn_rare", p -> new dev.neothaum.blocks.LootBlock(true, 2, p),
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.STONE).noOcclusion(), true);
+	public static final Block LOOT_CRATE_COMMON = register("loot_crate_common", p -> new dev.neothaum.blocks.LootBlock(false, 0, p),
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.WOOD).noOcclusion(), true);
+	public static final Block LOOT_CRATE_UNCOMMON = register("loot_crate_uncommon", p -> new dev.neothaum.blocks.LootBlock(false, 1, p),
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.WOOD).noOcclusion(), true);
+	public static final Block LOOT_CRATE_RARE = register("loot_crate_rare", p -> new dev.neothaum.blocks.LootBlock(false, 2, p),
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.WOOD).noOcclusion(), true);
+	public static final Block OBSIDIAN_TOTEM = register("obsidian_totem", dev.neothaum.blocks.ObsidianTotemBlock::new, stone(50.0F, 2000.0F), true);
+	public static final Block GOLEM_FETTER = register("golem_fetter", dev.neothaum.blocks.GolemFetterBlock::new, stone(2.0F, 10.0F), true);
 	public static final Block ARCANE_STONE_BLOCK = register("arcane_stone_block", Block::new, stone(2.0F, 10.0F), true);
 	public static final Block ARCANE_STONE_BRICKS = register("arcane_stone_bricks", Block::new, stone(2.0F, 10.0F), true);
 	public static final Block ARCANE_STONE_STAIRS = register("arcane_stone_stairs", p -> stairs(ARCANE_STONE_BRICKS, p), stone(2.0F, 10.0F), true);
@@ -321,11 +335,11 @@ public final class TVBlocks {
 	public static final Block ELDRITCH_STONE_GLYPH = register("eldritch_stone_glyph", p -> new dev.neothaum.blocks.eldritch.EldritchStoneBlock(dev.neothaum.blocks.eldritch.EldritchStoneBlock.Variant.GLYPH, p),
 		stone(20.0F, 100.0F), true);
 	public static final Block ELDRITCH_ALTAR = register("eldritch_altar", dev.neothaum.blocks.eldritch.EldritchAltarBlock::new,
-		stone(20.0F, 100.0F).noOcclusion(), true);
+		stone(50.0F, 20000.0F).noOcclusion().lightLevel(s -> 8), true);
 	public static final Block ELDRITCH_CAP = register("eldritch_cap", dev.neothaum.blocks.eldritch.EldritchCapBlock::new,
-		stone(20.0F, 100.0F).noOcclusion(), true);
+		stone(50.0F, 20000.0F).noOcclusion().lightLevel(s -> 8), true);
 	public static final Block ELDRITCH_OBELISK = register("eldritch_obelisk", dev.neothaum.blocks.eldritch.EldritchObeliskBlock::new,
-		stone(20.0F, 100.0F).noOcclusion(), true);
+		stone(50.0F, 20000.0F).noOcclusion().lightLevel(s -> 8), true);
 	public static final Block ELDRITCH_PORTAL = register("eldritch_portal", dev.neothaum.blocks.eldritch.EldritchPortalBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(-1.0F, 3600000.0F).noCollision().lightLevel(s -> 15), false);
 

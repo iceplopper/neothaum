@@ -1,5 +1,9 @@
 package dev.neothaum.entity.monster;
 
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.level.ServerLevelAccessor;
+
 import dev.neothaum.entity.projectile.GolemOrbEntity;
 import dev.neothaum.registry.TVItems;
 import dev.neothaum.registry.TVSounds;
@@ -43,13 +47,15 @@ import net.minecraft.world.phys.Vec3;
  * Knockback immune, flings targets with melee blows, loses its head upon near-death,
  * and unleashes electric neck-beam barrages in phase 2. Drops Primordial Pearl and Rare Loot Bag.
  */
-public class EldritchGolemEntity extends Monster implements RangedAttackMob {
+public class EldritchGolemEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob {
 	private static final EntityDataAccessor<Boolean> HEADLESS = SynchedEntityData.defineId(EldritchGolemEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private final ServerBossEvent bossEvent = new ServerBossEvent(UUID.randomUUID(), Component.literal("Eldritch Golem"),
 		BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
 	private int beamCharge = 0;
 	private int attackTimer = 0;
+	/** The golem rises out of the ground over its first 150 ticks, healing as it comes (entity event 18). */
+	public int spawnTimer = 0;
 
 	public EldritchGolemEntity(EntityType<? extends EldritchGolemEntity> type, Level level) {
 		super(type, level);
@@ -96,6 +102,13 @@ public class EldritchGolemEntity extends Monster implements RangedAttackMob {
 
 	@Override
 	public void tick() {
+		if (this.spawnTimer == 150 && !this.level().isClientSide()) {
+			this.level().broadcastEntityEvent(this, (byte) 18);
+		}
+		if (this.spawnTimer > 0) {
+			this.heal(2.0F);
+			this.spawnTimer--;
+		}
 		super.tick();
 
 		if (this.attackTimer > 0) {
@@ -137,6 +150,7 @@ public class EldritchGolemEntity extends Monster implements RangedAttackMob {
 		boolean hit = super.doHurtTarget(level, target);
 		if (hit) {
 			this.attackTimer = 10;
+			level.broadcastEntityEvent(this, (byte) 4);
 			this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.IRON_GOLEM_ATTACK, SoundSource.HOSTILE, 1.0F, 1.0F);
 			target.push(0, 0.4, 0);
 			if (this.isHeadless()) {
@@ -194,5 +208,27 @@ public class EldritchGolemEntity extends Monster implements RangedAttackMob {
 		super.dropCustomDeathLoot(level, source, recentlyHit);
 		this.spawnAtLocation(level, new ItemStack(TVItems.PRIMORDIAL_PEARL));
 		this.spawnAtLocation(level, new ItemStack(TVItems.LOOT_BAG_RARE));
+	}
+
+	public int getAttackTimer() {
+		return this.attackTimer;
+	}
+
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, net.minecraft.world.entity.EntitySpawnReason reason,
+		SpawnGroupData data) {
+		this.spawnTimer = 150;
+		return super.finalizeSpawn(level, difficulty, reason, data);
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 4) {
+			this.attackTimer = 10;
+		} else if (id == 18) {
+			this.spawnTimer = 150;
+		} else {
+			super.handleEntityEvent(id);
+		}
 	}
 }

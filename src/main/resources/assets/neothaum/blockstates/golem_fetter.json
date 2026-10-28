@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "neothaum:block/golem_fetter"
+    },
+    "powered=true": {
+      "model": "neothaum:block/golem_fetter_active"
+    }
+  }
+}

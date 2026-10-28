@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "base=true": {
+      "model": "neothaum:block/eldritch_obelisk"
+    },
+    "base=false": {
       "model": "neothaum:block/eldritch_obelisk"
     }
   }

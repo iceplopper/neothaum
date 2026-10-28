@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:infusion",
+  "research": "COREALCHEMY",
+  "instability": 2,
+  "aspects": {
+    "praecantatio": 15,
+    "aqua": 15,
+    "motus": 15
+  },
+  "central": "neothaum:golem_core_liquid",
+  "components": [
+    "neothaum:warded_jar",
+    "minecraft:potion",
+    "minecraft:potion",
+    "minecraft:potion"
+  ],
+  "result": {
+    "id": "neothaum:golem_core_essentia"
+  }
+}

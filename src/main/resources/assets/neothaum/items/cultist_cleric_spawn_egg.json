@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "neothaum:item/spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -44971
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -8388608
-      }
-    ]
+    "model": "neothaum:item/cultist_cleric_spawn_egg"
   }
 }

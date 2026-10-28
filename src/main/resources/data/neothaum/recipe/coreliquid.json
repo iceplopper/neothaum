@@ -1,0 +1,12 @@
+{
+  "type": "neothaum:crucible",
+  "research": "CORELIQUID",
+  "catalyst": "neothaum:golem_core_blank",
+  "aspects": {
+    "aqua": 5,
+    "vacuos": 5
+  },
+  "result": {
+    "id": "neothaum:golem_core_liquid"
+  }
+}

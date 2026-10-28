@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "GOLEMTHAUMIUM",
+  "catalyst": "neothaum:thaumium_block",
+  "aspects": {
+    "humanus": 8,
+    "motus": 8,
+    "spiritus": 8
+  },
+  "result": {
+    "id": "neothaum:golem_thaumium"
+  }
+}

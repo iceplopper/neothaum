@@ -1,0 +1,19 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "UPGRADEENTROPY",
+  "aspects": {
+    "perditio": 10
+  },
+  "pattern": [
+    "NNN",
+    "NCN",
+    "NNN"
+  ],
+  "key": {
+    "N": "minecraft:gold_nugget",
+    "C": "neothaum:entropy_shard"
+  },
+  "result": {
+    "id": "neothaum:golem_upgrade_entropy"
+  }
+}

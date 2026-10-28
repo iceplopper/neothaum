@@ -67,6 +67,67 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("nodejar")) {
 					nodeJarScene(ctx, server, sp);
 				}
+				if (scenes.contains("icons")) {
+					iconsScene(ctx);
+				}
+				if (scenes.contains("devices")) {
+					devicesScene(ctx, server, sp);
+				}
+				if (scenes.contains("eldritch")) {
+					eldritchScene(ctx, server, sp);
+				}
+				if (scenes.contains("sounds")) {
+					soundsScene(ctx, server, sp);
+				}
+				if (scenes.contains("pech")) {
+					pechScene(ctx, server, sp);
+				}
+				if (scenes.contains("worldmap")) {
+					worldMapScene(ctx, server, sp);
+				}
+				if (scenes.contains("golemancy")) {
+					golemancyScene(ctx, server);
+				}
+				if (scenes.contains("tooltips")) {
+					tooltipDump(ctx);
+				}
+				if (scenes.contains("templates")) {
+					buildVillageTemplates(server);
+				}
+				if (scenes.contains("config")) {
+					for (int t = 0; t < 4; t++) {
+						int tab = t;
+						ctx.setScreen(() -> {
+							var screen = new dev.neothaum.client.gui.NeoThaumConfigScreen(null);
+							try {
+								var f = dev.neothaum.client.gui.NeoThaumConfigScreen.class.getDeclaredField("activeTab");
+								f.setAccessible(true);
+								f.set(screen, tab);
+							} catch (ReflectiveOperationException e) {
+								throw new RuntimeException(e);
+							}
+							return screen;
+						});
+						ctx.waitTicks(3);
+						shot(ctx, "config_" + t);
+					}
+					ctx.setScreen(() -> null);
+				}
+				if (scenes.contains("staves")) {
+					server.runOnServer(srv -> {
+						for (String rod : new String[]{"greatwood", "greatwood_staff", "obsidian_staff", "silverwood_staff", "primal_staff"}) {
+							var w = dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", rod);
+							NeoThaum.LOGGER.info("[visual-test] staves: {} staff={} maxVis={} attributes={}", rod, dev.neothaum.items.WandItem.isStaff(w),
+								dev.neothaum.items.WandItem.getMaxVis(w), w.get(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS));
+						}
+					});
+				}
+				if (scenes.contains("golems")) {
+					golemsScene(ctx, server, sp);
+				}
+				if (scenes.contains("villages")) {
+					villagesScene(ctx, server, sp);
+				}
 				return;
 			}
 			dumpAspectGaps(server);
@@ -517,6 +578,555 @@ public class VisualTests implements FabricClientGameTest {
 	}
 
 	/** The creative inventory on each Thaumcraft tab, logging the order the tabs were laid out in. */
+	/**
+	 * Devices drawn by their tile renderers: a row of machines and banners, an ethereal bloom growing, and a generated eldritch ring with its
+	 * altar, capped pillars and floating obelisk.
+	 */
+	private static void devicesScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode creative @a", "fill -24 117 -30 24 135 2 air", "fill -24 116 -30 24 116 2 grass_block",
+			"fill -24 113 -30 24 115 2 dirt", "setblock -8 117 -8 neothaum:arcane_spa", "setblock -6 117 -8 neothaum:advanced_alchemical_construct",
+			"setblock -4 117 -8 neothaum:deconstruction_table", "setblock -2 117 -8 neothaum:arcane_bore_base", "setblock 0 117 -8 neothaum:flux_scrubber",
+			"setblock 2 117 -8 neothaum:banner", "setblock 4 117 -8 neothaum:banner"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			if (level.getBlockEntity(new net.minecraft.core.BlockPos(4, 117, -8)) instanceof dev.neothaum.tiles.BannerBlockEntity b) {
+				b.setColor(14);
+				b.setChanged();
+				level.sendBlockUpdated(b.getBlockPos(), b.getBlockState(), b.getBlockState(), 3);
+			}
+			boolean ring = dev.neothaum.world.EldritchRingFeature.generate(level, level.getRandom(), new net.minecraft.core.BlockPos(10, 116, -18));
+			NeoThaum.LOGGER.info("[visual-test] devices: ring generated={} altar={} obelisk={} shaft={}", ring,
+				level.getBlockState(new net.minecraft.core.BlockPos(10, 117, -18)).getBlock(), level.getBlockState(new net.minecraft.core.BlockPos(10, 119, -18)),
+				level.getBlockState(new net.minecraft.core.BlockPos(10, 121, -18)));
+		});
+		server.runCommand("setblock -10 117 -8 neothaum:ethereal_bloom");
+		server.runCommand("tp @a -1 119 -3 180 20");
+		waitChunks(sp, ctx);
+		ctx.waitTicks(30);
+		shot(ctx, "devices_row_early");
+		ctx.waitTicks(90);
+		shot(ctx, "devices_row");
+		server.runCommand("tp @a -8 118.5 -6 180 30");
+		ctx.waitTicks(10);
+		shot(ctx, "devices_bloom");
+		server.runCommand("tp @a 10 121 -8 180 10");
+		ctx.waitTicks(30);
+		shot(ctx, "devices_ring");
+		server.runCommand("tp @a 13 119 -15 135 -10");
+		ctx.waitTicks(20);
+		shot(ctx, "devices_obelisk");
+	}
+
+	/**
+	 * The cultists and eldritch mobs in a row facing the camera, each spawned as the world would spawn it (so in its armour), and armour stands
+	 * in the fortress and void robe sets, seen from the front and from behind.
+	 */
+	private static void eldritchScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode spectator @a", "difficulty normal", "time set noon", "fill -30 117 -40 30 130 -20 air",
+			"fill -30 116 -40 30 116 -20 stone"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			String[] names = {"cultist_knight", "cultist_cleric", "cultist_leader", "inhabited_zombie", "eldritch_guardian", "eldritch_crab",
+				"eldritch_crab", "mind_spider", "eldritch_warden", "eldritch_golem"};
+			double x = -18;
+			for (int i = 0; i < names.length; i++) {
+				var type = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(NeoThaum.id(names[i]));
+				var e = type.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+				if (!(e instanceof net.minecraft.world.entity.Mob m)) {
+					continue;
+				}
+				double w = names[i].contains("golem") || names[i].contains("warden") ? 4.0 : 2.5;
+				x += w / 2;
+				m.snapTo(x, 117, -30, 0.0F, 0.0F);
+				m.finalizeSpawn(level, level.getCurrentDifficultyAt(m.blockPosition()), net.minecraft.world.entity.EntitySpawnReason.COMMAND, null);
+				if (m instanceof dev.neothaum.entity.monster.EldritchCrabEntity crab) {
+					crab.setHelm(i == 5);
+				}
+				if (m instanceof dev.neothaum.entity.monster.CrimsonClericEntity cleric) {
+					cleric.setRitualist(true);
+				}
+				if (m instanceof dev.neothaum.entity.monster.EldritchWardenEntity wd) {
+					wd.spawnTimer = 0;
+				}
+				if (m instanceof dev.neothaum.entity.monster.EldritchGolemEntity g) {
+					g.spawnTimer = 0;
+				}
+				m.setNoAi(true);
+				m.setYBodyRot(0.0F);
+				m.setYHeadRot(0.0F);
+				m.setPersistenceRequired();
+				level.addFreshEntity(m);
+				x += w / 2;
+			}
+			// armour stands in the fortress set (with a mask) and in dyed void robes
+			for (int s = 0; s < 2; s++) {
+				var stand = new net.minecraft.world.entity.decoration.ArmorStand(level, 14 + s * 2.5, 117, -27);
+				stand.setYRot(0.0F);
+				stand.setYBodyRot(0.0F);
+				if (s == 0) {
+					var helm = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMIUM_FORTRESS_HELM);
+					helm.set(dev.neothaum.registry.TVComponents.MASK, 1);
+					stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, helm);
+					stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST,
+						new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMIUM_FORTRESS_CUIRASS));
+					stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.LEGS,
+						new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMIUM_FORTRESS_THIGH_GUARDS));
+				} else {
+					stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.VOID_ROBE_HELM));
+					stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.VOID_ROBE_CHEST));
+					stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.LEGS, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.VOID_ROBE_LEGS));
+				}
+				level.addFreshEntity(stand);
+			}
+			NeoThaum.LOGGER.info("[visual-test] eldritch: spawned up to x={}", x);
+		});
+		for (int[] view : new int[][]{{-12, 0}, {0, 0}, {11, 0}, {15, 0}}) {
+			server.runCommand("tp @a " + view[0] + " 118.6 -23 180 10");
+			waitChunks(sp, ctx);
+			ctx.waitTicks(20);
+			shot(ctx, "eldritch_front_" + view[0]);
+		}
+		server.runCommand("tp @a -6 119 -37 0 15");
+		ctx.waitTicks(15);
+		shot(ctx, "eldritch_back");
+	}
+
+	/** One golem of each material, the copper one at each stage of oxidation, and a shambling husk, facing the camera. */
+	private static void golemsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode spectator @a", "time set noon", "fill -20 117 -40 20 125 -20 air", "fill -20 116 -40 20 116 -20 stone"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			double x = -14;
+			for (var type : dev.neothaum.golem.GolemType.values()) {
+				int stages = type == dev.neothaum.golem.GolemType.COPPER ? 4 : 1;
+				for (int st = 0; st < stages; st++) {
+					var g = dev.neothaum.entity.TVEntities.GOLEM.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+					g.setGolemType(type);
+					g.setOxidationLevel(st);
+					g.snapTo(x, 117, -30, 0.0F, 0.0F);
+					g.setNoAi(true);
+					g.setYBodyRot(0.0F);
+					g.setYHeadRot(0.0F);
+					level.addFreshEntity(g);
+					x += 1.6;
+				}
+			}
+			var husk = dev.neothaum.entity.TVEntities.INHABITED_ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+			husk.snapTo(x + 1, 117, -30, 0.0F, 0.0F);
+			husk.finalizeSpawn(level, level.getCurrentDifficultyAt(husk.blockPosition()), net.minecraft.world.entity.EntitySpawnReason.COMMAND, null);
+			husk.setNoAi(true);
+			husk.setYBodyRot(0.0F);
+			husk.setYHeadRot(0.0F);
+			level.addFreshEntity(husk);
+		});
+		for (int vx : new int[]{-8, 4}) {
+			server.runCommand("tp @a " + vx + " 118.5 -25 180 10");
+			waitChunks(sp, ctx);
+			ctx.waitTicks(15);
+			shot(ctx, "golems_" + vx);
+		}
+	}
+
+	/**
+	 * TC4's village buildings: the tower and a banker's house placed straight from their templates for a look, then a run of generated
+	 * villages searched for them (by the tower's loot table and the bankers' iron-bar windows in planks walls).
+	 */
+	private static void villagesScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode spectator @a", "time set noon", "fill -12 117 -12 12 135 12 air", "fill -12 116 -12 12 116 12 grass_block",
+			"place template neothaum:village/wizard_tower -6 117 0", "place template neothaum:village/banker_home_tall_2 2 117 0",
+			"tp @a 0 122 16 180 15"}) {
+			server.runCommand(cmd);
+		}
+		waitChunks(sp, ctx);
+		ctx.waitTicks(20);
+		shot(ctx, "village_pieces");
+		int[] found = new int[2];
+		for (int v = 0; v < 12; v++) {
+			int vx = 300 + v * 200;
+			server.runCommand("tp @a " + vx + " 150 300");
+			waitChunks(sp, ctx);
+			ctx.waitTicks(10);
+			server.runCommand("place structure minecraft:village_plains " + vx + " 116 300");
+			ctx.waitTicks(5);
+			int x0 = vx;
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				for (var pos : net.minecraft.core.BlockPos.betweenClosed(x0 - 64, -64, 236, x0 + 64, -30, 364)) {
+					if (level.getBlockEntity(pos) instanceof net.minecraft.world.level.block.entity.ChestBlockEntity chest && chest.getLootTable() != null
+						&& chest.getLootTable().identifier().getPath().equals("chests/wizard_tower")) {
+						found[0]++;
+						NeoThaum.LOGGER.info("[visual-test] villages: wizard tower chest at {}", pos.immutable());
+					}
+					if (level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.BELL)) {
+						NeoThaum.LOGGER.info("[visual-test] villages: bell at {}", pos.immutable());
+					}
+					if (level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.STONE_PRESSURE_PLATE)
+						&& level.getBlockState(pos.below()).is(net.minecraft.world.level.block.Blocks.COBBLESTONE_WALL)) {
+						found[1]++;
+					}
+				}
+			});
+		}
+		NeoThaum.LOGGER.info("[visual-test] villages: 12 plains villages, wizard towers={}, banker tables={}", found[0], found[1]);
+	}
+
+	/**
+	 * Builds TC4's village buildings (TCVillagePieces) and saves them as structure templates into the mod's resources, with the entrance jigsaw
+	 * that lets a village street place them, and the tower's chest set to its loot table. Run after changing TCVillagePieces.
+	 */
+	private static void buildVillageTemplates(net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var out = java.nio.file.Path.of("").toAbsolutePath().resolve("../../../src/main/resources/data/neothaum/structure/village").normalize();
+			record Piece(String name, net.minecraft.core.Vec3i size, net.minecraft.core.BlockPos entrance,
+				java.util.function.Consumer<java.util.function.BiConsumer<net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState>> build) {
+			}
+			java.util.List<Piece> pieces = new java.util.ArrayList<>();
+			pieces.add(new Piece("wizard_tower", new net.minecraft.core.Vec3i(6, 12, 6), dev.neothaum.world.TCVillagePieces.TOWER_ENTRANCE,
+				dev.neothaum.world.TCVillagePieces::wizardTower));
+			for (int t = 0; t < 2; t++) {
+				{
+					boolean tall = t == 1;
+					int tp = tall ? 2 : 1;
+					int table = tp;
+					pieces.add(new Piece("banker_home_" + (tall ? "tall_" : "") + table, new net.minecraft.core.Vec3i(4, 6, 6),
+						dev.neothaum.world.TCVillagePieces.BANKER_ENTRANCE, set -> dev.neothaum.world.TCVillagePieces.bankerHome(set, tall, tp)));
+				}
+			}
+			int px = 40;
+			for (Piece piece : pieces) {
+				var origin = new net.minecraft.core.BlockPos(px, 140, 40);
+				px += 10;
+				for (var p : net.minecraft.core.BlockPos.betweenClosed(origin, origin.offset(piece.size.getX() - 1, piece.size.getY() - 1, piece.size.getZ() - 1))) {
+					level.setBlock(p, net.minecraft.world.level.block.Blocks.STRUCTURE_VOID.defaultBlockState(), 2);
+				}
+				piece.build.accept((p, st) -> level.setBlock(origin.offset(p), st, 2));
+				var entrance = origin.offset(piece.entrance);
+				level.setBlock(entrance, net.minecraft.world.level.block.Blocks.JIGSAW.defaultBlockState(), 2);
+				if (level.getBlockEntity(entrance) instanceof net.minecraft.world.level.block.entity.JigsawBlockEntity jig) {
+					jig.setName(net.minecraft.resources.Identifier.withDefaultNamespace("building_entrance"));
+					jig.setTarget(net.minecraft.resources.Identifier.withDefaultNamespace("building_entrance"));
+					jig.setPool(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.TEMPLATE_POOL,
+						net.minecraft.resources.Identifier.withDefaultNamespace("empty")));
+					jig.setFinalState("minecraft:cobblestone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]");
+					jig.setJoint(net.minecraft.world.level.block.entity.JigsawBlockEntity.JointType.ALIGNED);
+				}
+				if (piece.name.equals("wizard_tower")) {
+					net.minecraft.world.RandomizableContainer.setBlockEntityLootTable(level, level.getRandom(),
+						origin.offset(dev.neothaum.world.TCVillagePieces.TOWER_CHEST), net.minecraft.resources.ResourceKey.create(
+							net.minecraft.core.registries.Registries.LOOT_TABLE, NeoThaum.id("chests/wizard_tower")));
+				}
+				var template = new net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate();
+				template.fillFromWorld(level, origin, piece.size, false, java.util.List.of(net.minecraft.world.level.block.Blocks.STRUCTURE_VOID));
+				try {
+					java.nio.file.Files.createDirectories(out);
+					net.minecraft.nbt.NbtIo.writeCompressed(template.save(new net.minecraft.nbt.CompoundTag()), out.resolve(piece.name + ".nbt"));
+					NeoThaum.LOGGER.info("[visual-test] templates: wrote {}", out.resolve(piece.name + ".nbt"));
+				} catch (java.io.IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
+	}
+
+	/** Every NeoThaum item's name and tooltip (as a player sees it, advanced tooltips off), written to build/tooltips.txt. */
+	private static void tooltipDump(ClientGameTestContext ctx) {
+		ctx.runOnClient(mc -> {
+			StringBuilder sb = new StringBuilder();
+			var tabItems = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
+			for (var tab : dev.neothaum.registry.TVTab.TABS) {
+				tab.buildContents(new net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters(mc.player.connection.enabledFeatures(), false,
+					mc.level.registryAccess()));
+				tabItems.addAll(tab.getDisplayItems());
+			}
+			for (var stack : tabItems) {
+				var lines = stack.getTooltipLines(net.minecraft.world.item.Item.TooltipContext.of(mc.level), mc.player,
+					net.minecraft.world.item.TooltipFlag.NORMAL);
+				sb.append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem())).append(System.lineSeparator());
+				for (var l : lines) {
+					sb.append("    ").append(l.getString()).append(System.lineSeparator());
+				}
+			}
+			try {
+				java.nio.file.Files.writeString(java.nio.file.Path.of("tooltips.txt"), sb.toString());
+				NeoThaum.LOGGER.info("[visual-test] tooltips: {} stacks -> {}", tabItems.size(), java.nio.file.Path.of("tooltips.txt").toAbsolutePath());
+			} catch (java.io.IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
+	}
+
+	/** The Golemancy tab of the Thaumonomicon for a new player, after the first two entries, and with everything researched. */
+	private static void golemancyScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		String[][] stages = {{}, {"HUNGRYCHEST", "GOLEMSTRAW"}, null};
+		for (int i = 0; i < stages.length; i++) {
+			String[] keys = stages[i];
+			server.runOnServer(srv -> {
+				var p = srv.getPlayerList().getPlayers().get(0);
+				if (keys == null) {
+					for (ResearchItem r : ResearchManager.entries()) {
+						ResearchManager.completeResearch(p, r.key);
+					}
+				} else {
+					for (String k : keys) {
+						ResearchManager.completeResearch(p, k);
+					}
+				}
+			});
+			ctx.waitTicks(10);
+			ctx.setScreen(() -> {
+				try {
+					var f = ThaumonomiconScreen.class.getDeclaredField("selectedCategory");
+					f.setAccessible(true);
+					f.set(null, "GOLEMANCY");
+					// open on the middle of the golem tree
+					var lx = ThaumonomiconScreen.class.getDeclaredField("lastX");
+					lx.setAccessible(true);
+					lx.set(null, 0);
+					var ly = ThaumonomiconScreen.class.getDeclaredField("lastY");
+					ly.setAccessible(true);
+					ly.set(null, 4);
+				} catch (ReflectiveOperationException e) {
+					throw new RuntimeException(e);
+				}
+				return new ThaumonomiconScreen();
+			});
+			ctx.waitTicks(10);
+			ctx.runOnClient(mc -> {
+				var cat = ResearchManager.categories().get("GOLEMANCY");
+				var k = ResearchManager.knowledge(mc.player);
+				NeoThaum.LOGGER.info("[visual-test] golemancy: category entries={} known={} of {} (e.g. GOLEMSTRAW known={})", cat.research.size(),
+					cat.research.keySet().stream().filter(k.research::contains).count(), k.research.size(), k.research.contains("GOLEMSTRAW"));
+				try {
+					var f = ThaumonomiconScreen.class.getDeclaredField("research");
+					f.setAccessible(true);
+					NeoThaum.LOGGER.info("[visual-test] golemancy: screen list={}", ((java.util.List<?>) f.get(mc.gui.screen())).size());
+				} catch (ReflectiveOperationException e) {
+					NeoThaum.LOGGER.info("[visual-test] golemancy: no list", e);
+				}
+			});
+			shot(ctx, "golemancy_" + i);
+			ctx.setScreen(() -> null);
+		}
+	}
+
+	/**
+	 * Aura nodes on Xaero's World Map (NEOTHAUM_TEST_XAERO=1): three nodes are seen through goggles, two of them scanned (only those may
+	 * show), then the map is opened, then the nodes are hidden with the map's button.
+	 */
+	private static void worldMapScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode creative @a", "tp @a 0 120 0 0 30", "fill -30 117 -30 30 130 30 air",
+			"item replace entity @a armor.head with neothaum:goggles_of_revealing"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			int[][] at = {{8, 120, 8}, {-12, 121, 4}, {3, 119, -15}};
+			dev.neothaum.api.nodes.NodeType[] types = {dev.neothaum.api.nodes.NodeType.NORMAL, dev.neothaum.api.nodes.NodeType.DARK,
+				dev.neothaum.api.nodes.NodeType.PURE};
+			for (int i = 0; i < at.length; i++) {
+				var pos = new net.minecraft.core.BlockPos(at[i][0], at[i][1], at[i][2]);
+				dev.neothaum.world.NodeGenerator.createRandomNodeAt(level, pos, level.getRandom(), false, false, false, true, types[i]);
+				// the pure node is never scanned, so it must stay off the map
+				if (i < 2) {
+					NeoThaum.LOGGER.info("[visual-test] worldmap: scanned {} = {}", types[i], dev.neothaum.research.ScanManager.completeScan(
+						srv.getPlayerList().getPlayers().get(0), dev.neothaum.research.ScanManager.ScanResult.node(pos), "@"));
+				}
+			}
+		});
+		ctx.waitTicks(60);
+		// what the M key does: a GuiMap on the current session's map processor
+		ctx.runOnClient(mc -> {
+			try {
+				Object session = Class.forName("xaero.map.WorldMapSession").getMethod("getCurrentSession").invoke(null);
+				Object processor = session.getClass().getMethod("getMapProcessor").invoke(session);
+				Class<?> gui = Class.forName("xaero.map.gui.GuiMap");
+				Object screen = gui.getConstructor(net.minecraft.client.gui.screens.Screen.class, net.minecraft.client.gui.screens.Screen.class,
+					processor.getClass(), net.minecraft.world.entity.Entity.class).newInstance(null, null, processor, mc.player);
+				mc.gui.setScreen((net.minecraft.client.gui.screens.Screen) screen);
+			} catch (ReflectiveOperationException e) {
+				NeoThaum.LOGGER.info("[visual-test] worldmap: could not open the map", e);
+			}
+		});
+		ctx.waitTicks(80);
+		ctx.runOnClient(mc -> NeoThaum.LOGGER.info("[visual-test] worldmap: screen={}", mc.gui.screen() == null ? null : mc.gui.screen().getClass().getName()));
+		shot(ctx, "worldmap_nodes");
+		ctx.runOnClient(mc -> {
+			if (mc.gui.screen() != null) {
+				for (var w : mc.gui.screen().children()) {
+					if (w instanceof net.minecraft.client.gui.components.Button b && b.getMessage().getString().equals("✦")) {
+						b.onPress(new net.minecraft.client.input.KeyEvent(0, 0, 0));
+					}
+				}
+			}
+		});
+		ctx.waitTicks(5);
+		shot(ctx, "worldmap_hidden");
+		ctx.runOnClient(mc -> {
+			dev.neothaum.config.NeoThaumConfig.current.worldMapNodes = true;
+			mc.gui.setScreen(null);
+		});
+	}
+
+	/** Befriending a pech by dropping gold for it, then right-clicking it to trade. */
+	private static void pechScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode survival @a", "difficulty normal", "fill -10 117 -10 10 125 10 air", "fill -10 116 -10 10 116 10 grass_block",
+			"tp @a 0 117 5 180 10", "clear @a"}) {
+			server.runCommand(cmd);
+		}
+		int[] pechId = new int[1];
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var pech = dev.neothaum.entity.TVEntities.PECH.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+			pech.snapTo(0, 117, 0, 0.0F, 0.0F);
+			pech.setPersistenceRequired();
+			level.addFreshEntity(pech);
+			pechId[0] = pech.getId();
+			// thrown by the player, as in play (Q with gold in hand)
+			var player = srv.getPlayerList().getPlayers().get(0);
+			player.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, pech.position());
+			for (int i = 0; i < 40; i++) {
+				player.drop(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GOLD_INGOT), true, net.minecraft.util.Prediction.PREDICTED);
+			}
+		});
+		ctx.waitTicks(200);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			if (level.getEntity(pechId[0]) instanceof dev.neothaum.entity.monster.Pech pech) {
+				NeoThaum.LOGGER.info("[visual-test] pech: tamed={} anger={} gold left on ground={}", pech.isTamed(), pech.getAnger(),
+					level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, pech.getBoundingBox().inflate(8)).size());
+				p.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, pech.getEyePosition());
+				var result = p.interactOn(pech, net.minecraft.world.InteractionHand.MAIN_HAND, pech.position());
+				NeoThaum.LOGGER.info("[visual-test] pech: interact result={} menu={}", result, p.containerMenu.getClass().getSimpleName());
+			} else {
+				NeoThaum.LOGGER.info("[visual-test] pech: gone");
+			}
+		});
+		for (int t : new int[]{1, 4, 15, 100}) {
+			ctx.waitTicks(t);
+			ctx.runOnClient(mc -> NeoThaum.LOGGER.info("[visual-test] pech: client screen={} menu={}", mc.gui.screen() == null ? null
+				: mc.gui.screen().getClass().getSimpleName(), mc.player.containerMenu.getClass().getSimpleName()));
+			server.runOnServer(srv -> NeoThaum.LOGGER.info("[visual-test] pech: server menu={}",
+				srv.getPlayerList().getPlayers().get(0).containerMenu.getClass().getSimpleName()));
+		}
+		shot(ctx, "pech_trade");
+		// put a valued item on offer and roll the dice
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			if (p.containerMenu instanceof dev.neothaum.menu.PechMenu menu) {
+				menu.getSlot(0).set(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GOLD_INGOT, 4));
+				boolean rolled = menu.clickMenuButton(p, 0);
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < 5; i++) {
+					sb.append(menu.getSlot(i).getItem()).append(' ');
+				}
+				NeoThaum.LOGGER.info("[visual-test] pech: rolled={} slots={}", rolled, sb);
+			}
+		});
+		ctx.waitTicks(40);
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			if (p.containerMenu instanceof dev.neothaum.menu.PechMenu menu) {
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < 5; i++) {
+					sb.append(menu.getSlot(i).getItem()).append(' ');
+				}
+				NeoThaum.LOGGER.info("[visual-test] pech: after 2s slots={}", sb);
+			}
+		});
+		shot(ctx, "pech_paid");
+		ctx.runOnClient(mc -> mc.player.closeContainer());
+	}
+
+	/** Thaumic slimes of three sizes left to hop about and then hurt, with every sound the client starts logged. */
+	private static void soundsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode creative @a", "difficulty normal", "fill -10 117 -10 10 125 10 air", "fill -10 116 -10 10 116 10 stone",
+			"tp @a 0 117 6 180 20"}) {
+			server.runCommand(cmd);
+		}
+		java.util.Map<String, Integer> heard = new java.util.TreeMap<>();
+		net.minecraft.client.sounds.SoundEventListener listener = (sound, events, range) -> {
+			synchronized (heard) {
+				heard.merge(sound.getIdentifier().toString(), 1, Integer::sum);
+			}
+		};
+		ctx.runOnClient(mc -> mc.getSoundManager().addListener(listener));
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			int[] sizes = {1, 4, 9};
+			for (int i = 0; i < sizes.length; i++) {
+				var slime = dev.neothaum.entity.TVEntities.THAUMIC_SLIME.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+				slime.setSlimeSize(sizes[i]);
+				slime.snapTo(-4 + i * 4, 117, -2, 0.0F, 0.0F);
+				level.addFreshEntity(slime);
+			}
+		});
+		ctx.waitTicks(100);
+		synchronized (heard) {
+			NeoThaum.LOGGER.info("[visual-test] sounds: idle/jumping {}", heard);
+			heard.clear();
+		}
+		server.runCommand("damage @e[type=neothaum:thaumic_slime,limit=3] 1 minecraft:player_attack");
+		ctx.waitTicks(10);
+		server.runCommand("kill @e[type=neothaum:thaumic_slime]");
+		ctx.waitTicks(10);
+		synchronized (heard) {
+			NeoThaum.LOGGER.info("[visual-test] sounds: hurt/death {}", heard);
+		}
+		ctx.runOnClient(mc -> mc.getSoundManager().removeListener(listener));
+	}
+
+	/** Every NeoThaum item drawn as an inventory icon, a page at a time; items with no item definition are logged by name. */
+	private static void iconsScene(ClientGameTestContext ctx) {
+		java.util.List<net.minecraft.world.item.ItemStack> stacks = new java.util.ArrayList<>();
+		java.util.List<String> ids = new java.util.ArrayList<>();
+		for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+			var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
+			if (id.getNamespace().equals(NeoThaum.MOD_ID)) {
+				ids.add(id.getPath());
+			}
+		}
+		java.util.Collections.sort(ids);
+		ctx.runOnClient(mc -> {
+			var rm = mc.getResourceManager();
+			for (String id : ids) {
+				if (rm.getResource(NeoThaum.id("items/" + id + ".json")).isEmpty()) {
+					NeoThaum.LOGGER.info("[visual-test] icons: no item definition for {}", id);
+				}
+			}
+		});
+		for (String id : ids) {
+			stacks.add(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(NeoThaum.id(id))));
+		}
+		int per = IconSheetScreen.COLS * IconSheetScreen.ROWS;
+		for (int page = 0; page * per < stacks.size(); page++) {
+			StringBuilder sb = new StringBuilder();
+			for (int i = page * per; i < Math.min(stacks.size(), (page + 1) * per); i++) {
+				sb.append(i - page * per).append('=').append(ids.get(i)).append(' ');
+			}
+			NeoThaum.LOGGER.info("[visual-test] icons page {}: {}", page, sb);
+			int p = page;
+			ctx.setScreen(() -> new IconSheetScreen(stacks, p));
+			ctx.waitTicks(4);
+			shot(ctx, "icons_" + page);
+		}
+		ctx.setScreen(() -> null);
+	}
+
 	private static void tabsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
 		server.runCommand("gamemode creative @a");
 		ctx.waitTicks(10);

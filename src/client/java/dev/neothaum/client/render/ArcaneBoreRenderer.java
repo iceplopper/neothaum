@@ -95,6 +95,10 @@ public class ArcaneBoreRenderer implements BlockEntityRenderer<ArcaneBoreBlockEn
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
+		draw(ps, collector, s, s.lightCoords);
+	}
+
+	static void draw(PoseStack ps, SubmitNodeCollector collector, State s, int light) {
 		init();
 		ps.pushPose();
 		ps.translate(0.5F, 0.5F, 0.5F);
@@ -111,7 +115,7 @@ public class ArcaneBoreRenderer implements BlockEntityRenderer<ArcaneBoreBlockEn
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(TEXTURE), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			boreBasePart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			boreBasePart.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 		ps.popPose();
 
@@ -123,7 +127,7 @@ public class ArcaneBoreRenderer implements BlockEntityRenderer<ArcaneBoreBlockEn
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(TEXTURE), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			boreNozzlePart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			boreNozzlePart.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 		ps.popPose();
 
@@ -134,7 +138,7 @@ public class ArcaneBoreRenderer implements BlockEntityRenderer<ArcaneBoreBlockEn
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(TEXTURE), (pose, vc) -> {
 			PoseStack local = new PoseStack();
 			local.last().set(pose);
-			boreEmitPart.render(local, vc, s.lightCoords, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+			boreEmitPart.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 		ps.popPose();
 

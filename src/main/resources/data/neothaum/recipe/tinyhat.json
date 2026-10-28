@@ -1,0 +1,20 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "TINYHAT",
+  "aspects": {
+    "ordo": 8,
+    "ignis": 8
+  },
+  "pattern": [
+    " C ",
+    " G ",
+    "CCC"
+  ],
+  "key": {
+    "C": "minecraft:white_wool",
+    "G": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "neothaum:golem_deco_tophat"
+  }
+}

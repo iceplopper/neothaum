@@ -7,7 +7,8 @@
 		"LivingEntityHurtMixin",
 		"NoteBlockMixin",
 		"OverworldBiomeBuilderMixin",
-		"CarvedPumpkinBlockMixin"
+		"CarvedPumpkinBlockMixin",
+		"StructureTemplatePoolAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -26,6 +26,6 @@ public class GolemCoreItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
-		builder.accept(Component.translatable("item.ItemGolemCore." + this.coreType.id + ".desc").withStyle(ChatFormatting.GRAY));
+		builder.accept(Component.translatable("item.ItemGolemCore." + this.coreType.id + ".name").withStyle(ChatFormatting.GRAY));
 	}
 }

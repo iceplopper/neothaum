@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/cultist_banner",
+    "model": {
+      "type": "neothaum:device",
+      "device": "cultist_banner"
+    }
+  }
+}

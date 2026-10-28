@@ -2,13 +2,21 @@ package dev.neothaum.client.gui;
 
 import dev.neothaum.config.NeoThaumConfig;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 
 public class NeoThaumConfigScreen extends Screen {
 	private final Screen parent;
 	private int activeTab = 0; // 0: Nodes, 1: Biomes & Structures, 2: Taint & Flux, 3: Alchemy & Debug
+	private int col1;
+	private int col2;
+	private int slot;
 
 	public NeoThaumConfigScreen(Screen parent) {
 		super(Component.literal("NeoThaum Configuration"));
@@ -23,7 +31,7 @@ public class NeoThaumConfigScreen extends Screen {
 		int tabY = 32;
 
 		// Tab Selectors
-		String[] tabs = {"Nodes", "Biomes & Structures", "Taint & Flux", "Alchemy & Debug"};
+		String[] tabs = {"Nodes", "World", "Taint & Flux", "Alchemy & Debug"};
 		for (int i = 0; i < tabs.length; i++) {
 			final int t = i;
 			int tx = cx - (tabs.length * tabWidth + (tabs.length - 1) * 4) / 2 + i * (tabWidth + 4);
@@ -34,158 +42,44 @@ public class NeoThaumConfigScreen extends Screen {
 		}
 
 		var cfg = NeoThaumConfig.current;
-		int col1 = cx - 180;
-		int col2 = cx + 5;
-		int yStart = 62;
-		int dy = 24;
+		this.col1 = cx - 180;
+		this.col2 = cx + 5;
+		this.slot = 0;
 
 		if (this.activeTab == 0) {
-			// Tab 0: Nodes
-			this.addRenderableWidget(Button.builder(Component.literal("Node Rarity: " + (cfg.nodeRarity <= 0 ? "Disabled" : "1 in " + cfg.nodeRarity)), b -> {
-				int[] steps = {0, 18, 24, 30, 36, 48, 64, 96, 128};
-				cfg.nodeRarity = nextVal(steps, cfg.nodeRarity);
-				b.setMessage(Component.literal("Node Rarity: " + (cfg.nodeRarity <= 0 ? "Disabled" : "1 in " + cfg.nodeRarity)));
-			}).bounds(col1, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Variant Rarity: 1 in " + cfg.nodeVariantRarity), b -> {
-				int[] steps = {6, 10, 14, 18, 24, 32};
-				cfg.nodeVariantRarity = nextVal(steps, cfg.nodeVariantRarity);
-				b.setMessage(Component.literal("Variant Rarity: 1 in " + cfg.nodeVariantRarity));
-			}).bounds(col2, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Dark Node Weight: " + cfg.darkNodeWeight), b -> {
-				cfg.darkNodeWeight = (cfg.darkNodeWeight + 1) % 6;
-				b.setMessage(Component.literal("Dark Node Weight: " + cfg.darkNodeWeight));
-			}).bounds(col1, yStart + dy, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Unstable Node Weight: " + cfg.unstableNodeWeight), b -> {
-				cfg.unstableNodeWeight = (cfg.unstableNodeWeight + 1) % 6;
-				b.setMessage(Component.literal("Unstable Node Weight: " + cfg.unstableNodeWeight));
-			}).bounds(col2, yStart + dy, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Pure Node Weight: " + cfg.pureNodeWeight), b -> {
-				cfg.pureNodeWeight = (cfg.pureNodeWeight + 1) % 6;
-				b.setMessage(Component.literal("Pure Node Weight: " + cfg.pureNodeWeight));
-			}).bounds(col1, yStart + dy * 2, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Hungry Node Weight: " + cfg.hungryNodeWeight), b -> {
-				cfg.hungryNodeWeight = (cfg.hungryNodeWeight + 1) % 6;
-				b.setMessage(Component.literal("Hungry Node Weight: " + cfg.hungryNodeWeight));
-			}).bounds(col2, yStart + dy * 2, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Tainted Node Weight: " + cfg.taintedNodeWeight), b -> {
-				cfg.taintedNodeWeight = (cfg.taintedNodeWeight + 1) % 6;
-				b.setMessage(Component.literal("Tainted Node Weight: " + cfg.taintedNodeWeight));
-			}).bounds(col1, yStart + dy * 3, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Hard Nodes: " + (cfg.hardNodes ? "ON" : "OFF")), b -> {
-				cfg.hardNodes = !cfg.hardNodes;
-				b.setMessage(Component.literal("Hard Nodes: " + (cfg.hardNodes ? "ON" : "OFF")));
-			}).bounds(col2, yStart + dy * 3, 175, 20).build());
+			this.slider("Nodes", () -> cfg.nodeMultiplier, v -> cfg.nodeMultiplier = v);
+			this.slider("Special Nodes", () -> cfg.nodeVariantMultiplier, v -> cfg.nodeVariantMultiplier = v);
+			this.slider("Sinister Nodes", () -> cfg.darkNodeMultiplier, v -> cfg.darkNodeMultiplier = v);
+			this.slider("Unstable Nodes", () -> cfg.unstableNodeMultiplier, v -> cfg.unstableNodeMultiplier = v);
+			this.slider("Pure Nodes", () -> cfg.pureNodeMultiplier, v -> cfg.pureNodeMultiplier = v);
+			this.slider("Hungry Nodes", () -> cfg.hungryNodeMultiplier, v -> cfg.hungryNodeMultiplier = v);
+			this.slider("Tainted Nodes", () -> cfg.taintedNodeMultiplier, v -> cfg.taintedNodeMultiplier = v);
+			this.slider("Bright Nodes", () -> cfg.brightNodeMultiplier, v -> cfg.brightNodeMultiplier = v);
+			this.slider("Pale Nodes", () -> cfg.paleNodeMultiplier, v -> cfg.paleNodeMultiplier = v);
+			this.slider("Fading Nodes", () -> cfg.fadingNodeMultiplier, v -> cfg.fadingNodeMultiplier = v);
+			this.toggle("Hard Nodes", () -> cfg.hardNodes, v -> cfg.hardNodes = v);
 		} else if (this.activeTab == 1) {
-			// Tab 1: Biomes & Structures
-			this.addRenderableWidget(Button.builder(Component.literal("Magical Forest: " + (cfg.magicalForestGenerate ? "Enabled" : "Disabled")), b -> {
-				cfg.magicalForestGenerate = !cfg.magicalForestGenerate;
-				b.setMessage(Component.literal("Magical Forest: " + (cfg.magicalForestGenerate ? "Enabled" : "Disabled")));
-			}).bounds(col1, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Forest Size: " + cfg.magicalForestSize + "%"), b -> {
-				int[] steps = {10, 20, 30, 40, 50, 70};
-				cfg.magicalForestSize = nextVal(steps, cfg.magicalForestSize);
-				b.setMessage(Component.literal("Forest Size: " + cfg.magicalForestSize + "%"));
-			}).bounds(col2, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Tainted Land: " + (cfg.taintedLandGenerate ? "Enabled" : "Disabled")), b -> {
-				cfg.taintedLandGenerate = !cfg.taintedLandGenerate;
-				b.setMessage(Component.literal("Tainted Land: " + (cfg.taintedLandGenerate ? "Enabled" : "Disabled")));
-			}).bounds(col1, yStart + dy, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Tainted Size: " + cfg.taintedLandSize + "%"), b -> {
-				int[] steps = {2, 5, 10, 15, 25};
-				cfg.taintedLandSize = nextVal(steps, cfg.taintedLandSize);
-				b.setMessage(Component.literal("Tainted Size: " + cfg.taintedLandSize + "%"));
-			}).bounds(col2, yStart + dy, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Eldritch Ring: " + (cfg.eldritchRingRarity <= 0 ? "Off" : "1/" + cfg.eldritchRingRarity)), b -> {
-				int[] steps = {0, 33, 50, 66, 100, 150};
-				cfg.eldritchRingRarity = nextVal(steps, cfg.eldritchRingRarity);
-				b.setMessage(Component.literal("Eldritch Ring: " + (cfg.eldritchRingRarity <= 0 ? "Off" : "1/" + cfg.eldritchRingRarity)));
-			}).bounds(col1, yStart + dy * 2, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Barrow Mound: " + (cfg.barrowMoundRarity <= 0 ? "Off" : "1/" + cfg.barrowMoundRarity)), b -> {
-				int[] steps = {0, 75, 100, 150, 200, 300};
-				cfg.barrowMoundRarity = nextVal(steps, cfg.barrowMoundRarity);
-				b.setMessage(Component.literal("Barrow Mound: " + (cfg.barrowMoundRarity <= 0 ? "Off" : "1/" + cfg.barrowMoundRarity)));
-			}).bounds(col2, yStart + dy * 2, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Wizard Tower: " + (cfg.wizardTowerRarity <= 0 ? "Off" : "1/" + cfg.wizardTowerRarity)), b -> {
-				int[] steps = {0, 60, 90, 120, 180, 250};
-				cfg.wizardTowerRarity = nextVal(steps, cfg.wizardTowerRarity);
-				b.setMessage(Component.literal("Wizard Tower: " + (cfg.wizardTowerRarity <= 0 ? "Off" : "1/" + cfg.wizardTowerRarity)));
-			}).bounds(col1, yStart + dy * 3, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Banker House: " + (cfg.bankerHomeRarity <= 0 ? "Off" : "1/" + cfg.bankerHomeRarity)), b -> {
-				int[] steps = {0, 70, 100, 140, 200, 280};
-				cfg.bankerHomeRarity = nextVal(steps, cfg.bankerHomeRarity);
-				b.setMessage(Component.literal("Banker House: " + (cfg.bankerHomeRarity <= 0 ? "Off" : "1/" + cfg.bankerHomeRarity)));
-			}).bounds(col2, yStart + dy * 3, 175, 20).build());
+			this.toggle("Magical Forest", () -> cfg.magicalForestGenerate, v -> cfg.magicalForestGenerate = v);
+			this.slider("Magical Forest Size", () -> cfg.magicalForestSizeMultiplier, v -> cfg.magicalForestSizeMultiplier = v);
+			this.toggle("Tainted Land", () -> cfg.taintedLandGenerate, v -> cfg.taintedLandGenerate = v);
+			this.slider("Tainted Land Size", () -> cfg.taintedLandSizeMultiplier, v -> cfg.taintedLandSizeMultiplier = v);
+			this.slider("Eldritch Rings", () -> cfg.eldritchRingMultiplier, v -> cfg.eldritchRingMultiplier = v);
+			this.slider("Barrow Mounds", () -> cfg.barrowMoundMultiplier, v -> cfg.barrowMoundMultiplier = v);
+			this.slider("Hilltop Stones", () -> cfg.hilltopStonesMultiplier, v -> cfg.hilltopStonesMultiplier = v);
+			this.toggle("Village Buildings", () -> cfg.villageBuildings, v -> cfg.villageBuildings = v);
 		} else if (this.activeTab == 2) {
-			// Tab 2: Taint & Flux
-			this.addRenderableWidget(Button.builder(Component.literal("Taint Spread: " + (cfg.taintSpread ? "ON" : "OFF")), b -> {
-				cfg.taintSpread = !cfg.taintSpread;
-				b.setMessage(Component.literal("Taint Spread: " + (cfg.taintSpread ? "ON" : "OFF")));
-			}).bounds(col1, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Spread Delay: " + cfg.taintSpreadRate + " ticks"), b -> {
-				int[] steps = {50, 100, 200, 350, 500};
-				cfg.taintSpreadRate = nextVal(steps, cfg.taintSpreadRate);
-				b.setMessage(Component.literal("Spread Delay: " + cfg.taintSpreadRate + " ticks"));
-			}).bounds(col2, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Corrupt Mobs: " + (cfg.corruptExistingMobs ? "Dying Mobs (TC4)" : "Spawn Only")), b -> {
-				cfg.corruptExistingMobs = !cfg.corruptExistingMobs;
-				b.setMessage(Component.literal("Corrupt Mobs: " + (cfg.corruptExistingMobs ? "Dying Mobs (TC4)" : "Spawn Only")));
-			}).bounds(col1, yStart + dy, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Flux Multiplier: " + cfg.fluxMultiplier + "x"), b -> {
-				float[] steps = {0.0f, 0.5f, 1.0f, 1.5f, 2.0f, 3.0f};
-				cfg.fluxMultiplier = nextVal(steps, cfg.fluxMultiplier);
-				b.setMessage(Component.literal("Flux Multiplier: " + cfg.fluxMultiplier + "x"));
-			}).bounds(col2, yStart + dy, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Warp Enabled: " + (cfg.allowWarp ? "ON" : "OFF")), b -> {
-				cfg.allowWarp = !cfg.allowWarp;
-				b.setMessage(Component.literal("Warp Enabled: " + (cfg.allowWarp ? "ON" : "OFF")));
-			}).bounds(col1, yStart + dy * 2, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Wisp Spawn Rate: " + cfg.wispSpawnRate + "x"), b -> {
-				float[] steps = {0.0f, 0.5f, 1.0f, 1.5f, 2.0f};
-				cfg.wispSpawnRate = nextVal(steps, cfg.wispSpawnRate);
-				b.setMessage(Component.literal("Wisp Spawn Rate: " + cfg.wispSpawnRate + "x"));
-			}).bounds(col2, yStart + dy * 2, 175, 20).build());
+			this.toggle("Taint Spread", () -> cfg.taintSpread, v -> cfg.taintSpread = v);
+			this.slider("Taint Spread Speed", () -> cfg.taintSpreadMultiplier, v -> cfg.taintSpreadMultiplier = v);
+			this.toggle("Taint Corrupts Dying Mobs", () -> cfg.corruptExistingMobs, v -> cfg.corruptExistingMobs = v);
+			this.slider("Flux", () -> cfg.fluxMultiplier, v -> cfg.fluxMultiplier = v);
+			this.toggle("Warp", () -> cfg.allowWarp, v -> cfg.allowWarp = v);
+			this.slider("Wisp Spawns", () -> cfg.wispSpawnMultiplier, v -> cfg.wispSpawnMultiplier = v);
 		} else {
-			// Tab 3: Alchemy & Creative
-			this.addRenderableWidget(Button.builder(Component.literal("Infernal Speed: " + cfg.infernalFurnaceSpeedMultiplier + "x"), b -> {
-				float[] steps = {0.5f, 1.0f, 1.5f, 2.0f, 3.0f, 5.0f};
-				cfg.infernalFurnaceSpeedMultiplier = nextVal(steps, cfg.infernalFurnaceSpeedMultiplier);
-				b.setMessage(Component.literal("Infernal Speed: " + cfg.infernalFurnaceSpeedMultiplier + "x"));
-			}).bounds(col1, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Infernal Bonus: " + cfg.infernalFurnaceBonusMultiplier + "x"), b -> {
-				float[] steps = {0.0f, 0.5f, 1.0f, 1.5f, 2.0f, 3.0f};
-				cfg.infernalFurnaceBonusMultiplier = nextVal(steps, cfg.infernalFurnaceBonusMultiplier);
-				b.setMessage(Component.literal("Infernal Bonus: " + cfg.infernalFurnaceBonusMultiplier + "x"));
-			}).bounds(col2, yStart, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Creative Dev Tab: " + (cfg.showCreativeDebugTab ? "Visible" : "Hidden")), b -> {
-				cfg.showCreativeDebugTab = !cfg.showCreativeDebugTab;
-				b.setMessage(Component.literal("Creative Dev Tab: " + (cfg.showCreativeDebugTab ? "Visible" : "Hidden")));
-			}).bounds(col1, yStart + dy, 175, 20).build());
-
-			this.addRenderableWidget(Button.builder(Component.literal("Champion Mobs: " + (cfg.championMobs ? "ON" : "OFF")), b -> {
-				cfg.championMobs = !cfg.championMobs;
-				b.setMessage(Component.literal("Champion Mobs: " + (cfg.championMobs ? "ON" : "OFF")));
-			}).bounds(col2, yStart + dy, 175, 20).build());
+			this.slider("Infernal Furnace Speed", () -> cfg.infernalFurnaceSpeedMultiplier, v -> cfg.infernalFurnaceSpeedMultiplier = v);
+			this.slider("Infernal Furnace Bonus", () -> cfg.infernalFurnaceBonusMultiplier, v -> cfg.infernalFurnaceBonusMultiplier = v);
+			this.slider("Aspect Orb Drops", () -> cfg.aspectOrbMultiplier, v -> cfg.aspectOrbMultiplier = v);
+			this.toggle("Creative Dev Tab", () -> cfg.showCreativeDebugTab, v -> cfg.showCreativeDebugTab = v);
+			this.toggle("Champion Mobs", () -> cfg.championMobs, v -> cfg.championMobs = v);
 		}
 
 		// Bottom Buttons
@@ -211,22 +105,56 @@ public class NeoThaumConfigScreen extends Screen {
 		}).bounds(cx + 55, by, 100, 20).build());
 	}
 
-	private static int nextVal(int[] steps, int cur) {
-		for (int i = 0; i < steps.length; i++) {
-			if (steps[i] == cur) {
-				return steps[(i + 1) % steps.length];
-			}
-		}
-		return steps[0];
+	/** The next place in the two-column layout. */
+	private int[] place() {
+		int x = this.slot % 2 == 0 ? this.col1 : this.col2;
+		int y = 62 + this.slot / 2 * 24;
+		this.slot++;
+		return new int[]{x, y};
 	}
 
-	private static float nextVal(float[] steps, float cur) {
-		for (int i = 0; i < steps.length; i++) {
-			if (Math.abs(steps[i] - cur) < 0.05f) {
-				return steps[(i + 1) % steps.length];
-			}
+	private void toggle(String label, BooleanSupplier get, Consumer<Boolean> set) {
+		int[] at = this.place();
+		this.addRenderableWidget(Button.builder(Component.literal(label + ": " + (get.getAsBoolean() ? "ON" : "OFF")), b -> {
+			set.accept(!get.getAsBoolean());
+			b.setMessage(Component.literal(label + ": " + (get.getAsBoolean() ? "ON" : "OFF")));
+		}).bounds(at[0], at[1], 175, 20).build());
+	}
+
+	/** A multiplier on TC4's own setting: 0 to 10 in steps of 0.1, where 1 is TC4 and 0 is off. */
+	private void slider(String label, Supplier<Float> get, Consumer<Float> set) {
+		int[] at = this.place();
+		this.addRenderableWidget(new MultiplierSlider(at[0], at[1], label, get.get(), set));
+	}
+
+	private static final class MultiplierSlider extends AbstractSliderButton {
+		private final String label;
+		private final Consumer<Float> set;
+
+		MultiplierSlider(int x, int y, String label, float initial, Consumer<Float> set) {
+			super(x, y, 175, 20, Component.empty(), Mth.clamp(initial, 0.0F, 10.0F) / 10.0);
+			this.label = label;
+			this.set = set;
+			this.updateMessage();
 		}
-		return steps[0];
+
+		private float multiplier() {
+			return Math.round(this.value * 100.0) / 10.0F;
+		}
+
+		@Override
+		protected void updateMessage() {
+			float m = this.multiplier();
+			String v = m == 0.0F ? "Off" : String.format("x%.1f", m) + (m == 1.0F ? " (TC4)" : "");
+			this.setMessage(Component.literal(this.label + ": " + v));
+		}
+
+		@Override
+		protected void applyValue() {
+			float m = this.multiplier();
+			this.value = m / 10.0;
+			this.set.accept(m);
+		}
 	}
 
 	@Override

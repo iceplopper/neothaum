@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/flux_scrubber",
+    "model": {
+      "type": "neothaum:device",
+      "device": "flux_scrubber"
+    }
+  }
+}
