@@ -511,6 +511,12 @@ public final class TVNetwork {
 		}
 	}
 
+	/** PacketFXBlockArc: a lob of lightning from an entity to a block. */
+	public static void sendBlockArc(net.minecraft.world.entity.Entity entity, net.minecraft.core.BlockPos pos) {
+		long l = pos.asLong();
+		sendEntityFx(entity, 6, (int) (l >> 32), (int) l);
+	}
+
 	public static void sendEntityFx(net.minecraft.world.entity.Entity entity, int kind, int target, int value) {
 		if (entity.level() instanceof ServerLevel sl) {
 			for (ServerPlayer p : PlayerLookup.around(sl, entity.position(), 32.0)) {

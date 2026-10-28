@@ -1658,5 +1658,6 @@
   "block.neothaum.vis_charge_relay": "Suporte de Carregamento de Vis",
   "block.neothaum.vis_relay": "Suporte de Vis",
   "block.neothaum.energized_aura_node": "Nodo de Aura Energizado",
-  "item.neothaum.apprentice_ring": "Anel Aprendiz de %s"
+  "item.neothaum.apprentice_ring": "Anel Aprendiz de %s",
+  "block.neothaum.sapping_field": "Sapping Field"
 }

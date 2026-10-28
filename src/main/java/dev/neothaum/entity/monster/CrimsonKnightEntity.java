@@ -47,7 +47,7 @@ public class CrimsonKnightEntity extends CultistEntity {
 		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers(CultistEntity.class));
+		this.targetSelector.addGoal(1, new CultistHurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 

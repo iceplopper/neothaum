@@ -1,5 +1,7 @@
 package dev.neothaum.entity.projectile;
 
+import net.minecraft.util.Mth;
+
 import dev.neothaum.entity.TVEntities;
 import dev.neothaum.registry.TVSounds;
 import net.minecraft.core.particles.ParticleTypes;
@@ -70,19 +72,14 @@ public class GolemOrbEntity extends TCThrowable {
 			return;
 		}
 
-		// Homing steering toward target
-		if (!this.level().isClientSide() && this.target != null && this.target.isAlive()) {
-			Vec3 currentPos = this.position();
-			Vec3 targetPos = this.target.position().add(0, this.target.getBbHeight() * 0.5, 0);
-			Vec3 dir = targetPos.subtract(currentPos);
-			double dist = dir.length();
-			if (dist > 0.01) {
-				Vec3 norm = dir.scale(1.0 / dist);
-				Vec3 motion = this.getDeltaMovement();
-				double steer = 0.15;
-				Vec3 newMotion = motion.scale(0.85).add(norm.scale(steer * 0.66));
-				this.setDeltaMovement(newMotion);
-			}
+		// steer towards the target, at most a quarter block a tick each way
+		if (this.target != null && this.target.isAlive()) {
+			double d = this.distanceToSqr(this.target);
+			double dx = (this.target.getX() - this.getX()) / d;
+			double dy = (this.target.getBoundingBox().minY + this.target.getBbHeight() * 0.6 - this.getY()) / d;
+			double dz = (this.target.getZ() - this.getZ()) / d;
+			Vec3 m = this.getDeltaMovement();
+			this.setDeltaMovement(Mth.clamp(m.x + dx * 0.2, -0.25, 0.25), Mth.clamp(m.y + dy * 0.2, -0.25, 0.25), Mth.clamp(m.z + dz * 0.2, -0.25, 0.25));
 		}
 
 		// Particle trail
@@ -100,8 +97,10 @@ public class GolemOrbEntity extends TCThrowable {
 		super.onHitEntity(hit);
 		Entity entity = hit.getEntity();
 		if (!this.level().isClientSide() && this.level() instanceof ServerLevel sl) {
-			float damage = this.isRed() ? 7.0F : 5.0F;
-			entity.hurtServer(sl, this.damageSources().indirectMagic(this, this.getOwner()), damage);
+			if (this.getOwner() instanceof LivingEntity owner) {
+				float damage = (float) owner.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE) * (this.isRed() ? 1.0F : 0.6F);
+				entity.hurtServer(sl, this.damageSources().indirectMagic(this, owner), damage);
+			}
 		}
 	}
 

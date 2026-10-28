@@ -1803,5 +1803,6 @@
   "block.neothaum.vis_charge_relay": "Vis-Laderelais",
   "block.neothaum.vis_relay": "Visrelais",
   "block.neothaum.energized_aura_node": "Energetisierte Auranodie",
-  "item.neothaum.apprentice_ring": "%s-Ring des Lehrlings"
+  "item.neothaum.apprentice_ring": "%s-Ring des Lehrlings",
+  "block.neothaum.sapping_field": "Sapping Field"
 }

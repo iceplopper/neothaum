@@ -144,6 +144,17 @@ public final class TVClientNetwork {
 				}
 				case 1 -> ctx.client().particleEngine.add(new dev.neothaum.client.fx.TCParticles.Burst(level, src.getX(), src.getY() + 0.45F, src.getZ(),
 					p.value() / 100.0F));
+				case 5 -> dev.neothaum.client.fx.ArcSonicFX.sonic(src);
+				case 6 -> {
+					// PacketFXBlockArc: from the entity to the top of a block (packed in target and value)
+					var bp = net.minecraft.core.BlockPos.of((long) p.target() << 32 | p.value() & 0xFFFFFFFFL);
+					var rand = level.getRandom();
+					boolean portal = src instanceof dev.neothaum.entity.monster.boss.CultistPortalEntity;
+					float r = portal ? 0.5F + rand.nextFloat() * 0.2F : 0.3F - rand.nextFloat() * 0.1F;
+					float b = portal ? 0.0F : 0.5F + rand.nextFloat() * 0.2F;
+					dev.neothaum.client.fx.ArcSonicFX.arcLightning(src.getX(), src.getBoundingBox().minY + src.getBbHeight() / 2.0F, src.getZ(),
+						bp.getX() + 0.5, bp.getY() + 1, bp.getZ() + 0.5, r, 0.0F, b, 0.5F);
+				}
 				default -> {
 				}
 			}

@@ -1802,5 +1802,6 @@
   "block.neothaum.vis_charge_relay": "Вис-заряжатель",
   "block.neothaum.vis_relay": "Вис-канал",
   "block.neothaum.energized_aura_node": "Возбуждённый узел ауры",
-  "item.neothaum.apprentice_ring": "Кольцо подмастерья - %s "
+  "item.neothaum.apprentice_ring": "Кольцо подмастерья - %s ",
+  "block.neothaum.sapping_field": "Sapping Field"
 }

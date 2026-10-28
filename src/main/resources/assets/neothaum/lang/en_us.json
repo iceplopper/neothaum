@@ -2140,5 +2140,6 @@
   "block.neothaum.loot_urn_rare": "Old Urn",
   "block.neothaum.loot_crate_rare": "Abandoned Crate",
   "block.neothaum.obsidian_totem": "Obsidian Totem",
-  "item.neothaum.apprentice_ring": "Apprentices Ring of %s"
+  "item.neothaum.apprentice_ring": "Apprentices Ring of %s",
+  "block.neothaum.sapping_field": "Sapping Field"
 }

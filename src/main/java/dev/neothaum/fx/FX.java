@@ -71,6 +71,8 @@ public final class FX {
 		void nodeBolt(Level level, double x, double y, double z, double x2, double y2, double z2);
 
 		void burst(Level level, double x, double y, double z, float size);
+
+		void arc(double x, double y, double z, double tx, double ty, double tz, float r, float g, float b, float h);
 	}
 
 	private static Impl impl;
@@ -270,6 +272,13 @@ public final class FX {
 	}
 
 	/** ClientProxy.burst: a quick flash of light. */
+	/** ClientProxy.arcLightning. */
+	public static void arc(Level level, double x, double y, double z, double tx, double ty, double tz, float r, float g, float b, float h) {
+		if (impl != null && level.isClientSide()) {
+			impl.arc(x, y, z, tx, ty, tz, r, g, b, h);
+		}
+	}
+
 	public static void burst(Level level, double x, double y, double z, float size) {
 		if (impl != null && level.isClientSide()) {
 			impl.burst(level, x, y, z, size);

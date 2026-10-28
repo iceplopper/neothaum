@@ -45,6 +45,7 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.MIND_SPIDER, MindSpiderRenderer::new);
 		EntityRendererRegistry.register(TVEntities.ELDRITCH_GUARDIAN, EldritchGuardianRenderer::guardian);
 		EntityRendererRegistry.register(TVEntities.GOLEM_ORB, FocusProjectileRenderers.GolemOrbRenderer::new);
+		EntityRendererRegistry.register(TVEntities.ELDRITCH_ORB, FocusProjectileRenderers.EldritchOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.CULTIST_KNIGHT, CultistRenderer::knight);
 		EntityRendererRegistry.register(TVEntities.CULTIST_CLERIC, CultistRenderer::cleric);
 		EntityRendererRegistry.register(TVEntities.CULTIST_LEADER, CultistRenderer::leader);

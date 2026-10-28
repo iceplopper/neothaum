@@ -192,6 +192,10 @@ public final class TVBlocks {
 	public static final Block STATIC_FIELD = register("static_field", dev.neothaum.blocks.StaticFieldBlock::new,
 		BlockBehaviour.Properties.of().replaceable().noCollision().noLootTable().strength(100.0F, 50.0F).noOcclusion().randomTicks()
 			.pushReaction(PushReaction.POPPED), false);
+	/** BlockAiry 11: the Eldritch Warden's sapping field. */
+	public static final Block SAPPING_FIELD = register("sapping_field", dev.neothaum.blocks.SappingFieldBlock::new,
+		BlockBehaviour.Properties.of().replaceable().noCollision().noLootTable().strength(100.0F, 50.0F).noOcclusion().randomTicks().lightLevel(s -> 8)
+			.pushReaction(PushReaction.POPPED), false);
 	/** BlockHole: the portable hole's empty space. */
 	public static final Block EMPTY_SPACE = register("empty_space", dev.neothaum.blocks.HoleBlock::new,
 		BlockBehaviour.Properties.of().noCollision().noLootTable().strength(-1.0F, 6000000.0F).lightLevel(s -> 10).noOcclusion()

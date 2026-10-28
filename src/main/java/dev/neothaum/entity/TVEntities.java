@@ -93,6 +93,9 @@ public final class TVEntities {
 		dev.neothaum.entity.projectile.BottleTaint::new);
 	public static final EntityType<dev.neothaum.entity.projectile.AlumentumEntity> ALUMENTUM = projectile("alumentum",
 		dev.neothaum.entity.projectile.AlumentumEntity::new);
+	/** EntityEldritchOrb: the warden's blast. */
+	public static final EntityType<dev.neothaum.entity.projectile.EldritchOrbEntity> ELDRITCH_ORB = projectile("eldritch_orb",
+		dev.neothaum.entity.projectile.EldritchOrbEntity::new);
 	public static final EntityType<dev.neothaum.entity.projectile.GolemOrbEntity> GOLEM_ORB = projectile("golem_orb",
 		dev.neothaum.entity.projectile.GolemOrbEntity::new);
 	public static final EntityType<dev.neothaum.entity.AspectOrbEntity> ASPECT_ORB = projectile("aspect_orb",

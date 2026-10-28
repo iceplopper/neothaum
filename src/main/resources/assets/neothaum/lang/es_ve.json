@@ -1563,5 +1563,6 @@
   "block.neothaum.vis_charge_relay": "Relé de carga de Vis",
   "block.neothaum.vis_relay": "Relé de Vis",
   "block.neothaum.energized_aura_node": "Nodo de Aura",
-  "item.neothaum.apprentice_ring": "Anillo de Aprendiz de %s"
+  "item.neothaum.apprentice_ring": "Anillo de Aprendiz de %s",
+  "block.neothaum.sapping_field": "Sapping Field"
 }

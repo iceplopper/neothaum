@@ -310,6 +310,11 @@ public final class FXImpl implements FX.Impl {
 	}
 
 	@Override
+	public void arc(double x, double y, double z, double tx, double ty, double tz, float r, float g, float b, float h) {
+		ArcSonicFX.arcLightning(x, y, z, tx, ty, tz, r, g, b, h);
+	}
+
+	@Override
 	public void burst(Level level, double x, double y, double z, float size) {
 		add(new TCParticles.Burst((ClientLevel) level, x, y, z, size));
 	}

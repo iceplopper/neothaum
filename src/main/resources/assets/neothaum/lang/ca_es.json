@@ -1451,5 +1451,6 @@
   "block.neothaum.vis_charge_relay": "Vis Charge Relay",
   "block.neothaum.vis_relay": "Vis Relay",
   "block.neothaum.energized_aura_node": "Node d'Aura",
-  "item.neothaum.apprentice_ring": "Anell de Aprenent de %s"
+  "item.neothaum.apprentice_ring": "Anell de Aprenent de %s",
+  "block.neothaum.sapping_field": "Sapping Field"
 }

@@ -103,6 +103,8 @@ public class NeoThaumClient implements ClientModInitializer {
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.OreScanOverlay::render);
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.ShieldFX::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.render.ShieldFX::tick);
+		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.fx.ArcSonicFX::render);
+		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.ArcSonicFX::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(mc -> dev.neothaum.client.hud.FogFiddle.tick());
 		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
 			if (mc.player != null) {
