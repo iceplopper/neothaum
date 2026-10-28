@@ -526,9 +526,8 @@ public final class WandManager {
 			return true;
 		}
 		level.removeBlock(pos, false);
-		ItemEntity e = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5, new ItemStack(TVItems.THAUMONOMICON));
-		e.setDeltaMovement(0, 0, 0);
-		e.setNoGravity(true);
+		ItemEntity e = dev.neothaum.entity.SpecialItemEntity.create(level, pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5,
+			new ItemStack(TVItems.THAUMONOMICON));
 		level.addFreshEntity(e);
 		TVNetwork.sendBlockSparkle(level, pos, -9999);
 		level.playSound(null, pos, TVSounds.WAND, SoundSource.BLOCKS, 1.0F, 1.0F);

@@ -224,7 +224,7 @@ public abstract class ThaumcraftBoss extends Monster {
 
 	@Override
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
-		this.spawnAtLocation(level, new ItemStack(TVItems.PRIMORDIAL_PEARL), this.getBbHeight() / 2.0F);
+		dev.neothaum.entity.SpecialItemEntity.dropFrom(this, new ItemStack(TVItems.PRIMORDIAL_PEARL), this.getBbHeight() / 2.0F);
 		this.spawnAtLocation(level, new ItemStack(TVItems.LOOT_BAG_RARE), 1.5F);
 	}
 

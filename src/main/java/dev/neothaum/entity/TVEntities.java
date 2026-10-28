@@ -199,6 +199,12 @@ public final class TVEntities {
 		return type;
 	}
 
+	/** EntitySpecialItem: a floating, explosion-proof item drop. */
+	public static final EntityType<SpecialItemEntity> SPECIAL_ITEM = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+		ResourceKey.create(Registries.ENTITY_TYPE, NeoThaum.id("special_item")),
+		EntityType.Builder.<SpecialItemEntity>of(SpecialItemEntity::new, MobCategory.MISC).noLootTable().sized(0.25F, 0.25F).eyeHeight(0.2125F)
+			.clientTrackingRange(6).updateInterval(20).build(ResourceKey.create(Registries.ENTITY_TYPE, NeoThaum.id("special_item"))));
+
 	private static <T extends net.minecraft.world.entity.Entity> EntityType<T> projectile(String name, EntityType.EntityFactory<T> factory) {
 		ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, NeoThaum.id(name));
 		return Registry.register(BuiltInRegistries.ENTITY_TYPE, key,

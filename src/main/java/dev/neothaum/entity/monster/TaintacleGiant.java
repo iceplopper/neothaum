@@ -125,7 +125,8 @@ public class TaintacleGiant extends Taintacle {
 	@Override
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
 		if (level.getEntitiesOfClass(TaintacleGiant.class, this.getBoundingBox().inflate(48.0), e -> e != this && e.isAlive()).isEmpty()) {
-			this.spawnAtLocation(level, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.PRIMORDIAL_PEARL), this.getBbHeight() / 2.0F);
+			dev.neothaum.entity.SpecialItemEntity.dropFrom(this, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.PRIMORDIAL_PEARL),
+				this.getBbHeight() / 2.0F);
 		}
 	}
 }

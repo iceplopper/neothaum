@@ -184,10 +184,9 @@ public class CrucibleBlockEntity extends TVBlockEntity implements dev.neothaum.a
 		do {
 			ItemStack spitout = items.copyWithCount(Math.min(items.getCount(), items.getMaxStackSize()));
 			items.shrink(spitout.getCount());
-			ItemEntity e = new ItemEntity(this.level, this.worldPosition.getX() + 0.5F, this.worldPosition.getY() + 0.71F, this.worldPosition.getZ() + 0.5F,
-				spitout);
+			ItemEntity e = dev.neothaum.entity.SpecialItemEntity.create(this.level, this.worldPosition.getX() + 0.5F, this.worldPosition.getY() + 0.71F,
+				this.worldPosition.getZ() + 0.5F, spitout);
 			e.setDeltaMovement(first ? 0.0 : (rand.nextFloat() - rand.nextFloat()) * 0.01F, 0.1F, first ? 0.0 : (rand.nextFloat() - rand.nextFloat()) * 0.01F);
-			e.addTag("neothaum_crucible_output");
 			e.setPickUpDelay(10);
 			this.level.addFreshEntity(e);
 			first = false;
@@ -195,7 +194,7 @@ public class CrucibleBlockEntity extends TVBlockEntity implements dev.neothaum.a
 	}
 
 	public static boolean isCrucibleOutput(Entity e) {
-		return e.entityTags().contains("neothaum_crucible_output");
+		return e instanceof dev.neothaum.entity.SpecialItemEntity || e.entityTags().contains("neothaum_crucible_output");
 	}
 
 	public CrucibleRecipe findMatchingCrucibleRecipe(Player player, ItemStack lastDrop) {

@@ -23,6 +23,9 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.PRIMAL_ORB, FocusProjectileRenderers.PrimalOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.PRIMAL_ARROW, dev.neothaum.client.render.PrimalArrowRenderer::new);
 		EntityRendererRegistry.register(TVEntities.DART, DartRenderer::new);
+		// EntitySpecialItem renders as an ordinary dropped item
+		EntityRendererRegistry.register(TVEntities.SPECIAL_ITEM,
+			(net.minecraft.client.renderer.entity.EntityRendererProvider) net.minecraft.client.renderer.entity.ItemEntityRenderer::new);
 		EntityRendererRegistry.register(TVEntities.GOLEM_BOBBER, GolemBobberRenderer::new);
 		EntityRendererRegistry.register(TVEntities.BOTTLE_TAINT, ThrownItemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.ALUMENTUM, ThrownItemRenderer::new);

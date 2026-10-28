@@ -274,10 +274,7 @@ public class CultistPortalEntity extends Monster {
 	@Override
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
 		super.dropCustomDeathLoot(level, source, killedByPlayer);
-		var pearl = new net.minecraft.world.entity.item.ItemEntity(level, this.getX(), this.getY() + this.getBbHeight() / 2.0F, this.getZ(),
-			new ItemStack(TVItems.PRIMORDIAL_PEARL));
-		pearl.setDeltaMovement(Vec3.ZERO);
-		level.addFreshEntity(pearl);
+		dev.neothaum.entity.SpecialItemEntity.dropFrom(this, new ItemStack(TVItems.PRIMORDIAL_PEARL), this.getBbHeight() / 2.0F);
 	}
 
 	@Override
