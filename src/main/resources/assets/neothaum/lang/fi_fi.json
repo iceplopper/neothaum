@@ -1319,5 +1319,6 @@
   "block.neothaum.focal_manipulator": "Focal Manipulator",
   "block.neothaum.vis_charge_relay": "Vis Charge Relay",
   "block.neothaum.vis_relay": "Vis Relay",
-  "block.neothaum.energized_aura_node": "Sädesolmu"
+  "block.neothaum.energized_aura_node": "Sädesolmu",
+  "item.neothaum.apprentice_ring": "Apprentices Ring of %s"
 }

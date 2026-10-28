@@ -1802,5 +1802,6 @@
   "block.neothaum.focal_manipulator": "Focal Manipulator",
   "block.neothaum.vis_charge_relay": "Vis Charge Relay",
   "block.neothaum.vis_relay": "Vis Relay",
-  "block.neothaum.energized_aura_node": "Nabitá Aura Node"
+  "block.neothaum.energized_aura_node": "Nabitá Aura Node",
+  "item.neothaum.apprentice_ring": "Učnův prsten %s"
 }

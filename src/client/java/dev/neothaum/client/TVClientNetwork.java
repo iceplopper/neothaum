@@ -113,7 +113,10 @@ public final class TVClientNetwork {
 			var player = ctx.client().player;
 			if (player == null) return;
 			switch (p.eventType()) {
-				case 0 -> player.playSound(TVSounds.HEARTBEAT, 1.0F, 1.0F);
+				case 0 -> {
+					player.playSound(TVSounds.HEARTBEAT, 1.0F, 1.0F);
+					dev.neothaum.client.hud.WarpVisuals.heartbeat();
+				}
 				case 1 -> dev.neothaum.client.hud.FogFiddle.warpFog();
 				case 2 -> dev.neothaum.client.hud.FogFiddle.gaze();
 			}

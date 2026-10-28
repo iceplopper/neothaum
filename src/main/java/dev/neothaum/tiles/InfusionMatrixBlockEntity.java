@@ -213,7 +213,7 @@ public class InfusionMatrixBlockEntity extends TVBlockEntity implements Wandable
 			if (h.value() instanceof InfusionRecipe r && r.matches(components, this.recipeInput, player)) {
 				this.recipeType = 0;
 				this.setRecipe(h.id(), r.components());
-				this.recipeOutput = r.result().create();
+				this.recipeOutput = r.output(this.recipeInput);
 				this.recipeInstability = r.instability();
 				this.recipeEssentia = r.aspects().copy();
 				this.begin(player);

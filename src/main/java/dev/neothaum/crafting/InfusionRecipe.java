@@ -26,23 +26,25 @@ import net.minecraft.world.level.Level;
 
 /**
  * Port of thaumcraft.api.crafting.InfusionRecipe: the central item on the altar's middle pedestal, every component on the surrounding
- * pedestals (no more, no fewer), and the essentia drawn from nearby jars.
+ * pedestals (no more, no fewer), and the essentia drawn from nearby jars. With copy_central the output is the central item itself with the
+ * result's components added (TC4's Object[] {tag, value} outputs: goggles, fortress masks, advanced golems).
  */
 public record InfusionRecipe(String research, int instability, AspectList aspects, Ingredient central, List<Ingredient> components,
-	ItemStackTemplate result) implements Recipe<SingleRecipeInput> {
+	ItemStackTemplate result, boolean copyCentral) implements Recipe<SingleRecipeInput> {
 	public static final MapCodec<InfusionRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 		Codec.STRING.fieldOf("research").forGetter(InfusionRecipe::research),
 		Codec.INT.fieldOf("instability").forGetter(InfusionRecipe::instability),
 		AspectList.CODEC.fieldOf("aspects").forGetter(InfusionRecipe::aspects),
 		Ingredient.CODEC.fieldOf("central").forGetter(InfusionRecipe::central),
 		Ingredient.CODEC.listOf().fieldOf("components").forGetter(InfusionRecipe::components),
-		ItemStackTemplate.CODEC.fieldOf("result").forGetter(InfusionRecipe::result)
+		ItemStackTemplate.CODEC.fieldOf("result").forGetter(InfusionRecipe::result),
+		Codec.BOOL.optionalFieldOf("copy_central", false).forGetter(InfusionRecipe::copyCentral)
 	).apply(i, InfusionRecipe::new));
 	public static final StreamCodec<RegistryFriendlyByteBuf, InfusionRecipe> STREAM_CODEC = StreamCodec.composite(
 		ByteBufCodecs.STRING_UTF8, InfusionRecipe::research, ByteBufCodecs.VAR_INT, InfusionRecipe::instability, AspectList.STREAM_CODEC,
 		InfusionRecipe::aspects, Ingredient.CONTENTS_STREAM_CODEC, InfusionRecipe::central,
 		Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), InfusionRecipe::components, ItemStackTemplate.STREAM_CODEC,
-		InfusionRecipe::result, InfusionRecipe::new);
+		InfusionRecipe::result, ByteBufCodecs.BOOL, InfusionRecipe::copyCentral, InfusionRecipe::new);
 	public static final RecipeSerializer<InfusionRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
 	/** InfusionRecipe.matches. */
@@ -70,6 +72,17 @@ public record InfusionRecipe(String research, int instability, AspectList aspect
 			}
 		}
 		return ii.isEmpty();
+	}
+
+	/** The crafted item for this central item. */
+	public ItemStack output(ItemStack central) {
+		ItemStack r = this.result.create();
+		if (!this.copyCentral) {
+			return r;
+		}
+		ItemStack out = central.copyWithCount(1);
+		out.applyComponents(r.getComponentsPatch());
+		return out;
 	}
 
 	@Override

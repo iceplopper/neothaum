@@ -17,9 +17,9 @@ import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntPr
 /**
  * Config.initLoot: what TC4 slipped into the world's loot chests through ChestGenHooks. Common things (a loot bag, thaumium, amber), uncommon
  * ones (a better bag, mundane baubles, knowledge fragments) and rare ones (the best bag, the Thaumonomicon, thaumium tools, a runic ring, a vis
- * amulet) go into dungeons, temples, mineshafts and strongholds at TC4's weights; the stronghold library also holds knowledge fragments and a
+ * amulet, apprentice's rings) go into dungeons, temples, mineshafts and strongholds at TC4's weights; the stronghold library also holds knowledge fragments and a
  * village smith's chest thaumium. 1.7 chests drew these from the same list as the vanilla loot; here they are a pool of their own, empty half
- * the time, of one to three draws. (TC4 also added apprentice's rings, which are not ported yet.)
+ * the time, of one to three draws.
  */
 public final class TCChestLoot {
 	private record Entry(Item item, int min, int max, int weight) {
@@ -41,7 +41,9 @@ public final class TCChestLoot {
 			new Entry(TVItems.MUNDANE_BELT, 1, umax, u), new Entry(TVItems.KNOWLEDGE_FRAGMENT, 1, umax, u), new Entry(TVItems.LOOT_BAG_RARE, 1, 1, 1),
 			new Entry(TVItems.THAUMONOMICON, 1, 1, 1), new Entry(TVItems.THAUMIUM_SWORD, 1, 1, 1), new Entry(TVItems.THAUMIUM_PICKAXE, 1, 1, 1),
 			new Entry(TVItems.THAUMIUM_AXE, 1, 1, 1), new Entry(TVItems.THAUMIUM_HOE, 1, 1, 1), new Entry(TVItems.RING_OF_PROTECTION, 1, 1, 1),
-			new Entry(TVItems.AMULET_OF_VIS_STORAGE, 1, 1, 1));
+			new Entry(TVItems.AMULET_OF_VIS_STORAGE, 1, 1, 1), new Entry(TVItems.APPRENTICE_RING_AER, 1, 1, 1),
+			new Entry(TVItems.APPRENTICE_RING_TERRA, 1, 1, 1), new Entry(TVItems.APPRENTICE_RING_IGNIS, 1, 1, 1), new Entry(TVItems.APPRENTICE_RING_AQUA, 1, 1, 1),
+			new Entry(TVItems.APPRENTICE_RING_ORDO, 1, 1, 1), new Entry(TVItems.APPRENTICE_RING_PERDITIO, 1, 1, 1));
 	}
 
 	private static LootPool.Builder pool(List<Entry> entries) {

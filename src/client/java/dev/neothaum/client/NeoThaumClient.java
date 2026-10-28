@@ -187,6 +187,8 @@ public class NeoThaumClient implements ClientModInitializer {
 		registerTints();
 		net.minecraft.client.color.item.ItemTintSources.ID_MAPPER.put(NeoThaum.id("aspect"), dev.neothaum.client.render.AspectTint.MAP_CODEC);
 
+		HudElementRegistry.addFirst(NeoThaum.id("warp_vignette"), dev.neothaum.client.hud.WarpVisuals::render);
+		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.hud.WarpVisuals::tick);
 		HudElementRegistry.addLast(NeoThaum.id("wand_dial"), WandHud::render);
 		HudElementRegistry.addLast(NeoThaum.id("focus_radial"), dev.neothaum.client.hud.FocusRadial::render);
 		dev.neothaum.client.hud.FocusRadial.init();

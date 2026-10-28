@@ -1,0 +1,26 @@
+{
+  "type": "neothaum:infusion",
+  "research": "MASKANGRYGHOST",
+  "instability": 8,
+  "aspects": {
+    "perditio": 64,
+    "mortuus": 64,
+    "tutamen": 16
+  },
+  "central": "neothaum:thaumium_fortress_helm",
+  "components": [
+    "minecraft:bone_meal",
+    "minecraft:iron_ingot",
+    "minecraft:leather",
+    "minecraft:poisonous_potato",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:iron_ingot"
+  ],
+  "result": {
+    "id": "neothaum:thaumium_fortress_helm",
+    "components": {
+      "neothaum:mask": 1
+    }
+  },
+  "copy_central": true
+}

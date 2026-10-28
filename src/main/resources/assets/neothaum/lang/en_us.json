@@ -2104,11 +2104,6 @@
   "golem.traits.stone": "Heavy, Armored, Fire resistant",
   "golem.traits.iron": "Very Heavy, Armored, Fire resistant",
   "golem.traits.thaumium": "Heavy, Armored, Fire resistant, Resilient",
-  "tc.research_name.GOLEMCOPPER": "Copper Golems",
-  "tc.research_text.GOLEMCOPPER": "Conductive automatons",
-  "tc.research_page.GOLEMCOPPER.1": "Copper has long been revered for its supreme conductivity to both lightning and primal vis. By fusing copper with the animating spark of Golemancy, you have created an automaton that interacts with the arcane and mundane mechanisms around it with unparalleled affinity.<BR>§l§nCopper Golem Attributes§r<BR>§lDurability:§r Above Average<BR>§lStrength:§r Low<BR>§lSelf-repair:§r Lightning Grounding<BR>§lCarry Limit:§r 8<BR>§lSpeed:§r Fast (Declines with oxidation)<BR>§lUpgrades:§r 2",
-  "tc.research_page.GOLEMCOPPER.2": "Exposure to the open air causes the copper golem to oxidize over time through four stages: Unaffected, Exposed, Weathered, and fully Oxidized. As verdigris blankets its joints, its movements become more ponderous.<BR>The golem may be preserved against weathering by rubbing it with honeycomb, though this wax layer will eventually erode. For a permanent seal, anointing the automaton with Magic Tallow creates an imperishable mystical barrier.<BR>Any oxidation or wax can be scraped clean with an axe.",
-  "tc.research_page.GOLEMCOPPER.3": "When fitted with a Use Core, copper golems display an irresistible compulsion toward mechanical switches, periodically pressing nearby buttons and tripping levers to maintain alchemical circuits.<BR>Furthermore, the conductive rod atop its cranium acts as a static lightning rod. During thunderstorms or following a lightning strike, the supercharged automaton discharges its excess potentia into nearby wands and pedestals, replenishing their vis reserves while grounding harmful flux.",
   "item.neothaum.golem_copper": "Copper Golem",
   "entity.neothaum.cultist_leader": "Crimson Praetor",
   "item.neothaum.cultist_leader_spawn_egg": "Spawn Crimson Praetor",
@@ -2144,5 +2139,6 @@
   "block.neothaum.loot_crate_uncommon": "Abandoned Crate",
   "block.neothaum.loot_urn_rare": "Old Urn",
   "block.neothaum.loot_crate_rare": "Abandoned Crate",
-  "block.neothaum.obsidian_totem": "Obsidian Totem"
+  "block.neothaum.obsidian_totem": "Obsidian Totem",
+  "item.neothaum.apprentice_ring": "Apprentices Ring of %s"
 }

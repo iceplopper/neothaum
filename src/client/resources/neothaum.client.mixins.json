@@ -6,6 +6,7 @@
 		"ContainerScreenAccessor",
 		"FirstPersonThaumometerMixin",
 		"FogRendererMixin",
+		"GameRendererPostEffectsMixin",
 		"SpecialModelRenderersAccessor"
 	],
 	"injectors": {

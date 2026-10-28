@@ -1,6 +1,6 @@
 {
   "type": "neothaum:crucible",
-  "research": "GOLEMCOPPER",
+  "research": "GOLEMCLAY",
   "catalyst": "minecraft:copper_block",
   "aspects": {
     "humanus": 4,

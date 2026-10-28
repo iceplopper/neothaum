@@ -41,7 +41,10 @@ public final class ArcaneCraftingManager {
 		return inv.getItem(row + column * 3);
 	}
 
-	/** Normal crafting first (the worktable is also a crafting table), then arcane recipes, then the wand recipe. */
+	/**
+	 * Normal crafting first (the worktable is also a crafting table), then arcane recipes, then the wand recipe. The SCEPTRE recipes are only
+	 * the book's examples (TC4 never registered them); ArcaneSceptreRecipe makes every sceptre.
+	 */
 	public static Match find(Container inv, Player player, Level level) {
 		CraftingInput in = input(inv);
 		if (level instanceof ServerLevel sl) {
@@ -50,19 +53,23 @@ public final class ArcaneCraftingManager {
 				return new Match(normal.get().value().assemble(in), new AspectList(), false);
 			}
 			for (RecipeHolder<?> h : sl.getServer().getRecipeManager().getRecipes()) {
-				if (h.value() instanceof ArcaneRecipe ar && ResearchManager.isResearchComplete(player, ar.research()) && ar.matches(in, level)) {
+				if (h.value() instanceof ArcaneRecipe ar && !isExample(ar) && ResearchManager.isResearchComplete(player, ar.research()) && ar.matches(in, level)) {
 					return new Match(ar.assemble(in), ar.aspects(), true);
 				}
 			}
 		} else {
 			for (ArcaneRecipe ar : clientArcane) {
-				if (ResearchManager.isResearchComplete(player, ar.research()) && ar.matches(in, level)) {
+				if (!isExample(ar) && ResearchManager.isResearchComplete(player, ar.research()) && ar.matches(in, level)) {
 					return new Match(ar.assemble(in), ar.aspects(), true);
 				}
 			}
 		}
 		Match wand = wandRecipe(inv, player);
 		return wand.result().isEmpty() ? sceptreRecipe(inv, player) : wand;
+	}
+
+	private static boolean isExample(ArcaneRecipe ar) {
+		return "SCEPTRE".equals(ar.research());
 	}
 
 	/** ArcaneSceptreRecipe: three matching caps around a rod with a primal charm in the top right; costs half again a wand's vis. */

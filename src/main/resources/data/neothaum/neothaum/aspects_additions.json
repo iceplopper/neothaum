@@ -78,6 +78,42 @@
       "aspects": {
         "metallum": 1
       }
+    },
+    {
+      "item": "neothaum:apprentice_ring_aer",
+      "aspects": {
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "neothaum:apprentice_ring_terra",
+      "aspects": {
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "neothaum:apprentice_ring_ignis",
+      "aspects": {
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "neothaum:apprentice_ring_aqua",
+      "aspects": {
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "neothaum:apprentice_ring_ordo",
+      "aspects": {
+        "praecantatio": 5
+      }
+    },
+    {
+      "item": "neothaum:apprentice_ring_perditio",
+      "aspects": {
+        "praecantatio": 5
+      }
     }
   ],
   "entities": []

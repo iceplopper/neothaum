@@ -1,0 +1,26 @@
+{
+  "type": "neothaum:infusion",
+  "research": "MASKSIPPINGFIEND",
+  "instability": 8,
+  "aspects": {
+    "exanimis": 64,
+    "victus": 64,
+    "tutamen": 16
+  },
+  "central": "neothaum:thaumium_fortress_helm",
+  "components": [
+    "minecraft:red_dye",
+    "minecraft:iron_ingot",
+    "minecraft:leather",
+    "minecraft:ghast_tear",
+    "minecraft:milk_bucket",
+    "minecraft:iron_ingot"
+  ],
+  "result": {
+    "id": "neothaum:thaumium_fortress_helm",
+    "components": {
+      "neothaum:mask": 2
+    }
+  },
+  "copy_central": true
+}

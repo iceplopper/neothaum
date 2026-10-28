@@ -205,6 +205,13 @@ public final class TVItems {
 	// ItemBaubleBlanks
 	public static final Item MUNDANE_AMULET = register("mundane_amulet", p -> new BaubleBlankItem(BaubleType.AMULET, p), new Item.Properties().stacksTo(1));
 	public static final Item MUNDANE_RING = register("mundane_ring", p -> new BaubleBlankItem(BaubleType.RING, p), new Item.Properties().stacksTo(1));
+	/** ItemBaubleBlanks 3-8: the Apprentice's Rings, one per primal aspect. */
+	public static final Item APPRENTICE_RING_AER = register("apprentice_ring_aer", p -> new dev.neothaum.items.ApprenticeRingItem(dev.neothaum.api.aspects.Aspect.AIR, p), new Item.Properties().stacksTo(1));
+	public static final Item APPRENTICE_RING_TERRA = register("apprentice_ring_terra", p -> new dev.neothaum.items.ApprenticeRingItem(dev.neothaum.api.aspects.Aspect.EARTH, p), new Item.Properties().stacksTo(1));
+	public static final Item APPRENTICE_RING_IGNIS = register("apprentice_ring_ignis", p -> new dev.neothaum.items.ApprenticeRingItem(dev.neothaum.api.aspects.Aspect.FIRE, p), new Item.Properties().stacksTo(1));
+	public static final Item APPRENTICE_RING_AQUA = register("apprentice_ring_aqua", p -> new dev.neothaum.items.ApprenticeRingItem(dev.neothaum.api.aspects.Aspect.WATER, p), new Item.Properties().stacksTo(1));
+	public static final Item APPRENTICE_RING_ORDO = register("apprentice_ring_ordo", p -> new dev.neothaum.items.ApprenticeRingItem(dev.neothaum.api.aspects.Aspect.ORDER, p), new Item.Properties().stacksTo(1));
+	public static final Item APPRENTICE_RING_PERDITIO = register("apprentice_ring_perditio", p -> new dev.neothaum.items.ApprenticeRingItem(dev.neothaum.api.aspects.Aspect.ENTROPY, p), new Item.Properties().stacksTo(1));
 	public static final Item MUNDANE_BELT = register("mundane_belt", p -> new BaubleBlankItem(BaubleType.BELT, p), new Item.Properties().stacksTo(1));
 
 	// ItemRingRunic, ItemAmuletRunic, ItemGirdleRunic, ItemAmuletVis, ItemGirdleHover

@@ -1,0 +1,22 @@
+{
+  "type": "neothaum:infusion",
+  "research": "HELMGOGGLES",
+  "instability": 5,
+  "aspects": {
+    "sensus": 32,
+    "auram": 16,
+    "tutamen": 16
+  },
+  "central": "neothaum:thaumium_fortress_helm",
+  "components": [
+    "minecraft:slime_ball",
+    "neothaum:goggles_of_revealing"
+  ],
+  "result": {
+    "id": "neothaum:thaumium_fortress_helm",
+    "components": {
+      "neothaum:goggles": true
+    }
+  },
+  "copy_central": true
+}

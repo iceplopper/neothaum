@@ -1801,5 +1801,6 @@
   "block.neothaum.focal_manipulator": "Manipulador de Focos",
   "block.neothaum.vis_charge_relay": "Relé de Carga de Vis",
   "block.neothaum.vis_relay": "Relé de Vis",
-  "block.neothaum.energized_aura_node": "Nodo de Aura Energizado"
+  "block.neothaum.energized_aura_node": "Nodo de Aura Energizado",
+  "item.neothaum.apprentice_ring": "Anillo de Aprendiz de %s"
 }

@@ -1802,5 +1802,6 @@
   "block.neothaum.focal_manipulator": "Fokusmanipulator",
   "block.neothaum.vis_charge_relay": "Vis-Laderelais",
   "block.neothaum.vis_relay": "Visrelais",
-  "block.neothaum.energized_aura_node": "Energetisierte Auranodie"
+  "block.neothaum.energized_aura_node": "Energetisierte Auranodie",
+  "item.neothaum.apprentice_ring": "%s-Ring des Lehrlings"
 }

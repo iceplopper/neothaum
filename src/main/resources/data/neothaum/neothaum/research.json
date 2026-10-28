@@ -838,6 +838,47 @@
       "flags": []
     },
     {
+      "key": "SCEPTRE",
+      "category": "THAUMATURGY",
+      "aspects": {
+        "instrumentum": 6,
+        "fabrico": 6,
+        "arbor": 6,
+        "praecantatio": 9
+      },
+      "col": 0,
+      "row": 4,
+      "complexity": 3,
+      "icon": {
+        "item": "neothaum:wand",
+        "components": {
+          "neothaum:wand_cap": "thaumium",
+          "neothaum:wand_rod": "silverwood",
+          "neothaum:sceptre": true
+        }
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.SCEPTRE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:sceptre1",
+            "neothaum:sceptre2",
+            "neothaum:sceptre3"
+          ]
+        }
+      ],
+      "parents": [
+        "ROD_silverwood"
+      ],
+      "flags": [
+        "concealed"
+      ]
+    },
+    {
       "key": "ROD_greatwood_staff",
       "category": "THAUMATURGY",
       "aspects": {
@@ -3677,7 +3718,10 @@
           "text": "tc.research_page.HELMGOGGLES.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:helmgoggles"
+          ]
         }
       ],
       "parents_hidden": [
@@ -3711,7 +3755,10 @@
           "text": "tc.research_page.MASKGRINNINGDEVIL.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:maskgrinningdevil"
+          ]
         }
       ],
       "parents": [
@@ -3742,7 +3789,10 @@
           "text": "tc.research_page.MASKANGRYGHOST.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:maskangryghost"
+          ]
         }
       ],
       "parents": [
@@ -3774,7 +3824,10 @@
           "text": "tc.research_page.MASKSIPPINGFIEND.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:masksippingfiend"
+          ]
         }
       ],
       "parents": [
@@ -5556,51 +5609,6 @@
       ]
     },
     {
-      "key": "GOLEMCOPPER",
-      "category": "GOLEMANCY",
-      "aspects": {
-        "spiritus": 6,
-        "motus": 6,
-        "metallum": 4,
-        "potentia": 4,
-        "machina": 4,
-        "permutatio": 3
-      },
-      "col": 0,
-      "row": 8,
-      "complexity": 2,
-      "icon": {
-        "item": "neothaum:golem_copper"
-      },
-      "pages": [
-        {
-          "type": "text",
-          "text": "tc.research_page.GOLEMCOPPER.1"
-        },
-        {
-          "type": "text",
-          "text": "tc.research_page.GOLEMCOPPER.2"
-        },
-        {
-          "type": "recipe",
-          "recipes": [
-            "neothaum:golemcopper"
-          ]
-        },
-        {
-          "type": "text",
-          "text": "tc.research_page.GOLEMCOPPER.3"
-        }
-      ],
-      "parents": [
-        "GOLEMCLAY"
-      ],
-      "flags": [
-        "secondary",
-        "concealed"
-      ]
-    },
-    {
       "key": "GOLEMFLESH",
       "category": "GOLEMANCY",
       "aspects": {
@@ -6477,7 +6485,10 @@
           "text": "tc.research_page.ADVANCEDGOLEM.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:advancedgolem"
+          ]
         }
       ],
       "parents": [

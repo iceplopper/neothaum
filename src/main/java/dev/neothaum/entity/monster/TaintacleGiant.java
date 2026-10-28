@@ -20,8 +20,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * EntityTaintacleGiant: a towering taintacle guarding the tainted land, with a boss bar. Huge blows are capped at 35 and the first one enrages
- * it, healing and strengthening it for ten seconds. It always spawns a champion. (TC4 also dropped a primordial pearl when the last of them
- * died.)
+ * it, healing and strengthening it for ten seconds. It always spawns a champion, and the last of a group to die drops a primordial pearl.
  */
 public class TaintacleGiant extends Taintacle {
 	private static final EntityDataAccessor<Integer> ANGER = SynchedEntityData.defineId(TaintacleGiant.class, EntityDataSerializers.INT);
@@ -125,5 +124,8 @@ public class TaintacleGiant extends Taintacle {
 
 	@Override
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
+		if (level.getEntitiesOfClass(TaintacleGiant.class, this.getBoundingBox().inflate(48.0), e -> e != this && e.isAlive()).isEmpty()) {
+			this.spawnAtLocation(level, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.PRIMORDIAL_PEARL), this.getBbHeight() / 2.0F);
+		}
 	}
 }

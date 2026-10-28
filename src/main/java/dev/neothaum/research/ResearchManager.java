@@ -105,8 +105,12 @@ public final class ResearchManager {
 	private static ItemStack stackFrom(JsonObject o) {
 		if (o.has("components") && o.get("item").getAsString().equals("neothaum:wand")) {
 			JsonObject c = o.getAsJsonObject("components");
-			return dev.neothaum.items.WandItem.createFull(TVItems.WAND, c.get("neothaum:wand_cap").getAsString(),
+			ItemStack w = dev.neothaum.items.WandItem.createFull(TVItems.WAND, c.get("neothaum:wand_cap").getAsString(),
 				c.get("neothaum:wand_rod").getAsString());
+			if (c.has("neothaum:sceptre")) {
+				w.set(dev.neothaum.registry.TVComponents.SCEPTRE, c.get("neothaum:sceptre").getAsBoolean());
+			}
+			return w;
 		}
 		if (o.has("item")) {
 			var item = BuiltInRegistries.ITEM.getOptional(Identifier.parse(o.get("item").getAsString()));

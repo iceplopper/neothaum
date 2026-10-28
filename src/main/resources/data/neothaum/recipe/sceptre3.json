@@ -1,0 +1,30 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "SCEPTRE",
+  "aspects": {
+    "aer": 81,
+    "terra": 81,
+    "ignis": 81,
+    "aqua": 81,
+    "ordo": 81,
+    "perditio": 81
+  },
+  "pattern": [
+    " TF",
+    " RT",
+    "T  "
+  ],
+  "key": {
+    "T": "neothaum:thaumium_cap",
+    "R": "neothaum:silverwood_rod",
+    "F": "neothaum:primal_charm"
+  },
+  "result": {
+    "id": "neothaum:wand",
+    "components": {
+      "neothaum:wand_cap": "thaumium",
+      "neothaum:wand_rod": "silverwood",
+      "neothaum:sceptre": true
+    }
+  }
+}

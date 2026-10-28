@@ -1801,5 +1801,6 @@
   "block.neothaum.focal_manipulator": "Manipulateur focal",
   "block.neothaum.vis_charge_relay": "Relais de recharge de Vis",
   "block.neothaum.vis_relay": "Relais de Vis",
-  "block.neothaum.energized_aura_node": "Noeud d'aura énergétique"
+  "block.neothaum.energized_aura_node": "Noeud d'aura énergétique",
+  "item.neothaum.apprentice_ring": "Anneau d'apprenti de %s"
 }

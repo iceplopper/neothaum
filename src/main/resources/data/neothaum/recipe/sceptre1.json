@@ -1,0 +1,30 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "SCEPTRE",
+  "aspects": {
+    "aer": 1,
+    "terra": 1,
+    "ignis": 1,
+    "aqua": 1,
+    "ordo": 1,
+    "perditio": 1
+  },
+  "pattern": [
+    " TF",
+    " RT",
+    "T  "
+  ],
+  "key": {
+    "T": "neothaum:iron_cap",
+    "R": "minecraft:stick",
+    "F": "neothaum:primal_charm"
+  },
+  "result": {
+    "id": "neothaum:wand",
+    "components": {
+      "neothaum:wand_cap": "iron",
+      "neothaum:wand_rod": "wood",
+      "neothaum:sceptre": true
+    }
+  }
+}

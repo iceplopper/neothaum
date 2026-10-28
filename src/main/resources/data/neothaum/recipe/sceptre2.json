@@ -1,0 +1,30 @@
+{
+  "type": "neothaum:arcane_shaped",
+  "research": "SCEPTRE",
+  "aspects": {
+    "aer": 13,
+    "terra": 13,
+    "ignis": 13,
+    "aqua": 13,
+    "ordo": 13,
+    "perditio": 13
+  },
+  "pattern": [
+    " TF",
+    " RT",
+    "T  "
+  ],
+  "key": {
+    "T": "neothaum:gold_cap",
+    "R": "neothaum:greatwood_rod",
+    "F": "neothaum:primal_charm"
+  },
+  "result": {
+    "id": "neothaum:wand",
+    "components": {
+      "neothaum:wand_cap": "gold",
+      "neothaum:wand_rod": "greatwood",
+      "neothaum:sceptre": true
+    }
+  }
+}

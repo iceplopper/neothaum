@@ -1,0 +1,25 @@
+{
+  "type": "neothaum:infusion",
+  "research": "ADVANCEDGOLEM",
+  "instability": 3,
+  "aspects": {
+    "cognitio": 8,
+    "sensus": 8,
+    "victus": 8
+  },
+  "central": "#neothaum:golem_placers",
+  "components": [
+    "minecraft:redstone",
+    "minecraft:glowstone_dust",
+    "minecraft:gunpowder",
+    "neothaum:warded_jar",
+    "neothaum:zombie_brain"
+  ],
+  "result": {
+    "id": "neothaum:golem_straw",
+    "components": {
+      "neothaum:golem_advanced": true
+    }
+  },
+  "copy_central": true
+}

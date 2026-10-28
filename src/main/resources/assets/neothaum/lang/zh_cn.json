@@ -1796,5 +1796,6 @@
   "block.neothaum.focal_manipulator": "核心镶饰台",
   "block.neothaum.vis_charge_relay": "魔力充能中继器",
   "block.neothaum.vis_relay": "魔力中继器",
-  "block.neothaum.energized_aura_node": "充能灵气节点"
+  "block.neothaum.energized_aura_node": "充能灵气节点",
+  "item.neothaum.apprentice_ring": "%s之学徒指环"
 }
