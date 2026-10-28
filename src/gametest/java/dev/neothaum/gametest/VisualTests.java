@@ -88,6 +88,12 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("audit")) {
 					auditScene(ctx, server, sp);
 				}
+				if (scenes.contains("bore")) {
+					boreScene(ctx, server);
+				}
+				if (scenes.contains("harness")) {
+					harnessScene(ctx, server);
+				}
 				if (scenes.contains("golemai")) {
 					golemAiScene(ctx, server);
 				}
@@ -1976,6 +1982,74 @@ public class VisualTests implements FabricClientGameTest {
 		} catch (Throwable t) {
 			ctx.waitTicks(20);
 		}
+	}
+
+	/** The Thaumostatic Harness on the player's back, idle and then hovering, seen from behind. */
+	private static void harnessScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode survival @a", "time set noon", "weather clear", "fill -6 117 -6 6 125 6 air",
+			"fill -6 116 -6 6 116 6 stone", "tp @a 0 117 0 0 0", "item replace entity @a armor.chest with neothaum:thaumostatic_harness"}) {
+			server.runCommand(cmd);
+		}
+		ctx.runOnClient(mc -> mc.options.setCameraType(net.minecraft.client.CameraType.THIRD_PERSON_BACK));
+		ctx.waitTicks(20);
+		shot(ctx, "harness_idle");
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			p.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST).set(dev.neothaum.registry.TVComponents.HARNESS_ACTIVE, true);
+		});
+		ctx.waitTicks(10);
+		shot(ctx, "harness_hover");
+		ctx.runOnClient(mc -> mc.options.setCameraType(net.minecraft.client.CameraType.FIRST_PERSON));
+	}
+
+	/** An arcane bore on its base boring north into stone, with a chest for its spoils and an arcane lamp to light the way. */
+	private static void boreScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "fill -8 112 -16 8 125 8 air", "fill -8 111 -16 8 111 8 stone",
+			"fill -6 112 -14 6 124 -3 stone", "fill -6 112 -14 6 124 -3 iron_ore replace stone", "fill -1 116 -14 1 120 -3 stone",
+			"setblock 0 117 0 neothaum:arcane_bore_base[facing=east]", "setblock 0 118 0 neothaum:arcane_bore[facing=north,base_dir=down]",
+			"setblock 1 117 0 chest", "setblock -1 117 0 redstone_block", "setblock 0 117 1 neothaum:arcane_lamp", "tp @a 4 120 6 150 20"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			if (level.getBlockEntity(new net.minecraft.core.BlockPos(0, 118, 0)) instanceof dev.neothaum.tiles.ArcaneBoreBlockEntity bore) {
+				bore.setOrientation(net.minecraft.core.Direction.NORTH, true);
+				bore.setItem(0, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.FOCUS_EXCAVATION));
+				bore.setItem(1, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_PICKAXE));
+			}
+		});
+		for (int r = 1; r <= 2; r++) {
+			ctx.waitTicks(400);
+			int round = r;
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				int dug = 0;
+				int lights = 0;
+				for (var p : net.minecraft.core.BlockPos.betweenClosed(-6, 112, -14, 6, 124, -3)) {
+					if (level.getBlockState(p).isAir()) {
+						dug++;
+					}
+					if (level.getBlockState(p).is(dev.neothaum.registry.TVBlocks.LAMP_LIGHT)) {
+						lights++;
+					}
+				}
+				StringBuilder sb = new StringBuilder();
+				if (level.getBlockEntity(new net.minecraft.core.BlockPos(1, 117, 0)) instanceof net.minecraft.world.Container c) {
+					for (int i = 0; i < c.getContainerSize(); i++) {
+						if (!c.getItem(i).isEmpty()) {
+							sb.append(c.getItem(i).getCount()).append(' ').append(c.getItem(i).getItem()).append(", ");
+						}
+					}
+				}
+				var bore = (dev.neothaum.tiles.ArcaneBoreBlockEntity) level.getBlockEntity(new net.minecraft.core.BlockPos(0, 118, 0));
+				NeoThaum.LOGGER.info("[visual-test] bore {}: blocks dug={} lamp lights={} chest=[{}] pick damage={}", round, dug, lights, sb,
+					bore.getItem(1).getDamageValue());
+				NeoThaum.LOGGER.info("[visual-test] bore {}: rot {} {} tar {} {} toDig={} dig={} focus={} pick={} power={} valid={} orient={}", round, bore.rotX,
+					bore.rotZ, bore.tarX, bore.tarZ, bore.toDig, bore.digPos, bore.hasFocus, bore.hasPickaxe, bore.isGettingPower(), bore.areItemsValid(),
+					bore.orientation);
+			});
+		}
+		shot(ctx, "bore");
 	}
 
 	/** One golem per core, each at a little workplace of its own, and what each has done after a while. */

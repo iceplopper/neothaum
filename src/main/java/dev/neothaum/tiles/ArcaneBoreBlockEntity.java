@@ -9,6 +9,8 @@ import dev.neothaum.items.equipment.ElementalPickaxeItem;
 import dev.neothaum.items.foci.ExcavationFocusItem;
 import dev.neothaum.menu.ArcaneBoreMenu;
 import dev.neothaum.registry.TVBlockEntities;
+import dev.neothaum.registry.TVBlocks;
+import dev.neothaum.api.wands.FocusUpgradeType;
 import dev.neothaum.registry.TVItems;
 import dev.neothaum.registry.TVSounds;
 import java.util.List;
@@ -189,7 +191,7 @@ public class ArcaneBoreBlockEntity extends TVBlockEntity implements WorldlyConta
 
 	public boolean isGettingPower() {
 		if (this.level == null) return false;
-		BlockPos basePos = this.worldPosition.relative(this.baseOrientation.getOpposite());
+		BlockPos basePos = this.worldPosition.relative(this.baseOrientation);
 		return this.level.hasNeighborSignal(this.worldPosition) || this.level.hasNeighborSignal(basePos);
 	}
 
@@ -227,7 +229,7 @@ public class ArcaneBoreBlockEntity extends TVBlockEntity implements WorldlyConta
 		if (bore.speedyTime < 20.0F) {
 			bore.speedyTime += VisNetHandler.drainVis(level, pos, Aspect.ENTROPY, 100) / 5.0F;
 			if (bore.speedyTime < 20.0F) {
-				BlockPos basePos = pos.relative(bore.baseOrientation.getOpposite());
+				BlockPos basePos = pos.relative(bore.baseOrientation);
 				if (level.getBlockEntity(basePos) instanceof ArcaneBoreBaseBlockEntity base && base.drawEssentia()) {
 					bore.speedyTime += 20.0F;
 				}
@@ -265,122 +267,167 @@ public class ArcaneBoreBlockEntity extends TVBlockEntity implements WorldlyConta
 	}
 
 	private void digBlock(Level level, BlockPos pos) {
-		if (this.rotX != this.tarX || this.rotZ != this.tarZ) {
+		if (this.rotX != this.tarX || this.rotZ != this.tarZ || !(level instanceof ServerLevel sl)) {
 			return;
 		}
 		if (--this.count > 0) {
 			return;
 		}
-
-		if (this.toDig && this.digPos != null && !this.digPos.equals(BlockPos.ZERO)) {
+		if (this.toDig) {
 			this.toDig = false;
 			BlockState targetState = level.getBlockState(this.digPos);
-			if (!targetState.isAir() && targetState.getDestroySpeed(level, this.digPos) >= 0.0F) {
-				BlockPos basePos = pos.relative(this.baseOrientation.getOpposite());
-				ArcaneBoreBaseBlockEntity base = level.getBlockEntity(basePos) instanceof ArcaneBoreBaseBlockEntity b ? b : null;
-
-				if (level instanceof ServerLevel sl) {
-					List<ItemStack> drops = Block.getDrops(targetState, sl, this.digPos, level.getBlockEntity(this.digPos));
-					// Native clusters conversion if applicable
-					boolean nativeClusters = this.hasNativeClusters();
-					for (ItemStack drop : drops) {
-						ItemStack processedDrop = drop;
-						if (nativeClusters) {
-							processedDrop = convertNativeClusters(drop);
-						}
-						if (base != null) {
-							base.ejectItem(processedDrop);
-						} else {
-							Block.popResource(level, pos, processedDrop);
-						}
-					}
-					// Play break sound and particles
-					SoundType st = targetState.getSoundType();
-					level.playSound(null, this.digPos, st.getBreakSound(), SoundSource.BLOCKS, (st.getVolume() + 1.0F) / 2.0F, st.getPitch() * 0.8F);
-					sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, targetState),
-						this.digPos.getX() + 0.5, this.digPos.getY() + 0.5, this.digPos.getZ() + 0.5, 10, 0.3, 0.3, 0.3, 0.05);
-
-					level.destroyBlock(this.digPos, false);
-				}
-
-				// Damage pickaxe
-				ItemStack pick = this.items.get(1);
-				if (!pick.isEmpty() && level instanceof ServerLevel sl) {
-					pick.hurtAndBreak(1, sl, null, item -> this.items.set(1, ItemStack.EMPTY));
-					this.setChanged();
-				}
-
-				if (this.speedyTime > 0.0F) {
-					this.speedyTime--;
-				}
+			if (!targetState.isAir()) {
+				this.harvest(sl, pos, targetState);
+			}
+			// the bore's own pickaxe wears with every block
+			ItemStack pick = this.items.get(1);
+			if (!pick.isEmpty()) {
+				pick.hurtAndBreak(1, sl, null, item -> this.items.set(1, ItemStack.EMPTY));
+				this.setChanged();
+			}
+			level.removeBlock(this.digPos, false);
+			this.lightTunnel(sl, pos);
+			if (this.speedyTime > 0.0F) {
+				this.speedyTime--;
 			}
 		}
-
 		this.findNextBlockToDig(level, pos);
 	}
 
-	private static ItemStack convertNativeClusters(ItemStack drop) {
-		if (drop.is(net.minecraft.world.item.Items.RAW_IRON)) {
-			return new ItemStack(TVItems.NATIVE_IRON_CLUSTER, drop.getCount());
-		} else if (drop.is(net.minecraft.world.item.Items.RAW_GOLD)) {
-			return new ItemStack(TVItems.NATIVE_GOLD_CLUSTER, drop.getCount());
-		} else if (drop.is(net.minecraft.world.item.Items.RAW_COPPER)) {
-			return new ItemStack(TVItems.NATIVE_COPPER_CLUSTER, drop.getCount());
+	/**
+	 * The dig: drops as the pickaxe (or the focus's treasure upgrade, whichever is luckier) would give, or the block itself with silk touch
+	 * from either; any loose items about the spot are swept up too. An elemental pickaxe or a dowsing focus can turn ore into native clusters
+	 * (20% plus 7.5% per fortune). Everything goes into the container the base faces, or is spat out beside it.
+	 */
+	private void harvest(ServerLevel sl, BlockPos pos, BlockState targetState) {
+		var enchants = sl.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+		var silkHolder = enchants.getOrThrow(Enchantments.SILK_TOUCH);
+		var fortuneHolder = enchants.getOrThrow(Enchantments.FORTUNE);
+		ItemStack pick = this.items.get(1);
+		ItemStack focus = this.items.get(0);
+		int tfortune = this.fortune;
+		boolean canSilk = targetState.getBlock().asItem() != net.minecraft.world.item.Items.AIR;
+		boolean silktouch = canSilk && (EnchantmentHelper.getItemEnchantmentLevel(silkHolder, pick) > 0
+			|| focus.getItem() instanceof ExcavationFocusItem ef && ef.isUpgradedWith(focus, FocusUpgradeType.silktouch));
+		if (silktouch) {
+			tfortune = 0;
 		}
-		return drop;
+		sl.playSound(null, this.digPos, targetState.getSoundType().getBreakSound(), SoundSource.BLOCKS, (targetState.getSoundType().getVolume() + 1.0F) / 2.0F,
+			targetState.getSoundType().getPitch() * 0.8F);
+		sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, targetState), this.digPos.getX() + 0.5, this.digPos.getY() + 0.5,
+			this.digPos.getZ() + 0.5, 10, 0.3, 0.3, 0.3, 0.05);
+		List<ItemStack> items = new java.util.ArrayList<>();
+		if (silktouch) {
+			items.add(new ItemStack(targetState.getBlock()));
+		} else {
+			ItemStack tool = pick.isEmpty() ? new ItemStack(net.minecraft.world.item.Items.IRON_PICKAXE) : pick.copy();
+			final int f = tfortune;
+			EnchantmentHelper.updateEnchantments(tool, m -> {
+				m.set(silkHolder, 0);
+				m.set(fortuneHolder, f);
+			});
+			items.addAll(Block.getDrops(targetState, sl, this.digPos, sl.getBlockEntity(this.digPos), null, tool));
+		}
+		for (var e : sl.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(this.digPos).inflate(1.0))) {
+			items.add(e.getItem().copy());
+			e.discard();
+		}
+		boolean special = !silktouch && (pick.getItem() instanceof ElementalPickaxeItem
+			|| focus.getItem() instanceof ExcavationFocusItem ef && ef.isUpgradedWith(focus, ExcavationFocusItem.DOWSING));
+		BlockPos basePos = pos.relative(this.baseOrientation);
+		ArcaneBoreBaseBlockEntity base = sl.getBlockEntity(basePos) instanceof ArcaneBoreBaseBlockEntity b ? b : null;
+		for (ItemStack is : items) {
+			ItemStack dropped = special ? dev.neothaum.items.equipment.SpecialMining.find(is, 0.2F + tfortune * 0.075F, sl.getRandom()) : is.copy();
+			if (base != null) {
+				base.ejectItem(dropped);
+			}
+		}
 	}
 
+	/** With an arcane lamp beside the base, the bore lights its tunnel as it goes. */
+	private void lightTunnel(ServerLevel sl, BlockPos pos) {
+		BlockPos basePos = pos.relative(this.baseOrientation);
+		for (Direction lbd : Direction.Plane.HORIZONTAL) {
+			if (sl.getBlockEntity(basePos.relative(lbd)) instanceof ArcaneLampBlockEntity) {
+				int d = sl.getRandom().nextInt(32) * 2;
+				Direction o = this.orientation;
+				int xx = pos.getX() + o.getStepX() + o.getStepX() * d;
+				int yy = pos.getY() + o.getStepY() + o.getStepY() * d;
+				int zz = pos.getZ() + o.getStepZ() + o.getStepZ() * d;
+				int p = d / 2 % 4;
+				int off = p == 0 ? 3 : (p != 1 && p != 3 ? -3 : 0);
+				if (o.getStepX() != 0) {
+					zz += off;
+				} else {
+					xx += off;
+				}
+				if (p == 3 && o.getStepY() == 0) {
+					yy -= 2;
+				}
+				BlockPos lp = new BlockPos(xx, yy, zz);
+				if (sl.getBlockState(lp).isAir() && !sl.getBlockState(lp).is(TVBlocks.LAMP_LIGHT) && sl.getMaxLocalRawBrightness(lp) < 15) {
+					sl.setBlock(lp, TVBlocks.LAMP_LIGHT.defaultBlockState(), 3);
+				}
+				break;
+			}
+		}
+	}
+
+	private int digDelay(Level level, BlockPos at) {
+		int c = Math.max(10 - this.speed, (int) (level.getBlockState(at).getDestroySpeed(level, at) * 2.0F) - this.speed * 2);
+		return this.speedyTime < 1.0F ? c * 4 : c;
+	}
+
+	/** findNextBlockToDig: the next point along the widening and narrowing spiral, then the first solid block up to 64 deep along the bore's aim. */
 	private void findNextBlockToDig(Level level, BlockPos pos) {
 		if (this.radInc == 0.0F) {
 			this.radInc = (this.maxRadius + this.area) / 360.0F;
 		}
-
 		int targetRadius = this.maxRadius + this.area;
 		int x = this.lastX, y = this.lastY, z = this.lastZ;
-
+		Direction o = this.orientation;
 		while (x == this.lastX && z == this.lastZ && y == this.lastY) {
 			this.spiral += 2;
-			if (this.spiral >= 360) this.spiral -= 360;
-
+			if (this.spiral >= 360) {
+				this.spiral -= 360;
+			}
 			this.currentRadius += this.radInc;
 			if (this.currentRadius > targetRadius || this.currentRadius < -targetRadius) {
 				this.radInc *= -1.0F;
 			}
-
-			double angle = Math.toRadians(this.spiral);
-			double rx = Math.cos(angle) * this.currentRadius;
-			double ry = Math.sin(angle) * this.currentRadius;
-
-			// Project offset according to orientation
-			Vec3 offset = switch (this.orientation) {
-				case NORTH, SOUTH -> new Vec3(rx, ry, 0.0);
-				case EAST, WEST -> new Vec3(0.0, ry, rx);
-				case UP, DOWN -> new Vec3(rx, 0.0, ry);
-			};
-
-			x = Mth.floor(pos.getX() + 0.5 + offset.x);
-			y = Mth.floor(pos.getY() + 0.5 + offset.y);
-			z = Mth.floor(pos.getZ() + 0.5 + offset.z);
+			Vec3 vtar = new Vec3(0.0, this.currentRadius, 0.0).zRot(this.spiral / 180.0F * (float) Math.PI).yRot((float) (Math.PI / 2) * o.getStepX())
+				.xRot((float) (Math.PI / 2) * o.getStepY());
+			x = Mth.floor(pos.getX() + o.getStepX() + 0.5 + vtar.x);
+			y = Mth.floor(pos.getY() + o.getStepY() + 0.5 + vtar.y);
+			z = Mth.floor(pos.getZ() + o.getStepZ() + 0.5 + vtar.z);
 		}
-
 		this.lastX = x;
 		this.lastY = y;
 		this.lastZ = z;
-
-		BlockPos.MutableBlockPos ray = new BlockPos.MutableBlockPos(x, y, z);
+		BlockPos.MutableBlockPos ray = new BlockPos.MutableBlockPos(x, y, z).move(o);
 		for (int depth = 0; depth < 64; depth++) {
-			ray.move(this.orientation);
+			ray.move(o);
 			BlockState bs = level.getBlockState(ray);
-			if (!bs.isAir() && bs.getDestroySpeed(level, ray) >= 0.0F) {
+			if (bs.getDestroySpeed(level, ray) < 0.0F) {
+				break;
+			}
+			if (!bs.isAir() && !bs.getCollisionShape(level, ray).isEmpty()) {
 				this.digPos = ray.immutable();
+				this.count = this.digDelay(level, this.digPos);
 				this.toDig = true;
-
-				float hardness = bs.getDestroySpeed(level, ray);
-				this.maxPause = Math.max(2, (int) (hardness * 4.0F) - this.speed * 2);
-				if (this.speedyTime <= 0.0F) {
-					this.maxPause *= 3;
+				// anything solid in the way of the beam is dug first
+				Vec3 from = new Vec3(pos.getX() + 0.5 + o.getStepX(), pos.getY() + 0.5 + o.getStepY(), pos.getZ() + 0.5 + o.getStepZ());
+				var hit = level.clip(new net.minecraft.world.level.ClipContext(from, Vec3.atCenterOf(this.digPos), net.minecraft.world.level.ClipContext.Block.COLLIDER,
+					net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
+				if (hit.getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) {
+					BlockPos hp = hit.getBlockPos();
+					BlockState hs = level.getBlockState(hp);
+					if (hs.getDestroySpeed(level, hp) > -1.0F && !hs.getCollisionShape(level, hp).isEmpty()) {
+						this.count = this.digDelay(level, hp);
+						this.digPos = hp.immutable();
+					}
 				}
-				this.count = this.maxPause;
+				this.markForUpdate();
 				break;
 			}
 		}

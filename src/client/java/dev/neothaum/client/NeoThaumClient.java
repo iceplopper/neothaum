@@ -105,6 +105,15 @@ public class NeoThaumClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.render.ShieldFX::tick);
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.fx.ArcSonicFX::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.ArcSonicFX::tick);
+		net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback.EVENT.register((type, renderer, helper, ctx) -> {
+			if (renderer instanceof net.minecraft.client.renderer.entity.player.AvatarRenderer<?> avatar) {
+				@SuppressWarnings("unchecked")
+				var parent = (net.minecraft.client.renderer.entity.RenderLayerParent<net.minecraft.client.renderer.entity.state.AvatarRenderState,
+					net.minecraft.client.model.player.PlayerModel>) (Object) avatar;
+				helper.register(new dev.neothaum.client.render.HarnessLayer(parent));
+			}
+		});
+		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.render.HarnessLayer::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(mc -> dev.neothaum.client.hud.FogFiddle.tick());
 		ClientTickEvents.END_CLIENT_TICK.register(mc -> {
 			if (mc.player != null) {

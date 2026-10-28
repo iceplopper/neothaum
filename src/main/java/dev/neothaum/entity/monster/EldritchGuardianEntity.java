@@ -161,20 +161,28 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 
 	private static final net.minecraft.resources.Identifier OUTER_WARD = dev.neothaum.NeoThaum.id("outer_ward");
 
+	/** EntityEldritchGuardian.onUpdate: away from the Outer Lands, its gaze clouds the eyes of everyone within 16 blocks (24 on Hard). */
+	@Override
+	public void tick() {
+		super.tick();
+		if (this.level() instanceof ServerLevel level) {
+			boolean outer = level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY);
+			if (!outer && (this.tickCount <= 1 || this.tickCount % 100 == 0) && level.getDifficulty() != net.minecraft.world.Difficulty.EASY) {
+				double range = level.getDifficulty() == net.minecraft.world.Difficulty.HARD ? 576.0 : 256.0;
+				for (var p : level.players()) {
+					if (p.isAlive() && p.distanceToSqr(this) < range) {
+						net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.send(p, new dev.neothaum.network.TVNetwork.MiscEvent((short) 2));
+					}
+				}
+			}
+	}
+	}
+
 	/** ...and the ward grows back a point every 25 ticks while it isn't being hit (updateAITasks). */
 	@Override
 	protected void customServerAiStep(ServerLevel level) {
 		super.customServerAiStep(level);
 		boolean outer = level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY);
-		// EntityEldritchGuardian.onUpdate: away from the Outer Lands, its gaze clouds the eyes of everyone within 16 blocks (24 on Hard)
-		if (!outer && (this.tickCount <= 1 || this.tickCount % 100 == 0) && level.getDifficulty() != net.minecraft.world.Difficulty.EASY) {
-			double range = level.getDifficulty() == net.minecraft.world.Difficulty.HARD ? 576.0 : 256.0;
-			for (var p : level.players()) {
-				if (p.isAlive() && p.distanceToSqr(this) < range) {
-					net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.send(p, new dev.neothaum.network.TVNetwork.MiscEvent((short) 2));
-				}
-			}
-		}
 		if (outer && this.hurtTime <= 0 && this.tickCount % 25 == 0) {
 			int bh = (int) this.getAttributeBaseValue(Attributes.MAX_HEALTH) / 2;
 			if (this.getAbsorptionAmount() < bh) {

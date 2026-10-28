@@ -119,7 +119,7 @@ public class BannerBlock extends BaseEntityBlock {
 			if (player.isShiftKeyDown()) {
 				if (!level.isClientSide()) {
 					be.setAspect(null);
-					level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
+					level.playSound(null, pos, SoundEvents.WOOL_STEP, SoundSource.BLOCKS, 1.0F, 1.0F);
 				}
 				return InteractionResult.SUCCESS;
 			}
@@ -127,12 +127,10 @@ public class BannerBlock extends BaseEntityBlock {
 				AspectList al = stack.get(TVComponents.ASPECTS);
 				if (al != null && al.size() > 0) {
 					if (!level.isClientSide()) {
+						// the phial is used up, glass and all
 						be.setAspect(al.getAspects()[0]);
-						if (!player.isCreative()) {
-							stack.shrink(1);
-							player.getInventory().add(new ItemStack(TVItems.GLASS_PHIAL));
-						}
-						level.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
+						stack.shrink(1);
+						level.playSound(null, pos, SoundEvents.WOOL_STEP, SoundSource.BLOCKS, 1.0F, 1.0F);
 					}
 					return InteractionResult.SUCCESS;
 				}
