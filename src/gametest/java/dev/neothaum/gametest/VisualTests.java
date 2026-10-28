@@ -765,6 +765,10 @@ public class VisualTests implements FabricClientGameTest {
 		waitChunks(sp, ctx);
 		ctx.waitTicks(20);
 		shot(ctx, "village_pieces");
+		// up close at the tower's lower window, to see the pane joined to the walls
+		server.runCommand("tp @a -3 119 7 180 0");
+		ctx.waitTicks(10);
+		shot(ctx, "village_tower_window");
 		server.runOnServer(srv -> {
 			var level = srv.overworld();
 			for (var v : level.getEntitiesOfClass(net.minecraft.world.entity.npc.villager.Villager.class, new net.minecraft.world.phys.AABB(-12, 110, -12, 12, 140, 12))) {
