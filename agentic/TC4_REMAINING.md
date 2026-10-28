@@ -1,6 +1,6 @@
 # Thaumcraft 4.2.3.5 features not yet in NeoThaum 4
 
-Last updated: 2026-10-26, after Lamps, JEI integration, Doors & Warding, Infernal Furnace, Boots Overhaul, TNC Audit, and Worldgen Fixes.
+Last updated: 2026-10-28, after 1.0.7 (golem and boss AI ports, villages, bore, harness).
 Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ## Already done (for reference)
@@ -151,29 +151,34 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ## Still to do
 
-### Eldritch and the Outer Lands (L)
-- **The Outer Lands dimension:** maze generation, rooms, locks, nests and boss rooms.
-- **Overworld structures:** eldritch obelisks, altars and rings, the eldritch portal and keys.
-- **Cultist Portal:** portal block and summoning ritual spawning crimson cultists.
-- **The Watcher:** eldritch eye turret entity in the Outer Lands maze.
-- **Champion mobs:** the champion modifiers TC4 adds to some mobs (the giant taintacle uses one).
-- **Research:** eldritch minor and major, forbidden knowledge.
+Re-audited 2026-10-28 (after 1.0.7) by comparing TC4's registered entities, items, blocks, research, sounds, potions, world generation and
+commands with NeoThaum's. Everything in the old list (Outer Lands, eldritch structures, cultist portal, champions, barrows, hilltop stones,
+villages, ethereal bloom) is done. What is left:
 
-### World generation, the rest (M)
-- **Structures:** barrow mounds with loot urns and crates, hilltop stones, and eldritch rings.
-- **Villages:** the Thaumcraft villages' wizard tower and banker (moneychanger) houses.
-- **Ethereal bloom** (a taint-cleansing plant).
+### World generation (S-M)
+- **Obsidian totems:** ThaumcraftWorldGenerator.generateTotem, in the overworld and the Nether (1 in nodeRarity x 10 chunks): an obsidian
+  tile base, an obsidian totem pillar, and a *charged* obsidian totem (blockCosmeticSolid 8) with an aura node in it. Neither the
+  generation nor the charged totem block exists.
+- **Nodes over vanilla structures:** TC4 put a random aura node 3 blocks above every scattered feature (desert and jungle temples, witch
+  huts) the first time a chunk near it generated.
 
-### Polish and integration (COMPLETED)
-- **Aspect orbs** dropped by mobs on death and by unstable nodes. (DONE)
-- **Lightning** from nodes to players (nodeBolt). (DONE)
-- **Shovel of the Earthmover:** the orientation keybind and placement preview. (DONE)
-- **Config file:** the TC4 options (spawn toggles, taint spread rate, biome weights, etc.). (DONE)
-- **Achievements and advancements:** modern Fabric data advancements. (DONE)
+### Small behaviour and polish (S)
+- **EntitySpecialItem:** boss pearls, crucible products and wand-made items (the Thaumonomicon from a bookshelf) float gently upward and
+  ignore explosions; NeoThaum drops ordinary items.
+- **Sounds:** the cultist portal's ambient "monolith" hum (every 540 ticks), loot urns' "urnbreak" break sound, and the crucible's "spill"
+  sound when items dissolve (NeoThaum plays a bubble instead).
+- **Eldritch Obelisk Placer** (creative/debug item, ItemEldritchObject 4).
+
+### Commands (S)
+- **/thaumcraft:** research list / give / all / reset, aspect add, warp add / set, for a player. NeoThaum registers no commands.
+
+### Cross-mod (M, optional)
+- **Native tin, silver and lead clusters** and the tin/silver/lead nuggets, with the PURETIN/PURESILVER/PURELEAD and TRANS* research,
+  active only when another mod supplies those ores (c: tags). The research entries exist but their recipe pages are placeholders.
 
 ### Test coverage still missing
-- **Gametests** for the elemental tools and baubles, and Pech trading. (Taint conversion, peaceful rules, wands, foci and the vis network have scenes now.)
-- **Not ported on purpose:** TC4's Frugal, Potency and Wand Fortune enchantments only applied to the old focus API that no 4.2 focus used; focus upgrades replaced them.
+- **Gametests** for the elemental tools and baubles, and Pech trading.
+- **Not ported on purpose:** TC4's Frugal, Potency and Wand Fortune enchantments only applied to the old focus API that no 4.2 focus used.
 
 ## Suggested order
 
