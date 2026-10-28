@@ -6,44 +6,70 @@
 
 ## Overview
 
-The primary casting tools of the Thaumaturge, capable of manipulating world blocks, crafting in arcane tables, and discharging focuses.
+The casting wand is the primary conduit through which a Thaumaturge manifests will into reality. Whether crafting arcane apparatus, transmuting matter, or firing devastating magical spells, your choice of wand rod and caps determines your vis storage capacity and spellcasting efficiency.
 
 ---
 
-## Wand Rods
+## Anatomical Components of a Wand
 
-Wood (25 vis), Greatwood (50 vis), Silverwood (100 vis).
+Every wand is crafted in an [Arcane Worktable](Arcane-Worktable) by combining two **Wand Caps** with a central **Wand Rod**.
 
-*(Full guide and documentation for this section will be added here.)*
+```
+[ Top Cap  ] [    Empty   ] [    Empty   ]
+[   Empty  ] [  Wand Rod  ] [    Empty   ]
+[   Empty  ] [    Empty   ] [ Bottom Cap ]
+```
 
-## Wand Caps
+---
 
-Iron, Gold, Copper, Silver, Thaumium, Void Metal (vis discounts from 110% down to 80%).
+## Wand Rods Comparison
 
-*(Full guide and documentation for this section will be added here.)*
+| Rod Type | Base Vis Capacity | Special Passive Traits |
+| :--- | :---: | :--- |
+| **Wood** | 25 Vis | Novice starter rod. No special properties. |
+| **Greatwood** | 50 Vis | Durable hardwood capable of holding moderate charges. |
+| **Silverwood** | 100 Vis | Pure magical wood. Highly receptive to all aspects. |
+| **Obsidian** | 150 Vis | High earth affinity. Very resilient. |
+| **Blaze** | 150 Vis | Passively regenerates **Ignis** vis over time up to 10%. |
+| **Ice** | 150 Vis | Passively regenerates **Aqua** vis over time up to 10%. |
+| **Quartz** | 150 Vis | Passively regenerates **Ordo** vis over time up to 10%. |
+| **Bone** | 150 Vis | Passively regenerates **Perditio** vis over time up to 10%. |
+| **Reed** | 150 Vis | Passively regenerates **Aer** vis over time up to 10%. |
+| **Primal Staff Core** | 250 Vis | Forged in the Infusion Altar. Two-handed weapon with 2.5x storage. |
 
-## Casting Scepters
+---
 
-Specialized non-focus crafting wands holding 1.5× vis with built-in discount bonus.
+## Wand Caps & Discounts
 
-*(Full guide and documentation for this section will be added here.)*
+Wand caps act as conduits, reducing the friction of vis channeling. A higher discount means you consume fewer vis points for every action.
 
-## Combat Staves
+| Cap Material | Vis Cost Modifier | Net Discount |
+| :--- | :---: | :---: |
+| **Iron** | 110% | -10% penalty |
+| **Copper** | 105% | -5% penalty |
+| **Gold** | 100% | 0% (baseline) |
+| **Silver** | 95% | +5% discount |
+| **Thaumium** | 90% | +10% discount |
+| **Void Metal** | 80% | +20% discount (inflicts mild warp) |
 
-Two-handed battle staves holding 2.5× vis capable of striking enemies for high physical and magical damage.
+---
 
-*(Full guide and documentation for this section will be added here.)*
+## Specialized Casting Implements
 
-## Assembling Wands
+### 1. Casting Scepters
+Scepters are heavy-headed crafting wands assembled with **three caps** in an L-shaped recipe.
+- **Traits:** Holds **150% of the base rod's vis capacity** and gives an additional **5% built-in discount**.
+- **Limitation:** Cannot equip Wand Focuses. Scepters are dedicated purely to workshop crafting in Arcane Worktables.
 
-Arcane Worktable recipes and wand assembly.
-
-*(Full guide and documentation for this section will be added here.)*
+### 2. Battle Staves
+By infusing two wand rods with primal nodes, you create a **Staff Core**.
+- **Traits:** Holds **250 Vis**, deals substantial melee knockback and physical damage equivalent to a diamond sword.
+- **Limitation:** Cannot be used inside an Arcane Worktable; strictly reserved for focus spellcasting and combat.
 
 ---
 
 ## Related Topics
-
 - [Wand Focuses](Wand-Focuses)
-- [Vis Storage & Discount Armor](Vis-Storage-&-Discount-Armor)
+- [Focal Manipulator](Focal-Manipulator)
+- [Vis Storage & Discount Robes](Vis-Storage-&-Discount-Armor)
 - [Home](Home)

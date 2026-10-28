@@ -6,33 +6,28 @@
 
 ## Overview
 
-The mysterious pocket dimension labyrinth of the Eldritch Architects.
+The **Outer Lands** is a separate, pocket dimension constructed out of indestructible ancient stone floating in a starless cosmic void. It is designed as an infinite subterranean labyrinth filled with trapped keystones, eldritch guardians, and forgotten vaults.
 
 ---
 
-## Opening the Portal
+## Navigating the Maze
 
-Activating an Eldritch Portal atop an Eldritch Altar using 4 Eldritch Eyes.
+1. **Indestructible Terrain**: The walls, ceilings, and floors of the Outer Lands cannot be broken by ordinary tools, TNT, or even Excavation Focuses.
+2. **Ancient Lock Doors**: Passage between maze sectors is blocked by glowing runic doorways. You must find the **Runic Key** hidden in side chambers to open each doorway.
+3. **Crusted Openings**: Spawns swarms of Eldritch Crabs and Guardians from biological wall nests.
 
-*(Full guide and documentation for this section will be added here.)*
+---
 
-## The Maze of Stone
+## The Central Vault & Boss Fight
 
-Navigating indestructible obsidian corridors, trapped doorways, and runic keystones.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## The Boss Vault
-
-Confronting the ancient lords of the labyrinth for primordial pearls.
-
-*(Full guide and documentation for this section will be added here.)*
+At the heart of the labyrinth lies the central Boss Arena:
+- Confront one of the four legendary Eldritch Bosses (The Eldritch Construct, The Crimson Praetor, or The Champion Guardian).
+- Defeating the vault boss unlocks the final chest containing the **Primordial Pearl**, the ultimate artifact in Thaumaturgy.
 
 ---
 
 ## Related Topics
-
-- [Eldritch Worldgen](Eldritch-Worldgen)
-- [Eldritch Mobs](Eldritch-Mobs)
+- [Eldritch Structures](Eldritch-Worldgen)
+- [Eldritch Horrors & Bosses](Eldritch-Mobs)
 - [Void Metal Equipment](Void-Metal-Equipment)
 - [Home](Home)

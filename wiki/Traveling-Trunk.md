@@ -6,25 +6,28 @@
 
 ## Overview
 
-A loyal, animated wooden chest with little legs that follows its master across the world.
+The **Traveling Trunk** is an animated wooden storage chest supported by four energetic little legs. It functions as a loyal following pet that provides mobile inventory storage wherever your adventures take you.
 
 ---
 
-## Taming & Binding
+## Creation & Bonding
 
-Right-clicking with a wand to bind the trunk to your player.
+1. Construct the Traveling Trunk in the [Crucible](Crucible-Alchemy) using a standard Chest, *Motus*, *Terra*, and *Spiritus*.
+2. Place the trunk on the ground and right-click it with your **Wand** to bond its soul to your character.
+3. The trunk will hop merrily behind you wherever you travel!
 
-*(Full guide and documentation for this section will be added here.)*
+---
 
-## Combat & Healing
+## Features & Combat
 
-How trunks defend their owners and heal from damage.
-
-*(Full guide and documentation for this section will be added here.)*
+- **Mobile Storage**: Right-click the trunk to access 27 slots of mobile storage.
+- **Follower Mechanics**: Teleports to you if you travel too far away or cross dimensions.
+- **Combat Defense**: If you are attacked by hostile mobs, the trunk will aggressively leap at attackers, biting them for damage.
+- **Healing**: Feed the trunk raw beef, pork, or rotten flesh to restore its health.
 
 ---
 
 ## Related Topics
-
 - [Golem Basics & Materials](Golem-Basics-&-Materials)
+- [Hungry Chest](Hungry-Chest)
 - [Home](Home)

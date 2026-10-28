@@ -1,30 +1,27 @@
 # The Hungry Chest
 
-**Category:** Artifice | [Return to Wiki Home](Home)
+**Category:** Artifice & Ancient Machinery | [Return to Wiki Home](Home)
 
 ---
 
 ## Overview
 
-A living, ravenous storage chest that snaps shut on dropped items colliding with it.
+The **Hungry Chest** is a living, carnivorous storage container. When closed, it appears as an ordinary wooden chest, but when dropped items come into physical contact with it, the lid snaps open like a pair of jaws, instantly swallowing the item into its internal inventory.
 
 ---
 
-## Crafting
+## Practical Applications
 
-Infusing a chest with an Arcane Door latch.
+- **Quarry Depots**: Place beneath an [Arcane Bore](Arcane-Bore) to capture falling mined blocks without relying on complex hopper chains.
+- **Mob Farms**: Place at the bottom of drop shafts to capture mob drops instantly.
+- **Furnace Feeding**: Capture items spat out by the [Infernal Furnace](Infernal-Furnace).
 
-*(Full guide and documentation for this section will be added here.)*
-
-## Automation Mechanics
-
-Instant intake of items from conveyor belts, drop chutes, and mob farms.
-
-*(Full guide and documentation for this section will be added here.)*
+> [!WARNING]
+> Do not jump onto a Hungry Chest yourself! Stepping on an open Hungry Chest will cause it to snap shut on your legs, dealing continuous crushing damage.
 
 ---
 
 ## Related Topics
-
-- [Artifice](Artifice)
+- [The Arcane Bore](Arcane-Bore)
+- [The Infernal Furnace](Infernal-Furnace)
 - [Home](Home)

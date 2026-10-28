@@ -6,32 +6,29 @@
 
 ## Overview
 
-Nightmarish beings hailing from the Outer Lands.
+Entities native to the Outer Lands are alien to our reality. They do not conform to standard biological laws and often possess armor-bypassing void attacks.
 
 ---
 
-## Eldritch Guardians
+## Eldritch Bestiary
 
-Tall, shadowy entities firing life-draining eldritch spheres.
+### 1. 👁️ Eldritch Guardians
+- **Appearance:** Towering, cloaked wraiths with elongated limbs and glowing purple eyes.
+- **Attacks:** Projects explosive eldritch orbs that bypass physical armor and inflict direct magical damage accompanied by temporary warp.
+- **Weakness:** Ranged projectile combat and runic shielding.
 
-*(Full guide and documentation for this section will be added here.)*
+### 2. 🦀 Eldritch Crabs
+- **Appearance:** Spiny crystalline face-huggers that nest inside ancient stone blocks.
+- **Behavior:** When disturbed, they leap onto the player's head, blinding the screen and dealing rapid damage.
 
-## Eldritch Crabs
-
-Vicious face-hugging scuttlers nesting inside ancient stone.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## Eldritch Golems
-
-Massive biomechanical constructs guarding labyrinth chambers.
-
-*(Full guide and documentation for this section will be added here.)*
+### 3. 🗿 Eldritch Golems
+- **Appearance:** Colossal animated stone titans constructed by the ancient architects.
+- **Combat:** Acts as the labyrinth vault guardian. Immune to projectiles; must be brought down in close-quarters melee combat.
 
 ---
 
 ## Related Topics
-
+- [The Crimson Cult](Crimson-Cult)
 - [The Outer Lands](The-Outer-Lands)
 - [Void Metal Equipment](Void-Metal-Equipment)
 - [Home](Home)

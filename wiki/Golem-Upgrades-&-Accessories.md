@@ -6,25 +6,38 @@
 
 ## Overview
 
-Enhancing golem abilities with elemental power upgrades and vanity equipment.
+You can augment your golems using **Elemental Upgrades** (socketed into the golem's back) and **Vanity Accessories** (equipped on their head, face, or chest) to grant powerful stat bonuses.
 
 ---
 
 ## Elemental Upgrades
 
-Air (speed), Earth (strength), Fire (damage), Water (perception), Order (efficiency), Entropy (demolition).
+Socketed into the golem's upgrade slot:
 
-*(Full guide and documentation for this section will be added here.)*
+| Element | Upgrade Name | Granted Enhancement |
+| :--- | :--- | :--- |
+| 💨 **Aer** | Air Upgrade | Doubles golem walking and sprinting speed. |
+| 🪨 **Terra** | Earth Upgrade | Doubles maximum item carry capacity. |
+| 🔥 **Ignis** | Fire Upgrade | Imbues melee attacks with fire damage; grants night vision. |
+| 💧 **Aqua** | Water Upgrade | Expands operational search radius and block detection range. |
+| ⚖️ **Ordo** | Order Upgrade | Increases filter intelligence; allows matching exact NBT data and durability. |
+| 💥 **Perditio** | Entropy Upgrade | Increases attack knockback and allows demolishing weak obstacle blocks. |
 
-## Equipping Accessories
+---
 
-Tiny Top Hats, Spectacles, Fezzes, Bowties, and Iron Visors with specific functional bonuses.
+## Golem Vanity Accessories
 
-*(Full guide and documentation for this section will be added here.)*
+Right-click a golem with an accessory to equip it:
+
+- **🎩 Tiny Top Hat / Fez**: Increases max health by +10 HP.
+- **👓 Spectacles**: Significantly expands visual search range.
+- **👔 Bowtie**: Imparts charm; decreases threat generation from hostile mobs.
+- **🛡️ Iron Visor**: Adds +4 natural armor defense.
+- **🏹 Tiny Dart Launcher**: Equips the golem with a ranged blowgun attack that fires poisonous or potion-tipped darts at enemies!
 
 ---
 
 ## Related Topics
-
 - [Golem Basics & Materials](Golem-Basics-&-Materials)
+- [Animation Cores](Animation-Cores)
 - [Home](Home)

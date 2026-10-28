@@ -1,36 +1,36 @@
 # Baubles & Runic Shielding
 
-**Category:** Artifice | [Return to Wiki Home](Home)
+**Category:** Artifice & Ancient Machinery | [Return to Wiki Home](Home)
 
 ---
 
 ## Overview
 
-Wearable enchanted jewelry and force-field personal shielding.
+**Baubles** are wearable enchanted jewelry, belts, rings, and talismans that grant continuous passive enchantments. Through [Infusion Enchanting](Infusion-Enchanting), you can also coat your armor and baubles with **Runic Shielding**, generating an invulnerable kinetic forcefield.
 
 ---
 
-## Boots of the Traveller
+## Prominent Thaumic Baubles
 
-Enhanced movement speed, high step-up, and jump boosts.
+### 1. Boots of the Traveller
+- **Crafting:** Infusion Altar (Raw Leather Boots + Feather + Fish + Aer/Iter essentia).
+- **Abilities:**
+  - Increases walking and sprinting velocity.
+  - Grants auto step-up (steps up full 1-block steps without jumping).
+  - Doubles jumping height and drastically reduces fall damage.
 
-*(Full guide and documentation for this section will be added here.)*
+### 2. Ring of Runic Shielding
+- Grants rechargeable kinetic shield points represented by purple/golden pips above your health bar.
+- Kinetic shielding absorbs all incoming damage (including environmental, fall, and void damage) before touching player health.
+- Shields recharge automatically after a few seconds without taking damage.
 
-## Runic Shielding
-
-Infusing rings, belts, amulets, and armor with rechargeable kinetic force fields.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## Paving Stones of Travel & Warding
-
-Road blocks that accelerate players or prevent hostile mob transit.
-
-*(Full guide and documentation for this section will be added here.)*
+### 3. Paving Stones of Travel & Warding
+- **Paving Stone of Travel**: Increases player walking speed by 50% when walked upon.
+- **Paving Stone of Warding**: Emits an invisible barrier that prevents hostile mobs from stepping onto the road.
 
 ---
 
 ## Related Topics
-
-- [Infusion Altar](Infusion-Altar)
+- [The Infusion Altar](Infusion-Altar)
+- [Vis Storage & Discount Robes](Vis-Storage-&-Discount-Armor)
 - [Home](Home)

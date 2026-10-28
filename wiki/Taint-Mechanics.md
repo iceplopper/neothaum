@@ -6,38 +6,50 @@
 
 ## Overview
 
-A biological and magical infection that devours landscapes and transforms living organisms.
+**Taint** is an invasive mystical blight—a virulent magical pathogen that infects the terrain, transforms living animals into aggressive husks, and pollutes the atmospheric aura. If left unchecked, a localized taint spore can consume entire biomes.
 
 ---
 
-## Spread Dynamics
+## Propagation Dynamics
 
-Fibrous taint creeping across stone and dirt, transforming soil into tainted earth.
+```mermaid
+graph TD
+    N["Tainted Aura Node / Flux Slime"] --> S["Fibrous Taint Spread"]
+    S --> T["Tainted Soil & Crusted Stone"]
+    T --> P["Taint Spores & Tendrils"]
+    P --> M["Corrupted Tainted Mobs"]
+```
 
-*(Full guide and documentation for this section will be added here.)*
+1. **Fibrous Taint**: Creeps across the ground like a purple fungus, converting grass and dirt into **Tainted Soil**, and stone into **Crusted Taint**.
+2. **Taint Spores**: Explosive fungal pods that burst when approached, showering victims with poison and spreading fresh taint.
+3. **Tendrils**: Attacking tentacles that emerge from infected blocks to strike nearby players.
 
-## Taint Spores & Tendrils
-
-Explosive spore pods and attacking tendrils.
-
-*(Full guide and documentation for this section will be added here.)*
+---
 
 ## Tainted Creatures
 
-Tainted Crawlers, Tainted Sheep, Tainted Pigs, and mutated beasts.
+When ordinary passive animals dwell on tainted soil or are struck by taint attacks, they mutate:
+- **Tainted Sheep**: Wool falls off, replaced by purple crust.
+- **Tainted Pigs / Cows**: Aggressive monstrosities that hunt down uninfected wildlife.
+- **Tainted Crawlers**: Vicious swarming centipedes that scuttle through infected caves.
 
-*(Full guide and documentation for this section will be added here.)*
+---
 
-## Cleansing Taint
+## Curing and Repelling Taint
 
-Planting Silverwood saplings, using Pure Nodes, or deploying Ethereal Blooms to repel corruption.
+To protect your base from corruption:
 
-*(Full guide and documentation for this section will be added here.)*
+### 1. The Ethereal Bloom
+- A radiant white flower crafted in the [Crucible](Crucible-Alchemy) using Shimmerleaf, *Praecantatio*, *Sano*, and *Herba*.
+- Radiates a 16-block purifying aura that permanently cures tainted soil back to clean grass and kills taint tendrils.
+
+### 2. Planting Silverwoods
+- Planting Silverwood saplings creates a **Pure Node**, naturally reclaiming tainted land into lush Magical Forest.
 
 ---
 
 ## Related Topics
-
-- [Biomes & Flora](Biomes-&-Flora)
+- [Biomes & Thaumic Flora](Biomes-&-Flora)
+- [Crucible Alchemy](Crucible-Alchemy)
 - [Configuration & Settings](Configuration-&-Settings)
 - [Home](Home)

@@ -1,37 +1,43 @@
 # The Arcane Worktable
 
-**Category:** Artifice | [Return to Wiki Home](Home)
+**Category:** Artifice & Ancient Machinery | [Return to Wiki Home](Home)
 
 ---
 
 ## Overview
 
-A 3x3 crafting grid enhanced with wand vis channels for creating magical artifacts.
+The **Arcane Worktable** is an enhanced crafting table capable of channeling primal vis directly from a casting wand into physical materials. Standard vanilla crafting benches lack the mystical channels required to bind enchanted tools, wand assemblies, and alchemical apparatus.
 
 ---
 
 ## Construction
 
-Right-clicking a mundane crafting table with any wand.
+1. Place a standard vanilla **Crafting Table** anywhere in the world.
+2. Hold any **Wand** in your hand and right-click the table.
+3. The crafting table morphs into an **Arcane Worktable**, marked with brass corner inlays and six colored primal aspect orbs.
 
-*(Full guide and documentation for this section will be added here.)*
+---
 
-## Wand Vis Channeling
+## Interface & Operation
 
-Resting a wand in the top-right slot to power crafts with primal vis.
+The Arcane Worktable interface features:
+- **3x3 Crafting Grid**: Where physical ingredients are arranged.
+- **Wand Slot (Top Right)**: Where your casting wand, scepter, or staff is placed.
+- **Primal Vis Display**: Six crystalline indicators showing the current vis stored within the docked wand.
 
-*(Full guide and documentation for this section will be added here.)*
+### Crafting with Vis
+Many recipes require both physical items and a specific amount of primal vis (Aer, Terra, Ignis, Aqua, Ordo, Perditio).
+- When a valid recipe is placed in the grid, the required vis amounts illuminate around the output slot.
+- If your docked wand holds sufficient vis, the crafted item appears in the output slot.
+- Removing the output deducts the vis directly from your wand.
 
-## Aspect Crafting Recipes
-
-Recipes that consume specific vis amounts (Aer, Terra, Ignis, Aqua, Ordo, Perditio).
-
-*(Full guide and documentation for this section will be added here.)*
+> [!TIP]
+> **Use a Casting Scepter for Workshop Crafting!** Scepters hold 1.5x more vis than wands and provide an extra 5% vis discount, making them the ideal dedicated tool to leave resting inside your Arcane Worktable.
 
 ---
 
 ## Related Topics
-
 - [Getting Started](Getting-Started)
-- [Wands and Staffs](Wands-and-Staffs)
+- [Wands, Scepters & Staffs](Wands-and-Staffs)
+- [Vis Storage & Discount Robes](Vis-Storage-&-Discount-Armor)
 - [Home](Home)

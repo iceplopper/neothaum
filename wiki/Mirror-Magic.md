@@ -1,31 +1,31 @@
 # Mirror Magic
 
-**Category:** Artifice | [Return to Wiki Home](Home)
+**Category:** Artifice & Ancient Machinery | [Return to Wiki Home](Home)
 
 ---
 
 ## Overview
 
-Trans-dimensional conduits for instant item and essentia transmission across infinite distances.
+**Mirrors** are trans-dimensional conduits that teleport physical items and liquid essentia across infinite distances, even across different dimensions.
 
 ---
 
-## Magic Mirrors
+## Types of Magic Mirrors
 
-Paired item teleportation portals.
+### 1. Magic Mirrors (Item Transportation)
+- Crafted in the Infusion Altar.
+- Created in linked pairs: hold one mirror and right-click another mirror to pair their dimensional frequencies.
+- Any item dropped into one mirror immediately pops out of the linked mirror on the other side.
+- **Hand Mirror**: A portable handheld mirror linked to a chest in your home base. Allows you to send loot back to storage while mining deep in caves!
 
-*(Full guide and documentation for this section will be added here.)*
-
-## Essentia Mirrors
-
-Wirelessly feeding essentia from remote jar storages into Infusion Altars.
-
-*(Full guide and documentation for this section will be added here.)*
+### 2. Essentia Mirrors (Wireless Essentia)
+- Paired identical to Magic Mirrors.
+- Place one Essentia Mirror directly above your [Warded Jar](Essentia-Storage) warehouse, and place the linked mirror adjacent to your [Infusion Altar](Infusion-Altar).
+- The altar will wirelessly pull essentia directly from your jars through the mirror, eliminating the need to carry jars back and forth!
 
 ---
 
 ## Related Topics
-
-- [Infusion Altar](Infusion-Altar)
-- [Essentia Transport & Piping](Essentia-Transport-&-Piping)
+- [The Infusion Altar](Infusion-Altar)
+- [Essentia Storage](Essentia-Storage)
 - [Home](Home)

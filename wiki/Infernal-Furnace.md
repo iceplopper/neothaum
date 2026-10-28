@@ -1,36 +1,50 @@
 # The Infernal Furnace
 
-**Category:** Artifice | [Return to Wiki Home](Home)
+**Category:** Artifice & Ancient Machinery | [Return to Wiki Home](Home)
 
 ---
 
 ## Overview
 
-A 3x3 hollow stone furnace powered by trapped elemental fire that smelts ores at super speed and produces rare bonus nuggets.
+The **Infernal Furnace** is a $3 \times 3 \times 3$ hollow stone multiblock fueled by trapped elemental fire. It smelts ores and cookable items at hyper speed without consuming coal or fuel, and grants a significant chance of producing **rare bonus metal nuggets** and liquid experience slurry.
 
 ---
 
-## Multiblock Assembly
+## Multiblock Construction
 
-Netherrack, Obsidian, Iron Bars, and wand activation.
+### Required Blocks:
+- 12x **Netherrack**
+- 12x **Obsidian**
+- 1x **Iron Bars**
 
-*(Full guide and documentation for this section will be added here.)*
+```
+Layer 3 (Top):    [Obsidian]   [Obsidian]   [Obsidian]
+                  [Obsidian]   [  Air   ]   [Obsidian]
+                  [Obsidian]   [Obsidian]   [Obsidian]
 
-## Smelting Bonuses
+Layer 2 (Middle): [Obsidian]   [IronBars]   [Obsidian]  <-- Front has Iron Bars
+                  [Netherrack] [  Air   ]   [Netherrack]
+                  [Obsidian]   [Netherrack] [Obsidian]
 
-Chance of yielding rare metal nuggets and native clusters.
+Layer 1 (Bottom): [Obsidian]   [Netherrack] [Obsidian]
+                  [Netherrack] [Netherrack] [Netherrack]
+                  [Obsidian]   [Netherrack] [Obsidian]
+```
 
-*(Full guide and documentation for this section will be added here.)*
+### Activation:
+Right-click the central front **Iron Bars** with any **Wand**. The structure transforms into an open furnace glowing with molten lava.
 
-## XP Slurry & Bellows
+---
 
-Attaching Arcane Bellows to increase speed and eliminate residual flux.
+## Operating Mechanics
 
-*(Full guide and documentation for this section will be added here.)*
+- **Input**: Drop ores or raw items into the top chimney opening (using hoppers, water streams, or dropping them by hand).
+- **Output**: Smelted ingots, bonus nuggets, and XP orbs are ejected out through the front iron gate.
+- **Arcane Bellows**: Attach up to **3 Arcane Bellows** to the side and rear vents. Each bellows increases smelting speed by 25% and dramatically raises the drop rate of bonus rare nuggets!
 
 ---
 
 ## Related Topics
-
 - [Configuration & Settings](Configuration-&-Settings)
+- [Crucible Alchemy](Crucible-Alchemy)
 - [Home](Home)

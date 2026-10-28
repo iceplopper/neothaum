@@ -6,68 +6,63 @@
 
 ## Overview
 
-Interchangeable crystals that channel a wand's stored vis into offensive, defensive, and utility spells.
+**Wand Focuses** are cut magical crystals that channel the raw primal vis stored in your wand into specific spell effects. By swapping focuses, a single wand can transition instantaneously from a flamethrower to an excavation drill or an impenetrable forcefield.
 
 ---
 
-## Equipping & Radial Selector
+## Managing Your Focuses
 
-Holding the Focus pouch key / 'F' key to swap active focuses on the fly.
+### The Radial Selection Menu
+- With a wand in your main hand, press the **F key** (or your configured focus swap key) to open the interactive circular focus wheel.
+- Hover your mouse over the desired focus to equip it instantly.
 
-*(Full guide and documentation for this section will be added here.)*
+### The Focus Pouch
+- Craft a leather **Focus Pouch** and equip it in your belt or carry it in your inventory.
+- It provides a dedicated internal inventory holding up to 18 wand focuses, keeping your hotbar uncluttered.
 
-## Focus: Fire
+---
 
-Projecting streams of incendiary flame.
+## Complete Catalog of Wand Focuses
 
-*(Full guide and documentation for this section will be added here.)*
+### 1. 🔥 Focus: Fire
+- **Cost:** Ignis
+- **Effect:** Unleashes a continuous cone of roaring elemental flames that incinerates enemies and ignites blocks. Highly effective for crowd control against swarming mobs.
 
-## Focus: Frost
+### 2. ❄️ Focus: Frost
+- **Cost:** Aqua + Gelum
+- **Effect:** Launches a heavy crystalline orb of frost that shatters on impact, dealing blunt ice damage and applying severe slowness to targets.
 
-Launching freezing crystalline orbs that slow and damage foes.
+### 3. ⚡ Focus: Shock
+- **Cost:** Aer
+- **Effect:** Fires instantaneous arcs of chain lightning. The bolt automatically arcs between nearby hostile targets, bypassing armor.
 
-*(Full guide and documentation for this section will be added here.)*
+### 4. ⛏️ Focus: Excavation
+- **Cost:** Terra + Perditio
+- **Effect:** Projects a sonic digging beam that instantly carves out blocks at long range. When upgraded with the *Silky* or *Fortune* enchantment in the [Focal Manipulator](Focal-Manipulator), it rivals top-tier pickaxes.
 
-## Focus: Shock
+### 5. 🕳️ Focus: Portable Hole
+- **Cost:** Vacuos + Alienis
+- **Effect:** Right-clicking any solid wall opens a temporary $3 \times 3 \times 33$ trans-dimensional tunnel. The passage remains open for several seconds before collapsing harmlessly, returning all original blocks without damaging terrain.
 
-Discharging instant chain lightning arcs.
+### 6. 🔄 Focus: Equal Trade
+- **Cost:** Permutatio + Terra
+- **Effect:** Sneak-right-click to select a block from the world (or your inventory). Right-clicking any surface swaps the clicked blocks with your chosen block across a wide radius. Essential for builders and architectural terraforming.
 
-*(Full guide and documentation for this section will be added here.)*
+### 7. 🦇 Focus: Hellbat
+- **Cost:** Ignis + Bestia
+- **Effect:** Summons a homing Nether Hellbat that flies directly at your targeted enemy, detonating in an explosion upon impact.
 
-## Focus: Excavation
+### 8. 🛡️ Focus: Warding
+- **Cost:** Terra + Ordo
+- **Effect:** Renders targeted blocks completely indestructible and immune to explosions, wither attacks, and player mining. Only the caster with the warding focus can unward the blocks.
 
-Rapidly mining stone, dirt, and minerals at range.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## Focus: Portable Hole
-
-Creating temporary trans-dimensional passages through solid walls.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## Focus: Equal Trade
-
-Swapping surface blocks in a wide radius with blocks from your inventory.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## Focus: Hellbat & Primal
-
-Summoning explosive nether bats and unleashed primal elemental storms.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## Focus: Warding
-
-Rendering blocks completely indestructible and tamper-proof.
-
-*(Full guide and documentation for this section will be added here.)*
+### 9. 🌌 Focus: Primal
+- **Cost:** All 6 Primals
+- **Effect:** Forbidden eldritch focus. Discharges chaotic balls of raw elemental matter that produce unpredictable, devastating explosions, firestorms, or lightning strikes. Inflicts temporary warp on the caster.
 
 ---
 
 ## Related Topics
-
-- [Wands and Staffs](Wands-and-Staffs)
+- [Wands, Scepters & Staffs](Wands-and-Staffs)
 - [Focal Manipulator](Focal-Manipulator)
 - [Home](Home)

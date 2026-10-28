@@ -1,30 +1,36 @@
 # Infusion Enchanting
 
-**Category:** Artifice | [Return to Wiki Home](Home)
+**Category:** Artifice & Ancient Machinery | [Return to Wiki Home](Home)
 
 ---
 
 ## Overview
 
-Applying non-standard and high-tier enchantments directly to tools and weapons via the Infusion Altar.
+Unlike the unpredictable, random results of the vanilla Enchanting Table, **Infusion Enchanting** offers 100% deterministic, custom enchantments using the [Infusion Altar](Infusion-Altar).
 
 ---
 
-## Custom Enchantments
+## Custom Thaumic Enchantments
 
-Haste, Repair, Frugal, Potency, and Corrosive.
+| Enchantment | Applicable Gear | Effect |
+| :--- | :--- | :--- |
+| **Repair (I - II)** | Tools, Weapons, Armor | Automatically regenerates item durability over time using ambient vis. |
+| **Haste (I - III)** | Boots, Tools | Increases player movement speed on armor, or increases mining speed on picks and axes. |
+| **Frugal (I - III)** | Wand Focuses | Decreases vis cost per spell activation. |
+| **Potency (I - III)** | Wand Focuses | Amplifies spell damage and mining efficiency. |
 
-*(Full guide and documentation for this section will be added here.)*
+---
 
-## Deterministic Enchanting
+## The Enchanting Process
 
-Bypassing the vanilla random enchanting table with 100% predictable outcomes.
-
-*(Full guide and documentation for this section will be added here.)*
+1. Place the tool or weapon on the central altar pedestal.
+2. Arrange the required catalyst items (shards, gold nuggets, spider eyes, etc.) on surrounding symmetrical pedestals.
+3. Ensure the required liquid Essentia jars are located within 12 blocks of the matrix.
+4. Right-click the Runic Matrix with your wand to initiate the ritual.
 
 ---
 
 ## Related Topics
-
-- [Infusion Altar](Infusion-Altar)
+- [The Infusion Altar](Infusion-Altar)
+- [Baubles & Runic Armor](Baubles-&-Runed-Armor)
 - [Home](Home)

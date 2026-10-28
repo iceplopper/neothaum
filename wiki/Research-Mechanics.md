@@ -6,39 +6,57 @@
 
 ## Overview
 
-The cerebral minigame of linking aspect runes on hex parchment to unlock ancient knowledge.
+Research is the core progression loop of **NeoThaum**. Rather than relying on simple linear crafting recipes, arcane secrets must be deciphered using the **Research Table** through an engaging hexagonal puzzle minigame.
 
 ---
 
-## The Research Table
+## Setting Up Your Research Laboratory
 
-Setting up tables with Scribing Tools and Paper.
+### Materials Needed:
+1. **Research Table**: Place two wooden Tables side by side and right-click with **Scribing Tools**.
+2. **Scribing Tools**: 1x Glass Phial, 1x Ink Sac, 1x Feather. (Holds 100 ink charges).
+3. **Paper**: Crafted from sugar cane.
+4. **Thaumonomicon**: Your research book.
 
-*(Full guide and documentation for this section will be added here.)*
+---
 
-## Research Notes
+## Solving Research Notes: The Hex Mini-Game
 
-Selecting uncompleted research from the Thaumonomicon.
+1. Open your **Thaumonomicon** and find a research entry with a parchment icon.
+2. Click it to extract a **Research Note** (consumes 1 Paper and 1 Ink from your inventory).
+3. Place the Research Note into the active slot on the **Research Table**.
+4. You will see a grid of hexagonal tiles with several fixed aspect runes:
+   - Your objective is to create an unbroken connection between all starting runes.
+   - Two adjacent hexes can connect if and only if **they share a parent-child relationship** according to the [Compound Aspects Chart](Compound-Aspects-Chart).
 
-*(Full guide and documentation for this section will be added here.)*
+### Connection Rules Example:
+$$	ext{Aer} \longleftrightarrow 	ext{Lux} \longleftrightarrow 	ext{Ignis}$$
+Because $	ext{Aer} + 	ext{Ignis} = 	ext{Lux}$, `Lux` can bridge directly between `Aer` and `Ignis`.
 
-## The Hex Grid Mini-Game
+$$	ext{Victus} \longleftrightarrow 	ext{Bestia} \longleftrightarrow 	ext{Motus} \longleftrightarrow 	ext{Iter} \longleftrightarrow 	ext{Terra}$$
+Here, `Bestia` connects to `Victus`, `Motus` connects to `Bestia`, `Iter` connects to `Motus`, and `Terra` connects to `Iter`.
 
-Rules of connecting starting aspect nodes using chain links of parent/child compound aspects.
+---
 
-*(Full guide and documentation for this section will be added here.)*
+## Warp & Forbidden Knowledge
 
-## Warp from Research
+Some research entries in the Thaumonomicon are surrounded by a **deep purple pulsing border** and marked as **Forbidden Knowledge**:
 
-Forbidden Knowledge entries marked with purple borders and sticky/permanent warp gain.
+> [!WARNING]
+> Delving into Forbidden Knowledge permanently warps your mind. As your Warp increases, you will suffer auditory hallucinations, spontaneous blindness, unnatural hunger, and surprise ambushes by Eldritch Guardians. See [Warp Mechanics](Warp-Mechanics) for full details and sanitizing remedies.
 
-*(Full guide and documentation for this section will be added here.)*
+---
+
+## Video Tutorial: Hex Grid Mastery
+
+[![Thaumcraft 4 Research Mini-game Guide](https://img.youtube.com/vi/Dq0XyZ2Z3Uo/0.jpg)](https://www.youtube.com/watch?v=Dq0XyZ2Z3Uo)
+*(Tutorial courtesy of Mischief of Mice)*
 
 ---
 
 ## Related Topics
-
-- [Scanning & Thaumometer](Scanning-&-Thaumometer)
+- [Aspects Overview](Aspects-Overview)
 - [Compound Aspects Chart](Compound-Aspects-Chart)
-- [Warp Mechanics](Warp-Mechanics)
+- [Scanning & Thaumometer](Scanning-&-Thaumometer)
+- [Warp Mechanics & Sanity](Warp-Mechanics)
 - [Home](Home)

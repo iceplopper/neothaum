@@ -6,38 +6,37 @@
 
 ## Overview
 
-Fanatical zealots from beyond the veil seeking to usher in the Eldritch Lords.
+The **Crimson Cult** is a fanatical order of trans-dimensional zealots clad in blood-red robes. They construct ritual circles around Eldritch Obelisks in an attempt to summon the dark entities of the Outer Lands into our world.
 
 ---
 
-## Crimson Knights
+## Cultist Ranks
 
-Heavily armored melee warriors wielding broadswords.
+### 1. Crimson Knights
+- **Role:** Heavy melee vanguards.
+- **Equipment:** Crimson Plate Armor, broadswords, and heavy shields.
+- **Combat Style:** Charges players with high forward velocity and powerful knockback.
 
-*(Full guide and documentation for this section will be added here.)*
+### 2. Crimson Clerics
+- **Role:** Ritual spellcasters.
+- **Equipment:** Crimson Robes.
+- **Combat Style:** Keeps distance while casting homing crimson eldritch bolts and summoning portals of lightning.
 
-## Crimson Clerics
+### 3. The Crimson Praetor (Boss)
+- **Role:** Commander of the cult forces.
+- **Combat Style:** Wields an enchanted Void Broadsword; casts life-stealing spells and possesses immense health pools.
 
-Spellcasters launching fiery eldritch projectiles.
+---
 
-*(Full guide and documentation for this section will be added here.)*
+## The Crimson Rites Grimoire
 
-## Crimson Praetor
-
-A lethal boss commander leading ritual strikes.
-
-*(Full guide and documentation for this section will be added here.)*
-
-## The Crimson Rites Book
-
-Rare grimoire dropped by cultists that unlocks the Eldritch research tab.
-
-*(Full guide and documentation for this section will be added here.)*
+Slaying Crimson Clerics has a rare chance to drop the **Crimson Rites** book.
+- Right-clicking and reading this tome inflicts significant Warp, but immediately unlocks the final, secret **Eldritch Research Tab** in your Thaumonomicon!
 
 ---
 
 ## Related Topics
-
-- [Eldritch Worldgen](Eldritch-Worldgen)
-- [Eldritch Mobs](Eldritch-Mobs)
+- [Warp Mechanics & Sanity](Warp-Mechanics)
+- [Eldritch Structures](Eldritch-Worldgen)
+- [Eldritch Horrors & Bosses](Eldritch-Mobs)
 - [Home](Home)
