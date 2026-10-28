@@ -37,13 +37,20 @@ public final class TVBiomes {
 	public static void setBiomeAt(ServerLevel level, int x, int z, ResourceKey<Biome> biome) {
 		Holder<Biome> holder = level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(biome);
 		LevelChunk chunk = level.getChunk(SectionPos.blockToSectionCoord(x), SectionPos.blockToSectionCoord(z));
+		if (setBiomeAt(chunk, x, z, holder)) {
+			level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunk));
+		}
+	}
+
+	/** Utils.setBiomeAt for a chunk still being generated (or loaded): the column at x, z becomes the biome. Returns whether anything changed. */
+	public static boolean setBiomeAt(net.minecraft.world.level.chunk.ChunkAccess chunk, int x, int z, Holder<Biome> holder) {
 		int qx = (x & 15) >> 2;
 		int qz = (z & 15) >> 2;
 		boolean changed = false;
 		LevelChunkSection[] sections = chunk.getSections();
 		for (int i = 0; i < sections.length; i++) {
 			LevelChunkSection section = sections[i];
-			if (section.getNoiseBiome(qx, 0, qz).is(biome)) {
+			if (section.getNoiseBiome(qx, 0, qz).equals(holder)) {
 				continue;
 			}
 			int quartMinY = SectionPos.sectionToBlockCoord(chunk.getSectionYFromSectionIndex(i)) >> 2;
@@ -55,8 +62,8 @@ public final class TVBiomes {
 		}
 		if (changed) {
 			chunk.markUnsaved();
-			level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunk));
 		}
+		return changed;
 	}
 
 	private TVBiomes() {

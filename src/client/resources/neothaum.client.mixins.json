@@ -5,6 +5,7 @@
 	"client": [
 		"ContainerScreenAccessor",
 		"FirstPersonThaumometerMixin",
+		"FogRendererMixin",
 		"SpecialModelRenderersAccessor"
 	],
 	"injectors": {

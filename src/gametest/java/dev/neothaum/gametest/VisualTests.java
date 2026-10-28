@@ -2264,6 +2264,45 @@ public class VisualTests implements FabricClientGameTest {
 			ctx.waitTicks(30);
 			shot(ctx, "outer_boss_room");
 		}
+		// a tainted corridor's biome, and a crab vent steaming
+		net.minecraft.core.BlockPos[] vent = new net.minecraft.core.BlockPos[1];
+		server.runOnServer(srv -> {
+			var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+			for (int x = -20; x <= 20; x++) {
+				for (int z = -20; z <= 20; z++) {
+					var c = dev.neothaum.world.outer.MazeHandler.getCell(x, z);
+					if (c != null && c.feature == 13) {
+						outer.getChunk(x, z);
+						var biome = outer.getBiome(new net.minecraft.core.BlockPos(x * 16 + 8, 54, z * 16 + 8));
+						NeoThaum.LOGGER.info("[visual-test] outer: tainted corridor at chunk {},{} biome = {}", x, z, biome.unwrapKey().map(k -> k.identifier()).orElse(null));
+					}
+				}
+			}
+			for (int x = -2; x <= 2 && vent[0] == null; x++) {
+				for (int z = -2; z <= 2 && vent[0] == null; z++) {
+					outer.getChunk(x, z);
+					for (var p : net.minecraft.core.BlockPos.betweenClosed(x * 16, 45, z * 16, x * 16 + 15, 65, z * 16 + 15)) {
+						if (outer.getBlockState(p).is(dev.neothaum.registry.TVBlocks.CRUSTED_OPENING)) {
+							vent[0] = p.immutable();
+							break;
+						}
+					}
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] outer: a crab vent at {}", vent[0]);
+		});
+		if (vent[0] != null) {
+			server.runOnServer(srv -> {
+				var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+				var dir = outer.getBlockState(vent[0]).getValue(dev.neothaum.blocks.eldritch.CrustedOpeningBlock.FACING);
+				var at = vent[0].relative(dir, 2);
+				srv.getCommands().performPrefixedCommand(srv.createCommandSourceStack(), "execute in neothaum:outer_lands run tp @a " + (at.getX() + 0.5)
+					+ " " + (at.getY() - 1) + " " + (at.getZ() + 0.5) + " facing " + (vent[0].getX() + 0.5) + " " + (vent[0].getY() + 0.5) + " "
+					+ (vent[0].getZ() + 0.5));
+			});
+			ctx.waitTicks(60);
+			shot(ctx, "outer_crab_vent");
+		}
 		// and back through the maze's portal (after the portal cooldown wears off)
 		server.runCommand("execute in neothaum:outer_lands run tp @a 12.5 52 8.5");
 		ctx.waitTicks(120);
@@ -2274,6 +2313,15 @@ public class VisualTests implements FabricClientGameTest {
 			NeoThaum.LOGGER.info("[visual-test] outer: home again: dimension={} pos={}", player.level().dimension().identifier(), player.blockPosition());
 			player.removeAllEffects();
 		});
+		server.runCommand("kill @e[type=!player]");
+		// an eldritch guardian's gaze clouds the overworld air
+		server.runCommand("summon neothaum:eldritch_guardian 4 117 -4 {NoAI:1b}");
+		ctx.waitTicks(120);
+		ctx.runOnClient(mc -> NeoThaum.LOGGER.info("[visual-test] outer: guardian gaze: fog fiddled={} density={}",
+			dev.neothaum.client.hud.FogFiddle.fiddled, dev.neothaum.client.hud.FogFiddle.target));
+		server.runCommand("tp @a 0 117 6 180 0");
+		ctx.waitTicks(5);
+		shot(ctx, "outer_guardian_gaze");
 		server.runCommand("kill @e[type=!player]");
 	}
 

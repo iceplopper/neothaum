@@ -260,6 +260,12 @@ public final class FXImpl implements FX.Impl {
 	}
 
 	@Override
+	public void vent(Level level, double x, double y, double z, double mx, double my, double mz, int color, float scale) {
+		TCParticles.Vent v = new TCParticles.Vent((ClientLevel) level, x, y, z, mx, my, mz, color).scaled(scale);
+		add(v);
+	}
+
+	@Override
 	public void generic(Level level, double x, double y, double z, double mx, double my, double mz, float r, float g, float b, float alpha,
 		boolean loop, int start, int num, int inc, int age, int delay, float scale) {
 		add(new TCParticles.Generic((ClientLevel) level, x, y, z, mx, my, mz).setup(r, g, b, alpha, loop, start, num, inc, age, delay, scale));

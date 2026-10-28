@@ -114,7 +114,8 @@ public final class TVClientNetwork {
 			if (player == null) return;
 			switch (p.eventType()) {
 				case 0 -> player.playSound(TVSounds.HEARTBEAT, 1.0F, 1.0F);
-				case 1, 2 -> player.playSound(TVSounds.WIND, 0.8F, 0.8F);
+				case 1 -> dev.neothaum.client.hud.FogFiddle.warpFog();
+				case 2 -> dev.neothaum.client.hud.FogFiddle.gaze();
 			}
 		});
 		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.EntityFx.TYPE, (p, ctx) -> {

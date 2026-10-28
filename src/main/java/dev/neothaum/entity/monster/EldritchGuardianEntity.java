@@ -134,7 +134,17 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 	@Override
 	protected void customServerAiStep(ServerLevel level) {
 		super.customServerAiStep(level);
-		if (level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY) && this.hurtTime <= 0 && this.tickCount % 25 == 0) {
+		boolean outer = level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY);
+		// EntityEldritchGuardian.onUpdate: away from the Outer Lands, its gaze clouds the eyes of everyone within 16 blocks (24 on Hard)
+		if (!outer && (this.tickCount <= 1 || this.tickCount % 100 == 0) && level.getDifficulty() != net.minecraft.world.Difficulty.EASY) {
+			double range = level.getDifficulty() == net.minecraft.world.Difficulty.HARD ? 576.0 : 256.0;
+			for (var p : level.players()) {
+				if (p.isAlive() && p.distanceToSqr(this) < range) {
+					net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.send(p, new dev.neothaum.network.TVNetwork.MiscEvent((short) 2));
+				}
+			}
+		}
+		if (outer && this.hurtTime <= 0 && this.tickCount % 25 == 0) {
 			int bh = (int) this.getAttributeBaseValue(Attributes.MAX_HEALTH) / 2;
 			if (this.getAbsorptionAmount() < bh) {
 				this.setAbsorptionAmount(this.getAbsorptionAmount() + 1.0F);

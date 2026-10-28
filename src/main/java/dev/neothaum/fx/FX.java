@@ -12,6 +12,8 @@ public final class FX {
 	public interface Impl {
 		void wisp(Level level, double x, double y, double z, float scale, float r, float g, float b, boolean tinkle, boolean shrink, float gravity);
 
+		void vent(Level level, double x, double y, double z, double mx, double my, double mz, int color, float scale);
+
 		void wispTo(Level level, double x, double y, double z, double tx, double ty, double tz, float scale, int type, boolean shrink, float gravity);
 
 		void sparkle(Level level, double x, double y, double z, float scale, int type, float gravity);
@@ -75,6 +77,13 @@ public final class FX {
 
 	public static void install(Impl i) {
 		impl = i;
+	}
+
+	/** ClientProxy.drawVentParticles: a puff of steam blown along (mx, my, mz). */
+	public static void vent(Level level, double x, double y, double z, double mx, double my, double mz, int color, float scale) {
+		if (impl != null && level.isClientSide()) {
+			impl.vent(level, x, y, z, mx, my, mz, color, scale);
+		}
 	}
 
 	public static void wisp(Level level, double x, double y, double z, float scale, float r, float g, float b, boolean tinkle, boolean shrink, float gravity) {

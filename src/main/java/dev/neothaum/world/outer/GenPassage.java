@@ -247,7 +247,7 @@ final class GenPassage {
 								g.setTc(x + 8 + w, y + 4 + h, z + 8 + jx, "blockTaintFibres", g.rand.nextInt(4) == 0 ? 1 : 0);
 							}
 
-							// (TC4 also turned these columns to Tainted Land; biomes can't safely be changed mid-generation here)
+							g.setTaintBiome(x + 8 + w, z + 8 + jx);
 						}
 					}
 				}

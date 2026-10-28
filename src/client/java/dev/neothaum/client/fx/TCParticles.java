@@ -259,6 +259,80 @@ public final class TCParticles {
 	}
 
 	/** FXGeneric: animates through a run of particles.png cells. */
+	/**
+	 * FXVent: a puff of steam from a crab vent. It starts small, swells by 15% a tick to its full size (frames 1-5 of particles.png as it
+	 * grows), fades as it does, and drifts slowly up. Drawn with normal blending and the world's light.
+	 */
+	public static class Vent extends TCParticle {
+		private float particleScale;
+		private float psm = 1.0F;
+
+		public Vent(ClientLevel level, double x, double y, double z, double mx, double my, double mz, int color) {
+			super(level, x, y, z);
+			this.additive = false;
+			this.particleScale = this.random.nextFloat() * 0.1F + 0.05F;
+			this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F);
+			// setHeading(motion, 0.125, 5): the given direction, wobbled a little, at a fixed speed
+			double len = Math.sqrt(mx * mx + my * my + mz * mz);
+			mx /= len;
+			my /= len;
+			mz /= len;
+			mx += this.random.nextGaussian() * (this.random.nextBoolean() ? -1 : 1) * 0.0075 * 5.0;
+			my += this.random.nextGaussian() * (this.random.nextBoolean() ? -1 : 1) * 0.0075 * 5.0;
+			mz += this.random.nextGaussian() * (this.random.nextBoolean() ? -1 : 1) * 0.0075 * 5.0;
+			this.xd = mx * 0.125;
+			this.yd = my * 0.125;
+			this.zd = mz * 0.125;
+			this.lifetime = 200;
+			if (tooFar(x, y, z)) {
+				this.lifetime = 0;
+			}
+		}
+
+		public Vent scaled(float f) {
+			this.particleScale *= f;
+			this.psm *= f;
+			return this;
+		}
+
+		@Override
+		public float getQuadSize(float a) {
+			return 0.3F * this.particleScale;
+		}
+
+		@Override
+		protected int getLightCoords(float a) {
+			var pos = net.minecraft.core.BlockPos.containing(this.x, this.y, this.z);
+			return this.level.hasChunkAt(pos) ? net.minecraft.util.LightCoordsUtil.getLightCoords(this.level, pos) : 0;
+		}
+
+		@Override
+		public void tick() {
+			this.xo = this.x;
+			this.yo = this.y;
+			this.zo = this.z;
+			if (this.age++ >= this.lifetime || this.particleScale > this.psm) {
+				this.remove();
+				return;
+			}
+			this.yd += 0.0025;
+			this.x += this.xd;
+			this.y += this.yd;
+			this.z += this.zd;
+			this.xd *= 0.85;
+			this.yd *= 0.85;
+			this.zd *= 0.85;
+			if (this.particleScale < this.psm) {
+				this.particleScale *= 1.15F;
+			}
+			int part = (int) (1.0F + this.particleScale / this.psm * 4.0F);
+			float u = part % 16 / 16.0F;
+			float v = part / 16 / 16.0F;
+			this.setUV(u, v, u + 0.0624375F, v + 0.0624375F);
+			this.alpha = Math.max(0.0F, 0.4F * ((this.psm - this.particleScale) / this.psm));
+		}
+	}
+
 	public static class Generic extends TCParticle {
 		boolean loop;
 		int delay;

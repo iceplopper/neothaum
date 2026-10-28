@@ -7,7 +7,6 @@ import dev.neothaum.registry.TVBlockEntities;
 import dev.neothaum.registry.TVSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -59,14 +58,15 @@ public class CrustedOpeningBlockEntity extends BlockEntity {
 		}
 	}
 
+	/** TileEldritchCrabSpawner.drawVent: a puff of steam (colour 10061994) blown out of the vent. */
 	private void drawVent() {
 		var r = this.level.getRandom();
 		Direction dir = this.facing();
-		double x = this.worldPosition.getX() + 0.5 + (0.15 - r.nextFloat() * 0.3) + dir.getStepX() / 2.1;
-		double y = this.worldPosition.getY() + 0.5 + (0.15 - r.nextFloat() * 0.3) + dir.getStepY() / 2.1;
-		double z = this.worldPosition.getZ() + 0.5 + (0.15 - r.nextFloat() * 0.3) + dir.getStepZ() / 2.1;
-		this.level.addParticle(ParticleTypes.SMOKE, x, y, z, dir.getStepX() / 3.0 + 0.1 - r.nextFloat() * 0.2, dir.getStepY() / 3.0 + 0.1 - r.nextFloat() * 0.2,
-			dir.getStepZ() / 3.0 + 0.1 - r.nextFloat() * 0.2);
+		float fx = 0.15F - r.nextFloat() * 0.3F, fy = 0.15F - r.nextFloat() * 0.3F, fz = 0.15F - r.nextFloat() * 0.3F;
+		float fx2 = 0.1F - r.nextFloat() * 0.2F, fy2 = 0.1F - r.nextFloat() * 0.2F, fz2 = 0.1F - r.nextFloat() * 0.2F;
+		dev.neothaum.fx.FX.vent(this.level, this.worldPosition.getX() + 0.5F + fx + dir.getStepX() / 2.1F,
+			this.worldPosition.getY() + 0.5F + fy + dir.getStepY() / 2.1F, this.worldPosition.getZ() + 0.5F + fz + dir.getStepZ() / 2.1F,
+			dir.getStepX() / 3.0F + fx2, dir.getStepY() / 3.0F + fy2, dir.getStepZ() / 3.0F + fz2, 10061994, 2.0F);
 	}
 
 	public boolean triggerEvent(int id, int param) {

@@ -100,6 +100,13 @@ public class GenCommon {
 		this.set(x, y, z, state);
 	}
 
+	/** Utils.setBiomeAt(world, x, z, biomeTaint), on the chunk being built. */
+	void setTaintBiome(int x, int z) {
+		var holder = this.world.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME)
+			.getOrThrow(dev.neothaum.world.TVBiomes.TAINTED_LAND);
+		dev.neothaum.world.TVBiomes.setBiomeAt(this.world.getChunk(x >> 4, z >> 4), x, z, holder);
+	}
+
 	/** Any of TC4's BlockCosmeticSolid stones the maze is built of. */
 	boolean isAncientStone(int x, int y, int z) {
 		BlockState s = this.get(x, y, z);

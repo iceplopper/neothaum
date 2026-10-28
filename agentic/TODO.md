@@ -213,8 +213,6 @@ Root causes differed from the handoff's guesses in several places; what was actu
 - **Golem AI still invented / missing (from the bell work):** the Use core presses nearby buttons (copper-golem add-on behaviour) instead of
   TC4's AIUseItem on marked blocks; the Liquid (Decant) and Essentia (Alchemy) cores have no AI yet; Empty-core marker colours are not yet
   matched against filter-slot colours. Fill/Empty/Sorting now work from bell markers.
-- Outer Lands gaps: the taint corridor doesn't repaint its biome (biomes can't be changed safely mid-generation); the Eldritch Guardian's
-  overworld "gaze" (PacketMiscEvent 2, fog closing in) needs a fog hook; the crab vent puffs use vanilla smoke instead of FXVent.
 - Giant Taintacle: TC4 dropped a primordial pearl when the last one in an area died; not ported.
 
 ## ✅ Completed 2026-10-28 (Claude) — the Outer Lands (Feature 11), verified with the `outer` gametest scene
@@ -230,6 +228,8 @@ Root causes differed from the handoff's guesses in several places; what was actu
 - The altar now lays out a maze as its eyes go in and only opens over a sinister node once the maze exists; the portal carries players
   both ways (5 s cooldown) and grants ENTEROUTER; it collapses if its frame is broken.
 - Fitting a Runed Tablet wakes the next boss (golem, warden, crimson portal, champion taintacles) in its TC4 arena.
+- Tainted corridors turn their biome to Tainted Land; crab vents puff TC4's FXVent steam; away from the Outer Lands a guardian's gaze
+  (PacketMiscEvent 2) draws TC4's fiddled fog in for ten seconds, and the warp mist (event 1) for two minutes.
 - Guardians wear a regrowing ward in the Outer Lands; champions are likelier there (key rooms and libraries most); the portable hole won't
   work there; OUTERREV triggers on glyphed and runed stone.
 
