@@ -66,6 +66,7 @@ public class NeoThaum implements ModInitializer {
 		dev.neothaum.events.AspectOrbEvents.init();
 		dev.neothaum.entity.champion.ChampionEvents.init();
 		dev.neothaum.golem.GolemBellItem.init();
+		dev.neothaum.events.CommandThaumcraft.init();
 		LOGGER.info("NeoThaum 4 initialized: {} aspects", Aspect.aspects.size());
 	}
 }

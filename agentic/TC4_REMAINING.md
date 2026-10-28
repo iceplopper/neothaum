@@ -182,9 +182,8 @@ villages, ethereal bloom) is done. What is left:
 
 ## Suggested order
 
-1. **Artifice blocks and the remaining alchemy machines.**
-2. **Remaining gear (Fortress armor, Harness, Cultist armor, Crimson blade, Primal arrows).**
-3. **Golemancy.**
-4. **Warp events.**
-5. **Eldritch content and the Outer Lands.**
-6. **Polish.**
+1. **/thaumcraft command.**
+2. **Sounds and the Eldritch Obelisk Placer.**
+3. **Floating special items.**
+4. **Obsidian totems and nodes over vanilla structures.**
+5. **Native tin, silver and lead clusters (cross-mod).**
