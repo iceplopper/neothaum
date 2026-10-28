@@ -52,72 +52,73 @@ public class GolemScreen extends AbstractContainerScreen<GolemMenu> {
 		if (this.golem == null) return;
 
 		int core = this.golem.getCore();
-		int orderUpgrades = this.golem.getUpgradeCount(GolemUpgradeType.ORDER);
-		int entropyUpgrades = this.golem.getUpgradeCount(GolemUpgradeType.ENTROPY);
+		boolean order = this.golem.getUpgradeCount(GolemUpgradeType.ORDER) > 0;
+		int slots = this.golem.getInventorySize();
 		int typeLoc = this.golem.getGolemType().ordinal() * 24;
 
-		// Render filter slots if core has inventory
 		if (core >= 0 && GolemCoreType.byId(core).hasInventory) {
-			for (int a = 0; a < 6; a++) {
+			for (int a = 0; a < Math.min(6, slots); a++) {
 				int sx = x + 96 + (a / 2) * 28;
-				int sy = y + 12 + (a % 2) * 31;
-				g.blit(RenderPipelines.GUI_TEXTURED, TEX, sx, sy, 184, typeLoc, 24, 24, 256, 256);
-
-				// Order upgrade marker tab
-				if (orderUpgrades > 0) {
-					g.blit(RenderPipelines.GUI_TEXTURED, TEX, sx, sy - 8, 72, 168, 24, 12, 256, 256);
-					int slotIndex = a + this.menu.currentScroll * 6;
-					int color = this.golem.getFilterColor(slotIndex);
+				g.blit(RenderPipelines.GUI_TEXTURED, TEX, sx, y + 12 + (a % 2) * 31, 184, typeLoc, 24, 24, 256, 256);
+				if (order) {
+					g.blit(RenderPipelines.GUI_TEXTURED, TEX, sx, y + 4 + (a % 2) * 31, 72, 168, 24, 12, 256, 256);
+					int color = this.golem.getFilterColor(a + this.menu.currentScroll * 6);
 					if (color >= 0 && color < MARKER_COLORS.length) {
-						int argb = 0xFF000000 | MARKER_COLORS[color];
-						g.blit(RenderPipelines.GUI_TEXTURED, TEX, sx + 9, sy - 5, 0, 176, 6, 6, 256, 256, argb);
+						g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 105 + (a / 2) * 28, y + 7 + (a % 2) * 31, 0, 176, 6, 6, 256, 256,
+							0xFF000000 | MARKER_COLORS[color]);
 					}
 				}
 			}
-
-			// Scroll buttons
-			if (this.menu.maxScroll > 0) {
-				int uLeft = this.menu.currentScroll > 0 ? 0 : 0;
-				int vLeft = this.menu.currentScroll > 0 ? 200 : 208;
-				g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 111, y + 68, uLeft, vLeft, 24, 8, 256, 256);
-
-				int uRight = this.menu.currentScroll < this.menu.maxScroll ? 24 : 24;
-				int vRight = this.menu.currentScroll < this.menu.maxScroll ? 200 : 208;
-				g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 135, y + 68, uRight, vRight, 24, 8, 256, 256);
+			if (slots > 6) {
+				g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 111, y + 68, 0, this.menu.currentScroll > 0 ? 200 : 208, 24, 8, 256, 256);
+				g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 135, y + 68, 24, this.menu.currentScroll < this.menu.maxScroll ? 200 : 208, 24, 8, 256, 256);
 			}
 		}
-
-		// Guard Core checkboxes (Core 4)
-		if (core == 4) {
+		// guard: what it may attack (an order upgrade lets it choose)
+		if (core == 4 && order) {
 			for (int i = 0; i < 4; i++) {
-				int cy = y + 8 + i * 16;
-				boolean checked = this.golem.getTargetFlag(i);
-				g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 104, cy, 8, checked ? 176 : 168, 8, 8, 256, 256);
+				this.box(g, x + 104, y + 5 + i * 16, this.golem.getTargetFlag(i));
 			}
 		}
-
-		// Fill Core toggle (Core 0)
+		// fill: precise amount or any amount
 		if (core == 0) {
-			boolean anyAmount = this.golem.getToggle(0);
-			g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 55, y + 54, 8, anyAmount ? 176 : 168, 8, 8, 256, 256);
+			this.box(g, x + 62, y + 54, !this.golem.getToggle(0));
 		}
-
-		// Use Core toggles (Core 8)
+		// use: block or empty space, right or left click, sneaking
 		if (core == 8) {
 			for (int i = 0; i < 3; i++) {
-				boolean val = this.golem.getToggle(i);
-				g.blit(RenderPipelines.GUI_TEXTURED, TEX, x + 10, y + 42 + i * 12, 8, val ? 176 : 168, 8, 8, 256, 256);
+				this.box(g, x + 42, y + 40 + i * 10, !this.golem.getToggle(i));
 			}
 		}
-
-		// Sorting options (Core 10 or Sortable with Entropy upgrade)
-		if (core == 10 || (entropyUpgrades > 0 && GolemCoreType.byId(core).hasInventory)) {
-			int bx = (core == 10) ? x + 10 : x + 70;
+		// entropy: how strictly items must match
+		if (this.canSortGui()) {
+			int sx = core == 10 ? 66 : 180;
+			int sy = core == 10 ? 12 : 0;
 			for (int i = 0; i < 3; i++) {
-				boolean checked = this.golem.getSortFlag(i);
-				g.blit(RenderPipelines.GUI_TEXTURED, TEX, bx, y + 42 + i * 10, 8, checked ? 176 : 168, 8, 8, 256, 256);
+				this.box(g, x + sx, y + 24 + i * 10 + sy, this.golem.getSortFlag(i));
 			}
 		}
+	}
+
+	private void box(GuiGraphicsExtractor g, int bx, int by, boolean checked) {
+		g.blit(RenderPipelines.GUI_TEXTURED, TEX, bx, by, 8, 168, 8, 8, 256, 256);
+		if (checked) {
+			g.blit(RenderPipelines.GUI_TEXTURED, TEX, bx, by, 8, 176, 8, 8, 256, 256);
+		}
+	}
+
+	/** ItemGolemCore.canSort with an entropy upgrade: fill, empty, gather, use and sorting cores. */
+	private boolean canSortGui() {
+		int core = this.golem.getCore();
+		return this.golem.getUpgradeCount(GolemUpgradeType.ENTROPY) > 0 && (core == 0 || core == 1 || core == 2 || core == 8 || core == 10);
+	}
+
+	private void halfText(GuiGraphicsExtractor g, String text, float tx, float ty, int color, boolean centred) {
+		g.pose().pushMatrix();
+		g.pose().translate(tx, ty);
+		g.pose().scale(0.5F, 0.5F);
+		g.text(this.font, Component.literal(text), centred ? -this.font.width(text) / 2 : 0, 0, 0xFF000000 | color, false);
+		g.pose().popMatrix();
 	}
 
 	@Override
@@ -144,48 +145,50 @@ public class GolemScreen extends AbstractContainerScreen<GolemMenu> {
 		}
 
 		int core = this.golem.getCore();
-
-		// Blurb or Threat message on left side
-		if (this.threat >= 0) {
-			g.textWithWordWrap(this.font, Component.translatable("golemthreat." + this.threat + ".text"), 10, 14, 80, 0xDDDDDD);
-		} else if (core >= 0) {
-			g.textWithWordWrap(this.font, Component.translatable("golemblurb." + core + ".text"), 10, 14, 80, 0xDDDDDD);
-		}
-
-		// Page number text
+		// TC4 writes the blurb (or an advanced golem's occasional threat) at half size
+		g.pose().pushMatrix();
+		g.pose().scale(0.5F, 0.5F);
+		Component blurb = this.threat >= 0 ? Component.translatable("golemthreat." + this.threat + ".text")
+			: Component.translatable("golemblurb." + core + ".text");
+		g.textWithWordWrap(this.font, blurb, 80, 22, 110, 0xFFDDDDDD);
 		if (this.menu.maxScroll > 0) {
-			String pageStr = (this.menu.currentScroll + 1) + "/" + (this.menu.maxScroll + 1);
-			g.text(this.font, Component.literal(pageStr), 125, 74, 0xDDDDDD, false);
+			g.text(this.font, Component.literal((this.menu.currentScroll + 1) + "/" + (this.menu.maxScroll + 1)), 323, 140, 0xFFDDDDDD, false);
 		}
-
-		// Guard labels
-		if (core == 4) {
-			g.text(this.font, Component.literal("Monsters"), 116, 8, 0xFF5555, false);
-			g.text(this.font, Component.literal("Animals"), 116, 24, 0x55FF55, false);
-			g.text(this.font, Component.literal("Players"), 116, 40, 0x55FFFF, false);
-			g.text(this.font, Component.literal("Creepers"), 116, 56, 0xFFFF55, false);
+		g.pose().popMatrix();
+		if (core == 4 && this.golem.getUpgradeCount(GolemUpgradeType.ORDER) > 0) {
+			g.text(this.font, Component.literal("Monsters"), 122, 6, 0xFFFFCCCC, false);
+			g.text(this.font, Component.literal("Animals"), 122, 22, 0xFFFFFFCC, false);
+			g.text(this.font, Component.literal("Players"), 122, 38, 0xFFCCCCFF, false);
+			g.text(this.font, Component.literal("Creepers"), 122, 54, 0xFFCCFFCC, false);
 		}
-
-		// Fill label
 		if (core == 0) {
-			String fillText = this.golem.getToggle(0) ? "Any amount" : "Precise amount";
-			g.text(this.font, Component.literal(fillText), 30, 66, 0xFECE5D, false);
+			this.halfText(g, this.golem.getToggle(0) ? "Any amount" : "Precise amount", 66, 48, 16645629, true);
 		}
-
-		// Use labels
 		if (core == 8) {
-			g.text(this.font, Component.literal(this.golem.getToggle(0) ? "Empty space" : "Block"), 22, 42, 0xFECE5D, false);
-			g.text(this.font, Component.literal(this.golem.getToggle(1) ? "Left click" : "Right click"), 22, 54, 0xFECE5D, false);
-			g.text(this.font, Component.literal(this.golem.getToggle(2) ? "Sneaking" : "Not sneaking"), 22, 66, 0xFECE5D, false);
+			this.halfText(g, this.golem.getToggle(0) ? "Empty space" : "Block", 53, 42, 16645629, false);
+			this.halfText(g, this.golem.getToggle(1) ? "Left click" : "Right click", 53, 52, 16645629, false);
+			this.halfText(g, this.golem.getToggle(2) ? "Sneaking" : "Not sneaking", 53, 62, 16645629, false);
 		}
-
-		// Sorting labels
-		int entropyUpgrades = this.golem.getUpgradeCount(GolemUpgradeType.ENTROPY);
-		if (core == 10 || (entropyUpgrades > 0 && GolemCoreType.byId(core).hasInventory)) {
-			int bx = (core == 10) ? 22 : 82;
-			g.text(this.font, Component.literal("Tags/Ore"), bx, 42, 0xDDDDDD, false);
-			g.text(this.font, Component.literal("Ignore damage"), bx, 52, 0xDDDDDD, false);
-			g.text(this.font, Component.literal("Ignore NBT"), bx, 62, 0xDDDDDD, false);
+		if (this.canSortGui()) {
+			int sx = core == 10 ? 66 : 180;
+			int sy = core == 10 ? 12 : 0;
+			this.halfText(g, "Use Ore dictionary", sx + 10, 26 + sy, this.golem.checkOreDict() ? 16645629 : 6710886, false);
+			this.halfText(g, "Ignore item damage", sx + 10, 36 + sy, this.golem.ignoreDamage() ? 16645629 : 6710886, false);
+			this.halfText(g, "Ignore NBT values", sx + 10, 46 + sy, this.golem.ignoreNBT() ? 16645629 : 6710886, false);
+		}
+		// the colour under the mouse, over the slots
+		if (core >= 0 && GolemCoreType.byId(core).hasInventory && this.golem.getUpgradeCount(GolemUpgradeType.ORDER) > 0) {
+			int x = (this.width - this.imageWidth) / 2;
+			int y = (this.height - this.imageHeight) / 2;
+			for (int a = 0; a < Math.min(6, this.golem.getInventorySize()); a++) {
+				int mx = mouseX - (x + 96 + a / 2 * 28);
+				int my = mouseY - (y + 4 + a % 2 * 31);
+				if (mx >= 0 && my >= 0 && mx < 24 && my < 12) {
+					int c = this.golem.getFilterColor(a + this.menu.currentScroll * 6);
+					String text = c >= 0 ? MARKER_COLOR_NAMES[c] : "Any color";
+					g.text(this.font, Component.literal(text), 133 - this.font.width(text) / 2, -6, 0xFFFDFDFD, false);
+				}
+			}
 		}
 	}
 
@@ -199,85 +202,70 @@ public class GolemScreen extends AbstractContainerScreen<GolemMenu> {
 		double my = event.y();
 
 		int core = this.golem.getCore();
-		int orderUpgrades = this.golem.getUpgradeCount(GolemUpgradeType.ORDER);
-
-		// Click Order upgrade marker tab above slot
-		if (core >= 0 && GolemCoreType.byId(core).hasInventory && orderUpgrades > 0) {
-			for (int a = 0; a < 6; a++) {
-				int sx = x + 96 + (a / 2) * 28;
-				int sy = y + 12 + (a % 2) * 31;
-				if (mx >= sx && mx < sx + 24 && my >= sy - 8 && my < sy + 4) {
-					int slotIndex = a + this.menu.currentScroll * 6;
-					this.golem.handleButton(0, slotIndex);
-					TVNetwork.clientSender.accept(new TVNetwork.GolemButton(this.golem.getId(), 0, slotIndex));
-					return true;
+		int slots = this.golem.getInventorySize();
+		if (core >= 0 && GolemCoreType.byId(core).hasInventory) {
+			if (this.golem.getUpgradeCount(GolemUpgradeType.ORDER) > 0) {
+				for (int a = 0; a < Math.min(6, slots); a++) {
+					int slot = a + this.menu.currentScroll * 6;
+					double ty = my - (y + 4 + a % 2 * 31);
+					double lx = mx - (x + 96 + a / 2 * 28);
+					if (ty >= 0 && ty < 12 && lx >= 0 && lx < 8) {
+						return this.press(4, slot);
+					}
+					if (ty >= 0 && ty < 12 && lx >= 16 && lx < 24) {
+						return this.press(0, slot);
+					}
 				}
 			}
-		}
-
-		// Click scroll buttons
-		if (this.menu.maxScroll > 0) {
-			if (mx >= x + 111 && mx < x + 135 && my >= y + 68 && my < y + 76) {
-				if (this.menu.currentScroll > 0) {
+			if (slots > 6 && my >= y + 68 && my < y + 76) {
+				if (mx >= x + 111 && mx < x + 135 && this.menu.currentScroll > 0) {
 					this.menu.setScroll(this.menu.currentScroll - 1);
 					return true;
 				}
-			}
-			if (mx >= x + 135 && mx < x + 159 && my >= y + 68 && my < y + 76) {
-				if (this.menu.currentScroll < this.menu.maxScroll) {
+				if (mx >= x + 135 && mx < x + 159 && this.menu.currentScroll < this.menu.maxScroll) {
 					this.menu.setScroll(this.menu.currentScroll + 1);
 					return true;
 				}
 			}
 		}
-
-		// Click Guard Core checkboxes
 		if (core == 4) {
 			for (int i = 0; i < 4; i++) {
-				int cy = y + 8 + i * 16;
-				if (mx >= x + 104 && mx < x + 120 && my >= cy && my < cy + 12) {
-					this.golem.handleButton(2, i);
-					TVNetwork.clientSender.accept(new TVNetwork.GolemButton(this.golem.getId(), 2, i));
-					return true;
+				if (this.in(mx, my, x + 104, y + 5 + 16 * i, 8, 8)) {
+					return this.press(1, i + 1);
 				}
 			}
 		}
-
-		// Click Fill Core toggle
-		if (core == 0) {
-			if (mx >= x + 55 && mx < x + 70 && my >= y + 54 && my < y + 66) {
-				this.golem.handleButton(1, 0);
-				TVNetwork.clientSender.accept(new TVNetwork.GolemButton(this.golem.getId(), 1, 0));
-				return true;
-			}
+		if (core == 0 && this.in(mx, my, x + 62, y + 54, 8, 8)) {
+			return this.press(1, 0);
 		}
-
-		// Click Use Core toggles
 		if (core == 8) {
 			for (int i = 0; i < 3; i++) {
-				int cy = y + 42 + i * 12;
-				if (mx >= x + 10 && mx < x + 25 && my >= cy && my < cy + 10) {
-					this.golem.handleButton(1, i);
-					TVNetwork.clientSender.accept(new TVNetwork.GolemButton(this.golem.getId(), 1, i));
-					return true;
+				if (this.in(mx, my, x + 42, y + 40 + i * 10, 8, 8)) {
+					return this.press(1, i);
 				}
 			}
 		}
-
-		// Click Sorting options
-		int entropyUpgrades = this.golem.getUpgradeCount(GolemUpgradeType.ENTROPY);
-		if (core == 10 || (entropyUpgrades > 0 && GolemCoreType.byId(core).hasInventory)) {
-			int bx = (core == 10) ? x + 10 : x + 70;
+		if (this.canSortGui()) {
+			int sx = core == 10 ? 66 : 180;
+			int sy = core == 10 ? 12 : 0;
 			for (int i = 0; i < 3; i++) {
-				int cy = y + 42 + i * 10;
-				if (mx >= bx && mx < bx + 15 && my >= cy && my < cy + 10) {
-					this.golem.handleButton(3, i);
-					TVNetwork.clientSender.accept(new TVNetwork.GolemButton(this.golem.getId(), 3, i));
-					return true;
+				if (this.in(mx, my, x + sx, y + 24 + i * 10 + sy, 64, 8)) {
+					return this.press(1, 5 + i);
 				}
 			}
 		}
-
 		return super.mouseClicked(event, doubleClick);
+	}
+
+	private boolean in(double mx, double my, int bx, int by, int w, int h) {
+		return mx >= bx && my >= by && mx < bx + w && my < by + h;
+	}
+
+	/** ContainerGolem.enchantItem: send a button to the golem, with a click. */
+	private boolean press(int button, int value) {
+		this.golem.handleButton(button, value);
+		TVNetwork.clientSender.accept(new TVNetwork.GolemButton(this.golem.getId(), button, value));
+		this.golem.playSound(net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.value(), 0.2F, 0.8F);
+		return true;
 	}
 }

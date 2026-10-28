@@ -83,38 +83,39 @@ public class GolemPlacerItem extends Item {
 		BlockPos spawnPos = clickedPos.relative(side);
 
 		double yOffset = 0.0;
-		if (side == Direction.UP && world.getBlockState(clickedPos).getBlock() instanceof FenceBlock) {
+		var clicked = world.getBlockState(clickedPos);
+		if (side == Direction.UP && clicked.getBlock() instanceof FenceBlock || clicked.getBlock() instanceof net.minecraft.world.level.block.IronBarsBlock) {
 			yOffset = 0.5;
 		}
 
 		GolemEntity golem = new GolemEntity(TVEntities.GOLEM, world);
 		golem.setGolemType(this.golemType);
-		golem.snapTo(spawnPos.getX() + 0.5, spawnPos.getY() + yOffset, spawnPos.getZ() + 0.5,
-			world.getRandom().nextFloat() * 360.0F, 0.0F);
-
-		boolean advanced = Boolean.TRUE.equals(stack.get(TVComponents.GOLEM_ADVANCED));
-		golem.setAdvanced(advanced);
-
-		if (stack.has(TVComponents.GOLEM_CORE)) {
-			golem.setCore(stack.get(TVComponents.GOLEM_CORE));
+		golem.snapTo(spawnPos.getX() + 0.5, spawnPos.getY() + yOffset, spawnPos.getZ() + 0.5, world.getRandom().nextFloat() * 360.0F, 0.0F);
+		golem.setAdvanced(Boolean.TRUE.equals(stack.get(TVComponents.GOLEM_ADVANCED)));
+		// ItemGolemPlacer.spawnCreature: home is where the golem stands, facing back at the block it was placed on
+		golem.setHomeArea(spawnPos, side);
+		if (stack.has(TVComponents.GOLEM_DECORATION)) {
+			golem.setDecoration(stack.get(TVComponents.GOLEM_DECORATION));
 		}
 		if (stack.has(TVComponents.GOLEM_UPGRADES)) {
 			golem.setUpgrades(stack.get(TVComponents.GOLEM_UPGRADES));
 		}
-		if (stack.has(TVComponents.GOLEM_DECORATION)) {
-			golem.setDecoration(stack.get(TVComponents.GOLEM_DECORATION));
-		}
-
+		golem.setCore(stack.has(TVComponents.GOLEM_CORE) ? stack.get(TVComponents.GOLEM_CORE) : -1);
+		golem.setHealth(golem.getMaxHealth());
 		if (stack.has(TVComponents.GOLEM_MARKERS)) {
 			golem.setMarkers(stack.get(TVComponents.GOLEM_MARKERS));
 		}
-
-		golem.setHomeArea(clickedPos, side);
 		if (player != null) {
 			golem.setOwner(player);
 		}
 		if (stack.has(net.minecraft.core.component.DataComponents.CUSTOM_NAME)) {
 			golem.setCustomName(stack.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME));
+		}
+		java.util.List<ItemStack> filter = stack.get(TVComponents.GOLEM_INVENTORY);
+		if (filter != null) {
+			for (int a = 0; a < filter.size(); a++) {
+				golem.setFilterItem(a, filter.get(a));
+			}
 		}
 
 		world.addFreshEntity(golem);

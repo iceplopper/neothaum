@@ -130,6 +130,11 @@ public final class TVEntities {
 	public static final EntityType<dev.neothaum.golem.GolemEntity> GOLEM = mob("golem",
 		dev.neothaum.golem.GolemEntity::new, MobCategory.MISC, 0.4F, 0.95F,
 		dev.neothaum.golem.GolemEntity::createAttributes, b -> b, 0, 0);
+	/** EntityDart: a golem's dart. */
+	public static final EntityType<dev.neothaum.golem.DartEntity> DART = projectile("dart", dev.neothaum.golem.DartEntity::new);
+	/** EntityGolemBobber: a fishing golem's float. */
+	public static final EntityType<dev.neothaum.golem.GolemBobberEntity> GOLEM_BOBBER = projectile("golem_bobber",
+		dev.neothaum.golem.GolemBobberEntity::new);
 	public static final EntityType<dev.neothaum.golem.TravelingTrunkEntity> TRAVELING_TRUNK = mob("traveling_trunk",
 		dev.neothaum.golem.TravelingTrunkEntity::new, MobCategory.CREATURE, 0.8F, 0.8F,
 		dev.neothaum.golem.TravelingTrunkEntity::createAttributes, b -> b, 0, 0, true);

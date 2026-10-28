@@ -88,6 +88,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("audit")) {
 					auditScene(ctx, server, sp);
 				}
+				if (scenes.contains("golemai")) {
+					golemAiScene(ctx, server);
+				}
 				if (scenes.contains("worldmap")) {
 					worldMapScene(ctx, server, sp);
 				}
@@ -1960,6 +1963,183 @@ public class VisualTests implements FabricClientGameTest {
 		} catch (Throwable t) {
 			ctx.waitTicks(20);
 		}
+	}
+
+	/** One golem per core, each at a little workplace of its own, and what each has done after a while. */
+	private static void golemAiScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode creative @a", "difficulty peaceful", "gamerule doDaylightCycle false", "gamerule doMobSpawning false",
+			"weather clear", "time set 6000", "fill -72 117 -54 72 130 54 air", "fill -72 116 -54 72 116 54 stone", "tp @a 0 140 0"}) {
+			server.runCommand(cmd);
+		}
+		ctx.waitTicks(20);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var dim = level.dimension();
+			java.util.function.BiFunction<int[], Integer, dev.neothaum.golem.GolemEntity> golem = (c, core) -> {
+				var g = new dev.neothaum.golem.GolemEntity(dev.neothaum.entity.TVEntities.GOLEM, level);
+				g.setGolemType(dev.neothaum.golem.GolemType.IRON);
+				var home = new net.minecraft.core.BlockPos(c[0], 117, c[1]);
+				g.snapTo(c[0] + 0.5, 117, c[1] + 0.5, 0, 0);
+				g.setHomeArea(home, net.minecraft.core.Direction.SOUTH);
+				g.setCore(core);
+				level.addFreshEntity(g);
+				return g;
+			};
+			java.util.function.Function<net.minecraft.core.BlockPos, net.minecraft.world.level.block.entity.ChestBlockEntity> chest = p -> {
+				level.setBlock(p, net.minecraft.world.level.block.Blocks.CHEST.defaultBlockState(), 3);
+				return (net.minecraft.world.level.block.entity.ChestBlockEntity) level.getBlockEntity(p);
+			};
+			java.util.function.BiFunction<net.minecraft.core.BlockPos, net.minecraft.core.Direction, dev.neothaum.golem.GolemMarker> mark =
+				(p, d) -> new dev.neothaum.golem.GolemMarker(p, dim, (byte) d.get3DDataValue(), (byte) -1);
+			var up = net.minecraft.core.Direction.UP;
+			// fill: keep four cobblestone in the home chest
+			int[] c = {-54, -36};
+			chest.apply(new net.minecraft.core.BlockPos(c[0], 117, c[1] - 1));
+			chest.apply(new net.minecraft.core.BlockPos(c[0] + 5, 117, c[1])).setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.COBBLESTONE, 64));
+			var g = golem.apply(c, 0);
+			g.setFilterItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.COBBLESTONE, 4));
+			g.setMarkers(java.util.List.of(mark.apply(new net.minecraft.core.BlockPos(c[0] + 5, 117, c[1]), up)));
+			// empty: carry the home chest's dirt to the marked chest
+			c = new int[]{-18, -36};
+			chest.apply(new net.minecraft.core.BlockPos(c[0], 117, c[1] - 1)).setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT, 40));
+			chest.apply(new net.minecraft.core.BlockPos(c[0] + 5, 117, c[1]));
+			golem.apply(c, 1).setMarkers(java.util.List.of(mark.apply(new net.minecraft.core.BlockPos(c[0] + 5, 117, c[1]), up)));
+			// gather: pick up the apples lying about
+			c = new int[]{18, -36};
+			chest.apply(new net.minecraft.core.BlockPos(c[0], 117, c[1] - 1));
+			golem.apply(c, 2);
+			for (int i = 0; i < 3; i++) {
+				level.addFreshEntity(new net.minecraft.world.entity.item.ItemEntity(level, c[0] + 4.5 + i, 117.2, c[1] + 3.5,
+					new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.APPLE, 2)));
+			}
+			// harvest: a little field of ripe wheat
+			c = new int[]{54, -36};
+			golem.apply(c, 3);
+			for (int i = 0; i < 3; i++) {
+				var soil = new net.minecraft.core.BlockPos(c[0] + 2 + i, 116, c[1] + 2);
+				level.setBlock(soil, net.minecraft.world.level.block.Blocks.FARMLAND.defaultBlockState(), 3);
+				level.setBlock(soil.above(), net.minecraft.world.level.block.Blocks.WHEAT.defaultBlockState()
+					.setValue(net.minecraft.world.level.block.CropBlock.AGE, 7), 3);
+			}
+			// guard: a zombie that stands still
+			c = new int[]{-54, 0};
+			golem.apply(c, 4);
+			var z = new net.minecraft.world.entity.monster.zombie.Zombie(level);
+			z.snapTo(c[0] + 4.5, 117, c[1] + 4.5, 0, 0);
+			z.setNoAi(true);
+			z.setPersistenceRequired();
+			level.addFreshEntity(z);
+			// liquid: fill the home cauldron from a marked pool of water
+			c = new int[]{-18, 0};
+			level.setBlock(new net.minecraft.core.BlockPos(c[0], 117, c[1] - 1), net.minecraft.world.level.block.Blocks.CAULDRON.defaultBlockState(), 3);
+			var pool = new net.minecraft.core.BlockPos(c[0] + 4, 116, c[1]);
+			level.setBlock(pool, net.minecraft.world.level.block.Blocks.WATER.defaultBlockState(), 3);
+			golem.apply(c, 5).setMarkers(java.util.List.of(mark.apply(pool, up)));
+			// essentia: move ignis from the home jar to a marked jar
+			c = new int[]{18, 0};
+			var homeJarPos = new net.minecraft.core.BlockPos(c[0], 117, c[1] - 1);
+			level.setBlock(homeJarPos, dev.neothaum.registry.TVBlocks.WARDED_JAR.defaultBlockState(), 3);
+			((dev.neothaum.tiles.JarBlockEntity) level.getBlockEntity(homeJarPos)).addToContainer(dev.neothaum.api.aspects.Aspect.FIRE, 20);
+			var jarPos = new net.minecraft.core.BlockPos(c[0] + 5, 117, c[1]);
+			level.setBlock(jarPos, dev.neothaum.registry.TVBlocks.WARDED_JAR.defaultBlockState(), 3);
+			golem.apply(c, 6).setMarkers(java.util.List.of(mark.apply(jarPos, up)));
+			// lumber: a bare oak trunk
+			c = new int[]{54, 0};
+			golem.apply(c, 7);
+			for (int y = 117; y < 121; y++) {
+				level.setBlock(new net.minecraft.core.BlockPos(c[0] + 3, y, c[1] + 3), net.minecraft.world.level.block.Blocks.OAK_LOG.defaultBlockState(), 3);
+			}
+			// use: plant the home chest's seeds on the marked farmland
+			c = new int[]{-54, 36};
+			chest.apply(new net.minecraft.core.BlockPos(c[0], 117, c[1] - 1)).setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WHEAT_SEEDS, 5));
+			var farm = new net.minecraft.core.BlockPos(c[0] + 3, 116, c[1] + 2);
+			level.setBlock(farm, net.minecraft.world.level.block.Blocks.FARMLAND.defaultBlockState(), 3);
+			golem.apply(c, 8).setMarkers(java.util.List.of(mark.apply(farm, up)));
+			// butcher: four cows, one too many
+			c = new int[]{-18, 36};
+			golem.apply(c, 9);
+			for (int i = 0; i < 4; i++) {
+				var cow = new net.minecraft.world.entity.animal.cow.Cow(net.minecraft.world.entity.EntityTypes.COW, level);
+				cow.snapTo(c[0] + 3.5 + i, 117, c[1] + 4.5, 0, 0);
+				cow.setNoAi(true);
+				cow.setPersistenceRequired();
+				level.addFreshEntity(cow);
+			}
+			// sorting: dirt to the chest with dirt, stone to the chest with stone
+			c = new int[]{18, 36};
+			var hc = chest.apply(new net.minecraft.core.BlockPos(c[0], 117, c[1] - 1));
+			hc.setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT, 5));
+			hc.setItem(1, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.STONE, 5));
+			var dirtChest = new net.minecraft.core.BlockPos(c[0] + 5, 117, c[1]);
+			var stoneChest = new net.minecraft.core.BlockPos(c[0] - 5, 117, c[1]);
+			chest.apply(dirtChest).setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT));
+			chest.apply(stoneChest).setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.STONE));
+			golem.apply(c, 10).setMarkers(java.util.List.of(mark.apply(dirtChest, up), mark.apply(stoneChest, up)));
+			// fish: a pond
+			c = new int[]{54, 36};
+			golem.apply(c, 11);
+			for (var p : net.minecraft.core.BlockPos.betweenClosed(c[0] + 2, 114, c[1] + 2, c[0] + 6, 116, c[1] + 6)) {
+				level.setBlock(p, net.minecraft.world.level.block.Blocks.WATER.defaultBlockState(), 3);
+			}
+		});
+		for (int round = 1; round <= 3; round++) {
+			ctx.waitTicks(400);
+			int r = round;
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				java.util.function.BiFunction<Integer, Integer, String> inv = (x, zz) -> {
+					var be = level.getBlockEntity(new net.minecraft.core.BlockPos(x, 117, zz));
+					if (!(be instanceof net.minecraft.world.Container ct)) {
+						return "none";
+					}
+					StringBuilder sb = new StringBuilder();
+					for (int i = 0; i < ct.getContainerSize(); i++) {
+						if (!ct.getItem(i).isEmpty()) {
+							sb.append(ct.getItem(i).getCount()).append(' ').append(ct.getItem(i).getItem()).append(", ");
+						}
+					}
+					return sb.toString();
+				};
+				var box = new net.minecraft.world.phys.AABB(-72, 110, -54, 72, 130, 54);
+				int zombies = level.getEntitiesOfClass(net.minecraft.world.entity.monster.zombie.Zombie.class, box).size();
+				int cows = level.getEntitiesOfClass(net.minecraft.world.entity.animal.cow.Cow.class, box).size();
+				int wheat = 0;
+				for (int i = 0; i < 3; i++) {
+					if (level.getBlockState(new net.minecraft.core.BlockPos(56 + i, 117, -34)).is(net.minecraft.world.level.block.Blocks.WHEAT)) {
+						wheat++;
+					}
+				}
+				int logs = 0;
+				for (int y = 117; y < 121; y++) {
+					if (level.getBlockState(new net.minecraft.core.BlockPos(57, y, 3)).is(net.minecraft.world.level.block.Blocks.OAK_LOG)) {
+						logs++;
+					}
+				}
+				var jar = (dev.neothaum.tiles.JarBlockEntity) level.getBlockEntity(new net.minecraft.core.BlockPos(23, 117, 0));
+				var homeJar = (dev.neothaum.tiles.JarBlockEntity) level.getBlockEntity(new net.minecraft.core.BlockPos(18, 117, -1));
+				int bobbers = level.getEntitiesOfClass(dev.neothaum.golem.GolemBobberEntity.class, box).size();
+				var cauldron = level.getBlockState(new net.minecraft.core.BlockPos(-18, 117, -1));
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: fill home=[{}] source=[{}]", r, inv.apply(-54, -37), inv.apply(-49, -36));
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: empty home=[{}] target=[{}]", r, inv.apply(-18, -37), inv.apply(-13, -36));
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: gather home=[{}]", r, inv.apply(18, -37));
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: harvest ripe wheat left={} of 3", r, wheat);
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: guard zombies left={}", r, zombies);
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: liquid cauldron={} pool={}", r, cauldron,
+					level.getBlockState(new net.minecraft.core.BlockPos(-14, 116, 0)));
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: essentia home jar={} {} marked jar={} {}", r, homeJar.aspect, homeJar.amount, jar.aspect,
+					jar.amount);
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: lumber logs left={} of 4", r, logs);
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: use home=[{}] above farmland={}", r, inv.apply(-54, 35),
+					level.getBlockState(new net.minecraft.core.BlockPos(-51, 117, 38)));
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: butcher cows left={} of 4", r, cows);
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: sorting home=[{}] dirt chest=[{}] stone chest=[{}]", r, inv.apply(18, 35),
+					inv.apply(23, 36), inv.apply(13, 36));
+				NeoThaum.LOGGER.info("[visual-test] golemai {}: fish bobbers={}", r, bobbers);
+			});
+		}
+		server.runCommand("tp @a 18 125 30");
+		ctx.waitTicks(10);
+		shot(ctx, "golemai");
 	}
 
 	/** The TC4-accuracy fixes: lamp lights, finite and flowing fluids, dissolve drops, champions and the golemancer's bell. */

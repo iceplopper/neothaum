@@ -22,6 +22,8 @@ public final class TVEntityRenderers {
 		EntityRendererRegistry.register(TVEntities.SHOCK_ORB, FocusProjectileRenderers.ShockOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.PRIMAL_ORB, FocusProjectileRenderers.PrimalOrbRenderer::new);
 		EntityRendererRegistry.register(TVEntities.PRIMAL_ARROW, dev.neothaum.client.render.PrimalArrowRenderer::new);
+		EntityRendererRegistry.register(TVEntities.DART, DartRenderer::new);
+		EntityRendererRegistry.register(TVEntities.GOLEM_BOBBER, GolemBobberRenderer::new);
 		EntityRendererRegistry.register(TVEntities.BOTTLE_TAINT, ThrownItemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.ALUMENTUM, ThrownItemRenderer::new);
 		EntityRendererRegistry.register(TVEntities.TAINT_SPIDER, TaintSpiderRenderer::new);
