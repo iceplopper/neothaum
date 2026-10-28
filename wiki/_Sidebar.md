@@ -1,5 +1,12 @@
 ## [NeoThaum 4 Wiki](Home)
 
+### 📚 Encyclopedia Directories
+- 📦 **[Items Directory](Items-Directory)** (307 Items)
+- 🧱 **[Blocks Directory](Blocks-Directory)** (169 Blocks)
+- 👾 **[Entities Directory](Entities-Directory)** (44 Mobs)
+
+---
+
 ### 🚀 Getting Started
 - [Getting Started](Getting-Started)
 - [Configuration & Settings](Configuration-&-Settings)

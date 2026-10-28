@@ -20,6 +20,19 @@ Whether you are an aspiring Thaumaturge picking up an Iron-Capped Wand for the v
 
 ---
 
+## 📚 Complete Encyclopedia Directories
+
+Browse dedicated individual documentation pages for every object in NeoThaum:
+
+| Directory | Entries | Description |
+| :--- | :---: | :--- |
+| 📦 **[Items Directory](Items-Directory)** | **307 Items** | Wands, foci, casting apparel, baubles, tools, alchemical reagents, and eldritch relics. |
+| 🧱 **[Blocks Directory](Blocks-Directory)** | **169 Blocks** | Arcane machinery, infusion altars, elemental crystal ores, botanical flora, and eldritch stone. |
+| 👾 **[Entities Directory](Entities-Directory)** | **44 Entities** | Autonomous golems, traveling trunks, Crimson cultists, tainted wildlife, and eldritch bosses. |
+
+
+---
+
 ## 🧭 Navigation & Major Chapters
 
 ```mermaid
