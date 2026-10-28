@@ -1804,5 +1804,7 @@
   "block.neothaum.vis_relay": "Visrelais",
   "block.neothaum.energized_aura_node": "Energetisierte Auranodie",
   "item.neothaum.apprentice_ring": "%s-Ring des Lehrlings",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

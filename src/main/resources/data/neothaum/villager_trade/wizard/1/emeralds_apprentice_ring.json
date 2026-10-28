@@ -1,0 +1,57 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": {
+      "type": "minecraft:uniform",
+      "min": 5,
+      "max": 7
+    }
+  },
+  "gives": {
+    "id": "neothaum:apprentice_ring_aer"
+  },
+  "max_uses": 7,
+  "xp": 1,
+  "given_item_modifier": [
+    {
+      "type": "minecraft:set_item",
+      "item": "neothaum:apprentice_ring_terra",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.5
+      }
+    },
+    {
+      "type": "minecraft:set_item",
+      "item": "neothaum:apprentice_ring_ignis",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.3333333333333333
+      }
+    },
+    {
+      "type": "minecraft:set_item",
+      "item": "neothaum:apprentice_ring_aqua",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.25
+      }
+    },
+    {
+      "type": "minecraft:set_item",
+      "item": "neothaum:apprentice_ring_ordo",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.2
+      }
+    },
+    {
+      "type": "minecraft:set_item",
+      "item": "neothaum:apprentice_ring_perditio",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.16666666666666666
+      }
+    }
+  ]
+}

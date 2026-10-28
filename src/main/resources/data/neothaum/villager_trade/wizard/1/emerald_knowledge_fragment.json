@@ -1,0 +1,11 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": 1
+  },
+  "gives": {
+    "id": "neothaum:knowledge_fragment"
+  },
+  "max_uses": 7,
+  "xp": 1
+}

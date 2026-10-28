@@ -1798,5 +1798,7 @@
   "block.neothaum.vis_relay": "魔力中继器",
   "block.neothaum.energized_aura_node": "充能灵气节点",
   "item.neothaum.apprentice_ring": "%s之学徒指环",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

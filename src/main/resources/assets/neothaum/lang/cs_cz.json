@@ -1804,5 +1804,7 @@
   "block.neothaum.vis_relay": "Vis Relay",
   "block.neothaum.energized_aura_node": "Nabitá Aura Node",
   "item.neothaum.apprentice_ring": "Učnův prsten %s",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

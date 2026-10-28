@@ -1158,5 +1158,7 @@
   "block.neothaum.vis_charge_relay": "Vis Charge Relay",
   "block.neothaum.vis_relay": "Vis Relay",
   "block.neothaum.energized_aura_node": "Aura Node",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

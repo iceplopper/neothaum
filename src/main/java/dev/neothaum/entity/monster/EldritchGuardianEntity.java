@@ -34,7 +34,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 /** EntityEldritchGuardian: mysterious, robed outer lands guardian summoned by deep warp hallucinations or ancient portals. */
-public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.EldritchMob {
+public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.EldritchMob, net.minecraft.world.entity.monster.RangedAttackMob {
 	private static final EntityDataAccessor<Byte> ATTACK_STATE = SynchedEntityData.defineId(EldritchGuardianEntity.class, EntityDataSerializers.BYTE);
 
 	public float armLiftL = 0.0F;
@@ -63,32 +63,63 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(2, new GuardianRangedAttackGoal(this));
+		this.goalSelector.addGoal(2, new dev.neothaum.entity.monster.boss.LongRangeAttackGoal(this, 8.0, 1.0, 20, 40, 24.0F));
 		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0, false));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8));
-		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(5, new net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal(this, 0.8));
+		this.goalSelector.addGoal(7, new net.minecraft.world.entity.ai.goal.RandomStrollGoal(this, 1.0));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, CultistEntity.class, true));
 	}
 
+	/** Projectiles do half damage. */
 	@Override
 	public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
-		// Magic damage resistance: take 50% damage
-		if (source.is(DamageTypeTags.WITCH_RESISTANT_TO) || source.is(DamageTypeTags.BYPASSES_ARMOR)) {
-			amount *= 0.5F;
+		if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+			amount /= 2.0F;
 		}
 		return super.hurtServer(level, source, amount);
 	}
 
+	/** Like a zombie: a burning guardian may set what it hits alight. */
 	@Override
 	public boolean doHurtTarget(ServerLevel level, Entity target) {
 		boolean hit = super.doHurtTarget(level, target);
-		if (hit && target instanceof LivingEntity living) {
-			living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0));
-			living.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 0));
+		if (hit) {
+			int i = level.getDifficulty().getId();
+			if (this.getMainHandItem().isEmpty() && this.isOnFire() && this.random.nextFloat() < i * 0.3F) {
+				target.igniteForSeconds(2 * i);
+			}
 		}
 		return hit;
+	}
+
+	/** Nine times in ten an eldritch orb from alternating hands; otherwise, if it can see its target, a screech. */
+	@Override
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
+		if (this.random.nextFloat() > 0.1F) {
+			var blast = new dev.neothaum.entity.projectile.EldritchOrbEntity(this.level(), this);
+			boolean right = this.random.nextBoolean();
+			this.level().broadcastEntityEvent(this, (byte) (right ? 16 : 15));
+			int rr = right ? 90 : 180;
+			double xx = net.minecraft.util.Mth.cos((this.getYRot() + rr) % 360.0F / 180.0F * (float) Math.PI) * 0.5F;
+			double zz = net.minecraft.util.Mth.sin((this.getYRot() + rr) % 360.0F / 180.0F * (float) Math.PI) * 0.5F;
+			blast.setPos(blast.getX() - xx, blast.getY() - 0.057777777 * this.getBbHeight(), blast.getZ() - zz);
+			var tm = target.getDeltaMovement();
+			blast.heading(target.getX() + tm.x - this.getX(), target.getY() - this.getY() - target.getBbHeight() / 2.0F, target.getZ() + tm.z - this.getZ(),
+				1.0F, 2.0F);
+			this.playSound(TVSounds.EGATTACK, 2.0F, 1.0F + this.random.nextFloat() * 0.1F);
+			this.level().addFreshEntity(blast);
+		} else if (this.hasLineOfSight(target)) {
+			dev.neothaum.network.TVNetwork.sendEntityFx(this, 5, 0, 0);
+			target.addEffect(new MobEffectInstance(MobEffects.WITHER, 400, 0));
+			if (target instanceof Player player) {
+				Warp.addWarpToPlayer(player, 1 + this.random.nextInt(3), true);
+			}
+			this.playSound(TVSounds.EGSCREECH, 3.0F, 1.0F + this.random.nextFloat() * 0.1F);
+		}
 	}
 
 	@Override
@@ -192,57 +223,5 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 	@Override
 	protected void readAdditionalSaveData(ValueInput input) {
 		super.readAdditionalSaveData(input);
-	}
-
-	// Ranged spell attack
-	private static class GuardianRangedAttackGoal extends Goal {
-		private final EldritchGuardianEntity guardian;
-		private int attackCooldown = 30;
-
-		GuardianRangedAttackGoal(EldritchGuardianEntity guardian) {
-			this.guardian = guardian;
-			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-		}
-
-		@Override
-		public boolean canUse() {
-			LivingEntity target = this.guardian.getTarget();
-			if (target == null || !target.isAlive()) return false;
-			double distSq = this.guardian.distanceToSqr(target);
-			return distSq >= 16.0 && distSq <= 576.0;
-		}
-
-		@Override
-		public void tick() {
-			LivingEntity target = this.guardian.getTarget();
-			if (target == null) return;
-			this.guardian.getLookControl().setLookAt(target, 30.0F, 30.0F);
-
-			if (--this.attackCooldown <= 0) {
-				this.attackCooldown = 35 + this.guardian.getRandom().nextInt(15);
-				Level level = this.guardian.level();
-				if (level instanceof ServerLevel sl) {
-					// 20% chance screech, 80% ranged wither strike
-					if (this.guardian.getRandom().nextFloat() < 0.2F) {
-						// Screech attack
-						level.playSound(null, this.guardian.getX(), this.guardian.getY(), this.guardian.getZ(),
-							TVSounds.EGSCREECH, SoundSource.HOSTILE, 2.5F, 1.0F);
-						target.addEffect(new MobEffectInstance(MobEffects.WITHER, 160, 0));
-						if (target instanceof Player player) {
-							Warp.addWarpToPlayer(player, 1 + this.guardian.getRandom().nextInt(3), true);
-						}
-						sl.sendParticles(ParticleTypes.SONIC_BOOM, target.getX(), target.getY() + 1.0, target.getZ(), 1, 0, 0, 0, 0);
-					} else {
-						// Ranged blast attack
-						level.playSound(null, this.guardian.getX(), this.guardian.getY(), this.guardian.getZ(),
-							TVSounds.EGATTACK, SoundSource.HOSTILE, 1.8F, 1.0F);
-						target.hurtServer(sl, this.guardian.damageSources().mobAttack(this.guardian), 4.5F);
-						target.addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
-						sl.sendParticles(ParticleTypes.WITCH, target.getX(), target.getY() + 1.0, target.getZ(), 15, 0.3, 0.5, 0.3, 0.05);
-					}
-					level.broadcastEntityEvent(this.guardian, (byte) (this.guardian.getRandom().nextBoolean() ? 15 : 16));
-				}
-			}
-		}
 	}
 }

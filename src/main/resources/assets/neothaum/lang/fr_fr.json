@@ -1803,5 +1803,7 @@
   "block.neothaum.vis_relay": "Relais de Vis",
   "block.neothaum.energized_aura_node": "Noeud d'aura énergétique",
   "item.neothaum.apprentice_ring": "Anneau d'apprenti de %s",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

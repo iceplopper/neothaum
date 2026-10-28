@@ -759,6 +759,19 @@ public class VisualTests implements FabricClientGameTest {
 		waitChunks(sp, ctx);
 		ctx.waitTicks(20);
 		shot(ctx, "village_pieces");
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			for (var v : level.getEntitiesOfClass(net.minecraft.world.entity.npc.villager.Villager.class, new net.minecraft.world.phys.AABB(-12, 110, -12, 12, 140, 12))) {
+				var offers = v.getOffers();
+				StringBuilder sb = new StringBuilder();
+				for (var o : offers) {
+					sb.append(o.getCostA().getCount()).append(' ').append(o.getCostA().getItem()).append(" -> ").append(o.getResult().getCount()).append(' ')
+						.append(o.getResult().getItem()).append("; ");
+				}
+				NeoThaum.LOGGER.info("[visual-test] villages: villager {} at {} trades={} [{}]", v.getVillagerData().profession().unwrapKey(),
+					v.blockPosition(), offers.size(), sb);
+			}
+		});
 		int[] found = new int[2];
 		for (int v = 0; v < 12; v++) {
 			int vx = 300 + v * 200;

@@ -1,0 +1,15 @@
+{
+  "wants": {
+    "id": "minecraft:book",
+    "count": {
+      "type": "minecraft:uniform",
+      "min": 4,
+      "max": 6
+    }
+  },
+  "gives": {
+    "id": "neothaum:knowledge_fragment"
+  },
+  "max_uses": 7,
+  "xp": 1
+}

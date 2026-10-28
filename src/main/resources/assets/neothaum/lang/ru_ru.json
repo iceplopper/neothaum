@@ -1803,5 +1803,7 @@
   "block.neothaum.vis_relay": "Вис-канал",
   "block.neothaum.energized_aura_node": "Возбуждённый узел ауры",
   "item.neothaum.apprentice_ring": "Кольцо подмастерья - %s ",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

@@ -1613,5 +1613,7 @@
   "block.neothaum.vis_relay": "비스 중계기",
   "block.neothaum.energized_aura_node": "활성화된 오라 노드",
   "item.neothaum.apprentice_ring": "견습생의 %s 반지",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

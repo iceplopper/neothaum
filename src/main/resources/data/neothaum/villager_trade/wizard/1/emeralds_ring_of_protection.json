@@ -1,0 +1,15 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": {
+      "type": "minecraft:uniform",
+      "min": 5,
+      "max": 7
+    }
+  },
+  "gives": {
+    "id": "neothaum:ring_of_protection"
+  },
+  "max_uses": 7,
+  "xp": 1
+}

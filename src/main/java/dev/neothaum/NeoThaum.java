@@ -44,6 +44,7 @@ public class NeoThaum implements ModInitializer {
 		TVRecipes.init();
 		TVAttachments.init();
 		dev.neothaum.world.TCChestLoot.init();
+		dev.neothaum.world.TCVillagers.init();
 		dev.neothaum.world.TCVillages.init();
 		TVTab.init();
 		WandManager.init();

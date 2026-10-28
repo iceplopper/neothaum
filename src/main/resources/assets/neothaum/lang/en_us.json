@@ -2141,5 +2141,7 @@
   "block.neothaum.loot_crate_rare": "Abandoned Crate",
   "block.neothaum.obsidian_totem": "Obsidian Totem",
   "item.neothaum.apprentice_ring": "Apprentices Ring of %s",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

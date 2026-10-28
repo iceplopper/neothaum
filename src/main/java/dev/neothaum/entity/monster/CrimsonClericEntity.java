@@ -68,7 +68,7 @@ public class CrimsonClericEntity extends CultistEntity implements RangedAttackMo
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0, 20, 40, 24.0F));
+		this.goalSelector.addGoal(2, new dev.neothaum.entity.monster.boss.LongRangeAttackGoal(this, 2.0, 1.0, 20, 40, 24.0F));
 		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0, false));
 		this.goalSelector.addGoal(4, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(6, new MoveTowardsRestrictionGoal(this, 0.8));

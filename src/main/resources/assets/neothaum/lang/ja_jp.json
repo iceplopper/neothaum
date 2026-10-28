@@ -1452,5 +1452,7 @@
   "block.neothaum.vis_relay": "Vis中継器",
   "block.neothaum.energized_aura_node": "オーラ節",
   "item.neothaum.apprentice_ring": "Apprentices Ring of %s",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }

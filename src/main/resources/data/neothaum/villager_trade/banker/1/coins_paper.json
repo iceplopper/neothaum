@@ -1,0 +1,15 @@
+{
+  "wants": {
+    "id": "neothaum:gold_coin",
+    "count": {
+      "type": "minecraft:uniform",
+      "min": 3,
+      "max": 4
+    }
+  },
+  "gives": {
+    "id": "minecraft:paper"
+  },
+  "max_uses": 7,
+  "xp": 1
+}

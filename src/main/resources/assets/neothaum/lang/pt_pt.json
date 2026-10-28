@@ -1659,5 +1659,7 @@
   "block.neothaum.vis_relay": "Suporte de Vis",
   "block.neothaum.energized_aura_node": "Nodo de Aura Energizado",
   "item.neothaum.apprentice_ring": "Anel Aprendiz de %s",
-  "block.neothaum.sapping_field": "Sapping Field"
+  "block.neothaum.sapping_field": "Sapping Field",
+  "entity.neothaum.villager.wizard": "Wizard",
+  "entity.neothaum.villager.banker": "Banker"
 }
