@@ -59,6 +59,31 @@ public class CultistPortalEntity extends Monster {
 		this.noPhysics = true;
 	}
 
+	@Override
+	protected float getSoundVolume() {
+		return 0.75F;
+	}
+
+	@Override
+	public int getAmbientSoundInterval() {
+		return 540;
+	}
+
+	@Override
+	protected net.minecraft.sounds.SoundEvent getAmbientSound() {
+		return TVSounds.MONOLITH;
+	}
+
+	@Override
+	protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
+		return TVSounds.ZAP;
+	}
+
+	@Override
+	protected net.minecraft.sounds.SoundEvent getDeathSound() {
+		return TVSounds.SHOCK;
+	}
+
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.MAX_HEALTH, 500.0)

@@ -125,12 +125,15 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(4.0F, 10.0F).sound(SoundType.METAL).requiresCorrectToolForDrops(), true);
 	public static final Block TALLOW_BLOCK = register("tallow_block", Block::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE).strength(2.0F, 10.0F).sound(SoundType.STONE), true);
+	/** TC4's CustomSoundType("urnbreak", 1.0F, 0.7F): the urn breaks, steps and is placed with the same clatter. */
+	private static final SoundType URN_SOUND = new SoundType(1.0F, 0.7F, TVSounds.URNBREAK, TVSounds.URNBREAK, TVSounds.URNBREAK,
+		TVSounds.URNBREAK, TVSounds.URNBREAK);
 	public static final Block LOOT_URN_COMMON = register("loot_urn_common", p -> new dev.neothaum.blocks.LootBlock(true, 0, p),
-		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.STONE).noOcclusion(), true);
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(URN_SOUND).noOcclusion(), true);
 	public static final Block LOOT_URN_UNCOMMON = register("loot_urn_uncommon", p -> new dev.neothaum.blocks.LootBlock(true, 1, p),
-		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.STONE).noOcclusion(), true);
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(URN_SOUND).noOcclusion(), true);
 	public static final Block LOOT_URN_RARE = register("loot_urn_rare", p -> new dev.neothaum.blocks.LootBlock(true, 2, p),
-		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.STONE).noOcclusion(), true);
+		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(URN_SOUND).noOcclusion(), true);
 	public static final Block LOOT_CRATE_COMMON = register("loot_crate_common", p -> new dev.neothaum.blocks.LootBlock(false, 0, p),
 		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.WOOD).noOcclusion(), true);
 	public static final Block LOOT_CRATE_UNCOMMON = register("loot_crate_uncommon", p -> new dev.neothaum.blocks.LootBlock(false, 1, p),

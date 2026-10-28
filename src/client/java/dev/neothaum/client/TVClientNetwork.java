@@ -170,7 +170,7 @@ public final class TVClientNetwork {
 				}
 				case 3 -> {
 					FX.crucibleBoil(level, p.pos(), p.value());
-					level.playLocalSound(p.pos(), TVSounds.BUBBLE, net.minecraft.sounds.SoundSource.BLOCKS, 0.2F, 1.0F, false);
+					level.playLocalSound(p.pos(), TVSounds.SPILL, net.minecraft.sounds.SoundSource.BLOCKS, 0.2F, 1.0F, false);
 					if (p.value() == 5) {
 						FX.blockSparkle(level, p.pos(), -9999);
 					}

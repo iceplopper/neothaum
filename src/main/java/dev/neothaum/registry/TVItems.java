@@ -172,6 +172,8 @@ public final class TVItems {
 	public static final Item CRIMSON_RITES = register("crimson_rites", dev.neothaum.items.eldritch.CrimsonRitesItem::new, new Item.Properties());
 	public static final Item ELDRITCH_EYE = register("eldritch_eye", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item RUNED_TABLET = register("runed_tablet", Item::new, new Item.Properties().rarity(Rarity.RARE));
+	public static final Item OBELISK_PLACER = register("obelisk_placer", dev.neothaum.items.eldritch.ObeliskPlacerItem::new,
+		new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
 	public static final Item BANNER = register("banner", props -> new dev.neothaum.items.BannerItem(props, false), new Item.Properties().stacksTo(16));
 	public static final Item CULTIST_BANNER = register("cultist_banner", props -> new dev.neothaum.items.BannerItem(props, true), new Item.Properties().stacksTo(16));
 	public static final Item GOLD_COIN = simple("gold_coin");
