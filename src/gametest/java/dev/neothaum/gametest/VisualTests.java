@@ -769,6 +769,26 @@ public class VisualTests implements FabricClientGameTest {
 		server.runCommand("tp @a -3 119 7 180 0");
 		ctx.waitTicks(10);
 		shot(ctx, "village_tower_window");
+		// the biome versions, in a row: desert, savanna, taiga, snowy
+		server.runCommand("fill -40 117 20 40 140 40 air");
+		server.runCommand("fill -40 116 20 40 116 40 grass_block");
+		String[] kinds = {"desert", "savanna", "taiga", "snowy"};
+		for (int k = 0; k < kinds.length; k++) {
+			int bx = -36 + k * 18;
+			server.runCommand("place template neothaum:village/" + kinds[k] + "/wizard_tower " + bx + " 117 24");
+			server.runCommand("place template neothaum:village/" + kinds[k] + "/banker_home_1 " + (bx + 8) + " 117 24");
+		}
+		server.runCommand("tp @a 0 128 58 180 15");
+		waitChunks(sp, ctx);
+		ctx.waitTicks(20);
+		shot(ctx, "village_variants");
+		server.runOnServer(srv -> {
+			for (var v : srv.overworld().getEntitiesOfClass(net.minecraft.world.entity.npc.villager.Villager.class,
+				new net.minecraft.world.phys.AABB(-40, 110, 20, 40, 140, 40))) {
+				NeoThaum.LOGGER.info("[visual-test] villages: variant villager {} {} at {}", v.getVillagerData().profession().unwrapKey().orElseThrow().identifier(),
+					v.getVillagerData().type().unwrapKey().orElseThrow().identifier(), v.blockPosition());
+			}
+		});
 		server.runOnServer(srv -> {
 			var level = srv.overworld();
 			for (var v : level.getEntitiesOfClass(net.minecraft.world.entity.npc.villager.Villager.class, new net.minecraft.world.phys.AABB(-12, 110, -12, 12, 140, 12))) {
