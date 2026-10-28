@@ -26,7 +26,7 @@ public class GolemFillGoal extends Goal {
 	@Override
 	public boolean canUse() {
 		int core = this.golem.getCore();
-		if (this.golem.isInactive() || (core != GolemCoreType.FILL.id && core != GolemCoreType.EMPTY.id)) {
+		if (this.golem.isInactive() || (core != GolemCoreType.FILL.id && core != GolemCoreType.EMPTY.id && core != GolemCoreType.SORT.id)) {
 			return false;
 		}
 
@@ -60,7 +60,7 @@ public class GolemFillGoal extends Goal {
 					boolean anyAmount = this.golem.getToggle(0);
 					if (anyAmount ? countInHome == 0 : countInHome < filter.getCount()) {
 						// Need this item! Look for a nearby source container with it
-						BlockPos found = this.findContainerWithItem(home, range, filter);
+						BlockPos found = this.findContainerWithItem(home, filter);
 						if (found != null) {
 							this.sourceContainerPos = found;
 							this.returningHome = false;
@@ -70,24 +70,22 @@ public class GolemFillGoal extends Goal {
 				}
 			}
 		} else if (core == GolemCoreType.EMPTY.id) {
-			// Take items from home container matching filter
+			// Empty: take items matching the filter (Sorting: items one of the marked inventories already holds) from home to a marked spot
 			for (int h = 0; h < homeContainer.getContainerSize(); h++) {
 				ItemStack inHome = homeContainer.getItem(h);
-				if (!inHome.isEmpty() && this.matchesFilter(inHome)) {
-					// Take item from home
-					int carryLimit = this.golem.getGolemType().carry * 16;
-					int take = Math.min(inHome.getCount(), carryLimit);
-					ItemStack taken = inHome.split(take);
-					this.golem.setCarried(taken);
-					this.golem.level().playSound(null, home.getX(), home.getY(), home.getZ(),
-						TVSounds.CAMERACLACK, SoundSource.NEUTRAL, 0.4F, 1.0F);
-
-					// Find destination container
-					BlockPos dest = this.findDestinationContainer(home, range, taken);
-					this.sourceContainerPos = dest != null ? dest : home.relative(this.golem.getHomeFacing());
-					this.returningHome = false;
-					return true;
+				if (inHome.isEmpty() || (core == GolemCoreType.SORT.id ? this.findContainerWithItem(home, inHome) == null : !this.matchesFilter(inHome))) {
+					continue;
 				}
+				BlockPos dest = core == GolemCoreType.SORT.id ? this.findContainerWithItem(home, inHome) : this.findDestination(home);
+				if (dest == null) {
+					continue;
+				}
+				int carryLimit = this.golem.getGolemType().carry * 16;
+				this.golem.setCarried(inHome.split(Math.min(inHome.getCount(), carryLimit)));
+				this.golem.level().playSound(null, home.getX(), home.getY(), home.getZ(), TVSounds.CAMERACLACK, SoundSource.NEUTRAL, 0.4F, 1.0F);
+				this.sourceContainerPos = dest;
+				this.returningHome = false;
+				return true;
 			}
 		}
 
@@ -115,35 +113,26 @@ public class GolemFillGoal extends Goal {
 		return total;
 	}
 
-	private BlockPos findContainerWithItem(BlockPos home, int range, ItemStack match) {
-		BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
-		for (int dx = -range; dx <= range; dx++) {
-			for (int dz = -range; dz <= range; dz++) {
-				for (int dy = -2; dy <= 2; dy++) {
-					mpos.set(home.getX() + dx, home.getY() + dy, home.getZ() + dz);
-					if (mpos.equals(home)) continue;
-					if (this.golem.level().getBlockEntity(mpos) instanceof Container c) {
-						if (this.countInContainer(c, match) > 0) {
-							return mpos.immutable();
-						}
-					}
-				}
+	/** GolemHelper.getMarkedContainers: the nearest marked inventory (not home) holding some of the item. */
+	private BlockPos findContainerWithItem(BlockPos home, ItemStack match) {
+		for (BlockPos p : this.golem.getMarkedContainers()) {
+			if (!p.equals(home) && this.golem.level().getBlockEntity(p) instanceof Container c && this.countInContainer(c, match) > 0) {
+				return p;
 			}
 		}
 		return null;
 	}
 
-	private BlockPos findDestinationContainer(BlockPos home, int range, ItemStack stack) {
-		BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
-		for (int dx = -range; dx <= range; dx++) {
-			for (int dz = -range; dz <= range; dz++) {
-				for (int dy = -2; dy <= 2; dy++) {
-					mpos.set(home.getX() + dx, home.getY() + dy, home.getZ() + dz);
-					if (mpos.equals(home)) continue;
-					if (this.golem.level().getBlockEntity(mpos) instanceof Container c) {
-						return mpos.immutable();
-					}
-				}
+	/** The nearest marked inventory, or failing that the first marked spot (where the item is dropped). */
+	private BlockPos findDestination(BlockPos home) {
+		for (BlockPos p : this.golem.getMarkedContainers()) {
+			if (!p.equals(home)) {
+				return p;
+			}
+		}
+		for (var m : this.golem.getMarkers()) {
+			if (m.dim().equals(this.golem.level().dimension()) && !m.pos().equals(home)) {
+				return m.pos().relative(net.minecraft.core.Direction.from3DDataValue(m.side()));
 			}
 		}
 		return null;
@@ -185,7 +174,7 @@ public class GolemFillGoal extends Goal {
 						}
 					}
 					this.returningHome = true;
-				} else if (this.golem.getCore() == GolemCoreType.EMPTY.id) {
+				} else {
 					// Deposit item into destination container
 					if (this.golem.level().getBlockEntity(this.sourceContainerPos) instanceof Container dst) {
 						ItemStack rem = this.insertIntoContainer(dst, this.golem.getCarried());

@@ -1,31 +1,23 @@
 package dev.neothaum.items;
 
-import dev.neothaum.api.WarpingGear;
-import dev.neothaum.items.equipment.VoidGear;
 import dev.neothaum.registry.TVComponents;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
  * Port of ItemCompassStone (Sinister Lodestone):
  * Attuned stone compass that vibrates and glows when facing towards a Sinister node within 256 blocks.
- * Harbors 1 point of permanent warp.
  */
-public class SinisterLodestoneItem extends Item implements WarpingGear {
+public class SinisterLodestoneItem extends Item {
 	public static final Map<GlobalPos, Long> SINISTER_NODES = new ConcurrentHashMap<>();
 
 	public SinisterLodestoneItem(Properties props) {
@@ -77,15 +69,5 @@ public class SinisterLodestoneItem extends Item implements WarpingGear {
 		} else if (!looking && stack.has(TVComponents.ACTIVE)) {
 			stack.remove(TVComponents.ACTIVE);
 		}
-	}
-
-	@Override
-	public int getWarp(ItemStack stack, Player player) {
-		return 1;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
-		VoidGear.warpTooltip(1, builder);
 	}
 }

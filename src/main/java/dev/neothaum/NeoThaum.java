@@ -34,6 +34,7 @@ public class NeoThaum implements ModInitializer {
 		Aspect.bootstrap();
 		TVSounds.init();
 		TVComponents.init();
+		dev.neothaum.fluids.TVFluids.init();
 		TVBlocks.init();
 		dev.neothaum.registry.TVMobEffects.init();
 		TVItems.init();
@@ -63,6 +64,7 @@ public class NeoThaum implements ModInitializer {
 		dev.neothaum.warp.WarpEvents.init();
 		dev.neothaum.events.AspectOrbEvents.init();
 		dev.neothaum.entity.champion.ChampionEvents.init();
+		dev.neothaum.golem.GolemBellItem.init();
 		LOGGER.info("NeoThaum 4 initialized: {} aspects", Aspect.aspects.size());
 	}
 }

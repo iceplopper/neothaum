@@ -48,7 +48,8 @@ import net.minecraft.world.phys.Vec3;
  * EldritchWardenEntity: massive eldritch guardian boss of the Outer Lands.
  * Runic shielding, sonic screech with temporary warp, wither blasts, and primordial pearl drop.
  */
-public class EldritchWardenEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob {
+public class EldritchWardenEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob,
+	dev.neothaum.entity.champion.ChampionBoss {
 	public static final String[] TITLES = new String[]{
 		"Aphoom-Zhah", "Basatan", "Chaugnar Faugn", "Mnomquah", "Nyogtha",
 		"Oorn", "Shaikorth", "Rhan-Tegoth", "Rhogog", "Shudde M'ell",
@@ -97,6 +98,14 @@ public class EldritchWardenEntity extends Monster implements RangedAttackMob, de
 		int clamped = Math.max(0, Math.min(TITLES.length - 1, idx));
 		this.entityData.set(TITLE, clamped);
 		Component name = Component.literal(TITLES[clamped] + " the Eldritch Warden");
+		this.setCustomName(name);
+		this.bossEvent.setName(name);
+	}
+
+	/** entity.Thaumcraft.EldritchWarden.name: "<title> the <modifier>". */
+	@Override
+	public void nameAsChampion(Component modifier) {
+		Component name = Component.literal(TITLES[this.getTitleIndex()] + " the ").append(modifier);
 		this.setCustomName(name);
 		this.bossEvent.setName(name);
 	}

@@ -105,6 +105,10 @@ public class GolemPlacerItem extends Item {
 			golem.setDecoration(stack.get(TVComponents.GOLEM_DECORATION));
 		}
 
+		if (stack.has(TVComponents.GOLEM_MARKERS)) {
+			golem.setMarkers(stack.get(TVComponents.GOLEM_MARKERS));
+		}
+
 		golem.setHomeArea(clickedPos, side);
 		if (player != null) {
 			golem.setOwner(player);

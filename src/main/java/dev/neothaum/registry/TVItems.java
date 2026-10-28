@@ -271,11 +271,8 @@ public final class TVItems {
 		new Item.Properties().humanoidArmor(TRAVELLER_ARMOR, ArmorType.BOOTS).durability(350).rarity(Rarity.RARE)
 			.attributes(ItemAttributeModifiers.builder()
 				.add(Attributes.ARMOR, new AttributeModifier(NeoThaum.id("traveller_armor"), 1.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-				.add(Attributes.STEP_HEIGHT, new AttributeModifier(NeoThaum.id("traveller_step"), 0.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-				.add(Attributes.MOVEMENT_SPEED, new AttributeModifier(NeoThaum.id("traveller_speed"), 0.04, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-				.add(Attributes.JUMP_STRENGTH, new AttributeModifier(NeoThaum.id("traveller_jump"), 0.12, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-				.add(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(NeoThaum.id("traveller_fall"), 3.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
-				.add(Attributes.WATER_MOVEMENT_EFFICIENCY, new AttributeModifier(NeoThaum.id("traveller_water"), 0.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.add(Attributes.STEP_HEIGHT, new AttributeModifier(NeoThaum.id("traveller_step"), 0.4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
+				.add(Attributes.JUMP_STRENGTH, new AttributeModifier(NeoThaum.id("traveller_jump"), 0.275, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.FEET)
 				.build()));
 
 	public static final Item BOW_OF_BONE = register("bow_of_bone", BoneBowItem::new, new Item.Properties().durability(512));
@@ -423,7 +420,8 @@ public final class TVItems {
 		Consumables.defaultFood().onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0), 0.66F)).build()));
 
 	public static final Item BUCKET_OF_LIQUID_DEATH = register("bucket_of_liquid_death", p -> new FluidBucketItem(() -> TVBlocks.LIQUID_DEATH, p), new Item.Properties());
-	public static final Item BUCKET_OF_PURIFYING_FLUID = register("bucket_of_purifying_fluid", p -> new FluidBucketItem(() -> TVBlocks.PURIFYING_FLUID, p), new Item.Properties());
+	public static final Item BUCKET_OF_PURIFYING_FLUID = register("bucket_of_purifying_fluid", p -> new net.minecraft.world.item.BucketItem(dev.neothaum.fluids.TVFluids.PURIFYING, p),
+		new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET));
 	public static final Item PURIFYING_BATH_SALTS = register("purifying_bath_salts", BathSaltsItem::new, new Item.Properties());
 	public static final Item SANITIZING_SOAP = register("sanitizing_soap", SanitizingSoapItem::new, new Item.Properties());
 

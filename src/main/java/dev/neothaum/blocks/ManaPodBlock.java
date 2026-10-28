@@ -23,7 +23,6 @@ import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -41,7 +40,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * Hanging plant block that grows on the underside of logs in magical biomes.
  * Stages 0-7, drops mana beans infused with primal or compound aspects.
  */
-public class ManaPodBlock extends BaseEntityBlock implements BonemealableBlock {
+public class ManaPodBlock extends BaseEntityBlock {
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 
 	private static final VoxelShape[] SHAPES = new VoxelShape[]{
@@ -118,27 +117,6 @@ public class ManaPodBlock extends BaseEntityBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-		if (state.getValue(AGE) == 7) {
-			if (!level.isClientSide()) {
-				int count = level.getRandom().nextFloat() > 0.33F ? 2 : 1;
-				Aspect aspect = (level.getBlockEntity(pos) instanceof ManaPodBlockEntity be && be.getAspect() != null)
-					? be.getAspect() : Aspect.PLANT;
-				ItemStack drop = ManaBeanItem.of(aspect);
-				drop.setCount(count);
-				popResource(level, pos, drop);
-				level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 1.0F);
-				level.setBlock(pos, state.setValue(AGE, 0), 3);
-				if (level.getBlockEntity(pos) instanceof ManaPodBlockEntity be) {
-					be.setAspect(null);
-				}
-			}
-			return InteractionResult.SUCCESS;
-		}
-		return InteractionResult.PASS;
-	}
-
-	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (!level.isClientSide() && !player.isCreative() && state.getValue(AGE) >= 2) {
 			int count = (state.getValue(AGE) == 7 && level.getRandom().nextFloat() > 0.33F) ? 2 : 1;
@@ -154,25 +132,5 @@ public class ManaPodBlock extends BaseEntityBlock implements BonemealableBlock {
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new ManaPodBlockEntity(pos, state);
-	}
-
-	// ------------------------------------------------------------------ Bonemeal
-	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
-		return state.getValue(AGE) < 7;
-	}
-
-	@Override
-	public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
-		return true;
-	}
-
-	@Override
-	public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, net.minecraft.world.level.block.BonemealSource source) {
-		int newAge = Math.min(7, state.getValue(AGE) + random.nextInt(3) + 1);
-		level.setBlock(pos, state.setValue(AGE, newAge), 3);
-		if (level.getBlockEntity(pos) instanceof ManaPodBlockEntity be) {
-			be.checkGrowth(newAge);
-		}
 	}
 }

@@ -30,7 +30,7 @@ import net.minecraft.world.level.Level;
 /**
  * ItemHoverHarness: Thaumostatic Harness chestplate allowing creative-style flight.
  * Consumes Potentia essentia from an inserted warded jar.
- * Movement speed can be accelerated with Haste enchantment and the Thaumostatic Girdle.
+ * Hovering drags on horizontal movement; the Haste enchantment and the Thaumostatic Girdle lessen the drag.
  */
 public class ThaumostaticHarnessItem extends Item implements VisDiscountGear, RunicArmor {
 	private static long lastJacobsSound = 0;
@@ -159,37 +159,27 @@ public class ThaumostaticHarnessItem extends Item implements VisDiscountGear, Ru
 		return newActive;
 	}
 
+	/** Hover.handleHoverArmor's client half: the jacobs-ladder hum, and horizontal motion damped by 0.7 + 0.075 per Haste (+0.21 with the girdle). */
 	public static void clientTick(Player player) {
 		ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
-		if (!(chest.getItem() instanceof ThaumostaticHarnessItem)) {
-			if (player.getAbilities().getFlyingSpeed() != 0.05F) {
-				player.getAbilities().setFlyingSpeed(0.05F);
-			}
+		if (!(chest.getItem() instanceof ThaumostaticHarnessItem) || !Boolean.TRUE.equals(chest.get(TVComponents.HARNESS_ACTIVE))
+			|| !player.getAbilities().flying) {
 			return;
 		}
-
-		boolean active = Boolean.TRUE.equals(chest.get(TVComponents.HARNESS_ACTIVE));
-		if (active && player.getAbilities().flying) {
-			long now = System.currentTimeMillis();
-			if (now - lastJacobsSound >= 1200) {
-				lastJacobsSound = now;
-				player.level().playLocalSound(
-					player.getX(), player.getY(), player.getZ(),
-					TVSounds.JACOBS, SoundSource.PLAYERS,
-					0.05F, 1.0F + player.level().getRandom().nextFloat() * 0.05F,
-					false
-				);
-			}
-
-			int haste = TCEnchantments.level(player, chest, TCEnchantments.HASTE);
-			boolean hasGirdle = Baubles.get(player).get(3).getItem() instanceof HoverGirdleItem;
-			float flySpeed = 0.05F + (haste * 0.012F) + (hasGirdle ? 0.02F : 0.0F);
-			player.getAbilities().setFlyingSpeed(flySpeed);
-		} else {
-			if (player.getAbilities().getFlyingSpeed() != 0.05F) {
-				player.getAbilities().setFlyingSpeed(0.05F);
-			}
+		long now = System.currentTimeMillis();
+		if (now - lastJacobsSound >= 1200) {
+			lastJacobsSound = now;
+			player.level().playLocalSound(player.getX(), player.getY(), player.getZ(), TVSounds.JACOBS, SoundSource.PLAYERS, 0.05F,
+				1.0F + player.level().getRandom().nextFloat() * 0.05F, false);
 		}
+		int haste = TCEnchantments.level(player, chest, TCEnchantments.HASTE);
+		float mod = 0.7F + 0.075F * haste;
+		if (Baubles.get(player).get(3).getItem() instanceof HoverGirdleItem) {
+			mod += 0.21F;
+		}
+		mod = Math.min(1.0F, mod);
+		var v = player.getDeltaMovement();
+		player.setDeltaMovement(v.x * mod, v.y, v.z * mod);
 	}
 
 	@Override

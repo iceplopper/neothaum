@@ -1,5 +1,7 @@
 # Audit of Gemini's features against TC4 4.2.3.5 (2026-10-27)
 
+**Status (2026-10-28): everything below has been fixed to TC4 behaviour except where noted in agentic/TODO.md (Outer Lands, golem AI).**
+
 Each feature was read side by side with the decompiled TC4 source (`original/decompiled/thaumcraft/`) and, where noted, exercised in a
 client gametest scene. Nothing here has been changed yet: this is the list for the user to choose fixes from.
 

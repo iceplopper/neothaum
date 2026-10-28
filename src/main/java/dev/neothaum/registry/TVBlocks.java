@@ -15,7 +15,6 @@ import dev.neothaum.blocks.ItemGrateBlock;
 import dev.neothaum.blocks.LiquidDeathBlock;
 import dev.neothaum.blocks.PavingStoneOfTravelBlock;
 import dev.neothaum.blocks.PavingStoneOfWardingBlock;
-import dev.neothaum.blocks.PurifyingFluidBlock;
 import dev.neothaum.blocks.WardedGlassBlock;
 import dev.neothaum.blocks.WardingAuraBlock;
 import dev.neothaum.blocks.LampOfGrowthBlock;
@@ -185,6 +184,10 @@ public final class TVBlocks {
 		BlockBehaviour.Properties.of().noCollision().instabreak().lightLevel(s -> 15).noOcclusion().sound(SoundType.WOOL).pushReaction(PushReaction.POPPED),
 		false);
 
+	/** BlockAiry meta 3: the arcane lamp's invisible light. */
+	public static final Block LAMP_LIGHT = register("lamp_light", dev.neothaum.blocks.LampLightBlock::new,
+		BlockBehaviour.Properties.of().replaceable().noCollision().noLootTable().instabreak().lightLevel(s -> 15).noOcclusion().sound(SoundType.WOOL)
+			.pushReaction(PushReaction.POPPED), false);
 	/** BlockAiry meta 10: the earth shock orb's static field. */
 	public static final Block STATIC_FIELD = register("static_field", dev.neothaum.blocks.StaticFieldBlock::new,
 		BlockBehaviour.Properties.of().replaceable().noCollision().noLootTable().strength(100.0F, 50.0F).noOcclusion().randomTicks()
@@ -292,10 +295,14 @@ public final class TVBlocks {
 		stone(2.0F, 10.0F).noOcclusion(), true);
 	public static final Block ESSENTIA_RESERVOIR = register("essentia_reservoir", ReservoirBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 17.0F).sound(SoundType.METAL).noOcclusion(), true);
+	/** BlockFluidDeath: luminosity 8. */
 	public static final Block LIQUID_DEATH = register("liquid_death", LiquidDeathBlock::new,
-		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 4).noOcclusion(), false);
-	public static final Block PURIFYING_FLUID = register("purifying_fluid", PurifyingFluidBlock::new,
-		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 8).noOcclusion(), false);
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).replaceable().noCollision().strength(100.0F).noLootTable().lightLevel(s -> 8).noOcclusion(), false);
+	/** BlockFluidPure: luminosity 10. */
+	public static final Block PURIFYING_FLUID = register("purifying_fluid", p -> new net.minecraft.world.level.block.LiquidBlock(
+			dev.neothaum.fluids.TVFluids.PURIFYING, p),
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).replaceable().noCollision().strength(100.0F).noLootTable().liquid()
+			.sound(SoundType.EMPTY).lightLevel(s -> 10), false);
 	public static final Block MAGIC_MIRROR = register("magic_mirror", dev.neothaum.blocks.MagicMirrorBlock::new, mirror(), false);
 	public static final Block ESSENTIA_MIRROR = register("essentia_mirror", dev.neothaum.blocks.EssentiaMirrorBlock::new, mirror(), false);
 	public static final Block ALCHEMICAL_CONSTRUCT = register("alchemical_construct", dev.neothaum.blocks.AlchemicalConstructBlock::new,

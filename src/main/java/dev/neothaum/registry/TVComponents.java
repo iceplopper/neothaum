@@ -91,6 +91,9 @@ public final class TVComponents {
 		b -> b.persistent(Codec.INT.listOf()).networkSynchronized(ByteBufCodecs.VAR_INT.apply(ByteBufCodecs.list())));
 	public static final DataComponentType<String> GOLEM_DECORATION = register("golem_decoration",
 		b -> b.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+	/** ItemGolemBell / ItemGolemPlacer "markers". */
+	public static final DataComponentType<java.util.List<dev.neothaum.golem.GolemMarker>> GOLEM_MARKERS = register("golem_markers",
+		b -> b.persistent(dev.neothaum.golem.GolemMarker.LIST_CODEC).networkSynchronized(dev.neothaum.golem.GolemMarker.LIST_STREAM_CODEC));
 	public static final DataComponentType<Integer> GOLEM_BELL_ID = register("golem_bell_id",
 		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 	public static final DataComponentType<Integer> GOLEM_BELL_FACE = register("golem_bell_face",

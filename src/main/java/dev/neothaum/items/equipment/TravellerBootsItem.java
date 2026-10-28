@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * ItemBootsTraveller: walk up full blocks, run faster on the ground, steer better in the air, jump higher and fall more softly. The step
- * height and jump come from the boots' attribute modifiers (TVItems); the push is applied on the client, which moves the player.
+ * height (0.6 + 0.4, a full block) and jump (+0.275, TC4 LivingJumpEvent) come from the boots' attribute modifiers (TVItems); the push is applied on the client, which moves the player.
  */
 public class TravellerBootsItem extends Item implements dev.neothaum.api.RunicArmor {
 	public TravellerBootsItem(Item.Properties props) {

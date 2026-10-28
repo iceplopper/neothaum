@@ -113,7 +113,8 @@ public class NeoThaumJeiPlugin implements IModPlugin {
 		registration.addCraftingStation(CRUCIBLE, TVBlocks.CRUCIBLE);
 		registration.addCraftingStation(INFUSION, TVBlocks.RUNIC_MATRIX, TVBlocks.ARCANE_PEDESTAL);
 		registration.addCraftingStation(INFUSION_ENCHANTMENT, TVBlocks.RUNIC_MATRIX, TVBlocks.ARCANE_PEDESTAL);
-		registration.addCraftingStation(ASPECT_DECOMP, TVItems.THAUMOMETER, TVBlocks.RESEARCH_TABLE);
+		// the research table has no item (it is built in place from two tables), so only the thaumometer
+		registration.addCraftingStation(ASPECT_DECOMP, TVItems.THAUMOMETER);
 	}
 
 	@Override

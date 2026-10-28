@@ -210,8 +210,30 @@ Root causes differed from the handoff's guesses in several places; what was actu
 - Apprentice's rings (bauble blanks 3–8) are not ported, so they're missing from chest loot.
 - The warden/golem/praetor AI is largely invented (e.g. the warden fires golem orbs on a screech timer); port EntityEldritchWarden/Golem behaviour.
 - Thaumostatic harness still uses the vanilla armour model (ModelHoverHarness not ported).
-- **Branding (queued for after the next checkpoint):** some items (e.g. golems) still show "TC" instead of "NeoThaum". Known spot: the creative tab names in `en_us.json` ("TC: Tools & Utilities" etc.); audit item names/tooltips for any other "TC"/"Thaumcraft" labels that should read NeoThaum, keeping TC4's own item names (e.g. "Thaumonomicon").
-- **Golemancer's Bell (queued):** doesn't behave as its Thaumonomicon (TNC) entry describes; port ItemGolemBell's behaviour from TC4 (NeoThaum's bell has an invented "linking" mechanic).
+- **Golem AI still invented / missing (from the bell work):** the Use core presses nearby buttons (copper-golem add-on behaviour) instead of
+  TC4's AIUseItem on marked blocks; the Liquid (Decant) and Essentia (Alchemy) cores have no AI yet; Empty-core marker colours are not yet
+  matched against filter-slot colours. Fill/Empty/Sorting now work from bell markers.
+- Eldritch Portal: leads nowhere until the Outer Lands (Feature 11); TC4's altar also generated the maze then.
+- Giant Taintacle: TC4 dropped a primordial pearl when the last one in an area died; not ported.
+
+## ✅ Completed 2026-10-28 (Claude) — Gemini audit fixes (agentic/AUDIT_GEMINI.md), verified with the `audit` gametest scene
+
+- Arcane Lamp: TC4 sky-or-block light check and its own invisible lamp light (BlockAiry 3); lights cleared however the lamp is removed.
+- Arcane keys: one blank in, one imprinted key out; TC4 key sound; chat messages. Infernal furnace: 1 tick of speed per centivis.
+- Boots of the Traveller: only TC4's step (full block), jump (+0.275), push and fall softening.
+- Liquid Death: 4-quanta finite fluid, level+1 armour-piercing "dissolve" damage, crystallized essence drops. Purifying Fluid: real
+  flowing fluid (no new sources, water-tagged), Warp Ward from source blocks.
+- Harness: TC4 hover drag instead of extra flying speed. Hard Nodes toggle now works.
+- Primal arrows: Air/Order ignore armour; Slowness/Weakness V. Rare loot bag: Primordial Pearl.
+- Eldritch Altar: needs a sinister node above, no lightning, TC4 crystal sound, TC4 defender spawning (eyes 3+ wake guardians).
+- Cultist Portal: TC4 stage timing, 1 HP/tick healing, touch zap, loot crates, keeps summoning after the Praetor, harmless 2.0 burst,
+  one Primordial Pearl.
+- Champions rebuilt to TC4 (whitelist, difficulty/biome odds, +30 HP, x3 damage, every modifier's real effect, boss naming, loot bag
+  and 5-7 XP); aspect orbs per primal at 50%; warp milestones @BATHSALTS/ELDRITCHMINOR/ELDRITCHMAJOR.
+- Removed inventions: node zaps, lodestone warp, mana pod harvest/bonemeal, fragment sound, champion orbs and always-on nameplates.
+- Golemancer's Bell ported (select, mark/unmark/cycle colours, sneak clears, F clears all, hit to pick up, sneak-hit to strip, home and
+  marker overlay); golems keep markers, also through the placer.
+- Branding: creative tabs read "NeoThaum: ...", golem entity is "Golem". JEI catalyst crash (itemless research table) fixed.
 
 ## 🧩 Mod integrations to support eventually (addon code in `dev.neothaum.addon` / `client.addon`; all optional "suggests" deps)
 - [ ] **Trinkets / Accessories** — put amulets, rings, belts, Hover Girdle and Vis Amulet in the shared accessory slots (the modern Baubles).

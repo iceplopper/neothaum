@@ -78,6 +78,8 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 
 	private final NonNullList<ItemStack> filterItems = NonNullList.withSize(36, ItemStack.EMPTY);
 	private final byte[] filterColors = new byte[36];
+	/** EntityGolemBase.markers: the block faces its bell has marked. */
+	private List<GolemMarker> markers = new ArrayList<>();
 	private final boolean[] toggles = new boolean[4];
 	private byte targetFlags = 1;
 	private byte sortFlags = 0;
@@ -712,6 +714,21 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 		return super.mobInteract(player, hand);
 	}
 
+	public List<GolemMarker> getMarkers() {
+		return this.markers;
+	}
+
+	public void setMarkers(List<GolemMarker> markers) {
+		this.markers = new ArrayList<>(markers);
+	}
+
+	/** GolemHelper.getMarkedContainers: the marked blocks in this dimension holding an inventory, nearest first. */
+	public List<BlockPos> getMarkedContainers() {
+		return this.markers.stream().filter(m -> m.dim().equals(this.level().dimension()))
+			.map(GolemMarker::pos).distinct().filter(p -> this.level().getBlockEntity(p) instanceof net.minecraft.world.Container)
+			.sorted(java.util.Comparator.comparingDouble(p -> p.distToCenterSqr(this.position()))).toList();
+	}
+
 	public ItemStack toPlacerItem() {
 		ItemStack stack = switch (this.getGolemType()) {
 			case STRAW -> new ItemStack(TVItems.GOLEM_STRAW);
@@ -739,6 +756,9 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 		}
 		if (this.hasCustomName()) {
 			stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, this.getCustomName());
+		}
+		if (!this.markers.isEmpty()) {
+			stack.set(TVComponents.GOLEM_MARKERS, new ArrayList<>(this.markers));
 		}
 
 		return stack;
@@ -786,6 +806,7 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 		output.putIntArray("FilterColors", colorsInt);
 		output.putByte("TargetFlags", this.targetFlags);
 		output.putByte("SortFlags", this.sortFlags);
+		output.store("Markers", GolemMarker.LIST_CODEC, this.markers);
 	}
 
 	@Override
@@ -822,5 +843,6 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 			}
 		}
 		this.ownerName = input.getStringOr("OwnerName", "");
+		this.setMarkers(input.read("Markers", GolemMarker.LIST_CODEC).orElse(List.of()));
 	}
 }

@@ -150,11 +150,9 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 			furnace.speedyTime--;
 		}
 
+		// TC4: each centivis of Ignis buys one tick of fast smelting (nozzle essentia buys 600)
 		if (furnace.speedyTime <= 0) {
-			int drained = VisNetHandler.drainVis(level, pos, Aspect.FIRE, 5);
-			if (drained > 0) {
-				furnace.speedyTime = drained * 120;
-			}
+			furnace.speedyTime = VisNetHandler.drainVis(level, pos, Aspect.FIRE, 5);
 		}
 
 		if (furnace.maxCookTime == 0) {

@@ -21,11 +21,11 @@ import net.minecraft.world.phys.EntityHitResult;
 /**
  * Port of EntityPrimalArrow:
  * Arrows infused with the six primal aspects.
- * Air: penetrates armor.
+ * Air: magic damage that ignores armour.
  * Fire: ignites target for 5s.
- * Water: inflicts Slowness IV for 10s.
+ * Water: inflicts Slowness V for 10s.
  * Earth: 1.5x damage.
- * Order: inflicts Weakness IV for 10s.
+ * Order: magic damage that ignores armour, and Weakness V for 10s.
  * Entropy: inflicts Wither for 5s.
  */
 public class PrimalArrowEntity extends AbstractArrow {
@@ -63,12 +63,16 @@ public class PrimalArrowEntity extends AbstractArrow {
 		this.applyDamageScaling();
 	}
 
+	/** EntityPrimalArrow.getDamage: 2.1, Earth 1.5x, Order and Entropy 0.8x. */
+	private double primalDamage = 2.1;
+
 	private void applyDamageScaling() {
-		switch (this.getPrimalType()) {
-			case 3 -> this.setBaseDamage(3.15); // Earth: 1.5x damage
-			case 4, 5 -> this.setBaseDamage(1.68); // Order, Entropy: 0.8x damage
-			default -> this.setBaseDamage(2.1); // Air, Fire, Water: 2.1
-		}
+		this.primalDamage = switch (this.getPrimalType()) {
+			case 3 -> 3.15;
+			case 4, 5 -> 1.68;
+			default -> 2.1;
+		};
+		this.setBaseDamage(this.primalDamage);
 	}
 
 	@Override
@@ -95,16 +99,37 @@ public class PrimalArrowEntity extends AbstractArrow {
 		}
 	}
 
+	private static final net.minecraft.resources.ResourceKey<net.minecraft.world.damagesource.DamageType> AIR_ARROW = net.minecraft.resources.ResourceKey
+		.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE, dev.neothaum.NeoThaum.id("airarrow"));
+	private static final net.minecraft.resources.ResourceKey<net.minecraft.world.damagesource.DamageType> ORDER_ARROW = net.minecraft.resources.ResourceKey
+		.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE, dev.neothaum.NeoThaum.id("orderarrow"));
+
 	@Override
 	protected void onHitEntity(EntityHitResult result) {
 		Entity target = result.getEntity();
+		int type = this.getPrimalType();
 		if (target instanceof LivingEntity living) {
-			switch (this.getPrimalType()) {
+			switch (type) {
 				case 1 -> living.igniteForSeconds(5);
-				case 2 -> living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, 3));
-				case 4 -> living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 3));
+				case 2 -> living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, 4));
+				case 4 -> living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 4));
 				case 5 -> living.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0));
 			}
+		}
+		if ((type == 0 || type == 4) && this.level() instanceof net.minecraft.server.level.ServerLevel sl) {
+			// "airarrow" / "orderarrow": magic damage that ignores armour, but otherwise an arrow's hit
+			Entity owner = this.getOwner();
+			var damageType = sl.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE)
+				.getOrThrow(type == 0 ? AIR_ARROW : ORDER_ARROW);
+			var source = new net.minecraft.world.damagesource.DamageSource(damageType, this, owner == null ? this : owner);
+			int damage = net.minecraft.util.Mth.ceil(net.minecraft.util.Mth.clamp(this.getDeltaMovement().length() * this.primalDamage, 0.0, 2.147483647E9));
+			if (this.isCritArrow()) {
+				damage = (int) Math.min((long) this.random.nextInt(damage / 2 + 2) + damage, Integer.MAX_VALUE);
+			}
+			target.hurtServer(sl, source, damage);
+			this.playSound(net.minecraft.sounds.SoundEvents.ARROW_HIT, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+			this.discard();
+			return;
 		}
 		super.onHitEntity(result);
 	}

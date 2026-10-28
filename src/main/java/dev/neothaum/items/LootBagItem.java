@@ -120,7 +120,7 @@ public class LootBagItem extends Item {
 		p.add(new WeightedLoot(() -> new ItemStack(TVItems.GOLD_COIN, coinCount), coinWeight));
 
 		if (rarity == 2) {
-			p.add(new WeightedLoot(() -> new ItemStack(TVItems.ELDRITCH_EYE), 1));
+			p.add(new WeightedLoot(() -> new ItemStack(TVItems.PRIMORDIAL_PEARL), 1)); // itemEldritchObject:3
 			p.add(new WeightedLoot(() -> new ItemStack(Items.NETHER_STAR), 1));
 		}
 

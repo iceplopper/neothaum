@@ -20,8 +20,8 @@ import net.minecraft.world.level.Level;
 
 /**
  * EntityTaintacleGiant: a towering taintacle guarding the tainted land, with a boss bar. Huge blows are capped at 35 and the first one enrages
- * it, healing and strengthening it for ten seconds. (TC4 made it a champion and dropped a primordial pearl when the last of them died; those
- * come with the champion system and the eldritch items.)
+ * it, healing and strengthening it for ten seconds. It always spawns a champion. (TC4 also dropped a primordial pearl when the last of them
+ * died.)
  */
 public class TaintacleGiant extends Taintacle {
 	private static final EntityDataAccessor<Integer> ANGER = SynchedEntityData.defineId(TaintacleGiant.class, EntityDataSerializers.INT);
@@ -32,6 +32,17 @@ public class TaintacleGiant extends Taintacle {
 		super(type, level);
 		this.xpReward = 20;
 		this.setPersistenceRequired();
+	}
+
+	/** EntityTaintacleGiant.onSpawnWithEgg: always a champion, and never despawns. */
+	@Override
+	public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor level,
+		net.minecraft.world.DifficultyInstance difficulty, net.minecraft.world.entity.EntitySpawnReason reason,
+		net.minecraft.world.entity.SpawnGroupData data) {
+		data = super.finalizeSpawn(level, difficulty, reason, data);
+		this.addTag(dev.neothaum.entity.champion.ChampionEvents.TAG_CHECKED);
+		dev.neothaum.entity.champion.ChampionEvents.makeChampion(this, true);
+		return data;
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

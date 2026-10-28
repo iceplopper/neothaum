@@ -47,7 +47,8 @@ import net.minecraft.world.phys.Vec3;
  * Knockback immune, flings targets with melee blows, loses its head upon near-death,
  * and unleashes electric neck-beam barrages in phase 2. Drops Primordial Pearl and Rare Loot Bag.
  */
-public class EldritchGolemEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob {
+public class EldritchGolemEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob,
+	dev.neothaum.entity.champion.ChampionBoss {
 	private static final EntityDataAccessor<Boolean> HEADLESS = SynchedEntityData.defineId(EldritchGolemEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private final ServerBossEvent bossEvent = new ServerBossEvent(UUID.randomUUID(), Component.literal("Eldritch Golem"),
@@ -56,6 +57,14 @@ public class EldritchGolemEntity extends Monster implements RangedAttackMob, dev
 	private int attackTimer = 0;
 	/** The golem rises out of the ground over its first 150 ticks, healing as it comes (entity event 18). */
 	public int spawnTimer = 0;
+
+	/** entity.Thaumcraft.EldritchGolem.name: "<modifier> Eldritch Construct". */
+	@Override
+	public void nameAsChampion(Component modifier) {
+		Component name = modifier.copy().append(" Eldritch Construct");
+		this.setCustomName(name);
+		this.bossEvent.setName(name);
+	}
 
 	public EldritchGolemEntity(EntityType<? extends EldritchGolemEntity> type, Level level) {
 		super(type, level);

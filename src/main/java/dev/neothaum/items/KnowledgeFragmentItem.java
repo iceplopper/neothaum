@@ -37,8 +37,6 @@ public class KnowledgeFragmentItem extends Item {
 				TVNetwork.sendAspectPool(sp, a, q, k.getAspectPool(a));
 			}
 			ResearchManager.setKnowledge(sp, k);
-			level.playSound(null, player.getX(), player.getY(), player.getZ(),
-				SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.5F, 1.2F + level.getRandom().nextFloat() * 0.2F);
 		}
 		player.awardStat(Stats.ITEM_USED.get(this));
 		stack.consume(1, player);

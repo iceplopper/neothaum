@@ -5,21 +5,20 @@ import dev.neothaum.api.aspects.AspectList;
 import dev.neothaum.entity.TVEntities;
 import dev.neothaum.entity.monster.CrimsonClericEntity;
 import dev.neothaum.entity.monster.CrimsonKnightEntity;
+import dev.neothaum.entity.monster.CultistEntity;
 import dev.neothaum.entity.monster.EldritchGuardianEntity;
 import dev.neothaum.items.WandItem;
 import dev.neothaum.registry.TVBlockEntities;
 import dev.neothaum.registry.TVBlocks;
 import dev.neothaum.registry.TVSounds;
+import dev.neothaum.tiles.NodeBlockEntity;
 import dev.neothaum.tiles.TVBlockEntity;
-import java.util.List;
+import dev.neothaum.api.nodes.NodeType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -80,16 +79,17 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 
 	public InteractionResult insertEye(Player player, ItemStack stack) {
 		if (this.eyes < 4) {
+			// BlockEldritch: the third and fourth eyes wake the guardians
+			if (this.eyes >= 2) {
+				this.spawner = true;
+				this.spawnType = 1;
+			}
 			this.eyes++;
 			if (!player.isCreative()) {
 				stack.shrink(1);
 			}
-			if (this.eyes >= 2 && !this.spawner) {
-				this.spawner = true;
-				this.spawnType = 1;
-			}
 			if (this.level != null) {
-				this.level.playSound(null, this.worldPosition, SoundEvents.END_PORTAL_FRAME_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+				this.level.playSound(null, this.worldPosition, TVSounds.CRYSTAL, SoundSource.BLOCKS, 0.2F, 1.0F);
 			}
 			this.markForUpdate();
 			return InteractionResult.SUCCESS;
@@ -97,38 +97,30 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 		return InteractionResult.PASS;
 	}
 
+	/**
+	 * WandManager.createOculus: with all four eyes in and a sinister node floating just above, a wand strike paying 100 of every primal
+	 * opens the Eldritch Portal in the node's place.
+	 */
 	public InteractionResult activateWand(Player player, ItemStack stack) {
-		if (this.eyes == 4 && !this.open && this.level != null && !this.level.isClientSide()) {
-			WandItem wand = (WandItem) stack.getItem();
-			AspectList cost = new AspectList()
-				.add(Aspect.AIR, 100)
-				.add(Aspect.EARTH, 100)
-				.add(Aspect.FIRE, 100)
-				.add(Aspect.WATER, 100)
-				.add(Aspect.ORDER, 100)
-				.add(Aspect.ENTROPY, 100);
-
-			if (player.isCreative() || wand.consumeAllVisCrafting(stack, player, cost, true)) {
-				this.open = true;
-				this.spawner = false;
-				ServerLevel sl = (ServerLevel) this.level;
-				sl.playSound(null, this.worldPosition, TVSounds.WAND, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-				// Lightning strike
-				LightningBolt bolt = EntityTypes.LIGHTNING_BOLT.create(sl, EntitySpawnReason.EVENT);
-				if (bolt != null) {
-					bolt.snapTo(this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.0, this.worldPosition.getZ() + 0.5, 0, 0);
-					sl.addFreshEntity(bolt);
-				}
-
-				// Place Eldritch Portal directly above altar
-				BlockPos portalPos = this.worldPosition.above();
-				sl.setBlockAndUpdate(portalPos, TVBlocks.ELDRITCH_PORTAL.defaultBlockState());
-				this.markForUpdate();
-				return InteractionResult.SUCCESS;
-			}
+		if (this.eyes != 4 || this.open || !(this.level instanceof ServerLevel sl)) {
+			return InteractionResult.PASS;
 		}
-		return InteractionResult.PASS;
+		BlockPos nodePos = this.worldPosition.above();
+		if (!(sl.getBlockEntity(nodePos) instanceof NodeBlockEntity node) || node.getNodeType() != NodeType.DARK) {
+			return InteractionResult.PASS;
+		}
+		WandItem wand = (WandItem) stack.getItem();
+		AspectList cost = new AspectList().add(Aspect.AIR, 100).add(Aspect.FIRE, 100).add(Aspect.EARTH, 100).add(Aspect.WATER, 100)
+			.add(Aspect.ORDER, 100).add(Aspect.ENTROPY, 100);
+		if (!wand.consumeAllVisCrafting(stack, player, cost, true)) {
+			return InteractionResult.PASS;
+		}
+		sl.playSound(null, this.worldPosition, TVSounds.WAND, SoundSource.BLOCKS, 1.0F, 1.0F);
+		this.open = true;
+		sl.removeBlock(nodePos, false);
+		sl.setBlockAndUpdate(nodePos, TVBlocks.ELDRITCH_PORTAL.defaultBlockState());
+		this.markForUpdate();
+		return InteractionResult.SUCCESS;
 	}
 
 	public static void tick(Level level, BlockPos pos, BlockState state, EldritchAltarBlockEntity altar) {
@@ -149,60 +141,86 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 		}
 	}
 
+	/** TileEldritchAltar.spawnClerics: four ritualist clerics at the corners, leashed within 8; done once at least three appear. */
 	private void spawnClerics() {
-		if (!(this.level instanceof ServerLevel sl)) return;
-		int[][] offsets = {{-2, -2}, {-2, 2}, {2, -2}, {2, 2}};
+		if (!(this.level instanceof ServerLevel sl)) {
+			return;
+		}
 		int success = 0;
-		for (int[] off : offsets) {
+		for (int[] off : new int[][]{{-2, -2}, {-2, 2}, {2, -2}, {2, 2}}) {
 			BlockPos cp = this.worldPosition.offset(off[0], 0, off[1]);
 			CrimsonClericEntity cleric = TVEntities.CULTIST_CLERIC.create(sl, EntitySpawnReason.EVENT);
-			if (cleric != null) {
-				cleric.snapTo(cp.getX() + 0.5, cp.getY(), cp.getZ() + 0.5, 0, 0);
-				cleric.setRitualist(true);
+			if (cleric == null || !sl.getBlockState(cp.below()).isFaceSturdy(sl, cp.below(), net.minecraft.core.Direction.UP)) {
+				continue;
+			}
+			cleric.snapTo(cp.getX() + 0.5, cp.getY(), cp.getZ() + 0.5, 0, 0);
+			if (sl.noCollision(cleric) && !sl.containsAnyLiquid(cleric.getBoundingBox())) {
+				cleric.setHomeTo(this.worldPosition, 8);
+				cleric.finalizeSpawn(sl, sl.getCurrentDifficultyAt(cp), EntitySpawnReason.EVENT, null);
+				cleric.spawnAnim();
 				if (sl.addFreshEntity(cleric)) {
 					success++;
+					cleric.setRitualist(true);
 				}
 			}
 		}
-		if (success > 0) {
+		if (success > 2) {
 			this.spawnedClerics = true;
-			this.markForUpdate();
+			this.setChanged();
 		}
 	}
 
+	/** TileEldritchAltar.spawnGuards: while a cleric lives within 24, a cultist knight joins as long as there are fewer than 8 cultists. */
 	private void spawnGuards() {
-		if (!(this.level instanceof ServerLevel sl)) return;
+		if (!(this.level instanceof ServerLevel sl)) {
+			return;
+		}
 		AABB area = new AABB(this.worldPosition).inflate(24.0, 16.0, 24.0);
-		List<CrimsonClericEntity> clerics = sl.getEntitiesOfClass(CrimsonClericEntity.class, area);
-		if (clerics.isEmpty()) {
+		if (sl.getEntitiesOfClass(CrimsonClericEntity.class, area).isEmpty()) {
 			this.spawner = false;
 			return;
 		}
-		List<CrimsonKnightEntity> knights = sl.getEntitiesOfClass(CrimsonKnightEntity.class, area);
-		if (knights.size() < 6) {
+		if (sl.getEntitiesOfClass(CultistEntity.class, area).size() < 8) {
 			CrimsonKnightEntity knight = TVEntities.CULTIST_KNIGHT.create(sl, EntitySpawnReason.EVENT);
-			if (knight != null) {
-				int rx = sl.getRandom().nextInt(12) - 6;
-				int rz = sl.getRandom().nextInt(12) - 6;
-				knight.snapTo(this.worldPosition.getX() + rx + 0.5, this.worldPosition.getY(), this.worldPosition.getZ() + rz + 0.5, sl.getRandom().nextFloat() * 360, 0);
-				sl.addFreshEntity(knight);
+			BlockPos at = this.defenderSpot(sl);
+			if (knight != null && at != null) {
+				knight.snapTo(at.getX(), at.getY(), at.getZ(), 0, 0);
+				if (sl.noCollision(knight) && !sl.containsAnyLiquid(knight.getBoundingBox())) {
+					knight.finalizeSpawn(sl, sl.getCurrentDifficultyAt(at), EntitySpawnReason.EVENT, null);
+					knight.spawnAnim();
+					knight.setHomeTo(this.worldPosition, 16);
+					sl.addFreshEntity(knight);
+				}
 			}
 		}
 	}
 
+	/** TileEldritchAltar.spawnGuardian: every two seconds an eldritch guardian, leashed within 16, wherever one can stand. */
 	private void spawnGuardians() {
-		if (!(this.level instanceof ServerLevel sl)) return;
-		AABB area = new AABB(this.worldPosition).inflate(24.0, 16.0, 24.0);
-		List<EldritchGuardianEntity> guards = sl.getEntitiesOfClass(EldritchGuardianEntity.class, area);
-		if (guards.size() < 3) {
-			EldritchGuardianEntity guardian = TVEntities.ELDRITCH_GUARDIAN.create(sl, EntitySpawnReason.EVENT);
-			if (guardian != null) {
-				int rx = sl.getRandom().nextInt(10) - 5;
-				int rz = sl.getRandom().nextInt(10) - 5;
-				guardian.snapTo(this.worldPosition.getX() + rx + 0.5, this.worldPosition.getY(), this.worldPosition.getZ() + rz + 0.5, sl.getRandom().nextFloat() * 360, 0);
+		if (!(this.level instanceof ServerLevel sl)) {
+			return;
+		}
+		EldritchGuardianEntity guardian = TVEntities.ELDRITCH_GUARDIAN.create(sl, EntitySpawnReason.EVENT);
+		BlockPos at = this.defenderSpot(sl);
+		if (guardian != null && at != null) {
+			guardian.snapTo(at.getX(), at.getY(), at.getZ(), 0, 0);
+			if (guardian.checkSpawnObstruction(sl)) {
+				guardian.finalizeSpawn(sl, sl.getCurrentDifficultyAt(at), EntitySpawnReason.EVENT, null);
+				guardian.spawnAnim();
+				guardian.setHomeTo(this.worldPosition, 16);
 				sl.addFreshEntity(guardian);
 			}
 		}
+	}
+
+	/** 4 to 10 blocks out on each axis (or none), 0 to 3 up or down, standing on something solid; null if not. */
+	private BlockPos defenderSpot(ServerLevel sl) {
+		var rand = sl.getRandom();
+		int x = this.worldPosition.getX() + net.minecraft.util.Mth.randomBetweenInclusive(rand, 4, 10) * net.minecraft.util.Mth.randomBetweenInclusive(rand, -1, 1);
+		int y = this.worldPosition.getY() + net.minecraft.util.Mth.randomBetweenInclusive(rand, 0, 3) * net.minecraft.util.Mth.randomBetweenInclusive(rand, -1, 1);
+		int z = this.worldPosition.getZ() + net.minecraft.util.Mth.randomBetweenInclusive(rand, 4, 10) * net.minecraft.util.Mth.randomBetweenInclusive(rand, -1, 1);
+		BlockPos at = new BlockPos(x, y, z);
+		return sl.getBlockState(at.below()).isFaceSturdy(sl, at.below(), net.minecraft.core.Direction.UP) ? at : null;
 	}
 
 	@Override

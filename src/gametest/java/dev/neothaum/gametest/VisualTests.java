@@ -82,6 +82,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("pech")) {
 					pechScene(ctx, server, sp);
 				}
+				if (scenes.contains("audit")) {
+					auditScene(ctx, server, sp);
+				}
 				if (scenes.contains("worldmap")) {
 					worldMapScene(ctx, server, sp);
 				}
@@ -1954,6 +1957,138 @@ public class VisualTests implements FabricClientGameTest {
 		} catch (Throwable t) {
 			ctx.waitTicks(20);
 		}
+	}
+
+	/** The TC4-accuracy fixes: lamp lights, finite and flowing fluids, dissolve drops, champions and the golemancer's bell. */
+	private static void auditScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode creative @a", "difficulty normal", "gamerule doDaylightCycle false", "gamerule doMobSpawning false",
+			"weather clear", "time set 6000", "fill -24 117 -24 24 135 24 air", "fill -24 116 -24 24 116 24 stone", "tp @a 0 117 0"}) {
+			server.runCommand(cmd);
+		}
+		// --- arcane lamp: nothing in daylight, lights at night, all gone when the lamp is broken
+		server.runCommand("setblock 0 117 0 neothaum:arcane_lamp");
+		ctx.waitTicks(200);
+		java.util.function.IntSupplier lights = () -> {
+			int[] n = new int[1];
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				for (var p : net.minecraft.core.BlockPos.betweenClosed(-16, 117, -16, 16, 135, 16)) {
+					if (level.getBlockState(p).is(dev.neothaum.registry.TVBlocks.LAMP_LIGHT)
+						|| level.getBlockState(p).is(net.minecraft.world.level.block.Blocks.LIGHT)) {
+						n[0]++;
+					}
+				}
+			});
+			return n[0];
+		};
+		NeoThaum.LOGGER.info("[visual-test] audit: lamp lights above ground at noon = {}", lights.getAsInt());
+		server.runCommand("time set 18000");
+		ctx.waitTicks(200);
+		NeoThaum.LOGGER.info("[visual-test] audit: lamp lights above ground at midnight = {}", lights.getAsInt());
+		server.runCommand("setblock 0 117 0 air destroy");
+		ctx.waitTicks(5);
+		NeoThaum.LOGGER.info("[visual-test] audit: lamp lights after breaking the lamp = {}", lights.getAsInt());
+		server.runCommand("time set 6000");
+
+		// --- liquid death spreads out as a finite fluid; purifying fluid flows from a source
+		server.runCommand("setblock 8 117 8 neothaum:liquid_death");
+		server.runCommand("setblock -8 117 -8 neothaum:purifying_fluid");
+		ctx.waitTicks(120);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			int blocks = 0, quanta = 0, pure = 0, pureSources = 0;
+			for (var p : net.minecraft.core.BlockPos.betweenClosed(-20, 116, -20, 20, 118, 20)) {
+				var st = level.getBlockState(p);
+				if (st.is(dev.neothaum.registry.TVBlocks.LIQUID_DEATH)) {
+					blocks++;
+					quanta += st.getValue(dev.neothaum.blocks.LiquidDeathBlock.LEVEL) + 1;
+				}
+				if (st.is(dev.neothaum.registry.TVBlocks.PURIFYING_FLUID)) {
+					pure++;
+					if (level.getFluidState(p).isSource()) {
+						pureSources++;
+					}
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] audit: liquid death blocks = {}, total quanta = {} (4 expected)", blocks, quanta);
+			NeoThaum.LOGGER.info("[visual-test] audit: purifying fluid blocks = {}, sources = {}, is water = {}", pure, pureSources,
+				level.getFluidState(new net.minecraft.core.BlockPos(-8, 117, -8)).is(net.minecraft.tags.FluidTags.WATER));
+		});
+		server.runCommand("tp @a 0 121 0 135 35");
+		ctx.waitTicks(20);
+		shot(ctx, "audit_fluids");
+
+		// --- dissolve: a pig in a pit of liquid death dies and drops crystallized essence
+		server.runCommand("fill 15 116 15 15 115 15 air");
+		server.runCommand("setblock 15 115 15 stone");
+		server.runCommand("setblock 15 116 15 neothaum:liquid_death");
+		server.runCommand("summon minecraft:pig 15.5 116 15.5");
+		ctx.waitTicks(100);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var box = new net.minecraft.world.phys.AABB(10, 110, 10, 20, 125, 20);
+			int pigs = level.getEntitiesOfClass(net.minecraft.world.entity.animal.pig.Pig.class, box).size();
+			int crystals = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, box).stream()
+				.filter(e -> e.getItem().is(dev.neothaum.registry.TVItems.CRYSTAL_ESSENCE)).mapToInt(e -> e.getItem().getCount()).sum();
+			NeoThaum.LOGGER.info("[visual-test] audit: pigs left in liquid death = {}, crystal essence dropped = {}", pigs, crystals);
+		});
+
+		// --- champions: a zombie made champion, and a giant taintacle, which always is one
+		server.runCommand("summon minecraft:zombie 0 117 -10 {NoAI:1b}");
+		server.runCommand("summon neothaum:taintacle_giant 6 117 -10");
+		ctx.waitTicks(5);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var box = new net.minecraft.world.phys.AABB(-5, 110, -15, 10, 125, -5);
+			for (var z : level.getEntitiesOfClass(net.minecraft.world.entity.monster.zombie.Zombie.class, box)) {
+				if (!dev.neothaum.entity.champion.ChampionEvents.isChampion(z)) {
+					dev.neothaum.entity.champion.ChampionEvents.makeChampion(z, false);
+				}
+				NeoThaum.LOGGER.info("[visual-test] audit: champion zombie {} name={} maxHealth={} health={} damage={} nameVisible={}",
+					dev.neothaum.entity.champion.ChampionEvents.getModifier(z), z.getCustomName() == null ? null : z.getCustomName().getString(),
+					z.getMaxHealth(), z.getHealth(), z.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE),
+					z.isCustomNameVisible());
+			}
+			for (var t : level.getEntitiesOfClass(dev.neothaum.entity.monster.TaintacleGiant.class, box)) {
+				NeoThaum.LOGGER.info("[visual-test] audit: giant taintacle champion={} modifier={} name={}",
+					dev.neothaum.entity.champion.ChampionEvents.isChampion(t), dev.neothaum.entity.champion.ChampionEvents.getModifier(t),
+					t.getCustomName() == null ? null : t.getCustomName().getString());
+			}
+		});
+
+		// --- golemancer's bell: select a golem, mark a chest and two faces, unmark one, see them drawn
+		server.runCommand("kill @e[type=!player]");
+		server.runCommand("setblock -3 117 3 minecraft:chest");
+		server.runCommand("setblock 3 117 3 minecraft:chest");
+		server.runCommand("item replace entity @a weapon.mainhand with neothaum:golem_bell");
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var player = srv.getPlayerList().getPlayers().get(0);
+			var golem = new dev.neothaum.golem.GolemEntity(dev.neothaum.entity.TVEntities.GOLEM, level);
+			golem.setGolemType(dev.neothaum.golem.GolemType.WOOD);
+			golem.snapTo(-3.5, 118, 3.5, 0, 0);
+			golem.setHomeArea(new net.minecraft.core.BlockPos(-3, 117, 3), net.minecraft.core.Direction.UP);
+			golem.setNoAi(true);
+			level.addFreshEntity(golem);
+			var bell = player.getMainHandItem();
+			bell.getItem().interactLivingEntity(bell, player, golem, net.minecraft.world.InteractionHand.MAIN_HAND);
+			var up = net.minecraft.core.Direction.UP;
+			dev.neothaum.golem.GolemBellItem.changeMarkers(bell, player, level, new net.minecraft.core.BlockPos(3, 117, 3), up);
+			dev.neothaum.golem.GolemBellItem.changeMarkers(bell, player, level, new net.minecraft.core.BlockPos(0, 116, 4), up);
+			dev.neothaum.golem.GolemBellItem.changeMarkers(bell, player, level, new net.minecraft.core.BlockPos(1, 116, 4), up);
+			// clicking a marked face again (no Order upgrade) unmarks it
+			dev.neothaum.golem.GolemBellItem.changeMarkers(bell, player, level, new net.minecraft.core.BlockPos(1, 116, 4), up);
+			NeoThaum.LOGGER.info("[visual-test] audit: bell linked={} bell markers={} golem markers={} marked containers={}",
+				dev.neothaum.golem.GolemBellItem.getGolemId(bell) == golem.getId(), dev.neothaum.golem.GolemBellItem.getMarkers(bell).size(),
+				golem.getMarkers().size(), golem.getMarkedContainers());
+			NeoThaum.LOGGER.info("[visual-test] audit: placer keeps markers = {}",
+				golem.toPlacerItem().getOrDefault(dev.neothaum.registry.TVComponents.GOLEM_MARKERS, java.util.List.of()).size());
+		});
+		server.runCommand("tp @a 0 120 -3 0 30");
+		ctx.waitTicks(20);
+		shot(ctx, "audit_bell");
+		server.runCommand("kill @e[type=!player]");
 	}
 
 	private static void shot(ClientGameTestContext ctx, String name) {

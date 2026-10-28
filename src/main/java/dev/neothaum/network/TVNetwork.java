@@ -319,6 +319,10 @@ public final class TVNetwork {
 		});
 		ServerPlayNetworking.registerGlobalReceiver(FocusChange.TYPE, (p, ctx) -> {
 			var held = ctx.player().getMainHandItem();
+			if (held.getItem() instanceof dev.neothaum.golem.GolemBellItem && "BELL_RESET".equals(p.key())) {
+				dev.neothaum.golem.GolemBellItem.resetMarkers(held, ctx.player());
+				return;
+			}
 			// KeyHandler: a sceptre takes no focus
 			if (held.getItem() instanceof dev.neothaum.items.WandItem && !dev.neothaum.items.WandItem.isSceptre(held)) {
 				dev.neothaum.wands.WandFoci.changeFocus(held, ctx.player(), p.key());

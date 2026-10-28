@@ -51,9 +51,8 @@ public class ArcaneLampBlock extends AbstractLampBlock {
 
 	@Override
 	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
-		if (level.getBlockEntity(pos) instanceof ArcaneLampBlockEntity lamp) {
-			lamp.removeLights(level);
-		}
+		// BlockMetalDevice.breakBlock: however the lamp goes, its lights go with it
+		ArcaneLampBlockEntity.clearLights(level, pos);
 		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
 	}
 }

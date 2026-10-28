@@ -46,7 +46,8 @@ public final class FocusRadial {
 
 	/** F is also vanilla's swap-hands key; while a wand is in hand the focus key wins (1.7 had no off hand to swap to). */
 	public static void startTick(Minecraft mc) {
-		if (mc.player != null && mc.player.getMainHandItem().getItem() instanceof WandItem && keyF.same(mc.options.keySwapOffhand)) {
+		if (mc.player != null && (mc.player.getMainHandItem().getItem() instanceof WandItem
+			|| mc.player.getMainHandItem().getItem() instanceof dev.neothaum.golem.GolemBellItem) && keyF.same(mc.options.keySwapOffhand)) {
 			while (mc.options.keySwapOffhand.consumeClick()) {
 				// swallowed
 			}
@@ -63,7 +64,10 @@ public final class FocusRadial {
 					radialLock = false;
 				}
 				ItemStack held = player.getMainHandItem();
-				if (!radialLock && held.getItem() instanceof WandItem && !WandItem.isSceptre(held)) {
+				if (held.getItem() instanceof dev.neothaum.golem.GolemBellItem && !keyPressedF) {
+					// KeyHandler: with the bell in hand the key clears its golem's markers
+					TVNetwork.clientSender.accept(new TVNetwork.FocusChange("BELL_RESET"));
+				} else if (!radialLock && held.getItem() instanceof WandItem && !WandItem.isSceptre(held)) {
 					if (player.isShiftKeyDown()) {
 						if (!keyPressedF) {
 							TVNetwork.clientSender.accept(new TVNetwork.FocusChange("REMOVE"));

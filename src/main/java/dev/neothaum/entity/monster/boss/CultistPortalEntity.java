@@ -124,33 +124,21 @@ public class CultistPortalEntity extends Monster {
 		}
 
 		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
-
-		// Proximity zap
-		AABB zapArea = this.getBoundingBox().inflate(3.0);
-		List<Player> nearby = this.level().getEntitiesOfClass(Player.class, zapArea);
-		for (Player p : nearby) {
-			if (!p.isCreative() && !p.isSpectator()) {
-				p.hurtServer((ServerLevel) this.level(), this.damageSources().mobAttack(this), 8.0F);
-				this.level().playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.ZAP, SoundSource.HOSTILE, 1.0F, 1.0F);
-			}
-		}
-
+		ServerLevel sl = (ServerLevel) this.level();
 		if (this.stageCounter <= 0) {
-			Player target = this.level().getNearestPlayer(this, 48.0);
-			if (target != null) {
+			if (sl.getNearestPlayer(this, 48.0) != null) {
 				this.setPulse(10);
-				this.level().broadcastEntityEvent(this, (byte) 16);
-
-				if (this.stage < 12) {
-					int timing = this.getTiming();
-					this.stageCounter = Math.max(20, timing + this.random.nextInt(10));
+				sl.broadcastEntityEvent(this, (byte) 16);
+				if (this.stage <= 4) {
+					this.stageCounter = 15 + this.random.nextInt(10 - this.stage) - this.stage;
 					this.spawnMinion();
 				} else if (this.stage == 12) {
-					this.stageCounter = 80;
+					this.stageCounter = 50 + this.getTiming() * 2 + this.random.nextInt(50);
 					this.spawnBoss();
 				} else {
-					this.stageCounter = 40;
-					this.hurtServer((ServerLevel) this.level(), this.damageSources().generic(), 5.0F + this.random.nextInt(5));
+					int t = this.getTiming();
+					this.stageCounter = t + this.random.nextInt(5 + t / 3);
+					this.spawnMinion();
 				}
 				this.stage++;
 			} else {
@@ -158,87 +146,113 @@ public class CultistPortalEntity extends Monster {
 			}
 		} else {
 			this.stageCounter--;
-			// Stage 0 banner placement
-			if (this.stage == 0 && this.stageCounter == 160) {
+			if (this.stageCounter == 160 && this.stage == 0) {
 				this.spawnBanners();
 			}
+			if (this.stageCounter > 20 && this.stageCounter < 150 && this.stage == 0 && this.stageCounter % 13 == 0) {
+				this.spawnLootCrate(sl);
+			}
 		}
-
-		// Passive regeneration before boss phase
-		if (this.stage < 12 && this.tickCount % 20 == 0) {
+		// it mends itself until the Praetor comes
+		if (this.stage < 12) {
 			this.heal(1.0F);
 		}
 	}
 
+	/** onCollideWithPlayer: touching the portal zaps for 8. */
+	@Override
+	public void playerTouch(Player player) {
+		if (this.level() instanceof ServerLevel sl && this.distanceToSqr(player) < 3.0
+			&& player.hurtServer(sl, this.damageSources().mobAttack(this), 8.0F)) {
+			this.playSound(TVSounds.ZAP, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F + 1.0F);
+		}
+	}
+
+	/** Twenty points a cultist within 32 blocks: the more there are, the slower the waves. */
 	private int getTiming() {
-		AABB area = this.getBoundingBox().inflate(32.0);
-		List<LivingEntity> cultists = this.level().getEntitiesOfClass(LivingEntity.class, area,
-			e -> e instanceof CrimsonKnightEntity || e instanceof CrimsonClericEntity);
-		return cultists.size() * 20;
+		return this.level().getEntitiesOfClass(dev.neothaum.entity.monster.CultistEntity.class, this.getBoundingBox().inflate(32.0)).size() * 20;
 	}
 
+	/** Four crimson banners six blocks out, facing in. */
 	private void spawnBanners() {
-		if (!(this.level() instanceof ServerLevel sl)) return;
-		Direction[] dirs = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-		BlockPos center = this.blockPosition();
-		for (Direction dir : dirs) {
-			BlockPos bp = center.relative(dir, 6);
-			// Find ground level
-			while (bp.getY() > sl.getMinY() && sl.isEmptyBlock(bp.below())) {
-				bp = bp.below();
-			}
-			if (sl.isEmptyBlock(bp)) {
-				sl.setBlockAndUpdate(bp, TVBlocks.BANNER.defaultBlockState());
-				if (sl.getBlockEntity(bp) instanceof BannerBlockEntity banner) {
-					banner.setFacing(dir.getOpposite());
-				}
+		if (!(this.level() instanceof ServerLevel sl)) {
+			return;
+		}
+		sl.broadcastEntityEvent(this, (byte) 16);
+		for (Direction dir : new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST}) {
+			BlockPos bp = this.blockPosition().relative(dir, 6);
+			sl.setBlockAndUpdate(bp, TVBlocks.BANNER.defaultBlockState());
+			if (sl.getBlockEntity(bp) instanceof BannerBlockEntity banner) {
+				banner.setFacing(dir.getOpposite());
+				this.playSound(TVSounds.WANDFAIL, 1.0F, 1.0F);
 			}
 		}
 	}
 
-	private void spawnMinion() {
-		if (!(this.level() instanceof ServerLevel sl)) return;
-		Mob cultist;
-		if (this.random.nextFloat() > 0.33F) {
-			cultist = TVEntities.CULTIST_KNIGHT.create(sl, EntitySpawnReason.EVENT);
-		} else {
-			cultist = TVEntities.CULTIST_CLERIC.create(sl, EntitySpawnReason.EVENT);
+	/** Early on, loot crates pop up near the portal: rare 5%, uncommon 15%, else common. */
+	private void spawnLootCrate(ServerLevel sl) {
+		int x = (int) this.getX() + this.random.nextInt(5) - this.random.nextInt(5);
+		int z = (int) this.getZ() + this.random.nextInt(5) - this.random.nextInt(5);
+		BlockPos at = new BlockPos(x, (int) this.getY(), z);
+		if (x != (int) this.getX() && z != (int) this.getZ() && sl.isEmptyBlock(at)) {
+			sl.broadcastEntityEvent(this, (byte) 16);
+			float rr = this.random.nextFloat();
+			sl.setBlockAndUpdate(at, (rr < 0.05F ? TVBlocks.LOOT_CRATE_RARE : rr < 0.2F ? TVBlocks.LOOT_CRATE_UNCOMMON : TVBlocks.LOOT_CRATE_COMMON)
+				.defaultBlockState());
+			this.playSound(TVSounds.WANDFAIL, 1.0F, 1.0F);
 		}
+	}
+
+	/** A knight (two in three) or a cleric, leashed within 32. Once the Praetor is out, every one costs the portal 5 to 9 health. */
+	private void spawnMinion() {
+		if (!(this.level() instanceof ServerLevel sl)) {
+			return;
+		}
+		Mob cultist = this.random.nextFloat() > 0.33F ? TVEntities.CULTIST_KNIGHT.create(sl, EntitySpawnReason.EVENT)
+			: TVEntities.CULTIST_CLERIC.create(sl, EntitySpawnReason.EVENT);
 		if (cultist != null) {
-			double sx = this.getX() + (this.random.nextDouble() - this.random.nextDouble()) * 1.5;
-			double sy = this.getY() + 0.25;
-			double sz = this.getZ() + (this.random.nextDouble() - this.random.nextDouble()) * 1.5;
-			cultist.snapTo(sx, sy, sz, this.random.nextFloat() * 360.0F, 0.0F);
-			sl.addFreshEntity(cultist);
-			sl.playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.WANDFAIL, SoundSource.HOSTILE, 1.0F, 1.0F);
+			this.placeSummoned(sl, cultist);
+		}
+		if (this.stage > 12) {
+			this.hurtServer(sl, this.damageSources().fellOutOfWorld(), 5 + this.random.nextInt(5));
 		}
 	}
 
 	private void spawnBoss() {
-		if (!(this.level() instanceof ServerLevel sl)) return;
-		CrimsonLeaderEntity leader = TVEntities.CULTIST_LEADER.create(sl, EntitySpawnReason.EVENT);
-		if (leader != null) {
-			double sx = this.getX() + (this.random.nextDouble() - this.random.nextDouble()) * 1.5;
-			double sy = this.getY() + 0.25;
-			double sz = this.getZ() + (this.random.nextDouble() - this.random.nextDouble()) * 1.5;
-			leader.snapTo(sx, sy, sz, this.random.nextFloat() * 360.0F, 0.0F);
-			sl.addFreshEntity(leader);
-			sl.playSound(null, this.getX(), this.getY(), this.getZ(), TVSounds.WANDFAIL, SoundSource.HOSTILE, 1.0F, 1.0F);
+		if (this.level() instanceof ServerLevel sl) {
+			CrimsonLeaderEntity leader = TVEntities.CULTIST_LEADER.create(sl, EntitySpawnReason.EVENT);
+			if (leader != null) {
+				this.placeSummoned(sl, leader);
+			}
 		}
 	}
 
+	private void placeSummoned(ServerLevel sl, Mob mob) {
+		mob.snapTo(this.getX() + this.random.nextFloat() - this.random.nextFloat(), this.getY() + 0.25,
+			this.getZ() + this.random.nextFloat() - this.random.nextFloat(), this.random.nextFloat() * 360.0F, 0.0F);
+		mob.finalizeSpawn(sl, sl.getCurrentDifficultyAt(mob.blockPosition()), EntitySpawnReason.EVENT, null);
+		mob.setHomeTo(this.blockPosition(), 32);
+		mob.spawnAnim();
+		sl.addFreshEntity(mob);
+		mob.playSound(TVSounds.WANDFAIL, 1.0F, 1.0F);
+	}
+
+	/** It bursts (no harm to blocks) and leaves a Primordial Pearl. */
 	@Override
 	public void die(DamageSource damageSource) {
-		super.die(damageSource);
-		if (!this.level().isClientSide() && this.level() instanceof ServerLevel sl) {
-			sl.explode(this, this.getX(), this.getY() + 1.0, this.getZ(), 2.5F, Level.ExplosionInteraction.MOB);
-			// Guaranteed drop of Crimson Rites and Rare Loot Bag
-			this.spawnAtLocation(sl, new ItemStack(TVItems.CRIMSON_RITES));
-			this.spawnAtLocation(sl, new ItemStack(TVItems.LOOT_BAG_RARE));
-			if (this.random.nextBoolean()) {
-				this.spawnAtLocation(sl, new ItemStack(TVItems.PRIMORDIAL_PEARL));
-			}
+		if (this.level() instanceof ServerLevel sl) {
+			sl.explode(this, this.getX(), this.getY(), this.getZ(), 2.0F, Level.ExplosionInteraction.NONE);
 		}
+		super.die(damageSource);
+	}
+
+	@Override
+	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
+		super.dropCustomDeathLoot(level, source, killedByPlayer);
+		var pearl = new net.minecraft.world.entity.item.ItemEntity(level, this.getX(), this.getY() + this.getBbHeight() / 2.0F, this.getZ(),
+			new ItemStack(TVItems.PRIMORDIAL_PEARL));
+		pearl.setDeltaMovement(Vec3.ZERO);
+		level.addFreshEntity(pearl);
 	}
 
 	@Override

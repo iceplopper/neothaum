@@ -95,7 +95,7 @@ public class NeoThaumConfig {
 	public static final int TC4_TAINT_SPREAD_RATE = 200;
 	public static final int MAGICAL_FOREST_PERCENT = 30;
 	public static final int TAINTED_LAND_PERCENT = 5;
-	public static final float ASPECT_ORB_CHANCE = 0.25f;
+	public static final float ASPECT_ORB_CHANCE = 0.5f;
 	public static final int WISP_SPAWN_WEIGHT = 5;
 
 	/** A "1 in {@code oneIn}" roll made {@code multiplier} times as likely (never, at 0). */

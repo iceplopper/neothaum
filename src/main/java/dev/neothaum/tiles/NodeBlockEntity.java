@@ -82,7 +82,6 @@ public class NodeBlockEntity extends TVBlockEntity {
 			change = this.handleDarkNode(change);
 			change = this.handlePureNode(change);
 			change = this.handleHungryNodeSecond(change);
-			this.handleNodeBolts();
 			if (change) {
 				this.markForUpdate();
 			}
@@ -512,31 +511,10 @@ public class NodeBlockEntity extends TVBlockEntity {
 		return change;
 	}
 
-	private void handleNodeBolts() {
-		if (this.level.isClientSide() || this.nodeLock > 0 || !(this.level instanceof ServerLevel sl)) {
-			return;
-		}
-		if (this.nodeType != NodeType.UNSTABLE && this.nodeType != NodeType.HUNGRY && this.nodeType != NodeType.DARK) {
-			return;
-		}
-		if (this.count % 80 == 0 && this.level.getRandom().nextInt(3) == 0) {
-			List<LivingEntity> targets = this.level.getEntitiesOfClass(LivingEntity.class, new AABB(this.worldPosition).inflate(6.0));
-			for (LivingEntity target : targets) {
-				if (target instanceof Player p && (p.isCreative() || p.isSpectator())) {
-					continue;
-				}
-				if (target.isAlive()) {
-					target.hurtServer(sl, sl.damageSources().magic(), 2.0F + this.level.getRandom().nextInt(3));
-					TVNetwork.sendZap(sl, this.worldPosition, target.blockPosition());
-					sl.playSound(null, this.worldPosition, TVSounds.ZAP, SoundSource.BLOCKS, 0.6F, 0.9F + this.level.getRandom().nextFloat() * 0.2F);
-					break;
-				}
-			}
-		}
-	}
-
 	/** Config.hardNode (TC4's "hard_mode_nodes", on by default): tainted nodes also sprout fibres, and sinister nodes call up giant zombies. */
-	private static final boolean HARD_NODE = true;
+	private static boolean hardNode() {
+		return dev.neothaum.config.NeoThaumConfig.current.hardNodes;
+	}
 
 	/** Nodes change the land only in the overworld and other non-Nether, non-End dimensions (TC4's dimension blacklist). */
 	private boolean landChanges() {
@@ -556,7 +534,7 @@ public class NodeBlockEntity extends TVBlockEntity {
 			if (!TVBiomes.is(sl, new BlockPos(x, this.worldPosition.getY(), z), TVBiomes.TAINTED_LAND)) {
 				TVBiomes.setBiomeAt(sl, x, z, TVBiomes.TAINTED_LAND);
 			}
-			if (HARD_NODE && rand.nextBoolean()) {
+			if (hardNode() && rand.nextBoolean()) {
 				BlockPos p = this.worldPosition.offset(rand.nextInt(5) - rand.nextInt(5), rand.nextInt(5) - rand.nextInt(5),
 					rand.nextInt(5) - rand.nextInt(5));
 				TaintFibreBlock.spreadFibres(sl, p);
@@ -614,7 +592,7 @@ public class NodeBlockEntity extends TVBlockEntity {
 			TVBiomes.setBiomeAt(sl, x, z, TVBiomes.EERIE);
 		}
 		double cx = this.worldPosition.getX() + 0.5, cy = this.worldPosition.getY() + 0.5, cz = this.worldPosition.getZ() + 0.5;
-		if (HARD_NODE && rand.nextBoolean() && sl.getDifficulty() != Difficulty.PEACEFUL && sl.getNearestPlayer(cx, cy, cz, 24.0, false) != null) {
+		if (hardNode() && rand.nextBoolean() && sl.getDifficulty() != Difficulty.PEACEFUL && sl.getNearestPlayer(cx, cy, cz, 24.0, false) != null) {
 			int j = sl.getEntitiesOfClass(GiantBrainyZombie.class, new AABB(this.worldPosition).inflate(10.0, 6.0, 10.0)).size();
 			if (j <= 3) {
 				GiantBrainyZombie entity = TVEntities.GIANT_BRAINY_ZOMBIE.create(sl, EntitySpawnReason.EVENT);

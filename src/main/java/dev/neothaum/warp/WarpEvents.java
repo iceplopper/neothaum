@@ -171,23 +171,26 @@ public final class WarpEvents {
 				} else if (eff <= 84) {
 					grantResearch(player, Math.max(1, warp / 10));
 					player.sendSystemMessage(Component.literal("§5§o" + Component.translatable("warp.text.3").getString()));
-				} else if (eff <= 92) {
-					suddenlySpiders(player, warp, true);
-				} else {
-					spawnMist(player, warp, Math.max(1, warp / 15));
+				} else if (eff > 88) {
+					// 85 to 88: nothing happens
+					if (eff <= 92) {
+						suddenlySpiders(player, warp, true);
+					} else {
+						spawnMist(player, warp, Math.max(1, warp / 15));
+					}
 				}
 			}
 
-			// Eldritch Research Milestones
-			if (actualwarp > 10 && !k.research.contains("ELDRITCHMINOR")) {
-				grantResearch(player, 5);
+			// WarpEvents.checkWarpEvent: past 10 warp the Bath Salts are hinted at; past 25 and 50 the eldritch research opens up
+			if (actualwarp > 10 && !k.research.contains("BATHSALTS") && !k.research.contains("@BATHSALTS")) {
+				player.sendSystemMessage(Component.literal("§5§o" + Component.translatable("warp.text.8").getString()));
+				ResearchManager.completeResearch(player, "@BATHSALTS");
+				ServerPlayNetworking.send(player, new TVNetwork.ResearchComplete("@BATHSALTS"));
+			}
+			if (actualwarp > 25 && !k.research.contains("ELDRITCHMINOR")) {
+				grantResearch(player, 10);
 				ResearchManager.completeResearch(player, "ELDRITCHMINOR");
 				ServerPlayNetworking.send(player, new TVNetwork.ResearchComplete("ELDRITCHMINOR"));
-			}
-			if (actualwarp > 25 && !k.research.contains("ELDRITCHWARPED")) {
-				grantResearch(player, 10);
-				ResearchManager.completeResearch(player, "ELDRITCHWARPED");
-				ServerPlayNetworking.send(player, new TVNetwork.ResearchComplete("ELDRITCHWARPED"));
 			}
 			if (actualwarp > 50 && !k.research.contains("ELDRITCHMAJOR")) {
 				grantResearch(player, 20);

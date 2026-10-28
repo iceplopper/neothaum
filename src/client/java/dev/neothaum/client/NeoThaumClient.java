@@ -52,6 +52,10 @@ public class NeoThaumClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		TVRenderTypes.init();
+		// BlockFluidPure's one texture, still and flowing
+		var pure = new net.minecraft.client.resources.model.sprite.Material(dev.neothaum.NeoThaum.id("blocks/fluidpure"));
+		net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry.register(dev.neothaum.fluids.TVFluids.PURIFYING,
+			dev.neothaum.fluids.TVFluids.FLOWING_PURIFYING, new net.minecraft.client.renderer.block.FluidModel.Unbaked(pure, pure, null, null));
 		FX.install(new FXImpl());
 		TVClientNetwork.init();
 		WandManager.setClientHooks(() -> Minecraft.getInstance().hasShiftDown(), () -> Minecraft.getInstance().player);
@@ -191,6 +195,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		});
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.fx.BeamFX::render);
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.ArchitectOverlay::render);
+		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.BellOverlay::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.BeamFX::tick);
 		MenuScreens.register(TVMenus.FOCUS_POUCH, dev.neothaum.client.gui.FocusPouchScreen::new);
 		MenuScreens.register(TVMenus.HOVER_HARNESS, dev.neothaum.client.gui.HoverHarnessScreen::new);

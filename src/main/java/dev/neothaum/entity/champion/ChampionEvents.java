@@ -1,40 +1,77 @@
 package dev.neothaum.entity.champion;
 
-import dev.neothaum.api.aspects.Aspect;
+import dev.neothaum.NeoThaum;
 import dev.neothaum.config.NeoThaumConfig;
-import dev.neothaum.entity.AspectOrbEntity;
+import dev.neothaum.entity.TVEntities;
+import dev.neothaum.entity.monster.CultistEntity;
+import dev.neothaum.entity.monster.EldritchCrabEntity;
+import dev.neothaum.entity.monster.InhabitedZombieEntity;
+import dev.neothaum.entity.monster.Pech;
+import dev.neothaum.entity.monster.Taintacle;
+import dev.neothaum.entity.monster.Wisp;
 import dev.neothaum.registry.TVItems;
 import dev.neothaum.registry.TVSounds;
 import dev.neothaum.warp.Warp;
+import java.util.List;
+import java.util.Map;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Enderman;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Witch;
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
+import net.minecraft.world.entity.monster.spider.Spider;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biomes;
 
 /**
- * Champion Mob events: spawning with TC4 modifiers, modifier combat triggers, undying revival, and death rewards.
+ * TC4 champion mobs (EventHandlerEntity, EntityUtils.makeChampion, ChampionModifier). A whitelisted monster with at least 10 base health
+ * rolls d100 as it joins the world: +2 on Easy, -2 on Hard, -2 in spooky, Nether or End biomes, minus its whitelist weight - 1. At 0 or
+ * below it becomes a champion: a random modifier (creepers are always Bold), +30 health, triple damage and a name like "Bold Zombie". Bosses
+ * are always champions, keep their health and damage, and take the modifier into their name. Champions killed by a player give 5-7 XP and
+ * a loot bag. Modifiers act each tick (Warded, Undying), when the champion is hurt (Spined, Armored, Infested), or when it hits (the rest).
  */
 public final class ChampionEvents {
 	public static final String TAG_CHAMPION = "neothaum:champion";
 	public static final String TAG_CHECKED = "neothaum:checked_champion";
 	public static final String TAG_MOD_PREFIX = "neothaum:champion_mod_";
-	public static final String TAG_REVIVED = "neothaum:champion_revived";
+
+	/** ConfigEntities.championModWhitelist, matched by class like Class.isAssignableFrom. Wisps are listed but, not being EntityMob, never roll. */
+	private static final List<Map.Entry<Class<?>, Integer>> WHITELIST = List.of(Map.entry(Zombie.class, 0), Map.entry(Spider.class, 0),
+		Map.entry(Blaze.class, 0), Map.entry(Enderman.class, 0), Map.entry(AbstractSkeleton.class, 0), Map.entry(Witch.class, 1),
+		Map.entry(EldritchCrabEntity.class, 0), Map.entry(Taintacle.class, 2), Map.entry(Wisp.class, 1), Map.entry(InhabitedZombieEntity.class, 3),
+		Map.entry(CultistEntity.class, 1), Map.entry(Pech.class, 1), Map.entry(ChampionBoss.class, 200));
+
+	private static final AttributeModifier HEALTH = new AttributeModifier(NeoThaum.id("champion_health"), 30.0, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier DAMAGE = new AttributeModifier(NeoThaum.id("champion_damage"), 2.0,
+		AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final AttributeModifier BOLD = new AttributeModifier(NeoThaum.id("champion_bold"), 0.3, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+	private static final AttributeModifier MIGHTY = new AttributeModifier(NeoThaum.id("champion_mighty"), 3.0,
+		AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final net.minecraft.resources.Identifier WARDED = NeoThaum.id("champion_warded");
+
+	private ChampionEvents() {
+	}
 
 	public static boolean isChampion(LivingEntity entity) {
 		return entity != null && entity.entityTags().contains(TAG_CHAMPION);
@@ -44,173 +81,180 @@ public final class ChampionEvents {
 		return ChampionModifier.fromEntity(entity);
 	}
 
-	public static void makeChampion(Monster monster) {
-		ChampionModifier mod = ChampionModifier.values()[monster.getRandom().nextInt(ChampionModifier.values().length)];
-		if (monster instanceof Creeper) {
+	/** EntityUtils.makeChampion. */
+	public static void makeChampion(Monster mob, boolean persist) {
+		ChampionModifier mod = ChampionModifier.values()[mob.getRandom().nextInt(ChampionModifier.values().length)];
+		if (mob instanceof Creeper) {
 			mod = ChampionModifier.BOLD;
 		}
-
-		monster.addTag(TAG_CHAMPION);
-		monster.addTag(TAG_MOD_PREFIX + mod.getKey());
-
-		// +30 Max Health
-		var maxHealth = monster.getAttribute(Attributes.MAX_HEALTH);
-		if (maxHealth != null) {
-			maxHealth.setBaseValue(maxHealth.getBaseValue() + 30.0);
-			monster.setHealth((float) maxHealth.getValue());
+		mob.addTag(TAG_CHAMPION);
+		mob.addTag(TAG_MOD_PREFIX + mod.getKey());
+		if (mob instanceof ChampionBoss boss) {
+			boss.nameAsChampion(mod.getFormattedPrefix());
+		} else {
+			addModifier(mob.getAttribute(Attributes.MAX_HEALTH), HEALTH);
+			addModifier(mob.getAttribute(Attributes.ATTACK_DAMAGE), DAMAGE);
+			mob.heal(25.0F);
+			mob.setCustomName(mod.getFormattedPrefix().copy().append(" ").append(mob.getType().getDescription()));
 		}
-
-		// Stat buffs according to modifier
+		if (persist) {
+			mob.setPersistenceRequired();
+		}
 		switch (mod) {
-			case BOLD -> {
-				var speed = monster.getAttribute(Attributes.MOVEMENT_SPEED);
-				if (speed != null) speed.setBaseValue(speed.getBaseValue() * 1.2);
-				var kb = monster.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
-				if (kb != null) kb.setBaseValue(kb.getBaseValue() + 0.5);
+			case BOLD -> addModifier(mob.getAttribute(Attributes.MOVEMENT_SPEED), BOLD);
+			case MIGHTY -> addModifier(mob.getAttribute(Attributes.ATTACK_DAMAGE), MIGHTY);
+			case WARDED -> {
+				// a ward of half its base health to start with (MAX_ABSORPTION lets it hold that much)
+				float ward = (float) mob.getAttributeBaseValue(Attributes.MAX_HEALTH) / 2.0F;
+				addModifier(mob.getAttribute(Attributes.MAX_ABSORPTION), new AttributeModifier(WARDED, ward, AttributeModifier.Operation.ADD_VALUE));
+				mob.setAbsorptionAmount(mob.getAbsorptionAmount() + ward);
 			}
-			case ARMORED -> {
-				var armor = monster.getAttribute(Attributes.ARMOR);
-				if (armor != null) armor.setBaseValue(armor.getBaseValue() + 8.0);
-				var toughness = monster.getAttribute(Attributes.ARMOR_TOUGHNESS);
-				if (toughness != null) toughness.setBaseValue(toughness.getBaseValue() + 4.0);
+			default -> {
 			}
-			case MIGHTY -> {
-				var attack = monster.getAttribute(Attributes.ATTACK_DAMAGE);
-				if (attack != null) attack.setBaseValue(attack.getBaseValue() * 1.5);
-			}
-			case WARDED -> monster.setAbsorptionAmount(20.0F);
-			default -> {}
 		}
+	}
 
-		// Colored Custom Nameplate
-		Component origName = monster.getType().getDescription();
-		Component champName = Component.empty().append(mod.getFormattedPrefix()).append(" ").append(origName);
-		monster.setCustomName(champName);
-		monster.setCustomNameVisible(true);
-		monster.setPersistenceRequired();
+	private static void addModifier(AttributeInstance attribute, AttributeModifier modifier) {
+		if (attribute != null) {
+			attribute.removeModifier(modifier.id());
+			attribute.addPermanentModifier(modifier);
+		}
+	}
+
+	/** EventHandlerEntity.entitySpawns: the champion roll. */
+	private static void roll(Monster mob, ServerLevel level) {
+		int c = mob.getRandom().nextInt(100);
+		if (level.getDifficulty() == Difficulty.EASY) {
+			c += 2;
+		}
+		if (level.getDifficulty() == Difficulty.HARD) {
+			c -= 2;
+		}
+		var biome = level.getBiome(mob.blockPosition());
+		if (biome.is(BiomeTags.IS_NETHER) || biome.is(BiomeTags.IS_END) || biome.is(Biomes.DARK_FOREST) || biome.is(Biomes.PALE_GARDEN)
+			|| biome.is(dev.neothaum.world.TVBiomes.EERIE)) {
+			c -= 2;
+		}
+		int cc = 0;
+		boolean whitelisted = false;
+		for (var e : WHITELIST) {
+			if (e.getKey().isInstance(mob)) {
+				whitelisted = true;
+				cc = Math.max(cc, e.getValue() - 1);
+			}
+		}
+		c -= cc;
+		if (whitelisted && c <= 0 && mob.getAttributeBaseValue(Attributes.MAX_HEALTH) >= 10.0) {
+			makeChampion(mob, false);
+		}
+	}
+
+	/** EventHandlerEntity.livingTick: the per-tick modifiers. */
+	public static void tick(LivingEntity mob) {
+		ChampionModifier mod = getModifier(mob);
+		if (mod == ChampionModifier.WARDED) {
+			// ChampionModWarded: while not reeling from a hit, the ward regrows a point every 25 ticks up to half its base health
+			if (mob.hurtTime <= 0 && mob.tickCount % 25 == 0) {
+				int bh = (int) mob.getAttributeBaseValue(Attributes.MAX_HEALTH) / 2;
+				if (mob.getAbsorptionAmount() < bh) {
+					mob.setAbsorptionAmount(mob.getAbsorptionAmount() + 1.0F);
+				}
+			}
+		} else if (mod == ChampionModifier.UNDYING && mob.tickCount % 20 == 0) {
+			mob.heal(1.0F);
+		}
+	}
+
+	/** EventHandlerRunic.entityHurt: a champion's hurt modifiers on what hits it, then the attacking champion's hit modifiers. */
+	public static float onHurt(LivingEntity victim, DamageSource source, float amount) {
+		if (!(victim.level() instanceof ServerLevel sl)) {
+			return amount;
+		}
+		var rand = victim.getRandom();
+		if (isChampion(victim) && source.getEntity() instanceof LivingEntity attacker) {
+			switch (getModifier(victim)) {
+				case SPINED -> {
+					if (!source.is(DamageTypes.THORNS)) {
+						attacker.hurtServer(sl, victim.damageSources().thorns(victim), 1 + rand.nextInt(3));
+						attacker.playSound(SoundEvents.THORNS_HIT, 0.5F, 1.0F);
+					}
+				}
+				case ARMORED -> {
+					if (!source.is(DamageTypeTags.BYPASSES_ARMOR)) {
+						amount = amount * 19.0F / 25.0F;
+					}
+				}
+				case INFESTED -> {
+					if (rand.nextFloat() < 0.4F) {
+						var spiderling = TVEntities.TAINT_SPIDER.create(sl, EntitySpawnReason.MOB_SUMMONED);
+						if (spiderling != null) {
+							spiderling.snapTo(victim.getX(), victim.getY() + victim.getBbHeight() / 2.0F, victim.getZ(), rand.nextFloat() * 360.0F, 0.0F);
+							sl.addFreshEntity(spiderling);
+							victim.playSound(TVSounds.GORE, 0.5F, 1.0F);
+						}
+					}
+				}
+				case null, default -> {
+				}
+			}
+		}
+		if (amount > 0.0F && source.getEntity() instanceof Monster mob && isChampion(mob)) {
+			switch (getModifier(mob)) {
+				case GRIM -> {
+					if (rand.nextFloat() < 0.4F) {
+						victim.addEffect(new MobEffectInstance(MobEffects.WITHER, 200));
+					}
+				}
+				case SICKLY -> {
+					if (rand.nextFloat() < 0.4F) {
+						victim.addEffect(new MobEffectInstance(MobEffects.HUNGER, 500));
+					}
+				}
+				case VENOMOUS -> {
+					if (rand.nextFloat() < 0.4F) {
+						victim.addEffect(new MobEffectInstance(MobEffects.POISON, 100));
+					}
+				}
+				case FIERY -> {
+					if (rand.nextFloat() < 0.4F) {
+						victim.igniteForSeconds(4.0F);
+					}
+				}
+				case VAMPIRIC -> mob.heal(Math.max(2.0F, amount / 2.0F));
+				case WARP -> {
+					if (rand.nextFloat() < 0.33F && victim instanceof Player player) {
+						Warp.addWarpToPlayer(player, 1 + rand.nextInt(3), true);
+					}
+				}
+				case null, default -> {
+				}
+			}
+		}
+		return amount;
 	}
 
 	public static void init() {
-		// Spawn chance on entity load into server level
-		ServerEntityEvents.ENTITY_LOAD.register((Entity entity, ServerLevel level) -> {
-			if (!NeoThaumConfig.current.championMobs) return;
-			if (entity instanceof Monster monster) {
-				if (!monster.entityTags().contains(TAG_CHECKED)) {
-					monster.addTag(TAG_CHECKED);
-					// 2.5% chance to spawn as a Champion mob
-					if (monster.getRandom().nextFloat() < 0.025F) {
-						makeChampion(monster);
-					}
-				}
+		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
+			if (NeoThaumConfig.current.championMobs && entity instanceof Monster mob && !mob.entityTags().contains(TAG_CHECKED)) {
+				mob.addTag(TAG_CHECKED);
+				roll(mob, level);
 			}
 		});
 
-		// Combat Effects
-		ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamageTaken, damageTaken, blocked) -> {
-			if (entity.level().isClientSide()) return;
-
-			// Attacker was a champion
-			if (source.getEntity() instanceof LivingEntity attacker && isChampion(attacker)) {
-				ChampionModifier mod = getModifier(attacker);
-				if (mod != null) {
-					switch (mod) {
-						case FIERY -> entity.igniteForSeconds(4.0F);
-						case GRIM -> entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1));
-						case SICKLY -> {
-							entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 120, 1));
-							entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 120, 1));
-						}
-						case VENOMOUS -> entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
-						case VAMPIRIC -> attacker.heal(damageTaken * 0.4F);
-						case WARP -> {
-							entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100, 0));
-							entity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 100, 0));
-							if (entity instanceof Player player) {
-								Warp.addWarpToPlayer(player, 1 + attacker.getRandom().nextInt(3), true);
-							}
-						}
-						default -> {}
-					}
-				}
-			}
-
-			// Victim was a champion
-			if (isChampion(entity)) {
-				ChampionModifier mod = getModifier(entity);
-				if (mod != null) {
-					switch (mod) {
-						case SPINED -> {
-							if (source.getEntity() instanceof LivingEntity attacker && attacker != entity) {
-								attacker.hurt(entity.damageSources().thorns(entity), 3.0F);
-							}
-						}
-						case INFESTED -> {
-							if (entity.getRandom().nextFloat() < 0.35F && entity.level() instanceof ServerLevel sl) {
-								EntityType<?> minionType = entity.getRandom().nextBoolean() ? EntityTypes.SILVERFISH : EntityTypes.CAVE_SPIDER;
-								Mob minion = (Mob) minionType.create(sl, EntitySpawnReason.TRIGGERED);
-								if (minion != null) {
-									minion.snapTo(entity.getX() + (entity.getRandom().nextDouble() - 0.5) * 2, entity.getY(),
-										entity.getZ() + (entity.getRandom().nextDouble() - 0.5) * 2, entity.getYRot(), 0.0F);
-									if (source.getEntity() instanceof LivingEntity attacker) {
-										minion.setTarget(attacker);
-									}
-									sl.addFreshEntity(minion);
-								}
-							}
-						}
-						default -> {}
-					}
-				}
-			}
-		});
-
-		// Undying Modifier (prevents death once and heals to 50%)
-		ServerLivingEntityEvents.ALLOW_DEATH.register((entity, source, damageAmount) -> {
-			if (entity.level().isClientSide()) return true;
-			if (isChampion(entity)) {
-				ChampionModifier mod = getModifier(entity);
-				if (mod == ChampionModifier.UNDYING && !entity.entityTags().contains(TAG_REVIVED)) {
-					entity.addTag(TAG_REVIVED);
-					entity.setHealth(entity.getMaxHealth() * 0.5F);
-					entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 120, 1));
-					entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), TVSounds.ZAP, SoundSource.HOSTILE, 1.0F, 1.0F);
-					return false;
-				}
-			}
-			return true;
-		});
-
-		// Drops on Death (Loot Bag, Aspect Orbs, Extra XP)
+		// EventHandlerEntity.livingDrops: a champion (not a boss) that a player killed gives 5-7 XP and a loot bag
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
-			if (entity.level().isClientSide() || !(entity.level() instanceof ServerLevel sl)) return;
-			if (isChampion(entity)) {
-				int looting = 0;
-				if (source.getEntity() instanceof LivingEntity) {
-					looting = 1;
-				}
-				int lb = Math.min(2, (entity.getRandom().nextInt(9) + looting) / 5);
-				Item bag = switch (lb) {
-					case 0 -> TVItems.LOOT_BAG_COMMON;
-					case 1 -> TVItems.LOOT_BAG_UNCOMMON;
-					default -> TVItems.LOOT_BAG_RARE;
-				};
-				entity.spawnAtLocation(sl, bag);
-
-				// Drop 2-4 Aspect Orbs
-				Aspect[] primals = Aspect.getPrimalAspects().toArray(new Aspect[0]);
-				int count = 2 + entity.getRandom().nextInt(3);
-				for (int i = 0; i < count; i++) {
-					Aspect a = primals[entity.getRandom().nextInt(primals.length)];
-					AspectOrbEntity orb = new AspectOrbEntity(entity.level(), entity.getX(), entity.getY() + 0.5, entity.getZ(), a, 1 + entity.getRandom().nextInt(2));
-					entity.level().addFreshEntity(orb);
-				}
-
-				// Award extra XP
-				ExperienceOrb.award(sl, entity.position(), 6 + entity.getRandom().nextInt(5));
+			if (!(entity.level() instanceof ServerLevel sl) || !(entity instanceof Monster) || entity instanceof ChampionBoss || !isChampion(entity)
+				|| entity.getLastHurtByPlayer() == null) {
+				return;
 			}
+			ExperienceOrb.award(sl, entity.position(), 5 + entity.getRandom().nextInt(3));
+			int lb = Math.min(2, (entity.getRandom().nextInt(9) + TVEntities.looting(sl, source)) / 5);
+			var bag = switch (lb) {
+				case 0 -> TVItems.LOOT_BAG_COMMON;
+				case 1 -> TVItems.LOOT_BAG_UNCOMMON;
+				default -> TVItems.LOOT_BAG_RARE;
+			};
+			entity.spawnAtLocation(sl, new net.minecraft.world.item.ItemStack(bag), entity.getEyeHeight());
 		});
-	}
-
-	private ChampionEvents() {
 	}
 }

@@ -48,7 +48,8 @@ import net.minecraft.world.phys.AABB;
  * CrimsonLeaderEntity: Crimson Praetor boss leading the cultists.
  * Heavy fortress armor, radiates Strength II to cultists, fires homing orbs, caps damage at 35, and drops Rare Loot Bag.
  */
-public class CrimsonLeaderEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob {
+public class CrimsonLeaderEntity extends Monster implements RangedAttackMob, dev.neothaum.api.EldritchMob,
+	dev.neothaum.entity.champion.ChampionBoss {
 	public static final String[] TITLES = new String[]{
 		"Alberic", "Anselm", "Bastian", "Beturian", "Chabier", "Chorache",
 		"Chuse", "Dodorol", "Ebardo", "Ferrando", "Fertus", "Guillen",
@@ -83,6 +84,14 @@ public class CrimsonLeaderEntity extends Monster implements RangedAttackMob, dev
 
 	public int getTitleIndex() {
 		return this.entityData.get(TITLE);
+	}
+
+	/** entity.Thaumcraft.CultistLeader.name: "Praetor <title> the <modifier>". */
+	@Override
+	public void nameAsChampion(Component modifier) {
+		Component name = Component.literal("Praetor " + TITLES[this.getTitleIndex()] + " the ").append(modifier);
+		this.setCustomName(name);
+		this.bossEvent.setName(name);
 	}
 
 	public void setTitleIndex(int idx) {

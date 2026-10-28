@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
+import dev.neothaum.registry.TVSounds;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -69,75 +69,57 @@ public class ArcaneKeyItem extends Item {
 		}
 
 		if (!stack.has(TVComponents.KEY_DATA)) {
-			// Blank key: link to this block if permitted
+			// ItemKey: a blank key is imprinted by the owner (or, for an iron key, anyone with admin access); one blank is used up and one
+			// imprinted key handed back. Anyone else gets nothing.
 			boolean canLink = this.admin ? be.isOwner(player) : be.hasAdminAccess(player);
-			if (canLink) {
+			if (canLink && player != null) {
 				if (!level.isClientSide()) {
-					stack.set(TVComponents.KEY_DATA, new TVComponents.KeyData(targetPos, targetType));
-					if (player != null) {
-						player.sendOverlayMessage(
-							Component.translatable(targetType == 0 ? "tc.key1" : "tc.key2")
-								.withStyle(ChatFormatting.DARK_PURPLE));
+					ItemStack key = new ItemStack(this);
+					key.set(TVComponents.KEY_DATA, new TVComponents.KeyData(targetPos, targetType));
+					if (!player.getInventory().add(key)) {
+						player.drop(key, false, net.minecraft.util.Prediction.SERVER_ONLY);
 					}
-					level.playSound(null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5F, 1.0F);
+					if (!player.getAbilities().instabuild) {
+						stack.shrink(1);
+					}
+					chat(player, Component.translatable(targetType == 0 ? "tc.key1" : "tc.key2"));
+					level.playSound(null, pos, TVSounds.KEY, SoundSource.BLOCKS, 1.0F, 0.9F);
 				}
-				return InteractionResult.SUCCESS;
-			} else {
-				if (!level.isClientSide() && player != null) {
-					player.sendOverlayMessage(Component.translatable("tc.doorfail").withStyle(ChatFormatting.DARK_PURPLE));
-				}
-				return InteractionResult.CONSUME;
 			}
+			return InteractionResult.SUCCESS;
 		}
 
-		// Imprinted key: check target match
 		TVComponents.KeyData keyData = stack.get(TVComponents.KEY_DATA);
 		if (keyData == null) {
 			return InteractionResult.PASS;
 		}
-
-		if (!keyData.pos().equals(targetPos) || keyData.type() != targetType) {
-			if (!level.isClientSide() && player != null) {
-				player.sendOverlayMessage(Component.translatable("tc.key7").withStyle(ChatFormatting.RED));
-			}
-			return InteractionResult.SUCCESS;
-		}
-
-		// Imprinted key matches: check if player already has access
 		boolean alreadyHas = this.admin ? be.hasAdminAccess(player) : be.hasAccess(player);
-		if (alreadyHas) {
-			if (!level.isClientSide() && player != null) {
-				player.sendOverlayMessage(Component.translatable("tc.key8").withStyle(ChatFormatting.YELLOW));
+		if (!alreadyHas && keyData.pos().equals(targetPos) && player != null) {
+			// an imprinted key gives its holder access and is used up
+			if (!level.isClientSide()) {
+				be.addAccess(player.getGameProfile().name(), this.admin);
+				if (targetType == 0 && level.getBlockEntity(targetPos.above()) instanceof OwnedBlockEntity beTop) {
+					beTop.addAccess(player.getGameProfile().name(), this.admin);
+				}
+				Component msg = Component.translatable(targetType == 0 ? "tc.key3" : "tc.key5");
+				if (this.admin) {
+					msg = msg.copy().append(Component.translatable(targetType == 0 ? "tc.key4" : "tc.key6"));
+				}
+				chat(player, msg);
+				level.playSound(null, pos, TVSounds.KEY, SoundSource.BLOCKS, 1.0F, 1.1F);
+				if (!player.getAbilities().instabuild) {
+					stack.shrink(1);
+				}
 			}
-			return InteractionResult.SUCCESS;
+		} else if (!level.isClientSide() && player != null) {
+			chat(player, Component.translatable(keyData.pos().equals(targetPos) ? "tc.key8" : "tc.key7"));
 		}
-
-		// Grant access
-		if (!level.isClientSide() && player != null) {
-			be.addAccess(player.getGameProfile().name(), this.admin);
-			if (targetType == 0 && level.getBlockEntity(targetPos.above()) instanceof OwnedBlockEntity beTop) {
-				beTop.addAccess(player.getGameProfile().name(), this.admin);
-			}
-
-			Component msg;
-			if (targetType == 0) {
-				msg = this.admin
-					? Component.translatable("tc.key3").append(Component.translatable("tc.key4"))
-					: Component.translatable("tc.key3");
-			} else {
-				msg = this.admin
-					? Component.translatable("tc.key5").append(Component.translatable("tc.key6"))
-					: Component.translatable("tc.key5");
-			}
-			player.sendOverlayMessage(msg.copy().withStyle(ChatFormatting.GREEN));
-			level.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.5F, 1.2F);
-
-			if (!player.getAbilities().instabuild) {
-				stack.shrink(1);
-			}
-		}
-
 		return InteractionResult.SUCCESS;
+	}
+
+	/** TC4 sends key messages to chat in purple italics. */
+	private static void chat(Player player, Component msg) {
+		player.sendSystemMessage(msg.copy().withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 	}
 
 	@Override
