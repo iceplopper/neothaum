@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "neothaum:block/ancient_rock_1"
+      },
+      {
+        "model": "neothaum:block/ancient_rock_2"
+      },
+      {
+        "model": "neothaum:block/ancient_rock_3"
+      },
+      {
+        "model": "neothaum:block/ancient_rock_4"
+      }
+    ]
+  }
+}

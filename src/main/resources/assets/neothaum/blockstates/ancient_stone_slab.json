@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "neothaum:block/ancient_stone_slab"
+    },
+    "type=top": {
+      "model": "neothaum:block/ancient_stone_slab_top"
+    },
+    "type=double": {
+      "model": "neothaum:block/ancient_stone_1"
+    }
+  }
+}

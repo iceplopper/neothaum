@@ -32,7 +32,7 @@ public final class TVBlockEntities {
 		TVBlocks.RESEARCH_TABLE);
 	public static final BlockEntityType<CrystalBlockEntity> CRYSTAL = register("crystal", CrystalBlockEntity::new, TVBlocks.AIR_CRYSTAL_CLUSTER,
 		TVBlocks.FIRE_CRYSTAL_CLUSTER, TVBlocks.WATER_CRYSTAL_CLUSTER, TVBlocks.EARTH_CRYSTAL_CLUSTER, TVBlocks.ORDER_CRYSTAL_CLUSTER,
-		TVBlocks.ENTROPY_CRYSTAL_CLUSTER, TVBlocks.MIXED_CRYSTAL_CLUSTER);
+		TVBlocks.ENTROPY_CRYSTAL_CLUSTER, TVBlocks.MIXED_CRYSTAL_CLUSTER, TVBlocks.STRANGE_CRYSTALS);
 	public static final BlockEntityType<JarBlockEntity> JAR = register("jar", JarBlockEntity::new, TVBlocks.WARDED_JAR, TVBlocks.VOID_JAR);
 	public static final BlockEntityType<dev.neothaum.tiles.ArcaneFurnaceBlockEntity> ARCANE_FURNACE = register("arcane_furnace", dev.neothaum.tiles.ArcaneFurnaceBlockEntity::new, TVBlocks.ARCANE_FURNACE);
 	public static final BlockEntityType<dev.neothaum.tiles.ArcaneFurnaceNozzleBlockEntity> ARCANE_FURNACE_NOZZLE = register("arcane_furnace_nozzle", dev.neothaum.tiles.ArcaneFurnaceNozzleBlockEntity::new, TVBlocks.ARCANE_FURNACE);
@@ -133,6 +133,14 @@ public final class TVBlockEntities {
 		dev.neothaum.tiles.eldritch.EldritchObeliskBlockEntity::new, TVBlocks.ELDRITCH_OBELISK);
 	public static final BlockEntityType<dev.neothaum.tiles.eldritch.EldritchPortalBlockEntity> ELDRITCH_PORTAL = register("eldritch_portal",
 		dev.neothaum.tiles.eldritch.EldritchPortalBlockEntity::new, TVBlocks.ELDRITCH_PORTAL);
+	public static final BlockEntityType<dev.neothaum.tiles.eldritch.EldritchNothingBlockEntity> ELDRITCH_NOTHING = register("eldritch_nothing",
+		dev.neothaum.tiles.eldritch.EldritchNothingBlockEntity::new, TVBlocks.ELDRITCH_NOTHING);
+	public static final BlockEntityType<dev.neothaum.tiles.eldritch.RunedStoneBlockEntity> RUNED_STONE = register("runed_stone",
+		dev.neothaum.tiles.eldritch.RunedStoneBlockEntity::new, TVBlocks.RUNED_STONE);
+	public static final BlockEntityType<dev.neothaum.tiles.eldritch.CrustedOpeningBlockEntity> CRUSTED_OPENING = register("crusted_opening",
+		dev.neothaum.tiles.eldritch.CrustedOpeningBlockEntity::new, TVBlocks.CRUSTED_OPENING);
+	public static final BlockEntityType<dev.neothaum.tiles.eldritch.AncientLockBlockEntity> ANCIENT_LOCK = register("ancient_lock",
+		dev.neothaum.tiles.eldritch.AncientLockBlockEntity::new, TVBlocks.ANCIENT_LOCK);
 	public static final BlockEntityType<dev.neothaum.tiles.EtherealBloomBlockEntity> ETHEREAL_BLOOM = register("ethereal_bloom",
 		dev.neothaum.tiles.EtherealBloomBlockEntity::new, TVBlocks.ETHEREAL_BLOOM);
 

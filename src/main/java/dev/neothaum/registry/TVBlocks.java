@@ -335,12 +335,38 @@ public final class TVBlocks {
 	// ---- Eldritch Blocks ----
 	public static final Block OBSIDIAN_TILE = register("obsidian_tile", dev.neothaum.blocks.eldritch.ObsidianTileBlock::new,
 		stone(50.0F, 2000.0F), true);
-	public static final Block ELDRITCH_STONE = register("eldritch_stone", p -> new dev.neothaum.blocks.eldritch.EldritchStoneBlock(dev.neothaum.blocks.eldritch.EldritchStoneBlock.Variant.SMOOTH, p),
-		stone(20.0F, 100.0F), true);
-	public static final Block ELDRITCH_STONE_CRACKED = register("eldritch_stone_cracked", p -> new dev.neothaum.blocks.eldritch.EldritchStoneBlock(dev.neothaum.blocks.eldritch.EldritchStoneBlock.Variant.CRACKED, p),
-		stone(20.0F, 100.0F), true);
-	public static final Block ELDRITCH_STONE_GLYPH = register("eldritch_stone_glyph", p -> new dev.neothaum.blocks.eldritch.EldritchStoneBlock(dev.neothaum.blocks.eldritch.EldritchStoneBlock.Variant.GLYPH, p),
-		stone(20.0F, 100.0F), true);
+	// ---- Outer Lands (BlockCosmeticSolid 11-15, BlockStairsEldritch, the eldritch slab, BlockEldritch 4-10, BlockEldritchNothing, BlockAiry 12)
+	public static final Block ANCIENT_STONE = register("ancient_stone", Block::new, stone(2.0F, 10.0F), true);
+	public static final Block ANCIENT_ROCK = register("ancient_rock", Block::new, stone(2.0F, 10.0F), true);
+	/** BlockCosmeticSolid 13: Ancient Stone that nothing spawns on. */
+	public static final Block ANCIENT_STONE_SEALED = register("ancient_stone_sealed", Block::new,
+		stone(2.0F, 10.0F).isValidSpawn((s, l, p, t) -> false), true);
+	public static final Block CRUSTED_STONE = register("crusted_stone", Block::new, stone(2.0F, 10.0F).lightLevel(s -> 4), true);
+	public static final Block ANCIENT_PEDESTAL = register("ancient_pedestal", Block::new, stone(2.0F, 10.0F), true);
+	public static final Block ANCIENT_STONE_STAIRS = register("ancient_stone_stairs", p -> stairs(ANCIENT_STONE, p), stone(2.0F, 10.0F), true);
+	public static final Block ANCIENT_STONE_SLAB = register("ancient_stone_slab", SlabBlock::new, stone(2.0F, 10.0F), true);
+	public static final Block GLOWING_CRUSTED_STONE = register("glowing_crusted_stone", Block::new,
+		stone(2.0F, 30.0F).lightLevel(s -> 12).isValidSpawn((s, l, p, t) -> false), true);
+	/** BlockEldritch 5: drops a knowledge fragment and 1-4 experience. */
+	public static final Block GLYPHED_STONE = register("glyphed_stone", p -> new DropExperienceBlock(net.minecraft.util.valueproviders.UniformInt.of(1, 4), p),
+		stone(2.0F, 30.0F).lightLevel(s -> 12).isValidSpawn((s, l, p, t) -> false), true);
+	public static final Block ANCIENT_DOORWAY = register("ancient_doorway", Block::new,
+		stone(-1.0F, 3600000.0F).lightLevel(s -> 12).noLootTable().isValidSpawn((s, l, p, t) -> false), true);
+	public static final Block ANCIENT_LOCK = register("ancient_lock", dev.neothaum.blocks.eldritch.AncientLockBlock::new,
+		stone(-1.0F, 3600000.0F).lightLevel(s -> 5).noLootTable().isValidSpawn((s, l, p, t) -> false), true);
+	public static final Block CRUSTED_OPENING = register("crusted_opening", dev.neothaum.blocks.eldritch.CrustedOpeningBlock::new,
+		stone(15.0F, 30.0F).lightLevel(s -> 4).noLootTable().isValidSpawn((s, l, p, t) -> false), true);
+	public static final Block RUNED_STONE = register("runed_stone", dev.neothaum.blocks.eldritch.RunedStoneBlock::new,
+		stone(15.0F, 30.0F).noLootTable().isValidSpawn((s, l, p, t) -> false), true);
+	public static final Block ELDRITCH_NOTHING = register("eldritch_nothing", dev.neothaum.blocks.eldritch.EldritchNothingBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(-1.0F, 6000000.0F).noLootTable().noOcclusion()
+			.isValidSpawn((s, l, p, t) -> false).pushReaction(PushReaction.IMMOVEABLE), false);
+	/** BlockAiry 12: the invisible wall in an Outer Lands doorway, cleared when its lock opens. */
+	public static final Block IMPASSABLE = register("impassable", dev.neothaum.blocks.eldritch.ImpassableBlock::new,
+		BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).noLootTable().noOcclusion().isValidSpawn((s, l, p, t) -> false)
+			.pushReaction(PushReaction.IMMOVEABLE), false);
+	/** BlockCrystal 7: Strange Crystals, which give a balanced shard. */
+	public static final Block STRANGE_CRYSTALS = crystal("strange_crystals", 7);
 	public static final Block ELDRITCH_ALTAR = register("eldritch_altar", dev.neothaum.blocks.eldritch.EldritchAltarBlock::new,
 		stone(50.0F, 20000.0F).noOcclusion().lightLevel(s -> 8), true);
 	public static final Block ELDRITCH_CAP = register("eldritch_cap", dev.neothaum.blocks.eldritch.EldritchCapBlock::new,

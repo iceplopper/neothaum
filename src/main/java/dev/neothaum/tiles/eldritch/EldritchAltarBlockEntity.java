@@ -85,6 +85,8 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 				this.spawnType = 1;
 			}
 			this.eyes++;
+			// TileEldritchAltar.checkForMaze: start laying out the maze beyond while the eyes go in
+			this.checkForMaze();
 			if (!player.isCreative()) {
 				stack.shrink(1);
 			}
@@ -109,6 +111,9 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 		if (!(sl.getBlockEntity(nodePos) instanceof NodeBlockEntity node) || node.getNodeType() != NodeType.DARK) {
 			return InteractionResult.PASS;
 		}
+		if (!this.checkForMaze()) {
+			return InteractionResult.PASS;
+		}
 		WandItem wand = (WandItem) stack.getItem();
 		AspectList cost = new AspectList().add(Aspect.AIR, 100).add(Aspect.FIRE, 100).add(Aspect.EARTH, 100).add(Aspect.WATER, 100)
 			.add(Aspect.ORDER, 100).add(Aspect.ENTROPY, 100);
@@ -121,6 +126,12 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 		sl.setBlockAndUpdate(nodePos, TVBlocks.ELDRITCH_PORTAL.defaultBlockState());
 		this.markForUpdate();
 		return InteractionResult.SUCCESS;
+	}
+
+	/** Whether a maze is ready beyond this altar; if none reaches here, one is started (and is ready a moment later). */
+	public boolean checkForMaze() {
+		return this.level == null || this.level.isClientSide()
+			|| dev.neothaum.world.outer.MazeHandler.checkForMaze(this.worldPosition.getX() >> 4, this.worldPosition.getZ() >> 4, this.level.getRandom());
 	}
 
 	public static void tick(Level level, BlockPos pos, BlockState state, EldritchAltarBlockEntity altar) {

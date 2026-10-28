@@ -49,6 +49,5 @@ Requires Fabric Loader 0.20.1+, Fabric API and Java 25. Optional integrations: J
 
 ## Known issues
 
-- The Eldritch Portal leads nowhere yet (the Outer Lands are not ported).
 - The golems' Use, Liquid and Essentia core AI is incomplete.
 - Wizard and banker villagers, apprentice's rings and the harness model are not ported.

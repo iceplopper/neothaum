@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "neothaum:blocks/es_1",
+    "top": "neothaum:blocks/es_1",
+    "side": "neothaum:blocks/es_1"
+  }
+}

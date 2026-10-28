@@ -161,6 +161,9 @@ public class NeoThaumClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.ARCANE_WORKTABLE, ArcaneWorktableRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.RESEARCH_TABLE, dev.neothaum.client.render.ResearchTableRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.CRYSTAL, dev.neothaum.client.render.CrystalRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_NOTHING, dev.neothaum.client.render.EldritchNothingRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.CRUSTED_OPENING, dev.neothaum.client.render.CrustedOpeningRenderer::new);
+		BlockEntityRendererRegistry.register(TVBlockEntities.ANCIENT_LOCK, dev.neothaum.client.render.AncientLockRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.HUNGRY_CHEST, dev.neothaum.client.render.HungryChestRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_ALTAR, dev.neothaum.client.render.EldritchAltarRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ELDRITCH_CAP, dev.neothaum.client.render.EldritchObeliskRenderer.CapRenderer::new);

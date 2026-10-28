@@ -82,6 +82,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("pech")) {
 					pechScene(ctx, server, sp);
 				}
+				if (scenes.contains("outer")) {
+					outerScene(ctx, server, sp);
+				}
 				if (scenes.contains("audit")) {
 					auditScene(ctx, server, sp);
 				}
@@ -2088,6 +2091,189 @@ public class VisualTests implements FabricClientGameTest {
 		server.runCommand("tp @a 0 120 -3 0 30");
 		ctx.waitTicks(20);
 		shot(ctx, "audit_bell");
+		server.runCommand("kill @e[type=!player]");
+	}
+
+	/** The Outer Lands: open an altar's portal, step through into the maze, find its rooms, wake a boss, and come back. */
+	private static void outerScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode creative @a", "difficulty normal", "gamerule doDaylightCycle false", "gamerule doMobSpawning false",
+			"time set 6000", "fill -8 117 -8 8 130 8 air", "fill -8 116 -8 8 116 8 stone", "tp @a 3 117 3"}) {
+			server.runCommand(cmd);
+		}
+		net.minecraft.core.BlockPos altarPos = new net.minecraft.core.BlockPos(0, 117, 0);
+		// an eldritch altar under a sinister node, an obelisk above, and all four eyes
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var player = srv.getPlayerList().getPlayers().get(0);
+			level.setBlockAndUpdate(altarPos, dev.neothaum.registry.TVBlocks.ELDRITCH_ALTAR.defaultBlockState());
+			dev.neothaum.world.NodeGenerator.createNodeAt(level, altarPos.above(), dev.neothaum.api.nodes.NodeType.DARK, null,
+				new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.AIR, 10), true);
+			level.setBlockAndUpdate(altarPos.above(2), dev.neothaum.registry.TVBlocks.ELDRITCH_OBELISK.defaultBlockState());
+			for (int i = 3; i <= 6; i++) {
+				level.setBlockAndUpdate(altarPos.above(i), dev.neothaum.registry.TVBlocks.ELDRITCH_OBELISK.defaultBlockState()
+					.setValue(dev.neothaum.blocks.eldritch.EldritchObeliskBlock.BASE, false));
+			}
+			if (level.getBlockEntity(altarPos) instanceof dev.neothaum.tiles.eldritch.EldritchAltarBlockEntity altar) {
+				var eyes = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.ELDRITCH_EYE, 4);
+				for (int i = 0; i < 4; i++) {
+					altar.insertEye(player, eyes);
+				}
+				NeoThaum.LOGGER.info("[visual-test] outer: eyes in = {}", altar.getEyes());
+			}
+		});
+		ctx.waitTicks(60);
+		server.runOnServer(srv -> {
+			var cell = dev.neothaum.world.outer.MazeHandler.getCell(0, 0);
+			NeoThaum.LOGGER.info("[visual-test] outer: maze ready = {} (portal cell feature {})", cell != null && cell.feature == 1,
+				cell == null ? null : cell.feature);
+			var level = srv.overworld();
+			var player = srv.getPlayerList().getPlayers().get(0);
+			var wand = dev.neothaum.items.WandItem.createFull(dev.neothaum.registry.TVItems.WAND, "gold", "primal_staff");
+			if (level.getBlockEntity(altarPos) instanceof dev.neothaum.tiles.eldritch.EldritchAltarBlockEntity altar) {
+				var r = altar.activateWand(player, wand);
+				NeoThaum.LOGGER.info("[visual-test] outer: wand strike = {}, portal opened = {}", r,
+					level.getBlockState(altarPos.above()).is(dev.neothaum.registry.TVBlocks.ELDRITCH_PORTAL));
+			}
+		});
+		server.runCommand("tp @a 4 117 4 135 15");
+		ctx.waitTicks(10);
+		shot(ctx, "outer_portal_overworld");
+		// step into the portal
+		server.runCommand("tp @a 0.5 118 0.5");
+		ctx.waitTicks(60);
+		server.runOnServer(srv -> {
+			var player = srv.getPlayerList().getPlayers().get(0);
+			NeoThaum.LOGGER.info("[visual-test] outer: after the portal: dimension={} pos={} ENTEROUTER={}", player.level().dimension().identifier(),
+				player.blockPosition(), dev.neothaum.research.ResearchManager.knowledge(player).research.contains("ENTEROUTER"));
+		});
+		ctx.waitTicks(40);
+		shot(ctx, "outer_arrival");
+		server.runCommand("execute in neothaum:outer_lands run tp @a 8.5 53 5.5 0 10");
+		ctx.waitTicks(40);
+		shot(ctx, "outer_portal_hall");
+		// what the maze holds: its rooms, the key room's tablet, and the boss room's locks
+		int[] boss = new int[2];
+		int[] key = new int[2];
+		server.runOnServer(srv -> {
+			var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+			java.util.Map<Integer, Integer> features = new java.util.TreeMap<>();
+			for (int x = -20; x <= 20; x++) {
+				for (int z = -20; z <= 20; z++) {
+					var c = dev.neothaum.world.outer.MazeHandler.getCell(x, z);
+					if (c != null && c.feature != 0) {
+						features.merge((int) c.feature, 1, Integer::sum);
+						if (c.feature == 2) {
+							boss[0] = x;
+							boss[1] = z;
+						}
+						if (c.feature == 6) {
+							key[0] = x;
+							key[1] = z;
+						}
+					}
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] outer: maze features {}", features);
+			// build the key room and look for its tablet
+			outer.getChunk(key[0], key[1]);
+			var box = new net.minecraft.world.phys.AABB(key[0] * 16, 40, key[1] * 16, key[0] * 16 + 16, 70, key[1] * 16 + 16);
+			NeoThaum.LOGGER.info("[visual-test] outer: key room at chunk {},{}: tablets={} guardians={}", key[0], key[1],
+				outer.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, box,
+					e -> e.getItem().is(dev.neothaum.registry.TVItems.RUNED_TABLET)).size(),
+				outer.getEntitiesOfClass(dev.neothaum.entity.monster.EldritchGuardianEntity.class, box.inflate(8)).size());
+			int stone = 0, voids = 0, decor = 0;
+			for (var p : net.minecraft.core.BlockPos.betweenClosed(0, 40, 0, 15, 70, 15)) {
+				var s = outer.getBlockState(p);
+				if (s.is(dev.neothaum.registry.TVBlocks.ANCIENT_STONE) || s.is(dev.neothaum.registry.TVBlocks.ANCIENT_STONE_SEALED)) {
+					stone++;
+				} else if (s.is(dev.neothaum.registry.TVBlocks.ELDRITCH_NOTHING)) {
+					voids++;
+				} else if (s.is(dev.neothaum.registry.TVBlocks.GLOWING_CRUSTED_STONE) || s.is(dev.neothaum.registry.TVBlocks.GLYPHED_STONE)
+					|| s.is(dev.neothaum.registry.TVBlocks.RUNED_STONE)) {
+					decor++;
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] outer: portal cell: ancient stone={} void={} decorations={}", stone, voids, decor);
+		});
+		// visit the key room: its tablet and guardians load once someone is there
+		server.runCommand("execute in neothaum:outer_lands run tp @a " + (key[0] * 16 + 8.5) + " 53 " + (key[1] * 16 + 8.5));
+		ctx.waitTicks(60);
+		server.runOnServer(srv -> {
+			var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+			var box = new net.minecraft.world.phys.AABB(key[0] * 16 - 8, 40, key[1] * 16 - 8, key[0] * 16 + 24, 70, key[1] * 16 + 24);
+			NeoThaum.LOGGER.info("[visual-test] outer: in the key room: tablets={} guardians={}",
+				outer.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, box,
+					e -> e.getItem().is(dev.neothaum.registry.TVItems.RUNED_TABLET)).size(),
+				outer.getEntitiesOfClass(dev.neothaum.entity.monster.EldritchGuardianEntity.class, box).size());
+			srv.getPlayerList().getPlayers().get(0).addEffect(new net.minecraft.world.effect.MobEffectInstance(
+				net.minecraft.world.effect.MobEffects.NIGHT_VISION, 2000, 0, false, false));
+		});
+		server.runCommand("execute in neothaum:outer_lands run tp @a " + (key[0] * 16 + 4.5) + " 53 " + (key[1] * 16 + 4.5) + " facing "
+			+ (key[0] * 16 + 8.5) + " 53 " + (key[1] * 16 + 8.5));
+		ctx.waitTicks(20);
+		shot(ctx, "outer_key_room");
+		// go to the boss room's lock
+		net.minecraft.core.BlockPos[] lock = new net.minecraft.core.BlockPos[1];
+		server.runOnServer(srv -> {
+			var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+			for (int a = 0; a < 2; a++) {
+				for (int b = 0; b < 2; b++) {
+					outer.getChunk(boss[0] + a, boss[1] + b);
+				}
+			}
+			for (var p : net.minecraft.core.BlockPos.betweenClosed(boss[0] * 16 - 1, 45, boss[1] * 16 - 1, boss[0] * 16 + 33, 65, boss[1] * 16 + 33)) {
+				if (outer.getBlockState(p).is(dev.neothaum.registry.TVBlocks.ANCIENT_LOCK)) {
+					lock[0] = p.immutable();
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] outer: boss room at chunk {},{}: lock at {}", boss[0], boss[1], lock[0]);
+		});
+		if (lock[0] != null) {
+			var face = net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
+			net.minecraft.core.BlockPos[] stand = new net.minecraft.core.BlockPos[1];
+			server.runOnServer(srv -> {
+				var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+				var dir = outer.getBlockState(lock[0]).getValue(face);
+				stand[0] = lock[0].relative(dir, 6).below(2);
+			});
+			server.runCommand("execute in neothaum:outer_lands run tp @a " + (stand[0].getX() + 0.5) + " " + stand[0].getY() + " " + (stand[0].getZ() + 0.5)
+				+ " facing " + (lock[0].getX() + 0.5) + " " + (lock[0].getY() + 0.5) + " " + (lock[0].getZ() + 0.5));
+			ctx.waitTicks(40);
+			shot(ctx, "outer_lock");
+			// fit the Runed Tablet
+			server.runOnServer(srv -> {
+				var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+				var player = srv.getPlayerList().getPlayers().get(0);
+				var tablet = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.RUNED_TABLET);
+				var state = outer.getBlockState(lock[0]);
+				var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(lock[0]), state.getValue(face), lock[0], false);
+				var r = state.useItemOn(tablet, outer, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+				NeoThaum.LOGGER.info("[visual-test] outer: tablet fitted = {}", r);
+			});
+			ctx.waitTicks(130);
+			server.runOnServer(srv -> {
+				var outer = srv.getLevel(dev.neothaum.world.outer.OuterLands.KEY);
+				var box = new net.minecraft.world.phys.AABB(boss[0] * 16, 40, boss[1] * 16, boss[0] * 16 + 32, 70, boss[1] * 16 + 32);
+				var bosses = outer.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, box).stream()
+					.map(m -> m.getType().getDescriptionId() + (m.hasCustomName() ? " '" + m.getCustomName().getString() + "'" : "")).toList();
+				NeoThaum.LOGGER.info("[visual-test] outer: lock gone = {}, woke {}", !outer.getBlockState(lock[0]).is(dev.neothaum.registry.TVBlocks.ANCIENT_LOCK),
+					bosses);
+			});
+			server.runCommand("execute in neothaum:outer_lands run tp @a " + (boss[0] * 16 + 16.5) + " 56 " + (boss[1] * 16 + 16.5) + " 45 40");
+			ctx.waitTicks(30);
+			shot(ctx, "outer_boss_room");
+		}
+		// and back through the maze's portal (after the portal cooldown wears off)
+		server.runCommand("execute in neothaum:outer_lands run tp @a 12.5 52 8.5");
+		ctx.waitTicks(120);
+		server.runCommand("execute in neothaum:outer_lands run tp @a 8.5 53 8.5");
+		ctx.waitTicks(40);
+		server.runOnServer(srv -> {
+			var player = srv.getPlayerList().getPlayers().get(0);
+			NeoThaum.LOGGER.info("[visual-test] outer: home again: dimension={} pos={}", player.level().dimension().identifier(), player.blockPosition());
+			player.removeAllEffects();
+		});
 		server.runCommand("kill @e[type=!player]");
 	}
 

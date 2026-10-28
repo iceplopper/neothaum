@@ -213,8 +213,25 @@ Root causes differed from the handoff's guesses in several places; what was actu
 - **Golem AI still invented / missing (from the bell work):** the Use core presses nearby buttons (copper-golem add-on behaviour) instead of
   TC4's AIUseItem on marked blocks; the Liquid (Decant) and Essentia (Alchemy) cores have no AI yet; Empty-core marker colours are not yet
   matched against filter-slot colours. Fill/Empty/Sorting now work from bell markers.
-- Eldritch Portal: leads nowhere until the Outer Lands (Feature 11); TC4's altar also generated the maze then.
+- Outer Lands gaps: the taint corridor doesn't repaint its biome (biomes can't be changed safely mid-generation); the Eldritch Guardian's
+  overworld "gaze" (PacketMiscEvent 2, fog closing in) needs a fog hook; the crab vent puffs use vanilla smoke instead of FXVent.
 - Giant Taintacle: TC4 dropped a primordial pearl when the last one in an area died; not ported.
+
+## ✅ Completed 2026-10-28 (Claude) — the Outer Lands (Feature 11), verified with the `outer` gametest scene
+
+- The neothaum:outer_lands dimension (WorldProviderOuter: no sky light, fixed time, dark purple fog) with the Eldritch biome and its spawns;
+  a void flat world whose only feature builds each chunk's maze cell.
+- Ported MazeGenerator / MazeThread / MazeHandler (kept in overworld saved data with MapBossData's boss counter) and every room:
+  portal hall, 2x2 boss room with sealed doorways and locks, key room (Runed Tablet + 2-4 guardians), nests, libraries, and the plain,
+  trapped, crusted, tainted and spider-hall corridors, with urns, pedestals, crystals, crab vents and runed traps.
+- New TC4 blocks: Ancient Stone/Rock/Stone (no spawns), Crusted Stone, Ancient Pedestal, stairs and slab, Glowing Crusted Stone, Glyphed
+  Stone (knowledge fragment), Ancient Doorway, Ancient Locking Mechanism, Crusted Opening (crab spawner), Runed Stone (trap), Nothing
+  (starfield void), Impassable, Strange Crystals. Gemini's invented "Eldritch Stone" variants are gone.
+- The altar now lays out a maze as its eyes go in and only opens over a sinister node once the maze exists; the portal carries players
+  both ways (5 s cooldown) and grants ENTEROUTER; it collapses if its frame is broken.
+- Fitting a Runed Tablet wakes the next boss (golem, warden, crimson portal, champion taintacles) in its TC4 arena.
+- Guardians wear a regrowing ward in the Outer Lands; champions are likelier there (key rooms and libraries most); the portable hole won't
+  work there; OUTERREV triggers on glyphed and runed stone.
 
 ## ✅ Completed 2026-10-28 (Claude) — Gemini audit fixes (agentic/AUDIT_GEMINI.md), verified with the `audit` gametest scene
 

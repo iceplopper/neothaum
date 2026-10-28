@@ -46,7 +46,8 @@ import net.minecraft.world.level.biome.Biomes;
 
 /**
  * TC4 champion mobs (EventHandlerEntity, EntityUtils.makeChampion, ChampionModifier). A whitelisted monster with at least 10 base health
- * rolls d100 as it joins the world: +2 on Easy, -2 on Hard, -2 in spooky, Nether or End biomes, minus its whitelist weight - 1. At 0 or
+ * rolls d100 as it joins the world: +2 on Easy, -2 on Hard, -3 in the Outer Lands (-10 more in its key rooms and libraries), -2 in
+ * spooky, Nether or End biomes, minus its whitelist weight - 1. At 0 or
  * below it becomes a champion: a random modifier (creepers are always Bold), +30 health, triple damage and a name like "Bold Zombie". Bosses
  * are always champions, keep their health and damage, and take the modifier into their name. Champions killed by a player give 5-7 XP and
  * a loot bag. Modifiers act each tick (Warded, Undying), when the champion is hurt (Spined, Armored, Infested), or when it hits (the rest).
@@ -129,6 +130,14 @@ public final class ChampionEvents {
 		}
 		if (level.getDifficulty() == Difficulty.HARD) {
 			c -= 2;
+		}
+		// the Outer Lands are deadlier, and their key rooms and libraries most of all (isDangerousLocation)
+		if (level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY)) {
+			c -= 3;
+			var cell = dev.neothaum.world.outer.MazeHandler.getCell(mob.getBlockX() >> 4, mob.getBlockZ() >> 4);
+			if (cell != null && (cell.feature == 6 || cell.feature == 8)) {
+				c -= 10;
+			}
 		}
 		var biome = level.getBiome(mob.blockPosition());
 		if (biome.is(BiomeTags.IS_NETHER) || biome.is(BiomeTags.IS_END) || biome.is(Biomes.DARK_FOREST) || biome.is(Biomes.PALE_GARDEN)

@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "neothaum:block/crusted_opening"
+    },
+    "facing=south": {
+      "model": "neothaum:block/crusted_opening"
+    },
+    "facing=west": {
+      "model": "neothaum:block/crusted_opening"
+    },
+    "facing=east": {
+      "model": "neothaum:block/crusted_opening"
+    },
+    "facing=up": {
+      "model": "neothaum:block/crusted_opening"
+    },
+    "facing=down": {
+      "model": "neothaum:block/crusted_opening"
+    }
+  }
+}

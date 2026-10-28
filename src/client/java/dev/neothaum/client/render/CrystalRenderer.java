@@ -81,6 +81,10 @@ public class CrystalRenderer implements BlockEntityRenderer<CrystalBlockEntity, 
 	 * light they are given ({@code fixedLight}), as 1.7.10 drew inventory items without the lightmap.
 	 */
 	public static void draw(PoseStack ps, SubmitNodeCollector collector, int md, int orientation, long seed, int fixedLight) {
+		if (md == 7) {
+			drawStrange(ps, collector, orientation, (int) Math.floorMod(seed, 4L), fixedLight);
+			return;
+		}
 		int color = md != 6 ? COLORS[md + 1] : COLORS[5];
 		Random rand = new Random(seed);
 		float a1 = (rand.nextFloat() - rand.nextFloat()) * 5.0F;
@@ -94,6 +98,42 @@ public class CrystalRenderer implements BlockEntityRenderer<CrystalBlockEntity, 
 			int angle2 = 15 + rand.nextInt(15);
 			drawCrystal(ps, collector, orientation, angle1, angle2, rand, color, 0.8F, fixedLight);
 		}
+	}
+
+	private static ObjModel strange;
+
+	/**
+	 * TileEldritchCrystalRenderer: a crust base and a cluster of pale crystals from vcrystal.obj, set against the face it grows from and
+	 * turned a quarter for every step of r. The crystals throb faintly.
+	 */
+	private static void drawStrange(PoseStack ps, SubmitNodeCollector collector, int orientation, int r, int fixedLight) {
+		if (strange == null) {
+			strange = ObjModel.load(dev.neothaum.NeoThaum.id("textures/models/vcrystal.obj"));
+		}
+		ps.pushPose();
+		ps.translate(0.5, 0.5, 0.5);
+		switch (orientation) {
+			case 0 -> ps.rotateDegrees(com.mojang.math.Axis.XP, 90.0F);
+			case 1 -> ps.rotateDegrees(com.mojang.math.Axis.XP, -90.0F);
+			case 2 -> ps.rotateDegrees(com.mojang.math.Axis.YP, 180.0F);
+			case 4 -> ps.rotateDegrees(com.mojang.math.Axis.YP, -90.0F);
+			case 5 -> ps.rotateDegrees(com.mojang.math.Axis.YP, 90.0F);
+			default -> {
+			}
+		}
+		ps.translate(0.0, 0.0, -0.5);
+		ps.rotateDegrees(com.mojang.math.Axis.ZP, 90.0F * r);
+		var player = Minecraft.getInstance().player;
+		float shade = net.minecraft.util.Mth.sin((player == null ? 0 : player.tickCount) / 6.0F) * 0.075F + 0.925F;
+		int bright = (int) (210.0F * shade);
+		int light = fixedLight >= 0 ? fixedLight : 0xF000F0;
+		int crystalLight = fixedLight >= 0 ? fixedLight : (bright | bright << 16);
+		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(dev.neothaum.NeoThaum.id("textures/blocks/crust.png")),
+			(pose, vc) -> strange.renderPart("Base", pose, vc, light, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0xFFFFFFFF));
+		collector.submitCustomGeometry(ps, RenderTypes.entityTranslucent(dev.neothaum.NeoThaum.id("textures/models/vcrystal.png")),
+			(pose, vc) -> strange.renderPart("Crystal", pose, vc, crystalLight, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY,
+				0xB3FFFFFF));
+		ps.popPose();
 	}
 
 	private static void drawCrystal(PoseStack ps, SubmitNodeCollector collector, int ori, float a1, float a2, Random rand, int color, float size, int fixedLight) {

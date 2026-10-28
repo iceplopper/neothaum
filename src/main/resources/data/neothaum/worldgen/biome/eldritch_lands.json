@@ -1,0 +1,56 @@
+{
+  "attributes": {
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {
+          "ambient": [],
+          "axolotls": [],
+          "creature": [],
+          "misc": [],
+          "monster": [
+            {
+              "type": "neothaum:inhabited_zombie",
+              "count": 1,
+              "weight": 1
+            },
+            {
+              "type": "neothaum:eldritch_guardian",
+              "count": 1,
+              "weight": 1
+            }
+          ],
+          "underground_water_creature": [],
+          "water_ambient": [],
+          "water_creature": []
+        }
+      },
+      "modifier": "overlay"
+    },
+    "minecraft:visual/sky_color": "#000000"
+  },
+  "carvers": [],
+  "downfall": 0.0,
+  "effects": {
+    "water_color": "#3f76e4",
+    "grass_color": "#404840",
+    "foliage_color": "#405340"
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "neothaum:outer_maze"
+    ]
+  ],
+  "has_precipitation": false,
+  "temperature": 0.5
+}

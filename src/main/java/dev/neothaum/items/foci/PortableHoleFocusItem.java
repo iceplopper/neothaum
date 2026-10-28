@@ -86,6 +86,13 @@ public class PortableHoleFocusItem extends FocusItem {
 			return false;
 		}
 		BlockPos pos = mop.getBlockPos();
+		if (level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY)) {
+			// the Outer Lands won't be holed
+			if (!level.isClientSide()) {
+				level.playSound(null, pos, dev.neothaum.registry.TVSounds.WANDFAIL, net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
+			}
+			return true;
+		}
 		Direction side = mop.getDirection();
 		int enlarge = WandItem.getFocusEnlarge(wand);
 		int maxdis = 33 + enlarge * 8;

@@ -109,6 +109,39 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 		}
 	}
 
+	/** In the Outer Lands a guardian wears a ward of half its base health (EntityEldritchGuardian.onSpawnWithEgg). */
+	@Override
+	public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor level,
+		net.minecraft.world.DifficultyInstance difficulty, net.minecraft.world.entity.EntitySpawnReason reason,
+		net.minecraft.world.entity.SpawnGroupData data) {
+		data = super.finalizeSpawn(level, difficulty, reason, data);
+		if (level.getLevel().dimension().equals(dev.neothaum.world.outer.OuterLands.KEY)) {
+			float ward = (float) this.getAttributeBaseValue(Attributes.MAX_HEALTH) / 2.0F;
+			var max = this.getAttribute(Attributes.MAX_ABSORPTION);
+			if (max != null) {
+				max.removeModifier(OUTER_WARD);
+				max.addPermanentModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(OUTER_WARD, ward,
+					net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
+			}
+			this.setAbsorptionAmount(this.getAbsorptionAmount() + ward);
+		}
+		return data;
+	}
+
+	private static final net.minecraft.resources.Identifier OUTER_WARD = dev.neothaum.NeoThaum.id("outer_ward");
+
+	/** ...and the ward grows back a point every 25 ticks while it isn't being hit (updateAITasks). */
+	@Override
+	protected void customServerAiStep(ServerLevel level) {
+		super.customServerAiStep(level);
+		if (level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY) && this.hurtTime <= 0 && this.tickCount % 25 == 0) {
+			int bh = (int) this.getAttributeBaseValue(Attributes.MAX_HEALTH) / 2;
+			if (this.getAbsorptionAmount() < bh) {
+				this.setAbsorptionAmount(this.getAbsorptionAmount() + 1.0F);
+			}
+		}
+	}
+
 	public void setAttackState(byte state) {
 		this.entityData.set(ATTACK_STATE, state);
 	}

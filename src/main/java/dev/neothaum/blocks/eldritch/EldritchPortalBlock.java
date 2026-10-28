@@ -45,6 +45,16 @@ public class EldritchPortalBlock extends BaseEntityBlock {
 		}
 	}
 
+	/** BlockEldritchPortal.onNeighborBlockChange: the portal only holds while eldritch stone frames it above and below. */
+	@Override
+	protected BlockState updateShape(BlockState state, net.minecraft.world.level.LevelReader level, net.minecraft.world.level.ScheduledTickAccess ticks,
+		BlockPos pos, net.minecraft.core.Direction dir, BlockPos neighborPos, BlockState neighbor, net.minecraft.util.RandomSource random) {
+		if (dir.getAxis() == net.minecraft.core.Direction.Axis.Y && !dev.neothaum.world.outer.GenCommon.isEldritch(neighbor)) {
+			return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
+		}
+		return super.updateShape(state, level, ticks, pos, dir, neighborPos, neighbor, random);
+	}
+
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
 		return createTickerHelper(type, TVBlockEntities.ELDRITCH_PORTAL, EldritchPortalBlockEntity::tick);

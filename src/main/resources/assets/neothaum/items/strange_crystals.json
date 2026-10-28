@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "neothaum:item/crystal_cluster",
+    "model": {
+      "type": "neothaum:crystal",
+      "kind": 7
+    }
+  }
+}
