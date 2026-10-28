@@ -137,3 +137,9 @@ The compiled mod JAR will be located in `build/libs/neothaum-<version>.jar`.
 ## 📜 Credits & License
 - **Original Thaumcraft 4**: Created by **Azanor**. All original concept designs, textures, lore, and audio remain the intellectual property of their original creator.
 - **NeoThaum**: Modern Fabric adaptation and engineering.
+
+---
+
+### ⚠️ Disclaimer
+This project was developed with the assistance of artificial intelligence (AI). NeoThaum does not utilize or incorporate any source code from the original Thaumcraft 4 mod. All systems and mechanics have been engineered cleanly from scratch for modern Minecraft, and all accompanying assets have been recreated with AI assistance to produce this mod.
+
