@@ -33,7 +33,7 @@ fabricApi {
 	configureTests {
 		createSourceSet = true
 		modId = "neothaum-visual-tests"
-		enableGameTests = false
+		enableGameTests = true
 		enableClientGameTests = true
 		eula = true
 	}
@@ -41,7 +41,6 @@ fabricApi {
 
 configurations {
 	// mods loaded into a client gametest run only when asked for (NEOTHAUM_TEST_MODS, below); never bundled
-	trinketsTest { transitive = false }
 	dynlightsTest { transitive = false }
 	sodiumTest { transitive = false }
 	irisTest { transitive = false }
@@ -59,9 +58,8 @@ dependencies {
 
 	compileOnly files("run/mods/Jade-mc26.3-Fabric-26.3.5.jar")
 	compileOnly files("run/mods/modmenu-21.0.0.jar")
-	// Trinkets Updated (Patbox's fork of Trinkets for 26.3): optional accessory slots for the baubles
-	compileOnly "maven.modrinth:trinkets-updated:${project.trinkets_version}"
-	trinketsTest "maven.modrinth:trinkets-updated:${project.trinkets_version}"
+	// Trinkets Updated (Patbox's fork of Trinkets for 26.3): a required dependency, its slots hold the baubles
+	implementation "maven.modrinth:trinkets-updated:${project.trinkets_version}"
 	// AppleSkin and REI: optional integrations (food values; recipe pages like the JEI plugin's)
 	compileOnly "maven.modrinth:appleskin:${project.appleskin_version}"
 	appleskinTest "maven.modrinth:appleskin:${project.appleskin_version}"
@@ -109,12 +107,9 @@ if (System.getenv("NEOTHAUM_TEST_XAERO") != null) {
 	}
 }
 
-// NEOTHAUM_TEST_MODS=trinkets,sodium,iris,appleskin,rei,dynlights loads those mods into the client gametest run (NEOTHAUM_TEST_TRINKETS=1 still means
-// trinkets). Each name is the <name>Test configuration above.
-def testMods = (System.getenv("NEOTHAUM_TEST_MODS") ?: "").split(",").collect { it.trim() }.findAll { it }
-if (System.getenv("NEOTHAUM_TEST_TRINKETS") != null) {
-	testMods += "trinkets"
-}
+// NEOTHAUM_TEST_MODS=sodium,iris,appleskin,rei,dynlights loads those mods into the client gametest run; each name is the <name>Test
+// configuration above. (Trinkets Updated is a dependency, so it is always loaded.)
+def testMods = (System.getenv("NEOTHAUM_TEST_MODS") ?: "").split(",").collect { it.trim() }.findAll { it && it != "trinkets" }
 if (!testMods.isEmpty()) {
 	loom.runs.matching { it.name == "clientGameTest" }.configureEach {
 		def jars = testMods.unique().collectMany { configurations.getByName(it + "Test").files.collect { f -> f.absolutePath } }

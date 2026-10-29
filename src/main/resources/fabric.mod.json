@@ -39,7 +39,8 @@
 		"fabricloader": ">=0.20.1",
 		"minecraft": "~26.3",
 		"java": ">=25",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"trinkets_updated": ">=4.2.1"
 	},
 	"suggests": {
 		"jei": "*",
@@ -49,8 +50,7 @@
 		"iris": "*",
 		"lambdynlights": "*",
 		"jade": "*",
-		"modmenu": "*",
-		"trinkets_updated": "*"
+		"modmenu": "*"
 	},
 	"mixins": [
 		"neothaum.mixins.json",
