@@ -66,6 +66,7 @@ public class NeoThaumConfigScreen extends Screen {
 			this.slider("Eldritch Rings", () -> cfg.eldritchRingMultiplier, v -> cfg.eldritchRingMultiplier = v);
 			this.slider("Barrow Mounds", () -> cfg.barrowMoundMultiplier, v -> cfg.barrowMoundMultiplier = v);
 			this.slider("Hilltop Stones", () -> cfg.hilltopStonesMultiplier, v -> cfg.hilltopStonesMultiplier = v);
+			this.slider("Obsidian Totems", () -> cfg.obsidianTotemMultiplier, v -> cfg.obsidianTotemMultiplier = v);
 			this.toggle("Village Buildings", () -> cfg.villageBuildings, v -> cfg.villageBuildings = v);
 		} else if (this.activeTab == 2) {
 			this.toggle("Taint Spread", () -> cfg.taintSpread, v -> cfg.taintSpread = v);

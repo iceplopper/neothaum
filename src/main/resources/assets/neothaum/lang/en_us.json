@@ -2144,5 +2144,6 @@
   "block.neothaum.sapping_field": "Sapping Field",
   "entity.neothaum.villager.wizard": "Wizard",
   "entity.neothaum.villager.banker": "Banker",
-  "item.neothaum.obelisk_placer": "Eldritch Obelisk Placer"
+  "item.neothaum.obelisk_placer": "Eldritch Obelisk Placer",
+  "block.neothaum.charged_obsidian_totem": "Charged Obsidian Totem"
 }

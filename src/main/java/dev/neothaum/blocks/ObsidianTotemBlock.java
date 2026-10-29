@@ -52,9 +52,11 @@ public class ObsidianTotemBlock extends Block {
 		return dir.getAxis() == Direction.Axis.Y ? this.shape(level, pos) : state;
 	}
 
-	private BlockState shape(BlockGetter level, BlockPos pos) {
-		boolean above = level.getBlockState(pos.above()).is(this);
-		boolean below = level.getBlockState(pos.below()).is(this);
+	/** The state this totem takes at pos given its neighbours (also used by world generation, where shapes are not updated). */
+	public BlockState shape(BlockGetter level, BlockPos pos) {
+		// a charged totem (metadata 8) stacks with plain ones
+		boolean above = level.getBlockState(pos.above()).getBlock() instanceof ObsidianTotemBlock;
+		boolean below = level.getBlockState(pos.below()).getBlock() instanceof ObsidianTotemBlock;
 		Part part = above ? Part.BELOW : below ? Part.TOP : Part.SINGLE;
 		int face = Math.floorMod(pos.getX() % 4 + pos.getZ() % 4 + pos.getY() % 4, 4);
 		return this.defaultBlockState().setValue(PART, part).setValue(FACE, face);

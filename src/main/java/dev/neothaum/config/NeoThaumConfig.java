@@ -49,10 +49,11 @@ public class NeoThaumConfig {
 		public float taintedLandSizeMultiplier = 1.0f;
 
 		// --- Structures ---
-		/** How often each structure generates (TC4: eldritch ring 1 chunk in 66, barrow mound 1 in 150, hilltop stones 1 in 40). */
+		/** How often each structure generates (TC4: eldritch ring 1 chunk in 66, barrow mound 1 in 150, hilltop stones 1 in 40, obsidian totem 1 in 360). */
 		public float eldritchRingMultiplier = 1.0f;
 		public float barrowMoundMultiplier = 1.0f;
 		public float hilltopStonesMultiplier = 1.0f;
+		public float obsidianTotemMultiplier = 1.0f;
 		/** Whether wizard towers and bankers' houses are among the buildings villages can have (TC4 built them nowhere else). Default: true. */
 		public boolean villageBuildings = true;
 
@@ -92,6 +93,8 @@ public class NeoThaumConfig {
 	public static final int TC4_ELDRITCH_RING_RARITY = 66;
 	public static final int TC4_BARROW_MOUND_RARITY = 150;
 	public static final int TC4_HILLTOP_STONES_RARITY = 40;
+	/** generateTotem: nodeRarity x 10. */
+	public static final int TC4_OBSIDIAN_TOTEM_RARITY = TC4_NODE_RARITY * 10;
 	public static final int TC4_TAINT_SPREAD_RATE = 200;
 	public static final int MAGICAL_FOREST_PERCENT = 30;
 	public static final int TAINTED_LAND_PERCENT = 5;

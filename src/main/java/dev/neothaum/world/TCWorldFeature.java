@@ -55,11 +55,122 @@ public record TCWorldFeature(boolean nether) implements Feature {
 			generateWildNodes(world, random, cx, cz);
 			return true;
 		}
+		// generateSurface's order: trees, ores, a node over a scattered feature or else a wild node, structures, then a totem if no node yet
 		generateVegetation(world, random, cx, cz);
-		generateStructures(world, random, cx, cz);
 		generateOres(world, random, cx, cz);
-		generateWildNodes(world, random, cx, cz);
+		boolean auraGen = generateScatteredFeatureNode(world, random, cx, cz);
+		if (!auraGen) {
+			auraGen = generateWildNodes(world, random, cx, cz);
+		}
+		auraGen |= generateStructures(world, random, cx, cz);
+		if (!auraGen) {
+			generateTotem(world, random, cx, cz);
+		}
 		return true;
+	}
+
+	/** The structures MapGenScatteredFeature made in TC4's day: desert and jungle temples and witch huts. */
+	private static final java.util.Set<String> SCATTERED_FEATURES = java.util.Set.of("minecraft:desert_pyramid", "minecraft:jungle_pyramid",
+		"minecraft:swamp_hut");
+
+	/**
+	 * generateSurface's structureNode: a random node 3 blocks above each scattered feature, once per structure. The structure starts in
+	 * exactly one chunk, so placing its node from that chunk makes it once.
+	 */
+	private boolean generateScatteredFeatureNode(WorldGenLevel world, RandomSource random, int cx, int cz) {
+		if (dev.neothaum.config.NeoThaumConfig.current.nodeMultiplier <= 0.0F) {
+			return false;
+		}
+		var registry = world.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.STRUCTURE);
+		for (var entry : world.getChunk(cx >> 4, cz >> 4).getAllStarts().entrySet()) {
+			var key = registry.getKey(entry.getKey());
+			if (key == null || !SCATTERED_FEATURES.contains(key.toString()) || !entry.getValue().isValid()) {
+				continue;
+			}
+			var box = entry.getValue().getBoundingBox();
+			BlockPos pos = new BlockPos(box.getCenter().getX(), box.maxY() + 3, box.getCenter().getZ());
+			if (Math.abs((pos.getX() >> 4) - (cx >> 4)) > 1 || Math.abs((pos.getZ() >> 4) - (cz >> 4)) > 1 || pos.getY() >= world.getMaxY()) {
+				continue;
+			}
+			NodeGenerator.createRandomNodeAt(world, pos, random, false, false, false, false);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * generateTotem: in 1 chunk in 360, where the ground is grass, sand, dirt or stone with room above, an obsidian tile with an obsidian
+	 * totem pillar on it, topped (or broken off early, one time in four from the second block up) by a charged totem holding a dark node.
+	 * TC4 only made them in the Overworld: its Nether call fails the dimension check.
+	 */
+	private void generateTotem(WorldGenLevel world, RandomSource random, int cx, int cz) {
+		if (world.getLevel().getChunkSource().getGenerator() instanceof net.minecraft.world.level.levelgen.FlatLevelSource
+			|| !dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_OBSIDIAN_TOTEM_RARITY,
+				dev.neothaum.config.NeoThaumConfig.current.obsidianTotemMultiplier)) {
+			return;
+		}
+		int x = cx + random.nextInt(16);
+		int z = cz + random.nextInt(16);
+		int topy = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z) - 1;
+		if (topy >= world.getMaxY() || topy <= world.getMinY()) {
+			return;
+		}
+		if (world.getBlockState(new BlockPos(x, topy, z)).is(BlockTags.LEAVES)) {
+			do {
+				topy--;
+			} while (!world.getBlockState(new BlockPos(x, topy, z)).is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK) && topy > 40);
+		}
+		BlockState surface = world.getBlockState(new BlockPos(x, topy, z));
+		if (isTotemClear(surface) && !surface.isAir()) {
+			topy--;
+		}
+		BlockState ground = world.getBlockState(new BlockPos(x, topy, z));
+		if (!ground.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK) && !ground.is(net.minecraft.world.level.block.Blocks.SAND)
+			&& !ground.is(net.minecraft.world.level.block.Blocks.DIRT) && !ground.is(net.minecraft.world.level.block.Blocks.STONE)
+			&& !ground.is(net.minecraft.world.level.block.Blocks.NETHERRACK)) {
+			return;
+		}
+		int count = 1;
+		while (isTotemClear(world.getBlockState(new BlockPos(x, topy + count, z))) && count < 3) {
+			count++;
+		}
+		if (count < 2) {
+			return;
+		}
+		world.setBlock(new BlockPos(x, topy, z), TVBlocks.OBSIDIAN_TILE.defaultBlockState(), 2);
+		BlockPos charged = null;
+		int top = topy;
+		count = 1;
+		while (isTotemClear(world.getBlockState(new BlockPos(x, topy + count, z))) && count < 5) {
+			world.setBlock(new BlockPos(x, topy + count, z), TVBlocks.OBSIDIAN_TOTEM.defaultBlockState(), 2);
+			top = topy + count;
+			if (count > 1 && random.nextInt(4) == 0) {
+				charged = new BlockPos(x, topy + count, z);
+				count = 5;
+			}
+			if (++count >= 5 && charged == null) {
+				charged = new BlockPos(x, topy + 5, z);
+			}
+		}
+		if (charged == null) {
+			return;
+		}
+		world.setBlock(charged, TVBlocks.CHARGED_OBSIDIAN_TOTEM.defaultBlockState(), 2);
+		top = Math.max(top, charged.getY());
+		// world generation does not run shape updates, so give each totem its stacked look now
+		for (int y = topy + 1; y <= top; y++) {
+			BlockPos p = new BlockPos(x, y, z);
+			if (world.getBlockState(p).getBlock() instanceof dev.neothaum.blocks.ObsidianTotemBlock totem) {
+				world.setBlock(p, totem.shape(world, p), 2);
+			}
+		}
+		NodeGenerator.createRandomNodeAt(world, charged, random, false, true, false, false);
+	}
+
+	/** Air, snow layers and tall grass let a totem stand in their place. */
+	private static boolean isTotemClear(BlockState state) {
+		return state.isAir() || state.is(net.minecraft.world.level.block.Blocks.SNOW) || state.is(net.minecraft.world.level.block.Blocks.SHORT_GRASS)
+			|| state.is(net.minecraft.world.level.block.Blocks.FERN);
 	}
 
 	/**
@@ -67,10 +178,10 @@ public record TCWorldFeature(boolean nether) implements Feature {
 	 * else hilltop stones; each made brings a node with it. Not in flat worlds. (The wizard's tower and banker's house are village buildings:
 	 * see TCVillages.)
 	 */
-	private void generateStructures(WorldGenLevel world, RandomSource random, int cx, int cz) {
+	private boolean generateStructures(WorldGenLevel world, RandomSource random, int cx, int cz) {
 		var cfg = dev.neothaum.config.NeoThaumConfig.current;
 		if (world.getLevel().getChunkSource().getGenerator() instanceof net.minecraft.world.level.levelgen.FlatLevelSource) {
-			return;
+			return false;
 		}
 		int x = cx + random.nextInt(16);
 		int z = cz + random.nextInt(16);
@@ -78,14 +189,17 @@ public record TCWorldFeature(boolean nether) implements Feature {
 		if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_BARROW_MOUND_RARITY, cfg.barrowMoundMultiplier)) {
 			if (BarrowMoundFeature.generate(world, random, new BlockPos(x, y, z))) {
 				NodeGenerator.createRandomNodeAt(world, new BlockPos(x + 9, y + 8, z + 9), random, false, true, false, true);
+				return true;
 			}
 		} else if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_ELDRITCH_RING_RARITY, cfg.eldritchRingMultiplier)) {
-			EldritchRingFeature.generate(world, random, new BlockPos(x, y + 8, z));
+			return EldritchRingFeature.generate(world, random, new BlockPos(x, y + 8, z));
 		} else if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_HILLTOP_STONES_RARITY, cfg.hilltopStonesMultiplier)) {
 			if (HilltopStonesFeature.generate(world, random, new BlockPos(x, y + 9, z))) {
 				NodeGenerator.createRandomNodeAt(world, new BlockPos(x, y + 14, z), random, false, true, false, true);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private static int heightAt(WorldGenLevel world, int x, int z) {
@@ -225,9 +339,9 @@ public record TCWorldFeature(boolean nether) implements Feature {
 	}
 
 	/** generateWildNodes: a node in 1 chunk in 36, scaled by the node multiplier. */
-	private void generateWildNodes(WorldGenLevel world, RandomSource random, int cx, int cz) {
+	private boolean generateWildNodes(WorldGenLevel world, RandomSource random, int cx, int cz) {
 		if (!dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_NODE_RARITY, dev.neothaum.config.NeoThaumConfig.current.nodeMultiplier)) {
-			return;
+			return false;
 		}
 		int x = cx + random.nextInt(16);
 		int z = cz + random.nextInt(16);
@@ -244,8 +358,9 @@ public record TCWorldFeature(boolean nether) implements Feature {
 			q += p;
 		}
 		if (q >= world.getMaxY()) {
-			return;
+			return false;
 		}
 		NodeGenerator.createRandomNodeAt(world, new BlockPos(x, q, z), random, false, false, false, false);
+		return true;
 	}
 }

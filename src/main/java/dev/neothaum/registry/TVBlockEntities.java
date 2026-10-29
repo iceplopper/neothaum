@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public final class TVBlockEntities {
-	public static final BlockEntityType<NodeBlockEntity> NODE = register("node", NodeBlockEntity::new, TVBlocks.AURA_NODE);
+	public static final BlockEntityType<NodeBlockEntity> NODE = register("node", NodeBlockEntity::new, TVBlocks.AURA_NODE, TVBlocks.CHARGED_OBSIDIAN_TOTEM);
 	public static final BlockEntityType<CrucibleBlockEntity> CRUCIBLE = register("crucible", CrucibleBlockEntity::new, TVBlocks.CRUCIBLE);
 	public static final BlockEntityType<ArcaneWorktableBlockEntity> ARCANE_WORKTABLE = register("arcane_worktable", ArcaneWorktableBlockEntity::new,
 		TVBlocks.ARCANE_WORKTABLE);

@@ -141,6 +141,8 @@ public final class TVBlocks {
 	public static final Block LOOT_CRATE_RARE = register("loot_crate_rare", p -> new dev.neothaum.blocks.LootBlock(false, 2, p),
 		BlockBehaviour.Properties.of().strength(0.15F, 0.0F).sound(SoundType.WOOD).noOcclusion(), true);
 	public static final Block OBSIDIAN_TOTEM = register("obsidian_totem", dev.neothaum.blocks.ObsidianTotemBlock::new, stone(50.0F, 2000.0F), true);
+	public static final Block CHARGED_OBSIDIAN_TOTEM = register("charged_obsidian_totem", dev.neothaum.blocks.ChargedObsidianTotemBlock::new,
+		stone(50.0F, 2000.0F), true);
 	public static final Block GOLEM_FETTER = register("golem_fetter", dev.neothaum.blocks.GolemFetterBlock::new, stone(2.0F, 10.0F), true);
 	public static final Block ARCANE_STONE_BLOCK = register("arcane_stone_block", Block::new, stone(2.0F, 10.0F), true);
 	public static final Block ARCANE_STONE_BRICKS = register("arcane_stone_bricks", Block::new, stone(2.0F, 10.0F), true);

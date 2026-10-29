@@ -28,6 +28,19 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			return;
 		}
+		if ("parity".equalsIgnoreCase(scenesEnv)) {
+			// totems and temple nodes need a real overworld; totems are made 360 times as common so a small area shows some
+			dev.neothaum.config.NeoThaumConfig.current.obsidianTotemMultiplier = 360.0F;
+			try (TestSingleplayerContext sp = ctx.worldBuilder().setUseConsistentSettings(false).adjustSettings(st -> {
+				st.setWorldType(st.getNormalPresetList().get(0));
+				st.setSeed("neothaum");
+			}).create()) {
+				waitChunks(sp, ctx);
+				parityScene(ctx, sp);
+			}
+			dev.neothaum.config.NeoThaumConfig.current.obsidianTotemMultiplier = 1.0F;
+			return;
+		}
 		try (TestSingleplayerContext sp = ctx.worldBuilder().create()) {
 			var server = sp.getServer();
 			waitChunks(sp, ctx);
@@ -2000,6 +2013,145 @@ public class VisualTests implements FabricClientGameTest {
 	}
 
 	
+	/**
+	 * The last TC4 parity pieces, in a real overworld: totems (made far more common for the check), a node over the nearest desert temple,
+	 * the /neothaum command, floating special items against an explosion, and the obelisk placer.
+	 */
+	private static void parityScene(ClientGameTestContext ctx, TestSingleplayerContext sp) {
+		var server = sp.getServer();
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear"}) {
+			server.runCommand(cmd);
+		}
+		// totems in the generated chunks around spawn
+		java.util.concurrent.atomic.AtomicReference<net.minecraft.core.BlockPos> seen = new java.util.concurrent.atomic.AtomicReference<>();
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			int tiles = 0, totems = 0, charged = 0, nodes = 0;
+			StringBuilder shapes = new StringBuilder();
+			var spawn = level.getRespawnData().pos();
+			for (int cx = -6; cx <= 6; cx++) {
+				for (int cz = -6; cz <= 6; cz++) {
+					var chunk = level.getChunk((spawn.getX() >> 4) + cx, (spawn.getZ() >> 4) + cz);
+					var min = chunk.getPos().getWorldPosition();
+					for (var p : net.minecraft.core.BlockPos.betweenClosed(min.getX(), level.getMinY(), min.getZ(), min.getX() + 15, level.getMaxY() - 1, min.getZ() + 15)) {
+						var st = chunk.getBlockState(p);
+						if (st.is(dev.neothaum.registry.TVBlocks.OBSIDIAN_TOTEM)) {
+							totems++;
+						} else if (st.is(dev.neothaum.registry.TVBlocks.OBSIDIAN_TILE)) {
+							tiles++;
+						} else if (st.is(dev.neothaum.registry.TVBlocks.CHARGED_OBSIDIAN_TOTEM)) {
+							charged++;
+							if (level.getBlockEntity(p) instanceof dev.neothaum.tiles.NodeBlockEntity node && node.getAspects().size() > 0) {
+								nodes++;
+								if (seen.get() == null) {
+									seen.set(p.immutable());
+								}
+							}
+							if (shapes.length() < 200) {
+								shapes.append(st.getValue(dev.neothaum.blocks.ObsidianTotemBlock.PART)).append('/')
+									.append(level.getBlockState(p.below()).getBlock().getName().getString()).append(", ");
+							}
+						}
+					}
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] totems: tiles={} totems={} charged={} with node={} shapes=[{}]", tiles, totems, charged, nodes, shapes);
+			// the nearest desert temple and the node over it
+			var structures = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.STRUCTURE);
+			var pyramid = structures.getOrThrow(net.minecraft.world.level.levelgen.structure.BuiltinStructures.DESERT_PYRAMID);
+			var found = level.getChunkSource().getGenerator().findNearestMapStructure(level, net.minecraft.core.HolderSet.direct(pyramid), spawn, 100, false);
+			if (found == null) {
+				NeoThaum.LOGGER.info("[visual-test] desert temple: none found");
+			} else {
+				var at = found.getFirst();
+				for (int dx = -1; dx <= 1; dx++) {
+					for (int dz = -1; dz <= 1; dz++) {
+						level.getChunk((at.getX() >> 4) + dx, (at.getZ() >> 4) + dz);
+					}
+				}
+				String node = "none";
+				for (var p : net.minecraft.core.BlockPos.betweenClosed(at.getX() - 24, level.getMinY(), at.getZ() - 24, at.getX() + 24, level.getMaxY() - 1, at.getZ() + 24)) {
+					if (level.getBlockState(p).is(dev.neothaum.registry.TVBlocks.AURA_NODE)) {
+						node = p.toShortString() + " top=" + level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, p.getX(), p.getZ());
+						break;
+					}
+				}
+				NeoThaum.LOGGER.info("[visual-test] desert temple at {}: node {}", at.toShortString(), node);
+			}
+		});
+		if (seen.get() != null) {
+			var p = seen.get();
+			server.runCommand("tp @a " + (p.getX() + 3.5) + " " + (p.getY() - 2) + " " + (p.getZ() + 3.5) + " 135 10");
+			ctx.waitTicks(60);
+			waitChunks(sp, ctx);
+			shot(ctx, "parity_totem");
+		}
+		// the command
+		server.runCommand("neothaum research @p reset");
+		server.runCommand("nt research @p ALCHEMICALMANUFACTURE");
+		server.runCommand("neothaum aspect @p ignis 25");
+		server.runCommand("neothaum warp @p add 5 TEMP");
+		server.runCommand("neothaum warp @p set 7 PERM");
+		server.runCommand("neothaum warp @p set 3");
+		ctx.waitTicks(5);
+		server.runOnServer(srv -> {
+			var pl = srv.getPlayerList().getPlayers().get(0);
+			var k = dev.neothaum.research.ResearchManager.knowledge(pl);
+			NeoThaum.LOGGER.info("[visual-test] command: research={} hasManufacture={} hasCrucible={} ignis={} warp={} sticky={} temp={}",
+				k.research.size(), k.research.contains("ALCHEMICALMANUFACTURE"), k.research.contains("CRUCIBLE"),
+				k.getAspectPool(dev.neothaum.api.aspects.Aspect.FIRE), k.warp, k.warpSticky, k.warpTemp);
+		});
+		// special items rise and survive an explosion; an ordinary drop beside them does not
+		server.runCommand("fill -6 199 -6 6 210 6 air");
+		server.runCommand("fill -6 199 -6 6 199 6 stone");
+		server.runCommand("tp @a 0 200 8 180 10");
+		java.util.concurrent.atomic.AtomicReference<double[]> ys = new java.util.concurrent.atomic.AtomicReference<>();
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var special = dev.neothaum.entity.SpecialItemEntity.create(level, 0.5, 200.5, 0.5,
+				new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.PRIMORDIAL_PEARL));
+			special.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+			level.addFreshEntity(special);
+			var plain = new net.minecraft.world.entity.item.ItemEntity(level, 1.5, 200.5, 0.5, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND));
+			level.addFreshEntity(plain);
+			special.addTag("parity_special");
+			plain.addTag("parity_plain");
+			ys.set(new double[]{special.getY()});
+		});
+		ctx.waitTicks(40);
+		shot(ctx, "parity_special_item");
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			double y0 = ys.get()[0];
+			level.explode(null, 1.0, 200.5, 0.5, 3.0F, net.minecraft.world.level.Level.ExplosionInteraction.NONE);
+			var all = level.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(net.minecraft.world.entity.item.ItemEntity.class),
+				e -> e.entityTags().contains("parity_special") || e.entityTags().contains("parity_plain"));
+			StringBuilder sb = new StringBuilder();
+			for (var e : all) {
+				sb.append(e.entityTags().contains("parity_special") ? "special" : "plain").append(" y ").append(String.format("%.2f", y0)).append("->")
+					.append(String.format("%.2f", e.getY())).append(" alive=").append(e.isAlive()).append(", ");
+			}
+			NeoThaum.LOGGER.info("[visual-test] special items after explosion: [{}]", sb);
+		});
+		// the obelisk placer on the stone floor
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var pl = srv.getPlayerList().getPlayers().get(0);
+			var stack = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.OBELISK_PLACER);
+			pl.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stack);
+			var hit = new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(-3.5, 200.0, -3.5), net.minecraft.core.Direction.UP,
+				new net.minecraft.core.BlockPos(-4, 199, -4), false);
+			var result = stack.useOn(new net.minecraft.world.item.context.UseOnContext(pl, net.minecraft.world.InteractionHand.MAIN_HAND, hit));
+			StringBuilder sb = new StringBuilder();
+			for (int y = 200; y <= 206; y++) {
+				sb.append(level.getBlockState(new net.minecraft.core.BlockPos(-4, y, -4)).getBlock().getName().getString()).append(", ");
+			}
+			NeoThaum.LOGGER.info("[visual-test] obelisk placer: {} -> [{}]", result, sb);
+		});
+		ctx.waitTicks(20);
+		shot(ctx, "parity_obelisk");
+	}
+
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {
 		try {
 			sp.getConnection().waitForChunksRender();

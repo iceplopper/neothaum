@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Port of thaumcraft.common.entities.EntitySpecialItem: an item drop that drifts gently upward instead of falling and is not destroyed by
+ * Port of thaumcraft.common.entities.EntitySpecialItem: an item drop that hovers where it is (its lift cancels gravity) and is not destroyed by
  * explosions. Bosses drop their primordial pearl this way, the crucible spits out its products, and a wand turns a bookshelf into one.
  */
 public class SpecialItemEntity extends ItemEntity {
@@ -27,7 +27,7 @@ public class SpecialItemEntity extends ItemEntity {
 		return e;
 	}
 
-	/** EntityUtils.entityDropSpecialItem: dropped from an entity at the given height, rising slowly with a short pickup delay. */
+	/** EntityUtils.entityDropSpecialItem: dropped from an entity at the given height with a little lift and a short pickup delay. */
 	public static SpecialItemEntity dropFrom(Entity entity, ItemStack stack, float dropHeight) {
 		if (stack.isEmpty()) {
 			return null;
