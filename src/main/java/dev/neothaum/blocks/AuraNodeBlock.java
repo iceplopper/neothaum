@@ -21,8 +21,18 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class AuraNodeBlock extends BaseEntityBlock {
 	private static final VoxelShape SHAPE = box(4.8, 4.8, 4.8, 11.2, 11.2, 11.2);
 
+	/** A bright node lights its surroundings fully (light 15, the addon in dev.neothaum.addon.BrightNodes); every other node gives TC4's 8. */
+	public static final net.minecraft.world.level.block.state.properties.BooleanProperty BRIGHT =
+		net.minecraft.world.level.block.state.properties.BooleanProperty.create("bright");
+
 	public AuraNodeBlock(BlockBehaviour.Properties props) {
 		super(props);
+		this.registerDefaultState(this.stateDefinition.any().setValue(BRIGHT, false));
+	}
+
+	@Override
+	protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+		builder.add(BRIGHT);
 	}
 
 

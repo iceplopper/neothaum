@@ -88,6 +88,12 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 			s.ticks = viewer.tickCount;
 			s.distance = cam.distanceTo(Vec3.atCenterOf(node.getBlockPos()));
 		}
+		if (s.visible && s.modifier == NodeModifier.BRIGHT && node.getBlockState().is(dev.neothaum.registry.TVBlocks.AURA_NODE)
+			&& s.aspects.size() > 0) {
+			// the bright-node lens flare (an addon), in the colour of the node's strongest aspect
+			Aspect strongest = s.aspects.getAspectsSortedAmount()[0];
+			dev.neothaum.client.addon.BrightNodeFlare.seen(node.getBlockPos(), strongest.getColor());
+		}
 		s.drainFrom = null;
 		if (node.drainEntity instanceof Player p && p.isUsingItem()) {
 			Vec3 hand = new Vec3(-0.1, -0.1, 0.5).xRot(-p.getXRot(partialTicks) * Mth.DEG_TO_RAD).yRot(-p.getYRot(partialTicks) * Mth.DEG_TO_RAD);

@@ -200,6 +200,11 @@ public class NeoThaumClient implements ClientModInitializer {
 		net.minecraft.client.color.item.ItemTintSources.ID_MAPPER.put(NeoThaum.id("aspect"), dev.neothaum.client.render.AspectTint.MAP_CODEC);
 
 		HudElementRegistry.addFirst(NeoThaum.id("warp_vignette"), dev.neothaum.client.hud.WarpVisuals::render);
+		// the bright-node lens flare: under the hotbar, or (with F1) on its own
+		HudElementRegistry.attachElementBefore(net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements.MISC_OVERLAYS,
+			NeoThaum.id("bright_node_flare"), dev.neothaum.client.addon.BrightNodeFlare::renderUnderHud);
+		HudElementRegistry.attachElementBefore(net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements.SLEEP,
+			NeoThaum.id("bright_node_flare_hud_hidden"), dev.neothaum.client.addon.BrightNodeFlare::renderHudHidden);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.hud.WarpVisuals::tick);
 		HudElementRegistry.addLast(NeoThaum.id("wand_dial"), WandHud::render);
 		HudElementRegistry.addLast(NeoThaum.id("focus_radial"), dev.neothaum.client.hud.FocusRadial::render);

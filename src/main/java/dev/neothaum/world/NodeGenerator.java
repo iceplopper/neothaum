@@ -266,6 +266,7 @@ public final class NodeGenerator {
 		if (world.getBlockEntity(pos) instanceof NodeBlockEntity node) {
 			node.setNodeType(nt);
 			node.setNodeModifier(nm);
+			dev.neothaum.addon.BrightNodes.sync(world, pos, nm);
 			node.setAspects(al);
 			// outside worldgen the client already has the empty node, so send it the contents
 			if (world instanceof net.minecraft.world.level.Level) {

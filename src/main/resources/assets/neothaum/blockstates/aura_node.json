@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "bright=false": {
+      "model": "neothaum:block/aura_node"
+    },
+    "bright=true": {
       "model": "neothaum:block/aura_node"
     }
   }

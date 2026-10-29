@@ -64,6 +64,10 @@ public class NodeBlockEntity extends TVBlockEntity {
 
 	public static void tick(Level level, BlockPos pos, BlockState state, NodeBlockEntity node) {
 		node.updateEntity();
+		// nodes from before the bright-node addon, or after its setting changed, catch up now and then
+		if (!level.isClientSide() && (level.getGameTime() + pos.asLong()) % 200 == 0) {
+			dev.neothaum.addon.BrightNodes.sync(level, pos, node.getNodeModifier());
+		}
 	}
 
 	public void updateEntity() {
@@ -160,6 +164,9 @@ public class NodeBlockEntity extends TVBlockEntity {
 
 	public void setNodeModifier(NodeModifier nodeModifier) {
 		this.nodeModifier = nodeModifier;
+		if (this.level != null && !this.level.isClientSide()) {
+			dev.neothaum.addon.BrightNodes.sync(this.level, this.worldPosition, nodeModifier);
+		}
 	}
 
 	public NodeModifier getNodeModifier() {

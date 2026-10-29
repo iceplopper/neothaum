@@ -183,7 +183,8 @@ public final class TVBlocks {
 
 	// ---- airy (BlockAiry) ----
 	public static final Block AURA_NODE = register("aura_node", AuraNodeBlock::new,
-		BlockBehaviour.Properties.of().replaceable().noCollision().noLootTable().strength(-1.0F, 3600000.0F).lightLevel(s -> 8).noOcclusion()
+		BlockBehaviour.Properties.of().replaceable().noCollision().noLootTable().strength(-1.0F, 3600000.0F)
+			.lightLevel(s -> s.getValue(AuraNodeBlock.BRIGHT) ? 15 : 8).noOcclusion()
 			.pushReaction(PushReaction.IMMOVEABLE), false);
 	public static final Block NITOR_LIGHT = register("nitor_light", NitorLightBlock::new,
 		BlockBehaviour.Properties.of().noCollision().instabreak().lightLevel(s -> 15).noOcclusion().sound(SoundType.WOOL).pushReaction(PushReaction.POPPED),

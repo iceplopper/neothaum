@@ -19,6 +19,10 @@ public class NeoThaumConfig {
 		// --- Addons ---
 		/** Whether the aura nodes you have seen are drawn on Xaero's World Map (toggled by the button on the map). Default: true. */
 		public boolean worldMapNodes = true;
+		/** Whether bright nodes light their surroundings fully (light 15; TC4 gave every node 8). Default: true. */
+		public boolean brightNodeLight = true;
+		/** Whether looking toward a bright node in clear sight shows a lens flare (client only). Default: true. */
+		public boolean brightNodeFlare = true;
 
 		// Every number below is a multiplier on TC4's own setting, from 0 to 10 in steps of 0.1: 1 is TC4, 3 is three times as much (as many
 		// nodes, as large a forest, taint spreading three times as fast), 0 turns it off. The TC4 values are the constants in NeoThaumConfig.

@@ -142,6 +142,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("warpfx")) {
 					warpFxScene(ctx, server);
 				}
+				if (scenes.contains("brightnode")) {
+					brightNodeScene(ctx, server, sp);
+				}
 				if (scenes.contains("bore")) {
 					boreScene(ctx, server);
 				}
@@ -3012,6 +3015,73 @@ public class VisualTests implements FabricClientGameTest {
 			}
 		}
 		return fallback;
+	}
+
+	/**
+	 * The bright-node addon: a bright node beside an ordinary one at night. Checks the light each gives (15 against 8) and that the node keeps its
+	 * aspects as its block turns bright, then shows the lens flare with the HUD up, with it hidden, and blocked by a wall.
+	 */
+	private static void brightNodeScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode creative @a", "gamerule advance_time false", "time set 18000", "weather clear",
+			"fill -16 117 -16 16 130 16 air", "fill -16 116 -16 16 116 16 grass_block", "fill -16 117 -16 16 117 -16 stone_bricks",
+			"fill -16 117 -16 -16 120 16 stone_bricks", "clear @a", "item replace entity @a armor.head with neothaum:goggles_of_revealing",
+			"tp @a -7.5 117 7.5"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var bright = new net.minecraft.core.BlockPos(0, 119, 0);
+			var plain = new net.minecraft.core.BlockPos(10, 119, -6);
+			var al = new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.LIGHT, 40).add(dev.neothaum.api.aspects.Aspect.AIR, 20);
+			dev.neothaum.world.NodeGenerator.createNodeAt(level, bright, dev.neothaum.api.nodes.NodeType.NORMAL, dev.neothaum.api.nodes.NodeModifier.BRIGHT,
+				al.copy(), true);
+			dev.neothaum.world.NodeGenerator.createNodeAt(level, plain, dev.neothaum.api.nodes.NodeType.NORMAL, null, al.copy(), true);
+			var p = firstPlayer(srv);
+			p.getAbilities().flying = true;
+			p.onUpdateAbilities();
+		});
+		ctx.waitTicks(20);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var bright = new net.minecraft.core.BlockPos(0, 119, 0);
+			var plain = new net.minecraft.core.BlockPos(10, 119, -6);
+			int lb = level.getBrightness(net.minecraft.world.level.LightLayer.BLOCK, bright.east(3));
+			int lp = level.getBrightness(net.minecraft.world.level.LightLayer.BLOCK, plain.east(3));
+			check("bright node casts strong light", level.getBlockState(bright).getValue(dev.neothaum.blocks.AuraNodeBlock.BRIGHT)
+				&& level.getLightEmission(bright) == 15 && lb == 12, "emits " + level.getLightEmission(bright) + ", 3 blocks off " + lb);
+			check("ordinary node keeps TC4's light 8", !level.getBlockState(plain).getValue(dev.neothaum.blocks.AuraNodeBlock.BRIGHT)
+				&& level.getLightEmission(plain) == 8 && lp == 5, "emits " + level.getLightEmission(plain) + ", 3 blocks off " + lp);
+			check("bright node keeps its aspects", level.getBlockEntity(bright) instanceof dev.neothaum.tiles.NodeBlockEntity n
+				&& n.getAspects().getAmount(dev.neothaum.api.aspects.Aspect.LIGHT) == 40 && n.getNodeModifier() == dev.neothaum.api.nodes.NodeModifier.BRIGHT,
+				level.getBlockEntity(bright) instanceof dev.neothaum.tiles.NodeBlockEntity n2 ? n2.getAspects() + " " + n2.getNodeModifier() : "no node");
+		});
+		// looking a little to the side of the node, so the flare's ghosts spread across the view
+		server.runCommand("tp @a -6.5 118 6.5 facing 2.5 119.2 -1.5");
+		ctx.waitTicks(40);
+		waitChunks(sp, ctx);
+		ctx.waitTicks(40);
+		shot(ctx, "brightnode_flare_hud");
+		ctx.runOnClient(mc -> {
+			if (!mc.gui.hud.isHidden()) {
+				mc.gui.hud.toggle();
+			}
+		});
+		ctx.waitTicks(10);
+		shot(ctx, "brightnode_flare_f1");
+		server.runCommand("tp @a -4.5 118 4.5 facing 0.5 119.5 0.5");
+		ctx.waitTicks(30);
+		shot(ctx, "brightnode_flare_centred");
+		server.runCommand("fill -2 117 2 -1 121 2 stone_bricks");
+		ctx.waitTicks(40);
+		shot(ctx, "brightnode_flare_blocked");
+		server.runCommand("fill -2 117 2 -1 121 2 air");
+		ctx.runOnClient(mc -> {
+			if (mc.gui.hud.isHidden()) {
+				mc.gui.hud.toggle();
+			}
+		});
+		NeoThaum.LOGGER.info("[visual-test] brightnode: {} failed checks so far", checkFailures);
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {

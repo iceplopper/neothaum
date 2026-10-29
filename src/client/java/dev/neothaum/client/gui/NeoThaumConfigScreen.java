@@ -55,6 +55,8 @@ public class NeoThaumConfigScreen extends Screen {
 			this.slider("Hungry Nodes", () -> cfg.hungryNodeMultiplier, v -> cfg.hungryNodeMultiplier = v);
 			this.slider("Tainted Nodes", () -> cfg.taintedNodeMultiplier, v -> cfg.taintedNodeMultiplier = v);
 			this.slider("Bright Nodes", () -> cfg.brightNodeMultiplier, v -> cfg.brightNodeMultiplier = v);
+			this.toggle("Bright Node Light", () -> cfg.brightNodeLight, v -> cfg.brightNodeLight = v);
+			this.toggle("Bright Node Lens Flare", () -> cfg.brightNodeFlare, v -> cfg.brightNodeFlare = v);
 			this.slider("Pale Nodes", () -> cfg.paleNodeMultiplier, v -> cfg.paleNodeMultiplier = v);
 			this.slider("Fading Nodes", () -> cfg.fadingNodeMultiplier, v -> cfg.fadingNodeMultiplier = v);
 			this.toggle("Hard Nodes", () -> cfg.hardNodes, v -> cfg.hardNodes = v);
