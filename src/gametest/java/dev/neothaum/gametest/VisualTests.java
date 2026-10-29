@@ -119,6 +119,17 @@ public class VisualTests implements FabricClientGameTest {
 					// every item's aspects as the game works them out (explicit and from recipes), to aspect_table.json
 					ctx.waitTicks(40);
 					dumpAspectTable(ctx);
+					// what scanning a mob would give, for a sample (including ones TC4 never had)
+					server.runOnServer(srv -> {
+						var level = srv.overworld();
+						for (String id : new String[]{"minecraft:breeze", "minecraft:skeleton_horse", "minecraft:zombie_horse", "minecraft:copper_golem", "minecraft:zombie",
+							"neothaum:thaumic_slime", "neothaum:taintacle_small", "neothaum:taint_spore_swarmer", "neothaum:eldritch_warden"}) {
+							var type = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(net.minecraft.resources.Identifier.parse(id));
+							var e = type.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+							var al = e == null ? null : dev.neothaum.aspects.ObjectAspects.getEntityAspects(e);
+							NeoThaum.LOGGER.info("[visual-test] mob aspects {}: {}", id, al);
+						}
+					});
 				}
 				if (scenes.contains("research")) {
 					// the full run's checks of item aspects and every openable Thaumonomicon page, on their own

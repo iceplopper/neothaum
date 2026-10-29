@@ -49,44 +49,25 @@ second wins, and matches TC4). Harmless; worth tidying.
 aqua, and modern slabs, walls, glass panes and sugar with no aspects all match TC4 or follow its rounding the same way TC4's own slabs
 did.
 
-## Mobs without aspects (can't be scanned)
+## Mobs
 
-TC4 listed 68 mobs; nothing has been added since, so every newer vanilla mob scans as unknown. Suggested, in TC4's style (2-4 per
-aspect, bestia for animals, exanimis for undead, humanus for people):
+**Correction:** the first version of this audit said 58 newer vanilla mobs had no aspects. That was wrong: it only read `aspects.json`, and
+`aspects_modern.json` (written with the 1.0.0 port for everything added after 1.7.10) already covers them. Of those, only the **copper golem**
+had none; it now has metallum 3, machina 2, motus 1. Three of that file's values were also off and are fixed:
 
-| Mob | Suggested | Mob | Suggested |
+| Mob | Was | Now | Why |
 |---|---|---|---|
-| Allay | spiritus 2, aer 2, volatus 1, sensus 1 | Llama / trader llama | bestia 3, terra 2, pannus 1 |
-| Armadillo | bestia 2, tutamen 2, terra 1 | Mule / donkey | bestia 3, terra 2, iter 1 |
-| Axolotl | bestia 2, aqua 2, victus 1 | Nautilus | bestia 2, aqua 2, tutamen 1 |
-| Bee | bestia 1, volatus 2, herba 1 | Panda | bestia 3, herba 2 |
-| Bogged | exanimis 3, venenum 2, herba 1 | Parched | exanimis 3, ignis 1, terra 1 |
-| Breeze | aer 4, motus 2, praecantatio 1 | Parrot | bestia 2, volatus 2, sensus 1 |
-| Camel | bestia 3, terra 2, iter 1 | Phantom | exanimis 2, volatus 3, tenebrae 2 |
-| Camel husk | bestia 2, exanimis 2, terra 1 | Piglin | humanus 1, bestia 2, ignis 1, lucrum 1 |
-| Cat | bestia 3, terra 2 | Piglin brute | humanus 1, bestia 2, ignis 1, telum 2 |
-| Cod / salmon | bestia 1, aqua 2 | Pillager | humanus 2, telum 2 |
-| Copper golem | metallum 3, machina 2, motus 1 | Polar bear | bestia 4, gelum 2 |
-| Creaking | arbor 3, spiritus 2, tenebrae 2 | Pufferfish | bestia 1, aqua 2, venenum 2 |
-| Dolphin | bestia 2, aqua 3, motus 1 | Rabbit | bestia 2, terra 1, motus 1 |
-| Drowned | exanimis 2, humanus 1, aqua 2 | Ravager | bestia 4, telum 2, terra 2 |
-| Elder guardian | aqua 5, bestia 3, tutamen 2, praecantatio 2 | Shulker | alienis 3, tutamen 3, bestia 1 |
-| Endermite | bestia 1, alienis 2, terra 1 | Skeleton horse | bestia 3, exanimis 2, iter 1 |
-| Evoker | humanus 2, praecantatio 3, spiritus 1 | Sniffer | bestia 4, terra 2, herba 1 |
-| Fox | bestia 2, terra 2, motus 1 | Stray | exanimis 3, gelum 2 |
-| Frog | bestia 2, aqua 1, motus 1 | Strider | bestia 2, ignis 3, iter 1 |
-| Glow squid | bestia 2, aqua 2, lux 2 | Sulfur cube | limus 3, ignis 1, perditio 1 |
-| Goat | bestia 3, terra 2, motus 1 | Tadpole | bestia 1, aqua 1, victus 1 |
-| Guardian | aqua 3, bestia 2, tutamen 1 | Tropical fish | bestia 1, aqua 2, sensus 1 |
-| Happy ghast | volatus 3, spiritus 2, victus 2 | Turtle | bestia 2, aqua 2, tutamen 2 |
-| Hoglin | bestia 3, ignis 2, terra 1 | Vex | spiritus 3, volatus 2, telum 1 |
-| Husk | exanimis 2, humanus 1, terra 2 | Vindicator | humanus 2, telum 3 |
-| Illusioner | humanus 2, praecantatio 2, sensus 2 | Wandering trader | humanus 2, permutatio 2, iter 1 |
-| Warden | tenebrae 4, sensus 4, spiritus 3, potentia 2 | Zoglin | bestia 3, exanimis 2, ignis 1 |
-| Zombie horse | bestia 3, exanimis 2 | Zombie nautilus | exanimis 2, aqua 2, tutamen 1 |
-| Zombie villager | exanimis 2, humanus 1, terra 1 | | |
+| Breeze | alienis 4, aer 1 | aer 4, motus 2, praecantatio 1 | A wind creature, not an eldritch one |
+| Skeleton horse | bestia 4, aer 1, terra 1 | bestia 3, exanimis 2, aer 1 | Copied from the living horse (a horse variant in TC4); undead now |
+| Zombie horse | bestia 4, aer 1, terra 1 | bestia 3, exanimis 2, terra 1 | Same |
 
-NeoThaum's own mobs that TC4 also left without aspects (optional, TC4 never let you scan them): cultist leader (alienis 2, humanus 2,
-perditio 2, telum 2), cultist portal (alienis 4, iter 4, tenebrae 2), eldritch crab (alienis 2, bestia 2, tutamen 2), eldritch golem
-(alienis 4, machina 4, tutamen 4), eldritch warden (alienis 6, exanimis 4, tenebrae 4), inhabited zombie (exanimis 2, alienis 2,
-tutamen 2), giant taintacle (vitium 6, aqua 4). The wisp has none in TC4 either.
+NeoThaum's own mobs that TC4 never gave aspects now have them: cultist leader (alienis 2, humanus 2, perditio 2, telum 2), cultist portal
+(alienis 4, iter 4, tenebrae 2), eldritch crab (alienis 2, bestia 2, tutamen 2), eldritch golem (alienis 4, machina 4, tutamen 4), eldritch
+warden (alienis 6, exanimis 4, tenebrae 4), inhabited zombie (exanimis 2, alienis 2, tutamen 2), giant taintacle (vitium 6, aqua 4). The wisp
+still has none, as in TC4.
+
+## Applied
+
+Every item change above is in, including the optional TC4-faithful ones (magma cream, jack o'lantern, chiseled and cut sandstone, frost
+focus). Fixes for things TC4 had are in `aspects.json`; fixes for modern content are in `aspects_modern.json`, which loads second and so
+decides for anything in both. The duplicate entries are gone. Knock-on: the hellbat focus's ignis goes from 6 to 7, through its magma cream.

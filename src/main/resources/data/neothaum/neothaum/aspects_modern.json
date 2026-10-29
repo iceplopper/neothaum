@@ -284,12 +284,6 @@
    }
   },
   {
-   "item": "minecraft:budding_amethyst",
-   "aspects": {
-    "vitreus": 2
-   }
-  },
-  {
    "item": "minecraft:burn_pottery_sherd",
    "aspects": {
     "terra": 1,
@@ -3177,6 +3171,128 @@
     "praecantatio": 1,
     "telum": 2
    }
+  },
+  {
+   "item": "minecraft:magma_block",
+   "aspects": {
+    "ignis": 3,
+    "terra": 2,
+    "limus": 1
+   }
+  },
+  {
+   "item": "minecraft:lantern",
+   "aspects": {
+    "metallum": 4,
+    "lux": 2
+   }
+  },
+  {
+   "item": "minecraft:soul_lantern",
+   "aspects": {
+    "metallum": 4,
+    "lux": 2,
+    "spiritus": 1
+   }
+  },
+  {
+   "item": "minecraft:campfire",
+   "aspects": {
+    "arbor": 4,
+    "ignis": 3,
+    "lux": 1
+   }
+  },
+  {
+   "item": "minecraft:soul_campfire",
+   "aspects": {
+    "arbor": 4,
+    "ignis": 2,
+    "spiritus": 2
+   }
+  },
+  {
+   "item": "minecraft:dried_ghast",
+   "aspects": {
+    "spiritus": 4,
+    "aer": 2,
+    "aqua": 1,
+    "victus": 1
+   }
+  },
+  {
+   "item": "minecraft:packed_mud",
+   "aspects": {
+    "terra": 2,
+    "messis": 1
+   }
+  },
+  {
+   "item": "minecraft:target",
+   "aspects": {
+    "sensus": 2,
+    "machina": 2,
+    "messis": 2,
+    "potentia": 1
+   }
+  },
+  {
+   "item": "minecraft:budding_amethyst",
+   "aspects": {
+    "vitreus": 6,
+    "sensus": 3,
+    "victus": 2
+   }
+  },
+  {
+   "item": "minecraft:tinted_glass",
+   "aspects": {
+    "vitreus": 2,
+    "tenebrae": 1,
+    "sensus": 1
+   }
+  },
+  {
+   "item": "minecraft:bone_block",
+   "aspects": {
+    "mortuus": 4,
+    "sensus": 2
+   }
+  },
+  {
+   "item": "minecraft:creaking_heart",
+   "aspects": {
+    "arbor": 4,
+    "spiritus": 3,
+    "tenebrae": 2,
+    "limus": 1
+   }
+  },
+  {
+   "item": "minecraft:respawn_anchor",
+   "aspects": {
+    "terra": 6,
+    "ignis": 6,
+    "praecantatio": 4,
+    "lux": 8,
+    "spiritus": 4
+   }
+  },
+  {
+   "item": "minecraft:glow_item_frame",
+   "aspects": {
+    "arbor": 4,
+    "lux": 1
+   }
+  },
+  {
+   "item": "minecraft:golden_dandelion",
+   "aspects": {
+    "herba": 1,
+    "victus": 1,
+    "sensus": 1,
+    "lucrum": 1
+   }
   }
  ],
  "entities": [
@@ -3222,8 +3338,9 @@
   {
    "entity": "minecraft:breeze",
    "aspects": {
-    "alienis": 4,
-    "aer": 1
+    "aer": 4,
+    "motus": 2,
+    "praecantatio": 1
    }
   },
   {
@@ -3502,9 +3619,9 @@
   {
    "entity": "minecraft:skeleton_horse",
    "aspects": {
-    "bestia": 4,
-    "aer": 1,
-    "terra": 1
+    "bestia": 3,
+    "exanimis": 2,
+    "aer": 1
    }
   },
   {
@@ -3613,8 +3730,8 @@
   {
    "entity": "minecraft:zombie_horse",
    "aspects": {
-    "bestia": 4,
-    "aer": 1,
+    "bestia": 3,
+    "exanimis": 2,
     "terra": 1
    }
   },
@@ -3632,6 +3749,14 @@
     "exanimis": 2,
     "terra": 1,
     "humanus": 1
+   }
+  },
+  {
+   "entity": "minecraft:copper_golem",
+   "aspects": {
+    "metallum": 3,
+    "machina": 2,
+    "motus": 1
    }
   }
  ]

@@ -509,12 +509,6 @@
   {
    "item": "minecraft:podzol",
    "aspects": {
-    "terra": 2
-   }
-  },
-  {
-   "item": "minecraft:podzol",
-   "aspects": {
     "terra": 1,
     "herba": 1
    }
@@ -709,24 +703,6 @@
   {
    "item": "minecraft:mossy_stone_bricks",
    "aspects": {
-    "terra": 2
-   }
-  },
-  {
-   "item": "minecraft:cracked_stone_bricks",
-   "aspects": {
-    "terra": 2
-   }
-  },
-  {
-   "item": "minecraft:chiseled_stone_bricks",
-   "aspects": {
-    "terra": 2
-   }
-  },
-  {
-   "item": "minecraft:mossy_stone_bricks",
-   "aspects": {
     "terra": 1,
     "herba": 1
    }
@@ -749,28 +725,6 @@
    "item": "minecraft:sandstone",
    "aspects": {},
    "complex": true
-  },
-  {
-   "item": "minecraft:chiseled_sandstone",
-   "aspects": {},
-   "complex": true
-  },
-  {
-   "item": "minecraft:cut_sandstone",
-   "aspects": {},
-   "complex": true
-  },
-  {
-   "item": "minecraft:chiseled_sandstone",
-   "aspects": {
-    "praecantatio": 1
-   }
-  },
-  {
-   "item": "minecraft:cut_sandstone",
-   "aspects": {
-    "ordo": 1
-   }
   },
   {
    "item": "minecraft:short_grass",
@@ -1828,13 +1782,6 @@
   {
    "item": "minecraft:furnace",
    "aspects": {
-    "ignis": 4
-   },
-   "complex": true
-  },
-  {
-   "item": "minecraft:furnace",
-   "aspects": {
     "ignis": 2
    },
    "complex": true
@@ -2680,6 +2627,65 @@
    "aspects": {
     "metallum": 1
    }
+  },
+  {
+   "item": "minecraft:magma_cream",
+   "aspects": {
+    "limus": 1,
+    "ignis": 1
+   }
+  },
+  {
+   "item": "neothaum:charged_obsidian_totem",
+   "aspects": {
+    "terra": 4,
+    "tenebrae": 2,
+    "alienis": 2,
+    "auram": 2
+   }
+  },
+  {
+   "item": "minecraft:sponge",
+   "aspects": {
+    "bestia": 1,
+    "vacuos": 2
+   }
+  },
+  {
+   "item": "minecraft:jack_o_lantern",
+   "aspects": {
+    "messis": 2,
+    "lux": 2
+   }
+  },
+  {
+   "item": "minecraft:chiseled_sandstone",
+   "aspects": {
+    "terra": 2,
+    "perditio": 2,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "minecraft:cut_sandstone",
+   "aspects": {
+    "terra": 2,
+    "perditio": 2,
+    "ordo": 1
+   }
+  },
+  {
+   "item": "neothaum:focus_frost",
+   "aspects": {
+    "praecantatio": 3,
+    "aqua": 9,
+    "vitreus": 9,
+    "potentia": 3,
+    "lucrum": 3,
+    "ordo": 3,
+    "perditio": 3,
+    "gelum": 3
+   }
   }
  ],
  "entities": [
@@ -3206,6 +3212,62 @@
     "aer": 2,
     "terra": 2,
     "praecantatio": 2
+   }
+  },
+  {
+   "entity": "neothaum:cultist_leader",
+   "aspects": {
+    "alienis": 2,
+    "humanus": 2,
+    "perditio": 2,
+    "telum": 2
+   }
+  },
+  {
+   "entity": "neothaum:cultist_portal",
+   "aspects": {
+    "alienis": 4,
+    "iter": 4,
+    "tenebrae": 2
+   }
+  },
+  {
+   "entity": "neothaum:eldritch_crab",
+   "aspects": {
+    "alienis": 2,
+    "bestia": 2,
+    "tutamen": 2
+   }
+  },
+  {
+   "entity": "neothaum:eldritch_golem",
+   "aspects": {
+    "alienis": 4,
+    "machina": 4,
+    "tutamen": 4
+   }
+  },
+  {
+   "entity": "neothaum:eldritch_warden",
+   "aspects": {
+    "alienis": 6,
+    "exanimis": 4,
+    "tenebrae": 4
+   }
+  },
+  {
+   "entity": "neothaum:inhabited_zombie",
+   "aspects": {
+    "exanimis": 2,
+    "alienis": 2,
+    "tutamen": 2
+   }
+  },
+  {
+   "entity": "neothaum:taintacle_giant",
+   "aspects": {
+    "vitium": 6,
+    "aqua": 4
    }
   }
  ]
