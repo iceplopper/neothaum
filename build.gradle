@@ -72,7 +72,9 @@ dependencies {
 	reiTest "maven.modrinth:rei:${project.rei_version}"
 	reiTest "maven.modrinth:cloth-config:${project.cloth_config_version}"
 	reiTest "maven.modrinth:architectury-api:${project.architectury_version}"
-	// Sodium and Iris: only checked against, nothing compiles against them
+	// Iris: its API maps NeoThaum's custom render pipelines to shader-pack programs (dev.neothaum.client.addon.IrisCompat)
+	compileOnly "maven.modrinth:iris:${project.iris_version}"
+	// Sodium is only checked against
 	sodiumTest "maven.modrinth:sodium:${project.sodium_version}"
 	irisTest "maven.modrinth:sodium:${project.sodium_version}"
 	irisTest "maven.modrinth:iris:${project.iris_version}"

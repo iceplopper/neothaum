@@ -17,6 +17,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 public class VisualTests implements FabricClientGameTest {
 	@Override
 	public void runTest(ClientGameTestContext ctx) {
+		useShaderPack(ctx);
 		String scenesEnv = System.getenv("NEOTHAUM_SCENES");
 		if ("biomes".equalsIgnoreCase(scenesEnv)) {
 			// the biome map needs a real (default preset) overworld, not the flat test world
@@ -126,6 +127,9 @@ public class VisualTests implements FabricClientGameTest {
 				}
 				if (scenes.contains("foods")) {
 					foodsScene(server);
+				}
+				if (scenes.contains("warpfx")) {
+					warpFxScene(ctx, server);
 				}
 				if (scenes.contains("bore")) {
 					boreScene(ctx, server);
@@ -2806,6 +2810,54 @@ public class VisualTests implements FabricClientGameTest {
 				|| net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("appleskin"), "test mods=" + asked);
 		});
 		NeoThaum.LOGGER.info("[visual-test] foods: {} failed checks so far", checkFailures);
+	}
+
+	/**
+	 * NEOTHAUM_TEST_SHADERPACK=<zip under run/shaderpacks> (with NEOTHAUM_TEST_MODS=iris): the test run's folder is made afresh each launch,
+	 * so the pack is copied in here and switched on through Iris's own config and reload (by reflection: the tests do not compile against Iris).
+	 */
+	private static void useShaderPack(ClientGameTestContext ctx) {
+		String pack = System.getenv("NEOTHAUM_TEST_SHADERPACK");
+		if (pack == null || !net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("iris")) {
+			return;
+		}
+		ctx.runOnClient(mc -> {
+			try {
+				Class<?> iris = Class.forName("net.irisshaders.iris.Iris");
+				Path dir = (Path) iris.getMethod("getShaderpacksDirectory").invoke(null);
+				Path src = Path.of(System.getProperty("user.dir")).resolve("../../../run/shaderpacks").resolve(pack).normalize();
+				java.nio.file.Files.createDirectories(dir);
+				java.nio.file.Files.copy(src, dir.resolve(pack), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+				Object config = iris.getMethod("getIrisConfig").invoke(null);
+				config.getClass().getMethod("setShaderPackName", String.class).invoke(config, pack);
+				config.getClass().getMethod("setShadersEnabled", boolean.class).invoke(config, true);
+				config.getClass().getMethod("save").invoke(config);
+				iris.getMethod("reload").invoke(null);
+				NeoThaum.LOGGER.info("[visual-test] shader pack {} in use={}", iris.getMethod("getCurrentPackName").invoke(null),
+					iris.getMethod("isPackInUseQuick").invoke(null));
+			} catch (ReflectiveOperationException | java.io.IOException e) {
+				throw new RuntimeException("Could not switch on shader pack " + pack, e);
+			}
+		});
+		ctx.waitTicks(40);
+	}
+
+	/** The warp screen effects (WarpVisuals' post effects), one at a time, over the same view: for checking them with and without shaders. */
+	private static void warpFxScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear", "fill -6 117 -6 6 125 6 air",
+			"fill -6 116 -6 6 116 6 grass_block", "setblock 0 117 -3 neothaum:crucible", "setblock 2 117 -3 oak_log", "tp @a 0.5 117 2.5 180 15",
+			"effect clear @a"}) {
+			server.runCommand(cmd);
+		}
+		ctx.waitTicks(40);
+		shot(ctx, "warpfx_none");
+		for (String fx : new String[]{"blurred_vision", "death_gaze", "sun_scorned", "unnatural_hunger"}) {
+			server.runCommand("effect clear @a");
+			server.runCommand("effect give @a neothaum:" + fx + " 60 0 true");
+			ctx.waitTicks(60);
+			shot(ctx, "warpfx_" + fx);
+		}
+		server.runCommand("effect clear @a");
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {

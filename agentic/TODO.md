@@ -255,10 +255,10 @@ core's AI (use, liquid, essentia, sorting colours), and the giant taintacle's pe
   Not done: a recipe transfer handler (JEI has one). EMI has no 26.3 build yet.
 - [x] **Sodium** — every custom renderer checked with Sodium 0.9.3 (essentia, infusion, node jars, devices, eldritch, harness, golems, mobs):
   no changes needed.
-- [ ] **Iris shaders** — assessed, small: NeoThaum boots with Iris 1.11.7. With a shader pack, the 5 custom world pipelines in
-  `TVRenderTypes` (4 "glow" on the eyes shader, 1 additive particle) need `IrisApi.assignPipeline` (glow -> EMISSIVE_ENTITIES, particle ->
-  PARTICLES_TRANSLUCENT) in an optional class. Then test with a shader pack: depth-ignoring node glows and the warp post effects.
-- [ ] **WTHIT** — node, jar and device info, matching the Jade plugin (same scanned + goggles/thaumometer gating).
-- [ ] **Xaero's Minimap / JourneyMap** — JourneyMap gets the scanned-node layer on its fullscreen map; check the Xaero World Map toggle and waypoint buttons with Xaero's Minimap installed.
+- [x] **Iris shaders** — `client.addon.IrisCompat` assigns the 5 custom world pipelines in `TVRenderTypes` to Iris programs (glows ->
+  EMISSIVE_ENTITIES, additive particles -> PARTICLES_TRANSLUCENT; all -> SHADOW_LIGHTNING in the shadow pass). Without it the node in a jar
+  is invisible under Complementary and Iris logs "missing program" errors. Checked with Complementary Reimagined r5.9.3 and BSL 10.1.8:
+  nodes, essentia, infusion, devices, eldritch, harness and the four warp screen effects, no Iris errors. Test packs live in
+  `run/shaderpacks/` (git-ignored): `NEOTHAUM_TEST_MODS=iris NEOTHAUM_TEST_SHADERPACK=<zip> NEOTHAUM_SCENES=...`; `warpfx` scene added.
 - [x] **AppleSkin** — works without code (all foods use the vanilla food component). Found that the zombie brain was not edible: now
   TC4's food (4, 0.2, wolf food, Hunger 80%, warp). Test mods load with `NEOTHAUM_TEST_MODS=sodium,iris,appleskin,rei,trinkets`.

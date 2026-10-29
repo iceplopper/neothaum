@@ -52,6 +52,7 @@ public class NeoThaumClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		TVRenderTypes.init();
+		dev.neothaum.client.addon.IrisCompat.init();
 		// BlockFluidPure's one texture, still and flowing
 		var pure = new net.minecraft.client.resources.model.sprite.Material(dev.neothaum.NeoThaum.id("blocks/fluidpure"));
 		net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderingRegistry.register(dev.neothaum.fluids.TVFluids.PURIFYING,
