@@ -1,12 +1,14 @@
 package dev.neothaum.events;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.neothaum.api.aspects.Aspect;
+import dev.neothaum.config.NeoThaumConfig;
 import dev.neothaum.network.TVNetwork;
 import dev.neothaum.research.PlayerKnowledge;
 import dev.neothaum.research.ResearchItem;
@@ -50,6 +52,9 @@ public final class CommandThaumcraft {
 						.then(Commands.argument("amount", IntegerArgumentType.integer(1))
 							.executes(c -> giveAspect(c.getSource(), EntityArgument.getPlayer(c, "player"), StringArgumentType.getString(c, "aspect"),
 								IntegerArgumentType.getInteger(c, "amount")))))))
+			.then(Commands.literal("config")
+				.then(setting("hardnodes", "hard mode nodes", () -> NeoThaumConfig.current.hardNodes, v -> NeoThaumConfig.current.hardNodes = v))
+				.then(setting("wussmode", "wuss mode", () -> !NeoThaumConfig.current.allowWarp, v -> NeoThaumConfig.current.allowWarp = !v)))
 			.then(Commands.literal("warp")
 				.then(Commands.argument("player", EntityArgument.player())
 					.then(Commands.literal("set")
@@ -64,6 +69,26 @@ public final class CommandThaumcraft {
 							.then(Commands.argument("type", StringArgumentType.word())
 								.suggests((c, b) -> SharedSuggestionProvider.suggest(new String[]{"PERM", "TEMP"}, b))
 								.executes(c -> warp(c, false, StringArgumentType.getString(c, "type"))))))));
+	}
+
+	/**
+	 * /neothaum config <name> [true|false]: shows or sets one of TC4's server settings and saves neothaum.json. Hard mode nodes gives hungry,
+	 * tainted and sinister nodes their nastier effects; wuss mode turns warp off (no warp events, none from research or crafting).
+	 */
+	private static LiteralArgumentBuilder<CommandSourceStack> setting(String name, String label, java.util.function.BooleanSupplier get,
+		java.util.function.Consumer<Boolean> set) {
+		return Commands.literal(name)
+			.executes(c -> {
+				c.getSource().sendSystemMessage(Component.literal("§5" + label + " is " + (get.getAsBoolean() ? "on" : "off")));
+				return 1;
+			})
+			.then(Commands.argument("value", BoolArgumentType.bool()).executes(c -> {
+				boolean v = BoolArgumentType.getBool(c, "value");
+				set.accept(v);
+				NeoThaumConfig.save();
+				c.getSource().sendSuccess(() -> Component.literal("§5" + label + " is now " + (v ? "on" : "off")), true);
+				return 1;
+			}));
 	}
 
 	private static String[] researchSuggestions() {
@@ -85,7 +110,8 @@ public final class CommandThaumcraft {
 		for (String line : new String[]{"§3You can also use /nt instead of /neothaum.", "§3Use this to give research to a player.",
 			"  /neothaum research <list|player> <all|reset|<research>>", "§3Use this to give aspect research points to a player.",
 			"  /neothaum aspect <player> <aspect|all> <amount>", "§3Use this to give set a players warp level.",
-			"  /neothaum warp <player> <add|set> <amount> <PERM|TEMP>", "  not specifying perm or temp will just add normal warp"}) {
+			"  /neothaum warp <player> <add|set> <amount> <PERM|TEMP>", "  not specifying perm or temp will just add normal warp",
+			"§3Use this to see or change a server setting.", "  /neothaum config <hardnodes|wussmode> [true|false]"}) {
 			src.sendSystemMessage(Component.literal(line));
 		}
 		return 1;

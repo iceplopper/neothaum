@@ -310,7 +310,8 @@ public final class ResearchManager {
 		k = k.copy();
 		k.research.add(key);
 		ResearchItem ri = getResearch(key);
-		int warp = ri != null ? ri.warp : 0;
+		// no warp from research in wuss mode (the Warp setting off), as TC4's Config.wuss
+		int warp = ri != null && dev.neothaum.config.NeoThaumConfig.current.allowWarp ? ri.warp : 0;
 		if (warp > 0) {
 			if (warp > 1) {
 				int w2 = warp / 2;

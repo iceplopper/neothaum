@@ -86,7 +86,9 @@ public class NeoThaumConfig {
 		public boolean showCreativeDebugTab = true;
 
 		// --- Other TC4 Options ---
+		/** TC4's hard_mode_nodes: hungry nodes pull in and eat creatures, tainted nodes grow fibres, sinister nodes call giant zombies. Default: true. */
 		public boolean hardNodes = true;
+		/** Warp at all; off is TC4's wuss_mode (no warp events, no warp from research or crafting). Default: true. */
 		public boolean allowWarp = true;
 		public boolean championMobs = true;
 	}

@@ -316,8 +316,8 @@ public class NodeBlockEntity extends TVBlockEntity {
 					}
 				}
 			}
-			// Config.hardNode: pull entities in and consume them
-			List<Entity> ents = this.level.getEntitiesOfClass(Entity.class, new AABB(this.worldPosition).inflate(15.0));
+			// Config.hardNode: pull entities in and consume them, feeding the node on what dies
+			List<Entity> ents = hardNode() ? this.level.getEntitiesOfClass(Entity.class, new AABB(this.worldPosition).inflate(15.0)) : List.of();
 			for (Entity eo : ents) {
 				if (eo instanceof Player p && (p.isCreative() || p.isSpectator())) {
 					continue;
@@ -326,6 +326,21 @@ public class NodeBlockEntity extends TVBlockEntity {
 					double d = this.getDistanceTo(eo.getX(), eo.getY(), eo.getZ());
 					if (d < 2.0) {
 						eo.hurtServer(sl, sl.damageSources().fellOutOfWorld(), 1.0F);
+						if (!eo.isAlive()) {
+							// one of its primal aspects, if the node is short of it, or now and then a step up in what the node holds
+							var al = dev.neothaum.research.ScanManager.getScanAspects(dev.neothaum.research.ScanManager.ScanResult.entity(eo), sl);
+							al = al != null && al.size() > 0 ? dev.neothaum.research.ResearchManager.reduceToPrimals(al.copy()) : null;
+							if (al != null && al.size() > 0) {
+								Aspect a = al.getAspects()[sl.getRandom().nextInt(al.size())];
+								if (this.getAspects().getAmount(a) < this.getNodeVisBase(a)) {
+									this.addToContainer(a, 1);
+									change = true;
+								} else if (sl.getRandom().nextInt(1 + this.getNodeVisBase(a) * 2) < al.getAmount(a)) {
+									this.aspectsBase.add(a, 1);
+									change = true;
+								}
+							}
+						}
 					}
 				}
 				double var3 = (this.worldPosition.getX() + 0.5 - eo.getX()) / 15.0;

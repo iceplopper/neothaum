@@ -3281,6 +3281,65 @@ public class VisualTests implements FabricClientGameTest {
 				+ (base.getY() + 1) + " " + (base.getZ() - 1));
 			ctx.waitTicks(40);
 			shot(ctx, "mp_world");
+			// --- TC4's server settings, through /neothaum config, on the dedicated server
+			server.runCommand("neothaum research @p reset");
+			server.runCommand("neothaum warp @p set 0 PERM");
+			server.runCommand("neothaum config wussmode true");
+			boolean wuss = server.computeOnServer(srv -> !dev.neothaum.config.NeoThaumConfig.current.allowWarp);
+			String warpKey = server.computeOnServer(srv -> dev.neothaum.research.ResearchManager.entries().stream().filter(r -> r.warp > 0)
+				.map(r -> r.key).findFirst().orElse(""));
+			int[] warpWuss = server.computeOnServer(srv -> {
+				var p = firstPlayer(srv);
+				int before = dev.neothaum.warp.Warp.total(p);
+				dev.neothaum.research.ResearchManager.completeResearch(p, warpKey);
+				int research = dev.neothaum.warp.Warp.total(p) - before;
+				new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.VOID_JAR).onCraftedBy(p, 1);
+				return new int[]{research, dev.neothaum.warp.Warp.total(p) - before - research};
+			});
+			check("mp wuss mode: no warp from research or crafting", wuss && warpWuss[0] == 0 && warpWuss[1] == 0,
+				"wuss=" + wuss + " research " + warpKey + " +" + warpWuss[0] + ", void jar crafted +" + warpWuss[1]);
+			server.runCommand("neothaum research @p reset");
+			server.runCommand("neothaum config wussmode false");
+			int[] warpNormal = server.computeOnServer(srv -> {
+				var p = firstPlayer(srv);
+				int before = dev.neothaum.warp.Warp.total(p);
+				dev.neothaum.research.ResearchManager.completeResearch(p, warpKey);
+				int research = dev.neothaum.warp.Warp.total(p) - before;
+				new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.VOID_JAR).onCraftedBy(p, 1);
+				return new int[]{research, dev.neothaum.warp.Warp.total(p) - before - research,
+					dev.neothaum.research.ResearchManager.getResearch(warpKey).warp};
+			});
+			check("mp warp on: research and crafting give warp", warpNormal[0] == warpNormal[2] && warpNormal[1] == 1,
+				"research " + warpKey + " +" + warpNormal[0] + " (its warp " + warpNormal[2] + "), void jar crafted +" + warpNormal[1]);
+			// a hungry node five blocks from a dropped item (a mob with its AI off can't be moved): hard mode pulls it in, otherwise it stays
+			var hungryPos = base.offset(-8, 2, -8);
+			server.runCommand("difficulty normal");
+			java.util.function.Function<Boolean, Double> pull = hard -> {
+				server.runCommand("neothaum config hardnodes " + hard);
+				server.runOnServer(srv -> {
+					var level = srv.overworld();
+					level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(hungryPos).inflate(20))
+						.forEach(net.minecraft.world.entity.Entity::discard);
+					dev.neothaum.world.NodeGenerator.createNodeAt(level, hungryPos, dev.neothaum.api.nodes.NodeType.HUNGRY, null,
+						new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.AIR, 20), true);
+					var item = new net.minecraft.world.entity.item.ItemEntity(level, hungryPos.getX() + 5.5, hungryPos.getY() - 1.5, hungryPos.getZ() + 0.5,
+						new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.COBBLESTONE));
+					item.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+					item.setPickUpDelay(32767);
+					item.addTag("hungry_test");
+					level.addFreshEntity(item);
+				});
+				ctx.waitTicks(60);
+				return server.computeOnServer(srv -> srv.overworld().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+					new net.minecraft.world.phys.AABB(hungryPos).inflate(20), e -> e.entityTags().contains("hungry_test")).stream()
+					.mapToDouble(e -> e.position().distanceTo(net.minecraft.world.phys.Vec3.atCenterOf(hungryPos))).findFirst().orElse(0.0));
+			};
+			double soft = pull.apply(false);
+			double hard = pull.apply(true);
+			// eaten (gone) counts as pulled in
+			check("mp hard nodes: a hungry node pulls only in hard mode", soft > 5.0 && hard < soft - 1.0,
+				String.format("distance after 3s: hard nodes off %.1f, on %.1f", soft, hard));
+			server.runCommand("neothaum config hardnodes true");
 		}
 		NeoThaum.LOGGER.info("[visual-test] multiplayer: {} failed checks so far", checkFailures);
 	}

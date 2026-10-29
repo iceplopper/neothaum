@@ -6,6 +6,7 @@
 		"FurnaceAccessor",
 		"LivingEntityHurtMixin",
 		"PlayerHurtMixin",
+		"ItemStackCraftedMixin",
 		"NoteBlockMixin",
 		"OverworldBiomeBuilderMixin",
 		"CarvedPumpkinBlockMixin",
