@@ -206,14 +206,8 @@ Root causes differed from the handoff's guesses in several places; what was actu
 
 ## 🔜 Follow-ups found while working
 
-- TC4's wizard and banker villagers (custom trades) are not ported; the village buildings have no resident.
-- Apprentice's rings (bauble blanks 3–8) are not ported, so they're missing from chest loot.
-- The warden/golem/praetor AI is largely invented (e.g. the warden fires golem orbs on a screech timer); port EntityEldritchWarden/Golem behaviour.
-- Thaumostatic harness still uses the vanilla armour model (ModelHoverHarness not ported).
-- **Golem AI still invented / missing (from the bell work):** the Use core presses nearby buttons (copper-golem add-on behaviour) instead of
-  TC4's AIUseItem on marked blocks; the Liquid (Decant) and Essentia (Alchemy) cores have no AI yet; Empty-core marker colours are not yet
-  matched against filter-slot colours. Fill/Empty/Sorting now work from bell markers.
-- Giant Taintacle: TC4 dropped a primordial pearl when the last one in an area died; not ported.
+All done in 1.0.6-1.0.8: wizard and banker villagers, apprentice's rings, warden/golem/praetor AI from TC4, the harness model, every golem
+core's AI (use, liquid, essentia, sorting colours), and the giant taintacle's pearl. Nothing open.
 
 ## ✅ Completed 2026-10-28 (Claude) — the Outer Lands (Feature 11), verified with the `outer` gametest scene
 

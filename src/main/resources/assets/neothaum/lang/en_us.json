@@ -2151,5 +2151,11 @@
   "item.neothaum.native_silver_cluster": "Native Silver Cluster",
   "item.neothaum.silver_nugget": "Silver Nugget",
   "item.neothaum.native_lead_cluster": "Native Lead Cluster",
-  "item.neothaum.lead_nugget": "Lead Nugget"
+  "item.neothaum.lead_nugget": "Lead Nugget",
+  "entity.neothaum.aspect_orb": "Aspect Orb",
+  "entity.neothaum.dart": "Golem Dart",
+  "entity.neothaum.eldritch_orb": "Eldritch Orb",
+  "entity.neothaum.golem_bobber": "Golem Bobber",
+  "entity.neothaum.pech_blast": "Pech Blast",
+  "entity.neothaum.special_item": "Item"
 }

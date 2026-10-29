@@ -98,6 +98,11 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("outer")) {
 					outerScene(ctx, server, sp);
 				}
+				if (scenes.contains("research")) {
+					// the full run's checks of item aspects and every openable Thaumonomicon page, on their own
+					dumpAspectGaps(server);
+					auditResearch(ctx);
+				}
 				if (scenes.contains("audit")) {
 					auditScene(ctx, server, sp);
 				}
