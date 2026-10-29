@@ -233,6 +233,11 @@ public final class RunicShielding {
 		return until == null || until < time;
 	}
 
+	/** The player's current shield charge (what the HUD is sent). */
+	public static int getCharge(Player player) {
+		return RUNIC_CHARGE.getOrDefault(player.getId(), 0);
+	}
+
 	/** Players leaving take their shield with them. */
 	public static void forget(Player player) {
 		RUNIC_CHARGE.remove(player.getId());

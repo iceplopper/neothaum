@@ -5,6 +5,7 @@
 	"mixins": [
 		"FurnaceAccessor",
 		"LivingEntityHurtMixin",
+		"PlayerHurtMixin",
 		"NoteBlockMixin",
 		"OverworldBiomeBuilderMixin",
 		"CarvedPumpkinBlockMixin",

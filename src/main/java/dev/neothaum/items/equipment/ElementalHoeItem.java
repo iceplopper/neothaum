@@ -20,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * ItemElementalHoe, the Hoe of Growth: tills 3x3 (sneak for one); where there is nothing to till it acts as bone meal, and it can force a
- * greatwood or silverwood sapling to grow at once, at a heavy cost in durability.
+ * greatwood (as a full 2x2 square) or silverwood sapling to grow at once, at a heavy cost in durability.
  */
 public class ElementalHoeItem extends Item {
 	public ElementalHoeItem(Properties props) {
@@ -52,23 +52,27 @@ public class ElementalHoeItem extends Item {
 			return InteractionResult.SUCCESS;
 		}
 		BlockState bi = level.getBlockState(pos);
-		if (BoneMealItem.growCrop(stack.copy(), level, pos)) {
+		// TC4's saplings took no bone meal, so the hoe always forced them; NeoThaum's do, so check for one before trying bone meal
+		if (bi.getBlock() instanceof TCSaplingBlock sapling) {
+			// a lone greatwood sapling cannot grow (NeoThaum's 2x2 rule), so it costs nothing
+			boolean silver = bi.is(TVBlocks.SILVERWOOD_SAPLING);
+			int cost = silver ? 25 : 5;
+			int needed = silver ? 150 : 20;
+			if (sapling.canGrow(level, pos) && stack.getDamageValue() + needed <= stack.getMaxDamage()) {
+				if (level instanceof ServerLevel sl) {
+					sapling.grow(sl, pos, sl.getRandom());
+					stack.hurtAndBreak(cost, player, ctx.getHand());
+					TVNetwork.sendBlockSparkle(level, pos, 0);
+				}
+				did = true;
+			}
+		} else if (BoneMealItem.growCrop(stack.copy(), level, pos)) {
 			// Utils.useBonemealAtLoc: the hoe stands in for the bone meal
 			if (!level.isClientSide()) {
 				stack.hurtAndBreak(1, player, ctx.getHand());
 				TVNetwork.sendBlockSparkle(level, pos, 0);
 			}
 			did = true;
-		} else if (bi.getBlock() instanceof TCSaplingBlock sapling && level instanceof ServerLevel sl) {
-			boolean silver = bi.is(TVBlocks.SILVERWOOD_SAPLING);
-			int cost = silver ? 25 : 5;
-			int needed = silver ? 150 : 20;
-			if (stack.getDamageValue() + needed <= stack.getMaxDamage()) {
-				sapling.grow(sl, pos, sl.getRandom());
-				stack.hurtAndBreak(cost, player, ctx.getHand());
-				TVNetwork.sendBlockSparkle(level, pos, 0);
-				did = true;
-			}
 		}
 		if (did) {
 			level.playSound(null, pos, TVSounds.WAND, SoundSource.BLOCKS, 0.75F, 0.9F + level.getRandom().nextFloat() * 0.2F);

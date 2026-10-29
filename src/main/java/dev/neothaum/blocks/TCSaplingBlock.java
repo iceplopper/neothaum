@@ -66,6 +66,11 @@ public class TCSaplingBlock extends VegetationBlock implements BonemealableBlock
 
 	@Override
 	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
+		return this.canGrow(level, pos);
+	}
+
+	/** Whether {@link #grow} can do anything here: a silverwood always can, a greatwood only as part of a full 2x2 square. */
+	public boolean canGrow(BlockGetter level, BlockPos pos) {
 		return this.silverwood || this.square(level, pos) != null;
 	}
 

@@ -160,10 +160,13 @@ Re-audited 2026-10-28 (after 1.0.7). All five gaps that audit found are now done
 - **Tin, silver and lead clusters and nuggets**, active only when a mod fills c:ingots/<metal> (research, crucible, smelting,
   nugget crafting, bore/excavation clusters, smelting bonus, Pech trades, creative tab).
 
-### Test coverage still missing
-- **Gametests** for the elemental tools and baubles, and Pech trading.
+### Test coverage
+- **Gametests with PASS/FAIL checks:** `elemental` (all five elemental tools), `baubles` (runic shielding, revitalizing ring, vis amulet,
+  apprentice's ring, thaumostatic girdle) and `pechtrade` (all three pech kinds) - 34 checks, all passing. They found and fixed: runic
+  shielding, fortress armour/masks and champion on-hit effects never applied to players (Player.actuallyHurt skips LivingEntity's), and
+  the Hoe of Growth charging for a lone greatwood sapling and bone-mealing a 2x2 instead of forcing it.
 - **Not ported on purpose:** TC4's Frugal, Potency and Wand Fortune enchantments only applied to the old focus API that no 4.2 focus used.
 
 ## Suggested order
 
-Nothing from TC4 4.2.3.5 is known to be missing. Next: the test coverage above, then a fresh audit after playtesting.
+Nothing from TC4 4.2.3.5 is known to be missing. Next: a fresh audit after playtesting.

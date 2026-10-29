@@ -189,6 +189,11 @@ public class PechMenu extends AbstractContainerMenu {
 		return net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(new EnchantmentInstance(reg.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(e), 1));
 	}
 
+	/** The items a pech of this kind can pay out from its trade list (not counting its pack or a dungeon treasure). */
+	public static List<ItemStack> tradeItems(int type, HolderLookup.Provider reg) {
+		return trades(type, reg).stream().map(Trade::stack).toList();
+	}
+
 	/** EntityPech.tradeInventory, by the pech's kind (forager, mage, stalker). */
 	private static List<Trade> trades(int type, HolderLookup.Provider reg) {
 		List<Trade> t = new ArrayList<>();

@@ -104,6 +104,15 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("metals")) {
 					metalsScene(server);
 				}
+				if (scenes.contains("elemental")) {
+					elementalScene(ctx, server);
+				}
+				if (scenes.contains("baubles")) {
+					baublesScene(ctx, server);
+				}
+				if (scenes.contains("pechtrade")) {
+					pechTradeScene(server);
+				}
 				if (scenes.contains("bore")) {
 					boreScene(ctx, server);
 				}
@@ -2188,6 +2197,440 @@ public class VisualTests implements FabricClientGameTest {
 				tab.getDisplayItems().stream().anyMatch(s -> s.is(dev.neothaum.registry.TVItems.NATIVE_TIN_CLUSTER)),
 				tab.getDisplayItems().stream().anyMatch(s -> s.is(dev.neothaum.registry.TVItems.NATIVE_SILVER_CLUSTER)));
 		});
+	}
+
+	/** Failed checks in this run; each check logs "CHECK PASS|FAIL name: detail". */
+	private static int checkFailures;
+
+	private static void check(String name, boolean ok, Object detail) {
+		if (!ok) {
+			checkFailures++;
+		}
+		NeoThaum.LOGGER.info("[visual-test] CHECK {} {}: {}", ok ? "PASS" : "FAIL", name, detail);
+	}
+
+	private static net.minecraft.server.level.ServerPlayer firstPlayer(net.minecraft.server.MinecraftServer srv) {
+		return srv.getPlayerList().getPlayers().get(0);
+	}
+
+	private static net.minecraft.world.entity.monster.zombie.Husk husk(net.minecraft.server.level.ServerLevel level, double x, double y, double z) {
+		var h = net.minecraft.world.entity.EntityTypes.HUSK.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+		h.snapTo(x, y, z, 0.0F, 0.0F);
+		h.setNoAi(true);
+		h.setPersistenceRequired();
+		level.addFreshEntity(h);
+		return h;
+	}
+
+	/** The five elemental tools doing what TC4's do, as a survival player. */
+	private static void elementalScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode survival @a", "difficulty normal", "time set noon", "fill -14 117 -14 14 150 14 air",
+			"fill -14 116 -14 14 116 14 stone", "clear @a", "effect give @a resistance 600 4 true", "kill @e[type=!player]"}) {
+			server.runCommand(cmd);
+		}
+		// --- Axe of the Stream: chopping the trunk's foot takes the furthest log first
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			for (int y = 117; y <= 121; y++) {
+				level.setBlockAndUpdate(new net.minecraft.core.BlockPos(5, y, 5), net.minecraft.world.level.block.Blocks.OAK_LOG.defaultBlockState());
+			}
+			level.setBlockAndUpdate(new net.minecraft.core.BlockPos(6, 121, 5), net.minecraft.world.level.block.Blocks.OAK_LOG.defaultBlockState());
+			level.setBlockAndUpdate(new net.minecraft.core.BlockPos(7, 121, 5), net.minecraft.world.level.block.Blocks.OAK_LOG.defaultBlockState());
+			p.teleportTo(3.5, 117, 5.5);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.AXE_OF_THE_STREAM));
+			p.gameMode.destroyBlock(new net.minecraft.core.BlockPos(5, 117, 5));
+			boolean footStays = level.getBlockState(new net.minecraft.core.BlockPos(5, 117, 5)).is(net.minecraft.world.level.block.Blocks.OAK_LOG);
+			boolean tipGone = level.getBlockState(new net.minecraft.core.BlockPos(7, 121, 5)).isAir();
+			int logs = 0;
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(4, 117, 4, 8, 122, 6)) {
+				if (level.getBlockState(q).is(net.minecraft.world.level.block.Blocks.OAK_LOG)) {
+					logs++;
+				}
+			}
+			check("axe fells from the far end", footStays && tipGone && logs == 6, "foot stays=" + footStays + " tip gone=" + tipGone + " logs left=" + logs);
+		});
+		// --- Axe of the Stream held up: loose items are drawn in
+		double[] start = new double[1];
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			var e = new net.minecraft.world.entity.item.ItemEntity(level, p.getX() - 7, p.getY() + 0.5, p.getZ(), new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.STICK));
+			e.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+			e.setPickUpDelay(400);
+			e.addTag("stream_test");
+			level.addFreshEntity(e);
+			start[0] = e.distanceTo(p);
+		});
+		for (int i = 0; i < 15; i++) {
+			server.runOnServer(srv -> {
+				var p = firstPlayer(srv);
+				var stack = p.getMainHandItem();
+				((dev.neothaum.items.equipment.ElementalAxeItem) stack.getItem()).onUseTick(p.level(), p, stack, 72000);
+			});
+			ctx.waitTick();
+		}
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			var stick = srv.overworld().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, p.getBoundingBox().inflate(12),
+				e -> e.entityTags().contains("stream_test")).stream().findFirst();
+			double end = stick.map(e -> (double) e.distanceTo(p)).orElse(-1.0);
+			check("axe draws items in", end >= 0 && end < start[0] - 2.0, String.format("%.1f -> %.1f", start[0], end));
+			stick.ifPresent(net.minecraft.world.entity.Entity::discard);
+		});
+		// --- Pickaxe of the Core: sets what it hits alight; used on a block it costs 5 durability
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			var pick = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.PICKAXE_OF_THE_CORE);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, pick);
+			var h = husk(level, -3.5, 117, 0.5);
+			pick.getItem().hurtEnemy(pick, h, p);
+			check("pickaxe ignites", h.getRemainingFireTicks() > 0, "fire ticks=" + h.getRemainingFireTicks());
+			h.discard();
+			int before = pick.getDamageValue();
+			var hit = new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(0.5, 117.0, 0.5), net.minecraft.core.Direction.UP,
+				new net.minecraft.core.BlockPos(0, 116, 0), false);
+			pick.useOn(new net.minecraft.world.item.context.UseOnContext(p, net.minecraft.world.InteractionHand.MAIN_HAND, hit));
+			check("pickaxe ore sight costs 5", pick.getDamageValue() - before == 5, "damage " + before + " -> " + pick.getDamageValue());
+		});
+		// --- Shovel of the Earthmover: digs 3x3 in the plane of the face, and lays a 3x3 of the clicked block from the inventory
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(-8, 117, -7, -4, 120, -7)) {
+				level.setBlockAndUpdate(q, net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState());
+			}
+			p.teleportTo(-5.5, 117, -4.5);
+			p.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, new net.minecraft.world.phys.Vec3(-5.5, 118.5, -6.0));
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.SHOVEL_OF_THE_EARTHMOVER));
+			p.gameMode.destroyBlock(new net.minecraft.core.BlockPos(-6, 118, -7));
+			int dug = 0;
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(-7, 117, -7, -5, 119, -7)) {
+				if (level.getBlockState(q).isAir()) {
+					dug++;
+				}
+			}
+			boolean edgeStays = level.getBlockState(new net.minecraft.core.BlockPos(-8, 118, -7)).is(net.minecraft.world.level.block.Blocks.DIRT);
+			check("shovel digs 3x3", dug == 9 && edgeStays, "dug=" + dug + " outside block stays=" + edgeStays);
+			// lay dirt: a dirt block on the floor clicked from above, nine dirt in the pack
+			level.setBlockAndUpdate(new net.minecraft.core.BlockPos(-6, 116, 4), net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState());
+			p.getInventory().clearContent();
+			var shovel = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.SHOVEL_OF_THE_EARTHMOVER);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, shovel);
+			p.getInventory().add(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT, 12));
+			var hit = new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(-5.5, 117.0, 4.5), net.minecraft.core.Direction.UP,
+				new net.minecraft.core.BlockPos(-6, 116, 4), false);
+			shovel.useOn(new net.minecraft.world.item.context.UseOnContext(p, net.minecraft.world.InteractionHand.MAIN_HAND, hit));
+			int laid = 0;
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(-7, 117, 3, -5, 117, 5)) {
+				if (level.getBlockState(q).is(net.minecraft.world.level.block.Blocks.DIRT)) {
+					laid++;
+				}
+			}
+			int left = p.getInventory().countItem(net.minecraft.world.item.Items.DIRT);
+			check("shovel lays 3x3 from the pack", laid == 9 && left == 3, "laid=" + laid + " dirt left=" + left);
+		});
+		// --- Sword of the Zephyr: a blow carries to mobs crowding the target; held up it lifts you and flings mobs away
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			p.teleportTo(8.5, 117, -3.5);
+			var sword = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.SWORD_OF_THE_ZEPHYR);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, sword);
+			var a = husk(level, 8.5, 117, -5.5);
+			var b = husk(level, 9.3, 117, -5.5);
+			// a weak swing, so vanilla's own sweep (full strength only) plays no part
+			p.resetAttackStrengthTicker();
+			p.attack(a);
+			check("sword blow carries to the crowd", a.getHealth() < a.getMaxHealth() && b.getHealth() < b.getMaxHealth(),
+				"struck " + a.getHealth() + "/" + a.getMaxHealth() + " neighbour " + b.getHealth() + "/" + b.getMaxHealth());
+			a.discard();
+			b.discard();
+			husk(level, 10.0, 117, -3.5).addTag("zephyr_test");
+		});
+		double[] before = new double[2];
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			var h = srv.overworld().getEntitiesOfClass(net.minecraft.world.entity.monster.zombie.Husk.class, p.getBoundingBox().inflate(4),
+				e -> e.entityTags().contains("zephyr_test")).getFirst();
+			h.setNoAi(false);
+			before[0] = h.distanceTo(p);
+			before[1] = p.getY();
+		});
+		for (int i = 0; i < 10; i++) {
+			server.runOnServer(srv -> {
+				var p = firstPlayer(srv);
+				var stack = p.getMainHandItem();
+				((dev.neothaum.items.equipment.ElementalSwordItem) stack.getItem()).onUseTick(p.level(), p, stack, 72000 - 1);
+			});
+			ctx.waitTick();
+		}
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			var h = srv.overworld().getEntitiesOfClass(net.minecraft.world.entity.monster.zombie.Husk.class, p.getBoundingBox().inflate(12),
+				e -> e.entityTags().contains("zephyr_test")).stream().findFirst();
+			double after = h.map(e -> (double) e.distanceTo(p)).orElse(-1.0);
+			check("sword whirlwind flings mobs away", after > before[0] + 1.0, String.format("%.1f -> %.1f", before[0], after));
+			h.ifPresent(net.minecraft.world.entity.Entity::discard);
+		});
+		// the lift is the player's own movement, which the client runs
+		ctx.waitTicks(20);
+		double[] clientY = new double[1];
+		ctx.runOnClient(mc -> clientY[0] = mc.player.getY());
+		for (int i = 0; i < 10; i++) {
+			ctx.runOnClient(mc -> {
+				var stack = mc.player.getMainHandItem();
+				if (stack.getItem() instanceof dev.neothaum.items.equipment.ElementalSwordItem sword) {
+					sword.onUseTick(mc.level, mc.player, stack, 72000 - 1);
+				}
+			});
+			ctx.waitTick();
+		}
+		ctx.runOnClient(mc -> check("sword whirlwind lifts you", mc.player.getY() > clientY[0] + 0.3,
+			String.format("y %.2f -> %.2f", clientY[0], mc.player.getY())));
+		server.runOnServer(srv -> firstPlayer(srv).teleportTo(0.5, 117, 0.5));
+		ctx.waitTicks(30);
+		// --- Hoe of Growth: tills 3x3, bone-meals a crop, and forces a greatwood sapling at 5 durability
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(-11, 116, 7, -7, 116, 11)) {
+				level.setBlockAndUpdate(q, net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState());
+			}
+			p.teleportTo(-9.5, 117, 4.5);
+			var hoe = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.HOE_OF_GROWTH);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, hoe);
+			var hit = new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(-8.5, 117.0, 9.5), net.minecraft.core.Direction.UP,
+				new net.minecraft.core.BlockPos(-9, 116, 9), false);
+			hoe.useOn(new net.minecraft.world.item.context.UseOnContext(p, net.minecraft.world.InteractionHand.MAIN_HAND, hit));
+			int tilled = 0;
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(-11, 116, 7, -7, 116, 11)) {
+				if (level.getBlockState(q).is(net.minecraft.world.level.block.Blocks.FARMLAND)) {
+					tilled++;
+				}
+			}
+			check("hoe tills 3x3", tilled == 9, "farmland=" + tilled);
+			var crop = new net.minecraft.core.BlockPos(-9, 117, 9);
+			level.setBlockAndUpdate(crop, net.minecraft.world.level.block.Blocks.WHEAT.defaultBlockState());
+			var cropHit = new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(-8.5, 117.5, 9.5), net.minecraft.core.Direction.UP, crop, false);
+			hoe.useOn(new net.minecraft.world.item.context.UseOnContext(p, net.minecraft.world.InteractionHand.MAIN_HAND, cropHit));
+			int age = level.getBlockState(crop).getValue(net.minecraft.world.level.block.CropBlock.AGE);
+			check("hoe bone-meals crops", age > 0, "wheat age=" + age);
+			p.teleportTo(5.5, 117, 5.5);
+			var lone = new net.minecraft.core.BlockPos(2, 117, 10);
+			level.setBlockAndUpdate(lone.below(), net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState());
+			level.setBlockAndUpdate(lone, dev.neothaum.registry.TVBlocks.GREATWOOD_SAPLING.defaultBlockState());
+			int d0 = hoe.getDamageValue();
+			hoe.useOn(new net.minecraft.world.item.context.UseOnContext(p, net.minecraft.world.InteractionHand.MAIN_HAND,
+				new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(2.5, 117.5, 10.5), net.minecraft.core.Direction.UP, lone, false)));
+			check("hoe leaves a lone greatwood sapling at no cost", level.getBlockState(lone).is(dev.neothaum.registry.TVBlocks.GREATWOOD_SAPLING)
+				&& hoe.getDamageValue() == d0, "damage +" + (hoe.getDamageValue() - d0));
+			var sapling = new net.minecraft.core.BlockPos(8, 117, 8);
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(8, 117, 8, 9, 117, 9)) {
+				level.setBlockAndUpdate(q.below(), net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState());
+				level.setBlockAndUpdate(q, dev.neothaum.registry.TVBlocks.GREATWOOD_SAPLING.defaultBlockState());
+			}
+			d0 = hoe.getDamageValue();
+			var sapHit = new net.minecraft.world.phys.BlockHitResult(new net.minecraft.world.phys.Vec3(8.5, 117.5, 8.5), net.minecraft.core.Direction.UP, sapling, false);
+			hoe.useOn(new net.minecraft.world.item.context.UseOnContext(p, net.minecraft.world.InteractionHand.MAIN_HAND, sapHit));
+			boolean grown = level.getBlockState(sapling.above(2)).is(dev.neothaum.registry.TVBlocks.GREATWOOD_LOG);
+			check("hoe forces a 2x2 of greatwood saplings for 5", grown && hoe.getDamageValue() - d0 == 5,
+				"log above=" + grown + " damage +" + (hoe.getDamageValue() - d0));
+		});
+		ctx.waitTicks(20);
+		shot(ctx, "elemental_tools");
+		NeoThaum.LOGGER.info("[visual-test] elemental: {} failed checks so far", checkFailures);
+	}
+
+	/** Worn baubles: a revitalizing ring of shielding fed by a vis amulet, the amulet topping up a wand, an apprentice's ring and the girdle. */
+	private static void baublesScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode survival @a", "difficulty normal", "fill -6 117 -6 6 125 6 air", "fill -6 116 -6 6 116 6 stone",
+			"tp @a 0.5 117 0.5", "clear @a", "effect clear @a"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			var amulet = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.AMULET_OF_VIS_STORAGE);
+			var va = (dev.neothaum.items.baubles.VisAmuletItem) amulet.getItem();
+			for (var a : dev.neothaum.api.aspects.Aspect.getPrimalAspects()) {
+				va.storeVis(amulet, a, 10000);
+			}
+			dev.neothaum.baubles.Baubles.set(p, dev.neothaum.baubles.Baubles.empty().with(0, amulet)
+				.with(1, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.REVITALIZING_RING_OF_SHIELDING)));
+			dev.neothaum.runic.RunicShielding.markDirty();
+			p.setHealth(p.getMaxHealth());
+		});
+		ctx.waitTicks(90);
+		int[] charged = new int[1];
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			int charge = dev.neothaum.runic.RunicShielding.getCharge(p);
+			var amulet = dev.neothaum.baubles.Baubles.get(p).get(0);
+			int air = ((dev.neothaum.items.baubles.VisAmuletItem) amulet.getItem()).getVis(amulet, dev.neothaum.api.aspects.Aspect.AIR);
+			int earth = ((dev.neothaum.items.baubles.VisAmuletItem) amulet.getItem()).getVis(amulet, dev.neothaum.api.aspects.Aspect.EARTH);
+			charged[0] = charge;
+			check("runic shield charges from the amulet", charge >= 2 && air == 10000 - 50 * charge && earth == 10000 - 50 * charge,
+				"charge=" + charge + " aer=" + air + " terra=" + earth);
+			float h = p.getHealth();
+			p.hurtServer(srv.overworld(), p.damageSources().generic(), 1.0F);
+			check("shield soaks a light blow", p.getHealth() == h && dev.neothaum.runic.RunicShielding.getCharge(p) == charge - 1,
+				"health " + h + " -> " + p.getHealth() + " charge -> " + dev.neothaum.runic.RunicShielding.getCharge(p));
+		});
+		ctx.waitTicks(20);
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			int charge = dev.neothaum.runic.RunicShielding.getCharge(p);
+			float h = p.getHealth();
+			p.hurtServer(srv.overworld(), p.damageSources().generic(), 6.0F);
+			check("a heavy blow breaks the shield and the rest gets through", Math.abs(h - p.getHealth() - (6.0F - charge)) < 0.01F
+				&& dev.neothaum.runic.RunicShielding.getCharge(p) == 0, "charge " + charge + " health " + h + " -> " + p.getHealth());
+			check("revitalizing ring heals when the shield breaks", p.hasEffect(net.minecraft.world.effect.MobEffects.REGENERATION), p.getActiveEffects());
+		});
+		// the amulet tops up the wand in hand, 5 centivis a time
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+				dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "iron", "wood"));
+		});
+		ctx.waitTicks(40);
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			int vis = dev.neothaum.items.WandItem.getVis(p.getMainHandItem(), dev.neothaum.api.aspects.Aspect.FIRE);
+			check("vis amulet tops up the wand", vis >= 20, "wand ignis centivis=" + vis);
+			// an apprentice's ring takes 1% off its aspect
+			float before = dev.neothaum.wands.WandManager.getTotalVisDiscount(p, dev.neothaum.api.aspects.Aspect.AIR);
+			float otherBefore = dev.neothaum.wands.WandManager.getTotalVisDiscount(p, dev.neothaum.api.aspects.Aspect.FIRE);
+			dev.neothaum.baubles.Baubles.set(p, dev.neothaum.baubles.Baubles.get(p).with(2,
+				new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.APPRENTICE_RING_AER)));
+			float after = dev.neothaum.wands.WandManager.getTotalVisDiscount(p, dev.neothaum.api.aspects.Aspect.AIR);
+			float otherAfter = dev.neothaum.wands.WandManager.getTotalVisDiscount(p, dev.neothaum.api.aspects.Aspect.FIRE);
+			check("apprentice's ring discounts only its aspect", Math.abs(after - before - 0.01F) < 0.0001F && otherAfter == otherBefore,
+				"aer " + before + " -> " + after + ", ignis " + otherBefore + " -> " + otherAfter);
+			p.setHealth(p.getMaxHealth());
+			p.removeAllEffects();
+			dev.neothaum.baubles.Baubles.set(p, dev.neothaum.baubles.Baubles.empty());
+			dev.neothaum.runic.RunicShielding.markDirty();
+			p.teleportTo(0.5, 131, 0.5);
+		});
+		// the girdle whittles fall distance away: the same 14-block drop without and with it
+		ctx.waitTicks(60);
+		float[] hurt = new float[2];
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			hurt[0] = p.getMaxHealth() - p.getHealth();
+			p.setHealth(p.getMaxHealth());
+			dev.neothaum.baubles.Baubles.set(p, dev.neothaum.baubles.Baubles.empty().with(3,
+				new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMOSTATIC_GIRDLE)));
+			dev.neothaum.runic.RunicShielding.markDirty();
+			p.teleportTo(0.5, 131, 0.5);
+		});
+		ctx.waitTicks(60);
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			hurt[1] = p.getMaxHealth() - p.getHealth();
+			check("thaumostatic girdle softens a fall", hurt[0] >= 6.0F && hurt[1] < hurt[0] - 3.0F, "damage without " + hurt[0] + ", with " + hurt[1]);
+			p.setHealth(p.getMaxHealth());
+			dev.neothaum.baubles.Baubles.set(p, dev.neothaum.baubles.Baubles.empty());
+			dev.neothaum.runic.RunicShielding.markDirty();
+		});
+		NeoThaum.LOGGER.info("[visual-test] baubles: {} failed checks so far", checkFailures);
+	}
+
+	/** Trading with each kind of pech through its window: payouts from its own list, refusals, and the window handing things back. */
+	private static void pechTradeScene(net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode survival @a", "fill -6 117 -6 6 125 6 air", "fill -6 116 -6 6 116 6 stone", "tp @a 0.5 117 3.5",
+			"clear @a", "kill @e[type=!player]"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			var loot = level.getServer().reloadableRegistries().getLootTable(net.minecraft.world.level.storage.loot.BuiltInLootTables.SIMPLE_DUNGEON);
+			for (int type = 0; type < 3; type++) {
+				var pech = dev.neothaum.entity.TVEntities.PECH.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+				pech.snapTo(type * 2 - 2, 117, 0, 0.0F, 0.0F);
+				pech.setNoAi(true);
+				pech.setPersistenceRequired();
+				pech.setPechType(type);
+				pech.setTamed(true);
+				level.addFreshEntity(pech);
+				var allowed = new java.util.HashSet<net.minecraft.world.item.Item>();
+				dev.neothaum.menu.PechMenu.tradeItems(type, level.registryAccess()).forEach(s -> allowed.add(s.getItem()));
+				var menu = new dev.neothaum.menu.PechMenu(0, p.getInventory(), pech);
+				int rolls = 0, paid = 0, untamed = 0, offerUsed = 0;
+				var other = new java.util.TreeSet<String>();
+				var seen = new java.util.TreeSet<String>();
+				for (int i = 0; i < 40; i++) {
+					menu.getSlot(0).set(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.EMERALD, 2));
+					if (!menu.canTrade()) {
+						continue;
+					}
+					menu.clickMenuButton(p, 0);
+					rolls++;
+					if (menu.getSlot(0).getItem().getCount() == 1) {
+						offerUsed++;
+					}
+					boolean any = false;
+					for (int s = 1; s < 5; s++) {
+						var got = menu.getSlot(s).getItem();
+						if (!got.isEmpty()) {
+							any = true;
+							String name = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(got.getItem()).getPath();
+							seen.add(name);
+							if (!allowed.contains(got.getItem())) {
+								other.add(name);
+							}
+							menu.getSlot(s).set(net.minecraft.world.item.ItemStack.EMPTY);
+						}
+					}
+					if (any) {
+						paid++;
+					}
+					if (!pech.isTamed()) {
+						untamed++;
+						pech.setTamed(true);
+					}
+				}
+				check("pech kind " + type + " pays for emeralds", rolls == 40 && paid >= 36 && offerUsed == rolls,
+					"rolls=" + rolls + " paid=" + paid + " one emerald taken each time=" + offerUsed + " turned wild=" + untamed);
+				NeoThaum.LOGGER.info("[visual-test] pech kind {} paid out: {}", type, seen);
+				// anything not on its list must be a dungeon treasure (the pack is empty)
+				var dungeon = new java.util.HashSet<String>();
+				for (int k = 0; k < 200; k++) {
+					loot.getRandomItems(new net.minecraft.world.level.storage.loot.LootParams.Builder(level)
+						.withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN, pech.position())
+						.create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST))
+						.forEach(s -> dungeon.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).getPath()));
+				}
+				other.removeAll(dungeon);
+				check("pech kind " + type + " pays only from its list or dungeon loot", other.isEmpty(), "unexpected=" + other);
+				// refusals: nothing it values on offer, or payout still waiting
+				menu.getSlot(0).set(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT, 3));
+				boolean dirt = menu.canTrade();
+				menu.clickMenuButton(p, 0);
+				boolean dirtKept = menu.getSlot(0).getItem().is(net.minecraft.world.item.Items.DIRT) && menu.getSlot(0).getItem().getCount() == 3;
+				menu.getSlot(0).set(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.EMERALD));
+				menu.getSlot(2).set(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.STICK));
+				boolean waiting = menu.canTrade();
+				check("pech kind " + type + " refuses dirt and waits for collection", !dirt && dirtKept && !waiting,
+					"dirt tradable=" + dirt + " dirt kept=" + dirtKept + " tradable with payout waiting=" + waiting);
+				p.getInventory().clearContent();
+				menu.removed(p);
+				int back = p.getInventory().countItem(net.minecraft.world.item.Items.EMERALD) + p.getInventory().countItem(net.minecraft.world.item.Items.STICK);
+				long dropped = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, p.getBoundingBox().inflate(4),
+					e -> e.getItem().is(net.minecraft.world.item.Items.EMERALD) || e.getItem().is(net.minecraft.world.item.Items.STICK)).size();
+				check("pech kind " + type + " window hands back what was left in it", back + dropped == 2, "in pack=" + back + " dropped=" + dropped);
+				level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, p.getBoundingBox().inflate(6)).forEach(net.minecraft.world.entity.Entity::discard);
+			}
+			// valuing, as EntityPech.valuedItems and greedy items
+			var pech = dev.neothaum.entity.TVEntities.PECH.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+			check("pech values", pech.getValue(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GOLD_INGOT)) == 2
+				&& pech.getValue(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.EMERALD)) == 5
+				&& pech.getValue(new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.MANA_BEAN)) == 1
+				&& !pech.isValued(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT)), "gold 2, emerald 5, mana bean 1, dirt none");
+		});
+		NeoThaum.LOGGER.info("[visual-test] pechtrade: {} failed checks so far", checkFailures);
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {
