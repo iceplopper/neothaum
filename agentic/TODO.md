@@ -250,8 +250,15 @@ core's AI (use, liquid, essentia, sorting colours), and the giant taintacle's pe
 - [x] **Trinkets / Accessories** — done for **Trinkets Updated** (Patbox's 26.3 fork; the original Trinkets and Accessories have no 26.3 build).
   `dev.neothaum.addon.trinkets`: necklace, both ring and belt slots enabled for players; NeoThaum's own 4 slots retire (contents move across
   on join, button hidden); every bauble read goes through `Baubles.worn()`. Test: `NEOTHAUM_TEST_TRINKETS=1 NEOTHAUM_SCENES=trinkets`.
-- [ ] **EMI and REI** — crucible, arcane worktable, infusion and item-aspect pages, like the existing JEI plugin.
-- [ ] **Sodium / Iris** — compatibility pass: check every custom renderer (nodes, jars, infusion, tubes, golems, eldritch portal) with Sodium and with Iris shaders on.
+- [x] **REI** — `dev.neothaum.client.rei`: arcane, crucible, infusion, infusion enchanting and aspect combination pages (all 297 recipes and
+  42 aspects), workstations, the worktable click area; `rei` gametest scene. Recipe lookup shared with JEI in `client.compat.RecipeLookup`.
+  Not done: a recipe transfer handler (JEI has one). EMI has no 26.3 build yet.
+- [x] **Sodium** — every custom renderer checked with Sodium 0.9.3 (essentia, infusion, node jars, devices, eldritch, harness, golems, mobs):
+  no changes needed.
+- [ ] **Iris shaders** — assessed, small: NeoThaum boots with Iris 1.11.7. With a shader pack, the 5 custom world pipelines in
+  `TVRenderTypes` (4 "glow" on the eyes shader, 1 additive particle) need `IrisApi.assignPipeline` (glow -> EMISSIVE_ENTITIES, particle ->
+  PARTICLES_TRANSLUCENT) in an optional class. Then test with a shader pack: depth-ignoring node glows and the warp post effects.
 - [ ] **WTHIT** — node, jar and device info, matching the Jade plugin (same scanned + goggles/thaumometer gating).
 - [ ] **Xaero's Minimap / JourneyMap** — JourneyMap gets the scanned-node layer on its fullscreen map; check the Xaero World Map toggle and waypoint buttons with Xaero's Minimap installed.
-- [ ] **AppleSkin** — food values for NeoThaum foods (zombie brain, mana beans, etc.).
+- [x] **AppleSkin** — works without code (all foods use the vanilla food component). Found that the zombie brain was not edible: now
+  TC4's food (4, 0.2, wolf food, Hunger 80%, warp). Test mods load with `NEOTHAUM_TEST_MODS=sodium,iris,appleskin,rei,trinkets`.

@@ -22,6 +22,9 @@
 		"client": [
 			"dev.neothaum.client.NeoThaumClient"
 		],
+		"rei_client": [
+			"dev.neothaum.client.rei.NeoThaumReiPlugin"
+		],
 		"jei_mod_plugin": [
 			"dev.neothaum.client.jei.NeoThaumJeiPlugin"
 		],
@@ -40,6 +43,9 @@
 	},
 	"suggests": {
 		"jei": "*",
+		"roughlyenoughitems": "*",
+		"appleskin": "*",
+		"sodium": "*",
 		"jade": "*",
 		"modmenu": "*",
 		"trinkets_updated": "*"

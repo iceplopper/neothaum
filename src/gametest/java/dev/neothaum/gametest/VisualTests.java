@@ -121,6 +121,12 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("trinkets")) {
 					trinketsScene(ctx, server);
 				}
+				if (scenes.contains("rei")) {
+					reiScene(ctx);
+				}
+				if (scenes.contains("foods")) {
+					foodsScene(server);
+				}
 				if (scenes.contains("bore")) {
 					boreScene(ctx, server);
 				}
@@ -2737,6 +2743,69 @@ public class VisualTests implements FabricClientGameTest {
 			dev.neothaum.runic.RunicShielding.markDirty();
 		});
 		NeoThaum.LOGGER.info("[visual-test] trinkets: {} failed checks so far", checkFailures);
+	}
+
+	/** With REI loaded (NEOTHAUM_TEST_MODS=rei): each NeoThaum page has its displays, and each opens and draws (one screenshot apiece). */
+	private static void reiScene(ClientGameTestContext ctx) {
+		for (int i = 0; i < 60 && ctx.computeOnClient(mc -> me.shedaniel.rei.api.common.plugins.PluginManager.areAnyReloading()); i++) {
+			ctx.waitTicks(10);
+		}
+		ctx.waitTicks(20);
+		var cats = java.util.List.<me.shedaniel.rei.api.common.category.CategoryIdentifier<?>>of(dev.neothaum.client.rei.NeoThaumReiPlugin.ARCANE,
+			dev.neothaum.client.rei.NeoThaumReiPlugin.CRUCIBLE, dev.neothaum.client.rei.NeoThaumReiPlugin.INFUSION,
+			dev.neothaum.client.rei.NeoThaumReiPlugin.INFUSION_ENCHANTMENT, dev.neothaum.client.rei.NeoThaumReiPlugin.ASPECT_DECOMP);
+		// every NeoThaum recipe of the page's kind, and every compound aspect, as the JEI plugin lists them
+		java.util.function.Function<Class<?>, Integer> countOf = type -> ctx.computeOnClient(mc ->
+			(int) dev.neothaum.client.compat.RecipeLookup.all().stream().filter(r -> type.isInstance(r)
+				&& !(r instanceof dev.neothaum.crafting.ArcaneRecipe ar && !(ar instanceof dev.neothaum.crafting.ShapedArcaneRecipe)
+					&& !(ar instanceof dev.neothaum.crafting.ShapelessArcaneRecipe))).count());
+		int[] expected = {countOf.apply(dev.neothaum.crafting.ArcaneRecipe.class), countOf.apply(dev.neothaum.crafting.CrucibleRecipe.class),
+			countOf.apply(dev.neothaum.crafting.InfusionRecipe.class), countOf.apply(dev.neothaum.crafting.InfusionEnchantmentRecipe.class),
+			(int) dev.neothaum.api.aspects.Aspect.aspects.values().stream().filter(a -> !a.isPrimal() && a.getComponents() != null
+				&& a.getComponents().length >= 2).count()};
+		for (int c = 0; c < cats.size(); c++) {
+			var cat = cats.get(c);
+			int want = expected[c];
+			int n = ctx.computeOnClient(mc -> me.shedaniel.rei.api.client.registry.display.DisplayRegistry.getInstance().get(cat).size());
+			check("rei " + cat.getPath() + " has every recipe", n == want && want > 0, n + " displays of " + want);
+		}
+		// what the arcane worktable makes, by item: REI looks up recipes for an output
+		int forWand = ctx.computeOnClient(mc -> me.shedaniel.rei.api.client.view.ViewSearchBuilder.builder()
+			.addRecipesFor(me.shedaniel.rei.api.common.util.EntryStacks.of(dev.neothaum.registry.TVBlocks.CRUCIBLE)).streamDisplays().toList().size());
+		check("rei finds the recipe for an item", forWand > 0, "recipes for the crucible block=" + forWand);
+		for (var cat : cats) {
+			ctx.runOnClient(mc -> me.shedaniel.rei.api.client.view.ViewSearchBuilder.builder().addCategory(cat).open());
+			ctx.waitTicks(20);
+			boolean open = ctx.computeOnClient(mc -> mc.gui.screen() != null && mc.gui.screen().getClass().getName().contains("shedaniel"));
+			check("rei " + cat.getPath() + " page opens", open, ctx.computeOnClient(mc -> String.valueOf(mc.gui.screen())));
+			shot(ctx, "rei_" + cat.getPath());
+			ctx.setScreen(() -> null);
+			ctx.waitTicks(5);
+		}
+		NeoThaum.LOGGER.info("[visual-test] rei: {} failed checks so far", checkFailures);
+	}
+
+	/** NeoThaum's foods as AppleSkin and vanilla see them: the zombie brain is edible (4 hunger, 0.2 saturation), wolf food, and gives warp. */
+	private static void foodsScene(net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		server.runCommand("gamemode survival @a");
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			var brain = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.ZOMBIE_BRAIN, 2);
+			var food = brain.get(net.minecraft.core.component.DataComponents.FOOD);
+			check("zombie brain is food", food != null && food.nutrition() == 4 && Math.abs(food.saturation() - 4 * 0.2F * 2.0F) < 0.001F,
+				"food=" + food);
+			check("zombie brain is wolf food", brain.is(net.minecraft.tags.ItemTags.WOLF_FOOD), "in #minecraft:wolf_food");
+			int warp = dev.neothaum.warp.Warp.total(p);
+			p.getFoodData().setFoodLevel(10);
+			brain.finishUsingItem(p.level(), p);
+			check("eating a zombie brain feeds and warps", p.getFoodData().getFoodLevel() == 14 && dev.neothaum.warp.Warp.total(p) > warp && brain.getCount() == 1,
+				"food 10 -> " + p.getFoodData().getFoodLevel() + ", warp " + warp + " -> " + dev.neothaum.warp.Warp.total(p));
+			check("arcane keys stack", new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.IRON_ARCANE_KEY).getMaxStackSize() == 64, "max 64");
+			String asked = String.valueOf(System.getenv("NEOTHAUM_TEST_MODS"));
+			check("appleskin loaded when asked", !java.util.Arrays.asList(asked.split(",")).contains("appleskin")
+				|| net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("appleskin"), "test mods=" + asked);
+		});
+		NeoThaum.LOGGER.info("[visual-test] foods: {} failed checks so far", checkFailures);
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {

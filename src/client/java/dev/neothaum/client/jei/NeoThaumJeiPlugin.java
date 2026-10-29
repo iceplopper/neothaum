@@ -2,7 +2,6 @@ package dev.neothaum.client.jei;
 
 import dev.neothaum.NeoThaum;
 import dev.neothaum.api.aspects.Aspect;
-import dev.neothaum.client.TVClientNetwork;
 import dev.neothaum.client.gui.ArcaneWorkbenchScreen;
 import dev.neothaum.crafting.ArcaneRecipe;
 import dev.neothaum.crafting.CrucibleRecipe;
@@ -13,9 +12,7 @@ import dev.neothaum.registry.TVBlocks;
 import dev.neothaum.registry.TVItems;
 import dev.neothaum.registry.TVMenus;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -27,10 +24,8 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
 /** Main JEI plugin for NeoThaum: registers recipe categories, recipes, crafting stations, and handlers. */
 @JeiPlugin
@@ -183,33 +178,10 @@ public class NeoThaumJeiPlugin implements IModPlugin {
 	}
 
 	public static List<Recipe<?>> getAllKnownRecipes() {
-		Map<Identifier, Recipe<?>> map = new LinkedHashMap<>(TVClientNetwork.RECIPES);
-		Minecraft mc = Minecraft.getInstance();
-		if (mc != null && mc.getSingleplayerServer() != null) {
-			for (RecipeHolder<?> holder : mc.getSingleplayerServer().getRecipeManager().getRecipes()) {
-				Identifier id = holder.id().identifier();
-				if (id.getNamespace().equals(NeoThaum.MOD_ID)) {
-					map.putIfAbsent(id, holder.value());
-				}
-			}
-		}
-		return new ArrayList<>(map.values());
+		return dev.neothaum.client.compat.RecipeLookup.all();
 	}
 
 	public static Identifier getRecipeId(Recipe<?> recipe) {
-		for (Map.Entry<Identifier, Recipe<?>> entry : TVClientNetwork.RECIPES.entrySet()) {
-			if (entry.getValue() == recipe) {
-				return entry.getKey();
-			}
-		}
-		Minecraft mc = Minecraft.getInstance();
-		if (mc != null && mc.getSingleplayerServer() != null) {
-			for (RecipeHolder<?> holder : mc.getSingleplayerServer().getRecipeManager().getRecipes()) {
-				if (holder.value() == recipe) {
-					return holder.id().identifier();
-				}
-			}
-		}
-		return null;
+		return dev.neothaum.client.compat.RecipeLookup.idOf(recipe);
 	}
 }

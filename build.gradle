@@ -7,6 +7,11 @@ base { archivesName = 'neothaum' }
 repositories {
 	maven { name = 'Jared (JEI)'; url = 'https://maven.blamejared.com/' }
 	maven {
+		name = 'shedaniel (Cloth math for REI)'
+		url = 'https://maven.shedaniel.me/'
+		content { includeGroup 'me.shedaniel.cloth' }
+	}
+	maven {
 		name = 'Modrinth'
 		url = 'https://api.modrinth.com/maven'
 		content { includeGroup 'maven.modrinth' }
@@ -35,8 +40,12 @@ fabricApi {
 }
 
 configurations {
-	// only resolved for NEOTHAUM_TEST_TRINKETS runs
+	// mods loaded into a client gametest run only when asked for (NEOTHAUM_TEST_MODS, below); never bundled
 	trinketsTest { transitive = false }
+	sodiumTest { transitive = false }
+	irisTest { transitive = false }
+	appleskinTest { transitive = false }
+	reiTest { transitive = false }
 }
 
 dependencies {
@@ -52,6 +61,21 @@ dependencies {
 	// Trinkets Updated (Patbox's fork of Trinkets for 26.3): optional accessory slots for the baubles
 	compileOnly "maven.modrinth:trinkets-updated:${project.trinkets_version}"
 	trinketsTest "maven.modrinth:trinkets-updated:${project.trinkets_version}"
+	// AppleSkin and REI: optional integrations (food values; recipe pages like the JEI plugin's)
+	compileOnly "maven.modrinth:appleskin:${project.appleskin_version}"
+	appleskinTest "maven.modrinth:appleskin:${project.appleskin_version}"
+	compileOnly "maven.modrinth:rei:${project.rei_version}"
+	// REI's widget API uses Cloth's math types (Point, Rectangle), which Cloth Config only carries as a nested jar
+	compileOnly "me.shedaniel.cloth:basic-math:0.6.1"
+	// and REI's EntryStacks overloads mention Architectury's FluidStack
+	compileOnly "maven.modrinth:architectury-api:${project.architectury_version}"
+	reiTest "maven.modrinth:rei:${project.rei_version}"
+	reiTest "maven.modrinth:cloth-config:${project.cloth_config_version}"
+	reiTest "maven.modrinth:architectury-api:${project.architectury_version}"
+	// Sodium and Iris: only checked against, nothing compiles against them
+	sodiumTest "maven.modrinth:sodium:${project.sodium_version}"
+	irisTest "maven.modrinth:sodium:${project.sodium_version}"
+	irisTest "maven.modrinth:iris:${project.iris_version}"
 }
 
 processResources {
@@ -79,9 +103,15 @@ if (System.getenv("NEOTHAUM_TEST_XAERO") != null) {
 	}
 }
 
-// NEOTHAUM_TEST_TRINKETS=1 loads Trinkets Updated into the client gametest run, for the "trinkets" scene
+// NEOTHAUM_TEST_MODS=trinkets,sodium,iris,appleskin,rei loads those mods into the client gametest run (NEOTHAUM_TEST_TRINKETS=1 still means
+// trinkets). Each name is the <name>Test configuration above.
+def testMods = (System.getenv("NEOTHAUM_TEST_MODS") ?: "").split(",").collect { it.trim() }.findAll { it }
 if (System.getenv("NEOTHAUM_TEST_TRINKETS") != null) {
+	testMods += "trinkets"
+}
+if (!testMods.isEmpty()) {
 	loom.runs.matching { it.name == "clientGameTest" }.configureEach {
-		vmArg "-Dfabric.addMods=${configurations.trinketsTest.singleFile.absolutePath}"
+		def jars = testMods.unique().collectMany { configurations.getByName(it + "Test").files.collect { f -> f.absolutePath } }
+		vmArg "-Dfabric.addMods=${jars.join(File.pathSeparator)}"
 	}
 }

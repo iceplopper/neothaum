@@ -54,6 +54,9 @@ public final class TVClientNetwork {
 			if (net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("jei")) {
 				dev.neothaum.client.jei.NeoThaumJeiPlugin.onRecipesUpdated();
 			}
+			if (net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("roughlyenoughitems")) {
+				dev.neothaum.client.rei.NeoThaumReiPlugin.onRecipesUpdated();
+			}
 		});
 		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.ResearchComplete.TYPE, (p, ctx) -> {
 			Minecraft mc = ctx.client();

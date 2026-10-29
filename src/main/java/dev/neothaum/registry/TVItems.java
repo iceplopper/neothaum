@@ -159,7 +159,10 @@ public final class TVItems {
 	public static final Item ENCHANTED_FABRIC = simple("enchanted_fabric");
 	public static final Item KNOWLEDGE_FRAGMENT = register("knowledge_fragment", KnowledgeFragmentItem::new, new Item.Properties());
 	public static final Item SALIS_MUNDUS = simple("salis_mundus");
-	public static final Item ZOMBIE_BRAIN = simple("zombie_brain");
+	/** ItemZombieBrain: ItemFood(4, 0.2F, wolf food), Hunger for 30s four times in five. */
+	public static final Item ZOMBIE_BRAIN = register("zombie_brain", dev.neothaum.items.ZombieBrainItem::new, new Item.Properties().food(
+		new FoodProperties.Builder().nutrition(4).saturationModifier(0.2F).build(),
+		Consumables.defaultFood().onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.8F)).build()));
 	public static final Item VIS_FILTER = simple("vis_filter");
 	public static final Item MIRRORED_GLASS = simple("mirrored_glass");
 	public static final Item TAINTED_GOO = register("tainted_goo", p -> new ResourceItem(ResourceItem.Kind.TAINT, p), new Item.Properties());
@@ -320,8 +323,9 @@ public final class TVItems {
 	public static final Item LOOT_BAG_COMMON = register("loot_bag_common", p -> new LootBagItem(0, p), new Item.Properties().stacksTo(16).rarity(Rarity.COMMON));
 	public static final Item LOOT_BAG_UNCOMMON = register("loot_bag_uncommon", p -> new LootBagItem(1, p), new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
 	public static final Item LOOT_BAG_RARE = register("loot_bag_rare", p -> new LootBagItem(2, p), new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-	public static final Item IRON_ARCANE_KEY = register("iron_arcane_key", p -> new ArcaneKeyItem(false, p), new Item.Properties().stacksTo(1));
-	public static final Item GOLD_ARCANE_KEY = register("gold_arcane_key", p -> new ArcaneKeyItem(true, p), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+	// ItemKey stacks to 64 (its recipes make two); imprinting takes one blank from the stack
+	public static final Item IRON_ARCANE_KEY = register("iron_arcane_key", p -> new ArcaneKeyItem(false, p), new Item.Properties());
+	public static final Item GOLD_ARCANE_KEY = register("gold_arcane_key", p -> new ArcaneKeyItem(true, p), new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item MAGIC_MIRROR = register("magic_mirror", p -> new dev.neothaum.items.MirrorItem(TVBlocks.MAGIC_MIRROR, false, p), new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item ESSENTIA_MIRROR = register("essentia_mirror", p -> new dev.neothaum.items.MirrorItem(TVBlocks.ESSENTIA_MIRROR, true, p), new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item MAGIC_HAND_MIRROR = register("magic_hand_mirror", dev.neothaum.items.HandMirrorItem::new, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
