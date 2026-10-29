@@ -29,6 +29,11 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			return;
 		}
+		if ("multiplayer".equalsIgnoreCase(scenesEnv)) {
+			// a dedicated server and the client joining it, instead of a single-player world
+			multiplayerScene(ctx);
+			return;
+		}
 		if ("showcase".equalsIgnoreCase(scenesEnv)) {
 			// a real overworld, generated as a player would get it
 			try (TestSingleplayerContext sp = ctx.worldBuilder().setUseConsistentSettings(false).adjustSettings(st -> {
@@ -3123,6 +3128,161 @@ public class VisualTests implements FabricClientGameTest {
 				mc.gui.hud.toggle();
 			}
 		});
+	}
+
+	/**
+	 * NeoThaum on both sides of a real multiplayer game: a dedicated server (not the integrated one) with the test client joining it over the
+	 * network, so everything the client knows has to come by packet. Checks recipe, research, warp, scan, Trinkets, block-entity, menu and entity
+	 * sync, and opening the Thaumonomicon with the use key, as a player would.
+	 */
+	private static void multiplayerScene(ClientGameTestContext ctx) {
+		var props = new java.util.Properties();
+		props.setProperty("level-type", "minecraft:flat");
+		props.setProperty("generate-structures", "false");
+		props.setProperty("spawn-protection", "0");
+		try (var server = ctx.worldBuilder().createServer(props); var conn = server.connect()) {
+			conn.waitForChunksRender();
+			server.runCommand("gamemode creative @a");
+			server.runCommand("time set noon");
+			ctx.waitTicks(20);
+			// --- joined a dedicated server, and the recipes came by packet (no integrated server to read them from)
+			int serverRecipes = server.computeOnServer(srv -> (int) srv.getRecipeManager().getRecipes().stream()
+				.filter(h -> h.id().identifier().getNamespace().equals(NeoThaum.MOD_ID)
+					|| dev.neothaum.network.TVNetwork.EXTRA_SYNCED_RECIPES.contains(h.id().identifier())).count());
+			boolean dedicated = server.computeOnServer(srv -> srv.isDedicatedServer());
+			int clientRecipes = ctx.computeOnClient(mc -> mc.getSingleplayerServer() == null ? dev.neothaum.client.TVClientNetwork.RECIPES.size() : -1);
+			int clientArcane = ctx.computeOnClient(mc -> dev.neothaum.crafting.ArcaneCraftingManager.clientArcane.size());
+			check("mp joined a dedicated server", dedicated && clientRecipes >= 0, "dedicated=" + dedicated + " client has no integrated server=" + (clientRecipes >= 0));
+			check("mp recipes reach the client", clientRecipes == serverRecipes && clientArcane > 0,
+				"client " + clientRecipes + " of " + serverRecipes + " recipes, " + clientArcane + " arcane");
+			// --- research and warp, given on the server
+			server.runCommand("neothaum research @p all");
+			server.runCommand("neothaum warp @p set 7 PERM");
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(10);
+			int serverResearch = server.computeOnServer(srv -> dev.neothaum.research.ResearchManager.knowledge(firstPlayer(srv)).research.size());
+			int clientResearch = ctx.computeOnClient(mc -> dev.neothaum.research.ResearchManager.knowledge(mc.player).research.size());
+			int clientWarp = ctx.computeOnClient(mc -> dev.neothaum.research.ResearchManager.knowledge(mc.player).warp);
+			check("mp research reaches the client", clientResearch == serverResearch && serverResearch > 100, "client " + clientResearch + " of " + serverResearch);
+			check("mp warp reaches the client", clientWarp == 7, "client warp=" + clientWarp);
+			// --- a scan made on the client is recorded by the server and comes back
+			int objectsBefore = server.computeOnServer(srv -> dev.neothaum.research.ResearchManager.knowledge(firstPlayer(srv)).objects.size());
+			// dirt has only primal aspects, which every player knows (a diamond's need discovering first, as in TC4)
+			ctx.runOnClient(mc -> dev.neothaum.network.TVNetwork.sendScanToServer(
+				dev.neothaum.research.ScanManager.ScanResult.item(net.minecraft.world.item.Items.DIRT)));
+			conn.waitForServerboundPackets();
+			ctx.waitTicks(10);
+			conn.waitForClientboundPackets();
+			int objectsAfter = server.computeOnServer(srv -> dev.neothaum.research.ResearchManager.knowledge(firstPlayer(srv)).objects.size());
+			int clientObjects = ctx.computeOnClient(mc -> dev.neothaum.research.ResearchManager.knowledge(mc.player).objects.size());
+			check("mp scan reaches the server and back", objectsAfter > objectsBefore && clientObjects == objectsAfter,
+				"server objects " + objectsBefore + " -> " + objectsAfter + ", client " + clientObjects);
+			// --- baubles in Trinkets slots, seen by the client
+			server.runOnServer(srv -> {
+				var p = firstPlayer(srv);
+				dev.neothaum.baubles.Baubles.set(p, dev.neothaum.baubles.Baubles.empty()
+					.with(0, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.AMULET_OF_VIS_STORAGE))
+					.with(1, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.RING_OF_RUNIC_SHIELDING)));
+				dev.neothaum.addon.trinkets.TrinketsCompat.moveBaublesIntoTrinkets(p);
+			});
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(10);
+			java.util.List<String> clientWorn = ctx.computeOnClient(mc -> dev.neothaum.baubles.Baubles.worn(mc.player).stream()
+				.filter(s -> !s.isEmpty()).map(s -> net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).getPath()).toList());
+			check("mp trinkets slots reach the client", clientWorn.contains("amulet_of_vis_storage") && clientWorn.contains("ring_of_runic_shielding"),
+				"client wears " + clientWorn);
+			// --- block entities: a node, a crucible with essentia, a jar
+			net.minecraft.core.BlockPos base = server.computeOnServer(srv -> firstPlayer(srv).blockPosition());
+			var nodePos = base.offset(3, 1, 0);
+			var cruciblePos = base.offset(0, 0, 3);
+			var jarPos = base.offset(-3, 0, 0);
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				dev.neothaum.world.NodeGenerator.createNodeAt(level, nodePos, dev.neothaum.api.nodes.NodeType.NORMAL, dev.neothaum.api.nodes.NodeModifier.BRIGHT,
+					new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.AIR, 30).add(dev.neothaum.api.aspects.Aspect.LIGHT, 12), true);
+				level.setBlockAndUpdate(cruciblePos, dev.neothaum.registry.TVBlocks.CRUCIBLE.defaultBlockState());
+				if (level.getBlockEntity(cruciblePos) instanceof dev.neothaum.tiles.CrucibleBlockEntity c) {
+					c.water = 1000;
+					c.aspects.add(dev.neothaum.api.aspects.Aspect.FIRE, 10);
+					c.markForUpdate();
+				}
+				level.setBlockAndUpdate(jarPos, dev.neothaum.registry.TVBlocks.WARDED_JAR.defaultBlockState());
+				if (level.getBlockEntity(jarPos) instanceof dev.neothaum.tiles.JarBlockEntity j) {
+					j.addToContainer(dev.neothaum.api.aspects.Aspect.ORDER, 32);
+					j.markForUpdate();
+				}
+			});
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(20);
+			String clientBlocks = ctx.computeOnClient(mc -> {
+				String node = mc.level.getBlockEntity(nodePos) instanceof dev.neothaum.tiles.NodeBlockEntity n
+					? n.getAspects() + "/" + n.getNodeModifier() + "/bright=" + mc.level.getBlockState(nodePos).getValue(dev.neothaum.blocks.AuraNodeBlock.BRIGHT) : "none";
+				String crucible = mc.level.getBlockEntity(cruciblePos) instanceof dev.neothaum.tiles.CrucibleBlockEntity c ? c.water + "/" + c.aspects : "none";
+				String jar = mc.level.getBlockEntity(jarPos) instanceof dev.neothaum.tiles.JarBlockEntity j ? j.amount + " " + (j.aspect == null ? null : j.aspect.getTag()) : "none";
+				return node + " | " + crucible + " | " + jar;
+			});
+			check("mp node reaches the client", clientBlocks.startsWith("{lux=12, aer=30}/BRIGHT/bright=true")
+				|| clientBlocks.startsWith("{aer=30, lux=12}/BRIGHT/bright=true"), clientBlocks);
+			check("mp crucible reaches the client", clientBlocks.contains("| 1000/{ignis=10} |"), clientBlocks);
+			check("mp jar reaches the client", clientBlocks.endsWith("| 32 ordo"), clientBlocks);
+			// --- a menu opened on the server shows its screen on the client
+			var tablePos = base.offset(0, 0, -3);
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				var p = firstPlayer(srv);
+				level.setBlockAndUpdate(tablePos, dev.neothaum.registry.TVBlocks.ARCANE_WORKTABLE.defaultBlockState());
+				p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.item.ItemStack.EMPTY);
+				p.gameMode.useItemOn(p, level, net.minecraft.world.item.ItemStack.EMPTY, net.minecraft.world.InteractionHand.MAIN_HAND,
+					new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(tablePos).add(0, 0.5, 0), net.minecraft.core.Direction.UP,
+						tablePos, false));
+			});
+			ctx.waitTicks(20);
+			String screen = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+			check("mp arcane worktable opens on the client", screen.equals("ArcaneWorkbenchScreen"), "client screen=" + screen);
+			shot(ctx, "mp_worktable");
+			ctx.runOnClient(mc -> mc.player.closeContainer());
+			ctx.waitTicks(10);
+			// --- an entity spawned on the server, with its data
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				var wisp = dev.neothaum.entity.TVEntities.WISP.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+				wisp.snapTo(base.getX() + 2.5, base.getY() + 2.0, base.getZ() - 2.5, 0.0F, 0.0F);
+				wisp.setNoAi(true);
+				wisp.setPersistenceRequired();
+				wisp.setWispType(dev.neothaum.api.aspects.Aspect.ORDER.getTag());
+				level.addFreshEntity(wisp);
+			});
+			conn.waitForClientboundEntityUpdates(dev.neothaum.entity.TVEntities.WISP);
+			String serverWisp = server.computeOnServer(srv -> srv.overworld().getEntities(dev.neothaum.entity.TVEntities.WISP, e -> true).getFirst().getWispType());
+			String clientWisp = ctx.computeOnClient(mc -> {
+				for (var e : mc.level.entitiesForRendering()) {
+					if (e instanceof dev.neothaum.entity.monster.Wisp w) {
+						return w.getWispType();
+					}
+				}
+				return "none";
+			});
+			check("mp wisp reaches the client with its aspect", clientWisp.equals(serverWisp) && clientWisp.equals("ordo"), "server " + serverWisp + ", client " + clientWisp);
+			// --- the Thaumonomicon, opened with the use key like a player
+			server.runCommand("clear @a");
+			server.runCommand("item replace entity @a hotbar.0 with neothaum:thaumonomicon");
+			conn.waitForClientboundPackets();
+			ctx.runOnClient(mc -> mc.player.getInventory().setSelectedSlot(0));
+			ctx.waitTicks(5);
+			ctx.getInput().pressKey(options -> options.keyUse);
+			ctx.waitTicks(20);
+			String book = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+			check("mp thaumonomicon opens", book.equals("ThaumonomiconScreen"), "client screen=" + book);
+			shot(ctx, "mp_thaumonomicon");
+			ctx.setScreen(() -> null);
+			// --- a look at the world: the node, crucible, jar and wisp, as the client draws them
+			server.runCommand("item replace entity @a armor.head with neothaum:goggles_of_revealing");
+			server.runCommand("tp @a " + (base.getX() + 0.5) + " " + (base.getY() + 1) + " " + (base.getZ() + 6.5) + " facing " + (base.getX() + 0.5) + " "
+				+ (base.getY() + 1) + " " + (base.getZ() - 1));
+			ctx.waitTicks(40);
+			shot(ctx, "mp_world");
+		}
+		NeoThaum.LOGGER.info("[visual-test] multiplayer: {} failed checks so far", checkFailures);
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {
