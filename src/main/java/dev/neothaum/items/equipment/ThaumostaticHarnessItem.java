@@ -81,7 +81,7 @@ public class ThaumostaticHarnessItem extends Item implements VisDiscountGear, Ru
 			if (player.getAbilities().flying) {
 				player.fallDistance = 0.0F;
 
-				boolean hasGirdle = Baubles.get(player).get(3).getItem() instanceof HoverGirdleItem;
+				boolean hasGirdle = Baubles.worn(player).stream().anyMatch(s -> s.getItem() instanceof HoverGirdleItem);
 				float mod = hasGirdle ? 0.8F : 1.0F;
 				int limit = (int) (360.0F * mod);
 
@@ -174,7 +174,7 @@ public class ThaumostaticHarnessItem extends Item implements VisDiscountGear, Ru
 		}
 		int haste = TCEnchantments.level(player, chest, TCEnchantments.HASTE);
 		float mod = 0.7F + 0.075F * haste;
-		if (Baubles.get(player).get(3).getItem() instanceof HoverGirdleItem) {
+		if (Baubles.worn(player).stream().anyMatch(s -> s.getItem() instanceof HoverGirdleItem)) {
 			mod += 0.21F;
 		}
 		mod = Math.min(1.0F, mod);

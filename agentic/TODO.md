@@ -253,7 +253,9 @@ Root causes differed from the handoff's guesses in several places; what was actu
 - Branding: creative tabs read "NeoThaum: ...", golem entity is "Golem". JEI catalyst crash (itemless research table) fixed.
 
 ## 🧩 Mod integrations to support eventually (addon code in `dev.neothaum.addon` / `client.addon`; all optional "suggests" deps)
-- [ ] **Trinkets / Accessories** — put amulets, rings, belts, Hover Girdle and Vis Amulet in the shared accessory slots (the modern Baubles).
+- [x] **Trinkets / Accessories** — done for **Trinkets Updated** (Patbox's 26.3 fork; the original Trinkets and Accessories have no 26.3 build).
+  `dev.neothaum.addon.trinkets`: necklace, both ring and belt slots enabled for players; NeoThaum's own 4 slots retire (contents move across
+  on join, button hidden); every bauble read goes through `Baubles.worn()`. Test: `NEOTHAUM_TEST_TRINKETS=1 NEOTHAUM_SCENES=trinkets`.
 - [ ] **EMI and REI** — crucible, arcane worktable, infusion and item-aspect pages, like the existing JEI plugin.
 - [ ] **Sodium / Iris** — compatibility pass: check every custom renderer (nodes, jars, infusion, tubes, golems, eldritch portal) with Sodium and with Iris shaders on.
 - [ ] **WTHIT** — node, jar and device info, matching the Jade plugin (same scanned + goggles/thaumometer gating).

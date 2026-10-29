@@ -70,7 +70,7 @@ public final class WarpEvents {
 				w += wg.getWarp(armor, player);
 			}
 		}
-		for (ItemStack bauble : Baubles.get(player).items()) {
+		for (ItemStack bauble : Baubles.worn(player)) {
 			if (!bauble.isEmpty() && bauble.getItem() instanceof WarpingGear wg) {
 				w += wg.getWarp(bauble, player);
 			}

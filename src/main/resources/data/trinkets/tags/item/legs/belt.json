@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "neothaum:mundane_belt",
+    "neothaum:girdle_of_runic_shielding",
+    "neothaum:kinetic_girdle_of_shielding",
+    "neothaum:thaumostatic_girdle",
+    "neothaum:focus_pouch"
+  ]
+}

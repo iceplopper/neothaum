@@ -104,7 +104,7 @@ public final class WandManager {
 
 	/** Pays a centivis cost from an amulet of vis storage, else from the last wand in the inventory that can cover it. */
 	public static boolean consumeVisFromInventory(Player player, AspectList cost) {
-		for (ItemStack s : dev.neothaum.baubles.Baubles.get(player).items()) {
+		for (ItemStack s : dev.neothaum.baubles.Baubles.worn(player)) {
 			if (s.getItem() instanceof dev.neothaum.items.baubles.VisAmuletItem amulet && amulet.consumeAllVis(s, player, cost, true, true)) {
 				return true;
 			}
@@ -124,7 +124,7 @@ public final class WandManager {
 			return 0.0F;
 		}
 		int total = 0;
-		for (ItemStack s : dev.neothaum.baubles.Baubles.get(player).items()) {
+		for (ItemStack s : dev.neothaum.baubles.Baubles.worn(player)) {
 			if (s.getItem() instanceof VisDiscountGear g) {
 				total += g.getVisDiscount(s, player, aspect);
 			}

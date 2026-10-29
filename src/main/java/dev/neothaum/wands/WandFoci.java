@@ -71,12 +71,13 @@ public final class WandFoci {
 	public static TreeMap<String, Found> carriedFoci(Player player, Map<Integer, Integer> pouches) {
 		TreeMap<String, Found> foci = new TreeMap<>();
 		int pouchcount = 0;
-		Baubles baubles = Baubles.get(player);
-		for (int a = 0; a < Baubles.SIZE; a++) {
-			ItemStack b = baubles.get(a);
+		// a worn pouch is keyed -(slot + 1), counting NeoThaum's own bauble slots and then any an addon adds
+		List<Baubles.Worn> worn = Baubles.wornSlots(player);
+		for (int a = 0; a < worn.size(); a++) {
+			ItemStack b = worn.get(a).stack();
 			if (b.getItem() instanceof FocusPouchItem) {
 				pouchcount++;
-				pouches.put(pouchcount, a - Baubles.SIZE);
+				pouches.put(pouchcount, -(a + 1));
 				List<ItemStack> inv = FocusPouchItem.getInventory(b);
 				for (int q = 0; q < inv.size(); q++) {
 					ItemStack it = inv.get(q);
@@ -157,14 +158,21 @@ public final class WandFoci {
 	}
 
 	private static ItemStack pouchAt(Player player, int pouchslot) {
-		return pouchslot >= 0 ? player.getInventory().getItem(pouchslot) : Baubles.get(player).get(pouchslot + Baubles.SIZE);
+		if (pouchslot >= 0) {
+			return player.getInventory().getItem(pouchslot);
+		}
+		List<Baubles.Worn> worn = Baubles.wornSlots(player);
+		return -pouchslot - 1 < worn.size() ? worn.get(-pouchslot - 1).stack() : ItemStack.EMPTY;
 	}
 
 	private static void putPouch(Player player, int pouchslot, ItemStack pouch) {
 		if (pouchslot >= 0) {
 			player.getInventory().setItem(pouchslot, pouch);
 		} else {
-			Baubles.set(player, Baubles.get(player).with(pouchslot + Baubles.SIZE, pouch));
+			List<Baubles.Worn> worn = Baubles.wornSlots(player);
+			if (-pouchslot - 1 < worn.size()) {
+				worn.get(-pouchslot - 1).set().accept(pouch);
+			}
 		}
 	}
 

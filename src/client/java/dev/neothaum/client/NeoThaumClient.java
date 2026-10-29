@@ -237,9 +237,11 @@ public class NeoThaumClient implements ClientModInitializer {
 			if (screen instanceof AbstractContainerScreen<?> acs) {
 				ScreenEvents.afterExtract(screen).register((s, g, mx, my, a) -> AspectOverlays.renderInGui(acs, g, mx, my));
 			}
-			// Baubles' inventory button, beside the top of the player portrait
+			// Baubles' inventory button, beside the top of the player portrait (with Trinkets installed, its slots hold the baubles instead)
 			Component baubles = Component.translatable("container.baubles");
-			if (screen instanceof InventoryScreen inv) {
+			if (dev.neothaum.addon.trinkets.TrinketsCompat.LOADED) {
+				// no NeoThaum bauble slots to open
+			} else if (screen instanceof InventoryScreen inv) {
 				Screens.getWidgets(screen).add(new dev.neothaum.client.gui.BaublesButton(inv, 64, 9, dev.neothaum.client.gui.BaublesButton.BAUBLES_ICON, baubles, () -> true,
 					() -> TVNetwork.clientSender.accept(new TVNetwork.OpenBaubles())));
 			} else if (screen instanceof net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen creative) {

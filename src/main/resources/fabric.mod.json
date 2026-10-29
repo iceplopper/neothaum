@@ -41,7 +41,8 @@
 	"suggests": {
 		"jei": "*",
 		"jade": "*",
-		"modmenu": "*"
+		"modmenu": "*",
+		"trinkets_updated": "*"
 	},
 	"mixins": [
 		"neothaum.mixins.json",

@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "neothaum:mundane_ring",
+    "neothaum:apprentice_ring_aer",
+    "neothaum:apprentice_ring_terra",
+    "neothaum:apprentice_ring_ignis",
+    "neothaum:apprentice_ring_aqua",
+    "neothaum:apprentice_ring_ordo",
+    "neothaum:apprentice_ring_perditio",
+    "neothaum:ring_of_protection",
+    "neothaum:ring_of_runic_shielding",
+    "neothaum:charged_ring_of_shielding",
+    "neothaum:revitalizing_ring_of_shielding"
+  ]
+}

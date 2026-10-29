@@ -75,7 +75,7 @@ public final class RunicShielding {
 			for (EquipmentSlot slot : new EquipmentSlot[]{EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD}) {
 				max += RunicArmor.getFinalCharge(player.getItemBySlot(slot));
 			}
-			for (ItemStack b : Baubles.get(player).items()) {
+			for (ItemStack b : Baubles.worn(player)) {
 				if (b.getItem() instanceof RunicArmor) {
 					if (b.getItem() instanceof RunicBaubleItem rb) {
 						switch (rb.kind) {

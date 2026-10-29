@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "neothaum:mundane_amulet",
+    "neothaum:amulet_of_runic_shielding",
+    "neothaum:amulet_of_emergency_shielding",
+    "neothaum:vis_stone",
+    "neothaum:amulet_of_vis_storage"
+  ]
+}

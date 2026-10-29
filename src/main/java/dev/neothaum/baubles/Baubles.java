@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import dev.neothaum.registry.TVAttachments;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -23,6 +25,30 @@ public record Baubles(List<ItemStack> items) {
 			l.add(ItemStack.EMPTY);
 		}
 		items = l;
+	}
+
+	/** One worn bauble, and how to put a changed stack back in its slot. */
+	public record Worn(ItemStack stack, Consumer<ItemStack> set) {
+	}
+
+	/** Bauble slots another mod adds (the Trinkets addon): each NeoThaum bauble worn there. Empty unless an addon fills it in. */
+	public static Function<Player, List<Worn>> extraSlots = p -> List.of();
+
+	/** Every bauble slot the player has: NeoThaum's own four first, then any an addon adds. */
+	public static List<Worn> wornSlots(Player player) {
+		List<Worn> out = new ArrayList<>();
+		Baubles b = get(player);
+		for (int i = 0; i < SIZE; i++) {
+			int slot = i;
+			out.add(new Worn(b.get(i), s -> set(player, get(player).with(slot, s))));
+		}
+		out.addAll(extraSlots.apply(player));
+		return out;
+	}
+
+	/** What the player is wearing in every bauble slot (some stacks may be empty). */
+	public static List<ItemStack> worn(Player player) {
+		return wornSlots(player).stream().map(Worn::stack).toList();
 	}
 
 	public static Baubles empty() {

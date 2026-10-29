@@ -113,6 +113,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("pechtrade")) {
 					pechTradeScene(server);
 				}
+				if (scenes.contains("trinkets")) {
+					trinketsScene(ctx, server);
+				}
 				if (scenes.contains("bore")) {
 					boreScene(ctx, server);
 				}
@@ -2631,6 +2634,104 @@ public class VisualTests implements FabricClientGameTest {
 				&& !pech.isValued(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT)), "gold 2, emerald 5, mana bean 1, dirt none");
 		});
 		NeoThaum.LOGGER.info("[visual-test] pechtrade: {} failed checks so far", checkFailures);
+	}
+
+	/**
+	 * With Trinkets Updated loaded (NEOTHAUM_TEST_TRINKETS=1): baubles left in NeoThaum's own slots move into Trinkets slots, and there they
+	 * shield, feed a wand, soften a fall and hold foci just as in NeoThaum's slots.
+	 */
+	private static void trinketsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode survival @a", "difficulty normal", "fill -6 117 -6 6 140 6 air", "fill -6 116 -6 6 116 6 stone",
+			"tp @a 0.5 117 0.5", "clear @a", "effect clear @a"}) {
+			server.runCommand(cmd);
+		}
+		check("trinkets is loaded", dev.neothaum.addon.trinkets.TrinketsCompat.LOADED, "trinkets_updated present");
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			check("bauble tags", new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.RING_OF_RUNIC_SHIELDING)
+					.is(eu.pb4.trinkets.api.DefaultTrinketSlotTags.HAND_RING)
+				&& new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.AMULET_OF_VIS_STORAGE).is(eu.pb4.trinkets.api.DefaultTrinketSlotTags.CHEST_NECKLACE)
+				&& new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMOSTATIC_GIRDLE).is(eu.pb4.trinkets.api.DefaultTrinketSlotTags.LEGS_BELT),
+				"ring, amulet and girdle tagged for their slots");
+			var amulet = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.AMULET_OF_VIS_STORAGE);
+			for (var a : dev.neothaum.api.aspects.Aspect.getPrimalAspects()) {
+				((dev.neothaum.items.baubles.VisAmuletItem) amulet.getItem()).storeVis(amulet, a, 10000);
+			}
+			// as left in NeoThaum's own slots before Trinkets was installed
+			dev.neothaum.baubles.Baubles.set(p, dev.neothaum.baubles.Baubles.empty().with(0, amulet)
+				.with(1, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.REVITALIZING_RING_OF_SHIELDING))
+				.with(2, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.APPRENTICE_RING_AER))
+				.with(3, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMOSTATIC_GIRDLE)));
+			dev.neothaum.addon.trinkets.TrinketsCompat.moveBaublesIntoTrinkets(p);
+			var own = dev.neothaum.baubles.Baubles.get(p).items();
+			var att = eu.pb4.trinkets.api.TrinketsApi.getAttachment(p);
+			StringBuilder where = new StringBuilder();
+			att.forEach((slot, stack) -> {
+				if (!stack.isEmpty()) {
+					where.append(slot.getAsIdentifierPath()).append('=').append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath())
+						.append(' ');
+				}
+			});
+			long worn = att.allEquipped(false).stream().filter(s -> !s.get().isEmpty()).count();
+			String w = where.toString();
+			boolean rightSlots = w.contains("chest/necklace/0=amulet_of_vis_storage") && w.contains("legs/belt/0=thaumostatic_girdle")
+				&& w.contains("ring/0=revitalizing_ring_of_shielding") && w.contains("ring/0=apprentice_ring_aer");
+			check("own slots move into trinkets", own.stream().allMatch(net.minecraft.world.item.ItemStack::isEmpty) && worn == 4 && rightSlots
+				&& p.getInventory().isEmpty(), "trinkets: " + where + "| own empty=" + own.stream().allMatch(net.minecraft.world.item.ItemStack::isEmpty)
+				+ " pack empty=" + p.getInventory().isEmpty());
+			check("worn() sees trinkets", dev.neothaum.baubles.Baubles.worn(p).stream().filter(s -> !s.isEmpty()).count() == 4,
+				dev.neothaum.baubles.Baubles.worn(p).stream().filter(s -> !s.isEmpty()).map(s -> s.getItem().toString()).toList());
+			check("apprentice's ring discount from a trinket slot",
+				Math.abs(dev.neothaum.wands.WandManager.getTotalVisDiscount(p, dev.neothaum.api.aspects.Aspect.AIR) - 0.01F) < 0.0001F,
+				"aer discount=" + dev.neothaum.wands.WandManager.getTotalVisDiscount(p, dev.neothaum.api.aspects.Aspect.AIR));
+			dev.neothaum.runic.RunicShielding.markDirty();
+			p.setHealth(p.getMaxHealth());
+		});
+		ctx.waitTicks(90);
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			int charge = dev.neothaum.runic.RunicShielding.getCharge(p);
+			var amulet = dev.neothaum.baubles.Baubles.worn(p).stream().filter(s -> s.is(dev.neothaum.registry.TVItems.AMULET_OF_VIS_STORAGE)).findFirst()
+				.orElse(net.minecraft.world.item.ItemStack.EMPTY);
+			int air = amulet.isEmpty() ? -1 : ((dev.neothaum.items.baubles.VisAmuletItem) amulet.getItem()).getVis(amulet, dev.neothaum.api.aspects.Aspect.AIR);
+			check("shield in a trinket slot charges from the amulet in one", charge >= 2 && air == 10000 - 50 * charge, "charge=" + charge + " aer=" + air);
+			float h = p.getHealth();
+			p.hurtServer(srv.overworld(), p.damageSources().generic(), 1.0F);
+			check("trinket shield soaks a light blow", p.getHealth() == h, "health " + h + " -> " + p.getHealth());
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,
+				dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "iron", "wood"));
+		});
+		ctx.waitTicks(40);
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			int vis = dev.neothaum.items.WandItem.getVis(p.getMainHandItem(), dev.neothaum.api.aspects.Aspect.FIRE);
+			check("amulet in a trinket slot tops up the wand (Trinkets ticks it)", vis >= 20, "wand ignis centivis=" + vis);
+			p.setHealth(p.getMaxHealth());
+			p.removeAllEffects();
+			p.teleportTo(0.5, 131, 0.5);
+		});
+		ctx.waitTicks(60);
+		server.runOnServer(srv -> {
+			var p = firstPlayer(srv);
+			float hurt = p.getMaxHealth() - p.getHealth();
+			// the same 14-block drop did about 10 damage without a girdle in the baubles scene; the shield may soak a little more here
+			check("girdle in a trinket slot softens a fall", hurt < 6.0F, "fall damage=" + hurt);
+			p.setHealth(p.getMaxHealth());
+			// swap the girdle for a focus pouch holding a fire focus: the wand's focus menu finds it
+			var att = eu.pb4.trinkets.api.TrinketsApi.getAttachment(p);
+			var pouch = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.FOCUS_POUCH);
+			var contents = new java.util.ArrayList<>(dev.neothaum.items.FocusPouchItem.getInventory(pouch));
+			contents.set(0, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.FOCUS_FIRE));
+			dev.neothaum.items.FocusPouchItem.setInventory(pouch, contents);
+			att.findFirst(dev.neothaum.registry.TVItems.THAUMOSTATIC_GIRDLE).ifPresent(slot -> slot.set(pouch));
+			var foci = dev.neothaum.wands.WandFoci.carriedFoci(p, new java.util.HashMap<>());
+			check("focus pouch in a trinket slot is searched", foci.values().stream().anyMatch(f -> f.stack().is(dev.neothaum.registry.TVItems.FOCUS_FIRE)),
+				"foci found=" + foci.keySet());
+			// clean up
+			att.forEach((slot, stack) -> slot.set(net.minecraft.world.item.ItemStack.EMPTY));
+			dev.neothaum.runic.RunicShielding.markDirty();
+		});
+		NeoThaum.LOGGER.info("[visual-test] trinkets: {} failed checks so far", checkFailures);
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {

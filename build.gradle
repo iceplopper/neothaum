@@ -6,6 +6,11 @@ base { archivesName = 'neothaum' }
 
 repositories {
 	maven { name = 'Jared (JEI)'; url = 'https://maven.blamejared.com/' }
+	maven {
+		name = 'Modrinth'
+		url = 'https://api.modrinth.com/maven'
+		content { includeGroup 'maven.modrinth' }
+	}
 }
 
 loom {
@@ -29,6 +34,11 @@ fabricApi {
 	}
 }
 
+configurations {
+	// only resolved for NEOTHAUM_TEST_TRINKETS runs
+	trinketsTest { transitive = false }
+}
+
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
@@ -39,6 +49,9 @@ dependencies {
 
 	compileOnly files("run/mods/Jade-mc26.3-Fabric-26.3.5.jar")
 	compileOnly files("run/mods/modmenu-21.0.0.jar")
+	// Trinkets Updated (Patbox's fork of Trinkets for 26.3): optional accessory slots for the baubles
+	compileOnly "maven.modrinth:trinkets-updated:${project.trinkets_version}"
+	trinketsTest "maven.modrinth:trinkets-updated:${project.trinkets_version}"
 }
 
 processResources {
@@ -63,5 +76,12 @@ tasks.register('printClasspath') {
 if (System.getenv("NEOTHAUM_TEST_XAERO") != null) {
 	loom.runs.matching { it.name == "clientGameTest" }.configureEach {
 		vmArg "-Dfabric.addMods=${file('run/mods/xaeroworldmap-fabric-26.3-1.47.2.jar').absolutePath}"
+	}
+}
+
+// NEOTHAUM_TEST_TRINKETS=1 loads Trinkets Updated into the client gametest run, for the "trinkets" scene
+if (System.getenv("NEOTHAUM_TEST_TRINKETS") != null) {
+	loom.runs.matching { it.name == "clientGameTest" }.configureEach {
+		vmArg "-Dfabric.addMods=${configurations.trinketsTest.singleFile.absolutePath}"
 	}
 }
