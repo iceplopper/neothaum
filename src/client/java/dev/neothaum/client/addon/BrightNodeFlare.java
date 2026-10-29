@@ -22,7 +22,8 @@ import org.joml.Vector4f;
  * NeoThaum addition, not TC4: a lens flare from bright nodes. NodeRenderer reports each bright node it draws (so only nodes the viewer can see,
  * through goggles or a thaumometer); this draws, over the world, a halo on the node, a horizontal streak through it and ghost rings along the
  * line from it through the middle of the screen, in the colour of its strongest aspect. It needs a clear line of sight, grows as the node nears
- * the middle of the view and fades in and out. Drawn as part of the HUD (also when F1 hides the rest), so shader packs leave it alone.
+ * the middle of the view and fades in and out. Only while an Iris shader pack is in use, to go with the pack's own bloom; drawn as part of the
+ * HUD (also when F1 hides the rest).
  */
 public final class BrightNodeFlare {
 	private static final Identifier HALO = NeoThaum.id("textures/misc/flare_halo.png");
@@ -69,6 +70,10 @@ public final class BrightNodeFlare {
 	private static void render(GuiGraphicsExtractor g) {
 		Minecraft mc = Minecraft.getInstance();
 		if (FLARES.isEmpty() || mc.level == null || mc.player == null) {
+			return;
+		}
+		if (!IrisCompat.shaderPackInUse()) {
+			FLARES.clear();
 			return;
 		}
 		var camera = mc.gameRenderer.mainCamera();

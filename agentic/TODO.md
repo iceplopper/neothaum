@@ -260,5 +260,7 @@ core's AI (use, liquid, essentia, sorting colours), and the giant taintacle's pe
   is invisible under Complementary and Iris logs "missing program" errors. Checked with Complementary Reimagined r5.9.3 and BSL 10.1.8:
   nodes, essentia, infusion, devices, eldritch, harness and the four warp screen effects, no Iris errors. Test packs live in
   `run/shaderpacks/` (git-ignored): `NEOTHAUM_TEST_MODS=iris NEOTHAUM_TEST_SHADERPACK=<zip> NEOTHAUM_SCENES=...`; `warpfx` scene added.
+- [x] **LambDynamicLights** — wisps give light 10 while it is installed (data only: `assets/neothaum/dynamiclights/entity/wisp.json`);
+  bright nodes give 15 as blocks (`addon.BrightNodes`). `wisplight` scene; load it with `NEOTHAUM_TEST_MODS=dynlights`.
 - [x] **AppleSkin** — works without code (all foods use the vanilla food component). Found that the zombie brain was not edible: now
   TC4's food (4, 0.2, wolf food, Hunger 80%, warp). Test mods load with `NEOTHAUM_TEST_MODS=sodium,iris,appleskin,rei,trinkets`.

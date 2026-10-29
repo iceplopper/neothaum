@@ -42,6 +42,7 @@ fabricApi {
 configurations {
 	// mods loaded into a client gametest run only when asked for (NEOTHAUM_TEST_MODS, below); never bundled
 	trinketsTest { transitive = false }
+	dynlightsTest { transitive = false }
 	sodiumTest { transitive = false }
 	irisTest { transitive = false }
 	appleskinTest { transitive = false }
@@ -74,6 +75,9 @@ dependencies {
 	reiTest "maven.modrinth:architectury-api:${project.architectury_version}"
 	// Iris: its API maps NeoThaum's custom render pipelines to shader-pack programs (dev.neothaum.client.addon.IrisCompat)
 	compileOnly "maven.modrinth:iris:${project.iris_version}"
+	// LambDynamicLights: wisps light their surroundings when it is installed (dev.neothaum.client.addon.WispDynamicLights)
+	compileOnly "maven.modrinth:lambdynamiclights:${project.lambdynamiclights_version}"
+	dynlightsTest "maven.modrinth:lambdynamiclights:${project.lambdynamiclights_version}"
 	// Sodium is only checked against
 	sodiumTest "maven.modrinth:sodium:${project.sodium_version}"
 	irisTest "maven.modrinth:sodium:${project.sodium_version}"
@@ -105,7 +109,7 @@ if (System.getenv("NEOTHAUM_TEST_XAERO") != null) {
 	}
 }
 
-// NEOTHAUM_TEST_MODS=trinkets,sodium,iris,appleskin,rei loads those mods into the client gametest run (NEOTHAUM_TEST_TRINKETS=1 still means
+// NEOTHAUM_TEST_MODS=trinkets,sodium,iris,appleskin,rei,dynlights loads those mods into the client gametest run (NEOTHAUM_TEST_TRINKETS=1 still means
 // trinkets). Each name is the <name>Test configuration above.
 def testMods = (System.getenv("NEOTHAUM_TEST_MODS") ?: "").split(",").collect { it.trim() }.findAll { it }
 if (System.getenv("NEOTHAUM_TEST_TRINKETS") != null) {

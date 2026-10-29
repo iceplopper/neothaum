@@ -23,8 +23,17 @@ public final class IrisCompat {
 		NeoThaum.LOGGER.info("Iris found: NeoThaum's glows and particles are given to the shader pack's programs");
 	}
 
+	/** Whether a shader pack is drawing the world right now (false without Iris). */
+	public static boolean shaderPackInUse() {
+		return FabricLoader.getInstance().isModLoaded("iris") && Hooks.inUse();
+	}
+
 	/** Kept apart so that nothing loads an Iris class unless Iris is installed. */
 	private static final class Hooks {
+		static boolean inUse() {
+			return IrisApi.getInstance().isShaderPackInUse();
+		}
+
 		static void assign() {
 			IrisApi iris = IrisApi.getInstance();
 			iris.assignPipeline(TVRenderTypes.GLOW_ADDITIVE, IrisProgram.EMISSIVE_ENTITIES);

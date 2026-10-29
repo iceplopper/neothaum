@@ -145,6 +145,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("brightnode")) {
 					brightNodeScene(ctx, server, sp);
 				}
+				if (scenes.contains("wisplight")) {
+					wispLightScene(ctx, server, sp);
+				}
 				if (scenes.contains("bore")) {
 					boreScene(ctx, server);
 				}
@@ -3082,6 +3085,44 @@ public class VisualTests implements FabricClientGameTest {
 			}
 		});
 		NeoThaum.LOGGER.info("[visual-test] brightnode: {} failed checks so far", checkFailures);
+	}
+
+	/** A wisp held still at night by a wall: with LambDynamicLights (NEOTHAUM_TEST_MODS=dynlights) it lights what is around it. */
+	private static void wispLightScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		for (String cmd : new String[]{"gamemode creative @a", "difficulty peaceful", "difficulty normal", "gamerule advance_time false",
+			"time set 18000", "weather clear", "kill @e[type=!player]", "fill -12 117 -12 12 130 12 air", "fill -12 116 -12 12 116 12 grass_block",
+			"fill -12 117 -4 12 121 -4 stone_bricks", "clear @a"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var wisp = dev.neothaum.entity.TVEntities.WISP.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+			wisp.snapTo(0.5, 118.0, -2.0, 0.0F, 0.0F);
+			wisp.setNoAi(true);
+			wisp.setNoGravity(true);
+			wisp.setPersistenceRequired();
+			level.addFreshEntity(wisp);
+			var p = firstPlayer(srv);
+			p.getAbilities().flying = true;
+			p.onUpdateAbilities();
+		});
+		server.runCommand("tp @a 0.5 117.5 6.5 facing 0.5 118 -3");
+		ctx.waitTicks(40);
+		waitChunks(sp, ctx);
+		ctx.runOnClient(mc -> {
+			if (!mc.gui.hud.isHidden()) {
+				mc.gui.hud.toggle();
+			}
+		});
+		ctx.waitTicks(60);
+		NeoThaum.LOGGER.info("[visual-test] wisplight: dynamic lights loaded={}", net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("lambdynlights"));
+		shot(ctx, "wisplight");
+		ctx.runOnClient(mc -> {
+			if (mc.gui.hud.isHidden()) {
+				mc.gui.hud.toggle();
+			}
+		});
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {

@@ -21,7 +21,7 @@ public class NeoThaumConfig {
 		public boolean worldMapNodes = true;
 		/** Whether bright nodes light their surroundings fully (light 15; TC4 gave every node 8). Default: true. */
 		public boolean brightNodeLight = true;
-		/** Whether looking toward a bright node in clear sight shows a lens flare (client only). Default: true. */
+		/** Whether looking toward a bright node in clear sight shows a lens flare, while an Iris shader pack is in use (client only). Default: true. */
 		public boolean brightNodeFlare = true;
 
 		// Every number below is a multiplier on TC4's own setting, from 0 to 10 in steps of 0.1: 1 is TC4, 3 is three times as much (as many
