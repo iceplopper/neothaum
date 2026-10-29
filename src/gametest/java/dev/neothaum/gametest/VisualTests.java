@@ -899,8 +899,9 @@ public class VisualTests implements FabricClientGameTest {
 	 */
 	private static void worldMapScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
 		TestSingleplayerContext sp) {
+		// every aspect known, so TC4's rule against scanning aspects whose parts are unknown can't refuse a node
 		for (String cmd : new String[]{"gamemode creative @a", "tp @a 0 120 0 0 30", "fill -30 117 -30 30 130 30 air",
-			"item replace entity @a armor.head with neothaum:goggles_of_revealing"}) {
+			"item replace entity @a armor.head with neothaum:goggles_of_revealing", "neothaum aspect @p all 1"}) {
 			server.runCommand(cmd);
 		}
 		server.runOnServer(srv -> {
