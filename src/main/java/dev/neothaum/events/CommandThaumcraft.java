@@ -54,7 +54,11 @@ public final class CommandThaumcraft {
 								IntegerArgumentType.getInteger(c, "amount")))))))
 			.then(Commands.literal("config")
 				.then(setting("hardnodes", "hard mode nodes", () -> NeoThaumConfig.current.hardNodes, v -> NeoThaumConfig.current.hardNodes = v))
-				.then(setting("wussmode", "wuss mode", () -> !NeoThaumConfig.current.allowWarp, v -> NeoThaumConfig.current.allowWarp = !v)))
+				.then(setting("wussmode", "wuss mode", () -> !NeoThaumConfig.current.allowWarp, v -> NeoThaumConfig.current.allowWarp = !v))
+				.then(number("researchdifficulty", "research difficulty", -1, 1, () -> NeoThaumConfig.current.researchDifficulty,
+					v -> NeoThaumConfig.current.researchDifficulty = v))
+				.then(number("aspectcap", "aspect total cap", 1, 100000, () -> NeoThaumConfig.current.aspectTotalCap,
+					v -> NeoThaumConfig.current.aspectTotalCap = v)))
 			.then(Commands.literal("warp")
 				.then(Commands.argument("player", EntityArgument.player())
 					.then(Commands.literal("set")
@@ -85,10 +89,35 @@ public final class CommandThaumcraft {
 			.then(Commands.argument("value", BoolArgumentType.bool()).executes(c -> {
 				boolean v = BoolArgumentType.getBool(c, "value");
 				set.accept(v);
-				NeoThaumConfig.save();
+				changed(c.getSource());
 				c.getSource().sendSuccess(() -> Component.literal("§5" + label + " is now " + (v ? "on" : "off")), true);
 				return 1;
 			}));
+	}
+
+	/** /neothaum config <name> [value]: the same for a whole-number setting. */
+	private static LiteralArgumentBuilder<CommandSourceStack> number(String name, String label, int min, int max, java.util.function.IntSupplier get,
+		java.util.function.IntConsumer set) {
+		return Commands.literal(name)
+			.executes(c -> {
+				c.getSource().sendSystemMessage(Component.literal("§5" + label + " is " + get.getAsInt()));
+				return 1;
+			})
+			.then(Commands.argument("value", IntegerArgumentType.integer(min, max)).executes(c -> {
+				int v = IntegerArgumentType.getInteger(c, "value");
+				set.accept(v);
+				changed(c.getSource());
+				c.getSource().sendSuccess(() -> Component.literal("§5" + label + " is now " + v), true);
+				return 1;
+			}));
+	}
+
+	/** Saves neothaum.json and sends the settings the clients follow to everyone online. */
+	private static void changed(CommandSourceStack source) {
+		NeoThaumConfig.save();
+		for (var player : source.getServer().getPlayerList().getPlayers()) {
+			dev.neothaum.network.TVNetwork.sendConfig(player);
+		}
 	}
 
 	private static String[] researchSuggestions() {
@@ -111,7 +140,7 @@ public final class CommandThaumcraft {
 			"  /neothaum research <list|player> <all|reset|<research>>", "§3Use this to give aspect research points to a player.",
 			"  /neothaum aspect <player> <aspect|all> <amount>", "§3Use this to give set a players warp level.",
 			"  /neothaum warp <player> <add|set> <amount> <PERM|TEMP>", "  not specifying perm or temp will just add normal warp",
-			"§3Use this to see or change a server setting.", "  /neothaum config <hardnodes|wussmode> [true|false]"}) {
+			"§3Use this to see or change a server setting.", "  /neothaum config <hardnodes|wussmode> [true|false]", "  /neothaum config researchdifficulty [-1|0|1]", "  /neothaum config aspectcap [amount]"}) {
 			src.sendSystemMessage(Component.literal(line));
 		}
 		return 1;

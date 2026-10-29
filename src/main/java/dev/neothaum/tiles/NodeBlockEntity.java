@@ -535,7 +535,7 @@ public class NodeBlockEntity extends TVBlockEntity {
 
 	/** Config.hardNode (TC4's "hard_mode_nodes", on by default): tainted nodes also sprout fibres, and sinister nodes call up giant zombies. */
 	private static boolean hardNode() {
-		return dev.neothaum.config.NeoThaumConfig.current.hardNodes;
+		return dev.neothaum.config.NeoThaumConfig.hardNodes();
 	}
 
 	/** Nodes change the land only in the overworld and other non-Nether, non-End dimensions (TC4's dimension blacklist). */

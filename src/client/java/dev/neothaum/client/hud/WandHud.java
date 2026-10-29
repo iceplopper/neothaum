@@ -15,7 +15,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-/** ClientTickEventsFML.renderCastingWandHud: the vis dial in the top-left corner while holding a wand. */
+/** ClientTickEventsFML.renderCastingWandHud: the vis dial in the top-left corner (or bottom-left) while holding a wand. */
 public final class WandHud {
 	private static final Identifier HUD = NeoThaum.id("textures/gui/hud.png");
 	private static final Map<Integer, AspectList> OLD = new HashMap<>();
@@ -43,6 +43,11 @@ public final class WandHud {
 		ItemStack focusStack = WandItem.getFocusStack(wandstack);
 		dev.neothaum.api.wands.FocusItem focus = WandItem.getFocus(wandstack);
 		g.pose().pushMatrix();
+		// Config.dialBottom: the whole dial moved to the bottom left, its gauges fanning up instead of down
+		boolean bottom = dev.neothaum.config.NeoThaumConfig.current.wandDialBottom;
+		if (bottom) {
+			g.pose().translate(0.0F, g.guiHeight() - 32);
+		}
 		g.pose().pushMatrix();
 		g.pose().scale(0.5F, 0.5F);
 		g.blit(RenderPipelines.GUI_TEXTURED, HUD, 0, 0, 0, 0, 64, 64, 256, 256);
@@ -54,7 +59,9 @@ public final class WandHud {
 		for (Aspect aspect : aspects.getAspects()) {
 			int amt = aspects.getAmount(aspect);
 			g.pose().pushMatrix();
-			g.pose().rotate((float) Math.toRadians(90.0F));
+			if (!bottom) {
+				g.pose().rotate((float) Math.toRadians(90.0F));
+			}
 			g.pose().rotate((float) Math.toRadians(-15 + count * 24));
 			g.pose().translate(0.0F, -32.0F);
 			g.pose().scale(0.5F, 0.5F);

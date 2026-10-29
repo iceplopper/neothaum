@@ -44,7 +44,7 @@ public final class AspectOverlays {
 	/** Called after a container screen renders. */
 	public static void renderInGui(AbstractContainerScreen<?> screen, GuiGraphicsExtractor g, int mx, int my) {
 		Minecraft mc = Minecraft.getInstance();
-		if (!Minecraft.getInstance().hasShiftDown() || mc.player == null) {
+		if (mc.hasShiftDown() == dev.neothaum.config.NeoThaumConfig.current.displayAspects || mc.player == null) {
 			return;
 		}
 		Slot slot = ((dev.neothaum.client.mixin.ContainerScreenAccessor) screen).neothaum$hoveredSlot();

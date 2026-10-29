@@ -240,7 +240,7 @@ public final class ScanManager {
 		return true;
 	}
 
-	/** Config.aspectTotalCap = 100. */
+	/** Past Config.aspectTotalCap (100) points of an aspect, a scan gives only the square root; past 1.25 times it, just 1. */
 	public static int checkAndSyncAspectKnowledge(ServerPlayer player, Aspect aspect, int amount) {
 		PlayerKnowledge k = ResearchManager.knowledge(player).copy();
 		int save = 0;
@@ -250,10 +250,10 @@ public final class ScanManager {
 			save = amount;
 			k.addDiscoveredAspect(aspect);
 		}
-		if (k.getAspectPool(aspect) >= 100) {
+		if (k.getAspectPool(aspect) >= dev.neothaum.config.NeoThaumConfig.aspectTotalCap()) {
 			amount = (int) Math.sqrt(amount);
 		}
-		if (amount > 1 && k.getAspectPool(aspect) >= 125) {
+		if (amount > 1 && k.getAspectPool(aspect) >= dev.neothaum.config.NeoThaumConfig.aspectTotalCap() * 1.25F) {
 			amount = 1;
 		}
 		if (k.addAspectPool(aspect, amount)) {

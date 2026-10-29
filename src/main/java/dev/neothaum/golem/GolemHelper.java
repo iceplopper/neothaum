@@ -274,7 +274,7 @@ public final class GolemHelper {
 	}
 
 	private static void timeOut(GolemEntity golem, ItemStack item) {
-		ITEM_TIMEOUT.add(new Timeout(golem.getId(), item.copy(), System.currentTimeMillis() + GolemEntity.GOLEM_IGNORE_DELAY));
+		ITEM_TIMEOUT.add(new Timeout(golem.getId(), item.copy(), System.currentTimeMillis() + dev.neothaum.config.NeoThaumConfig.current.golemIgnoreDelay));
 	}
 
 	public static boolean isOnTimeOut(GolemEntity golem, ItemStack stack) {

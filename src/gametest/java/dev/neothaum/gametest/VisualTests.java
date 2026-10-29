@@ -178,6 +178,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("golemai")) {
 					golemAiScene(ctx, server);
 				}
+				if (scenes.contains("config")) {
+					configScene(ctx, server);
+				}
 				if (scenes.contains("worldmap")) {
 					worldMapScene(ctx, server, sp);
 				}
@@ -3147,6 +3150,180 @@ public class VisualTests implements FabricClientGameTest {
 	}
 
 	/**
+	 * The config: TC4's defaults, then each new setting doing its job (research difficulty, aspect cap, mob spawning, world regeneration), the
+	 * golem link line, and the config page, every tab, with a tooltip on every control.
+	 */
+	private static void configScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		var fresh = new dev.neothaum.config.NeoThaumConfig.ConfigData();
+		check("config defaults are TC4's", fresh.researchDifficulty == 0 && fresh.aspectTotalCap == 100 && fresh.golemDelay == 5
+			&& fresh.golemIgnoreDelay == 10000 && fresh.golemLinkQuality == 16 && fresh.golemChestInteract && fresh.runicRechargeSpeed == 2000
+			&& fresh.runicRechargeDelay == 80 && fresh.runicCost == 50 && !fresh.colorBlind && !fresh.displayAspects && !fresh.wandDialBottom
+			&& fresh.notificationDelay == 5000 && fresh.notificationMax == 15 && fresh.portableHoleBlacklist.equals("iron_door")
+			&& fresh.regenKey.equals("DEFAULT") && !fresh.anyRegen() && fresh.generateAuraNodes && fresh.spawnPechs, "");
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		// --- research difficulty: what is bought with points
+		String difficulty = server.computeOnServer(srv -> {
+			ResearchItem secondary = null;
+			ResearchItem primary = null;
+			for (ResearchItem r : ResearchManager.entries()) {
+				if (r.tags.size() > 0 && !r.isHidden() && !r.isAutoUnlock()) {
+					if (r.isSecondary() && secondary == null) {
+						secondary = r;
+					} else if (!r.isSecondary() && primary == null) {
+						primary = r;
+					}
+				}
+			}
+			StringBuilder sb = new StringBuilder();
+			for (int d = -1; d <= 1; d++) {
+				cfg.researchDifficulty = d;
+				sb.append(ResearchManager.boughtWithPoints(secondary) ? "S" : "s").append(ResearchManager.boughtWithPoints(primary) ? "P" : "p").append(' ');
+			}
+			cfg.researchDifficulty = 0;
+			return sb.toString().trim();
+		});
+		check("config research difficulty easy/normal/hard", difficulty.equals("SP Sp sp"), difficulty);
+		// --- aspect cap: a scan of 9 points past the cap gives the square root
+		server.runCommand("neothaum aspect @p aer 11");
+		int gained = server.computeOnServer(srv -> {
+			cfg.aspectTotalCap = 10;
+			var p = srv.getPlayerList().getPlayers().get(0);
+			int pool = ResearchManager.knowledge(p).getAspectPool(dev.neothaum.api.aspects.Aspect.AIR);
+			int got = dev.neothaum.research.ScanManager.checkAndSyncAspectKnowledge(p, dev.neothaum.api.aspects.Aspect.AIR, 9);
+			cfg.aspectTotalCap = 100;
+			NeoThaum.LOGGER.info("[visual-test] config: aer pool {} before the scan", pool);
+			return got;
+		});
+		check("config aspect cap softens scans", gained == 3, "9 points past a cap of 10 gave " + gained);
+		// --- spawning: a switched-off mob fails natural spawns, but spawners still work
+		server.runCommand("difficulty normal");
+		String spawns = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			net.minecraft.core.BlockPos pos = p.blockPosition().offset(20, 0, 20);
+			int[] counts = new int[3];
+			for (int pass = 0; pass < 3; pass++) {
+				cfg.spawnFireBats = pass == 0;
+				var reason = pass == 2 ? net.minecraft.world.entity.EntitySpawnReason.SPAWNER : net.minecraft.world.entity.EntitySpawnReason.NATURAL;
+				for (int i = 0; i < 200; i++) {
+					if (net.minecraft.world.entity.SpawnPlacements.checkSpawnRules(dev.neothaum.entity.TVEntities.FIREBAT, level, reason, pos,
+						level.getRandom())) {
+						counts[pass]++;
+					}
+				}
+			}
+			cfg.spawnFireBats = true;
+			return counts[0] + "/" + counts[1] + "/" + counts[2];
+		});
+		String[] sc = spawns.split("/");
+		check("config spawn switches", Integer.parseInt(sc[0]) > 0 && sc[1].equals("0") && Integer.parseInt(sc[2]) > 0,
+			"natural on/natural off/spawner off = " + spawns);
+				// --- world regeneration: every chunk has the key; a new key and a regen switch regenerate a loaded chunk
+		String regen = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var chunk = level.getChunkAt(p.blockPosition());
+			String before = chunk.getAttached(dev.neothaum.world.WorldRegen.KEY);
+			cfg.regenKey = "TEST";
+			cfg.regenAuraNodes = true;
+			try {
+				var m = dev.neothaum.world.WorldRegen.class.getDeclaredMethod("chunkLoaded", net.minecraft.server.level.ServerLevel.class,
+					net.minecraft.world.level.chunk.LevelChunk.class, boolean.class);
+				m.setAccessible(true);
+				m.invoke(null, level, chunk, false);
+			} catch (ReflectiveOperationException e) {
+				throw new RuntimeException(e);
+			}
+			return before + "/" + chunk.getAttached(dev.neothaum.world.WorldRegen.KEY);
+		});
+		ctx.waitTicks(5);
+		String regenAfter = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			String after = srv.overworld().getChunkAt(p.blockPosition()).getAttached(dev.neothaum.world.WorldRegen.KEY);
+			cfg.regenKey = "DEFAULT";
+			cfg.regenAuraNodes = false;
+			return after;
+		});
+		check("config world regen", regen.equals("DEFAULT/DEFAULT") && "TEST".equals(regenAfter),
+			"key before/queued = " + regen + ", after the queue ran = " + regenAfter);
+		// --- golem link line: a bell linked to a golem with two marked faces
+		net.minecraft.core.BlockPos base = server.computeOnServer(srv -> srv.getPlayerList().getPlayers().get(0).blockPosition());
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var golem = new dev.neothaum.golem.GolemEntity(dev.neothaum.entity.TVEntities.GOLEM, level);
+			golem.setGolemType(dev.neothaum.golem.GolemType.WOOD);
+			golem.snapTo(base.getX() + 0.5, base.getY(), base.getZ() + 4.5, 180.0F, 0.0F);
+			golem.setNoAi(true);
+			level.addFreshEntity(golem);
+			var chest = base.offset(-3, 0, 7);
+			var other = base.offset(3, 0, 7);
+			level.setBlockAndUpdate(chest, net.minecraft.world.level.block.Blocks.CHEST.defaultBlockState());
+			level.setBlockAndUpdate(other, net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+			var bell = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.GOLEM_BELL);
+			bell.set(dev.neothaum.registry.TVComponents.GOLEM_BELL_ID, golem.getId());
+			bell.set(dev.neothaum.registry.TVComponents.GOLEM_MARKERS, new java.util.ArrayList<>(java.util.List.of(
+				new dev.neothaum.golem.GolemMarker(chest, level.dimension(), (byte) 1, (byte) -1),
+				new dev.neothaum.golem.GolemMarker(other, level.dimension(), (byte) 2, (byte) 14))));
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, bell);
+		});
+		server.runCommand("tp @p " + (base.getX() + 0.5) + " " + (base.getY() + 1) + " " + (base.getZ() - 1.5) + " facing " + (base.getX() + 0.5) + " "
+			+ base.getY() + " " + (base.getZ() + 6));
+		ctx.waitTicks(30);
+		shot(ctx, "config_link_line");
+		ctx.runOnClient(mc -> cfg.golemLinkQuality = 3);
+		ctx.waitTicks(5);
+		shot(ctx, "config_link_line_off");
+		ctx.runOnClient(mc -> cfg.golemLinkQuality = 16);
+		server.runCommand("clear @p");
+		// --- the config page: every tab, every control explained
+		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
+		ctx.waitTicks(5);
+		for (int tab = 0; tab < 8; tab++) {
+			final int t = tab;
+			String result = ctx.computeOnClient(mc -> {
+				try {
+					var screen = (dev.neothaum.client.gui.NeoThaumConfigScreen) mc.gui.screen();
+					var active = dev.neothaum.client.gui.NeoThaumConfigScreen.class.getDeclaredField("activeTab");
+					active.setAccessible(true);
+					active.setInt(screen, t);
+					var init = dev.neothaum.client.gui.NeoThaumConfigScreen.class.getDeclaredMethod("init");
+					init.setAccessible(true);
+					init.invoke(screen);
+					var placedField = dev.neothaum.client.gui.NeoThaumConfigScreen.class.getDeclaredField("placed");
+					placedField.setAccessible(true);
+					var tooltipField = net.minecraft.client.gui.components.AbstractWidget.class.getDeclaredField("tooltip");
+					tooltipField.setAccessible(true);
+					int controls = 0;
+					int missing = 0;
+					for (Object p : (java.util.List<?>) placedField.get(screen)) {
+						var getter = p.getClass().getDeclaredMethod("widget");
+						getter.setAccessible(true);
+						var w = (net.minecraft.client.gui.components.AbstractWidget) getter.invoke(p);
+						controls++;
+						if (((net.minecraft.client.gui.components.WidgetTooltipHolder) tooltipField.get(w)).get() == null) {
+							missing++;
+						}
+					}
+					return controls + " controls, " + missing + " without a tooltip";
+				} catch (ReflectiveOperationException e) {
+					throw new RuntimeException(e);
+				}
+			});
+			check("config tab " + tab + " tooltips", result.endsWith(" 0 without a tooltip") && !result.startsWith("0 "), result);
+			ctx.waitTicks(3);
+			shot(ctx, "config_tab_" + tab);
+		}
+		// hover the first control of the last tab to show its tooltip
+		double scale = ctx.computeOnClient(mc -> mc.getWindow().getGuiScale());
+		int[] first = ctx.computeOnClient(mc -> new int[]{mc.getWindow().getGuiScaledWidth() / 2 - 175 - 5 + 40, 84 + 10});
+		ctx.getInput().setCursorPos(first[0] * scale, first[1] * scale);
+		ctx.waitTicks(20);
+		shot(ctx, "config_tooltip");
+		ctx.setScreen(() -> null);
+	}
+
+	/**
 	 * NeoThaum on both sides of a real multiplayer game: a dedicated server (not the integrated one) with the test client joining it over the
 	 * network, so everything the client knows has to come by packet. Checks recipe, research, warp, scan, Trinkets, block-entity, menu and entity
 	 * sync, and opening the Thaumonomicon with the use key, as a player would.
@@ -3181,6 +3358,17 @@ public class VisualTests implements FabricClientGameTest {
 			int clientWarp = ctx.computeOnClient(mc -> dev.neothaum.research.ResearchManager.knowledge(mc.player).warp);
 			check("mp research reaches the client", clientResearch == serverResearch && serverResearch > 100, "client " + clientResearch + " of " + serverResearch);
 			check("mp warp reaches the client", clientWarp == 7, "client warp=" + clientWarp);
+			// --- the server's settings reach the client, kept apart from the client's own (which here, in one process, are the same object, so
+			// what is checked is that the client follows what came by packet and drops it on leaving)
+			boolean syncedOnJoin = ctx.computeOnClient(mc -> dev.neothaum.config.NeoThaumConfig.synced != null);
+			server.runCommand("neothaum config researchdifficulty 1");
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(5);
+			String clientSettings = ctx.computeOnClient(mc -> dev.neothaum.config.NeoThaumConfig.synced + " difficulty="
+				+ dev.neothaum.config.NeoThaumConfig.researchDifficulty());
+			check("mp server settings reach the client", syncedOnJoin && clientSettings.endsWith("difficulty=1"), "on join " + syncedOnJoin + ", " + clientSettings);
+			server.runCommand("neothaum config researchdifficulty 0");
+			conn.waitForClientboundPackets();
 			// --- a scan made on the client is recorded by the server and comes back
 			int objectsBefore = server.computeOnServer(srv -> dev.neothaum.research.ResearchManager.knowledge(firstPlayer(srv)).objects.size());
 			// dirt has only primal aspects, which every player knows (a diamond's need discovering first, as in TC4)
@@ -3357,6 +3545,9 @@ public class VisualTests implements FabricClientGameTest {
 				String.format("distance after 3s: hard nodes off %.1f, on %.1f", soft, hard));
 			server.runCommand("neothaum config hardnodes true");
 		}
+		ctx.waitTicks(10);
+		boolean dropped = ctx.computeOnClient(mc -> dev.neothaum.config.NeoThaumConfig.synced == null);
+		check("mp server settings dropped on leaving", dropped, "synced cleared=" + dropped);
 		NeoThaum.LOGGER.info("[visual-test] multiplayer: {} failed checks so far", checkFailures);
 	}
 

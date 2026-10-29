@@ -90,7 +90,152 @@ public class NeoThaumConfig {
 		public boolean hardNodes = true;
 		/** Warp at all; off is TC4's wuss_mode (no warp events, no warp from research or crafting). Default: true. */
 		public boolean allowWarp = true;
+		/** TC4's champion_mobs: hostile mobs can spawn as champions. Default: true. */
 		public boolean championMobs = true;
+
+		// Below: TC4's own settings, under its names, with its defaults and units.
+
+		// --- Research ---
+		/** research_difficulty: -1 easy (everything bought with research points), 0 normal (secondary research bought, the rest solved), 1 hard (everything solved at the research table). */
+		public int researchDifficulty = 0;
+		/** aspect_total_cap: research points of one aspect you can hold before scanning gives less (the square root; just 1 past 1.25 times this). Default: 100. */
+		public int aspectTotalCap = 100;
+
+		// --- World_Generation (taintedLandGenerate above is generate_taint) ---
+		public boolean generateAuraNodes = true;
+		public boolean generateStructures = true;
+		public boolean generateCinnabar = true;
+		public boolean generateAmber = true;
+		public boolean generateInfusedStone = true;
+		public boolean generateTrees = true;
+
+		// --- World_Regeneration ---
+		/** regen_key: stored in each chunk once it has been generated or regenerated; changing it makes the regeneration below run again. */
+		public String regenKey = "DEFAULT";
+		public boolean regenAuraNodes = false;
+		public boolean regenStructures = false;
+		public boolean regenCinnabar = false;
+		public boolean regenAmber = false;
+		public boolean regenInfusedStone = false;
+		public boolean regenTrees = false;
+		/** TC4 had this switch but never read it (taint is a biome, made only when the world is first generated); kept for parity, no effect. */
+		public boolean regenTaint = false;
+
+		// --- Monster_Spawning (championMobs above) ---
+		public boolean spawnAngryZombies = true;
+		public boolean spawnFireBats = true;
+		public boolean spawnWisps = true;
+		public boolean spawnTaintacles = true;
+		public boolean spawnTaintSpores = true;
+		public boolean spawnPechs = true;
+		public boolean spawnElderCreatures = true;
+
+		// --- Golems ---
+		/** golem_delay: ticks a golem waits between looking for tasks (minimum 1). Default: 5. */
+		public int golemDelay = 5;
+		/** golem_ignore_delay: milliseconds a golem ignores an item it found no use for (minimum 1000). Default: 10000. */
+		public int golemIgnoreDelay = 10000;
+		/** golem_link_quality: detail of the line from a golem to its marked blocks; below 4 turns it off. Default: 16. */
+		public int golemLinkQuality = 16;
+		/** golem_chest_interact: golems open chests (lid and sound) while they use them. Default: true. */
+		public boolean golemChestInteract = true;
+
+		// --- Runic_Shielding ---
+		/** runic_recharge_speed: milliseconds between recharge ticks (minimum 500). Default: 2000. */
+		public int runicRechargeSpeed = 2000;
+		/** runic_recharge_delay: game ticks after a shield is broken before it starts recharging (minimum 0). Default: 80. */
+		public int runicRechargeDelay = 80;
+		/** runic_cost: centi-vis (0.01 vis) of aer and of terra per point of shielding recharged (minimum 0). Default: 50. */
+		public int runicCost = 50;
+
+		// --- Client ---
+		/** color_blind: darker, higher contrast research orbs. Default: false. */
+		public boolean colorBlind = false;
+		/** display_aspects: item aspects always show, and shift hides them (TC4's default is the other way round). Default: false. */
+		public boolean displayAspects = false;
+		/** wand_dial_bottom: the wand's vis dial in the bottom left instead of the top left. Default: false. */
+		public boolean wandDialBottom = false;
+		/** notification_delay: how fast notifications scroll down and fade, in milliseconds. Default: 5000. */
+		public int notificationDelay = 5000;
+		/** notification_max: the most notifications on screen at once. Default: 15. */
+		public int notificationMax = 15;
+
+		// --- Portable hole ---
+		/** portablehole_blacklist: comma-separated blocks the portable hole won't pass through ("minecraft:" may be left off). Default: iron_door. */
+		public String portableHoleBlacklist = "iron_door";
+
+		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
+		void validate() {
+			this.researchDifficulty = Math.max(-1, Math.min(1, this.researchDifficulty));
+			this.aspectTotalCap = Math.max(1, this.aspectTotalCap);
+			this.golemDelay = Math.max(1, this.golemDelay);
+			this.golemIgnoreDelay = Math.max(1000, this.golemIgnoreDelay);
+			this.golemLinkQuality = Math.max(0, this.golemLinkQuality);
+			this.runicRechargeSpeed = Math.max(500, this.runicRechargeSpeed);
+			this.runicRechargeDelay = Math.max(0, this.runicRechargeDelay);
+			this.runicCost = Math.max(0, this.runicCost);
+			this.notificationDelay = Math.max(500, this.notificationDelay);
+			this.notificationMax = Math.max(1, this.notificationMax);
+			if (this.regenKey == null || this.regenKey.isBlank()) {
+				this.regenKey = "DEFAULT";
+			}
+			if (this.portableHoleBlacklist == null) {
+				this.portableHoleBlacklist = "";
+			}
+		}
+
+		public boolean anyRegen() {
+			return this.regenAuraNodes || this.regenStructures || this.regenCinnabar || this.regenAmber || this.regenInfusedStone || this.regenTrees;
+		}
+	}
+
+	/**
+	 * TC4's PacketConfig: the settings the server decides that the client also needs, sent when a player joins. Null when not connected; read
+	 * through the accessors below, which fall back to this game's own config.
+	 */
+	public record Synced(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp) {
+		public static Synced of(ConfigData c) {
+			return new Synced(c.researchDifficulty, c.aspectTotalCap, c.hardNodes, c.allowWarp);
+		}
+	}
+
+	public static Synced synced;
+
+	public static int researchDifficulty() {
+		return synced != null ? synced.researchDifficulty() : current.researchDifficulty;
+	}
+
+	public static int aspectTotalCap() {
+		return synced != null ? synced.aspectTotalCap() : current.aspectTotalCap;
+	}
+
+	public static boolean hardNodes() {
+		return synced != null ? synced.hardNodes() : current.hardNodes;
+	}
+
+	public static boolean allowWarp() {
+		return synced != null ? synced.allowWarp() : current.allowWarp;
+	}
+
+	private static String blacklistText;
+	private static java.util.Set<net.minecraft.resources.Identifier> blacklist = java.util.Set.of();
+
+	/** The portable hole blacklist as block ids, read again whenever the setting's text changes. */
+	public static java.util.Set<net.minecraft.resources.Identifier> portableHoleBlacklist() {
+		String text = current.portableHoleBlacklist;
+		if (!text.equals(blacklistText)) {
+			java.util.Set<net.minecraft.resources.Identifier> ids = new java.util.HashSet<>();
+			for (String part : text.split(",")) {
+				net.minecraft.resources.Identifier id = part.isBlank() ? null
+					: net.minecraft.resources.Identifier.tryParse(part.trim().toLowerCase(java.util.Locale.ROOT));
+				if (id != null) {
+					ids.add(id);
+				}
+			}
+			blacklist = ids;
+			blacklistText = text;
+		}
+		return blacklist;
 	}
 
 	// TC4's values, which the multipliers above scale
@@ -123,6 +268,7 @@ public class NeoThaumConfig {
 				try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
 					ConfigData loaded = GSON.fromJson(reader, ConfigData.class);
 					if (loaded != null) {
+						loaded.validate();
 						current = loaded;
 					}
 				}
@@ -135,6 +281,7 @@ public class NeoThaumConfig {
 	}
 
 	public static void save() {
+		current.validate();
 		try {
 			Files.createDirectories(CONFIG_PATH.getParent());
 			try (Writer writer = Files.newBufferedWriter(CONFIG_PATH)) {

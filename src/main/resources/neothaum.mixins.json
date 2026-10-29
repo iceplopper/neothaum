@@ -10,7 +10,8 @@
 		"NoteBlockMixin",
 		"OverworldBiomeBuilderMixin",
 		"CarvedPumpkinBlockMixin",
-		"StructureTemplatePoolAccessor"
+		"StructureTemplatePoolAccessor",
+		"SpawnPlacementsMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

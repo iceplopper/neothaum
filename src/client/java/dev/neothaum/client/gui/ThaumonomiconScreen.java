@@ -311,9 +311,9 @@ public class ThaumonomiconScreen extends Screen {
 			if (r.isRound()) {
 				g.blit(RenderPipelines.GUI_TEXTURED, GUI, var42 - 2, var41 - 2, 54, 230, 26, 26, 256, 256, col);
 			} else if (r.isHidden()) {
-				g.blit(RenderPipelines.GUI_TEXTURED, GUI, var42 - 2, var41 - 2, r.isSecondary() ? 230 : 86, 230, 26, 26, 256, 256, col);
+				g.blit(RenderPipelines.GUI_TEXTURED, GUI, var42 - 2, var41 - 2, ResearchManager.boughtWithPoints(r) ? 230 : 86, 230, 26, 26, 256, 256, col);
 			} else {
-				g.blit(RenderPipelines.GUI_TEXTURED, GUI, var42 - 2, var41 - 2, r.isSecondary() ? 110 : 0, 230, 26, 26, 256, 256, col);
+				g.blit(RenderPipelines.GUI_TEXTURED, GUI, var42 - 2, var41 - 2, ResearchManager.boughtWithPoints(r) ? 110 : 0, 230, 26, 26, 256, 256, col);
 			}
 			if (r.isSpecial()) {
 				g.blit(RenderPipelines.GUI_TEXTURED, GUI, var42 - 2, var41 - 2, 26, 230, 26, 26, 256, 256, col);
@@ -406,7 +406,7 @@ public class ThaumonomiconScreen extends Screen {
 			}
 			g.pose().popMatrix();
 		} else {
-			boolean secondary = !k.research.contains(h.key) && h.tags.size() > 0 && h.isSecondary();
+			boolean secondary = !k.research.contains(h.key) && h.tags.size() > 0 && ResearchManager.boughtWithPoints(h);
 			boolean primary = !secondary && !k.research.contains(h.key);
 			int w = (int) Math.max((float) fr.width(shownName), fr.width(h.getText()) / 1.9F);
 			int var41x = fr.split(shownName, Math.max(1, w)).size() * fr.lineHeight + 5;
@@ -495,7 +495,7 @@ public class ThaumonomiconScreen extends Screen {
 		int par2 = (int) event.y();
 		if (this.currentHighlight != null && !k.research.contains(this.currentHighlight.key) && canUnlockResearch(this.currentHighlight)) {
 			this.updateResearch();
-			boolean secondary = this.currentHighlight.tags.size() > 0 && this.currentHighlight.isSecondary();
+			boolean secondary = this.currentHighlight.tags.size() > 0 && ResearchManager.boughtWithPoints(this.currentHighlight);
 			if (secondary) {
 				boolean enough = true;
 				for (Aspect a : this.currentHighlight.tags.getAspects()) {

@@ -45,6 +45,13 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 		this.xpReward = 20;
 	}
 
+	/** getCanSpawnHere: never within 32 blocks (16 up and down) of another guardian, and otherwise as any monster. */
+	public static boolean checkGuardianSpawnRules(EntityType<EldritchGuardianEntity> type, net.minecraft.world.level.ServerLevelAccessor level,
+		net.minecraft.world.entity.EntitySpawnReason reason, net.minecraft.core.BlockPos pos, net.minecraft.util.RandomSource random) {
+		return level.getEntitiesOfClass(EldritchGuardianEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(32.0, 16.0, 32.0)).isEmpty()
+			&& Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
+	}
+
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
 			.add(Attributes.MAX_HEALTH, 50.0)

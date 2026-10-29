@@ -33,9 +33,6 @@ import net.minecraft.world.level.Level;
  * girdle throws out a blast, a revitalizing ring heals and an emergency amulet refills it, each on its own cooldown.
  */
 public final class RunicShielding {
-	public static final int SHIELD_RECHARGE = 2000;
-	public static final int SHIELD_WAIT = 80;
-	public static final int SHIELD_COST = 50;
 
 	/** max, charged, kinetic, healing, emergency */
 	private record Info(int max, int charged, int kinetic, int healing, int emergency) {
@@ -115,12 +112,13 @@ public final class RunicShielding {
 		RUNIC_CHARGE.putIfAbsent(id, 0);
 		NEXT_CYCLE.putIfAbsent(id, 0L);
 		long time = System.currentTimeMillis();
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
 		int charge = RUNIC_CHARGE.get(id);
 		if (charge > info.max()) {
 			charge = info.max();
-		} else if (charge < info.max() && NEXT_CYCLE.get(id) < time
-			&& WandManager.consumeVisFromInventory(player, new AspectList().add(Aspect.AIR, SHIELD_COST).add(Aspect.EARTH, SHIELD_COST))) {
-			long interval = SHIELD_RECHARGE - info.charged() * 500L;
+		} else if (charge < info.max() && NEXT_CYCLE.get(id) < time && (cfg.runicCost <= 0
+			|| WandManager.consumeVisFromInventory(player, new AspectList().add(Aspect.AIR, cfg.runicCost).add(Aspect.EARTH, cfg.runicCost)))) {
+			long interval = cfg.runicRechargeSpeed - info.charged() * 500L;
 			NEXT_CYCLE.put(id, time + interval);
 			RUNIC_CHARGE.put(id, ++charge);
 		}
@@ -221,7 +219,7 @@ public final class RunicShielding {
 			level.playSound(null, player.blockPosition(), TVSounds.RUNICSHIELDCHARGE, SoundSource.PLAYERS, 1.0F, 1.0F);
 		}
 		if (charge <= 0) {
-			rechargeDelay = SHIELD_WAIT;
+			rechargeDelay = dev.neothaum.config.NeoThaumConfig.current.runicRechargeDelay;
 		}
 		RUNIC_CHARGE.put(id, charge);
 		send(player, charge, info.max());

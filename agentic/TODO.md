@@ -250,9 +250,10 @@ core's AI (use, liquid, essentia, sorting colours), and the giant taintacle's pe
 - [x] **Server boot:** `./gradlew runGameTest` starts a dedicated server with NeoThaum and Trinkets (no tests yet; a smoke test).
 - [x] **Client on a dedicated server:** `NEOTHAUM_SCENES=multiplayer` (12 checks, all pass): recipe, research, warp, scan, Trinkets,
   node/crucible/jar, menu and wisp sync, and the Thaumonomicon opened with the use key.
-- [ ] **Server-owned settings:** TC4 sent 7 settings to joining clients (PacketConfig: cheat sheet, warded stone, mirrors, hard nodes,
-  wuss mode, research difficulty, aspect total cap). NeoThaum has only hard nodes of those, read on the server alone, so nothing needs
-  syncing yet. But the in-game config screen, on a client connected to a server, edits the client's own file, which does nothing there.
+- [x] **Server-owned settings:** done 2026-10-29. Research difficulty, aspect total cap, hard nodes and wuss mode go to each joining client
+  (TC4's PacketConfig) and are held apart from the client's own config, never saved, and dropped on leaving. Operators change them with
+  `/neothaum config`, which resends them to everyone. The config page on a remote server still edits the player's own file (says so on the
+  page). Cheat sheet, warded stone and mirrors are not in NeoThaum.
 - [ ] **JEI subtypes:** JEI lists phials, essences, wands, banners and jarred nodes as duplicates; register subtype interpreters.
 
 ## 🧩 Mod integrations to support eventually (addon code in `dev.neothaum.addon` / `client.addon`; all optional "suggests" deps)

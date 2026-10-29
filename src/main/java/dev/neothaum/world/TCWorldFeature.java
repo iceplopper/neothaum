@@ -37,6 +37,15 @@ public record TCWorldFeature(boolean nether) implements Feature {
 	public boolean place(WorldGenLevel world, ChunkGenerator gen, RandomSource random, BlockPos origin) {
 		int cx = origin.getX() & ~15;
 		int cz = origin.getZ() & ~15;
+		this.generate(world, random, cx, cz, true);
+		return true;
+	}
+
+	/**
+	 * ThaumcraftWorldGenerator.worldGeneration for the chunk at (cx, cz): {@code newGen} when the chunk is first made, otherwise a regeneration,
+	 * which runs only the parts Config's World_Regeneration switches on. Each part also needs its World_Generation switch.
+	 */
+	void generate(WorldGenLevel world, RandomSource random, int cx, int cz, boolean newGen) {
 		if (INFUSED[1] == null) {
 			INFUSED[1] = TVBlocks.AIR_INFUSED_STONE;
 			INFUSED[2] = TVBlocks.FIRE_INFUSED_STONE;
@@ -51,22 +60,41 @@ public record TCWorldFeature(boolean nether) implements Feature {
 			DEEP_INFUSED[5] = TVBlocks.DEEPSLATE_ORDER_INFUSED_STONE;
 			DEEP_INFUSED[6] = TVBlocks.DEEPSLATE_ENTROPY_INFUSED_STONE;
 		}
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		boolean aura = cfg.generateAuraNodes && (newGen || cfg.regenAuraNodes);
 		if (this.nether) {
-			generateWildNodes(world, random, cx, cz);
-			return true;
+			// generateNether: no totems there (generateTotem wants the overworld or the end), then a wild node
+			if (aura) {
+				generateWildNodes(world, random, cx, cz);
+			}
+			return;
 		}
 		// generateSurface's order: trees, ores, a node over a scattered feature or else a wild node, structures, then a totem if no node yet
-		generateVegetation(world, random, cx, cz);
-		generateOres(world, random, cx, cz);
-		boolean auraGen = generateScatteredFeatureNode(world, random, cx, cz);
-		if (!auraGen) {
-			auraGen = generateWildNodes(world, random, cx, cz);
+		if (cfg.generateTrees && (newGen || cfg.regenTrees)) {
+			generateVegetation(world, random, cx, cz);
 		}
-		auraGen |= generateStructures(world, random, cx, cz);
-		if (!auraGen) {
-			generateTotem(world, random, cx, cz);
+		generateOres(world, random, cx, cz, newGen);
+		boolean auraGen = false;
+		if (aura) {
+			auraGen = generateScatteredFeatureNode(world, random, cx, cz);
+			if (!auraGen) {
+				auraGen = generateWildNodes(world, random, cx, cz);
+			}
 		}
-		return true;
+		if (cfg.generateStructures && (newGen || cfg.regenStructures)) {
+			auraGen |= generateStructures(world, random, cx, cz);
+			// generateTotem: only in new chunks
+			if (!auraGen && newGen) {
+				generateTotem(world, random, cx, cz);
+			}
+		}
+	}
+
+	/** World regeneration: runs this chunk's generation again, as far as Config's World_Regeneration switches allow. */
+	public static void regenerate(net.minecraft.server.level.ServerLevel level, net.minecraft.world.level.ChunkPos pos) {
+		boolean nether = level.dimension() == net.minecraft.world.level.Level.NETHER;
+		RandomSource random = RandomSource.create(level.getSeed() ^ pos.pack() * 341873128712L);
+		new TCWorldFeature(nether).generate(level, random, pos.getMinBlockX(), pos.getMinBlockZ(), false);
 	}
 
 	/** The structures MapGenScatteredFeature made in TC4's day: desert and jungle temples and witch huts. */
@@ -251,24 +279,25 @@ public record TCWorldFeature(boolean nether) implements Feature {
 		}
 	}
 
-	private void generateOres(WorldGenLevel world, RandomSource random, int cx, int cz) {
+	private void generateOres(WorldGenLevel world, RandomSource random, int cx, int cz, boolean newGen) {
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
 		int bottom = world.getMinY();
 		// cinnabar: 18 single blocks in the bottom fifth of the world height (TC4: of 1.7's 256; here of -64..320, so mostly deepslate)
-		for (int i = 0; i < 18; i++) {
+		for (int i = 0; cfg.generateCinnabar && (newGen || cfg.regenCinnabar) && i < 18; i++) {
 			int x = cx + random.nextInt(16);
 			int y = bottom + random.nextInt((world.getMaxY() - bottom) / 5);
 			int z = cz + random.nextInt(16);
 			placeOre(world, new BlockPos(x, y, z), TVBlocks.CINNABAR_ORE, TVBlocks.DEEPSLATE_CINNABAR_ORE);
 		}
 		// amber: 20 single blocks within 25 blocks of the surface
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; cfg.generateAmber && (newGen || cfg.regenAmber) && i < 20; i++) {
 			int x = cx + random.nextInt(16);
 			int z = cz + random.nextInt(16);
 			int y = heightAt(world, x, z) - random.nextInt(25);
 			placeOre(world, new BlockPos(x, y, z), TVBlocks.AMBER_BEARING_STONE, TVBlocks.DEEPSLATE_AMBER_BEARING_STONE);
 		}
 		// infused stone: 8 veins of 6, biased towards the biome's primal
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; cfg.generateInfusedStone && (newGen || cfg.regenInfusedStone) && i < 8; i++) {
 			int x = cx + random.nextInt(16);
 			int z = cz + random.nextInt(16);
 			// TC4: anywhere from bedrock to 5 below the surface; the world now starts at y -64

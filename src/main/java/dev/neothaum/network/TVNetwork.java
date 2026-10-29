@@ -281,6 +281,19 @@ public final class TVNetwork {
 		}
 	}
 
+	/** PacketConfig: the server's research difficulty, aspect cap, hard nodes and wuss mode, which the client must follow. */
+	public record ConfigSync(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp) implements CustomPacketPayload {
+		public static final Type<ConfigSync> TYPE = new Type<>(NeoThaum.id("config_sync"));
+		public static final StreamCodec<ByteBuf, ConfigSync> CODEC = StreamCodec.composite(ByteBufCodecs.VAR_INT, ConfigSync::researchDifficulty,
+			ByteBufCodecs.VAR_INT, ConfigSync::aspectTotalCap, ByteBufCodecs.BOOL, ConfigSync::hardNodes, ByteBufCodecs.BOOL, ConfigSync::allowWarp,
+			ConfigSync::new);
+
+		@Override
+		public Type<ConfigSync> type() {
+			return TYPE;
+		}
+	}
+
 	// ------------------------------------------------------------------ client hooks (installed by the client entrypoint)
 
 	public static Consumer<CustomPacketPayload> clientSender = p -> {
@@ -301,6 +314,8 @@ public final class TVNetwork {
 		s2c.register(Shield.TYPE, Shield.CODEC);
 		s2c.register(EntityFx.TYPE, EntityFx.CODEC);
 		s2c.register(MiscEvent.TYPE, MiscEvent.CODEC);
+		s2c.register(ConfigSync.TYPE, ConfigSync.CODEC);
+		net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> sendConfig(handler.player));
 		var c2s = PayloadTypeRegistry.serverboundPlay();
 		c2s.register(Scan.TYPE, Scan.CODEC);
 		c2s.register(StartResearch.TYPE, StartResearch.CODEC);
@@ -395,7 +410,7 @@ public final class TVNetwork {
 		}
 		if (p.kind() == 1) {
 			ResearchManager.createResearchNoteForPlayer(player.level(), player, p.key());
-		} else {
+		} else if (ResearchManager.boughtWithPoints(ri)) {
 			var k = ResearchManager.knowledge(player).copy();
 			for (Aspect a : ri.tags.getAspects()) {
 				if (k.getAspectPool(a) < ri.tags.getAmount(a)) {
@@ -420,6 +435,12 @@ public final class TVNetwork {
 	}
 
 	// ------------------------------------------------------------------ senders
+
+	/** EventHandlerNetwork: the config packet goes to each player as they join, and to everyone when an operator changes a setting it carries. */
+	public static void sendConfig(ServerPlayer player) {
+		var c = dev.neothaum.config.NeoThaumConfig.current;
+		ServerPlayNetworking.send(player, new ConfigSync(c.researchDifficulty, c.aspectTotalCap, c.hardNodes, c.allowWarp));
+	}
 
 	public static void sendObjectAspects(ServerPlayer player) {
 		Map<Identifier, AspectList> m = new LinkedHashMap<>();

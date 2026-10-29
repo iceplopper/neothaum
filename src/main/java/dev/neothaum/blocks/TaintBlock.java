@@ -79,7 +79,7 @@ public class TaintBlock extends Block {
 		if (TVBiomes.is(level, p2, TVBiomes.TAINTED_LAND)) {
 			TaintFibreBlock.spreadFibres(level, p2);
 			if (this.kind == Kind.CRUST) {
-				if (level.isEmptyBlock(pos.above()) && random.nextInt(200) == 0) {
+				if (dev.neothaum.config.NeoThaumConfig.current.spawnTaintSpores && level.isEmptyBlock(pos.above()) && random.nextInt(200) == 0) {
 					dev.neothaum.entity.monster.TaintSporeSwarmer.spawnFromCrust(level, pos);
 				} else {
 					boolean doIt = level.getBlockState(pos.above()).getBlock() == this;

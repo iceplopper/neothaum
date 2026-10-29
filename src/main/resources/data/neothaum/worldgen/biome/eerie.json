@@ -80,6 +80,11 @@
               "type": "neothaum:pech",
               "count": 1,
               "weight": 10
+            },
+            {
+              "type": "neothaum:eldritch_guardian",
+              "count": 1,
+              "weight": 1
             }
           ]
         }

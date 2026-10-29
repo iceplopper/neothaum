@@ -405,6 +405,10 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
 	}
 
 	private void drawOrb(GuiGraphicsExtractor g, double x, double y, int color) {
+		if (dev.neothaum.config.NeoThaumConfig.current.colorBlind) {
+			// Config.colorBlind: every channel darkened, for contrast against the parchment
+			color = (int) ((color >> 16 & 0xFF) / 1.8F) << 16 | (int) ((color >> 8 & 0xFF) / 1.8F) << 8 | (int) ((color & 0xFF) / 1.8F);
+		}
 		int part = this.minecraft.player.tickCount % 8;
 		g.blit(RenderPipelines.GUI_TEXTURED, TVRenderTypes.PARTICLES, (int) x, (int) y, 128 + part * 32, 128, 16, 16, 16, 16, 256, 256, 0xFF000000 | color);
 	}

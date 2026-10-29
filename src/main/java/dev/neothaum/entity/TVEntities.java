@@ -146,7 +146,8 @@ public final class TVEntities {
 		dev.neothaum.entity.monster.MindSpiderEntity::createAttributes, b -> b, 11184810, 4210752);
 	public static final EntityType<dev.neothaum.entity.monster.EldritchGuardianEntity> ELDRITCH_GUARDIAN = mob("eldritch_guardian",
 		dev.neothaum.entity.monster.EldritchGuardianEntity::new, MobCategory.MONSTER, 0.8F, 2.25F,
-		dev.neothaum.entity.monster.EldritchGuardianEntity::createAttributes, b -> b, 2236962, 4210752);
+		dev.neothaum.entity.monster.EldritchGuardianEntity::createAttributes, b -> b.spawnPlacement(SpawnPlacementTypes.ON_GROUND,
+			Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, dev.neothaum.entity.monster.EldritchGuardianEntity::checkGuardianSpawnRules), 2236962, 4210752);
 	public static final EntityType<CrimsonKnightEntity> CULTIST_KNIGHT = mob("cultist_knight",
 		CrimsonKnightEntity::new, MobCategory.MONSTER, 0.6F, 1.95F,
 		CrimsonKnightEntity::createAttributes, b -> b, 8060928, 12951641);

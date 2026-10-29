@@ -21,7 +21,7 @@ public abstract class GolemGoal extends Goal {
 
 	/** theGolem.ticksExisted % Config.golemDelay <= 0. */
 	protected boolean delayTick() {
-		if (this.golem.tickCount - this.lastDelay < GolemEntity.GOLEM_DELAY) {
+		if (this.golem.tickCount - this.lastDelay < dev.neothaum.config.NeoThaumConfig.current.golemDelay) {
 			return false;
 		}
 		this.lastDelay = this.golem.tickCount;

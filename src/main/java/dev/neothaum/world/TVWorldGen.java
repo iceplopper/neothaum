@@ -21,6 +21,7 @@ public final class TVWorldGen {
 		// MazeHandler.loadMaze / the labyrinth lives with the server
 		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(dev.neothaum.world.outer.MazeHandler::load);
 		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(s -> dev.neothaum.world.outer.MazeHandler.unload());
+		WorldRegen.init();
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.VEGETAL_DECORATION, TC_WORLD);
 		BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Decoration.VEGETAL_DECORATION, TC_NETHER);
 		// ConfigEntities.initEntitySpawns: angry zombies wherever monsters spawn, wisps in the nether

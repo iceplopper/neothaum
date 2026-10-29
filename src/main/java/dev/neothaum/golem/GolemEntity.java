@@ -103,10 +103,6 @@ import org.jspecify.annotations.Nullable;
  * 1-4 don't attack monsters, animals, players, creepers (use core: 1 left click, 2 sneak), 5 ore dictionary, 6 ignore damage, 7 ignore NBT.
  */
 public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<Integer>, ContainerUser {
-	/** Config.golemDelay and golemIgnoreDelay. */
-	public static final int GOLEM_DELAY = 5;
-	public static final int GOLEM_IGNORE_DELAY = 10000;
-
 	private static final EntityDataAccessor<Integer> TYPE = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> ADVANCED = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> CORE = SynchedEntityData.defineId(GolemEntity.class, EntityDataSerializers.INT);
@@ -870,7 +866,7 @@ public class GolemEntity extends AbstractGolem implements ExtendedMenuProvider<I
 
 	/** The chest the golem has open, so it shows open while the golem works it (Config.golemChestInteract). */
 	public void openContainer(@Nullable BlockPos pos) {
-		if (pos == null) {
+		if (pos == null || !dev.neothaum.config.NeoThaumConfig.current.golemChestInteract) {
 			this.closeContainer();
 			return;
 		}

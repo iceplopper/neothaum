@@ -242,6 +242,15 @@ public final class ResearchManager {
 		return CATEGORIES;
 	}
 
+	/**
+	 * Whether research is bought with research points rather than solved at the research table, by Config.researchDifficulty: everything on easy
+	 * (-1), the secondary research on normal (0), nothing on hard (1).
+	 */
+	public static boolean boughtWithPoints(ResearchItem ri) {
+		int difficulty = dev.neothaum.config.NeoThaumConfig.researchDifficulty();
+		return difficulty == -1 || difficulty == 0 && ri.isSecondary();
+	}
+
 	public static ResearchItem getResearch(String key) {
 		ensureLoaded();
 		ResearchItem r = ENTRIES.get(key);
@@ -435,7 +444,7 @@ public final class ResearchManager {
 		if (allValidResearch == null) {
 			allValidResearch = new ArrayList<>();
 			for (ResearchItem ri : entries()) {
-				boolean secondary = ri.isSecondary(); // Config.researchDifficulty == 0
+				boolean secondary = boughtWithPoints(ri);
 				if (!secondary && !ri.isHidden() && !ri.isLost() && !ri.isAutoUnlock() && !ri.isVirtual() && !ri.isStub()) {
 					allValidResearch.add(ri);
 				}

@@ -14,14 +14,17 @@ import net.minecraft.resources.Identifier;
 
 /** Ports of PlayerNotifications + REHNotifyHandler: the text log bottom-right and aspect icons flying to the corner. */
 public final class Notifications {
-	private static final int DELAY = 5000;
-	private static final int MAX = 15;
 	private static final Identifier BOOK = NeoThaum.id("textures/items/thaumonomicon.png");
 
 	record Note(String text, Identifier image, long expire, long created, int color) {
 	}
 
 	record AspectNote(Aspect aspect, float startX, float startY, long created, long expire) {
+	}
+
+	/** Config.notificationDelay: how long a notification takes to scroll down and fade, in milliseconds. */
+	private static long delay() {
+		return dev.neothaum.config.NeoThaumConfig.current.notificationDelay;
 	}
 
 	private static List<Note> notes = new ArrayList<>();
@@ -37,8 +40,8 @@ public final class Notifications {
 
 	public static void add(String text, Identifier image, int color) {
 		long time = System.nanoTime() / 1000000L;
-		long timeBonus = notes.isEmpty() ? DELAY / 2 : 0L;
-		notes.add(new Note(text, image, time + DELAY + timeBonus, time + DELAY / 4, color));
+		long timeBonus = notes.isEmpty() ? delay() / 2 : 0L;
+		notes.add(new Note(text, image, time + delay() + timeBonus, time + delay() / 4, color));
 	}
 
 	public static void addAspect(Aspect aspect) {
@@ -52,7 +55,7 @@ public final class Notifications {
 		boolean first = true;
 		for (Note li : notes) {
 			if (li.expire >= time) {
-				temp.add(first ? li : new Note(li.text, li.image, time + DELAY, li.created, li.color));
+				temp.add(first ? li : new Note(li.text, li.image, time + delay(), li.created, li.color));
 			}
 			first = false;
 		}
@@ -70,15 +73,15 @@ public final class Notifications {
 		int l = g.guiHeight();
 		List<Note> list = listAndUpdate(time);
 		float shift = -8.0F;
-		for (int entry = 0; entry < list.size() && entry < MAX; entry++) {
+		for (int entry = 0; entry < list.size() && entry < dev.neothaum.config.NeoThaumConfig.current.notificationMax; entry++) {
 			Note li = list.get(entry);
 			int size = mc.font.width(li.text) / 2;
 			int alpha = 255;
 			if (entry == list.size() - 1 && li.created > time) {
-				alpha = 255 - (int) ((float) (li.created - time) / (DELAY / 4) * 240.0F);
+				alpha = 255 - (int) ((float) (li.created - time) / (delay() / 4) * 240.0F);
 			}
-			if (li.expire < time + DELAY) {
-				alpha = (int) (255.0F - (float) (time + DELAY - li.expire) / DELAY * 240.0F);
+			if (li.expire < time + delay()) {
+				alpha = (int) (255.0F - (float) (time + delay() - li.expire) / delay() * 240.0F);
 				shift = -8.0F * (alpha / 255.0F);
 			}
 			int color = (Math.max(4, alpha / 2) << 24) | 0xFFFFFF;
@@ -91,7 +94,7 @@ public final class Notifications {
 				GuiUtil.blitFull(g, RenderPipelines.GUI_TEXTURED, li.image, k - 9, l - entry * 8 + shift - 6.0F, 8, 8, GuiUtil.color(li.color, alpha / 511.0F));
 			}
 			if (entry == list.size() - 1 && li.created > time) {
-				float scale = (float) (li.created - time) / (DELAY / 4);
+				float scale = (float) (li.created - time) / (delay() / 4);
 				int a2 = 255 - (int) (scale * 240.0F);
 				g.pose().pushMatrix();
 				g.pose().translate(k - 5 - 8.0F * scale - (1.0F - scale) * (1.0F - scale) * (1.0F - scale) * size * 3.0F, l - entry * 8 + shift - 2.0F - 8.0F * scale);

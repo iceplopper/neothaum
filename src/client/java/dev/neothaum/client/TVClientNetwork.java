@@ -79,6 +79,15 @@ public final class TVClientNetwork {
 			HIGHLIGHTED.add("ASPECTS");
 			HIGHLIGHTED.add("BASICS");
 		});
+		// PacketConfig: on another's server, its settings win over this game's own (in single player they are the same settings already)
+		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.ConfigSync.TYPE, (p, ctx) -> {
+			if (!ctx.client().hasSingleplayerServer()) {
+				dev.neothaum.config.NeoThaumConfig.synced = new dev.neothaum.config.NeoThaumConfig.Synced(p.researchDifficulty(), p.aspectTotalCap(),
+					p.hardNodes(), p.allowWarp());
+			}
+		});
+		net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler, client) ->
+			dev.neothaum.config.NeoThaumConfig.synced = null);
 		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.AspectPool.TYPE, (p, ctx) -> {
 			if (p.amount() > 0) {
 				String text = Component.translatable("tc.addaspectpool").getString().replaceAll("%s", p.amount() + "").replaceAll("%n", p.aspect().getName());

@@ -176,7 +176,7 @@ public class TaintFibreBlock extends Block {
 			level.setBlock(p2, TVBlocks.TAINTED_SOIL.defaultBlockState(), Block.UPDATE_ALL);
 			level.blockEvent(p2, TVBlocks.TAINTED_SOIL, 1, 0);
 		}
-		if (md == 3 && random.nextInt(10) == 0 && level.isEmptyBlock(pos.above())) {
+		if (md == 3 && dev.neothaum.config.NeoThaumConfig.current.spawnTaintSpores && random.nextInt(10) == 0 && level.isEmptyBlock(pos.above())) {
 			level.setBlock(pos, state.setValue(TYPE, 4), Block.UPDATE_ALL);
 			TaintSpore.spawnOnStalk(level, pos);
 		} else if (md == 4 && !TaintSpore.hasSporeOn(level, pos)) {

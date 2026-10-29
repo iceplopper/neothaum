@@ -30,7 +30,7 @@ import net.minecraft.world.phys.HitResult;
 /** ItemFocusPortableHole, the Wand Focus: Portable Hole. Opens a temporary tunnel straight through solid blocks, paying vis by its depth. */
 public class PortableHoleFocusItem extends FocusItem {
 	private static final AspectList COST = new AspectList().add(Aspect.ENTROPY, 10).add(Aspect.AIR, 10);
-	/** ThaumcraftApi.portableHoleBlackList, as a block tag. */
+	/** ThaumcraftApi.portableHoleBlackList, as a block tag (for other mods); Config.portablehole_blacklist is the player's own list. */
 	public static final TagKey<Block> BLACKLIST = TagKey.create(Registries.BLOCK, NeoThaum.id("portable_hole_blacklist"));
 	private static final Identifier DEPTH = NeoThaum.id("items/focus_portablehole_depth");
 
@@ -59,7 +59,8 @@ public class PortableHoleFocusItem extends FocusItem {
 	}
 
 	private static boolean blocks(Level level, BlockPos pos, BlockState bs) {
-		return bs.is(BLACKLIST) || bs.is(Blocks.BEDROCK) || bs.is(TVBlocks.EMPTY_SPACE) || bs.isAir() || bs.getDestroySpeed(level, pos) == -1.0F;
+		return bs.is(BLACKLIST) || dev.neothaum.config.NeoThaumConfig.portableHoleBlacklist().contains(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(bs.getBlock()))
+			|| bs.is(Blocks.BEDROCK) || bs.is(TVBlocks.EMPTY_SPACE) || bs.isAir() || bs.getDestroySpeed(level, pos) == -1.0F;
 	}
 
 	/** ItemFocusPortableHole.createHole: swap a block for empty space that remembers it; {@code side} is the bore's face (or -1 for a ring). */
