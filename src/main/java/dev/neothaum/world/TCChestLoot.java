@@ -22,7 +22,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntPr
  * the time, of one to three draws.
  */
 public final class TCChestLoot {
-	private record Entry(Item item, int min, int max, int weight) {
+	public record Entry(Item item, int min, int max, int weight) {
 	}
 
 	private static final Map<ResourceKey<LootTable>, Integer> TABLES = Map.of(BuiltInLootTables.SIMPLE_DUNGEON, 0, BuiltInLootTables.JUNGLE_TEMPLE, 0,
@@ -33,7 +33,7 @@ public final class TCChestLoot {
 	}
 
 	/** kind 0: dungeons and temples (weights 5, 4, 1); kind 1: mineshafts and strongholds (4, 3, 1). */
-	private static List<Entry> entries(int kind) {
+	public static List<Entry> entries(int kind) {
 		int c = kind == 0 ? 5 : 4, u = kind == 0 ? 4 : 3;
 		int cmax = 3, umax = 2;
 		return List.of(new Entry(TVItems.LOOT_BAG_COMMON, 1, cmax, c), new Entry(TVItems.THAUMIUM_INGOT, 1, cmax, c), new Entry(TVItems.AMBER, 1, cmax, c),

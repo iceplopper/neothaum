@@ -9,3 +9,13 @@ original/
 
 *.log
 agentic/tmp/
+
+# Not needed to build the mod: agent notes, local tools, built releases, the wiki source
+agentic/
+CLAUDE.md
+GEMINI.md
+Aspect Review.xlsx
+run-gource.bat
+start-test-client.bat
+versions/
+wiki/

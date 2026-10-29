@@ -58,177 +58,14 @@ public class VisualTests implements FabricClientGameTest {
 			dev.neothaum.config.NeoThaumConfig.current.obsidianTotemMultiplier = 1.0F;
 			return;
 		}
+		// NEOTHAUM_SCENES=essentia,suction,infusion runs just those scenes, for a quicker check of one area
+		if (scenesEnv != null && !scenesEnv.isBlank()) {
+			runScenes(ctx, java.util.Set.of(scenesEnv.toLowerCase().split("\\s*,\\s*")));
+			return;
+		}
 		try (TestSingleplayerContext sp = ctx.worldBuilder().create()) {
 			var server = sp.getServer();
 			waitChunks(sp, ctx);
-			// NEOTHAUM_SCENES=essentia,suction,infusion runs just those scenes, for a quicker check of one area
-			String only = System.getenv("NEOTHAUM_SCENES");
-			if (only != null && !only.isBlank()) {
-				java.util.Set<String> scenes = java.util.Set.of(only.toLowerCase().split("\\s*,\\s*"));
-				server.runCommand("time set noon");
-				server.runCommand("weather clear");
-				if (scenes.contains("essentia")) {
-					essentiaScene(ctx, server, sp);
-				}
-				if (scenes.contains("suction")) {
-					suctionScene(ctx, server, sp);
-				}
-				if (scenes.contains("infusion")) {
-					infusionScene(ctx, server, sp);
-				}
-				if (scenes.contains("tabs")) {
-					tabsScene(ctx, server);
-				}
-				if (scenes.contains("bellows")) {
-					bellowsScene(ctx, server, sp);
-				}
-				if (scenes.contains("mobs")) {
-					mobsScene(ctx, server, sp);
-				}
-				if (scenes.contains("peaceful")) {
-					peacefulScene(ctx, server, sp);
-				}
-				if (scenes.contains("wands")) {
-					wandsScene(ctx, server, sp);
-				}
-				if (scenes.contains("visnet")) {
-					visnetScene(ctx, server, sp);
-				}
-				if (scenes.contains("nodejar")) {
-					nodeJarScene(ctx, server, sp);
-				}
-				if (scenes.contains("icons")) {
-					iconsScene(ctx);
-				}
-				if (scenes.contains("devices")) {
-					devicesScene(ctx, server, sp);
-				}
-				if (scenes.contains("eldritch")) {
-					eldritchScene(ctx, server, sp);
-				}
-				if (scenes.contains("sounds")) {
-					soundsScene(ctx, server, sp);
-				}
-				if (scenes.contains("pech")) {
-					pechScene(ctx, server, sp);
-				}
-				if (scenes.contains("outer")) {
-					outerScene(ctx, server, sp);
-				}
-				if (scenes.contains("aspects")) {
-					// every item's aspects as the game works them out (explicit and from recipes), to aspect_table.json
-					ctx.waitTicks(40);
-					dumpAspectTable(ctx);
-					// what scanning a mob would give, for a sample (including ones TC4 never had)
-					server.runOnServer(srv -> {
-						var level = srv.overworld();
-						for (String id : new String[]{"minecraft:breeze", "minecraft:skeleton_horse", "minecraft:zombie_horse", "minecraft:copper_golem", "minecraft:zombie",
-							"neothaum:thaumic_slime", "neothaum:taintacle_small", "neothaum:taint_spore_swarmer", "neothaum:eldritch_warden"}) {
-							var type = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(net.minecraft.resources.Identifier.parse(id));
-							var e = type.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
-							var al = e == null ? null : dev.neothaum.aspects.ObjectAspects.getEntityAspects(e);
-							NeoThaum.LOGGER.info("[visual-test] mob aspects {}: {}", id, al);
-						}
-					});
-				}
-				if (scenes.contains("research")) {
-					// the full run's checks of item aspects and every openable Thaumonomicon page, on their own
-					dumpAspectGaps(server);
-					auditResearch(ctx);
-				}
-				if (scenes.contains("audit")) {
-					auditScene(ctx, server, sp);
-				}
-				if (scenes.contains("metals")) {
-					metalsScene(server);
-				}
-				if (scenes.contains("elemental")) {
-					elementalScene(ctx, server);
-				}
-				if (scenes.contains("baubles")) {
-					baublesScene(ctx, server);
-				}
-				if (scenes.contains("pechtrade")) {
-					pechTradeScene(server);
-				}
-				if (scenes.contains("trinkets")) {
-					trinketsScene(ctx, server);
-				}
-				if (scenes.contains("rei")) {
-					reiScene(ctx);
-				}
-				if (scenes.contains("foods")) {
-					foodsScene(server);
-				}
-				if (scenes.contains("warpfx")) {
-					warpFxScene(ctx, server);
-				}
-				if (scenes.contains("brightnode")) {
-					brightNodeScene(ctx, server, sp);
-				}
-				if (scenes.contains("wisplight")) {
-					wispLightScene(ctx, server, sp);
-				}
-				if (scenes.contains("bore")) {
-					boreScene(ctx, server);
-				}
-				if (scenes.contains("harness")) {
-					harnessScene(ctx, server);
-				}
-				if (scenes.contains("golemai")) {
-					golemAiScene(ctx, server);
-				}
-				if (scenes.contains("config")) {
-					configScene(ctx, server);
-				}
-				if (scenes.contains("worldmap")) {
-					worldMapScene(ctx, server, sp);
-				}
-				if (scenes.contains("golemancy")) {
-					golemancyScene(ctx, server);
-				}
-				if (scenes.contains("tooltips")) {
-					tooltipDump(ctx);
-				}
-				if (scenes.contains("templates")) {
-					buildVillageTemplates(server);
-				}
-				if (scenes.contains("config")) {
-					for (int t = 0; t < 4; t++) {
-						int tab = t;
-						ctx.setScreen(() -> {
-							var screen = new dev.neothaum.client.gui.NeoThaumConfigScreen(null);
-							try {
-								var f = dev.neothaum.client.gui.NeoThaumConfigScreen.class.getDeclaredField("activeTab");
-								f.setAccessible(true);
-								f.set(screen, tab);
-							} catch (ReflectiveOperationException e) {
-								throw new RuntimeException(e);
-							}
-							return screen;
-						});
-						ctx.waitTicks(3);
-						shot(ctx, "config_" + t);
-					}
-					ctx.setScreen(() -> null);
-				}
-				if (scenes.contains("staves")) {
-					server.runOnServer(srv -> {
-						for (String rod : new String[]{"greatwood", "greatwood_staff", "obsidian_staff", "silverwood_staff", "primal_staff"}) {
-							var w = dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", rod);
-							NeoThaum.LOGGER.info("[visual-test] staves: {} staff={} maxVis={} attributes={}", rod, dev.neothaum.items.WandItem.isStaff(w),
-								dev.neothaum.items.WandItem.getMaxVis(w), w.get(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS));
-						}
-					});
-				}
-				if (scenes.contains("golems")) {
-					golemsScene(ctx, server, sp);
-				}
-				if (scenes.contains("villages")) {
-					villagesScene(ctx, server, sp);
-				}
-				return;
-			}
 			dumpAspectGaps(server);
 			dumpAspectTable(ctx);
 			ctx.waitTicks(40);
@@ -1200,6 +1037,208 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		shot(ctx, "pech_paid");
 		ctx.runOnClient(mc -> mc.player.closeContainer());
+	}
+
+	/** The scenes NEOTHAUM_SCENES can name, in the order they run. */
+	private static final String[] SCENES = {
+		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
+		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
+		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai",
+		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
+
+	/**
+	 * Runs the named scenes one after another in a shared world, tidied between them (mobs removed, the player back in creative at the start
+	 * with an empty inventory, noon, clear weather). A scene that ends with the player dead gets a fresh world for the next one.
+	 */
+	private static void runScenes(ClientGameTestContext ctx, java.util.Set<String> wanted) {
+		for (String name : wanted) {
+			if (!java.util.Arrays.asList(SCENES).contains(name)) {
+				NeoThaum.LOGGER.warn("[visual-test] no scene called {}", name);
+			}
+		}
+		TestSingleplayerContext sp = null;
+		try {
+			for (String name : SCENES) {
+				if (!wanted.contains(name)) {
+					continue;
+				}
+				if (sp == null) {
+					sp = ctx.worldBuilder().create();
+					waitChunks(sp, ctx);
+				} else {
+					ctx.setScreen(() -> null);
+					for (String cmd : new String[]{"execute in minecraft:overworld run tp @a 0 120 0", "kill @e[type=!player]", "gamemode creative @a",
+						"clear @a", "effect clear @a"}) {
+						sp.getServer().runCommand(cmd);
+					}
+				}
+				sp.getServer().runCommand("time set noon");
+				sp.getServer().runCommand("weather clear");
+				ctx.waitTicks(5);
+				NeoThaum.LOGGER.info("[visual-test] scene {}", name);
+				runScene(name, ctx, sp.getServer(), sp);
+				boolean dead = sp.getServer().computeOnServer(srv -> srv.getPlayerList().getPlayers().getFirst().isDeadOrDying());
+				if (dead) {
+					NeoThaum.LOGGER.info("[visual-test] the player died in scene {}; a fresh world for the next", name);
+					sp.close();
+					sp = null;
+				}
+			}
+		} finally {
+			if (sp != null) {
+				sp.close();
+			}
+		}
+	}
+
+	private static void runScene(String scene, ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
+		TestSingleplayerContext sp) {
+		switch (scene) {
+			case "essentia" -> {
+				essentiaScene(ctx, server, sp);
+			}
+			case "suction" -> {
+				suctionScene(ctx, server, sp);
+			}
+			case "infusion" -> {
+				infusionScene(ctx, server, sp);
+			}
+			case "tabs" -> {
+				tabsScene(ctx, server);
+			}
+			case "bellows" -> {
+				bellowsScene(ctx, server, sp);
+			}
+			case "mobs" -> {
+				mobsScene(ctx, server, sp);
+			}
+			case "peaceful" -> {
+				peacefulScene(ctx, server, sp);
+			}
+			case "wands" -> {
+				wandsScene(ctx, server, sp);
+			}
+			case "visnet" -> {
+				visnetScene(ctx, server, sp);
+			}
+			case "nodejar" -> {
+				nodeJarScene(ctx, server, sp);
+			}
+			case "icons" -> {
+				iconsScene(ctx);
+			}
+			case "devices" -> {
+				devicesScene(ctx, server, sp);
+			}
+			case "eldritch" -> {
+				eldritchScene(ctx, server, sp);
+			}
+			case "sounds" -> {
+				soundsScene(ctx, server, sp);
+			}
+			case "pech" -> {
+				pechScene(ctx, server, sp);
+			}
+			case "outer" -> {
+				outerScene(ctx, server, sp);
+			}
+			case "aspects" -> {
+				// every item's aspects as the game works them out (explicit and from recipes), to aspect_table.json
+				ctx.waitTicks(40);
+				dumpAspectTable(ctx);
+				// what scanning a mob would give, for a sample (including ones TC4 never had)
+				server.runOnServer(srv -> {
+					var level = srv.overworld();
+					for (String id : new String[]{"minecraft:breeze", "minecraft:skeleton_horse", "minecraft:zombie_horse", "minecraft:copper_golem", "minecraft:zombie",
+						"neothaum:thaumic_slime", "neothaum:taintacle_small", "neothaum:taint_spore_swarmer", "neothaum:eldritch_warden"}) {
+						var type = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(net.minecraft.resources.Identifier.parse(id));
+						var e = type.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+						var al = e == null ? null : dev.neothaum.aspects.ObjectAspects.getEntityAspects(e);
+						NeoThaum.LOGGER.info("[visual-test] mob aspects {}: {}", id, al);
+					}
+				});
+			}
+			case "research" -> {
+				// the full run's checks of item aspects and every openable Thaumonomicon page, on their own
+				dumpAspectGaps(server);
+				auditResearch(ctx);
+			}
+			case "audit" -> {
+				auditScene(ctx, server, sp);
+			}
+			case "metals" -> {
+				metalsScene(server);
+			}
+			case "elemental" -> {
+				elementalScene(ctx, server);
+			}
+			case "baubles" -> {
+				baublesScene(ctx, server);
+			}
+			case "pechtrade" -> {
+				pechTradeScene(server);
+			}
+			case "trinkets" -> {
+				trinketsScene(ctx, server);
+			}
+			case "rei" -> {
+				reiScene(ctx);
+			}
+			case "foods" -> {
+				foodsScene(server);
+			}
+			case "warpfx" -> {
+				warpFxScene(ctx, server);
+			}
+			case "brightnode" -> {
+				brightNodeScene(ctx, server, sp);
+			}
+			case "wisplight" -> {
+				wispLightScene(ctx, server, sp);
+			}
+			case "bore" -> {
+				boreScene(ctx, server);
+			}
+			case "harness" -> {
+				harnessScene(ctx, server);
+			}
+			case "golemai" -> {
+				golemAiScene(ctx, server);
+			}
+			case "config" -> {
+				configScene(ctx, server);
+			}
+			case "worldmap" -> {
+				worldMapScene(ctx, server, sp);
+			}
+			case "golemancy" -> {
+				golemancyScene(ctx, server);
+			}
+			case "tooltips" -> {
+				tooltipDump(ctx);
+			}
+			case "templates" -> {
+				buildVillageTemplates(server);
+			}
+			case "staves" -> {
+				server.runOnServer(srv -> {
+					for (String rod : new String[]{"greatwood", "greatwood_staff", "obsidian_staff", "silverwood_staff", "primal_staff"}) {
+						var w = dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", rod);
+						NeoThaum.LOGGER.info("[visual-test] staves: {} staff={} maxVis={} attributes={}", rod, dev.neothaum.items.WandItem.isStaff(w),
+							dev.neothaum.items.WandItem.getMaxVis(w), w.get(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS));
+					}
+				});
+			}
+			case "golems" -> {
+				golemsScene(ctx, server, sp);
+			}
+			case "villages" -> {
+				villagesScene(ctx, server, sp);
+			}
+			default -> {
+			}
+		}
 	}
 
 	/** Thaumic slimes of three sizes left to hop about and then hurt, with every sound the client starts logged. */
@@ -2662,6 +2701,8 @@ public class VisualTests implements FabricClientGameTest {
 						.create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST))
 						.forEach(s -> dungeon.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).getPath()));
 				}
+				// and every treasure NeoThaum adds to dungeon chests, rare ones included, which 200 rolls can miss
+				dev.neothaum.world.TCChestLoot.entries(0).forEach(e -> dungeon.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(e.item()).getPath()));
 				other.removeAll(dungeon);
 				check("pech kind " + type + " pays only from its list or dungeon loot", other.isEmpty(), "unexpected=" + other);
 				// refusals: nothing it values on offer, or payout still waiting
