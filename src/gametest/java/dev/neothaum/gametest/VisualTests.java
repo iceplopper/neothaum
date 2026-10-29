@@ -115,6 +115,11 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("outer")) {
 					outerScene(ctx, server, sp);
 				}
+				if (scenes.contains("aspects")) {
+					// every item's aspects as the game works them out (explicit and from recipes), to aspect_table.json
+					ctx.waitTicks(40);
+					dumpAspectTable(ctx);
+				}
 				if (scenes.contains("research")) {
 					// the full run's checks of item aspects and every openable Thaumonomicon page, on their own
 					dumpAspectGaps(server);

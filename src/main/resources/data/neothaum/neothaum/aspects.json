@@ -3052,7 +3052,7 @@
    }
   },
   {
-   "entity": "neothaum:thaum_slime",
+   "entity": "neothaum:thaumic_slime",
    "aspects": {
     "limus": 2,
     "praecantatio": 1,
@@ -3085,7 +3085,7 @@
    }
   },
   {
-   "entity": "neothaum:taintacle_tiny",
+   "entity": "neothaum:taintacle_small",
    "aspects": {
     "vitium": 1,
     "aqua": 1
@@ -3106,7 +3106,7 @@
    }
   },
   {
-   "entity": "neothaum:taint_swarmer",
+   "entity": "neothaum:taint_spore_swarmer",
    "aspects": {
     "vitium": 2,
     "aer": 2
