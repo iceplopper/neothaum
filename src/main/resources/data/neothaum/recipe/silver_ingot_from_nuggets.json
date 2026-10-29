@@ -1,0 +1,5 @@
+{
+  "type": "neothaum:nuggets_to_ingot",
+  "nugget": "neothaum:silver_nugget",
+  "result_tag": "c:ingots/silver"
+}

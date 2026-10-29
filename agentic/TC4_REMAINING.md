@@ -151,30 +151,14 @@ Size guide: **S** = an hour or two, **M** = a session, **L** = several sessions.
 
 ## Still to do
 
-Re-audited 2026-10-28 (after 1.0.7) by comparing TC4's registered entities, items, blocks, research, sounds, potions, world generation and
-commands with NeoThaum's. Everything in the old list (Outer Lands, eldritch structures, cultist portal, champions, barrows, hilltop stones,
-villages, ethereal bloom) is done. What is left:
+Re-audited 2026-10-28 (after 1.0.7). All five gaps that audit found are now done:
 
-### World generation (S-M)
-- **Obsidian totems:** ThaumcraftWorldGenerator.generateTotem, in the overworld and the Nether (1 in nodeRarity x 10 chunks): an obsidian
-  tile base, an obsidian totem pillar, and a *charged* obsidian totem (blockCosmeticSolid 8) with an aura node in it. Neither the
-  generation nor the charged totem block exists.
-- **Nodes over vanilla structures:** TC4 put a random aura node 3 blocks above every scattered feature (desert and jungle temples, witch
-  huts) the first time a chunk near it generated.
-
-### Small behaviour and polish (S)
-- **EntitySpecialItem:** boss pearls, crucible products and wand-made items (the Thaumonomicon from a bookshelf) float gently upward and
-  ignore explosions; NeoThaum drops ordinary items.
-- **Sounds:** the cultist portal's ambient "monolith" hum (every 540 ticks), loot urns' "urnbreak" break sound, and the crucible's "spill"
-  sound when items dissolve (NeoThaum plays a bubble instead).
-- **Eldritch Obelisk Placer** (creative/debug item, ItemEldritchObject 4).
-
-### Commands (S)
-- **/thaumcraft:** research list / give / all / reset, aspect add, warp add / set, for a player. NeoThaum registers no commands.
-
-### Cross-mod (M, optional)
-- **Native tin, silver and lead clusters** and the tin/silver/lead nuggets, with the PURETIN/PURESILVER/PURELEAD and TRANS* research,
-  active only when another mod supplies those ores (c: tags). The research entries exist but their recipe pages are placeholders.
+- **/neothaum command** (TC4's /thaumcraft, alias /nt): research list/all/reset/<key>, aspect, warp add/set.
+- **Sounds:** crucible "spill", loot urn "urnbreak", cultist portal "monolith" hum. **Eldritch Obelisk Placer** (creative).
+- **Floating special items** (EntitySpecialItem): boss pearls, crucible output, the wand-made Thaumonomicon.
+- **Obsidian totems** with the Charged Obsidian Totem and its node; **nodes over desert/jungle temples and witch huts**.
+- **Tin, silver and lead clusters and nuggets**, active only when a mod fills c:ingots/<metal> (research, crucible, smelting,
+  nugget crafting, bore/excavation clusters, smelting bonus, Pech trades, creative tab).
 
 ### Test coverage still missing
 - **Gametests** for the elemental tools and baubles, and Pech trading.
@@ -182,8 +166,4 @@ villages, ethereal bloom) is done. What is left:
 
 ## Suggested order
 
-1. **/thaumcraft command.**
-2. **Sounds and the Eldritch Obelisk Placer.**
-3. **Floating special items.**
-4. **Obsidian totems and nodes over vanilla structures.**
-5. **Native tin, silver and lead clusters (cross-mod).**
+Nothing from TC4 4.2.3.5 is known to be missing. Next: the test coverage above, then a fresh audit after playtesting.

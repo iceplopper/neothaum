@@ -1,0 +1,20 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "neothaum:purifiable/lead"
+      ]
+    }
+  ],
+  "type": "neothaum:crucible",
+  "research": "PURELEAD",
+  "catalyst": "#neothaum:purifiable/lead",
+  "aspects": {
+    "metallum": 1,
+    "ordo": 1
+  },
+  "result": {
+    "id": "neothaum:native_lead_cluster"
+  }
+}

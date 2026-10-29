@@ -21,6 +21,11 @@ public final class SmeltingBonus {
 		if (input.is(Items.RAW_COPPER) || input.is(Items.COPPER_ORE) || input.is(Items.DEEPSLATE_COPPER_ORE)) {
 			return new ItemStack(Items.COPPER_NUGGET);
 		}
+		for (String metal : new String[]{"tin", "silver", "lead"}) {
+			if (input.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Identifier.fromNamespaceAndPath("c", "ores/" + metal)))) {
+				return new ItemStack(metal.equals("tin") ? TVItems.TIN_NUGGET : metal.equals("silver") ? TVItems.SILVER_NUGGET : TVItems.LEAD_NUGGET);
+			}
+		}
 		if (input.is(TVBlocks.CINNABAR_ORE.asItem())) {
 			return new ItemStack(TVItems.QUICKSILVER);
 		}

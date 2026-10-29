@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:ores/lead",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/lead",
+      "required": false
+    }
+  ]
+}

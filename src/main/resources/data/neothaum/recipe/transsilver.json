@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "TRANSSILVER",
+  "catalyst": "#c:nuggets/silver",
+  "aspects": {
+    "metallum": 2,
+    "lucrum": 1
+  },
+  "result": {
+    "id": "neothaum:silver_nugget",
+    "count": 3
+  }
+}

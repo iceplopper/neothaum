@@ -504,7 +504,7 @@
     },
     {
       "key": "CAP_silver",
-      "requires_tag": "c:nuggets/silver",
+      "requires_tag": "c:ingots/silver",
       "category": "THAUMATURGY",
       "aspects": {
         "metallum": 3,
@@ -4416,6 +4416,7 @@
     },
     {
       "key": "PURETIN",
+      "requires_tag": "c:ingots/tin",
       "category": "ALCHEMY",
       "aspects": {
         "metallum": 3,
@@ -4434,7 +4435,10 @@
           "text": "tc.research_page.PURETIN.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:puretin"
+          ]
         }
       ],
       "parents": [
@@ -4447,6 +4451,7 @@
     },
     {
       "key": "PURESILVER",
+      "requires_tag": "c:ingots/silver",
       "category": "ALCHEMY",
       "aspects": {
         "metallum": 3,
@@ -4465,7 +4470,10 @@
           "text": "tc.research_page.PURESILVER.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:puresilver"
+          ]
         }
       ],
       "parents": [
@@ -4478,6 +4486,7 @@
     },
     {
       "key": "PURELEAD",
+      "requires_tag": "c:ingots/lead",
       "category": "ALCHEMY",
       "aspects": {
         "metallum": 3,
@@ -4495,7 +4504,10 @@
           "text": "tc.research_page.PURELEAD.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:purelead"
+          ]
         }
       ],
       "parents": [
@@ -4606,6 +4618,7 @@
     },
     {
       "key": "TRANSTIN",
+      "requires_tag": "c:ingots/tin",
       "category": "ALCHEMY",
       "aspects": {
         "metallum": 3,
@@ -4624,7 +4637,10 @@
           "text": "tc.research_page.TRANSTIN.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:transtin"
+          ]
         }
       ],
       "parents": [
@@ -4637,6 +4653,7 @@
     },
     {
       "key": "TRANSSILVER",
+      "requires_tag": "c:ingots/silver",
       "category": "ALCHEMY",
       "aspects": {
         "metallum": 3,
@@ -4655,7 +4672,10 @@
           "text": "tc.research_page.TRANSSILVER.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:transsilver"
+          ]
         }
       ],
       "parents": [
@@ -4668,6 +4688,7 @@
     },
     {
       "key": "TRANSLEAD",
+      "requires_tag": "c:ingots/lead",
       "category": "ALCHEMY",
       "aspects": {
         "metallum": 3,
@@ -4686,7 +4707,10 @@
           "text": "tc.research_page.TRANSLEAD.1"
         },
         {
-          "type": "missing"
+          "type": "recipe",
+          "recipes": [
+            "neothaum:translead"
+          ]
         }
       ],
       "parents": [

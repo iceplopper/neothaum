@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "TRANSTIN",
+  "catalyst": "#c:nuggets/tin",
+  "aspects": {
+    "metallum": 2,
+    "vitreus": 1
+  },
+  "result": {
+    "id": "neothaum:tin_nugget",
+    "count": 3
+  }
+}

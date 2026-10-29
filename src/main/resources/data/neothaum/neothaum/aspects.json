@@ -2662,6 +2662,24 @@
     "terra": 1,
     "alienis": 1
    }
+  },
+  {
+   "item": "neothaum:tin_nugget",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "item": "neothaum:silver_nugget",
+   "aspects": {
+    "metallum": 1
+   }
+  },
+  {
+   "item": "neothaum:lead_nugget",
+   "aspects": {
+    "metallum": 1
+   }
   }
  ],
  "entities": [

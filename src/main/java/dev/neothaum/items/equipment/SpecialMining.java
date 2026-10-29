@@ -38,9 +38,27 @@ public final class SpecialMining {
 		return table;
 	}
 
+	/** Config.postInit: anything in c:ores/tin, silver or lead (or their raw materials) gives that metal's cluster. */
+	private static Result crossModOre(ItemStack is) {
+		for (String metal : new String[]{"tin", "silver", "lead"}) {
+			if (is.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+				net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ores/" + metal)))
+				|| is.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+					net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "raw_materials/" + metal)))) {
+				Item cluster = metal.equals("tin") ? TVItems.NATIVE_TIN_CLUSTER : metal.equals("silver") ? TVItems.NATIVE_SILVER_CLUSTER
+					: TVItems.NATIVE_LEAD_CLUSTER;
+				return new Result(cluster, 1.0F);
+			}
+		}
+		return null;
+	}
+
 	/** The cluster this drop becomes, with probability chance x the ore's own chance; otherwise the drop unchanged. */
 	public static ItemStack find(ItemStack is, float chance, RandomSource rand) {
 		Result r = table().get(is.getItem());
+		if (r == null) {
+			r = crossModOre(is);
+		}
 		if (r != null && rand.nextFloat() <= chance * r.chance()) {
 			return new ItemStack(r.item(), is.getCount());
 		}

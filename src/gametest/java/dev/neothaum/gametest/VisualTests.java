@@ -101,6 +101,9 @@ public class VisualTests implements FabricClientGameTest {
 				if (scenes.contains("audit")) {
 					auditScene(ctx, server, sp);
 				}
+				if (scenes.contains("metals")) {
+					metalsScene(server);
+				}
 				if (scenes.contains("bore")) {
 					boreScene(ctx, server);
 				}
@@ -2150,6 +2153,41 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		ctx.waitTicks(20);
 		shot(ctx, "parity_obelisk");
+	}
+
+	/**
+	 * TC4's cross-mod tin, silver and lead pieces. The test mod's data puts netherite scrap in c:ingots/tin and emerald ore in c:ores/tin, standing
+	 * in for a tin mod; nothing fills the silver or lead tags, so those stay hidden.
+	 */
+	private static void metalsScene(net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var rm = srv.getRecipeManager();
+			var nugget = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.TIN_NUGGET);
+			var cluster = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.NATIVE_TIN_CLUSTER);
+			var smelt = rm.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.SMELTING, new net.minecraft.world.item.crafting.SingleRecipeInput(cluster), level)
+				.map(h -> h.value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(cluster)).toString()).orElse("none");
+			var silverSmelt = rm.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.SMELTING,
+				new net.minecraft.world.item.crafting.SingleRecipeInput(new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.NATIVE_SILVER_CLUSTER)), level)
+				.isPresent();
+			var grid = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, java.util.Collections.nCopies(9, nugget));
+			var toIngot = rm.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING, grid, level).map(h -> h.value().assemble(grid).toString()).orElse("none");
+			var one = net.minecraft.world.item.crafting.CraftingInput.of(1, 1, java.util.List.of(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.NETHERITE_SCRAP)));
+			var toNuggets = rm.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING, one, level).map(h -> h.value().assemble(one).toString()).orElse("none");
+			var mined = dev.neothaum.items.equipment.SpecialMining.find(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.EMERALD_ORE), 1.0F, level.getRandom());
+			var bonus = dev.neothaum.crafting.SmeltingBonus.getBonus(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.EMERALD_ORE));
+			NeoThaum.LOGGER.info("[visual-test] metals: hasTin={} hasSilver={} smelt cluster={} silver smelts={} 9 nuggets={} ingot={} bore on ore={} smelting bonus={}",
+				dev.neothaum.registry.TVItems.hasIngot("tin"), dev.neothaum.registry.TVItems.hasIngot("silver"), smelt, silverSmelt, toIngot, toNuggets, mined, bonus);
+			NeoThaum.LOGGER.info("[visual-test] metals research: PURETIN={} TRANSTIN={} PURESILVER={} CAP_silver={} crucible puretin={}",
+				dev.neothaum.research.ResearchManager.getResearch("PURETIN") != null, dev.neothaum.research.ResearchManager.getResearch("TRANSTIN") != null,
+				dev.neothaum.research.ResearchManager.getResearch("PURESILVER") != null, dev.neothaum.research.ResearchManager.getResearch("CAP_silver") != null,
+				rm.byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, NeoThaum.id("puretin"))).isPresent());
+			net.minecraft.world.item.CreativeModeTabs.tryRebuildTabContents(level.enabledFeatures(), true, level.registryAccess());
+			var tab = dev.neothaum.registry.TVTab.OTHER_TAB;
+			NeoThaum.LOGGER.info("[visual-test] metals tab: tin cluster listed={} silver cluster listed={}",
+				tab.getDisplayItems().stream().anyMatch(s -> s.is(dev.neothaum.registry.TVItems.NATIVE_TIN_CLUSTER)),
+				tab.getDisplayItems().stream().anyMatch(s -> s.is(dev.neothaum.registry.TVItems.NATIVE_SILVER_CLUSTER)));
+		});
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:ores/tin",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/tin",
+      "required": false
+    }
+  ]
+}

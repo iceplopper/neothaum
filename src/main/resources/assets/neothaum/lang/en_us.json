@@ -2145,5 +2145,11 @@
   "entity.neothaum.villager.wizard": "Wizard",
   "entity.neothaum.villager.banker": "Banker",
   "item.neothaum.obelisk_placer": "Eldritch Obelisk Placer",
-  "block.neothaum.charged_obsidian_totem": "Charged Obsidian Totem"
+  "block.neothaum.charged_obsidian_totem": "Charged Obsidian Totem",
+  "item.neothaum.native_tin_cluster": "Native Tin Cluster",
+  "item.neothaum.tin_nugget": "Tin Nugget",
+  "item.neothaum.native_silver_cluster": "Native Silver Cluster",
+  "item.neothaum.silver_nugget": "Silver Nugget",
+  "item.neothaum.native_lead_cluster": "Native Lead Cluster",
+  "item.neothaum.lead_nugget": "Lead Nugget"
 }

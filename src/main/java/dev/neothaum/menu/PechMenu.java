@@ -241,6 +241,15 @@ public class PechMenu extends AbstractContainerMenu {
 				t.add(new Trade(1, new ItemStack(TVItems.NATIVE_GOLD_CLUSTER)));
 				t.add(new Trade(1, new ItemStack(TVItems.NATIVE_CINNABAR_CLUSTER)));
 				t.add(new Trade(1, new ItemStack(TVItems.NATIVE_COPPER_CLUSTER)));
+				if (TVItems.hasIngot("tin")) {
+					t.add(new Trade(1, new ItemStack(TVItems.NATIVE_TIN_CLUSTER)));
+				}
+				if (TVItems.hasIngot("silver")) {
+					t.add(new Trade(1, new ItemStack(TVItems.NATIVE_SILVER_CLUSTER)));
+				}
+				if (TVItems.hasIngot("lead")) {
+					t.add(new Trade(1, new ItemStack(TVItems.NATIVE_LEAD_CLUSTER)));
+				}
 				t.add(new Trade(2, new ItemStack(Items.BLAZE_ROD)));
 				t.add(new Trade(2, new ItemStack(TVBlocks.GREATWOOD_SAPLING)));
 				t.add(new Trade(2, potion(Potions.STRENGTH)));

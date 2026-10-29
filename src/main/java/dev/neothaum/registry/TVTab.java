@@ -115,6 +115,11 @@ public final class TVTab {
 					if (!in.test(item)) {
 						continue;
 					}
+					// ItemNugget.getSubItems: the tin, silver and lead pieces only when a mod adds that ingot
+					String metal = TVItems.crossModMetal(item);
+					if (metal != null && !TVItems.hasIngot(metal)) {
+						continue;
+					}
 					if (item == TVItems.WAND) {
 						out.accept(WandItem.createFull(TVItems.WAND, "iron", "wood"));
 						out.accept(WandItem.createFull(TVItems.WAND, "gold", "greatwood"));

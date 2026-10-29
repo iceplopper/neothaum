@@ -1,0 +1,8 @@
+{
+  "type": "neothaum:tag_smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredient": "neothaum:native_tin_cluster",
+  "result_tag": "c:ingots/tin",
+  "count": 2
+}

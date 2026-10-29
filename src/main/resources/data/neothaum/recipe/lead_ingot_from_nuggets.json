@@ -1,0 +1,5 @@
+{
+  "type": "neothaum:nuggets_to_ingot",
+  "nugget": "neothaum:lead_nugget",
+  "result_tag": "c:ingots/lead"
+}

@@ -1,0 +1,20 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "neothaum:purifiable/silver"
+      ]
+    }
+  ],
+  "type": "neothaum:crucible",
+  "research": "PURESILVER",
+  "catalyst": "#neothaum:purifiable/silver",
+  "aspects": {
+    "metallum": 1,
+    "ordo": 1
+  },
+  "result": {
+    "id": "neothaum:native_silver_cluster"
+  }
+}

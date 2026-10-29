@@ -1,0 +1,13 @@
+{
+  "type": "neothaum:crucible",
+  "research": "TRANSLEAD",
+  "catalyst": "#c:nuggets/lead",
+  "aspects": {
+    "metallum": 2,
+    "ordo": 1
+  },
+  "result": {
+    "id": "neothaum:lead_nugget",
+    "count": 3
+  }
+}

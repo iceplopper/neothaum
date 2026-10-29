@@ -201,6 +201,34 @@ public final class TVItems {
 	public static final Item COPPER_NUGGET = Items.COPPER_NUGGET;
 	public static final Item NATIVE_IRON_CLUSTER = simple("native_iron_cluster");
 	public static final Item NATIVE_COPPER_CLUSTER = simple("native_copper_cluster");
+	/** TC4's tin, silver and lead clusters and nuggets (itemNugget 18-20 and 2-4): only of use, and only listed, when a mod adds the ingot. */
+	public static final Item NATIVE_TIN_CLUSTER = simple("native_tin_cluster");
+	public static final Item NATIVE_SILVER_CLUSTER = simple("native_silver_cluster");
+	public static final Item NATIVE_LEAD_CLUSTER = simple("native_lead_cluster");
+	public static final Item TIN_NUGGET = simple("tin_nugget");
+	public static final Item SILVER_NUGGET = simple("silver_nugget");
+	public static final Item LEAD_NUGGET = simple("lead_nugget");
+
+	/** Config.foundTinIngot and the rest: whether a loaded mod puts anything in c:ingots/<metal>. */
+	public static boolean hasIngot(String metal) {
+		var tag = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+			net.minecraft.resources.Identifier.fromNamespaceAndPath("c", "ingots/" + metal));
+		return BuiltInRegistries.ITEM.getTagOrEmpty(tag).iterator().hasNext();
+	}
+
+	/** The metal of one of the cross-mod items above, or null for any other item. */
+	public static String crossModMetal(Item item) {
+		if (item == NATIVE_TIN_CLUSTER || item == TIN_NUGGET) {
+			return "tin";
+		}
+		if (item == NATIVE_SILVER_CLUSTER || item == SILVER_NUGGET) {
+			return "silver";
+		}
+		if (item == NATIVE_LEAD_CLUSTER || item == LEAD_NUGGET) {
+			return "lead";
+		}
+		return null;
+	}
 	public static final Item NATIVE_GOLD_CLUSTER = simple("native_gold_cluster");
 	public static final Item NATIVE_CINNABAR_CLUSTER = simple("native_cinnabar_cluster");
 

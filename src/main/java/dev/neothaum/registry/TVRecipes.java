@@ -27,6 +27,10 @@ public final class TVRecipes {
 	public static final RecipeSerializer<InfusionEnchantmentRecipe> INFUSION_ENCHANTMENT_SERIALIZER = serializer("infusion_enchantment",
 		InfusionEnchantmentRecipe.SERIALIZER);
 	public static final RecipeSerializer<JarLabelRecipe> JAR_LABEL = serializer("jar_label", JarLabelRecipe.SERIALIZER);
+	public static final RecipeSerializer<dev.neothaum.crafting.TagResultSmeltingRecipe> TAG_SMELTING = serializer("tag_smelting",
+		dev.neothaum.crafting.TagResultSmeltingRecipe.SERIALIZER);
+	public static final RecipeSerializer<dev.neothaum.crafting.NuggetsToIngotRecipe> NUGGETS_TO_INGOT = serializer("nuggets_to_ingot",
+		dev.neothaum.crafting.NuggetsToIngotRecipe.SERIALIZER);
 
 	private static <T extends Recipe<?>> RecipeType<T> type(String name) {
 		return Registry.register(BuiltInRegistries.RECIPE_TYPE, NeoThaum.id(name), new RecipeType<T>() {
