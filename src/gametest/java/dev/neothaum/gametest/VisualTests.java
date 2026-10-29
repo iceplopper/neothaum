@@ -29,6 +29,17 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			return;
 		}
+		if ("showcase".equalsIgnoreCase(scenesEnv)) {
+			// a real overworld, generated as a player would get it
+			try (TestSingleplayerContext sp = ctx.worldBuilder().setUseConsistentSettings(false).adjustSettings(st -> {
+				st.setWorldType(st.getNormalPresetList().get(0));
+				st.setSeed("neothaum");
+			}).create()) {
+				waitChunks(sp, ctx);
+				showcaseScene(ctx, sp);
+			}
+			return;
+		}
 		if ("parity".equalsIgnoreCase(scenesEnv)) {
 			// totems and temple nodes need a real overworld; totems are made 360 times as common so a small area shows some
 			dev.neothaum.config.NeoThaumConfig.current.obsidianTotemMultiplier = 360.0F;
@@ -2858,6 +2869,149 @@ public class VisualTests implements FabricClientGameTest {
 			shot(ctx, "warpfx_" + fx);
 		}
 		server.runCommand("effect clear @a");
+	}
+
+	/**
+	 * A tour of NeoThaum's natural world generation in a real overworld, nothing placed or boosted: the land around spawn is generated and searched
+	 * for aura nodes, silverwood and greatwood trees, eldritch rings, obsidian totems and hilltop stones, then the nearest magical forest and
+	 * tainted land are found. Each is framed from a few blocks away, at midday and at night, with the HUD hidden. Meant for shader packs
+	 * (NEOTHAUM_TEST_SHADERPACK).
+	 */
+	private static void showcaseScene(ClientGameTestContext ctx, TestSingleplayerContext sp) {
+		var server = sp.getServer();
+		// flying in creative, wearing goggles of revealing: nodes are only seen through goggles or a thaumometer, as in TC4
+		for (String cmd : new String[]{"gamemode creative @a", "gamerule send_command_feedback false", "gamerule advance_time false",
+			"gamerule advance_weather false", "weather clear", "time set 6000", "clear @a",
+			"item replace entity @a armor.head with neothaum:goggles_of_revealing"}) {
+			server.runCommand(cmd);
+		}
+		ctx.runOnClient(mc -> {
+			if (!mc.gui.hud.isHidden()) {
+				mc.gui.hud.toggle();
+			}
+		});
+		// what to look for, and the first one found of each
+		java.util.Map<String, net.minecraft.core.BlockPos> found = new java.util.LinkedHashMap<>();
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var spawn = level.getRespawnData().pos();
+			int radius = 16;
+			java.util.Map<String, java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState>> wanted = new java.util.LinkedHashMap<>();
+			wanted.put("node", s -> s.is(dev.neothaum.registry.TVBlocks.AURA_NODE));
+			wanted.put("silverwood", s -> s.is(dev.neothaum.registry.TVBlocks.SILVERWOOD_LOG));
+			wanted.put("greatwood", s -> s.is(dev.neothaum.registry.TVBlocks.GREATWOOD_LOG));
+			wanted.put("eldritch_ring", s -> s.is(dev.neothaum.registry.TVBlocks.ELDRITCH_OBELISK));
+			wanted.put("totem", s -> s.is(dev.neothaum.registry.TVBlocks.CHARGED_OBSIDIAN_TOTEM));
+			wanted.put("hilltop_stones", s -> s.is(dev.neothaum.registry.TVBlocks.ARCANE_STONE_BLOCK));
+			var m = new net.minecraft.core.BlockPos.MutableBlockPos();
+			for (int r = 0; r <= radius && found.size() < wanted.size(); r++) {
+				for (int cx = -r; cx <= r; cx++) {
+					for (int cz = -r; cz <= r; cz++) {
+						if (Math.max(Math.abs(cx), Math.abs(cz)) != r) {
+							continue;
+						}
+						var chunk = level.getChunk((spawn.getX() >> 4) + cx, (spawn.getZ() >> 4) + cz);
+						int bx = chunk.getPos().getMinBlockX(), bz = chunk.getPos().getMinBlockZ();
+						for (int x = 0; x < 16; x++) {
+							for (int z = 0; z < 16; z++) {
+								int top = chunk.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, x, z);
+								for (int y = top - 14; y <= top + 2; y++) {
+									var st = chunk.getBlockState(m.set(bx + x, y, bz + z));
+									if (st.isAir()) {
+										continue;
+									}
+									for (var w : wanted.entrySet()) {
+										if (!found.containsKey(w.getKey()) && w.getValue().test(st)) {
+											found.put(w.getKey(), m.immutable());
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			for (var biome : java.util.List.of(dev.neothaum.world.TVBiomes.MAGICAL_FOREST, dev.neothaum.world.TVBiomes.TAINTED_LAND)) {
+				var near = level.findClosestBiome3d(h -> h.is(biome), spawn, 6400, 32, 64);
+				if (near != null) {
+					var p = near.getFirst();
+					level.getChunk(p.getX() >> 4, p.getZ() >> 4);
+					found.put(biome.identifier().getPath(),
+						new net.minecraft.core.BlockPos(p.getX(), level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, p.getX(), p.getZ()), p.getZ()));
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] showcase found: {}", found);
+		});
+		for (var e : found.entrySet()) {
+			var t = e.getValue();
+			boolean landscape = e.getKey().equals("magical_forest") || e.getKey().equals("tainted_land");
+			boolean node = e.getKey().equals("node");
+			double[] view = new double[3];
+			server.runOnServer(srv -> {
+				boolean totem = e.getKey().equals("totem");
+				var v = clearView(srv.overworld(), t, landscape ? 26 : node ? 4 : totem ? 6 : 11,
+					landscape ? new int[]{14, 20, 28} : totem ? new int[]{0, 1, 3} : new int[]{2, 4, 7, 10});
+				view[0] = v.x;
+				view[1] = v.y;
+				view[2] = v.z;
+				var p = firstPlayer(srv);
+				p.getAbilities().flying = true;
+				p.onUpdateAbilities();
+			});
+			double ty = landscape ? t.getY() : t.getY() + 0.5;
+			server.runCommand("tp @a " + view[0] + " " + view[1] + " " + view[2] + " facing " + (t.getX() + 0.5) + " " + ty + " " + (t.getZ() + 0.5));
+			String[] times = node ? new String[]{"6000", "12800", "18000"} : new String[]{"6000", "12800"};
+			for (String time : times) {
+				server.runCommand("time set " + time);
+				ctx.waitTicks(40);
+				waitChunks(sp, ctx);
+				ctx.waitTicks(60);
+				shot(ctx, "showcase_" + e.getKey() + "_" + switch (time) {
+					case "6000" -> "day";
+					case "12800" -> "sunset";
+					default -> "night";
+				});
+			}
+		}
+		ctx.runOnClient(mc -> {
+			if (mc.gui.hud.isHidden()) {
+				mc.gui.hud.toggle();
+			}
+		});
+	}
+
+	/**
+	 * Where to stand to see a block: around it at the given distance and heights above the ground there, the first spot with room to float
+	 * whose line of sight reaches the block (or within a block and a half of it). Feet position; falls back to the south-east at the first height.
+	 */
+	private static net.minecraft.world.phys.Vec3 clearView(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos target, int dist,
+		int[] heights) {
+		var aim = net.minecraft.world.phys.Vec3.atCenterOf(target);
+		net.minecraft.world.phys.Vec3 fallback = null;
+		for (int h : heights) {
+			for (int a = 0; a < 16; a++) {
+				double angle = Math.PI / 4 + a * Math.PI / 8;
+				int x = target.getX() + (int) Math.round(Math.cos(angle) * dist);
+				int z = target.getZ() + (int) Math.round(Math.sin(angle) * dist);
+				level.getChunk(x >> 4, z >> 4);
+				int y = Math.max(level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, x, z) + h, target.getY() + 1);
+				var feet = new net.minecraft.world.phys.Vec3(x + 0.5, y, z + 0.5);
+				if (fallback == null) {
+					fallback = feet;
+				}
+				var pos = net.minecraft.core.BlockPos.containing(feet);
+				if (!level.getBlockState(pos).isAir() || !level.getBlockState(pos.above()).isAir()) {
+					continue;
+				}
+				var eye = feet.add(0, 1.62, 0);
+				var hit = level.clip(new net.minecraft.world.level.ClipContext(eye, aim, net.minecraft.world.level.ClipContext.Block.VISUAL,
+					net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
+				if (hit.getType() == net.minecraft.world.phys.HitResult.Type.MISS || hit.getLocation().distanceTo(aim) < 1.5) {
+					return feet;
+				}
+			}
+		}
+		return fallback;
 	}
 
 	private static void waitChunks(TestSingleplayerContext sp, ClientGameTestContext ctx) {
