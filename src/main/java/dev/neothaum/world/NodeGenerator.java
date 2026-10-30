@@ -70,6 +70,11 @@ public final class NodeGenerator {
 		return out;
 	}
 
+	/** Whether the biome has any of the biome tags NeoThaum reads. */
+	public static boolean hasBiomeInfo(Holder<Biome> biome) {
+		return !typesFor(biome).isEmpty();
+	}
+
 	public static int getBiomeAura(Holder<Biome> biome) {
 		List<BiomeInfo> types = typesFor(biome);
 		if (types.isEmpty()) {

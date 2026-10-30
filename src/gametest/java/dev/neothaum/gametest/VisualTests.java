@@ -2113,7 +2113,7 @@ public class VisualTests implements FabricClientGameTest {
 					continue;
 				}
 				foreign++;
-				if (dev.neothaum.world.NodeGenerator.getRandomBiomeTag(ref, level.getRandom()) == null) {
+				if (!dev.neothaum.world.NodeGenerator.hasBiomeInfo(ref)) {
 					untagged.add(ref.key().identifier().toString());
 				}
 			}

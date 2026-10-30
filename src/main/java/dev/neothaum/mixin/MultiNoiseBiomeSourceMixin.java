@@ -20,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Magical Forest and Tainted Land in biome layouts that don't come from vanilla's builder (OverworldBiomeBuilderMixin covers that one):
  * Terralith and other mods give the overworld their own list of biomes. In such a list, each plain forest entry is split the same way as in
  * vanilla's layout: its driest 30% (scaled by the size setting) on the weird side becomes Magical Forest, its wettest 5% deep on the
- * negative weird side, inland, Tainted Land. A list that already has NeoThaum's biomes is left alone.
+ * negative weird side, inland, Tainted Land. A list with no forest that rare (Terralith's) uses its inland forest on the negative weird side
+ * for Tainted Land instead. A list that already has NeoThaum's biomes is left alone.
  */
 @Mixin(MultiNoiseBiomeSource.class)
 public abstract class MultiNoiseBiomeSourceMixin {
@@ -47,11 +48,15 @@ public abstract class MultiNoiseBiomeSourceMixin {
 			return;
 		}
 		boolean forest = false;
+		boolean rareForest = false;
 		for (Pair<Climate.ParameterPoint, Holder<Biome>> p : list.values()) {
 			if (p.getSecond().is(TVBiomes.MAGICAL_FOREST) || p.getSecond().is(TVBiomes.TAINTED_LAND)) {
 				return;
 			}
-			forest |= p.getSecond().is(Biomes.FOREST);
+			if (p.getSecond().is(Biomes.FOREST)) {
+				forest = true;
+				rareForest |= neothaum$taintable(p.getFirst(), true);
+			}
 		}
 		if (!forest) {
 			return;
@@ -73,8 +78,7 @@ public abstract class MultiNoiseBiomeSourceMixin {
 				long m1 = lo + span * magicPct / 100;
 				out.add(Pair.of(neothaum$withHumidity(pt, lo, m1), magical));
 				out.add(Pair.of(neothaum$withHumidity(pt, m1, hi), p.getSecond()));
-			} else if (pt.weirdness().max() < 0L && taintPct > 0 && pt.continentalness().min() >= MID_INLAND_MIN
-				&& pt.weirdness().max() <= RARE_WEIRDNESS_MAX) {
+			} else if (pt.weirdness().max() < 0L && taintPct > 0 && neothaum$taintable(pt, rareForest)) {
 				long m2 = hi - span * taintPct / 100;
 				out.add(Pair.of(neothaum$withHumidity(pt, lo, m2), p.getSecond()));
 				out.add(Pair.of(neothaum$withHumidity(pt, m2, hi), tainted));
@@ -85,6 +89,12 @@ public abstract class MultiNoiseBiomeSourceMixin {
 		this.neothaum$source = list;
 		this.neothaum$shared = new Climate.ParameterList<>(out);
 		cir.setReturnValue(this.neothaum$shared);
+	}
+
+	/** Inland forest on the negative weird side; when the list has some, only the rare deep-weird part, as in vanilla's layout. */
+	@Unique
+	private static boolean neothaum$taintable(Climate.ParameterPoint pt, boolean rareOnly) {
+		return pt.weirdness().max() < 0L && pt.continentalness().min() >= MID_INLAND_MIN && (!rareOnly || pt.weirdness().max() <= RARE_WEIRDNESS_MAX);
 	}
 
 	@Unique
