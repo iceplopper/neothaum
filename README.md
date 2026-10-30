@@ -61,6 +61,13 @@ Our core mission is to make the mod **visually, mechanically, and audibly indist
 - Towering Greatwood and Silverwood trees with naturally embedded pure nodes.
 - Cinderpearls, Shimmerleaf, Vishrooms, Mana Pods, Infused Stone, Cinnabar, and Amber deposits.
 - Magical Forest biomes and localized inland Tainted Land blights.
+- TC4's world regeneration: switch on what to regenerate, change the regen key, and existing chunks get it as they load.
+
+### 🌐 Multiplayer
+- Works on dedicated servers. The server's research difficulty, aspect cap, hard nodes and wuss mode apply to everyone on it, without
+  touching each player's own config.
+- `/neothaum` (or `/nt`): research, aspects, warp, and `config` for server settings (`hardnodes`, `wussmode`, `researchdifficulty`,
+  `aspectcap`).
 
 ---
 
@@ -70,9 +77,15 @@ NeoThaum natively integrates with the modern Fabric modding ecosystem:
 
 | Mod | Compatibility Highlights |
 | :--- | :--- |
+| **[Trinkets Updated](https://modrinth.com/mod/trinkets-updated)** *(required)* | Amulets, rings and belts go in its necklace, ring and belt slots. |
+| **[Roughly Enough Items (REI)](https://modrinth.com/mod/rei)** | The same recipe pages as JEI: arcane worktable, crucible, infusion, infusion enchanting and aspect combinations. |
+| **[Sodium](https://modrinth.com/mod/sodium)** & **[Iris](https://modrinth.com/mod/iris)** | NeoThaum's glowing effects work under shader packs (checked with Complementary Reimagined and BSL); bright nodes show a lens flare. Glowing blocks ship LabPBR emission maps. |
+| **[LambDynamicLights](https://modrinth.com/mod/lambdynamiclights)** | Wisps light up their surroundings as they fly. |
+| **[AppleSkin](https://modrinth.com/mod/appleskin)** | Shows NeoThaum's food values. |
+| **[Terralith](https://modrinth.com/mod/terralith)** & **[Biomes O' Plenty](https://modrinth.com/mod/biomes-o-plenty)** | Magical Forest and Tainted Land generate alongside their biomes, and their biomes give aura nodes aspects. |
 | **[Just Enough Items (JEI)](https://modrinth.com/mod/jei)** | Native recipe categories for **Arcane Worktable Crafting**, **Crucible Alchemy**, and **Infusion Altar Rituals**. |
 | **[Jade](https://modrinth.com/mod/jade)** | In-world HUD overlays showing **Aura Node aspect breakdowns** (when wearing Goggles of Revealing), **Crucible heat & dissolved essentia**, and **Jar fill levels**. |
-| **[ModMenu](https://modrinth.com/mod/modmenu)** | In-game configuration screen allowing live tuning of worldgen rates, node variants, taint spread, and gameplay multipliers. |
+| **[ModMenu](https://modrinth.com/mod/modmenu)** | The in-game configuration page (see below). |
 | **[Xaero's World Map](https://modrinth.com/mod/xaeros-world-map)** | Dedicated toggleable button on the fullscreen world map to view discovered Aura Nodes across the globe without cluttering the main HUD. |
 | **[Xaero's Minimap](https://modrinth.com/mod/xaeros-minimap)** | Smooth radar integration with full support for tainted entities and champion mobs. |
 
@@ -83,31 +96,45 @@ NeoThaum natively integrates with the modern Fabric modding ecosystem:
 ### Option A: Modrinth Modpack (Recommended / One-Click)
 The fastest way to play with all companion mods and optimal settings configured out of the box:
 
-1. Download the latest **`NeoThaum-x.x.x.mrpack`** from the [`versions/`](versions/) folder.
+1. Download the latest **`NeoThaum-x.x.x.mrpack`** from the [Releases](https://github.com/iceplopper/neothaum/releases) page.
 2. Open your launcher of choice (**Prism Launcher**, **Modrinth App**, or **ATLauncher**).
 3. Select **Add Instance** $\rightarrow$ **Import from zip / mrpack** $\rightarrow$ choose the downloaded `.mrpack`.
-4. Launch and enjoy!
+4. Launch and enjoy! The pack includes Fabric API, Trinkets Updated, ModMenu, JEI, Jade, Xaero's Minimap and World Map, Sodium, Iris,
+   LambDynamicLights, AppleSkin and Terralith. Iris comes without a shader pack: add your own.
 
 ### Option B: Standalone Fabric Mod JAR
 If adding NeoThaum to an existing modpack:
 
 1. Install [Fabric Loader](https://fabricmc.net/) (v0.20.1 or higher) for **Minecraft 26.3**.
-2. Download and install [Fabric API](https://modrinth.com/mod/fabric-api) into your `.minecraft/mods` directory.
-3. Download the latest **`neothaum-x.x.x.jar`** from the [`versions/`](versions/) directory and place it in `.minecraft/mods`.
+2. Download and install [Fabric API](https://modrinth.com/mod/fabric-api) and **[Trinkets Updated](https://modrinth.com/mod/trinkets-updated)**
+   (required, 4.2.1 or later) into your `.minecraft/mods` directory.
+3. Download the latest **`neothaum-x.x.x.jar`** from the [Releases](https://github.com/iceplopper/neothaum/releases) page and place it in
+   `.minecraft/mods`.
 4. *(Optional but highly recommended)* Add **JEI**, **Jade**, **ModMenu**, and **Xaero's World Map** for the full experience.
 
 ---
 
 ## ⚙️ In-Game Configuration
 
-NeoThaum features an extensive configuration system saved in `config/neothaum.json`, fully editable in-game via **ModMenu**:
+NeoThaum's configuration is saved in `config/neothaum.json` and editable in-game via **ModMenu**. Every setting explains itself when you
+hover over it, and "(TC4)" marks Thaumcraft 4's own value.
 
-- **Aura Nodes**: Global spawn rarity (1 in $N$ chunks), variant occurrence rates, and individual weights for Dark, Unstable, Pure, Hungry, and Tainted nodes.
-- **Biomes**: Generation toggles and regional percentage sizes for Magical Forests and Tainted Lands.
-- **World Structures**: Independent spawn frequency sliders for Eldritch Rings, Barrow Mounds, Hilltop Stones, Wizard Towers, and Banker Houses.
-- **Taint Mechanics**: Taint spread master toggle, spread rate intervals, and mob corruption mode (transforming dying animals vs. natural spawn-only).
-- **Magic & Alchemy**: Spilled flux multiplier, Infernal Furnace smelting speed, and bonus nugget yield frequency.
-- **Creative & Debug Tools**: Toggle visibility of the developer utility creative tab.
+- **TC4's options, with TC4's defaults and units:** research difficulty (easy, normal, hard), the aspect cap, world generation and
+  regeneration switches, monster spawning switches, golem delays, link quality and chest opening, runic shielding speed, delay and cost,
+  colour blind mode, always showing aspects, the wand dial at the bottom, notification speed and count, the portable hole blacklist, hard
+  mode nodes, wuss mode and champion mobs.
+- **NeoThaum's own tuning:** node, structure and biome frequency multipliers, taint spread, flux, the Infernal Furnace, aspect orb drops,
+  bright node light and lens flare, nodes on Xaero's World Map, and the developer creative tab.
+
+### NeoThaum Additions
+Features that are **not in Thaumcraft 4**, on their own tab. A master switch, **off by default**, turns them on; each also has its own
+switch.
+
+- **Shared Understanding:** a research that lets you teach another player your research, for warp.
+- **Essentia overlay:** a thaumium fortress helm fitted with goggles shows an essentia tube's contents, suction, open sides and filter.
+- **Warp readout:** your warp beside the hotbar.
+- **Golem marker copy:** copy one golemancer's bell's markers to another bell and its golem.
+- **Modded item aspects:** items from other mods with no aspects take them from their common tags (ores, ingots, gems, logs, food...).
 
 ---
 
@@ -126,8 +153,8 @@ cd neothaum
 # Package the runnable mod jar
 ./gradlew build -x test
 
-# Launch an interactive desktop test client
-./start-test-client.bat
+# Launch a test client
+./gradlew runClient
 ```
 
 The compiled mod JAR will be located in `build/libs/neothaum-<version>.jar`.
