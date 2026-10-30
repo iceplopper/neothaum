@@ -24,7 +24,7 @@ public final class ResearchSharing {
 
 	static void init() {
 		UseEntityCallback.EVENT.register((player, level, hand, entity, hit) -> {
-			if (!NeoThaumConfig.current.additionResearchSharing || !player.isShiftKeyDown() || !(entity instanceof Player student)
+			if (!Additions.enabled("research_sharing") || !player.isShiftKeyDown() || !(entity instanceof Player student)
 				|| !player.getItemInHand(hand).is(TVItems.THAUMONOMICON) || !ResearchManager.isResearchComplete(player, RESEARCH)) {
 				return InteractionResult.PASS;
 			}

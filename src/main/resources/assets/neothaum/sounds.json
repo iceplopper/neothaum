@@ -5,7 +5,8 @@
     "name": "neothaum:heartbeat",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.heartbeat"
  },
  "spill": {
   "sounds": [
@@ -13,7 +14,8 @@
     "name": "neothaum:spill",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.spill"
  },
  "bubble": {
   "sounds": [
@@ -21,7 +23,8 @@
    "neothaum:bubble2",
    "neothaum:bubble3",
    "neothaum:bubble4"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.bubble"
  },
  "alembicknock": {
   "sounds": [
@@ -29,19 +32,22 @@
     "name": "neothaum:alembicknock",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.alembicknock"
  },
  "creak": {
   "sounds": [
    "neothaum:creak1",
    "neothaum:creak2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.creak"
  },
  "squeek": {
   "sounds": [
    "neothaum:squeek1",
    "neothaum:squeek2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.squeek"
  },
  "golemironshoot": {
   "sounds": [
@@ -49,7 +55,8 @@
     "name": "neothaum:golemironshoot",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.golemironshoot"
  },
  "jar": {
   "sounds": [
@@ -57,14 +64,16 @@
    "neothaum:jar2",
    "neothaum:jar3",
    "neothaum:jar4"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.jar"
  },
  "swarm": {
   "sounds": [
    "neothaum:swarm1",
    "neothaum:swarm2",
    "neothaum:swarm3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.swarm"
  },
  "swarmattack": {
   "sounds": [
@@ -72,13 +81,15 @@
     "name": "neothaum:swarmattack",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.swarmattack"
  },
  "fly": {
   "sounds": [
    "neothaum:fly1",
    "neothaum:fly2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.fly"
  },
  "key": {
   "sounds": [
@@ -86,7 +97,8 @@
     "name": "neothaum:key",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.key"
  },
  "doorfail": {
   "sounds": [
@@ -94,7 +106,8 @@
     "name": "neothaum:doorfail",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.doorfail"
  },
  "cameraticks": {
   "sounds": [
@@ -102,27 +115,31 @@
     "name": "neothaum:cameraticks",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.cameraticks"
  },
  "cameraclack": {
   "sounds": [
    "neothaum:cameraclack1",
    "neothaum:cameraclack2",
    "neothaum:cameraclack3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.cameraclack"
  },
  "pump": {
   "sounds": [
    "neothaum:pump1",
    "neothaum:pump2",
    "neothaum:pump3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.pump"
  },
  "page": {
   "sounds": [
    "neothaum:page1",
    "neothaum:page2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.page"
  },
  "learn": {
   "sounds": [
@@ -130,13 +147,15 @@
     "name": "neothaum:learn",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.learn"
  },
  "write": {
   "sounds": [
    "neothaum:write1",
    "neothaum:write2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.write"
  },
  "erase": {
   "sounds": [
@@ -144,7 +163,8 @@
     "name": "neothaum:erase",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.erase"
  },
  "brain": {
   "sounds": [
@@ -152,7 +172,8 @@
    "neothaum:brain2",
    "neothaum:brain3",
    "neothaum:brain4"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.brain"
  },
  "crystal": {
   "sounds": [
@@ -160,7 +181,8 @@
     "name": "neothaum:crystal",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.crystal"
  },
  "wispdead": {
   "sounds": [
@@ -168,21 +190,24 @@
     "name": "neothaum:wispdead",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.wispdead"
  },
  "wisplive": {
   "sounds": [
    "neothaum:wisplive1",
    "neothaum:wisplive2",
    "neothaum:wisplive3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.wisplive"
  },
  "wand": {
   "sounds": [
    "neothaum:wand1",
    "neothaum:wand2",
    "neothaum:wand3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.wand"
  },
  "wandfail": {
   "sounds": [
@@ -190,7 +215,8 @@
     "name": "neothaum:wandfail",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.wandfail"
  },
  "rumble": {
   "sounds": [
@@ -198,14 +224,16 @@
     "name": "neothaum:rumble",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.rumble"
  },
  "ice": {
   "sounds": [
    "neothaum:ice1",
    "neothaum:ice2",
    "neothaum:ice3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.ice"
  },
  "jacobs": {
   "sounds": [
@@ -213,7 +241,8 @@
     "name": "neothaum:jacobs",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.jacobs"
  },
  "hhoff": {
   "sounds": [
@@ -221,7 +250,8 @@
     "name": "neothaum:hhoff",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.hhoff"
  },
  "hhon": {
   "sounds": [
@@ -229,14 +259,16 @@
     "name": "neothaum:hhon",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.hhon"
  },
  "pech_idle": {
   "sounds": [
    "neothaum:pech_idle1",
    "neothaum:pech_idle2",
    "neothaum:pech_idle3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.pech_idle"
  },
  "pech_trade": {
   "sounds": [
@@ -244,7 +276,8 @@
     "name": "neothaum:pech_trade",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.pech_trade"
  },
  "pech_dice": {
   "sounds": [
@@ -252,13 +285,15 @@
     "name": "neothaum:pech_dice",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.pech_dice"
  },
  "pech_hit": {
   "sounds": [
    "neothaum:pech_hit1",
    "neothaum:pech_hit2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.pech_hit"
  },
  "pech_death": {
   "sounds": [
@@ -266,19 +301,22 @@
     "name": "neothaum:pech_death",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.pech_death"
  },
  "pech_charge": {
   "sounds": [
    "neothaum:pech_charge1",
    "neothaum:pech_charge2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.pech_charge"
  },
  "shock": {
   "sounds": [
    "neothaum:shock1",
    "neothaum:shock2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.shock"
  },
  "fireloop": {
   "sounds": [
@@ -286,13 +324,15 @@
     "name": "neothaum:fireloop",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.fireloop"
  },
  "zap": {
   "sounds": [
    "neothaum:zap1",
    "neothaum:zap2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.zap"
  },
  "craftfail": {
   "sounds": [
@@ -300,7 +340,8 @@
     "name": "neothaum:craftfail",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.craftfail"
  },
  "craftstart": {
   "sounds": [
@@ -308,7 +349,8 @@
     "name": "neothaum:craftstart",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.craftstart"
  },
  "runicshieldeffect": {
   "sounds": [
@@ -316,7 +358,8 @@
     "name": "neothaum:runicshieldeffect",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.runicshieldeffect"
  },
  "runicshieldcharge": {
   "sounds": [
@@ -324,45 +367,52 @@
     "name": "neothaum:runicshieldcharge",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.runicshieldcharge"
  },
  "swing": {
   "sounds": [
    "neothaum:swing1",
    "neothaum:swing2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.swing"
  },
  "wind": {
   "sounds": [
    "neothaum:wind1",
    "neothaum:wind2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.wind"
  },
  "tool": {
   "sounds": [
    "neothaum:tool1",
    "neothaum:tool2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.tool"
  },
  "gore": {
   "sounds": [
    "neothaum:gore1",
    "neothaum:gore2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.gore"
  },
  "roots": {
   "sounds": [
    "neothaum:roots1",
    "neothaum:roots2",
    "neothaum:roots3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.roots"
  },
  "tentacle": {
   "sounds": [
    "neothaum:tentacle1",
    "neothaum:tentacle2",
    "neothaum:tentacle3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.tentacle"
  },
  "upgrade": {
   "sounds": [
@@ -370,7 +420,8 @@
     "name": "neothaum:upgrade",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.upgrade"
  },
  "whispers": {
   "sounds": [
@@ -378,7 +429,8 @@
     "name": "neothaum:whispers",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.whispers"
  },
  "monolith": {
   "sounds": [
@@ -386,7 +438,8 @@
     "name": "neothaum:monolith",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.monolith"
  },
  "infuser": {
   "sounds": [
@@ -394,7 +447,8 @@
     "name": "neothaum:infuser",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.infuser"
  },
  "infuserstart": {
   "sounds": [
@@ -402,13 +456,15 @@
     "name": "neothaum:infuserstart",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.infuserstart"
  },
  "egidle": {
   "sounds": [
    "neothaum:egidle1",
    "neothaum:egidle2"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.egidle"
  },
  "egattack": {
   "sounds": [
@@ -416,7 +472,8 @@
     "name": "neothaum:egattack",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.egattack"
  },
  "egdeath": {
   "sounds": [
@@ -424,7 +481,8 @@
     "name": "neothaum:egdeath",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.egdeath"
  },
  "egscreech": {
   "sounds": [
@@ -432,7 +490,8 @@
     "name": "neothaum:egscreech",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.egscreech"
  },
  "crabclaw": {
   "sounds": [
@@ -440,7 +499,8 @@
     "name": "neothaum:crabclaw",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.crabclaw"
  },
  "crabdeath": {
   "sounds": [
@@ -448,21 +508,24 @@
     "name": "neothaum:crabdeath",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.crabdeath"
  },
  "crabtalk": {
   "sounds": [
    "neothaum:crabtalk1",
    "neothaum:crabtalk2",
    "neothaum:crabtalk3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.crabtalk"
  },
  "chant": {
   "sounds": [
    "neothaum:chant1",
    "neothaum:chant2",
    "neothaum:chant3"
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.chant"
  },
  "coins": {
   "sounds": [
@@ -470,7 +533,8 @@
     "name": "neothaum:coins",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.coins"
  },
  "urnbreak": {
   "sounds": [
@@ -478,7 +542,8 @@
     "name": "neothaum:urnbreak",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.urnbreak"
  },
  "evilportal": {
   "sounds": [
@@ -486,6 +551,7 @@
     "name": "neothaum:evilportal",
     "stream": false
    }
-  ]
+  ],
+  "subtitle": "subtitles.neothaum.evilportal"
  }
 }

@@ -22,11 +22,10 @@ public final class AdditionsHud {
 		if (mc.player == null || mc.level == null || mc.gui.hud.isHidden()) {
 			return;
 		}
-		var cfg = NeoThaumConfig.current;
-		if (cfg.additionEssentiaOverlay) {
+		if (dev.neothaum.addon.Additions.enabled("essentia_overlay")) {
 			essentia(g, mc);
 		}
-		if (cfg.additionWarpHud) {
+		if (dev.neothaum.addon.Additions.enabled("warp_hud")) {
 			warp(g, mc);
 		}
 	}

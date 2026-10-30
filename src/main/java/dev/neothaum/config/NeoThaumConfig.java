@@ -164,13 +164,18 @@ public class NeoThaumConfig {
 		/** portablehole_blacklist: comma-separated blocks the portable hole won't pass through ("minecraft:" may be left off). Default: iron_door. */
 		public String portableHoleBlacklist = "iron_door";
 
-		// --- NeoThaum Additions: not in TC4, all off by default (code in dev.neothaum.addon, to be split off later) ---
+		// --- NeoThaum Additions: not in TC4 (code in dev.neothaum.addon, to be split off later). The master switch is off by default; each
+		// addition is on by default but does nothing until the master is on. ---
+		/** The master switch for every NeoThaum Addition below. */
+		public boolean additionsEnabled = false;
 		/** Research Sharing: a research that lets a player teach their research to another, for warp. Takes effect on restart. */
-		public boolean additionResearchSharing = false;
+		public boolean additionResearchSharing = true;
 		/** Goggled fortress helm shows essentia tubes' flow, suction and contents. */
-		public boolean additionEssentiaOverlay = false;
+		public boolean additionEssentiaOverlay = true;
 		/** A small warp readout beside the hotbar. */
-		public boolean additionWarpHud = false;
+		public boolean additionWarpHud = true;
+		/** Sneak-use a golemancer's bell with another in the off hand to copy its markers to that bell and its golem. */
+		public boolean additionMarkerCopy = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

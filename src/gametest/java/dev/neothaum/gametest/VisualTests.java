@@ -3319,7 +3319,8 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.runOnClient(mc -> cfg.golemLinkQuality = 16);
 		server.runCommand("clear @p");
 		// --- NeoThaum Additions: off by default; research sharing teaches all but warp research, for 1 permanent and 3 sticky warp
-		check("additions are off by default", !fresh.additionResearchSharing && !fresh.additionEssentiaOverlay && !fresh.additionWarpHud
+		check("additions are off by default", !fresh.additionsEnabled && fresh.additionResearchSharing && fresh.additionEssentiaOverlay
+			&& fresh.additionWarpHud && fresh.additionMarkerCopy && !dev.neothaum.addon.Additions.enabled("warp_hud")
 			&& ResearchManager.getResearch("RESEARCHSHARING") == null, "research entry loaded=" + (ResearchManager.getResearch("RESEARCHSHARING") != null));
 		server.runCommand("neothaum research @p all");
 		String sharing = server.computeOnServer(srv -> {
@@ -3336,10 +3337,37 @@ public class VisualTests implements FabricClientGameTest {
 		String[] sh = sharing.split("/");
 		check("addition research sharing", Integer.parseInt(sh[0]) > 50 && sh[1].equals("1") && sh[2].equals("3") && sh[3].equals("0"),
 			"taught/permanent warp/sticky warp/warp research taught = " + sharing);
-		ctx.runOnClient(mc -> cfg.additionWarpHud = true);
+		ctx.runOnClient(mc -> cfg.additionsEnabled = true);
 		ctx.waitTicks(10);
 		shot(ctx, "addition_warp_hud");
-		ctx.runOnClient(mc -> cfg.additionWarpHud = false);
+		ctx.runOnClient(mc -> cfg.additionsEnabled = false);
+		// --- marker copy: one bell's markers onto another bell and its golem
+		String copied = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var golem = new dev.neothaum.golem.GolemEntity(dev.neothaum.entity.TVEntities.GOLEM, level);
+			golem.setGolemType(dev.neothaum.golem.GolemType.WOOD);
+			golem.snapTo(p.getX() + 2, p.getY(), p.getZ(), 0.0F, 0.0F);
+			golem.setNoAi(true);
+			level.addFreshEntity(golem);
+			var from = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.GOLEM_BELL);
+			from.set(dev.neothaum.registry.TVComponents.GOLEM_MARKERS, new java.util.ArrayList<>(java.util.List.of(
+				new dev.neothaum.golem.GolemMarker(p.blockPosition().offset(3, 0, 0), level.dimension(), (byte) 1, (byte) -1),
+				new dev.neothaum.golem.GolemMarker(p.blockPosition().offset(4, 0, 0), level.dimension(), (byte) 1, (byte) 3))));
+			var to = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.GOLEM_BELL);
+			to.set(dev.neothaum.registry.TVComponents.GOLEM_BELL_ID, golem.getId());
+			int n = dev.neothaum.addon.MarkerCopy.copy(p, from, to);
+			int onGolem = golem.getMarkers().size();
+			golem.discard();
+			return n + "/" + dev.neothaum.golem.GolemBellItem.getMarkers(to).size() + "/" + onGolem;
+		});
+		check("addition marker copy", copied.equals("2/2/2"), "copied/on the bell/on its golem = " + copied);
+		// --- subtitles: part of the base mod, on every NeoThaum sound
+		String subtitle = ctx.computeOnClient(mc -> {
+			var events = mc.getSoundManager().getSoundEvent(NeoThaum.id("pech_dice"));
+			return String.valueOf(events == null ? null : events.getSubtitle());
+		});
+		check("subtitles on NeoThaum sounds", subtitle.contains("subtitles.neothaum.pech_dice"), subtitle);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);

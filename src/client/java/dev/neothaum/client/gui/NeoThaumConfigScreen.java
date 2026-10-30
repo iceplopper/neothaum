@@ -216,7 +216,14 @@ public class NeoThaumConfigScreen extends Screen {
 					v -> cfg.portableHoleBlacklist = v);
 			}
 			case 8 -> {
-				String off = " Not in TC4. Default: off.";
+				this.toggle("NeoThaum Additions", "The master switch for every addition on this page: features that are not in TC4. While it is off, "
+					+ "none of them do anything, whatever their own switches say. Default: off.", () -> cfg.additionsEnabled, v -> {
+						cfg.additionsEnabled = v;
+						this.init();
+					});
+				this.slot++;
+				int locked = this.placed.size();
+				String off = " Not in TC4. Needs the NeoThaum Additions switch above. Default: on.";
 				this.toggle("Research Sharing", "Adds the Shared Understanding research (Basics, after Research Mastery): sneak and use your Thaumonomicon "
 					+ "on another player to teach them the research you know, except research that brings warp. Each lesson costs you 1 permanent and "
 					+ "3 sticky warp. Takes effect on restart." + off, () -> cfg.additionResearchSharing, v -> cfg.additionResearchSharing = v);
@@ -225,6 +232,11 @@ public class NeoThaumConfigScreen extends Screen {
 					v -> cfg.additionEssentiaOverlay = v);
 				this.toggle("Warp Readout", "Shows your warp beside the hotbar: the total, then permanent/sticky/temporary." + off,
 					() -> cfg.additionWarpHud, v -> cfg.additionWarpHud = v);
+				this.toggle("Golem Marker Copy", "Hold a golemancer's bell in each hand, sneak and use the main-hand one in the air: its markers replace "
+					+ "the off-hand bell's, and that bell's golem takes them too." + off, () -> cfg.additionMarkerCopy, v -> cfg.additionMarkerCopy = v);
+				for (Placed p : this.placed.subList(locked, this.placed.size())) {
+					p.widget().active = cfg.additionsEnabled;
+				}
 			}
 			case 7 -> {
 				this.toggle("Color Blind", "color_blind. Setting this to on will make certain colors higher contrast or darker to prevent them from "
