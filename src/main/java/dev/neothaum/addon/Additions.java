@@ -15,6 +15,7 @@ public final class Additions {
 			case "essentia_overlay" -> cfg.additionEssentiaOverlay;
 			case "warp_hud" -> cfg.additionWarpHud;
 			case "marker_copy" -> cfg.additionMarkerCopy;
+			case "modded_aspects" -> cfg.additionModdedAspects;
 			default -> false;
 		};
 	}

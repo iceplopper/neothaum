@@ -3368,6 +3368,18 @@ public class VisualTests implements FabricClientGameTest {
 			return String.valueOf(events == null ? null : events.getSubtitle());
 		});
 		check("subtitles on NeoThaum sounds", subtitle.contains("subtitles.neothaum.pech_dice"), subtitle);
+		// --- modded aspects: the tag rules (shown on vanilla items, as no other mod's items are loaded); vanilla items themselves untouched
+		String tagged = server.computeOnServer(srv -> {
+			cfg.additionsEnabled = true;
+			var out = dev.neothaum.addon.ModdedAspects.fromTags(net.minecraft.world.item.Items.IRON_INGOT) + "|"
+				+ dev.neothaum.addon.ModdedAspects.fromTags(net.minecraft.world.item.Items.OAK_LOG) + "|"
+				+ dev.neothaum.addon.ModdedAspects.fromTags(net.minecraft.world.item.Items.DIAMOND) + "|"
+				+ dev.neothaum.addon.ModdedAspects.forItem(net.minecraft.world.item.Items.IRON_INGOT);
+			cfg.additionsEnabled = false;
+			return out;
+		});
+		check("addition modded aspects", tagged.equals("{metallum=3}|{arbor=4}|{vitreus=3, lucrum=2}|null")
+			|| tagged.startsWith("{metallum=3}|{arbor=4}|") && tagged.endsWith("|null"), tagged);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);

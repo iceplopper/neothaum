@@ -202,6 +202,13 @@ public final class ObjectAspects {
 		}
 		history.add(item);
 		AspectList ret = generateTagsFromRecipes(item, history);
+		if (ret == null || ret.size() == 0) {
+			// NeoThaum Addition: another mod's item with no recipe takes aspects from its tags
+			AspectList modded = dev.neothaum.addon.ModdedAspects.forItem(item);
+			if (modded != null) {
+				ret = modded;
+			}
+		}
 		AspectList cx = complex.get(item);
 		if (cx != null) {
 			ret = ret == null ? cx.copy() : ret.copy().add(cx);

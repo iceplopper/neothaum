@@ -234,6 +234,10 @@ public class NeoThaumConfigScreen extends Screen {
 					() -> cfg.additionWarpHud, v -> cfg.additionWarpHud = v);
 				this.toggle("Golem Marker Copy", "Hold a golemancer's bell in each hand, sneak and use the main-hand one in the air: its markers replace "
 					+ "the off-hand bell's, and that bell's golem takes them too." + off, () -> cfg.additionMarkerCopy, v -> cfg.additionMarkerCopy = v);
+				this.toggle("Modded Item Aspects", "Items from other mods that have no aspects and no recipe to work them out from take aspects from "
+					+ "their common tags: ores, ingots, gems, dusts, tools, armour, food, crops, logs and so on. Items crafted from them then get aspects "
+					+ "through TC4's recipe rule. Vanilla and NeoThaum items are untouched. Applies when the world loads or /reload runs." + off,
+					() -> cfg.additionModdedAspects, v -> cfg.additionModdedAspects = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

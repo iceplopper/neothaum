@@ -176,6 +176,8 @@ public class NeoThaumConfig {
 		public boolean additionWarpHud = true;
 		/** Sneak-use a golemancer's bell with another in the off hand to copy its markers to that bell and its golem. */
 		public boolean additionMarkerCopy = true;
+		/** Another mod's items with no aspects and no recipe take aspects from their common tags (ores, ingots, gems, logs...). On reload. */
+		public boolean additionModdedAspects = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {
