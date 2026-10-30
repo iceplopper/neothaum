@@ -21,6 +21,19 @@ public final class TVBiomes {
 
 	/** Config: magical forests and taint at worldgen. */
 	public static boolean GENERATE = true;
+	/** The running server's biomes, for placing NeoThaum's in other mods' biome lists (MultiNoiseBiomeSourceMixin); null between servers. */
+	private static net.minecraft.core.HolderGetter<Biome> lookup;
+
+	public static void init() {
+		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTING.register(srv ->
+			lookup = srv.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME));
+		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(srv -> lookup = null);
+	}
+
+	/** One of NeoThaum's biomes as the running server has it, or null outside a server. */
+	public static Holder<Biome> holder(ResourceKey<Biome> key) {
+		return lookup == null ? null : lookup.get(key).orElse(null);
+	}
 
 	private static ResourceKey<Biome> key(String name) {
 		return ResourceKey.create(Registries.BIOME, NeoThaum.id(name));

@@ -46,6 +46,8 @@ configurations {
 	irisTest { transitive = false }
 	appleskinTest { transitive = false }
 	reiTest { transitive = false }
+	terralithTest { transitive = false }
+	bopTest { transitive = false }
 }
 
 dependencies {
@@ -68,6 +70,12 @@ dependencies {
 	compileOnly "me.shedaniel.cloth:basic-math:0.6.1"
 	// and REI's EntryStacks overloads mention Architectury's FluidStack
 	compileOnly "maven.modrinth:architectury-api:${project.architectury_version}"
+	// biome mods, for the "biomes" scene: Terralith (with Lithostitched), Biomes O' Plenty (with TerraBlender and GlitchCore); Modrinth version ids
+	terralithTest "maven.modrinth:terralith:aGE3hYAA"
+	terralithTest "maven.modrinth:lithostitched:pZgI6b2t"
+	bopTest "maven.modrinth:biomes-o-plenty:MAQI6dsY"
+	bopTest "maven.modrinth:terrablender:xirJYe1V"
+	bopTest "maven.modrinth:glitchcore:kfFeDnrp"
 	reiTest "maven.modrinth:rei:${project.rei_version}"
 	reiTest "maven.modrinth:cloth-config:${project.cloth_config_version}"
 	reiTest "maven.modrinth:architectury-api:${project.architectury_version}"

@@ -2095,6 +2095,31 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			NeoThaum.LOGGER.info("[visual-test] biomes: samples={} magical={} tainted={} taint cells touching magical={} within 192 blocks={}", n * n,
 				magic, taint, touching, nearby);
+			// other biome mods (NEOTHAUM_TEST_MODS=terralith or bop): NeoThaum's biomes still generate beside theirs, and which of their biomes
+			// carry none of the biome tags NeoThaum reads (no node aspects, aura or greatwood there)
+			var registry = srv.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+			java.util.Map<String, Integer> sampled = new java.util.TreeMap<>();
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					var b = level.getUncachedNoiseBiome(((i - n / 2) * step) >> 2, 64 >> 2, ((j - n / 2) * step) >> 2);
+					sampled.merge(b.unwrapKey().map(k -> k.identifier().getNamespace()).orElse("?"), 1, Integer::sum);
+				}
+			}
+			java.util.List<String> untagged = new java.util.ArrayList<>();
+			int foreign = 0;
+			for (var ref : registry.listElements().toList()) {
+				String ns = ref.key().identifier().getNamespace();
+				if (ns.equals("minecraft") || ns.equals(NeoThaum.MOD_ID)) {
+					continue;
+				}
+				foreign++;
+				if (dev.neothaum.world.NodeGenerator.getRandomBiomeTag(ref, level.getRandom()) == null) {
+					untagged.add(ref.key().identifier().toString());
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] biomes: sampled by mod {}; other mods' biomes {}, without NeoThaum's tags {}: {}", sampled, foreign,
+				untagged.size(), untagged);
+			check("biomes: NeoThaum's biomes generate", magic > 0 && taint > 0, "magical=" + magic + " tainted=" + taint + " by mod " + sampled);
 		});
 	}
 

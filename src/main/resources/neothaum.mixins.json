@@ -11,7 +11,8 @@
 		"OverworldBiomeBuilderMixin",
 		"CarvedPumpkinBlockMixin",
 		"StructureTemplatePoolAccessor",
-		"SpawnPlacementsMixin"
+		"SpawnPlacementsMixin",
+		"MultiNoiseBiomeSourceMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

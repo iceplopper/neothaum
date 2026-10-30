@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "terralith:alpha_islands",
+      "required": false
+    },
+    {
+      "id": "terralith:alpha_islands_winter",
+      "required": false
+    },
+    {
+      "id": "terralith:blooming_plateau",
+      "required": false
+    },
+    {
+      "id": "terralith:lavender_valley",
+      "required": false
+    },
+    {
+      "id": "terralith:valley_clearing",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:origin_valley",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:wintry_origin_valley",
+      "required": false
+    }
+  ]
+}
