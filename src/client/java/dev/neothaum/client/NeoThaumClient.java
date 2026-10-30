@@ -207,6 +207,7 @@ public class NeoThaumClient implements ClientModInitializer {
 			NeoThaum.id("bright_node_flare_hud_hidden"), dev.neothaum.client.addon.BrightNodeFlare::renderHudHidden);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.hud.WarpVisuals::tick);
 		HudElementRegistry.addLast(NeoThaum.id("wand_dial"), WandHud::render);
+		HudElementRegistry.addLast(NeoThaum.id("additions"), dev.neothaum.client.addon.AdditionsHud::render);
 		HudElementRegistry.addLast(NeoThaum.id("focus_radial"), dev.neothaum.client.hud.FocusRadial::render);
 		dev.neothaum.client.hud.FocusRadial.init();
 		ClientTickEvents.START_CLIENT_TICK.register(dev.neothaum.client.hud.FocusRadial::startTick);

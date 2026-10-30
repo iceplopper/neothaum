@@ -164,6 +164,14 @@ public class NeoThaumConfig {
 		/** portablehole_blacklist: comma-separated blocks the portable hole won't pass through ("minecraft:" may be left off). Default: iron_door. */
 		public String portableHoleBlacklist = "iron_door";
 
+		// --- NeoThaum Additions: not in TC4, all off by default (code in dev.neothaum.addon, to be split off later) ---
+		/** Research Sharing: a research that lets a player teach their research to another, for warp. Takes effect on restart. */
+		public boolean additionResearchSharing = false;
+		/** Goggled fortress helm shows essentia tubes' flow, suction and contents. */
+		public boolean additionEssentiaOverlay = false;
+		/** A small warp readout beside the hotbar. */
+		public boolean additionWarpHud = false;
+
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {
 			this.researchDifficulty = Math.max(-1, Math.min(1, this.researchDifficulty));

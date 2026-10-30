@@ -8338,6 +8338,32 @@
         "hidden"
       ],
       "warp": 3
+    },
+    {
+      "key": "RESEARCHSHARING",
+      "category": "BASICS",
+      "aspects": {
+        "cognitio": 8,
+        "humanus": 6,
+        "praecantatio": 4,
+        "vinculum": 3
+      },
+      "col": 2,
+      "row": 5,
+      "complexity": 3,
+      "icon": {
+        "item": "neothaum:thaumonomicon"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.RESEARCHSHARING.1"
+        }
+      ],
+      "parents": [
+        "RESEARCHER2"
+      ],
+      "addition": "research_sharing"
     }
   ]
 }

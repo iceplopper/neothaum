@@ -3318,10 +3318,32 @@ public class VisualTests implements FabricClientGameTest {
 		shot(ctx, "config_link_line_off");
 		ctx.runOnClient(mc -> cfg.golemLinkQuality = 16);
 		server.runCommand("clear @p");
+		// --- NeoThaum Additions: off by default; research sharing teaches all but warp research, for 1 permanent and 3 sticky warp
+		check("additions are off by default", !fresh.additionResearchSharing && !fresh.additionEssentiaOverlay && !fresh.additionWarpHud
+			&& ResearchManager.getResearch("RESEARCHSHARING") == null, "research entry loaded=" + (ResearchManager.getResearch("RESEARCHSHARING") != null));
+		server.runCommand("neothaum research @p all");
+		String sharing = server.computeOnServer(srv -> {
+			var teacher = srv.getPlayerList().getPlayers().get(0);
+			var student = net.fabricmc.fabric.api.entity.FakePlayer.get(srv.overworld(), new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "Student"));
+			var before = ResearchManager.knowledge(teacher);
+			int perm = before.warp;
+			int sticky = before.warpSticky;
+			int taught = dev.neothaum.addon.ResearchSharing.share(teacher, student);
+			var after = ResearchManager.knowledge(teacher);
+			long warpResearchTaught = ResearchManager.entries().stream().filter(r -> r.warp > 0 && ResearchManager.isResearchComplete(student, r.key)).count();
+			return taught + "/" + (after.warp - perm) + "/" + (after.warpSticky - sticky) + "/" + warpResearchTaught;
+		});
+		String[] sh = sharing.split("/");
+		check("addition research sharing", Integer.parseInt(sh[0]) > 50 && sh[1].equals("1") && sh[2].equals("3") && sh[3].equals("0"),
+			"taught/permanent warp/sticky warp/warp research taught = " + sharing);
+		ctx.runOnClient(mc -> cfg.additionWarpHud = true);
+		ctx.waitTicks(10);
+		shot(ctx, "addition_warp_hud");
+		ctx.runOnClient(mc -> cfg.additionWarpHud = false);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);
-		for (int tab = 0; tab < 8; tab++) {
+		for (int tab = 0; tab < 9; tab++) {
 			final int t = tab;
 			String result = ctx.computeOnClient(mc -> {
 				try {
@@ -3358,7 +3380,7 @@ public class VisualTests implements FabricClientGameTest {
 		}
 		// hover the first control of the last tab to show its tooltip
 		double scale = ctx.computeOnClient(mc -> mc.getWindow().getGuiScale());
-		int[] first = ctx.computeOnClient(mc -> new int[]{mc.getWindow().getGuiScaledWidth() / 2 - 175 - 5 + 40, 84 + 10});
+		int[] first = ctx.computeOnClient(mc -> new int[]{mc.getWindow().getGuiScaledWidth() / 2 - 175 - 5 + 40, 106 + 10});
 		ctx.getInput().setCursorPos(first[0] * scale, first[1] * scale);
 		ctx.waitTicks(20);
 		shot(ctx, "config_tooltip");

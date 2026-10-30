@@ -2157,5 +2157,11 @@
   "entity.neothaum.eldritch_orb": "Eldritch Orb",
   "entity.neothaum.golem_bobber": "Golem Bobber",
   "entity.neothaum.pech_blast": "Pech Blast",
-  "entity.neothaum.special_item": "Item"
+  "entity.neothaum.special_item": "Item",
+  "tc.research_name.RESEARCHSHARING": "Shared Understanding",
+  "tc.research_text.RESEARCHSHARING": "[NeoThaum Addition] Teaching costs a piece of the teacher",
+  "tc.research_page.RESEARCHSHARING.1": "Knowledge can be passed from one mind to another, though not without cost.<BR>Sneak and use your Thaumonomicon on another player to teach them every research you know and they do not, as long as they know what it builds upon. Forbidden research, the kind that brings warp, cannot be taught this way.<BR>Each lesson leaves its mark on the teacher: one point of permanent warp and three of sticky warp.",
+  "neothaum.addition.shared": "You taught %s %s research. Something of you went with it.",
+  "neothaum.addition.shared_to": "%s taught you %s research.",
+  "neothaum.addition.nothing_to_share": "%s already knows everything you could teach."
 }

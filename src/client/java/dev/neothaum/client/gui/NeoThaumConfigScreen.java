@@ -23,8 +23,9 @@ import net.minecraft.util.Mth;
  * Tabs in two rows; a tab taller than the screen scrolls with the mouse wheel.
  */
 public class NeoThaumConfigScreen extends Screen {
-	private static final String[] TABS = {"Research", "World Gen", "World Regen", "Nodes", "Mobs", "Golems & Runic", "Taint & Alchemy", "Client"};
-	private static final int TOP = 84;
+	private static final String[] TABS = {"Research", "World Gen", "World Regen", "Nodes", "Mobs", "Golems & Runic", "Taint & Alchemy", "Client", "NeoThaum Additions"};
+	/** Below the tab rows (four tabs to a row). */
+	private static final int TOP = 30 + (TABS.length + 3) / 4 * 22 + 10;
 	private static final int ROW = 24;
 	private static final int CELL = 175;
 
@@ -65,7 +66,7 @@ public class NeoThaumConfigScreen extends Screen {
 			this.addRenderableWidget(Button.builder(Component.literal((i == this.activeTab ? "§6§l" : "§7") + TABS[i]), b -> {
 				this.activeTab = t;
 				this.init();
-			}).bounds(tx, ty, tabWidth, 20).build());
+			}).bounds(tx, ty, Math.max(tabWidth, this.font.width(TABS[i]) + 14), 20).build());
 		}
 
 		var cfg = NeoThaumConfig.current;
@@ -214,7 +215,18 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "allowed to pass through (minecraft: may be left off). TC4 default: iron_door.", 512, () -> cfg.portableHoleBlacklist,
 					v -> cfg.portableHoleBlacklist = v);
 			}
-			default -> {
+			case 8 -> {
+				String off = " Not in TC4. Default: off.";
+				this.toggle("Research Sharing", "Adds the Shared Understanding research (Basics, after Research Mastery): sneak and use your Thaumonomicon "
+					+ "on another player to teach them the research you know, except research that brings warp. Each lesson costs you 1 permanent and "
+					+ "3 sticky warp. Takes effect on restart." + off, () -> cfg.additionResearchSharing, v -> cfg.additionResearchSharing = v);
+				this.toggle("Essentia Overlay", "While wearing a thaumium fortress helm fitted with goggles, looking at an essentia tube shows what it "
+					+ "holds, what it pulls and how hard, its open sides and its filter." + off, () -> cfg.additionEssentiaOverlay,
+					v -> cfg.additionEssentiaOverlay = v);
+				this.toggle("Warp Readout", "Shows your warp beside the hotbar: the total, then permanent/sticky/temporary." + off,
+					() -> cfg.additionWarpHud, v -> cfg.additionWarpHud = v);
+			}
+			case 7 -> {
 				this.toggle("Color Blind", "color_blind. Setting this to on will make certain colors higher contrast or darker to prevent them from "
 					+ "being 'invisible' to color blind people (the research table's aspect orbs). TC4 default: off.", () -> cfg.colorBlind,
 					v -> cfg.colorBlind = v);

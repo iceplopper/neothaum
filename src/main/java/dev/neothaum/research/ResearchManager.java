@@ -70,6 +70,11 @@ public final class ResearchManager {
 					skipped++;
 					continue;
 				}
+				// NeoThaum Additions' research appears only while its addition is switched on
+				if (re.getAsJsonObject().has("addition") && !dev.neothaum.addon.Additions.enabled(re.getAsJsonObject().get("addition").getAsString())) {
+					skipped++;
+					continue;
+				}
 				if (re.getAsJsonObject().has("requires_tag")) {
 					r.requiresTag = re.getAsJsonObject().get("requires_tag").getAsString();
 				}

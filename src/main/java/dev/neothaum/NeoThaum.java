@@ -56,6 +56,7 @@ public class NeoThaum implements ModInitializer {
 		ObjectAspects.init();
 		TVNetwork.init();
 		dev.neothaum.addon.VanillaCandles.init();
+		dev.neothaum.addon.Additions.init();
 		TVWorldGen.init();
 		dev.neothaum.devtools.DevTools.init();
 		dev.neothaum.items.equipment.ToolEvents.init();
