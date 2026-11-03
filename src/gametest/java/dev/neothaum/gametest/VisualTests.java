@@ -2592,6 +2592,36 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		ctx.waitTicks(20);
 		shot(ctx, "elemental_tools");
+		// --- the pickaxe of the core: every raw ore it mines becomes native clusters, one each, after Fortune
+		String clusters = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = firstPlayer(srv);
+			var ench = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+				.getOrThrow(net.minecraft.world.item.enchantment.Enchantments.FORTUNE);
+			var core = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.PICKAXE_OF_THE_CORE);
+			core.enchant(ench, 3);
+			var plain = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_PICKAXE);
+			plain.enchant(ench, 3);
+			var ore = net.minecraft.world.level.block.Blocks.IRON_ORE.defaultBlockState();
+			var pos = p.blockPosition().above(3);
+			java.util.Set<String> coreItems = new java.util.TreeSet<>();
+			java.util.Set<String> plainItems = new java.util.TreeSet<>();
+			int coreCount = 0;
+			int plainCount = 0;
+			for (int i = 0; i < 40; i++) {
+				for (var s : net.minecraft.world.level.block.Block.getDrops(ore, level, pos, null, p, core)) {
+					coreItems.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).getPath());
+					coreCount += s.getCount();
+				}
+				for (var s : net.minecraft.world.level.block.Block.getDrops(ore, level, pos, null, p, plain)) {
+					plainItems.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(s.getItem()).getPath());
+					plainCount += s.getCount();
+				}
+			}
+			return coreItems + " " + coreCount + " | " + plainItems + " " + plainCount;
+		});
+		check("pickaxe of the core turns raw ore into clusters", clusters.startsWith("[native_iron_cluster] ") && clusters.contains("| [raw_iron] "),
+			"40 iron ores, Fortune III, core | plain: " + clusters);
 		NeoThaum.LOGGER.info("[visual-test] elemental: {} failed checks so far", checkFailures);
 	}
 

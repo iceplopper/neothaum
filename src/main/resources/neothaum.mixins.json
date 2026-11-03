@@ -12,7 +12,8 @@
 		"CarvedPumpkinBlockMixin",
 		"StructureTemplatePoolAccessor",
 		"SpawnPlacementsMixin",
-		"MultiNoiseBiomeSourceMixin"
+		"MultiNoiseBiomeSourceMixin",
+		"BlockDropsMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

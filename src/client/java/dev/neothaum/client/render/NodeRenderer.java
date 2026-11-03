@@ -22,6 +22,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -101,9 +102,12 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 			m.lightEngine = level.getLightEngine();
 			s.embedded = m;
 			// an opaque block hides the node, even from goggles (a node built into a wall stays hidden)
-			if (node.embedded.canOcclude()) {
+			if (node.embedded.canOcclude() || node.embedded.is(HIDES_NODES)) {
 				s.visible = false;
 			}
+		}
+		if (s.visible && viewer != null && behindHidingBlock(viewer, node)) {
+			s.visible = false;
 		}
 		s.embedded = null;
 		if (node.embedded != null && node.getLevel() instanceof net.minecraft.client.multiplayer.ClientLevel level) {
@@ -136,6 +140,26 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 		} else if (node.drainEntity != null) {
 			node.drainEntity = null;
 		}
+	}
+
+	/** Blocks that stop nodes being seen through them, even with goggles (the thaumium block by default; a tag, so others can join). */
+	public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> HIDES_NODES = net.minecraft.tags.TagKey.create(
+		net.minecraft.core.registries.Registries.BLOCK, dev.neothaum.NeoThaum.id("hides_nodes"));
+
+	/** Whether a node-hiding block lies on the line from the viewer's eye to the node. */
+	private static boolean behindHidingBlock(Player viewer, NodeBlockEntity node) {
+		Vec3 from = viewer.getEyePosition();
+		Vec3 to = Vec3.atCenterOf(node.getBlockPos());
+		BlockPos target = node.getBlockPos();
+		boolean[] hidden = new boolean[1];
+		net.minecraft.world.level.BlockGetter.traverseBlocks(from, to, null, (ctx, pos) -> {
+			if (!pos.equals(target) && viewer.level().getBlockState(pos).is(HIDES_NODES)) {
+				hidden[0] = true;
+				return Boolean.TRUE;
+			}
+			return null;
+		}, ctx -> null);
+		return hidden[0];
 	}
 
 	/** UtilsFX.isVisibleTo: within the player's view cone. */
