@@ -26,7 +26,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public class SpaBlockEntity extends TVBlockEntity implements WorldlyContainer, MenuProvider {
+public class SpaBlockEntity extends TVBlockEntity implements WorldlyContainer,
+	net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider<net.minecraft.core.BlockPos> {
 	private ItemStack bathSalts = ItemStack.EMPTY;
 	private boolean mix = true;
 	private String fluidType = "water";
@@ -286,5 +287,11 @@ public class SpaBlockEntity extends TVBlockEntity implements WorldlyContainer, M
 	@Override
 	public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
 		return new SpaMenu(containerId, playerInventory, this.worldPosition);
+	}
+
+	/** The menu type sends the block's position, so the client's menu can find it; without it the screen never opened. */
+	@Override
+	public net.minecraft.core.BlockPos getScreenOpeningData(net.minecraft.server.level.ServerPlayer player) {
+		return this.worldPosition;
 	}
 }

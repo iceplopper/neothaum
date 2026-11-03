@@ -29,7 +29,8 @@ import net.minecraft.world.level.storage.ValueOutput;
  * Port of TileDeconstructionTable:
  * Slot 0 takes items and deconstructs them one by one into primal research aspects.
  */
-public class DeconstructionTableBlockEntity extends TVBlockEntity implements WorldlyContainer, MenuProvider {
+public class DeconstructionTableBlockEntity extends TVBlockEntity implements WorldlyContainer,
+	net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider<net.minecraft.core.BlockPos> {
 	public ItemStack inputStack = ItemStack.EMPTY;
 	public Aspect aspect = null;
 	public int breaktime = 0;
@@ -238,6 +239,12 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 
 	@Override
 	public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-		return new DeconstructionTableMenu(containerId, playerInventory, this.worldPosition);
+		return new DeconstructionTableMenu(containerId, playerInventory, this, this.worldPosition, this.data);
+	}
+
+	/** The menu type sends the table's position, so the client's menu can find it; without it the screen never opened. */
+	@Override
+	public net.minecraft.core.BlockPos getScreenOpeningData(net.minecraft.server.level.ServerPlayer player) {
+		return this.worldPosition;
 	}
 }

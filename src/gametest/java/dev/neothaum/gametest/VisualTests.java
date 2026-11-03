@@ -3512,6 +3512,25 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		check("addition modded aspects", tagged.equals("{metallum=3}|{arbor=4}|{vitreus=3, lucrum=2}|null")
 			|| tagged.startsWith("{metallum=3}|{arbor=4}|") && tagged.endsWith("|null"), tagged);
+		// --- block screens that send their position: a player's click opens each (the deconstruction table, spa and thaumatorium never did)
+		java.util.List<String> opened = new java.util.ArrayList<>();
+		for (var block : new net.minecraft.world.level.block.Block[]{dev.neothaum.registry.TVBlocks.DECONSTRUCTION_TABLE, dev.neothaum.registry.TVBlocks.ARCANE_SPA,
+			dev.neothaum.registry.TVBlocks.THAUMATORIUM}) {
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				var p = srv.getPlayerList().getPlayers().get(0);
+				var at = p.blockPosition().offset(0, 0, 2);
+				level.setBlockAndUpdate(at, block.defaultBlockState());
+				p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.item.ItemStack.EMPTY);
+				p.gameMode.useItemOn(p, level, net.minecraft.world.item.ItemStack.EMPTY, net.minecraft.world.InteractionHand.MAIN_HAND,
+					new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.UP, at, false));
+			});
+			ctx.waitTicks(10);
+			opened.add(ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName()));
+			ctx.runOnClient(mc -> mc.player.closeContainer());
+			ctx.waitTicks(5);
+		}
+		check("block screens open", opened.equals(java.util.List.of("DeconstructionTableScreen", "SpaScreen", "ThaumatoriumScreen")), opened);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);

@@ -44,7 +44,8 @@ import net.minecraft.world.level.storage.ValueOutput;
  * Port of TileThaumatorium: automated crucible alchemy.
  * Draws liquid essentia from tubes, consumes catalysts from slot 0, and ejects products out the front.
  */
-public class ThaumatoriumBlockEntity extends TVBlockEntity implements AspectContainer, EssentiaTransport, WorldlyContainer, MenuProvider {
+public class ThaumatoriumBlockEntity extends TVBlockEntity implements AspectContainer, EssentiaTransport, WorldlyContainer,
+	net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider<net.minecraft.core.BlockPos> {
 	public record CrucibleEntry(Identifier id, CrucibleRecipe recipe) {}
 
 	public ItemStack inputStack = ItemStack.EMPTY;
@@ -518,5 +519,11 @@ public class ThaumatoriumBlockEntity extends TVBlockEntity implements AspectCont
 	@Override
 	public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
 		return new ThaumatoriumMenu(containerId, playerInventory, this.worldPosition);
+	}
+
+	/** The menu type sends the block's position, so the client's menu can find it; without it the screen never opened. */
+	@Override
+	public net.minecraft.core.BlockPos getScreenOpeningData(net.minecraft.server.level.ServerPlayer player) {
+		return this.worldPosition;
 	}
 }
