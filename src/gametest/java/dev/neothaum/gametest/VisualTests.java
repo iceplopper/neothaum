@@ -3531,6 +3531,38 @@ public class VisualTests implements FabricClientGameTest {
 			ctx.waitTicks(5);
 		}
 		check("block screens open", opened.equals(java.util.List.of("DeconstructionTableScreen", "SpaScreen", "ThaumatoriumScreen")), opened);
+		// --- the arcane worktable, filled as a player does: the items first, then the wand (the output used not to show)
+		server.runCommand("neothaum research @p ARCANESTONE");
+		String bench = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var at = p.blockPosition().offset(0, 0, 2);
+			level.setBlockAndUpdate(at, dev.neothaum.registry.TVBlocks.ARCANE_WORKTABLE.defaultBlockState());
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.item.ItemStack.EMPTY);
+			p.gameMode.useItemOn(p, level, net.minecraft.world.item.ItemStack.EMPTY, net.minecraft.world.InteractionHand.MAIN_HAND,
+				new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.UP, at, false));
+			if (!(p.containerMenu instanceof dev.neothaum.menu.ArcaneWorkbenchMenu menu)) {
+				return "no worktable menu";
+			}
+			// grid slots are menu slots 2..10; the wand slot is 1, the result 0
+			for (int i = 0; i < 9; i++) {
+				menu.setCarried(new net.minecraft.world.item.ItemStack(i == 4 ? dev.neothaum.registry.TVItems.EARTH_SHARD : net.minecraft.world.item.Items.STONE));
+				menu.clicked(2 + i, 0, net.minecraft.world.inventory.ContainerInput.PICKUP, p);
+			}
+			String before = menu.getSlot(0).getItem().toString();
+			var wand = dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", "greatwood");
+			for (var a : dev.neothaum.api.aspects.Aspect.getPrimalAspects()) {
+				dev.neothaum.items.WandItem.storeVis(wand, a, 2000);
+			}
+			menu.setCarried(wand);
+			menu.clicked(1, 0, net.minecraft.world.inventory.ContainerInput.PICKUP, p);
+			return before + " -> " + menu.getSlot(0).getItem();
+		});
+		ctx.waitTicks(5);
+		String clientBench = ctx.computeOnClient(mc -> mc.player.containerMenu instanceof dev.neothaum.menu.ArcaneWorkbenchMenu m ? m.getSlot(0).getItem().toString() : "none");
+		check("worktable output appears when the wand goes in last", bench.endsWith("-> 9 neothaum:arcane_stone_block") && clientBench.equals("9 neothaum:arcane_stone_block"),
+			"server " + bench + ", client " + clientBench);
+		ctx.runOnClient(mc -> mc.player.closeContainer());
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);

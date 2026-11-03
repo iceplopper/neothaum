@@ -1,7 +1,11 @@
 {
   "variants": {
-    "": {
+    "axis=x": {
       "model": "neothaum:block/table"
+    },
+    "axis=z": {
+      "model": "neothaum:block/table",
+      "y": 90
     }
   }
 }

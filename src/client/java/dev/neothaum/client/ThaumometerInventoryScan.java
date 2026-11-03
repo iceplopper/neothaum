@@ -26,7 +26,8 @@ public final class ThaumometerInventoryScan {
 			return;
 		}
 		Slot hovered = ((ContainerScreenAccessor) screen).neothaum$hoveredSlot();
-		if (hovered == null || !hovered.hasItem()) {
+		// an output slot (crafting, furnace, worktable...) holds what would be made, not what has been: it can't be scanned until taken out
+		if (hovered == null || !hovered.hasItem() || !hovered.mayPlace(hovered.getItem())) {
 			slot = null;
 			return;
 		}

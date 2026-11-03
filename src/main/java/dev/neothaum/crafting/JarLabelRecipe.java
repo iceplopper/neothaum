@@ -14,7 +14,10 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-/** A blank jar label crafted with a phial of essentia is marked with that aspect; the emptied phial is handed back. */
+/**
+ * A blank jar label crafted with a phial of essentia is marked with that aspect; the emptied phial is handed back. A marked label crafted on
+ * its own is wiped blank again (TC4's jarlabelnull, which as a plain recipe also turned a blank label into itself).
+ */
 public class JarLabelRecipe extends CustomRecipe {
 	public static final JarLabelRecipe INSTANCE = new JarLabelRecipe();
 	public static final MapCodec<JarLabelRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
@@ -40,13 +43,31 @@ public class JarLabelRecipe extends CustomRecipe {
 		return label ? aspect : null;
 	}
 
+	/** A single marked label and nothing else. */
+	private static boolean wipe(CraftingInput input) {
+		ItemStack only = ItemStack.EMPTY;
+		for (int i = 0; i < input.size(); i++) {
+			ItemStack s = input.getItem(i);
+			if (!s.isEmpty()) {
+				if (!only.isEmpty()) {
+					return false;
+				}
+				only = s;
+			}
+		}
+		return only.is(TVItems.JAR_LABEL) && only.has(TVComponents.ASPECT_FILTER);
+	}
+
 	@Override
 	public boolean matches(CraftingInput input, Level level) {
-		return find(input) != null;
+		return find(input) != null || wipe(input);
 	}
 
 	@Override
 	public ItemStack assemble(CraftingInput input) {
+		if (wipe(input)) {
+			return new ItemStack(TVItems.JAR_LABEL);
+		}
 		Aspect a = find(input);
 		if (a == null) {
 			return ItemStack.EMPTY;

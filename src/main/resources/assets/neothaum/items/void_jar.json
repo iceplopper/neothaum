@@ -1,6 +1,18 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "neothaum:block/void_jar"
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "neothaum:block/void_jar"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "neothaum:block/void_jar",
+        "model": {
+          "type": "neothaum:jar"
+        }
+      }
+    ]
   }
 }

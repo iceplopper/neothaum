@@ -5042,12 +5042,6 @@
         {
           "type": "recipe",
           "recipes": []
-        },
-        {
-          "type": "recipe",
-          "recipes": [
-            "neothaum:jarlabelnull"
-          ]
         }
       ],
       "parents": [

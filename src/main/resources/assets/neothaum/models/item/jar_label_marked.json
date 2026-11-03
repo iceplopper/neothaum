@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "neothaum:items/label",
+    "layer0": "neothaum:items/label_written",
     "layer1": "neothaum:items/label_over"
   }
 }

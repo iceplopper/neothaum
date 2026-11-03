@@ -57,4 +57,63 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 		}
 		ps.popPose();
 	}
+
+	public record JarData(float level, int color, Aspect filter) {
+	}
+
+	/** ItemJarFilledRenderer: a jar item shows its essentia and label as the placed jar does. */
+	public record ItemRenderer() implements net.minecraft.client.renderer.special.SpecialModelRenderer<JarData> {
+		@Override
+		public JarData extractArgument(net.minecraft.world.item.ItemStack stack) {
+			var al = stack.get(dev.neothaum.registry.TVComponents.ASPECTS);
+			Aspect filter = stack.get(dev.neothaum.registry.TVComponents.ASPECT_FILTER);
+			Aspect held = al == null || al.size() == 0 ? null : al.getAspects()[0];
+			int amount = held == null ? 0 : al.getAmount(held);
+			if (amount <= 0 && filter == null) {
+				return null;
+			}
+			return new JarData(amount > 0 ? Math.min(1.0F, (float) amount / JarBlockEntity.MAX) * 0.625F : 0.0F,
+				held != null ? held.getColor() : 0xFFFFFF, filter);
+		}
+
+		@Override
+		public void submit(JarData data, PoseStack ps, SubmitNodeCollector collector, int light, int overlay, boolean glint, int outline) {
+			if (data == null) {
+				return;
+			}
+			ps.pushPose();
+			ps.translate(0.5F, 0.01F, 0.5F);
+			if (data.level() > 0.0F) {
+				EssentiaRender.liquid(ps, collector, -0.25F, 0.0625F, -0.25F, 0.25F, 0.0625F + data.level(), 0.25F, data.color(),
+					net.minecraft.util.Util.getMillis() / 50L, light);
+			}
+			if (data.filter() != null) {
+				EssentiaRender.faceTowards(ps, Direction.NORTH);
+				EssentiaRender.label(ps, collector, data.filter(), 0.4F, 0.316F, 0.5F, 0.0F, light);
+			}
+			ps.popPose();
+		}
+
+		@Override
+		public void getExtents(java.util.function.Consumer<org.joml.Vector3fc> out) {
+			for (int i = 0; i < 8; i++) {
+				out.accept(new org.joml.Vector3f(i & 1, i >> 1 & 1, i >> 2 & 1));
+			}
+		}
+	}
+
+	public record Unbaked() implements net.minecraft.client.renderer.special.SpecialModelRenderer.Unbaked<JarData> {
+		public static final com.mojang.serialization.MapCodec<Unbaked> CODEC = com.mojang.serialization.MapCodec.unit(new Unbaked());
+
+		@Override
+		public net.minecraft.client.renderer.special.SpecialModelRenderer<JarData> bake(
+			net.minecraft.client.renderer.special.SpecialModelRenderer.BakingContext ctx) {
+			return new ItemRenderer();
+		}
+
+		@Override
+		public com.mojang.serialization.MapCodec<Unbaked> type() {
+			return CODEC;
+		}
+	}
 }
