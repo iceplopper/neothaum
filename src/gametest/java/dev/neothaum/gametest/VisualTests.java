@@ -1401,6 +1401,34 @@ public class VisualTests implements FabricClientGameTest {
 		waitChunks(sp, ctx);
 		ctx.waitTicks(40);
 		shot(ctx, "goggles_jar");
+		// --- a full jar and an empty one joined by tubes: the full jar keeps its essentia (no passing one back and forth), nothing sticks
+		net.minecraft.core.BlockPos ja = new net.minecraft.core.BlockPos(20, 117, 20);
+		net.minecraft.core.BlockPos jb = ja.east(2);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			level.setBlockAndUpdate(ja, dev.neothaum.registry.TVBlocks.WARDED_JAR.defaultBlockState());
+			level.setBlockAndUpdate(jb, dev.neothaum.registry.TVBlocks.WARDED_JAR.defaultBlockState());
+			for (var t : new net.minecraft.core.BlockPos[]{ja.above(), ja.above().east(), jb.above()}) {
+				level.setBlockAndUpdate(t, dev.neothaum.registry.TVBlocks.ESSENTIA_TUBE.defaultBlockState());
+			}
+			if (level.getBlockEntity(ja) instanceof dev.neothaum.tiles.JarBlockEntity j) {
+				j.addToContainer(dev.neothaum.api.aspects.Aspect.AIR, 64);
+			}
+		});
+		ctx.waitTicks(200);
+		String jars = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			int a = level.getBlockEntity(ja) instanceof dev.neothaum.tiles.JarBlockEntity j ? j.amount : -1;
+			int b = level.getBlockEntity(jb) instanceof dev.neothaum.tiles.JarBlockEntity j ? j.amount : -1;
+			int inTubes = 0;
+			for (var t : new net.minecraft.core.BlockPos[]{ja.above(), ja.above().east(), jb.above()}) {
+				if (level.getBlockEntity(t) instanceof dev.neothaum.tiles.TubeBlockEntity tube) {
+					inTubes += tube.getEssentiaAmount(null);
+				}
+			}
+			return a + "/" + b + "/" + inTubes;
+		});
+		check("a full jar keeps its essentia", jars.equals("64/0/0"), "full jar/empty jar/in the tubes after 10 s = " + jars);
 	}
 
 	/**

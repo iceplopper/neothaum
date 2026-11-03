@@ -248,6 +248,20 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 		return 0;
 	}
 
+	/**
+	 * How hard this jar holds on to its essentia when something asks for it. A full jar pulls nothing (getSuctionAmount is 0, so no essentia
+	 * is sent its way), but it holds on as hard as a part-full one: otherwise a tube takes one, the jar, now part-full, pulls it back, and the
+	 * two pass the same essentia back and forth for ever, jamming the tube. So only something that pulls harder than a part-full jar (a
+	 * labelled jar, a machine) can draw from it, as from a part-full jar.
+	 */
+	@Override
+	public int getSuctionFor(Aspect aspect, Direction face) {
+		if (!this.isVoid() && this.amount >= MAX && aspect == this.aspect) {
+			return this.aspectFilter != null ? 64 : 48;
+		}
+		return EssentiaTransport.super.getSuctionFor(aspect, face);
+	}
+
 	@Override
 	public Aspect getEssentiaType(Direction face) {
 		return this.aspect;
