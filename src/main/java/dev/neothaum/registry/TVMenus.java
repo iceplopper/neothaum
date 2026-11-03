@@ -3,7 +3,6 @@ package dev.neothaum.registry;
 import dev.neothaum.NeoThaum;
 import dev.neothaum.menu.AlchemyFurnaceMenu;
 import dev.neothaum.menu.ArcaneWorkbenchMenu;
-import dev.neothaum.menu.BaublesMenu;
 import dev.neothaum.menu.ResearchTableMenu;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
 import net.minecraft.core.BlockPos;
@@ -23,8 +22,6 @@ public final class TVMenus {
 		new ExtendedMenuType<>(dev.neothaum.menu.PechMenu::new, net.minecraft.network.codec.ByteBufCodecs.VAR_INT.cast()));
 	public static final ExtendedMenuType<dev.neothaum.golem.menu.GolemMenu, Integer> GOLEM = Registry.register(BuiltInRegistries.MENU, NeoThaum.id("golem"),
 		new ExtendedMenuType<>(dev.neothaum.golem.menu.GolemMenu::new, net.minecraft.network.codec.ByteBufCodecs.VAR_INT.cast()));
-	public static final MenuType<BaublesMenu> BAUBLES = Registry.register(BuiltInRegistries.MENU, NeoThaum.id("baubles"),
-		new MenuType<>(BaublesMenu::new, FeatureFlags.VANILLA_SET));
 
 	public static final MenuType<dev.neothaum.menu.FocusPouchMenu> FOCUS_POUCH = Registry.register(BuiltInRegistries.MENU, NeoThaum.id("focus_pouch"),
 		new MenuType<>(dev.neothaum.menu.FocusPouchMenu::new, FeatureFlags.VANILLA_SET));

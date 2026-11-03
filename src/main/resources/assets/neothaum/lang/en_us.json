@@ -1631,7 +1631,6 @@
   "block.neothaum.nitor_light": "Nitor",
   "block.neothaum.lamp_light": "Arcane Lamp Light",
   "container.baubles": "Baubles",
-  "key.neothaum.baubles": "Baubles Inventory",
   "key.categories.neothaum": "NeoThaum",
   "item.neothaum.glass_phial": "Glass Phial",
   "block.neothaum.deepslate_air_infused_stone": "Deepslate Air Infused Stone",
@@ -2232,5 +2231,6 @@
   "subtitles.neothaum.urnbreak": "Urn shatters",
   "subtitles.neothaum.evilportal": "Portal throbs",
   "neothaum.nodejar.novis": "Your wand lacks the vis to jar this node: it takes 70 of each primal.",
-  "tc.research_page.ARCANESTONE.2": "While working the stone you noticed something curious: the same infusion that hardens it also dulls the sight. Through goggles of revealing, or the lens of a thaumometer, an aura node shows through earth and wood alike, yet behind a wall of arcane stone it is simply gone, as though the stone drank in its light.<BR>A node built into such a wall, or set inside a block of the stone itself, is hidden just the same, from you and from anyone else who might come looking. The node is not harmed: it goes on drawing and giving vis as before. Blocks, bricks, stairs and slabs of it all serve."
+  "tc.research_page.ARCANESTONE.2": "While working the stone you noticed something curious: the same infusion that hardens it also dulls the sight. Through goggles of revealing, or the lens of a thaumometer, an aura node shows through earth and wood alike, yet behind a wall of arcane stone it is simply gone, as though the stone drank in its light.<BR>A node built into such a wall, or set inside a block of the stone itself, is hidden just the same, from you and from anyone else who might come looking. The node is not harmed: it goes on drawing and giving vis as before. Blocks, bricks, stairs and slabs of it all serve.",
+  "neothaum.visamulet.needs_research": "You must learn the Vis Amulet research to wear this"
 }

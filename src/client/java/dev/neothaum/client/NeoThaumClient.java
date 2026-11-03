@@ -6,7 +6,6 @@ import dev.neothaum.NeoThaum;
 import dev.neothaum.blocks.CrystalClusterBlock;
 import dev.neothaum.client.fx.FXImpl;
 import dev.neothaum.client.gui.ArcaneWorkbenchScreen;
-import dev.neothaum.client.gui.BaublesScreen;
 import dev.neothaum.client.gui.ResearchTableScreen;
 import dev.neothaum.client.gui.ThaumonomiconScreen;
 import dev.neothaum.client.hud.AspectOverlays;
@@ -46,7 +45,6 @@ import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class NeoThaumClient implements ClientModInitializer {
-	public static KeyMapping baublesKey;
 	public static KeyMapping harnessKey;
 
 	@Override
@@ -130,7 +128,6 @@ public class NeoThaumClient implements ClientModInitializer {
 
 		MenuScreens.register(TVMenus.ARCANE_WORKBENCH, ArcaneWorkbenchScreen::new);
 		MenuScreens.register(TVMenus.RESEARCH_TABLE, ResearchTableScreen::new);
-		MenuScreens.register(TVMenus.BAUBLES, BaublesScreen::new);
 		MenuScreens.register(TVMenus.ALCHEMY_FURNACE, dev.neothaum.client.gui.AlchemyFurnaceScreen::new);
 		MenuScreens.register(TVMenus.PECH, dev.neothaum.client.gui.PechScreen::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR, dev.neothaum.client.render.JarRenderer::new);
@@ -244,37 +241,13 @@ public class NeoThaumClient implements ClientModInitializer {
 			if (screen instanceof AbstractContainerScreen<?> acs) {
 				ScreenEvents.afterExtract(screen).register((s, g, mx, my, a) -> AspectOverlays.renderInGui(acs, g, mx, my));
 			}
-			// Baubles' inventory button, beside the top of the player portrait (with Trinkets installed, its slots hold the baubles instead)
-			Component baubles = Component.translatable("container.baubles");
-			if (dev.neothaum.addon.trinkets.TrinketsCompat.LOADED) {
-				// no NeoThaum bauble slots to open
-			} else if (screen instanceof InventoryScreen inv) {
-				Screens.getWidgets(screen).add(new dev.neothaum.client.gui.BaublesButton(inv, 64, 9, dev.neothaum.client.gui.BaublesButton.BAUBLES_ICON, baubles, () -> true,
-					() -> TVNetwork.clientSender.accept(new TVNetwork.OpenBaubles())));
-			} else if (screen instanceof net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen creative) {
-				Screens.getWidgets(screen).add(new dev.neothaum.client.gui.BaublesButton(creative, 96, 6, dev.neothaum.client.gui.BaublesButton.BAUBLES_ICON, baubles, creative::isInventoryOpen,
-					() -> TVNetwork.clientSender.accept(new TVNetwork.OpenBaubles())));
-			} else if (screen instanceof BaublesScreen bs) {
-				Screens.getWidgets(screen).add(new dev.neothaum.client.gui.BaublesButton(bs, 64, 9, dev.neothaum.client.gui.BaublesButton.INVENTORY_ICON, Component.translatable("container.inventory"),
-					() -> true, () -> {
-						client.player.closeContainer();
-						client.gui.setScreen(new InventoryScreen(client.player));
-					}));
-			}
 		});
 
-		baublesKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.neothaum.baubles", InputConstants.KEY_B,
-			KeyMapping.Category.INVENTORY));
 		harnessKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.neothaum.harness", InputConstants.KEY_H,
 			KeyMapping.Category.MISC));
 		ClientTickEvents.END_CLIENT_TICK.register(ThaumometerInventoryScan::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.SourceFX::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			while (baublesKey.consumeClick()) {
-				if (client.player != null && client.gui.screen() == null) {
-					TVNetwork.clientSender.accept(new TVNetwork.OpenBaubles());
-				}
-			}
 			while (harnessKey.consumeClick()) {
 				if (client.player != null && client.gui.screen() == null) {
 					var chest = client.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST);

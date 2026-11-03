@@ -4,7 +4,6 @@ import dev.neothaum.NeoThaum;
 import dev.neothaum.api.aspects.Aspect;
 import dev.neothaum.api.aspects.AspectList;
 import dev.neothaum.aspects.ObjectAspects;
-import dev.neothaum.menu.BaublesMenu;
 import dev.neothaum.research.ResearchItem;
 import dev.neothaum.research.ResearchManager;
 import dev.neothaum.research.ScanManager;
@@ -247,16 +246,6 @@ public final class TVNetwork {
 		}
 	}
 
-	public record OpenBaubles() implements CustomPacketPayload {
-		public static final Type<OpenBaubles> TYPE = new Type<>(NeoThaum.id("open_baubles"));
-		public static final StreamCodec<ByteBuf, OpenBaubles> CODEC = StreamCodec.unit(new OpenBaubles());
-
-		@Override
-		public Type<OpenBaubles> type() {
-			return TYPE;
-		}
-	}
-
 	public record ToggleHarness() implements CustomPacketPayload {
 		public static final Type<ToggleHarness> TYPE = new Type<>(NeoThaum.id("toggle_harness"));
 		public static final StreamCodec<ByteBuf, ToggleHarness> CODEC = StreamCodec.unit(new ToggleHarness());
@@ -321,7 +310,6 @@ public final class TVNetwork {
 		c2s.register(StartResearch.TYPE, StartResearch.CODEC);
 		c2s.register(PlaceAspect.TYPE, PlaceAspect.CODEC);
 		c2s.register(CombineAspects.TYPE, CombineAspects.CODEC);
-		c2s.register(OpenBaubles.TYPE, OpenBaubles.CODEC);
 		c2s.register(ToggleHarness.TYPE, ToggleHarness.CODEC);
 		c2s.register(FocusChange.TYPE, FocusChange.CODEC);
 		c2s.register(WandMisc.TYPE, WandMisc.CODEC);
@@ -372,8 +360,6 @@ public final class TVNetwork {
 				rt.combine(ctx.player(), p.a1(), p.a2(), p.ab1(), p.ab2());
 			}
 		});
-		ServerPlayNetworking.registerGlobalReceiver(OpenBaubles.TYPE, (p, ctx) -> ctx.player().openMenu(
-			new SimpleMenuProvider((id, inv, pl) -> new BaublesMenu(id, inv), Component.translatable("container.baubles"))));
 		ServerPlayNetworking.registerGlobalReceiver(ToggleHarness.TYPE, (p, ctx) -> {
 			var player = ctx.player();
 			var chest = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST);

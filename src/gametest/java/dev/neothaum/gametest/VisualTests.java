@@ -118,11 +118,6 @@ public class VisualTests implements FabricClientGameTest {
 			server.runCommand("give @a neothaum:mundane_belt");
 			server.runCommand("item replace entity @a armor.head with neothaum:goggles_of_revealing");
 			ctx.waitTicks(5);
-			ctx.runOnClient(mc -> dev.neothaum.network.TVNetwork.clientSender.accept(new dev.neothaum.network.TVNetwork.OpenBaubles()));
-			ctx.waitForScreen(dev.neothaum.client.gui.BaublesScreen.class);
-			ctx.waitTicks(5);
-			shot(ctx, "baubles");
-			ctx.runOnClient(mc -> mc.player.closeContainer());
 
 			ResearchItem page = ctx.computeOnClient(mc -> {
 				for (ResearchItem r : ResearchManager.entries()) {
@@ -2860,6 +2855,27 @@ public class VisualTests implements FabricClientGameTest {
 			server.runCommand(cmd);
 		}
 		check("trinkets is loaded", dev.neothaum.addon.trinkets.TrinketsCompat.LOADED, "trinkets_updated present");
+		// what the necklace slot lets a player put in, through Trinkets' own check (as when clicking an item into the slot)
+		String necklace = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var inv = eu.pb4.trinkets.api.TrinketsApi.getAttachment(p).getInventory("chest/necklace");
+			if (inv == null) {
+				return "no necklace slot";
+			}
+			var access = inv.getOrCreateSlotAccess(0);
+			// the amulet of vis storage needs the Vis Amulet research, as in TC4: refused before, accepted after
+			boolean before = eu.pb4.trinkets.api.TrinketSlotUtils.mayPlace(access, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.AMULET_OF_VIS_STORAGE));
+			ResearchManager.completeResearch(p, "VISAMULET");
+			StringBuilder sb = new StringBuilder("before research=" + before + " ");
+			for (var item : new net.minecraft.world.item.Item[]{dev.neothaum.registry.TVItems.AMULET_OF_VIS_STORAGE, dev.neothaum.registry.TVItems.MUNDANE_AMULET,
+				dev.neothaum.registry.TVItems.AMULET_OF_RUNIC_SHIELDING, dev.neothaum.registry.TVItems.RING_OF_RUNIC_SHIELDING}) {
+				sb.append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item).getPath()).append('=')
+					.append(eu.pb4.trinkets.api.TrinketSlotUtils.mayPlace(access, new net.minecraft.world.item.ItemStack(item))).append(' ');
+			}
+			return sb.toString().trim();
+		});
+		check("amulets go in the necklace slot", necklace.equals("before research=false amulet_of_vis_storage=true mundane_amulet=true amulet_of_runic_shielding=true "
+			+ "ring_of_runic_shielding=false"), necklace);
 		server.runOnServer(srv -> {
 			var p = firstPlayer(srv);
 			check("bauble tags", new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.RING_OF_RUNIC_SHIELDING)

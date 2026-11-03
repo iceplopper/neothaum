@@ -136,6 +136,11 @@ public class VisAmuletItem extends Item implements BaubleItem, RunicArmor {
 			builder.accept(Component.translatable("item.ItemAmuletVis.text").withStyle(ChatFormatting.AQUA));
 		}
 		builder.accept(Component.translatable("item.capacity.text").append(" " + this.getMaxVis(stack) / 100).withStyle(ChatFormatting.GOLD));
+		// TC4 lets only those who know the Vis Amulet research wear the amulet of vis storage; it can be found in chests long before
+		Player viewer = dev.neothaum.wands.WandManager.clientPlayer();
+		if (this.storage && viewer != null && !ResearchManager.isResearchComplete(viewer, "VISAMULET")) {
+			builder.accept(Component.translatable("neothaum.visamulet.needs_research").withStyle(ChatFormatting.RED));
+		}
 		AspectList al = stack.get(TVComponents.WAND_VIS);
 		if (al != null) {
 			for (Aspect aspect : Aspect.getPrimalAspects()) {
