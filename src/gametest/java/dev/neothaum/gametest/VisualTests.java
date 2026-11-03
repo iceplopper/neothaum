@@ -2620,7 +2620,12 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			return coreItems + " " + coreCount + " | " + plainItems + " " + plainCount;
 		});
-		check("pickaxe of the core turns raw ore into clusters", clusters.startsWith("[native_iron_cluster] ") && clusters.contains("| [raw_iron] "),
+		String[] cl = clusters.split(" ");
+		int coreN = Integer.parseInt(cl[1]);
+		int plainN = Integer.parseInt(cl[4]);
+		// two clusters per raw ore: Fortune's rolls make the plain count vary, so the core's should be about twice it
+		check("pickaxe of the core turns raw ore into clusters", clusters.startsWith("[native_iron_cluster] ") && clusters.contains("| [raw_iron] ")
+			&& coreN % 2 == 0 && coreN > plainN * 1.4,
 			"40 iron ores, Fortune III, core | plain: " + clusters);
 		NeoThaum.LOGGER.info("[visual-test] elemental: {} failed checks so far", checkFailures);
 	}

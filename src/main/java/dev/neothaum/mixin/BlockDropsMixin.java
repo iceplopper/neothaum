@@ -25,9 +25,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * EventHandlerWorld.harvestDrops: mining with the pickaxe of the core or the primal crusher turns ore drops into native clusters, one cluster
- * for each raw ore dropped (so Fortune counts). The pickaxe of the core does it every time, now that ores drop raw metal that Fortune
- * multiplies; the primal crusher keeps TC4's chance, 20% plus 7.5% a level of Fortune.
+ * EventHandlerWorld.harvestDrops: mining with the pickaxe of the core or the primal crusher turns ore drops into native clusters. The
+ * pickaxe of the core does it every time and gives two clusters for each raw ore dropped (after Fortune), so it stays worth having now
+ * that ores drop raw metal; the primal crusher keeps TC4's chance, 20% plus 7.5% a level of Fortune, one cluster per drop. Only the ores
+ * SpecialMining knows (iron, gold, copper, cinnabar, tin, silver, lead) change; redstone, lapis, diamond and the rest are left alone.
  */
 @Mixin(Block.class)
 public abstract class BlockDropsMixin {
@@ -51,7 +52,12 @@ public abstract class BlockDropsMixin {
 		boolean changed = false;
 		for (ItemStack is : cir.getReturnValue()) {
 			ItemStack r = SpecialMining.find(is, chance, level.getRandom());
-			changed |= !ItemStack.isSameItem(is, r);
+			if (!ItemStack.isSameItem(is, r)) {
+				changed = true;
+				if (core) {
+					r.setCount(Math.min(r.getMaxStackSize(), r.getCount() * 2));
+				}
+			}
 			out.add(r);
 		}
 		if (changed) {

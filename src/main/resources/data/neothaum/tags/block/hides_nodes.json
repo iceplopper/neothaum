@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "neothaum:arcane_stone_block",
-    "neothaum:arcane_stone_bricks"
+    "neothaum:arcane_stone_bricks",
+    "neothaum:arcane_stone_stairs",
+    "neothaum:arcane_stone_slab"
   ]
 }
