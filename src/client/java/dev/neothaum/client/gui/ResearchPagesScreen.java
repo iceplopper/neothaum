@@ -459,6 +459,17 @@ public class ResearchPagesScreen extends Screen {
 		if (e == null || e.isJsonNull()) {
 			return null;
 		}
+		if (e.isJsonPrimitive()) {
+			// "#tag": the tag's items in turn, a second each, as TC4 cycled through an ore dictionary entry
+			String s = e.getAsString();
+			if (!s.startsWith("#")) {
+				return BuiltInRegistries.ITEM.getOptional(Identifier.parse(s)).map(i -> new Cell(new ItemStack(i), null)).orElse(null);
+			}
+			var tag = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Identifier.parse(s.substring(1)));
+			var items = new java.util.ArrayList<net.minecraft.world.item.Item>();
+			BuiltInRegistries.ITEM.getTagOrEmpty(tag).forEach(h -> items.add(h.value()));
+			return items.isEmpty() ? null : new Cell(new ItemStack(items.get((int) (net.minecraft.util.Util.getMillis() / 1000L % items.size()))), null);
+		}
 		com.google.gson.JsonObject o = e.getAsJsonObject();
 		String id = o.has("item") ? o.get("item").getAsString() : null;
 		if (id == null || id.equals("neothaum:empty_space")) {

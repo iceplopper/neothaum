@@ -200,6 +200,7 @@ public class NodeBlockEntity extends TVBlockEntity {
 		}
 		this.drainColor = input.getIntOr("draincolor", 0xFFFFFF);
 		this.targetColor = this.drainColor;
+		this.embedded = input.read("embedded", net.minecraft.world.level.block.state.BlockState.CODEC).orElse(null);
 		int regen = 600;
 		if (this.nodeModifier != null) {
 			regen = switch (this.nodeModifier) {
@@ -227,6 +228,22 @@ public class NodeBlockEntity extends TVBlockEntity {
 			output.putString("drainer", p.getName().getString());
 		}
 		output.putInt("draincolor", this.drainColor);
+		if (this.embedded != null) {
+			output.store("embedded", net.minecraft.world.level.block.state.BlockState.CODEC, this.embedded);
+		}
+	}
+
+	/** A block placed in the node's space (NodeEmbedding): the node sits inside it, hidden when the block is opaque. Null for a bare node. */
+	public net.minecraft.world.level.block.state.BlockState embedded;
+
+	public void setEmbedded(net.minecraft.world.level.block.state.BlockState state) {
+		this.embedded = state;
+		this.setChanged();
+		this.markForUpdate();
+		if (this.level != null) {
+			this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+			this.level.updateNeighborsAt(this.worldPosition, this.getBlockState().getBlock());
+		}
 	}
 
 	/** Called every tick while a player holds right-click on this node with a wand. */

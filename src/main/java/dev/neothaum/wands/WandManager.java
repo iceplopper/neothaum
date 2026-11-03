@@ -446,11 +446,18 @@ public final class WandManager {
 			for (int yy = pos.getY() - 3; yy <= pos.getY(); yy++) {
 				for (int zz = pos.getZ() - 2; zz <= pos.getZ(); zz++) {
 					BlockPos o = new BlockPos(xx, yy, zz);
-					if (fitNodeJar(level, o) && WandItem.consumeAllVisCrafting(wand, player, cost, true)) {
-						if (!level.isClientSide()) {
-							replaceNodeJar(level, o);
+					if (fitNodeJar(level, o)) {
+						if (WandItem.consumeAllVisCrafting(wand, player, cost, true)) {
+							if (!level.isClientSide()) {
+								replaceNodeJar(level, o);
+							}
+							return true;
 						}
-						return true;
+						// the frame is right but the wand can't pay 70 of each primal (a plain greatwood wand holds only 50)
+						if (!level.isClientSide()) {
+							player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("neothaum.nodejar.novis"));
+						}
+						return false;
 					}
 				}
 			}

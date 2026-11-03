@@ -2051,6 +2051,34 @@ public class VisualTests implements FabricClientGameTest {
 		server.runCommand("tp @a -16 121 -6 90 25");
 		ctx.waitTicks(60);
 		shot(ctx, "nodeland_taint");
+		// --- the node jar research page (its slabs are a tag, which used to crash the page)
+		ResearchItem nodejar = ResearchManager.getResearch("NODEJAR");
+		ctx.setScreen(() -> new ResearchPagesScreen(nodejar, 1, 0, 0));
+		ctx.waitTicks(30);
+		String pageScreen = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+		check("node jar research page opens", pageScreen.equals("ResearchPagesScreen"), "screen=" + pageScreen);
+		shot(ctx, "nodejar_research");
+		ctx.setScreen(() -> null);
+		// --- a block placed in a node goes inside it; breaking it gives it back and leaves the node
+		net.minecraft.core.BlockPos np = new net.minecraft.core.BlockPos(0, 118, 20);
+		String embed = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			level.setBlockAndUpdate(np.below(), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+			dev.neothaum.world.NodeGenerator.createNodeAt(level, np, dev.neothaum.api.nodes.NodeType.NORMAL, null,
+				new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.AIR, 20), true);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.GLASS, 4));
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(np.below()).add(0, 0.5, 0),
+				net.minecraft.core.Direction.UP, np.below(), false);
+			p.gameMode.useItemOn(p, level, p.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+			var inside = dev.neothaum.blocks.AuraNodeBlock.embedded(level, np);
+			String placed = level.getBlockState(np).getBlock() + "/" + (inside == null ? null : inside.getBlock()) + "/" + p.getMainHandItem().getCount();
+			p.gameMode.destroyBlock(np);
+			var after = level.getBlockEntity(np) instanceof dev.neothaum.tiles.NodeBlockEntity n ? n.getAspects() + "/" + n.embedded : "gone";
+			return placed + " | " + after;
+		});
+		check("a block placed in a node goes inside it", embed.startsWith("Block{neothaum:aura_node}/Block{minecraft:glass}/") && embed.endsWith("| {aer=20}/null"),
+			embed);
 	}
 
 	/** Samples the climate biome map over 8192 blocks square: how much is magical forest and tainted land, and how often they touch. */

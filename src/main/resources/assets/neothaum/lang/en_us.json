@@ -2230,5 +2230,6 @@
   "subtitles.neothaum.chant": "Cultists chant",
   "subtitles.neothaum.coins": "Coins jingle",
   "subtitles.neothaum.urnbreak": "Urn shatters",
-  "subtitles.neothaum.evilportal": "Portal throbs"
+  "subtitles.neothaum.evilportal": "Portal throbs",
+  "neothaum.nodejar.novis": "Your wand lacks the vis to jar this node: it takes 70 of each primal."
 }

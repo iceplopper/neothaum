@@ -44,6 +44,8 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 		int drainColor;
 		float drainProgress;
 		int x;
+		/** A block placed inside the node (NodeEmbedding), drawn like a block moved by a piston; null for a bare node. */
+		net.minecraft.client.renderer.block.MovingBlockRenderState embedded;
 	}
 
 	public NodeRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -88,6 +90,36 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 			s.ticks = viewer.tickCount;
 			s.distance = cam.distanceTo(Vec3.atCenterOf(node.getBlockPos()));
 		}
+		s.embedded = null;
+		if (node.embedded != null && node.getLevel() instanceof net.minecraft.client.multiplayer.ClientLevel level) {
+			var m = new net.minecraft.client.renderer.block.MovingBlockRenderState();
+			m.randomSeedPos = node.getBlockPos();
+			m.blockPos = node.getBlockPos();
+			m.blockState = node.embedded;
+			m.biome = level.getBiome(node.getBlockPos());
+			m.cardinalLighting = level.cardinalLighting();
+			m.lightEngine = level.getLightEngine();
+			s.embedded = m;
+			// an opaque block hides the node, even from goggles (a node built into a wall stays hidden)
+			if (node.embedded.canOcclude()) {
+				s.visible = false;
+			}
+		}
+		s.embedded = null;
+		if (node.embedded != null && node.getLevel() instanceof net.minecraft.client.multiplayer.ClientLevel level) {
+			var m = new net.minecraft.client.renderer.block.MovingBlockRenderState();
+			m.randomSeedPos = node.getBlockPos();
+			m.blockPos = node.getBlockPos();
+			m.blockState = node.embedded;
+			m.biome = level.getBiome(node.getBlockPos());
+			m.cardinalLighting = level.cardinalLighting();
+			m.lightEngine = level.getLightEngine();
+			s.embedded = m;
+			// an opaque block hides the node, even from goggles (a node built into a wall stays hidden)
+			if (node.embedded.canOcclude()) {
+				s.visible = false;
+			}
+		}
 		if (s.visible && s.modifier == NodeModifier.BRIGHT && node.getBlockState().is(dev.neothaum.registry.TVBlocks.AURA_NODE)
 			&& s.aspects.size() > 0) {
 			// the bright-node lens flare (an addon), in the colour of the node's strongest aspect
@@ -115,6 +147,9 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 
 	@Override
 	public void submit(State s, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
+		if (s.embedded != null) {
+			collector.submitMovingBlock(poseStack, s.embedded, 0);
+		}
 		draw(s, poseStack, collector, camera.orientation);
 	}
 

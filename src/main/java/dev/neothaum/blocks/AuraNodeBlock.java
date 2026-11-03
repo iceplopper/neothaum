@@ -43,12 +43,26 @@ public class AuraNodeBlock extends BaseEntityBlock {
 
 	@Override
 	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return SHAPE;
+		BlockState inside = embedded(level, pos);
+		return inside != null ? inside.getShape(level, pos, context) : SHAPE;
 	}
 
 	@Override
 	protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return Shapes.empty();
+		BlockState inside = embedded(level, pos);
+		return inside != null ? inside.getCollisionShape(level, pos, context) : Shapes.empty();
+	}
+
+	/** A node with a block inside breaks like that block (the block comes out, the node stays); a bare node can't be broken. */
+	@Override
+	protected float getDestroyProgress(BlockState state, net.minecraft.world.entity.player.Player player, BlockGetter level, BlockPos pos) {
+		BlockState inside = embedded(level, pos);
+		return inside != null ? inside.getDestroyProgress(player, level, pos) : super.getDestroyProgress(state, player, level, pos);
+	}
+
+	/** The block placed inside this node, if any. */
+	public static BlockState embedded(BlockGetter level, BlockPos pos) {
+		return level.getBlockEntity(pos) instanceof NodeBlockEntity node ? node.embedded : null;
 	}
 
 	@Override

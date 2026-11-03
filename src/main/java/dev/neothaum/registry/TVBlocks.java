@@ -183,8 +183,9 @@ public final class TVBlocks {
 
 	// ---- airy (BlockAiry) ----
 	public static final Block AURA_NODE = register("aura_node", AuraNodeBlock::new,
-		BlockBehaviour.Properties.of().replaceable().noCollision().noLootTable().strength(-1.0F, 3600000.0F)
-			.lightLevel(s -> s.getValue(AuraNodeBlock.BRIGHT) ? 15 : 8).noOcclusion()
+		// not replaceable: a block placed in a node goes inside it (NodeEmbedding) instead of destroying it
+		BlockBehaviour.Properties.of().noCollision().noLootTable().strength(-1.0F, 3600000.0F)
+			.lightLevel(s -> s.getValue(AuraNodeBlock.BRIGHT) ? 15 : 8).noOcclusion().dynamicShape()
 			.pushReaction(PushReaction.IMMOVEABLE), false);
 	public static final Block NITOR_LIGHT = register("nitor_light", NitorLightBlock::new,
 		BlockBehaviour.Properties.of().noCollision().instabreak().lightLevel(s -> 15).noOcclusion().sound(SoundType.WOOL).pushReaction(PushReaction.POPPED),
