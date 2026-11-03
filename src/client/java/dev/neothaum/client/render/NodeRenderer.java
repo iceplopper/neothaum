@@ -142,7 +142,7 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 		}
 	}
 
-	/** Blocks that stop nodes being seen through them, even with goggles (the thaumium block by default; a tag, so others can join). */
+	/** Blocks that stop nodes being seen through them, even with goggles (arcane stone block and bricks by default; a tag, so others can join). */
 	public static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> HIDES_NODES = net.minecraft.tags.TagKey.create(
 		net.minecraft.core.registries.Registries.BLOCK, dev.neothaum.NeoThaum.id("hides_nodes"));
 

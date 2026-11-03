@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "neothaum:thaumium_block"
+    "neothaum:arcane_stone_block",
+    "neothaum:arcane_stone_bricks"
   ]
 }

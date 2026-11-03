@@ -1614,6 +1614,10 @@
           "recipes": [
             "neothaum:arcanestone4"
           ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANESTONE.2"
         }
       ],
       "flags": [
