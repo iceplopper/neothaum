@@ -94,7 +94,8 @@ final class GenKeyRoom {
 		tablet.setUnlimitedLifetime();
 		g.world.addFreshEntity(tablet);
 		var difficulty = g.world.getLevel().getDifficulty();
-		int zz = 2 + (difficulty == net.minecraft.world.Difficulty.HARD ? 2 : (difficulty == net.minecraft.world.Difficulty.NORMAL ? 1 : 0));
+		// none below Normal (EldritchGuardianEntity.mayAppear); TC4 placed two even on Easy
+		int zz = difficulty == net.minecraft.world.Difficulty.HARD ? 4 : (difficulty == net.minecraft.world.Difficulty.NORMAL ? 3 : 0);
 		for (int qq = 0; qq < zz; qq++) {
 			var eg = dev.neothaum.entity.TVEntities.ELDRITCH_GUARDIAN.create(g.world.getLevel(), net.minecraft.world.entity.EntitySpawnReason.STRUCTURE);
 			if (eg == null) {

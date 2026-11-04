@@ -103,7 +103,8 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 					table.breaktime--;
 					if (table.breaktime == 0) {
 						AspectList primals = ResearchManager.reduceToPrimals(al);
-						if (primals != null && primals.size() > 0 && level.getRandom().nextInt(80) < primals.visSize()) {
+						// TC4 rolled against 80; NeoThaum doubles the chance
+						if (primals != null && primals.size() > 0 && level.getRandom().nextInt(40) < primals.visSize()) {
 							Aspect[] parray = primals.getAspects();
 							int idx = aspectIndex(parray[level.getRandom().nextInt(parray.length)]);
 							if (idx >= 0) {

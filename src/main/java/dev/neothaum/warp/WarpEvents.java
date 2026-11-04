@@ -273,7 +273,7 @@ public final class WarpEvents {
 
 	private static void spawnMist(ServerPlayer player, int warp, int guardians) {
 		ServerPlayNetworking.send(player, new TVNetwork.MiscEvent((short) 1));
-		if (guardians > 0) {
+		if (guardians > 0 && player.level().getDifficulty().getId() >= net.minecraft.world.Difficulty.NORMAL.getId()) {
 			guardians = Math.min(4, guardians);
 			ServerLevel level = (ServerLevel) player.level();
 			BlockPos origin = player.blockPosition();

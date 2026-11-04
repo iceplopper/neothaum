@@ -53,13 +53,25 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 	public static boolean checkGuardianSpawnRules(EntityType<EldritchGuardianEntity> type, net.minecraft.world.level.ServerLevelAccessor level,
 		net.minecraft.world.entity.EntitySpawnReason reason, net.minecraft.core.BlockPos pos, net.minecraft.util.RandomSource random) {
 		boolean natural = reason == net.minecraft.world.entity.EntitySpawnReason.NATURAL || reason == net.minecraft.world.entity.EntitySpawnReason.CHUNK_GENERATION;
-		if (natural && !level.getLevel().dimension().equals(dev.neothaum.world.outer.OuterLands.KEY)
-			&& level.getLevel().players().stream().noneMatch(p -> p.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) < 128.0 * 128.0
-				&& dev.neothaum.research.ResearchManager.isResearchComplete(p, "ELDRITCHMINOR"))) {
+		if (natural && !mayAppear(level.getLevel(), pos)) {
 			return false;
 		}
 		return level.getEntitiesOfClass(EldritchGuardianEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(32.0, 16.0, 32.0)).isEmpty()
 			&& Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
+	}
+
+	/**
+	 * Whether a guardian may appear here unbidden (natural spawns, an eldritch ring's altar, warp mist, the Outer Lands' key rooms): never on
+	 * Easy or Peaceful, and outside the Outer Lands only within 128 blocks of someone who has learned Eldritch Minor. A NeoThaum change: TC4
+	 * spawned them on every difficulty and near anyone.
+	 */
+	public static boolean mayAppear(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos pos) {
+		if (level.getDifficulty().getId() < net.minecraft.world.Difficulty.NORMAL.getId()) {
+			return false;
+		}
+		return level.dimension().equals(dev.neothaum.world.outer.OuterLands.KEY) || level.players().stream().anyMatch(
+			p -> p.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) < 128.0 * 128.0
+				&& dev.neothaum.research.ResearchManager.isResearchComplete(p, "ELDRITCHMINOR"));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

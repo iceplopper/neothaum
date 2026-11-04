@@ -209,7 +209,7 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 
 	/** TileEldritchAltar.spawnGuardian: every two seconds an eldritch guardian, leashed within 16, wherever one can stand. */
 	private void spawnGuardians() {
-		if (!(this.level instanceof ServerLevel sl)) {
+		if (!(this.level instanceof ServerLevel sl) || !EldritchGuardianEntity.mayAppear(sl, this.worldPosition)) {
 			return;
 		}
 		EldritchGuardianEntity guardian = TVEntities.ELDRITCH_GUARDIAN.create(sl, EntitySpawnReason.EVENT);

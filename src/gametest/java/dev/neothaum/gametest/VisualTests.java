@@ -3852,6 +3852,89 @@ public class VisualTests implements FabricClientGameTest {
 		});
 		check("keepInventory death takes essence", (death.startsWith("kinds 1 ") || death.startsWith("kinds 2 ") || death.startsWith("kinds 3 "))
 			&& death.endsWith("primals kept true sticky +1 temp +2"), death);
+		// --- eldritch guardians: never on Easy, and outside the Outer Lands only near someone with Eldritch Minor, even from a ring's altar
+		String[] altarAt = new String[1];
+		net.minecraft.world.Difficulty[] wasDifficulty = new net.minecraft.world.Difficulty[1];
+		String gate = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			wasDifficulty[0] = srv.getWorldData().getDifficulty();
+			altarAt[0] = "-";
+			var k = ResearchManager.knowledge(p).copy();
+			k.research.remove("ELDRITCHMINOR");
+			ResearchManager.setKnowledge(p, k);
+			net.minecraft.core.BlockPos at = p.blockPosition();
+			StringBuilder sb = new StringBuilder();
+			for (var d : new net.minecraft.world.Difficulty[]{net.minecraft.world.Difficulty.EASY, net.minecraft.world.Difficulty.NORMAL}) {
+				srv.setDifficulty(d, true);
+				sb.append(d.getSerializedName()).append(" without ").append(dev.neothaum.entity.monster.EldritchGuardianEntity.mayAppear(level, at)).append(' ');
+			}
+			var k2 = ResearchManager.knowledge(p).copy();
+			k2.research.add("ELDRITCHMINOR");
+			ResearchManager.setKnowledge(p, k2);
+			for (var d : new net.minecraft.world.Difficulty[]{net.minecraft.world.Difficulty.EASY, net.minecraft.world.Difficulty.NORMAL}) {
+				srv.setDifficulty(d, true);
+				sb.append(d.getSerializedName()).append(" with ").append(dev.neothaum.entity.monster.EldritchGuardianEntity.mayAppear(level, at)).append(' ');
+			}
+			// a guardian ring's altar, on Normal, with no one around who knows Eldritch Minor
+			var k3 = ResearchManager.knowledge(p).copy();
+			k3.research.remove("ELDRITCHMINOR");
+			ResearchManager.setKnowledge(p, k3);
+			net.minecraft.core.BlockPos ground = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at.offset(24, 0, 24));
+			// a clear stone floor round it, so the guardians have room to stand whatever the land is like there
+			for (net.minecraft.core.BlockPos q : net.minecraft.core.BlockPos.betweenClosed(ground.offset(-12, -1, -12), ground.offset(12, 4, 12))) {
+				level.setBlock(q, q.getY() < ground.getY() ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState()
+					: net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2);
+			}
+			level.setBlock(ground, dev.neothaum.registry.TVBlocks.ELDRITCH_ALTAR.defaultBlockState(), 3);
+			if (level.getBlockEntity(ground) instanceof dev.neothaum.tiles.eldritch.EldritchAltarBlockEntity altar) {
+				altar.setSpawner(true);
+				altar.setSpawnType((byte) 1);
+			}
+			altarAt[0] += " " + ground.getX() + " " + ground.getY() + " " + ground.getZ();
+			return sb.toString().trim();
+		});
+		check("guardians wait for Normal and Eldritch Minor", gate.equals("easy without false normal without false easy with false normal with true"), gate);
+		net.minecraft.world.level.GameType[] wasMode = new net.minecraft.world.level.GameType[1];
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			wasMode[0] = p.gameMode.getGameModeForPlayer();
+			p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+		});
+		ctx.waitTicks(300);
+		String[] a = altarAt[0].split(" ");
+		net.minecraft.core.BlockPos altarPos = new net.minecraft.core.BlockPos(Integer.parseInt(a[1]), Integer.parseInt(a[2]), Integer.parseInt(a[3]));
+		int without = server.computeOnServer(srv -> srv.overworld().getEntitiesOfClass(dev.neothaum.entity.monster.EldritchGuardianEntity.class,
+			new net.minecraft.world.phys.AABB(altarPos).inflate(20)).size());
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var k = ResearchManager.knowledge(p).copy();
+			k.research.add("ELDRITCHMINOR");
+			ResearchManager.setKnowledge(p, k);
+		});
+		ctx.waitTicks(400);
+		String altarState = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			return level.getBlockState(altarPos) + " spawner " + (level.getBlockEntity(altarPos) instanceof dev.neothaum.tiles.eldritch.EldritchAltarBlockEntity t
+				&& t.isSpawner()) + " may " + dev.neothaum.entity.monster.EldritchGuardianEntity.mayAppear(level, altarPos) + " difficulty "
+				+ srv.getWorldData().getDifficulty() + " player " + p.blockPosition() + " " + p.level().dimension() + " below "
+				+ level.getBlockState(altarPos.offset(5, -1, 5)) + " at " + level.getBlockState(altarPos.offset(5, 0, 5)) + " research " + ResearchManager.knowledge(p).research.size() + " minor " + ResearchManager.knowledge(p).research.contains("ELDRITCHMINOR") + " health " + p.getHealth() + " alive " + p.isAlive() + " id " + p.getId();
+		});
+		NeoThaum.LOGGER.info("[visual-test] altar: " + altarState);
+		int with = server.computeOnServer(srv -> srv.overworld().getEntitiesOfClass(dev.neothaum.entity.monster.EldritchGuardianEntity.class,
+			new net.minecraft.world.phys.AABB(altarPos).inflate(20)).size());
+		check("a ring's altar spawns guardians only once Eldritch Minor is known", without == 0 && with > 0, "without " + without + " with " + with);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			level.getEntitiesOfClass(dev.neothaum.entity.monster.EldritchGuardianEntity.class, new net.minecraft.world.phys.AABB(altarPos).inflate(32))
+				.forEach(e -> e.discard());
+			level.removeBlock(altarPos, false);
+			srv.setDifficulty(wasDifficulty[0], true);
+			var p = srv.getPlayerList().getPlayers().get(0);
+			p.setGameMode(wasMode[0]);
+			p.setHealth(p.getMaxHealth());
+		});
 		// --- an aspect orb gives its value in vis to a hotbar wand with room (it used to give a hundred times that)
 		String orb = server.computeOnServer(srv -> {
 			var level = srv.overworld();
