@@ -68,6 +68,9 @@ public final class ObjectAspects {
 
 	private static final List<ObjEntry> RAW_OBJECTS = new ArrayList<>();
 	private static final List<EntityEntry> ENTITIES = new ArrayList<>();
+	/** aspects_mods.json's entries, used only while the Modded Item Aspects addition is on. */
+	private static final List<ObjEntry> MOD_OBJECTS = new ArrayList<>();
+	private static final List<EntityEntry> MOD_ENTITIES = new ArrayList<>();
 	/** Explicit object tags (ThaumcraftApi.objectTags). */
 	private static final Map<Item, AspectList> registered = new HashMap<>();
 	/** registerComplexObjectTag additions applied on top of recipe-derived tags. */
@@ -87,20 +90,46 @@ public final class ObjectAspects {
 
 	/**
 	 * aspects.json is ConfigAspects converted 1:1; aspects_modern.json covers content added to Minecraft after 1.7.10, in the same style
-	 * (from the reviewed spreadsheet); aspects_additions.json covers NeoThaum's own new items, such as the deepslate ores.
+	 * (from the reviewed spreadsheet); aspects_additions.json covers NeoThaum's own new items, such as the deepslate ores; aspects_mods.json
+	 * other mods' items, while the Modded Item Aspects addition is on.
 	 */
 	private static void load() {
 		load("aspects.json");
 		load("aspects_modern.json");
 		load("aspects_additions.json");
+		// NeoThaum Addition (Modded Item Aspects): hand-written aspects for other mods' items that their tags and recipes get wrong or miss
+		load("aspects_mods.json", MOD_OBJECTS, MOD_ENTITIES);
+	}
+
+	/** The entries in force: TC4's and NeoThaum's, and other mods' while that addition is on. */
+	private static List<ObjEntry> objects() {
+		if (!dev.neothaum.addon.Additions.enabled("modded_aspects")) {
+			return RAW_OBJECTS;
+		}
+		List<ObjEntry> all = new ArrayList<>(RAW_OBJECTS);
+		all.addAll(MOD_OBJECTS);
+		return all;
+	}
+
+	private static List<EntityEntry> entities() {
+		if (!dev.neothaum.addon.Additions.enabled("modded_aspects")) {
+			return ENTITIES;
+		}
+		List<EntityEntry> all = new ArrayList<>(ENTITIES);
+		all.addAll(MOD_ENTITIES);
+		return all;
 	}
 
 	private static void load(String file) {
+		load(file, RAW_OBJECTS, ENTITIES);
+	}
+
+	private static void load(String file, List<ObjEntry> objectsOut, List<EntityEntry> entitiesOut) {
 		try (InputStream in = ObjectAspects.class.getResourceAsStream("/data/neothaum/neothaum/" + file)) {
 			JsonObject root = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
 			for (JsonElement e : root.getAsJsonArray("objects")) {
 				JsonObject o = e.getAsJsonObject();
-				RAW_OBJECTS.add(new ObjEntry(o.has("item") ? o.get("item").getAsString() : null, o.has("tag") ? o.get("tag").getAsString() : null,
+				objectsOut.add(new ObjEntry(o.has("item") ? o.get("item").getAsString() : null, o.has("tag") ? o.get("tag").getAsString() : null,
 					parse(o.getAsJsonObject("aspects")), o.has("complex") && o.get("complex").getAsBoolean()));
 			}
 			for (JsonElement e : root.getAsJsonArray("entities")) {
@@ -109,7 +138,7 @@ public final class ObjectAspects {
 				if (o.has("nbt")) {
 					o.getAsJsonObject("nbt").entrySet().forEach(n -> nbt.put(n.getKey(), n.getValue().getAsString()));
 				}
-				ENTITIES.add(new EntityEntry(Identifier.parse(o.get("entity").getAsString()), parse(o.getAsJsonObject("aspects")), nbt));
+				entitiesOut.add(new EntityEntry(Identifier.parse(o.get("entity").getAsString()), parse(o.getAsJsonObject("aspects")), nbt));
 			}
 		} catch (Exception ex) {
 			throw new IllegalStateException("Failed to load " + file, ex);
@@ -137,7 +166,7 @@ public final class ObjectAspects {
 		registered.clear();
 		complex.clear();
 		generated.clear();
-		for (ObjEntry o : RAW_OBJECTS) {
+		for (ObjEntry o : objects()) {
 			for (Item item : resolve(o)) {
 				if (o.complex()) {
 					complex.put(item, o.aspects());
@@ -613,7 +642,7 @@ public final class ObjectAspects {
 	public static AspectList getBlockAspects(net.minecraft.world.level.block.Block block) {
 		if (blockTable == null) {
 			Map<net.minecraft.world.level.block.Block, AspectList> t = new HashMap<>();
-			for (ObjEntry o : RAW_OBJECTS) {
+			for (ObjEntry o : objects()) {
 				if (o.item() != null && BuiltInRegistries.ITEM.getOptional(Identifier.parse(o.item())).isEmpty()) {
 					BuiltInRegistries.BLOCK.getOptional(Identifier.parse(o.item())).ifPresent(b -> t.put(b, o.aspects()));
 				}
@@ -625,7 +654,7 @@ public final class ObjectAspects {
 	}
 
 	public static boolean hasEntityAspects(Identifier id) {
-		return ENTITIES.stream().anyMatch(e -> e.entity().equals(id));
+		return entities().stream().anyMatch(e -> e.entity().equals(id));
 	}
 
 	/** ScanManager.generateEntityAspects. */
@@ -651,7 +680,7 @@ public final class ObjectAspects {
 		}
 		Identifier id = EntityType.getKey(entity.getType());
 		AspectList tags = null;
-		for (EntityEntry et : ENTITIES) {
+		for (EntityEntry et : entities()) {
 			if (!et.entity().equals(id)) {
 				continue;
 			}

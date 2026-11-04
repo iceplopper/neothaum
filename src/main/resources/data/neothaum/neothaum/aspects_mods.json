@@ -1,0 +1,327 @@
+{
+  "objects": [
+    {
+      "item": "elevatorid:elevator_white",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_orange",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_magenta",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_light_blue",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_yellow",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_lime",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_pink",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_gray",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_light_gray",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_cyan",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_purple",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_blue",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_brown",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_green",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_red",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "elevatorid:elevator_black",
+      "aspects": {
+        "pannus": 3,
+        "iter": 4,
+        "motus": 2,
+        "alienis": 2
+      }
+    },
+    {
+      "item": "travelersbackpack:white_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:orange_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:magenta_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:light_blue_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:yellow_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:lime_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:pink_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:gray_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:light_gray_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:cyan_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:purple_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:blue_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:brown_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:green_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:red_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:black_sleeping_bag",
+      "aspects": {
+        "pannus": 4,
+        "arbor": 1
+      }
+    },
+    {
+      "item": "travelersbackpack:netherite",
+      "aspects": {
+        "pannus": 4,
+        "vacuos": 4,
+        "bestia": 2,
+        "metallum": 8,
+        "ignis": 4,
+        "tutamen": 4
+      }
+    },
+    {
+      "item": "travelersbackpack:netherite_tier_upgrade",
+      "aspects": {
+        "metallum": 8,
+        "ignis": 4,
+        "tutamen": 4
+      }
+    },
+    {
+      "item": "travelersbackpack:bat",
+      "aspects": {
+        "pannus": 4,
+        "vacuos": 3,
+        "bestia": 2,
+        "volatus": 4,
+        "tenebrae": 3
+      }
+    },
+    {
+      "item": "travelersbackpack:villager",
+      "aspects": {
+        "pannus": 4,
+        "vacuos": 3,
+        "bestia": 2,
+        "humanus": 4,
+        "lucrum": 2
+      }
+    },
+    {
+      "item": "travelersbackpack:iron_golem",
+      "aspects": {
+        "pannus": 4,
+        "vacuos": 3,
+        "metallum": 8,
+        "tutamen": 4,
+        "humanus": 2
+      }
+    },
+    {
+      "item": "naturescompass:naturescompass",
+      "aspects": {
+        "iter": 3,
+        "sensus": 2,
+        "herba": 2
+      },
+      "complex": true
+    }
+  ],
+  "entities": [
+    {
+      "entity": "travelersbackpack:backpack",
+      "aspects": {
+        "pannus": 4,
+        "vacuos": 4
+      }
+    }
+  ]
+}

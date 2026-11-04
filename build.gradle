@@ -48,9 +48,12 @@ configurations {
 	reiTest { transitive = false }
 	terralithTest { transitive = false }
 	bopTest { transitive = false }
+	// the mods players add alongside NeoThaum (agentic/compat/mods): NEOTHAUM_TEST_MODS=compat
+	compatTest { transitive = false }
 }
 
 dependencies {
+	compatTest fileTree(dir: "agentic/compat/mods", include: "*.jar")
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"

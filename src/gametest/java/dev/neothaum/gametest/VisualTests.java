@@ -1035,6 +1035,108 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.runOnClient(mc -> mc.player.closeContainer());
 	}
 
+	/** The mods players add beside NeoThaum (NEOTHAUM_TEST_MODS=compat): what each adds, and the aspects its items and creatures have. */
+	private static final String[] COMPAT_MODS = {"travelersbackpack", "elevatorid", "naturescompass", "sorted", "continuity", "ok_zoomer",
+		"sound_physics_remastered", "leavesbegone"};
+
+	private static void compatScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		boolean wasOn = cfg.additionsEnabled;
+		cfg.additionsEnabled = true;
+		server.runCommand("reload");
+		ctx.waitTicks(40);
+		String loaded = ctx.computeOnClient(mc -> {
+			StringBuilder sb = new StringBuilder();
+			for (String m : COMPAT_MODS) {
+				sb.append(m).append('=').append(net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded(m) ? "yes" : "no").append(' ');
+			}
+			return sb.toString().trim();
+		});
+		NeoThaum.LOGGER.info("[visual-test] compat: loaded {}", loaded);
+		String missing = server.computeOnServer(srv -> {
+			int none = 0;
+			for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+				var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
+				if (!java.util.Arrays.asList(COMPAT_MODS).contains(id.getNamespace())) {
+					continue;
+				}
+				var al = dev.neothaum.aspects.ObjectAspects.getAspects(new net.minecraft.world.item.ItemStack(item));
+				StringBuilder a = new StringBuilder();
+				if (al != null) {
+					for (var asp : al.getAspectsSorted()) {
+						a.append(asp.getTag()).append(' ').append(al.getAmount(asp)).append(' ');
+					}
+				}
+				if (a.isEmpty()) {
+					none++;
+				}
+				NeoThaum.LOGGER.info("[visual-test] compat item {} : {}", id, a.isEmpty() ? "NONE" : a.toString().trim());
+			}
+			for (var type : net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE) {
+				var id = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(type);
+				if (java.util.Arrays.asList(COMPAT_MODS).contains(id.getNamespace())) {
+					NeoThaum.LOGGER.info("[visual-test] compat entity {}", id);
+				}
+			}
+			return String.valueOf(none);
+		});
+		NeoThaum.LOGGER.info("[visual-test] compat: {} items without aspects", missing);
+		check("compat: every item from the added mods has aspects", missing.equals("0"), missing);
+		String elevators = server.computeOnServer(srv -> {
+			var white = dev.neothaum.aspects.ObjectAspects.getAspects(new net.minecraft.world.item.ItemStack(
+				net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.parse("elevatorid:elevator_white"))));
+			var yellow = dev.neothaum.aspects.ObjectAspects.getAspects(new net.minecraft.world.item.ItemStack(
+				net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.parse("elevatorid:elevator_yellow"))));
+			return "white iter " + white.getAmount(dev.neothaum.api.aspects.Aspect.TRAVEL) + " same " + white.equals(yellow);
+		});
+		check("compat: every elevator colour has the same aspects", elevators.equals("white iter 4 same true"), elevators);
+		// Leaves Be Gone: a greatwood's leaves decay quickly once its log is gone, and a silverwood's pure node is left alone
+		for (String cmd : new String[]{"gamemode creative @a", "fill -6 116 -6 6 124 6 air", "fill -6 115 -6 6 115 6 stone",
+			"setblock 0 116 0 neothaum:greatwood_log", "fill -1 117 -1 1 118 1 neothaum:greatwood_leaves", "setblock 0 117 0 neothaum:greatwood_log",
+			"setblock 4 116 4 neothaum:silverwood_log", "fill 3 117 3 5 118 5 neothaum:silverwood_leaves", "setblock 4 117 4 neothaum:silverwood_log",
+			"setblock 4 120 4 neothaum:aura_node", "tp @a 0 118 -5 0 20"}) {
+			server.runCommand(cmd);
+		}
+		ctx.waitTicks(10);
+		server.runCommand("fill 0 116 0 0 117 0 air");
+		server.runCommand("fill 4 116 4 4 117 4 air");
+		ctx.waitTicks(200);
+		String leaves = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			int left = 0;
+			for (var pos : net.minecraft.core.BlockPos.betweenClosed(-1, 117, -1, 5, 118, 5)) {
+				if (level.getBlockState(pos).getBlock() instanceof net.minecraft.world.level.block.LeavesBlock) {
+					left++;
+				}
+			}
+			return "leaves left " + left + " node " + level.getBlockState(new net.minecraft.core.BlockPos(4, 120, 4)).is(dev.neothaum.registry.TVBlocks.AURA_NODE);
+		});
+		check("compat: Leaves Be Gone decays magical leaves and spares the node", leaves.equals("leaves left 0 node true"), leaves);
+		// Sorted: our screens still open (and screenshots show what it adds to them)
+		server.runCommand("setblock -2 116 -2 neothaum:arcane_worktable");
+		server.runCommand("setblock 2 116 -2 neothaum:experience_siphon");
+		String[] screens = {"arcane_worktable", "experience_siphon"};
+		net.minecraft.core.BlockPos[] at = {new net.minecraft.core.BlockPos(-2, 116, -2), new net.minecraft.core.BlockPos(2, 116, -2)};
+		for (int i = 0; i < 2; i++) {
+			final int k = i;
+			server.runOnServer(srv -> {
+				var p = srv.getPlayerList().getPlayers().get(0);
+				if (srv.overworld().getBlockEntity(at[k]) instanceof net.minecraft.world.MenuProvider mp) {
+					p.openMenu(mp);
+				}
+			});
+			ctx.waitTicks(20);
+			String open = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+			shot(ctx, "compat_sorted_" + screens[k]);
+			check("compat: " + screens[k] + " screen opens beside Sorted", !open.equals("none"), open);
+			ctx.setScreen(() -> null);
+			ctx.waitTicks(5);
+		}
+		cfg.additionsEnabled = wasOn;
+		server.runCommand("reload");
+		ctx.waitTicks(20);
+	}
+
 	/**
 	 * The Experience Siphon addition: a sneaking player on it is drained, an empty jar in it fills at ten levels, a jar of experience is
 	 * left alone by tubes and shows its levels, the worktable recipe takes only a full jar and gives the jar back, and Condensed Experience
@@ -1478,7 +1580,7 @@ public class VisualTests implements FabricClientGameTest {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "compat",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -1651,6 +1753,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "siphon" -> {
 				siphonScene(ctx, server);
+			}
+			case "compat" -> {
+				compatScene(ctx, server);
 			}
 			case "config" -> {
 				configScene(ctx, server);
