@@ -122,7 +122,9 @@ public class RunicMatrixRenderer implements BlockEntityRenderer<InfusionMatrixBl
 					}
 					ps.scale(0.45F, 0.45F, 0.45F);
 					if (over) {
-						// the glow: full-bright, additive, pulsing a little out of step on each cube
+						// the glow: full-bright, additive, pulsing a little out of step on each cube; a hair larger than the stone cube under it,
+						// or the two fight over the same depth and the runes flicker
+						ps.scale(1.002F, 1.002F, 1.002F);
 						float alpha = (Mth.sin((s.ticks + a * 2 + b * 3 + c * 4) / 4.0F) * 0.1F + 0.2F) * s.startUp;
 						int argb = (int) (alpha * 255) << 24 | (int) (0.8F * 255) << 16 | (int) (0.1F * 255) << 8 | 255;
 						collector.submitCustomGeometry(ps, TVRenderTypes.glow(TEXTURE, true, true), (pose, vc) -> {

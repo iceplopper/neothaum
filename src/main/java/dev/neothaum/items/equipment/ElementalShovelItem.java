@@ -56,7 +56,11 @@ public class ElementalShovelItem extends Item {
 		return false;
 	}
 
-	/** The nine offsets of the placement square for this face, orientation and facing (ItemElementalShovel.onItemUse). */
+	/**
+	 * The nine offsets of the placement square for this face, orientation and facing (ItemElementalShovel.onItemUse). 0: flat against the
+	 * face. 1: an upright wall standing out of the face (on a top or bottom face, across your view). 2: a level ledge out of the face (on a
+	 * top or bottom face, an upright wall along your view).
+	 */
 	static List<BlockPos> square(int o, Direction face, float yaw) {
 		List<BlockPos> out = new ArrayList<>();
 		int side = face.get3DDataValue();
@@ -79,11 +83,13 @@ public class ElementalShovelItem extends Item {
 					}
 				} else if (o == 2) {
 					if (side <= 1) {
+						// on top of or under a block TC4 repeated orientation 1 here (a level square out of a level face is just the parallel
+						// one); instead the upright wall turns the other way, along your view, so each orientation does something different
 						yy = bb;
 						if (l != 0 && l != 2) {
-							zz = aa;
-						} else {
 							xx = aa;
+						} else {
+							zz = aa;
 						}
 					} else {
 						zz = bb;

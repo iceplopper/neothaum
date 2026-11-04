@@ -404,11 +404,13 @@ public final class TVBlocks {
 			.randomTicks();
 	}
 
-	/** BlockJar's CustomStepSound("jar"): TC4's own jar sound for breaking, placing, walking on and hitting a jar. */
-	private static final SoundType JAR_SOUND = new SoundType(1.0F, 1.0F, TVSounds.JAR, TVSounds.JAR, TVSounds.JAR, TVSounds.JAR, TVSounds.JAR);
-
+	/**
+	 * BlockJar's CustomStepSound("jar"): TC4's own jar sound for breaking, placing, walking on and hitting a jar. Made here, not as a constant
+	 * below, because the jar blocks above are built before such a constant would be.
+	 */
 	private static BlockBehaviour.Properties jar() {
-		return BlockBehaviour.Properties.of().strength(0.3F).sound(JAR_SOUND).lightLevel(s -> 10).noOcclusion();
+		SoundType jarSound = new SoundType(1.0F, 1.0F, TVSounds.JAR, TVSounds.JAR, TVSounds.JAR, TVSounds.JAR, TVSounds.JAR);
+		return BlockBehaviour.Properties.of().strength(0.3F).sound(jarSound).lightLevel(s -> 10).noOcclusion();
 	}
 
 	private static Block tube(String name, TubeBlockEntity.Kind kind) {

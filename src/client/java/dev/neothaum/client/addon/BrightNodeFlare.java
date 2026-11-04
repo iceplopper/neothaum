@@ -94,8 +94,7 @@ public final class BrightNodeFlare {
 			float sx = inFront ? cx + clip.x / clip.w * cx : 0.0F;
 			float sy = inFront ? cy - clip.y / clip.w * cy : 0.0F;
 			boolean onScreen = inFront && sx > -w * 0.1F && sx < w * 1.1F && sy > -h * 0.1F && sy < h * 1.1F;
-			boolean clear = current && onScreen && dist < RANGE && mc.level.clip(new ClipContext(eye, f.pos, ClipContext.Block.VISUAL,
-				ClipContext.Fluid.NONE, mc.player)).getType() == HitResult.Type.MISS;
+			boolean clear = current && onScreen && dist < RANGE && clearSight(mc, eye, f.pos);
 			// ease in and out rather than pop
 			f.strength = Mth.clamp(f.strength + (clear ? 0.12F : -0.08F), 0.0F, 1.0F);
 			if (f.strength <= 0.0F) {
@@ -113,6 +112,41 @@ public final class BrightNodeFlare {
 			float power = f.strength * (0.35F + 0.65F * nearness) * (0.4F + 0.6F * centred);
 			draw(g, f.color, sx, sy, cx, cy, h, power, now);
 		}
+	}
+
+	/**
+	 * Whether the flare's light reaches the eye: through glass, panes and water, and between the parts of thin blocks such as fences, but
+	 * not through tinted glass or anything solid.
+	 */
+	private static boolean clearSight(Minecraft mc, Vec3 eye, Vec3 to) {
+		BlockPos target = BlockPos.containing(to);
+		Boolean blocked = net.minecraft.world.level.BlockGetter.traverseBlocks(eye, to, mc.level, (level, pos) -> {
+			if (pos.equals(target)) {
+				return null;
+			}
+			var state = level.getBlockState(pos);
+			if (state.isAir() || seeThrough(state)) {
+				return null;
+			}
+			// anything else stops the light where its visible shape crosses the line
+			var shape = state.getVisualShape(level, pos, net.minecraft.world.phys.shapes.CollisionContext.empty());
+			return shape.clip(eye, to, pos) != null ? Boolean.TRUE : null;
+		}, level -> Boolean.FALSE);
+		return !blocked;
+	}
+
+	/**
+	 * Glass, glass panes and iron bars, and water: see-through all over. Blocks whose texture merely has holes (doors, trapdoors, leaves,
+	 * ladders) count as solid; telling a hole from the rest would mean reading the texture where the line crosses it. Fences, gates and
+	 * chains are thin enough that their own shape already leaves the gaps open.
+	 */
+	private static boolean seeThrough(net.minecraft.world.level.block.state.BlockState state) {
+		var b = state.getBlock();
+		if (b instanceof net.minecraft.world.level.block.TintedGlassBlock) {
+			return false;
+		}
+		return b instanceof net.minecraft.world.level.block.TransparentBlock || b instanceof net.minecraft.world.level.block.IronBarsBlock
+			|| !state.getFluidState().isEmpty();
 	}
 
 	private static void draw(GuiGraphicsExtractor g, int color, float sx, float sy, float cx, float cy, int h, float power, long now) {

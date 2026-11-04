@@ -3374,7 +3374,8 @@ public class VisualTests implements FabricClientGameTest {
 		String spawns = server.computeOnServer(srv -> {
 			var level = srv.overworld();
 			var p = srv.getPlayerList().getPlayers().get(0);
-			net.minecraft.core.BlockPos pos = p.blockPosition().offset(20, 0, 20);
+			// high in open air, away from anything earlier scenes left lit
+			net.minecraft.core.BlockPos pos = p.blockPosition().offset(60, 40, 60);
 			int[] counts = new int[3];
 			for (int pass = 0; pass < 3; pass++) {
 				cfg.spawnFireBats = pass == 0;
