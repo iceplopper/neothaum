@@ -68,12 +68,17 @@ public final class ThaumometerRenderer {
 		// renderQuadCenteredFromTexture scales the matrix and leaves it scaled for the readout
 		ps.scale(2.5F, 2.5F, 2.5F);
 		int screenLight = flicker(player, 0);
-		collector.submitCustomGeometry(ps, RenderTypes.entityTranslucent(SCREEN), (pose, vc) -> {
+		// the screen is see-through glass: drawn without writing depth, or under a shader pack everything translucent behind it (water,
+		// glass panes, portals, and the skins of players and piglins) vanished. The render type is full-bright, so the flicker goes in the colour
+		int lit = Math.max(screenLight >> 4 & 0xF, screenLight >> 20 & 0xF);
+		int shade = (int) ((0.4F + 0.6F * lit / 15.0F) * 255);
+		int screenColor = 0xFF000000 | shade << 16 | shade << 8 | shade;
+		collector.submitCustomGeometry(ps, dev.neothaum.client.render.TVRenderTypes.glow(SCREEN, false, true), (pose, vc) -> {
 			float[][] v = {{-0.5F, 0.5F, 0, 1}, {0.5F, 0.5F, 1, 1}, {0.5F, -0.5F, 1, 0}, {-0.5F, -0.5F, 0, 0}};
 			for (int side = 0; side < 1; side++) { // both render types draw back faces too; a second copy z-fights
 				for (int i = 0; i < 4; i++) {
 					float[] q = v[side == 0 ? i : 3 - i];
-					vc.addVertex(pose, q[0], q[1], 0.0F).setColor(0xFFFFFFFF).setUv(q[2], q[3]).setOverlay(OverlayTexture.NO_OVERLAY)
+					vc.addVertex(pose, q[0], q[1], 0.0F).setColor(screenColor).setUv(q[2], q[3]).setOverlay(OverlayTexture.NO_OVERLAY)
 						.setLight(screenLight).setNormal(pose, 0.0F, 0.0F, side == 0 ? -1.0F : 1.0F);
 				}
 			}

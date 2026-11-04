@@ -1035,12 +1035,32 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.runOnClient(mc -> mc.player.closeContainer());
 	}
 
+	/**
+	 * Looking through the thaumometer's screen at water, a glass pane, a nether portal and a piglin (run under a shader pack): all of them
+	 * should show through it.
+	 */
+	private static void thaumometerViewScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "fill -6 116 -6 6 125 10 air", "fill -6 115 -6 6 115 10 stone",
+			"fill -3 115 4 3 115 7 water", "fill -1 116 3 1 118 3 glass_pane", "fill -4 116 8 -1 120 8 obsidian", "fill -3 117 8 -2 119 8 nether_portal[axis=x]",
+			"summon minecraft:piglin 2 116 6 {NoAI:1b,PersistenceRequired:1b,IsImmuneToZombification:1b}", "tp @a 0 117 -2 0 15",
+			"item replace entity @a weapon.mainhand with neothaum:thaumometer"}) {
+			server.runCommand(cmd);
+		}
+		ctx.waitTicks(40);
+		ctx.getInput().holdKey(options -> options.keyUse);
+		ctx.waitTicks(30);
+		shot(ctx, "thaumometer_view");
+		ctx.getInput().releaseKey(options -> options.keyUse);
+		ctx.waitTicks(5);
+		shot(ctx, "thaumometer_view_lowered");
+	}
+
 	/** The scenes NEOTHAUM_SCENES can name, in the order they run. */
 	private static final String[] SCENES = {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -1201,6 +1221,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "golemai" -> {
 				golemAiScene(ctx, server);
+			}
+			case "thaumometerview" -> {
+				thaumometerViewScene(ctx, server);
 			}
 			case "config" -> {
 				configScene(ctx, server);
