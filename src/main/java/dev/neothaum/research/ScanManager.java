@@ -176,6 +176,42 @@ public final class ScanManager {
 		return tags.size() > 0 ? tags : null;
 	}
 
+	/** The first aspect the player must study before they can understand these aspects, or null (validScanError's "study X"). */
+	public static Aspect missingAspect(AspectList aspects, Player player) {
+		if (aspects == null) {
+			return null;
+		}
+		PlayerKnowledge k = ResearchManager.knowledge(player);
+		for (Aspect aspect : aspects.getAspects()) {
+			if (!aspect.isPrimal() && !k.hasDiscoveredParentAspects(aspect)) {
+				for (Aspect parent : aspect.getComponents()) {
+					if (!k.hasDiscoveredAspect(parent)) {
+						return parent;
+					}
+				}
+				return null;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Client: after a scan fails with this error. A failure for want of an aspect goes to the server as well, which counts it for the
+	 * hint research (a NeoThaum Addition), and once that research is known the missing aspect is named with a hint.
+	 */
+	public static void afterBlockedScan(ScanResult scan, AspectList aspects, Player player) {
+		Aspect missing = missingAspect(aspects, player);
+		if (missing == null || !dev.neothaum.addon.HintResearch.enabled()) {
+			return;
+		}
+		if (!dev.neothaum.addon.HintResearch.found(player)) {
+			TVNetwork.sendScanToServer(scan);
+		}
+		if (dev.neothaum.addon.HintResearch.known(player)) {
+			TVNetwork.clientAspectNotifier.accept(dev.neothaum.addon.HintResearch.hint(missing), missing);
+		}
+	}
+
 	/** Client half of validScan: checks parents and returns the notification to show, or null. */
 	public static Component validScanError(AspectList aspects, Player player) {
 		PlayerKnowledge k = ResearchManager.knowledge(player);
@@ -201,6 +237,9 @@ public final class ScanManager {
 		AspectList aspects = getScanAspects(scan, player.level());
 		Component err = validScanError(aspects, player);
 		if (err != null) {
+			if (missingAspect(aspects, player) != null) {
+				dev.neothaum.addon.HintResearch.blocked(player, "@" + keyOf(scan));
+			}
 			return false;
 		}
 		Object clue = null;

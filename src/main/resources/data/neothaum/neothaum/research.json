@@ -8362,6 +8362,40 @@
         "RESEARCHER2"
       ],
       "addition": "research_sharing"
+    },
+    {
+      "key": "HINTRESEARCH",
+      "category": "BASICS",
+      "aspects": {
+        "aer": 16,
+        "ignis": 16,
+        "aqua": 16,
+        "terra": 16,
+        "ordo": 16,
+        "perditio": 16
+      },
+      "col": -2,
+      "row": 2,
+      "complexity": 2,
+      "icon": {
+        "item": "neothaum:thaumometer"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.HINTRESEARCH.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.HINTRESEARCH.2"
+        }
+      ],
+      "flags": [
+        "hidden",
+        "secondary"
+      ],
+      "warp": 1,
+      "addition": "hint_research"
     }
   ]
 }

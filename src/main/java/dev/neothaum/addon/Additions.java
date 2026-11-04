@@ -17,12 +17,14 @@ public final class Additions {
 			case "marker_copy" -> cfg.additionMarkerCopy;
 			case "modded_aspects" -> cfg.additionModdedAspects;
 			case "wood_sets" -> cfg.additionWoodSets;
+			case "hint_research" -> cfg.additionHintResearch;
 			default -> false;
 		};
 	}
 
 	public static void init() {
 		AdditionCondition.init();
+		HintResearch.init();
 		ResearchSharing.init();
 		MarkerCopy.init();
 	}

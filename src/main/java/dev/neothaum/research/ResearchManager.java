@@ -54,6 +54,19 @@ public final class ResearchManager {
 		}
 	}
 
+	/**
+	 * Reads the research again, as after a config change that adds or removes an addition's research (each loads only while its
+	 * addition is on). On a dedicated server each side reads its own, so a client sees the change when it next starts.
+	 */
+	public static synchronized void reload() {
+		CATEGORIES.clear();
+		ENTRIES.clear();
+		allHiddenResearch = null;
+		allValidResearch = null;
+		loaded = true;
+		load();
+	}
+
 	private static void load() {
 		try (InputStream in = ResearchManager.class.getResourceAsStream("/data/neothaum/neothaum/research.json")) {
 			JsonObject root = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();

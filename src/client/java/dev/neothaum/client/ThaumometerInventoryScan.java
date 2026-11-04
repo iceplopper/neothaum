@@ -49,6 +49,7 @@ public final class ThaumometerInventoryScan {
 			var err = ScanManager.validScanError(ScanManager.getScanAspects(scan, mc.level), mc.player);
 			if (err != null) {
 				TVNetwork.clientNotify(err);
+				ScanManager.afterBlockedScan(scan, ScanManager.getScanAspects(scan, mc.level), mc.player);
 			} else {
 				TVNetwork.sendScanToServer(scan);
 			}

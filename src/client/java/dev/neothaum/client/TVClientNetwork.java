@@ -35,6 +35,7 @@ public final class TVClientNetwork {
 	public static void init() {
 		TVNetwork.clientSender = ClientPlayNetworking::send;
 		TVNetwork.clientNotifier = c -> Notifications.add(c.getString());
+		TVNetwork.clientAspectNotifier = (c, a) -> Notifications.add(c.getString(), a);
 
 		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.ObjectAspectsSync.TYPE, (p, ctx) -> {
 			Map<Item, AspectList> t = new HashMap<>();

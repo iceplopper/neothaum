@@ -85,6 +85,7 @@ public class ThaumometerItem extends Item {
 				var err = ScanManager.validScanError(ScanManager.getScanAspects(scan, level), p);
 				if (err != null) {
 					TVNetwork.clientNotify(err);
+					ScanManager.afterBlockedScan(scan, ScanManager.getScanAspects(scan, level), p);
 				} else {
 					TVNetwork.sendScanToServer(scan);
 				}

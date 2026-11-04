@@ -1036,6 +1036,97 @@ public class VisualTests implements FabricClientGameTest {
 	}
 
 	/**
+	 * The hint research addition: scans that fail for want of an aspect bring Shortcuts of the Impatient Mind to light after 4 different
+	 * things, or 8 failures of one; it gives 1 warp; once known it names the aspect with a hint; with the addition off nothing counts.
+	 */
+	private static void hintResearchScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		boolean wasOn = cfg.additionsEnabled;
+		boolean wasHint = cfg.additionHintResearch;
+		cfg.additionsEnabled = true;
+		cfg.additionHintResearch = true;
+		// the research is read with the addition on
+		ResearchManager.reload();
+		String result = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var saved = ResearchManager.knowledge(p).copy();
+			var savedBlocked = p.getAttachedOrCreate(dev.neothaum.addon.HintResearch.BLOCKED);
+			StringBuilder sb = new StringBuilder();
+			// a newcomer: the primal aspects and the research every player starts with
+			ResearchManager.setKnowledge(p, dev.neothaum.research.PlayerKnowledge.empty());
+			ResearchManager.grantStartingKnowledge(p);
+			p.removeAttached(dev.neothaum.addon.HintResearch.BLOCKED);
+			// items whose scan the newcomer can't understand
+			java.util.List<net.minecraft.world.item.Item> blocked = new java.util.ArrayList<>();
+			for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+				var scan = dev.neothaum.research.ScanManager.ScanResult.item(item);
+				if (dev.neothaum.research.ScanManager.missingAspect(dev.neothaum.research.ScanManager.getScanAspects(scan, p.level()), p) != null) {
+					blocked.add(item);
+				}
+				if (blocked.size() >= 4) {
+					break;
+				}
+			}
+			sb.append("blocked items ").append(blocked.size());
+			for (int i = 0; i < blocked.size(); i++) {
+				dev.neothaum.research.ScanManager.completeScan(p, dev.neothaum.research.ScanManager.ScanResult.item(blocked.get(i)), "@");
+				if (i == 2) {
+					sb.append(" after 3 ").append(dev.neothaum.addon.HintResearch.found(p));
+				}
+			}
+			sb.append(" after 4 different ").append(dev.neothaum.addon.HintResearch.found(p));
+			// the same thing, 8 times
+			ResearchManager.setKnowledge(p, dev.neothaum.research.PlayerKnowledge.empty());
+			ResearchManager.grantStartingKnowledge(p);
+			p.removeAttached(dev.neothaum.addon.HintResearch.BLOCKED);
+			var one = dev.neothaum.research.ScanManager.ScanResult.item(blocked.get(0));
+			for (int i = 0; i < 8; i++) {
+				dev.neothaum.research.ScanManager.completeScan(p, one, "@");
+				if (i == 6) {
+					sb.append(" after 7 same ").append(dev.neothaum.addon.HintResearch.found(p));
+				}
+			}
+			sb.append(" after 8 same ").append(dev.neothaum.addon.HintResearch.found(p));
+			// learning it brings 1 warp, and the hint names the aspect
+			int warp = ResearchManager.knowledge(p).getWarpTotal();
+			ResearchManager.completeResearch(p, dev.neothaum.addon.HintResearch.KEY);
+			sb.append(" warp +").append(ResearchManager.knowledge(p).getWarpTotal() - warp);
+			sb.append(" known ").append(dev.neothaum.addon.HintResearch.known(p));
+			var missing = dev.neothaum.research.ScanManager.missingAspect(dev.neothaum.research.ScanManager.getScanAspects(one, p.level()), p);
+			String hint = dev.neothaum.addon.HintResearch.hint(missing).getString();
+			sb.append(" hint names it ").append(hint.startsWith(missing.getName() + ": ") && !hint.contains("somewhere"));
+			NeoThaum.LOGGER.info("[visual-test] hint for {}: {}", missing.getTag(), hint);
+			// with the addition off, failures aren't counted
+			cfg.additionsEnabled = false;
+			ResearchManager.setKnowledge(p, dev.neothaum.research.PlayerKnowledge.empty());
+			ResearchManager.grantStartingKnowledge(p);
+			p.removeAttached(dev.neothaum.addon.HintResearch.BLOCKED);
+			for (int i = 0; i < 8; i++) {
+				dev.neothaum.research.ScanManager.completeScan(p, one, "@");
+			}
+			sb.append(" off counts ").append(p.getAttachedOrCreate(dev.neothaum.addon.HintResearch.BLOCKED).total());
+			cfg.additionsEnabled = true;
+			// the page, then everything back as it was
+			ResearchManager.setKnowledge(p, saved);
+			p.setAttached(dev.neothaum.addon.HintResearch.BLOCKED, savedBlocked);
+			return sb.toString();
+		});
+		check("hint research comes to light, costs warp and hints", result.equals(
+			"blocked items 4 after 3 false after 4 different true after 7 same false after 8 same true warp +1 known true hint names it true off counts 0"), result);
+		ResearchItem ri = ctx.computeOnClient(mc -> ResearchManager.getResearch(dev.neothaum.addon.HintResearch.KEY));
+		check("hint research entry is loaded", ri != null && ri.warp == 1 && ri.isHidden(), String.valueOf(ri));
+		if (ri != null) {
+			ctx.setScreen(() -> new ResearchPagesScreen(ri, 0, 0, 0));
+			ctx.waitTicks(10);
+			shot(ctx, "hint_research_page");
+			ctx.setScreen(() -> null);
+		}
+		cfg.additionsEnabled = wasOn;
+		cfg.additionHintResearch = wasHint;
+		ResearchManager.reload();
+	}
+
+	/**
 	 * The wood sets addition: with it on, every block places and drops, an axe strips the magical logs, doors open, the boats float and carry
 	 * the player, and the recipes are there; with it off, the recipes are gone and an axe leaves the logs alone. Screenshots of both sets
 	 * built and of their items.
@@ -1246,7 +1337,7 @@ public class VisualTests implements FabricClientGameTest {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -1413,6 +1504,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "woodsets" -> {
 				woodSetsScene(ctx, server);
+			}
+			case "hints" -> {
+				hintResearchScene(ctx, server);
 			}
 			case "config" -> {
 				configScene(ctx, server);

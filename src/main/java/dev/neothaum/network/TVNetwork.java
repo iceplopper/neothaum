@@ -289,6 +289,9 @@ public final class TVNetwork {
 	};
 	public static Consumer<Component> clientNotifier = c -> {
 	};
+	/** A notification with an aspect's icon beside it. */
+	public static java.util.function.BiConsumer<Component, dev.neothaum.api.aspects.Aspect> clientAspectNotifier = (c, a) -> {
+	};
 
 	public static void init() {
 		var s2c = PayloadTypeRegistry.clientboundPlay();

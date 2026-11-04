@@ -181,6 +181,8 @@ public class NeoThaumConfig {
 		public boolean additionModdedAspects = true;
 		/** Greatwood and silverwood fences, doors, trapdoors, pressure plates, buttons, shelves, boats, stripped logs and wood. */
 		public boolean additionWoodSets = true;
+		/** Shortcuts of the Impatient Mind: a hidden research that names the aspect a blocked scan needs, with a hint. On restart. */
+		public boolean additionHintResearch = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {
