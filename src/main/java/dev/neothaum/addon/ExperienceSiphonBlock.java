@@ -26,9 +26,26 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public class ExperienceSiphonBlock extends BaseEntityBlock {
 	private static final VoxelShape SHAPE = box(0, 0, 0, 16, 8, 16);
+	/** How full its store is, from 0 (empty) to 4 (full): the orb in its basin grows with it. */
+	public static final net.minecraft.world.level.block.state.properties.IntegerProperty FILL =
+		net.minecraft.world.level.block.state.properties.IntegerProperty.create("fill", 0, 4);
 
 	public ExperienceSiphonBlock(Properties props) {
 		super(props);
+		this.registerDefaultState(this.stateDefinition.any().setValue(FILL, 0));
+	}
+
+	@Override
+	protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+		builder.add(FILL);
+	}
+
+	/** The fill level for a store: 0 only when empty, 4 only when full. */
+	public static int fillFor(int store) {
+		if (store <= 0) {
+			return 0;
+		}
+		return store >= ExperienceSiphon.STORE ? 4 : Math.min(3, 1 + store * 3 / ExperienceSiphon.STORE);
 	}
 
 	@Override

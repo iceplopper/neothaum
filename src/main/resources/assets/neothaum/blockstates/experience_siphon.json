@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "fill=0": {
       "model": "neothaum:block/experience_siphon"
+    },
+    "fill=1": {
+      "model": "neothaum:block/experience_siphon_1"
+    },
+    "fill=2": {
+      "model": "neothaum:block/experience_siphon_2"
+    },
+    "fill=3": {
+      "model": "neothaum:block/experience_siphon_3"
+    },
+    "fill=4": {
+      "model": "neothaum:block/experience_siphon_4"
     }
   }
 }

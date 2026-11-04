@@ -2,7 +2,7 @@
   "parent": "minecraft:block/slab",
   "textures": {
     "bottom": "neothaum:blocks/arcane_stone",
-    "top": "neothaum:blocks/experience_siphon_top",
+    "top": "neothaum:blocks/experience_siphon_top_0",
     "side": "neothaum:blocks/experience_siphon_side"
   }
 }

@@ -103,6 +103,11 @@ public class ExperienceSiphonBlockEntity extends TVBlockEntity implements Worldl
 			siphon.markForUpdate();
 			level.updateNeighbourForOutputSignal(pos, state.getBlock());
 		}
+		// the orb on its top shows how full the store is
+		int fill = ExperienceSiphonBlock.fillFor(siphon.store);
+		if (state.hasProperty(ExperienceSiphonBlock.FILL) && state.getValue(ExperienceSiphonBlock.FILL) != fill) {
+			level.setBlock(pos, state.setValue(ExperienceSiphonBlock.FILL, fill), 3);
+		}
 	}
 
 	private boolean canFill() {

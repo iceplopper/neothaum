@@ -1137,6 +1137,37 @@ public class VisualTests implements FabricClientGameTest {
 		shot(ctx, "experience_siphon_screen");
 		check("experience siphon screen opens", open, String.valueOf(open));
 		ctx.setScreen(() -> null);
+		// the orb on its top grows with the store
+		String fills = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var pos = new net.minecraft.core.BlockPos(0, 116, 0);
+			var siphon = (dev.neothaum.addon.ExperienceSiphonBlockEntity) level.getBlockEntity(pos);
+			siphon.clearContent();
+			StringBuilder sb = new StringBuilder();
+			for (int s : new int[]{0, 1, dev.neothaum.addon.ExperienceSiphon.STORE / 2, dev.neothaum.addon.ExperienceSiphon.STORE - 1, dev.neothaum.addon.ExperienceSiphon.STORE}) {
+				siphon.store = s;
+				dev.neothaum.addon.ExperienceSiphonBlockEntity.tick(level, pos, level.getBlockState(pos), siphon);
+				sb.append(level.getBlockState(pos).getValue(dev.neothaum.addon.ExperienceSiphonBlock.FILL));
+			}
+			return sb.toString();
+		});
+		check("experience siphon's orb shows its store", fills.equals("01234"), fills);
+		// five siphons, empty to full
+		for (int f = 0; f < 5; f++) {
+			server.runCommand("setblock " + (f - 2) + " 116 3 neothaum:experience_siphon");
+		}
+		server.runOnServer(srv -> {
+			int[] stores = {0, 100, dev.neothaum.addon.ExperienceSiphon.STORE / 2, dev.neothaum.addon.ExperienceSiphon.STORE - 100, dev.neothaum.addon.ExperienceSiphon.STORE};
+			for (int f = 0; f < 5; f++) {
+				if (srv.overworld().getBlockEntity(new net.minecraft.core.BlockPos(f - 2, 116, 3)) instanceof dev.neothaum.addon.ExperienceSiphonBlockEntity s) {
+					s.store = stores[f];
+				}
+			}
+		});
+		server.runCommand("item replace entity @a weapon.mainhand with minecraft:air");
+		server.runCommand("tp @a 0.5 122.5 3.5 0 90");
+		ctx.waitTicks(20);
+		shot(ctx, "experience_siphon_fills");
 		cfg.additionsEnabled = wasOn;
 		cfg.additionExperienceSiphon = wasSiphon;
 		ResearchManager.reload();
