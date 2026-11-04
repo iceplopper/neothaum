@@ -3743,6 +3743,47 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.runOnClient(mc -> mc.player.closeContainer());
 		check("deconstruction table stacks points and keeps working", decon.endsWith(" left 0") && claimed.endsWith("[0, 0, 0, 0, 0, 0]")
 			&& !decon.startsWith("[0, 0, 0, 0, 0, 0]"), decon + " | " + claimed);
+		// --- keepInventory death: some warp, and 2 to 6 of each of 1 to 3 non-primal aspects (primals untouched)
+		server.runCommand("neothaum aspect @p all 20");
+		String death = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var before = ResearchManager.knowledge(p).copy();
+			dev.neothaum.warp.DeathEssence.take(p);
+			var after = ResearchManager.knowledge(p);
+			int lostKinds = 0;
+			int lost = 0;
+			boolean primalsKept = true;
+			for (var a : dev.neothaum.api.aspects.Aspect.aspects.values()) {
+				int d = before.getAspectPool(a) - after.getAspectPool(a);
+				if (a.isPrimal()) {
+					primalsKept &= d == 0;
+				} else if (d > 0) {
+					lostKinds++;
+					lost += d;
+					if (d < 2 || d > 6) {
+						return "lost " + d + " " + a.getTag();
+					}
+				}
+			}
+			return "kinds " + lostKinds + " points " + lost + " primals kept " + primalsKept + " sticky +" + (after.warpSticky - before.warpSticky)
+				+ " temp +" + (after.warpTemp - before.warpTemp);
+		});
+		check("keepInventory death takes essence", (death.startsWith("kinds 1 ") || death.startsWith("kinds 2 ") || death.startsWith("kinds 3 "))
+			&& death.endsWith("primals kept true sticky +1 temp +2"), death);
+		// --- an aspect orb gives its value in vis to a hotbar wand with room (it used to give a hundred times that)
+		String orb = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var wand = dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", "greatwood");
+			p.getInventory().setItem(0, wand);
+			int before = dev.neothaum.items.WandItem.getVis(p.getInventory().getItem(0), dev.neothaum.api.aspects.Aspect.AIR);
+			var o = new dev.neothaum.entity.AspectOrbEntity(level, p.getX(), p.getY(), p.getZ(), dev.neothaum.api.aspects.Aspect.AIR, 3);
+			level.addFreshEntity(o);
+			o.playerTouch(p);
+			int after = dev.neothaum.items.WandItem.getVis(p.getInventory().getItem(0), dev.neothaum.api.aspects.Aspect.AIR);
+			return (after - before) + " centivis, orb gone " + o.isRemoved();
+		});
+		check("aspect orb gives its value in vis", orb.equals("300 centivis, orb gone true"), orb);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);

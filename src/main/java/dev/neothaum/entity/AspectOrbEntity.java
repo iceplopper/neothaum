@@ -31,6 +31,8 @@ public class AspectOrbEntity extends Entity {
 	private static final EntityDataAccessor<String> ASPECT_TAG = SynchedEntityData.defineId(AspectOrbEntity.class, EntityDataSerializers.STRING);
 	private static final EntityDataAccessor<Integer> VALUE = SynchedEntityData.defineId(AspectOrbEntity.class, EntityDataSerializers.INT);
 
+	/** EntityAspectOrb.orbMaxAge: an orb lasts 150 ticks (seven and a half seconds). */
+	public static final int MAX_AGE = 150;
 	private int age = 0;
 	private Player targetPlayer = null;
 
@@ -85,7 +87,7 @@ public class AspectOrbEntity extends Entity {
 		super.tick();
 
 		this.age++;
-		if (this.age > 1200) {
+		if (this.age > MAX_AGE) {
 			this.discard();
 			return;
 		}
@@ -122,9 +124,7 @@ public class AspectOrbEntity extends Entity {
 		this.setDeltaMovement(delta.scale(0.98));
 		this.move(MoverType.SELF, this.getDeltaMovement());
 
-		if (this.level().isClientSide() && this.random.nextInt(4) == 0) {
-			this.level().addParticle(ParticleTypes.GLOW, this.getX(), this.getY() + 0.1, this.getZ(), 0, 0.01, 0);
-		}
+		// TC4's orb is only its glowing sprite (RenderAspectOrb): no trail of particles
 	}
 
 	@Override
@@ -137,35 +137,23 @@ public class AspectOrbEntity extends Entity {
 		int val = this.getValue();
 		boolean absorbed = false;
 
-		// 1. Try filling held or hotbar wand with vis (if primal aspect)
+		// EntityAspectOrb.onCollideWithPlayer: a primal orb goes into the first wand in the hotbar with room for any of it (isWandInHotbarWithRoom),
+		// as that many vis (addVis counts whole vis). With no such wand it stays where it is; it never becomes research points.
 		if (aspect.isPrimal()) {
-			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			for (int i = 0; i < 9; i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				if (stack.getItem() instanceof WandItem) {
-					int added = WandItem.addVis(stack, aspect, val * 100, true);
-					if (added > 0) {
-						absorbed = true;
-						break;
-					}
+				if (stack.getItem() instanceof WandItem && WandItem.addVis(stack, aspect, val, false) < val) {
+					WandItem.addVis(stack, aspect, val, true);
+					absorbed = true;
+					break;
 				}
 			}
-		}
-
-		// 2. Otherwise add to player's research aspect pool
-		if (!absorbed) {
-			PlayerKnowledge k = ResearchManager.knowledge(player).copy();
-			k.addAspectPool(aspect, val);
-			ResearchManager.setKnowledge(player, k);
-			absorbed = true;
 		}
 
 		if (absorbed) {
 			this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
 				SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.2F,
 				0.8F + this.random.nextFloat() * 0.4F);
-			if (this.level() instanceof ServerLevel sl) {
-				sl.sendParticles(ParticleTypes.ENCHANT, this.getX(), this.getY() + 0.1, this.getZ(), 5, 0.1, 0.1, 0.1, 0.05);
-			}
 			this.discard();
 		}
 	}

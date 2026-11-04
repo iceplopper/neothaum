@@ -65,6 +65,7 @@ public class NeoThaum implements ModInitializer {
 		dev.neothaum.baubles.Baubles.initTicking();
 		dev.neothaum.items.BathSaltsItem.init();
 		dev.neothaum.warp.WarpEvents.init();
+		dev.neothaum.warp.DeathEssence.init();
 		dev.neothaum.events.AspectOrbEvents.init();
 		dev.neothaum.entity.champion.ChampionEvents.init();
 		dev.neothaum.golem.GolemBellItem.init();

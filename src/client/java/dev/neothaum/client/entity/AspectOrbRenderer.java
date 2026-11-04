@@ -38,39 +38,34 @@ public class AspectOrbRenderer extends EntityRenderer<AspectOrbEntity, AspectOrb
 		state.ticks = entity.tickCount;
 	}
 
+	/**
+	 * RenderAspectOrb: a frame of the animated orb from the particle sheet, facing the camera, in the aspect's colour at half strength and
+	 * blended as the aspect blends; it shrinks from 0.4 to 0.1 over the orb's 150-tick life.
+	 */
 	@Override
 	public void submit(State state, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
 		ps.pushPose();
-		ps.translate(0.0F, 0.1F, 0.0F);
-
-		// Billboard toward camera
 		ps.rotate(camera.orientation);
-		ps.rotateDegrees(Axis.ZP, (state.ticks % 360) * 4.0F);
-
-		float scale = 0.25F + 0.05F * (float) Math.sin(state.ticks * 0.2F);
+		float life = Math.max(0.0F, (AspectOrbEntity.MAX_AGE - state.ticks) / (float) AspectOrbEntity.MAX_AGE);
+		float scale = 0.1F + 0.3F * life;
 		ps.scale(scale, scale, scale);
-
+		int frame = (int) (System.nanoTime() / 25000000L % 16L);
+		float u0 = frame / 16.0F;
+		float u1 = (frame + 1) / 16.0F;
+		float v0 = 0.5F;
+		float v1 = 0.5625F;
 		int col = state.aspect != null ? state.aspect.getColor() : 0xFFFFFF;
 		float r = (col >> 16 & 255) / 255.0F;
 		float g = (col >> 8 & 255) / 255.0F;
 		float b = (col & 255) / 255.0F;
-
-		collector.submitCustomGeometry(ps, TVRenderTypes.glow(TVRenderTypes.WHITE, true, true), (pose, vc) -> {
-			float h = 0.5F;
-			// Quad 1
-			vc.addVertex(pose, -h, -h, 0.0F).setColor(r, g, b, 0.85F).setUv(0.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
-			vc.addVertex(pose, h, -h, 0.0F).setColor(r, g, b, 0.85F).setUv(1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
-			vc.addVertex(pose, h, h, 0.0F).setColor(r, g, b, 0.85F).setUv(1.0F, 0.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
-			vc.addVertex(pose, -h, h, 0.0F).setColor(r, g, b, 0.85F).setUv(0.0F, 0.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
-
-			// Inner brighter white core
-			float ch = 0.25F;
-			vc.addVertex(pose, -ch, -ch, 0.01F).setColor(1.0F, 1.0F, 1.0F, 0.95F).setUv(0.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
-			vc.addVertex(pose, ch, -ch, 0.01F).setColor(1.0F, 1.0F, 1.0F, 0.95F).setUv(1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
-			vc.addVertex(pose, ch, ch, 0.01F).setColor(1.0F, 1.0F, 1.0F, 0.95F).setUv(1.0F, 0.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
-			vc.addVertex(pose, -ch, ch, 0.01F).setColor(1.0F, 1.0F, 1.0F, 0.95F).setUv(0.0F, 0.0F).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
+		float a = 128 / 255.0F;
+		boolean additive = state.aspect == null || state.aspect.getBlend() == 1;
+		collector.submitCustomGeometry(ps, TVRenderTypes.glow(TVRenderTypes.PARTICLES, additive, true), (pose, vc) -> {
+			vc.addVertex(pose, -0.5F, -0.25F, 0.0F).setColor(r, g, b, a).setUv(u0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
+			vc.addVertex(pose, 0.5F, -0.25F, 0.0F).setColor(r, g, b, a).setUv(u1, v1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
+			vc.addVertex(pose, 0.5F, 0.75F, 0.0F).setColor(r, g, b, a).setUv(u1, v0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
+			vc.addVertex(pose, -0.5F, 0.75F, 0.0F).setColor(r, g, b, a).setUv(u0, v0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(pose, 0.0F, 1.0F, 0.0F);
 		});
-
 		ps.popPose();
 	}
 }

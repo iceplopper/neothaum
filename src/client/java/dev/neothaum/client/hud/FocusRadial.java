@@ -40,8 +40,8 @@ public final class FocusRadial {
 	private static final Map<String, Float> SCALE = new LinkedHashMap<>();
 
 	public static void init() {
-		keyF = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.neothaum.focus", InputConstants.KEY_F, KeyMapping.Category.MISC));
-		keyG = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.neothaum.misc", InputConstants.KEY_G, KeyMapping.Category.MISC));
+		keyF = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.neothaum.focus", InputConstants.KEY_F, dev.neothaum.client.TVKeys.CATEGORY));
+		keyG = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.neothaum.misc", InputConstants.KEY_G, dev.neothaum.client.TVKeys.CATEGORY));
 	}
 
 	/** F is also vanilla's swap-hands key; while a wand is in hand the focus key wins (1.7 had no off hand to swap to). */

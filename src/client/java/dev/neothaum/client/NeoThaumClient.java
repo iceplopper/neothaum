@@ -246,7 +246,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		});
 
 		harnessKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.neothaum.harness", InputConstants.KEY_H,
-			KeyMapping.Category.MISC));
+			dev.neothaum.client.TVKeys.CATEGORY));
 		ClientTickEvents.END_CLIENT_TICK.register(ThaumometerInventoryScan::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.SourceFX::tick);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {

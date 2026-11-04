@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "neothaum:quicksilver_drop"
+  ],
+  "result": {
+    "id": "neothaum:quicksilver_bead",
+    "count": 9
+  }
+}
