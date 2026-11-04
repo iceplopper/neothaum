@@ -35,7 +35,7 @@ public class AspectOrbRenderer extends EntityRenderer<AspectOrbEntity, AspectOrb
 	public void extractRenderState(AspectOrbEntity entity, State state, float partialTicks) {
 		super.extractRenderState(entity, state, partialTicks);
 		state.aspect = entity.getAspect();
-		state.ticks = entity.tickCount;
+		state.ticks = entity.getAge();
 	}
 
 	/**

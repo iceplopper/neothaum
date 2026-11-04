@@ -35,6 +35,8 @@ public class AspectOrbEntity extends Entity {
 	public static final int MAX_AGE = 150;
 	private int age = 0;
 	private Player targetPlayer = null;
+	/** Someone is near, but no one near has a wand with room for it. */
+	private boolean unwanted = false;
 
 	public AspectOrbEntity(EntityType<? extends AspectOrbEntity> type, Level level) {
 		super(type, level);
@@ -64,6 +66,11 @@ public class AspectOrbEntity extends Entity {
 		this.entityData.set(ASPECT_TAG, aspect != null ? aspect.getTag() : "aer");
 	}
 
+	/** Ticks of its life used up (faster than its tickCount while no one near can take it), for its fading. */
+	public int getAge() {
+		return this.age;
+	}
+
 	public int getValue() {
 		return this.entityData.get(VALUE);
 	}
@@ -86,7 +93,8 @@ public class AspectOrbEntity extends Entity {
 	public void tick() {
 		super.tick();
 
-		this.age++;
+		// an orb no one near can take (their wands are full) fades half again as fast: a NeoThaum change
+		this.age += this.unwanted && this.tickCount % 2 == 0 ? 2 : 1;
 		if (this.age > MAX_AGE) {
 			this.discard();
 			return;
@@ -98,18 +106,24 @@ public class AspectOrbEntity extends Entity {
 			delta = delta.add(0, -this.getDefaultGravity(), 0);
 		}
 
-		// Player attraction
+		// Drawn only to the nearest player whose hotbar wand has room for it; with none, it settles where it fell
 		if (this.tickCount % 5 == 0) {
 			List<Player> nearby = this.level().getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(8.0));
 			double closest = Double.MAX_VALUE;
 			this.targetPlayer = null;
+			boolean anyone = false;
 			for (Player p : nearby) {
+				if (p.isSpectator()) {
+					continue;
+				}
+				anyone = true;
 				double d = p.distanceToSqr(this);
-				if (d < closest && !p.isSpectator()) {
+				if (d < closest && this.hotbarWandWithRoom(p) >= 0) {
 					closest = d;
 					this.targetPlayer = p;
 				}
 			}
+			this.unwanted = anyone && this.targetPlayer == null;
 		}
 
 		if (this.targetPlayer != null && !this.targetPlayer.isSpectator()) {
@@ -121,7 +135,12 @@ public class AspectOrbEntity extends Entity {
 			}
 		}
 
-		this.setDeltaMovement(delta.scale(0.98));
+		delta = delta.scale(0.98);
+		if (this.onGround() && this.targetPlayer == null) {
+			// resting on the ground: it stops sliding and lies still
+			delta = new Vec3(delta.x * 0.6, delta.y, delta.z * 0.6);
+		}
+		this.setDeltaMovement(delta);
 		this.move(MoverType.SELF, this.getDeltaMovement());
 
 		// TC4's orb is only its glowing sprite (RenderAspectOrb): no trail of particles
@@ -139,15 +158,10 @@ public class AspectOrbEntity extends Entity {
 
 		// EntityAspectOrb.onCollideWithPlayer: a primal orb goes into the first wand in the hotbar with room for any of it (isWandInHotbarWithRoom),
 		// as that many vis (addVis counts whole vis). With no such wand it stays where it is; it never becomes research points.
-		if (aspect.isPrimal()) {
-			for (int i = 0; i < 9; i++) {
-				ItemStack stack = player.getInventory().getItem(i);
-				if (stack.getItem() instanceof WandItem && WandItem.addVis(stack, aspect, val, false) < val) {
-					WandItem.addVis(stack, aspect, val, true);
-					absorbed = true;
-					break;
-				}
-			}
+		int slot = this.hotbarWandWithRoom(player);
+		if (slot >= 0) {
+			WandItem.addVis(player.getInventory().getItem(slot), aspect, val, true);
+			absorbed = true;
 		}
 
 		if (absorbed) {
@@ -156,6 +170,22 @@ public class AspectOrbEntity extends Entity {
 				0.8F + this.random.nextFloat() * 0.4F);
 			this.discard();
 		}
+	}
+
+	/** The first hotbar slot holding a wand with room for any of this orb, or -1 (isWandInHotbarWithRoom); only primal orbs fit a wand. */
+	private int hotbarWandWithRoom(Player player) {
+		Aspect aspect = this.getAspect();
+		if (!aspect.isPrimal()) {
+			return -1;
+		}
+		int val = this.getValue();
+		for (int i = 0; i < 9; i++) {
+			ItemStack stack = player.getInventory().getItem(i);
+			if (stack.getItem() instanceof WandItem && WandItem.addVis(stack, aspect, val, false) < val) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	@Override

@@ -3949,6 +3949,44 @@ public class VisualTests implements FabricClientGameTest {
 			return (after - before) + " centivis, orb gone " + o.isRemoved();
 		});
 		check("aspect orb gives its value in vis", orb.equals("300 centivis, orb gone true"), orb);
+		// --- with the wand full, an orb lies where it fell and fades half again as fast; with room, it comes to the player
+		int[] orbIds = new int[2];
+		double[] orbStart = new double[1];
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var wand = p.getInventory().getItem(0);
+			dev.neothaum.items.WandItem.addVis(wand, dev.neothaum.api.aspects.Aspect.AIR, 100000, true);
+			var o = new dev.neothaum.entity.AspectOrbEntity(level, p.getX() + 3, p.getY() + 0.5, p.getZ(), dev.neothaum.api.aspects.Aspect.AIR, 3);
+			o.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+			level.addFreshEntity(o);
+			orbIds[0] = o.getId();
+			orbStart[0] = o.distanceTo(p);
+		});
+		ctx.waitTicks(40);
+		String fullOrb = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			if (!(srv.overworld().getEntity(orbIds[0]) instanceof dev.neothaum.entity.AspectOrbEntity o)) {
+				return "gone";
+			}
+			String r = "kept away " + (o.distanceTo(p) > orbStart[0] - 0.5) + " on ground " + o.onGround() + " aged faster " + (o.getAge() > o.tickCount + 10);
+			o.discard();
+			// now with room: a fresh wand
+			p.getInventory().setItem(0, dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", "greatwood"));
+			var o2 = new dev.neothaum.entity.AspectOrbEntity(srv.overworld(), p.getX() + 3, p.getY() + 0.5, p.getZ(), dev.neothaum.api.aspects.Aspect.AIR, 3);
+			o2.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+			srv.overworld().addFreshEntity(o2);
+			orbIds[1] = o2.getId();
+			return r;
+		});
+		ctx.waitTicks(60);
+		String roomOrb = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			boolean gone = srv.overworld().getEntity(orbIds[1]) == null;
+			return "taken " + gone + " vis " + dev.neothaum.items.WandItem.getVis(p.getInventory().getItem(0), dev.neothaum.api.aspects.Aspect.AIR);
+		});
+		check("an orb a full wand can't take lies still and fades faster", fullOrb.equals("kept away true on ground true aged faster true")
+			&& roomOrb.equals("taken true vis 300"), fullOrb + " | " + roomOrb);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);
