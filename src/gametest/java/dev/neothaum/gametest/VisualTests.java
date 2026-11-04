@@ -1473,6 +1473,67 @@ public class VisualTests implements FabricClientGameTest {
 			return a + "/" + b + "/" + inTubes;
 		});
 		check("a full jar keeps its essentia", jars.equals("64/0/0"), "full jar/empty jar/in the tubes after 10 s = " + jars);
+		// --- an alembic of 32 aer drained through 8 tubes into a jar: all of it arrives, at about TC4's pace, and nothing sticks
+		net.minecraft.core.BlockPos al = new net.minecraft.core.BlockPos(-20, 118, 20);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			level.setBlockAndUpdate(al, dev.neothaum.registry.TVBlocks.ARCANE_ALEMBIC.defaultBlockState());
+			for (int i = 1; i <= 8; i++) {
+				level.setBlockAndUpdate(al.east(i), dev.neothaum.registry.TVBlocks.ESSENTIA_TUBE.defaultBlockState());
+			}
+			level.setBlockAndUpdate(al.east(8).below(), dev.neothaum.registry.TVBlocks.WARDED_JAR.defaultBlockState());
+			if (level.getBlockEntity(al) instanceof dev.neothaum.tiles.AlembicBlockEntity a) {
+				a.facing = net.minecraft.core.Direction.WEST;
+				a.addToContainer(dev.neothaum.api.aspects.Aspect.AIR, 32);
+			}
+		});
+		int took = -1;
+		for (int t = 20; t <= 800 && took < 0; t += 20) {
+			ctx.waitTicks(20);
+			int inJar = server.computeOnServer(srv -> srv.overworld().getBlockEntity(al.east(8).below()) instanceof dev.neothaum.tiles.JarBlockEntity j ? j.amount : -1);
+			if (inJar >= 32) {
+				took = t;
+			}
+		}
+		final int seconds = took;
+		String line = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			int stuck = 0;
+			for (int i = 1; i <= 8; i++) {
+				if (level.getBlockEntity(al.east(i)) instanceof dev.neothaum.tiles.TubeBlockEntity tube) {
+					stuck += tube.getEssentiaAmount(null);
+				}
+			}
+			int left = level.getBlockEntity(al) instanceof dev.neothaum.tiles.AlembicBlockEntity a ? a.amount : -1;
+			return "ticks " + seconds + " alembic left " + left + " in tubes " + stuck;
+		});
+		check("essentia line delivers everything", took > 0 && took <= 400 && line.endsWith("alembic left 0 in tubes 0"), line);
+		// --- stacked alembics: matching essentia merges down, freeing the upper one
+		net.minecraft.core.BlockPos fz = new net.minecraft.core.BlockPos(-30, 118, 20);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			level.setBlockAndUpdate(fz, dev.neothaum.registry.TVBlocks.ALCHEMICAL_FURNACE.defaultBlockState());
+			dev.neothaum.api.aspects.Aspect[] fill = {dev.neothaum.api.aspects.Aspect.EARTH, dev.neothaum.api.aspects.Aspect.ENTROPY, dev.neothaum.api.aspects.Aspect.EARTH};
+			int[] amounts = {10, 5, 20};
+			for (int i = 0; i < 3; i++) {
+				level.setBlockAndUpdate(fz.above(1 + i), dev.neothaum.registry.TVBlocks.ARCANE_ALEMBIC.defaultBlockState());
+				if (level.getBlockEntity(fz.above(1 + i)) instanceof dev.neothaum.tiles.AlembicBlockEntity a) {
+					a.addToContainer(fill[i], amounts[i]);
+				}
+			}
+		});
+		ctx.waitTicks(60);
+		String stack = server.computeOnServer(srv -> {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 1; i <= 3; i++) {
+				var be = srv.overworld().getBlockEntity(fz.above(i));
+				if (be instanceof dev.neothaum.tiles.AlembicBlockEntity a) {
+					sb.append(a.amount).append(' ').append(a.aspect == null ? "-" : a.aspect.getTag()).append(i < 3 ? " | " : "");
+				}
+			}
+			return sb.toString();
+		});
+		check("stacked alembics merge matching essentia", stack.equals("30 terra | 5 perditio | 0 -"), "bottom to top: " + stack);
 	}
 
 	/**

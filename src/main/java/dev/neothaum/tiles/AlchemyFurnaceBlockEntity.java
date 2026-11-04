@@ -140,8 +140,11 @@ public class AlchemyFurnaceBlockEntity extends TVBlockEntity implements WorldlyC
 		if (f.bellows < 0 || f.count % 20 == 0) {
 			f.bellows = BellowsBlockEntity.getBellows(level, pos, Direction.values());
 		}
-		if (f.count % (f.speedBoost ? 20 : 40) == 0 && f.aspects.size() > 0) {
-			f.feedAlembics();
+		if (f.count % (f.speedBoost ? 20 : 40) == 0) {
+			f.mergeAlembics();
+			if (f.aspects.size() > 0) {
+				f.feedAlembics();
+			}
 		}
 		if (f.furnaceBurnTime == 0 && f.canSmelt()) {
 			f.currentItemBurnTime = f.furnaceBurnTime = f.burnTime(f.items.get(1));
@@ -172,6 +175,30 @@ public class AlchemyFurnaceBlockEntity extends TVBlockEntity implements WorldlyC
 		AlchemyFurnaceBlock.updateState(level, pos, f.isBurning(), f.vis > 0);
 		if (changed) {
 			f.markForUpdate();
+		}
+	}
+
+	/**
+	 * Not in TC4: essentia moves between the alembics of the stack. Where two hold the same aspect, the upper one pours into the lower until
+	 * the lower is full; one that empties is free for a new aspect. TC4's stacks jammed once every alembic held something.
+	 */
+	private void mergeAlembics() {
+		java.util.List<AlembicBlockEntity> stack = new java.util.ArrayList<>();
+		for (int deep = 1; deep <= 5 && this.level.getBlockEntity(this.worldPosition.above(deep)) instanceof AlembicBlockEntity alembic; deep++) {
+			stack.add(alembic);
+		}
+		for (int lower = 0; lower < stack.size(); lower++) {
+			AlembicBlockEntity to = stack.get(lower);
+			for (int upper = lower + 1; upper < stack.size() && to.amount < to.maxAmount; upper++) {
+				AlembicBlockEntity from = stack.get(upper);
+				if (to.aspect == null || to.amount <= 0 || from.aspect != to.aspect || from.amount <= 0) {
+					continue;
+				}
+				int moved = Math.min(from.amount, to.maxAmount - to.amount);
+				if (moved > 0 && from.takeFromContainer(from.aspect, moved)) {
+					to.addToContainer(to.aspect, moved);
+				}
+			}
 		}
 	}
 
