@@ -271,11 +271,12 @@ public final class TVNetwork {
 	}
 
 	/** PacketConfig: the server's research difficulty, aspect cap, hard nodes and wuss mode, which the client must follow. */
-	public record ConfigSync(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp) implements CustomPacketPayload {
+	public record ConfigSync(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp, boolean additions)
+		implements CustomPacketPayload {
 		public static final Type<ConfigSync> TYPE = new Type<>(NeoThaum.id("config_sync"));
 		public static final StreamCodec<ByteBuf, ConfigSync> CODEC = StreamCodec.composite(ByteBufCodecs.VAR_INT, ConfigSync::researchDifficulty,
 			ByteBufCodecs.VAR_INT, ConfigSync::aspectTotalCap, ByteBufCodecs.BOOL, ConfigSync::hardNodes, ByteBufCodecs.BOOL, ConfigSync::allowWarp,
-			ConfigSync::new);
+			ByteBufCodecs.BOOL, ConfigSync::additions, ConfigSync::new);
 
 		@Override
 		public Type<ConfigSync> type() {
@@ -428,7 +429,7 @@ public final class TVNetwork {
 	/** EventHandlerNetwork: the config packet goes to each player as they join, and to everyone when an operator changes a setting it carries. */
 	public static void sendConfig(ServerPlayer player) {
 		var c = dev.neothaum.config.NeoThaumConfig.current;
-		ServerPlayNetworking.send(player, new ConfigSync(c.researchDifficulty, c.aspectTotalCap, c.hardNodes, c.allowWarp));
+		ServerPlayNetworking.send(player, new ConfigSync(c.researchDifficulty, c.aspectTotalCap, c.hardNodes, c.allowWarp, c.additionsEnabled));
 	}
 
 	public static void sendObjectAspects(ServerPlayer player) {

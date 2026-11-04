@@ -1042,22 +1042,36 @@ public class VisualTests implements FabricClientGameTest {
 	 */
 	private static void totemsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
 		var cfg = dev.neothaum.config.NeoThaumConfig.current;
-		// JEI, ready since the world was joined with the additions off: none of their items are listed
-		String jei = ctx.computeOnClient(mc -> {
+		// JEI: the additions' items are listed while the additions are on (the default, as the world was joined), and hidden when JEI starts
+		// with them off (the plugin's hiding run again here), with the core items listed throughout
+		java.util.List<net.minecraft.world.item.Item> additionItems = java.util.List.of(
+			dev.neothaum.addon.totems.TravellersTotems.totemItem, dev.neothaum.addon.totems.TravellersTotems.homeTotemItem,
+			dev.neothaum.addon.totems.TravellersTotems.compass, dev.neothaum.addon.ExperienceSiphon.siphonItem,
+			dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem());
+		java.util.function.Supplier<String> jeiCount = () -> ctx.computeOnClient(mc -> {
 			var rt = dev.neothaum.client.jei.NeoThaumJeiPlugin.runtime();
 			if (rt == null) {
 				return "no jei";
 			}
 			var listed = rt.getIngredientManager().getAllIngredients(mezz.jei.api.constants.VanillaTypes.ITEM_STACK);
-			java.util.Set<net.minecraft.world.item.Item> hidden = new java.util.HashSet<>(java.util.List.of(
-				dev.neothaum.addon.totems.TravellersTotems.totemItem, dev.neothaum.addon.totems.TravellersTotems.homeTotemItem,
-				dev.neothaum.addon.totems.TravellersTotems.compass, dev.neothaum.addon.ExperienceSiphon.siphonItem,
-				dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem()));
-			long shown = listed.stream().filter(s -> hidden.contains(s.getItem())).count();
+			long shown = listed.stream().filter(s -> additionItems.contains(s.getItem())).count();
 			boolean core = listed.stream().anyMatch(s -> s.is(dev.neothaum.registry.TVBlocks.WARDED_JAR.asItem()));
 			return "additions listed " + shown + " core listed " + core;
 		});
-		check("JEI hides the additions' items while they are off", jei.equals("additions listed 0 core listed true"), jei);
+		String jeiOn = jeiCount.get();
+		boolean jeiWas = cfg.additionsEnabled;
+		ctx.runOnClient(mc -> {
+			cfg.additionsEnabled = false;
+			new dev.neothaum.client.jei.NeoThaumJeiPlugin().onRuntimeAvailable(dev.neothaum.client.jei.NeoThaumJeiPlugin.runtime());
+		});
+		String jeiOff = jeiCount.get();
+		ctx.runOnClient(mc -> {
+			cfg.additionsEnabled = jeiWas;
+			dev.neothaum.client.jei.NeoThaumJeiPlugin.runtime().getIngredientManager().addIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK,
+				additionItems.stream().map(net.minecraft.world.item.ItemStack::new).toList());
+		});
+		check("JEI lists the additions' items while on, and hides them while off", jeiOn.equals("additions listed 5 core listed true")
+			&& jeiOff.equals("additions listed 0 core listed true"), "on: " + jeiOn + "; off: " + jeiOff);
 		boolean wasOn = cfg.additionsEnabled;
 		cfg.additionsEnabled = true;
 		cfg.additionTravellersTotems = true;
@@ -3943,17 +3957,30 @@ public class VisualTests implements FabricClientGameTest {
 			for (int i = 0; i < 60 && ctx.computeOnClient(mc -> me.shedaniel.rei.api.common.plugins.PluginManager.areAnyReloading()); i++) {
 				ctx.waitTicks(10);
 			}
-			String rei = ctx.computeOnClient(mc -> {
+			java.util.List<net.minecraft.world.item.Item> additionItems = java.util.List.of(dev.neothaum.addon.totems.TravellersTotems.totemItem,
+				dev.neothaum.addon.totems.TravellersTotems.compass, dev.neothaum.addon.ExperienceSiphon.siphonItem, dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem());
+			java.util.function.Supplier<String> reiCount = () -> ctx.computeOnClient(mc -> {
 				var entries = me.shedaniel.rei.api.client.registry.entry.EntryRegistry.getInstance().getEntryStacks().toList();
-				java.util.Set<net.minecraft.world.item.Item> hidden = new java.util.HashSet<>(java.util.List.of(
-					dev.neothaum.addon.totems.TravellersTotems.totemItem, dev.neothaum.addon.totems.TravellersTotems.compass,
-					dev.neothaum.addon.ExperienceSiphon.siphonItem, dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem()));
-				long shown = entries.stream().filter(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s && hidden.contains(s.getItem())).count();
+				long shown = entries.stream().filter(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s && additionItems.contains(s.getItem())).count();
 				boolean core = entries.stream().anyMatch(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s
 					&& s.is(dev.neothaum.registry.TVBlocks.WARDED_JAR.asItem()));
 				return "additions listed " + shown + " core listed " + core;
 			});
-			check("REI hides the additions' items while they are off", rei.equals("additions listed 0 core listed true"), rei);
+			String reiOn = reiCount.get();
+			var rcfg = dev.neothaum.config.NeoThaumConfig.current;
+			boolean reiWas = rcfg.additionsEnabled;
+			ctx.runOnClient(mc -> {
+				rcfg.additionsEnabled = false;
+				new dev.neothaum.client.rei.NeoThaumReiPlugin().registerEntries(me.shedaniel.rei.api.client.registry.entry.EntryRegistry.getInstance());
+			});
+			String reiOff = reiCount.get();
+			ctx.runOnClient(mc -> {
+				rcfg.additionsEnabled = reiWas;
+				var registry = me.shedaniel.rei.api.client.registry.entry.EntryRegistry.getInstance();
+				additionItems.forEach(item -> registry.addEntry(me.shedaniel.rei.api.common.util.EntryStacks.of(item)));
+			});
+			check("REI lists the additions' items while on, and hides them while off", reiOn.equals("additions listed 4 core listed true")
+				&& reiOff.equals("additions listed 0 core listed true"), "on: " + reiOn + "; off: " + reiOff);
 		}
 		for (int i = 0; i < 60 && ctx.computeOnClient(mc -> me.shedaniel.rei.api.common.plugins.PluginManager.areAnyReloading()); i++) {
 			ctx.waitTicks(10);
@@ -4440,10 +4467,16 @@ public class VisualTests implements FabricClientGameTest {
 		shot(ctx, "config_link_line_off");
 		ctx.runOnClient(mc -> cfg.golemLinkQuality = 16);
 		server.runCommand("clear @p");
-		// --- NeoThaum Additions: off by default; research sharing teaches all but warp research, for 1 permanent and 3 sticky warp
-		check("additions are off by default", !fresh.additionsEnabled && fresh.additionResearchSharing && fresh.additionEssentiaOverlay
-			&& fresh.additionWarpHud && fresh.additionMarkerCopy && !dev.neothaum.addon.Additions.enabled("warp_hud")
-			&& ResearchManager.getResearch("RESEARCHSHARING") == null, "research entry loaded=" + (ResearchManager.getResearch("RESEARCHSHARING") != null));
+		// --- NeoThaum Additions: on by default (since 1.2.0); research sharing teaches all but warp research, for 1 permanent and 3 sticky warp
+		check("additions are on by default", fresh.additionsEnabled && fresh.configVersion == dev.neothaum.config.NeoThaumConfig.CONFIG_VERSION
+			&& fresh.additionResearchSharing && fresh.additionEssentiaOverlay && fresh.additionWarpHud && fresh.additionMarkerCopy
+			&& dev.neothaum.addon.Additions.enabled("warp_hud") && ResearchManager.getResearch("RESEARCHSHARING") != null,
+			"enabled=" + dev.neothaum.addon.Additions.enabled("warp_hud") + " research entry loaded=" + (ResearchManager.getResearch("RESEARCHSHARING") != null));
+		// upgrading: a settings file from before 1.2.0 comes out with the additions on; one written since keeps what it says
+		var oldFile = dev.neothaum.config.NeoThaumConfig.read(com.google.gson.JsonParser.parseString("{\"additionsEnabled\": false, \"hardNodes\": true}").getAsJsonObject());
+		var newFile = dev.neothaum.config.NeoThaumConfig.read(com.google.gson.JsonParser.parseString("{\"additionsEnabled\": false, \"configVersion\": 1}").getAsJsonObject());
+		check("an old settings file gets the additions on, a new one keeps its choice", oldFile.additionsEnabled && oldFile.hardNodes && !newFile.additionsEnabled,
+			"old " + oldFile.additionsEnabled + "/" + oldFile.hardNodes + " new " + newFile.additionsEnabled);
 		server.runCommand("neothaum research @p all");
 		String sharing = server.computeOnServer(srv -> {
 			var teacher = srv.getPlayerList().getPlayers().get(0);
@@ -4462,7 +4495,6 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.runOnClient(mc -> cfg.additionsEnabled = true);
 		ctx.waitTicks(10);
 		shot(ctx, "addition_warp_hud");
-		ctx.runOnClient(mc -> cfg.additionsEnabled = false);
 		// --- marker copy: one bell's markers onto another bell and its golem
 		String copied = server.computeOnServer(srv -> {
 			var level = srv.overworld();
@@ -4497,7 +4529,6 @@ public class VisualTests implements FabricClientGameTest {
 				+ dev.neothaum.addon.ModdedAspects.fromTags(net.minecraft.world.item.Items.OAK_LOG) + "|"
 				+ dev.neothaum.addon.ModdedAspects.fromTags(net.minecraft.world.item.Items.DIAMOND) + "|"
 				+ dev.neothaum.addon.ModdedAspects.forItem(net.minecraft.world.item.Items.IRON_INGOT);
-			cfg.additionsEnabled = false;
 			return out;
 		});
 		check("addition modded aspects", tagged.equals("{metallum=3}|{arbor=4}|{vitreus=3, lucrum=2}|null")
@@ -4910,6 +4941,17 @@ public class VisualTests implements FabricClientGameTest {
 			check("mp server settings reach the client", syncedOnJoin && clientSettings.endsWith("difficulty=1"), "on join " + syncedOnJoin + ", " + clientSettings);
 			server.runCommand("neothaum config researchdifficulty 0");
 			conn.waitForClientboundPackets();
+			// the server's NeoThaum Additions switch reaches the client (a server set to TC4 as it was keeps its players there)
+			server.runCommand("neothaum config additions false");
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(5);
+			String additionsOff = ctx.computeOnClient(mc -> dev.neothaum.config.NeoThaumConfig.synced + " enabled=" + dev.neothaum.addon.Additions.enabled("wood_sets"));
+			server.runCommand("neothaum config additions true");
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(5);
+			String additionsOn = ctx.computeOnClient(mc -> " then enabled=" + dev.neothaum.addon.Additions.enabled("wood_sets"));
+			check("mp the server's additions switch reaches the client", additionsOff.contains("additions=false") && additionsOff.endsWith("enabled=false")
+				&& additionsOn.endsWith("enabled=true"), additionsOff + additionsOn);
 			// --- a scan made on the client is recorded by the server and comes back
 			int objectsBefore = server.computeOnServer(srv -> dev.neothaum.research.ResearchManager.knowledge(firstPlayer(srv)).objects.size());
 			// dirt has only primal aspects, which every player knows (a diamond's need discovering first, as in TC4)

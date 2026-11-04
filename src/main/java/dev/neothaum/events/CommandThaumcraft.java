@@ -54,6 +54,9 @@ public final class CommandThaumcraft {
 								IntegerArgumentType.getInteger(c, "amount")))))))
 			.then(Commands.literal("config")
 				.then(setting("hardnodes", "hard mode nodes", () -> NeoThaumConfig.current.hardNodes, v -> NeoThaumConfig.current.hardNodes = v))
+				// NeoThaum Additions, the features not in TC4: off for TC4 as it was (their research and recipes follow on restart)
+				.then(setting("additions", "NeoThaum Additions (restart for research and recipes)", () -> NeoThaumConfig.current.additionsEnabled,
+					v -> NeoThaumConfig.current.additionsEnabled = v))
 				.then(setting("wussmode", "wuss mode", () -> !NeoThaumConfig.current.allowWarp, v -> NeoThaumConfig.current.allowWarp = !v))
 				.then(number("researchdifficulty", "research difficulty", -1, 1, () -> NeoThaumConfig.current.researchDifficulty,
 					v -> NeoThaumConfig.current.researchDifficulty = v))

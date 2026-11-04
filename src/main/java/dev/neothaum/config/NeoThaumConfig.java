@@ -167,8 +167,13 @@ public class NeoThaumConfig {
 
 		// --- NeoThaum Additions: not in TC4 (code in dev.neothaum.addon, to be split off later). The master switch is off by default; each
 		// addition is on by default but does nothing until the master is on. ---
-		/** The master switch for every NeoThaum Addition below. */
-		public boolean additionsEnabled = false;
+		/**
+		 * The master switch for every NeoThaum Addition below: features that are not in TC4. On by default since 1.2.0; turn it off for TC4
+		 * as it was.
+		 */
+		public boolean additionsEnabled = true;
+		/** Which NeoThaum wrote this file: 1 since 1.2.0 (files without it come from before, when the additions were off by default). */
+		public int configVersion = CONFIG_VERSION;
 		/** Research Sharing: a research that lets a player teach their research to another, for warp. Takes effect on restart. */
 		public boolean additionResearchSharing = true;
 		/** Goggled fortress helm shows essentia tubes' flow, suction and contents. */
@@ -217,10 +222,15 @@ public class NeoThaumConfig {
 	 * TC4's PacketConfig: the settings the server decides that the client also needs, sent when a player joins. Null when not connected; read
 	 * through the accessors below, which fall back to this game's own config.
 	 */
-	public record Synced(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp) {
+	public record Synced(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp, boolean additions) {
 		public static Synced of(ConfigData c) {
-			return new Synced(c.researchDifficulty, c.aspectTotalCap, c.hardNodes, c.allowWarp);
+			return new Synced(c.researchDifficulty, c.aspectTotalCap, c.hardNodes, c.allowWarp, c.additionsEnabled);
 		}
+	}
+
+	/** The NeoThaum Additions master switch: the server's while connected to one, so a server can keep its players to TC4 as it was. */
+	public static boolean additionsEnabled() {
+		return synced != null ? synced.additions() : current.additionsEnabled;
 	}
 
 	public static Synced synced;
@@ -286,14 +296,38 @@ public class NeoThaumConfig {
 		return Math.max(0, Math.round(base * multiplier));
 	}
 
+	/** The config file's version: see ConfigData.configVersion. */
+	public static final int CONFIG_VERSION = 1;
+
+	/**
+	 * A settings file's contents. One from before 1.2.0 (no configVersion) had the additions off because that was the default then: they
+	 * come on once, as for a new file.
+	 */
+	public static ConfigData read(com.google.gson.JsonObject json) {
+		ConfigData loaded = GSON.fromJson(json, ConfigData.class);
+		if (loaded == null) {
+			return null;
+		}
+		if (!json.has("configVersion")) {
+			loaded.additionsEnabled = true;
+			loaded.configVersion = CONFIG_VERSION;
+		}
+		loaded.validate();
+		return loaded;
+	}
+
 	public static void load() {
 		try {
 			if (Files.exists(CONFIG_PATH)) {
 				try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
-					ConfigData loaded = GSON.fromJson(reader, ConfigData.class);
+					com.google.gson.JsonObject json = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+					ConfigData loaded = read(json);
 					if (loaded != null) {
-						loaded.validate();
 						current = loaded;
+						if (!json.has("configVersion")) {
+							save();
+							NeoThaum.LOGGER.info("NeoThaum Additions are now on by default; turn them off in NeoThaum's settings for TC4 as it was");
+						}
 					}
 				}
 			} else {

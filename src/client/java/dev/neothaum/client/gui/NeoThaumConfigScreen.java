@@ -216,8 +216,10 @@ public class NeoThaumConfigScreen extends Screen {
 					v -> cfg.portableHoleBlacklist = v);
 			}
 			case 8 -> {
-				this.toggle("NeoThaum Additions", "The master switch for every addition on this page: features that are not in TC4. While it is off, "
-					+ "none of them do anything, whatever their own switches say. Default: off.", () -> cfg.additionsEnabled, v -> {
+				this.toggle("NeoThaum Additions", "The master switch for every addition on this page: features that are not in TC4. Turn it off "
+					+ "for Thaumcraft 4 as it was: none of them then do anything, whatever their own switches say, and their research, recipes and "
+					+ "items are hidden (on restart). On a server, an operator can use /neothaum config additions false. Default: on.",
+					() -> cfg.additionsEnabled, v -> {
 						cfg.additionsEnabled = v;
 						this.init();
 					});

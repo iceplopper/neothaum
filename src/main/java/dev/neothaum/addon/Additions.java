@@ -10,7 +10,7 @@ public final class Additions {
 	/** Whether the named addition is switched on, with the master switch; data (such as a research entry's "addition") names them this way. */
 	public static boolean enabled(String name) {
 		var cfg = NeoThaumConfig.current;
-		return cfg.additionsEnabled && switch (name) {
+		return dev.neothaum.config.NeoThaumConfig.additionsEnabled() && switch (name) {
 			case "research_sharing" -> cfg.additionResearchSharing;
 			case "essentia_overlay" -> cfg.additionEssentiaOverlay;
 			case "warp_hud" -> cfg.additionWarpHud;
