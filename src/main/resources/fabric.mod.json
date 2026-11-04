@@ -5,12 +5,10 @@
 	"name": "NeoThaum",
 	"description": "A modern Fabric recreation of Thaumcraft 4",
 	"authors": [
-		"Ice Plopper"
+		"Big Havarti"
 	],
 	"contact": {
-		"homepage": "https://github.com/iceplopper/neothaum",
-		"issues": "https://github.com/iceplopper/neothaum/issues",
-		"sources": "https://github.com/iceplopper/neothaum"
+		"homepage": "https://modrinth.com/mod/neothaum"
 	},
 	"license": "All-Rights-Reserved",
 	"icon": "assets/neothaum/icon.png",

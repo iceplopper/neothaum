@@ -96,7 +96,7 @@ NeoThaum natively integrates with the modern Fabric modding ecosystem:
 ### Option A: Modrinth Modpack (Recommended / One-Click)
 The fastest way to play with all companion mods and optimal settings configured out of the box:
 
-1. Download the latest **`NeoThaum-x.x.x.mrpack`** from the [Releases](https://github.com/iceplopper/neothaum/releases) page.
+1. Download the latest **`NeoThaum-x.x.x.mrpack`**, which comes with each release.
 2. Open your launcher of choice (**Prism Launcher**, **Modrinth App**, or **ATLauncher**).
 3. Select **Add Instance** $\rightarrow$ **Import from zip / mrpack** $\rightarrow$ choose the downloaded `.mrpack`.
 4. Launch and enjoy! The pack includes Fabric API, Trinkets Updated, ModMenu, JEI, Jade, Xaero's Minimap and World Map, Sodium, Iris,
@@ -108,7 +108,7 @@ If adding NeoThaum to an existing modpack:
 1. Install [Fabric Loader](https://fabricmc.net/) (v0.20.1 or higher) for **Minecraft 26.3**.
 2. Download and install [Fabric API](https://modrinth.com/mod/fabric-api) and **[Trinkets Updated](https://modrinth.com/mod/trinkets-updated)**
    (required, 4.2.1 or later) into your `.minecraft/mods` directory.
-3. Download the latest **`neothaum-x.x.x.jar`** from the [Releases](https://github.com/iceplopper/neothaum/releases) page and place it in
+3. Download the latest **`neothaum-x.x.x.jar`** from the [Modrinth page](https://modrinth.com/mod/neothaum) and place it in
    `.minecraft/mods`.
 4. *(Optional but highly recommended)* Add **JEI**, **Jade**, **ModMenu**, and **Xaero's World Map** for the full experience.
 
@@ -143,9 +143,7 @@ switch.
 To compile NeoThaum yourself:
 
 ```bash
-# Clone the repository
-git clone https://github.com/iceplopper/neothaum.git
-cd neothaum
+# from the folder holding the source
 
 # Compile server and client sources (requires JDK 25)
 ./gradlew compileJava compileClientJava
@@ -163,7 +161,7 @@ The compiled mod JAR will be located in `build/libs/neothaum-<version>.jar`.
 
 ## 📜 Credits & License
 - **Original Thaumcraft 4**: Created by **Azanor**. All original concept designs, textures, lore, and audio remain the intellectual property of their original creator.
-- **NeoThaum**: Modern Fabric adaptation and engineering.
+- **NeoThaum**: Modern Fabric adaptation and engineering by Big Havarti.
 
 ---
 
