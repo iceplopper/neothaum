@@ -1,0 +1,30 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "experience_siphon"
+    }
+  ],
+  "type": "neothaum:arcane_shapeless",
+  "research": "XPSIPHON",
+  "aspects": {
+    "aer": 10,
+    "ignis": 10,
+    "aqua": 10,
+    "terra": 10,
+    "ordo": 10,
+    "perditio": 10
+  },
+  "ingredients": [
+    {
+      "fabric:type": "fabric:components",
+      "base": "neothaum:warded_jar",
+      "components": {
+        "neothaum:experience": 160
+      }
+    }
+  ],
+  "result": {
+    "id": "neothaum:condensed_experience"
+  }
+}

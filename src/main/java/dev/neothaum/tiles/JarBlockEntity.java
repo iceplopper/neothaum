@@ -27,6 +27,9 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 	public int amount;
 	/** The side the label faces (TileJarFillable.facing). */
 	public Direction facing = Direction.NORTH;
+	/** Experience points poured in by an Experience Siphon (a NeoThaum Addition). A jar holding experience holds no essentia, and tubes
+	 * leave it alone. */
+	public int experience;
 	private int count;
 
 	public JarBlockEntity(BlockPos pos, BlockState state) {
@@ -44,6 +47,7 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 		this.aspectFilter = input.read("AspectFilter", Aspect.CODEC).orElse(null);
 		this.amount = input.getShortOr("Amount", (short) 0);
 		this.facing = Direction.from3DDataValue(input.getByteOr("facing", (byte) 2));
+		this.experience = input.getIntOr("Experience", 0);
 	}
 
 	@Override
@@ -57,6 +61,9 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 		}
 		output.putShort("Amount", (short) this.amount);
 		output.putByte("facing", (byte) this.facing.get3DDataValue());
+		if (this.experience > 0) {
+			output.putInt("Experience", this.experience);
+		}
 	}
 
 	// the jar item keeps its contents and label (ItemJarFilled)
@@ -69,6 +76,7 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 			this.amount = al.getAmount(this.aspect);
 		}
 		this.aspectFilter = components.get(TVComponents.ASPECT_FILTER);
+		this.experience = components.getOrDefault(TVComponents.EXPERIENCE, 0);
 	}
 
 	@Override
@@ -80,10 +88,13 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 		if (this.aspectFilter != null) {
 			builder.set(TVComponents.ASPECT_FILTER, this.aspectFilter);
 		}
+		if (this.experience > 0) {
+			builder.set(TVComponents.EXPERIENCE, this.experience);
+		}
 	}
 
 	public static void tick(Level level, BlockPos pos, BlockState state, JarBlockEntity jar) {
-		if (!level.isClientSide() && ++jar.count % 5 == 0 && (jar.isVoid() || jar.amount < MAX)) {
+		if (!level.isClientSide() && ++jar.count % 5 == 0 && jar.experience <= 0 && (jar.isVoid() || jar.amount < MAX)) {
 			jar.fillJar();
 		}
 	}
@@ -124,7 +135,7 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 
 	@Override
 	public int addToContainer(Aspect tt, int am) {
-		if (am == 0) {
+		if (am == 0 || this.experience > 0) {
 			return am;
 		}
 		boolean wasNotFull = this.amount < MAX;
@@ -197,17 +208,17 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 
 	@Override
 	public boolean isConnectable(Direction face) {
-		return face == Direction.UP;
+		return face == Direction.UP && this.experience <= 0;
 	}
 
 	@Override
 	public boolean canInputFrom(Direction face) {
-		return face == Direction.UP;
+		return face == Direction.UP && this.experience <= 0;
 	}
 
 	@Override
 	public boolean canOutputTo(Direction face) {
-		return face == Direction.UP;
+		return face == Direction.UP && this.experience <= 0;
 	}
 
 	@Override
@@ -242,7 +253,7 @@ public class JarBlockEntity extends TVBlockEntity implements AspectSource, Essen
 		if (this.isVoid()) {
 			return this.aspectFilter != null ? 40 : this.aspect != null && this.amount > 0 ? 28 : 24;
 		}
-		if (this.amount < MAX) {
+		if (this.amount < MAX && this.experience <= 0) {
 			return this.aspectFilter != null ? 64 : this.aspect != null && this.amount > 0 ? 48 : 32;
 		}
 		return 0;

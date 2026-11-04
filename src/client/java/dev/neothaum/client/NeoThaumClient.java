@@ -65,6 +65,14 @@ public class NeoThaumClient implements ClientModInitializer {
 		};
 
 		// dev tools: what each one does, under its name
+		// a warded jar holding experience says how much (an Experience Siphon addition)
+		net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback.EVENT.register((stack, ctx, type, lines) -> {
+			int xp = stack.getOrDefault(dev.neothaum.registry.TVComponents.EXPERIENCE, 0);
+			if (xp > 0) {
+				lines.add(1, Component.translatable("neothaum.experience.jar", dev.neothaum.addon.ExperienceSiphon.levels(xp))
+					.withStyle(net.minecraft.ChatFormatting.GREEN));
+			}
+		});
 		net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback.EVENT.register((stack, ctx, type, lines) -> {
 			if (dev.neothaum.devtools.DevTools.ITEMS.contains(stack.getItem())) {
 				String id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();

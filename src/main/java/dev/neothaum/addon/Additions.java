@@ -18,6 +18,7 @@ public final class Additions {
 			case "modded_aspects" -> cfg.additionModdedAspects;
 			case "wood_sets" -> cfg.additionWoodSets;
 			case "hint_research" -> cfg.additionHintResearch;
+			case "experience_siphon" -> cfg.additionExperienceSiphon;
 			default -> false;
 		};
 	}

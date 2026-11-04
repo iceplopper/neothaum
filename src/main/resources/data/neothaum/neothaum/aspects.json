@@ -2763,6 +2763,14 @@
     "iter": 4
    },
    "complex": true
+  },
+  {
+   "item": "neothaum:condensed_experience",
+   "aspects": {
+    "cognitio": 4,
+    "praecantatio": 2,
+    "fames": 1
+   }
   }
  ],
  "entities": [

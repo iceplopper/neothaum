@@ -1036,6 +1036,98 @@ public class VisualTests implements FabricClientGameTest {
 	}
 
 	/**
+	 * The Experience Siphon addition: a sneaking player on it is drained, an empty jar in it fills at ten levels, a jar of experience is
+	 * left alone by tubes and shows its levels, the worktable recipe takes only a full jar and gives the jar back, and Condensed Experience
+	 * gives the ten levels back.
+	 */
+	private static void siphonScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		boolean wasOn = cfg.additionsEnabled;
+		boolean wasSiphon = cfg.additionExperienceSiphon;
+		cfg.additionsEnabled = true;
+		cfg.additionExperienceSiphon = true;
+		ResearchManager.reload();
+		server.runCommand("reload");
+		ctx.waitTicks(40);
+		for (String cmd : new String[]{"gamemode survival @a", "time set noon", "weather clear", "fill -4 116 -4 4 120 4 air", "fill -4 115 -4 4 115 4 stone",
+			"setblock 0 116 0 neothaum:experience_siphon", "setblock 2 116 0 neothaum:warded_jar", "setblock 2 117 0 neothaum:essentia_tube",
+			"tp @a 0 116.6 0 180 30", "effect give @a minecraft:resistance 60 5 true", "xp set @a 0 points", "xp set @a 30 levels"}) {
+			server.runCommand(cmd);
+		}
+		ctx.waitTicks(10);
+		int before = server.computeOnServer(srv -> dev.neothaum.addon.ExperienceSiphon.pointsOf(srv.getPlayerList().getPlayers().get(0)));
+		ctx.getInput().holdKey(options -> options.keyShift);
+		ctx.waitTicks(42);
+		ctx.getInput().releaseKey(options -> options.keyShift);
+		String drain = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var siphon = (dev.neothaum.addon.ExperienceSiphonBlockEntity) srv.overworld().getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0));
+			return "taken " + (before - dev.neothaum.addon.ExperienceSiphon.pointsOf(p)) + " stored " + siphon.store;
+		});
+		// each pull takes a level's worth from zero (7 points); a few pulls in 42 ticks, and what is taken is what is stored
+		String[] d = drain.split(" ");
+		check("experience siphon drains a sneaking player", Integer.parseInt(d[1]) >= 21 && Integer.parseInt(d[1]) % 7 == 0 && d[1].equals(d[3]), drain);
+		String result = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			StringBuilder sb = new StringBuilder();
+			var pos = new net.minecraft.core.BlockPos(0, 116, 0);
+			var siphon = (dev.neothaum.addon.ExperienceSiphonBlockEntity) level.getBlockEntity(pos);
+			// off the plate, to look at it
+			p.teleportTo(level, 0.5, 116.6, -2.5, java.util.Set.of(), 0, 35, false);
+			// an empty jar fills at a jar's worth
+			siphon.setItem(0, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR));
+			siphon.store = dev.neothaum.addon.ExperienceSiphon.JAR + 5;
+			for (int i = 0; i < 10; i++) {
+				dev.neothaum.addon.ExperienceSiphonBlockEntity.tick(level, pos, level.getBlockState(pos), siphon);
+			}
+			var jar = siphon.getItem(0);
+			sb.append("jar ").append(jar.getOrDefault(dev.neothaum.registry.TVComponents.EXPERIENCE, 0)).append(" left ").append(siphon.store);
+			sb.append(" levels ").append(dev.neothaum.addon.ExperienceSiphon.levels(dev.neothaum.addon.ExperienceSiphon.JAR));
+			sb.append(" comparator ").append(level.getBlockState(pos).getAnalogOutputSignal(level, pos, net.minecraft.core.Direction.NORTH));
+			sb.append(" hopper takes ").append(siphon.canTakeItemThroughFace(0, jar, net.minecraft.core.Direction.DOWN));
+			// a placed experience jar: tubes leave it alone
+			var placed = (dev.neothaum.tiles.JarBlockEntity) level.getBlockEntity(new net.minecraft.core.BlockPos(2, 116, 0));
+			placed.experience = dev.neothaum.addon.ExperienceSiphon.JAR;
+			placed.markForUpdate();
+			sb.append(" tube ignores ").append(!placed.isConnectable(net.minecraft.core.Direction.UP) && placed.getSuctionAmount(net.minecraft.core.Direction.UP) == 0
+				&& placed.addToContainer(dev.neothaum.api.aspects.Aspect.FIRE, 5) == 5);
+			// the recipe takes only a full jar, and gives the jar back
+			var recipe = srv.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE,
+				NeoThaum.id("condensed_experience")));
+			boolean full = false;
+			boolean empty = true;
+			if (recipe.isPresent() && recipe.get().value() instanceof dev.neothaum.crafting.ArcaneRecipe ar) {
+				full = ar.ingredientList().get(0).test(jar);
+				empty = ar.ingredientList().get(0).test(new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR));
+			}
+			sb.append(" recipe full ").append(full).append(" empty ").append(empty);
+			var grid = new net.minecraft.world.SimpleContainer(9);
+			grid.setItem(4, jar.copy());
+			var rem = dev.neothaum.crafting.ArcaneCraftingManager.remainders(grid).get(4);
+			sb.append(" jar back ").append(dev.neothaum.addon.ExperienceSiphon.isEmptyJar(rem));
+			// condensed experience gives a jar's worth back
+			int xp = dev.neothaum.addon.ExperienceSiphon.pointsOf(p);
+			var food = new net.minecraft.world.item.ItemStack(dev.neothaum.addon.ExperienceSiphon.condensed);
+			food.getItem().finishUsingItem(food, level, p);
+			sb.append(" eaten +").append(dev.neothaum.addon.ExperienceSiphon.pointsOf(p) - xp);
+			// a jar of experience to look at beside the siphon, and the thaumometer to read it
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMOMETER));
+			return sb.toString();
+		});
+		check("experience siphon fills jars, which tubes ignore, and condenses", result.equals(
+			"jar 160 left 5 levels 10 comparator 1 hopper takes true tube ignores true recipe full true empty false jar back true eaten +160"), result);
+		ctx.waitTicks(20);
+		shot(ctx, "experience_siphon");
+		cfg.additionsEnabled = wasOn;
+		cfg.additionExperienceSiphon = wasSiphon;
+		ResearchManager.reload();
+		server.runCommand("reload");
+		server.runCommand("gamemode creative @a");
+		ctx.waitTicks(20);
+	}
+
+	/**
 	 * The hint research addition: scans that fail for want of an aspect bring Shortcuts of the Impatient Mind to light after 4 different
 	 * things, or 8 failures of one; it gives 1 warp; once known it names the aspect with a hint; with the addition off nothing counts.
 	 */
@@ -1337,7 +1429,7 @@ public class VisualTests implements FabricClientGameTest {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -1507,6 +1599,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "hints" -> {
 				hintResearchScene(ctx, server);
+			}
+			case "siphon" -> {
+				siphonScene(ctx, server);
 			}
 			case "config" -> {
 				configScene(ctx, server);

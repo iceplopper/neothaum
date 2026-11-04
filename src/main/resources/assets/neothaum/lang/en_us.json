@@ -2311,5 +2311,13 @@
   "neothaum.hint.vinculum": "What binds, and holds fast.",
   "neothaum.hint.vitium": "The corruption that creeps across the land.",
   "neothaum.hint.vitreus": "Clear and hard as ice, though no ice at all.",
-  "neothaum.hint.volatus": "Whatever takes to the air."
+  "neothaum.hint.volatus": "Whatever takes to the air.",
+  "block.neothaum.experience_siphon": "Experience Siphon",
+  "item.neothaum.condensed_experience": "Condensed Experience",
+  "neothaum.experience.jar": "Experience: %s levels",
+  "tc.research_name.XPSIPHON": "Experience Siphon",
+  "tc.research_text.XPSIPHON": "[NeoThaum Addition] Bottling the lessons of a life",
+  "tc.research_page.XPSIPHON.1": "What we call experience is a kind of essentia, the residue of everything a body has learned the hard way. It is too wayward for tubes and too stubborn for any alembic, but it can be coaxed out of a person who is willing to part with it.<BR>This plate of arcane stone draws it from anyone who kneels upon it (sneak while standing on it), a little at a time.",
+  "tc.research_page.XPSIPHON.2": "The siphon holds thirty levels' worth, counted as though from nothing, and pours it into an empty warded jar set into it, ten levels to a jar. Use it with an empty jar to set one in, and with an empty hand to take it out. A hopper beside it can feed it empty jars, and one beneath can take the full ones away.<BR>These jars will not share their contents with your tubes, and pouring one out spills it as experience. A redstone signal stops the siphon, and a comparator reads how full it is.",
+  "tc.research_page.XPSIPHON.3": "A full jar and a little vis condense its contents into something you can swallow, and the jar is returned to you. Eating it gives back the ten levels it held, counted as though from nothing, so it is best saved for when you have little."
 }

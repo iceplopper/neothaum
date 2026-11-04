@@ -77,6 +77,14 @@ public final class ContainerTags {
 			return;
 		}
 		BlockPos pos = hit.getBlockPos();
+		if (mc.level.getBlockEntity(pos) instanceof JarBlockEntity xpJar && xpJar.experience > 0) {
+			if (tagscale < 0.3F) {
+				tagscale += 0.031F - tagscale / 10.0F;
+			}
+			boolean above = mc.level.isEmptyBlock(pos.above());
+			drawExperience(ctx, pos.getX(), pos.getY() + (above ? 0.4F : 0.0F), pos.getZ(), xpJar.experience, 220, above ? Direction.UP : hit.getDirection());
+			return;
+		}
 		AspectList tags = contents(mc.level.getBlockEntity(pos));
 		if (tags == null || tags.size() == 0) {
 			return;
@@ -147,6 +155,37 @@ public final class ContainerTags {
 	}
 
 	/** UtilsFX.renderQuadCenteredFromTexture: a unit square in the aspect's colour, three quarters opaque. */
+	private static final Identifier EXPERIENCE = NeoThaum.id("textures/misc/experience.png");
+
+	/** An experience jar's tag: the experience symbol and the levels it holds, counted from level 0 (an Experience Siphon addition). */
+	private static void drawExperience(LevelRenderContext ctx, double x, double y, double z, int points, int bright, Direction dir) {
+		Minecraft mc = Minecraft.getInstance();
+		Vec3 cam = mc.gameRenderer.mainCamera().position();
+		Font font = mc.font;
+		PoseStack ps = ctx.poseStack();
+		ps.pushPose();
+		ps.translate(-cam.x + x + 0.5 + tagscale * 2.0F * dir.getStepX(), -cam.y + y + 0.5 + tagscale * 2.0F * dir.getStepY(),
+			-cam.z + z + 0.5 + tagscale * 2.0F * dir.getStepZ());
+		float rotYaw = (float) (Math.atan2(cam.x - (x + 0.5), cam.z - (z + 0.5)) * 180.0 / Math.PI);
+		ps.rotateDegrees(Axis.YP, rotYaw + 180.0F);
+		ps.rotateDegrees(Axis.ZP, 180.0F);
+		ps.scale(tagscale, tagscale, tagscale);
+		ctx.submitNodeCollector().submitCustomGeometry(ps, TVRenderTypes.glow(BACK, false, false), (pose, vc) -> back(pose, vc, bright));
+		ctx.submitNodeCollector().order(1).submitCustomGeometry(ps, TVRenderTypes.glow(EXPERIENCE, false, false),
+			(pose, vc) -> quad(pose, vc, 1.0F, 1.0F, 1.0F, bright));
+		String am = dev.neothaum.addon.ExperienceSiphon.levels(points);
+		ps.pushPose();
+		ps.scale(0.04F, 0.04F, 0.04F);
+		ps.translate(0.0F, 6.0F, -0.1F);
+		int sw = font.width(am);
+		var seq = Component.literal(am).getVisualOrderText();
+		ctx.submitNodeCollector().order(1).submitText(ps, 14 - sw, 1, seq, false, Font.DisplayMode.SEE_THROUGH, bright, 0xFF111111, 0, 0);
+		ps.translate(0.0F, 0.0F, -0.1F);
+		ctx.submitNodeCollector().order(1).submitText(ps, 13 - sw, 0, seq, false, Font.DisplayMode.SEE_THROUGH, bright, 0xFFFFFFFF, 0, 0);
+		ps.popPose();
+		ps.popPose();
+	}
+
 	private static void quad(PoseStack.Pose pose, VertexConsumer vc, float r, float g, float b, int bright) {
 		v(pose, vc, -0.5F, 0.5F, 0.0F, 1.0F, r, g, b, bright);
 		v(pose, vc, 0.5F, 0.5F, 1.0F, 1.0F, r, g, b, bright);

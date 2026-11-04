@@ -246,6 +246,10 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "want of an aspect on 4 different things, or 8 times in all. Bought for 16 of each primal, with 1 warp; after that a scan that "
 					+ "fails that way also names the missing aspect, with its symbol, and hints at where it is found. Takes effect on restart." + off,
 					() -> cfg.additionHintResearch, v -> cfg.additionHintResearch = v);
+				this.toggle("Experience Siphon", "Adds the Experience Siphon (Alchemy, after Thaumium and Essentia Distillation): an arcane stone plate "
+					+ "that draws experience from a player sneaking on it and pours it into empty warded jars, ten levels to a jar. A full jar and "
+					+ "ten of each primal make Condensed Experience at the arcane worktable, which gives the ten levels back when eaten. Takes "
+					+ "effect on restart." + off, () -> cfg.additionExperienceSiphon, v -> cfg.additionExperienceSiphon = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

@@ -36,6 +36,11 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 		BlockEntityRenderer.super.extractRenderState(be, s, pt, cam, crumbling);
 		s.level = be.amount > 0 ? (float) be.amount / JarBlockEntity.MAX * 0.625F : 0.0F;
 		s.color = be.aspect != null ? be.aspect.getColor() : 0xFFFFFF;
+		if (be.experience > 0) {
+			// experience from an Experience Siphon: a pale green liquid, full at a jar's worth
+			s.level = Math.min(1.0F, (float) be.experience / dev.neothaum.addon.ExperienceSiphon.JAR) * 0.625F;
+			s.color = EXPERIENCE_COLOR;
+		}
 		s.filter = be.aspectFilter;
 		s.facing = be.facing.getAxis().isHorizontal() ? be.facing : Direction.NORTH;
 		// Config.crooked: labels sit a couple of degrees askew
@@ -61,10 +66,17 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 	public record JarData(float level, int color, Aspect filter) {
 	}
 
+	/** The colour of experience in a jar: an experience orb's green. */
+	public static final int EXPERIENCE_COLOR = 0x9CFF5A;
+
 	/** ItemJarFilledRenderer: a jar item shows its essentia and label as the placed jar does. */
 	public record ItemRenderer() implements net.minecraft.client.renderer.special.SpecialModelRenderer<JarData> {
 		@Override
 		public JarData extractArgument(net.minecraft.world.item.ItemStack stack) {
+			int xp = stack.getOrDefault(dev.neothaum.registry.TVComponents.EXPERIENCE, 0);
+			if (xp > 0) {
+				return new JarData(Math.min(1.0F, (float) xp / dev.neothaum.addon.ExperienceSiphon.JAR) * 0.625F, EXPERIENCE_COLOR, null);
+			}
 			var al = stack.get(dev.neothaum.registry.TVComponents.ASPECTS);
 			Aspect filter = stack.get(dev.neothaum.registry.TVComponents.ASPECT_FILTER);
 			Aspect held = al == null || al.size() == 0 ? null : al.getAspects()[0];

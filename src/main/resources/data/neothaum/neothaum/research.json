@@ -8396,6 +8396,53 @@
       ],
       "warp": 1,
       "addition": "hint_research"
+    },
+    {
+      "key": "XPSIPHON",
+      "category": "ALCHEMY",
+      "aspects": {
+        "cognitio": 6,
+        "vacuos": 6,
+        "praecantatio": 4,
+        "humanus": 3
+      },
+      "col": 4,
+      "row": 1,
+      "complexity": 3,
+      "icon": {
+        "item": "neothaum:experience_siphon"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.XPSIPHON.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.XPSIPHON.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:experience_siphon"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.XPSIPHON.3"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:condensed_experience"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM",
+        "DISTILESSENTIA"
+      ],
+      "addition": "experience_siphon"
     }
   ]
 }

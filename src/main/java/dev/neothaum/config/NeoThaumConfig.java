@@ -183,6 +183,8 @@ public class NeoThaumConfig {
 		public boolean additionWoodSets = true;
 		/** Shortcuts of the Impatient Mind: a hidden research that names the aspect a blocked scan needs, with a hint. On restart. */
 		public boolean additionHintResearch = true;
+		/** The Experience Siphon: stores experience in warded jars, condensed into something you can eat. On restart. */
+		public boolean additionExperienceSiphon = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

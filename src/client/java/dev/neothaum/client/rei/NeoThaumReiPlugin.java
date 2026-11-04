@@ -33,10 +33,8 @@ public class NeoThaumReiPlugin implements REIClientPlugin {
 	/** The wood sets' items are hidden while that addition is off. */
 	@Override
 	public void registerEntries(me.shedaniel.rei.api.client.registry.entry.EntryRegistry registry) {
-		if (!dev.neothaum.addon.WoodSets.enabled()) {
-			registry.removeEntryIf(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s
-				&& dev.neothaum.addon.WoodSets.ITEMS.contains(s.getItem()));
-		}
+		registry.removeEntryIf(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s
+			&& (!dev.neothaum.addon.WoodSets.shown(s.getItem()) || !dev.neothaum.addon.ExperienceSiphon.shown(s.getItem())));
 	}
 
 	@Override

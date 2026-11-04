@@ -102,7 +102,11 @@ public class JarBlock extends BaseEntityBlock {
 		if (jar.aspectFilter != null && hit.getDirection() == jar.facing) {
 			return this.peelLabel(level, pos, jar, hit);
 		}
-		// sneak with an empty hand: pour the jar out (a label keeps its aspect)
+		// sneak with an empty hand: pour the jar out (a label keeps its aspect); experience spills out as orbs
+		if (jar.experience > 0 && level instanceof net.minecraft.server.level.ServerLevel sl) {
+			net.minecraft.world.entity.ExperienceOrb.award(sl, net.minecraft.world.phys.Vec3.atCenterOf(pos), jar.experience);
+		}
+		jar.experience = 0;
 		jar.amount = 0;
 		if (jar.aspectFilter == null) {
 			jar.aspect = null;

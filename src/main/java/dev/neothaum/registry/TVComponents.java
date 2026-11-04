@@ -31,6 +31,9 @@ public final class TVComponents {
 	public static final DataComponentType<ResearchNoteData> RESEARCH_NOTE = register("research_note",
 		b -> b.persistent(ResearchNoteData.CODEC).networkSynchronized(ResearchNoteData.STREAM_CODEC));
 	/** Scribing tools ink use (damage-like counter). */
+	/** Experience points in a warded jar, filled by the Experience Siphon (a NeoThaum Addition); never essentia. */
+	public static final DataComponentType<Integer> EXPERIENCE = register("experience",
+		b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 	/** A jar's or alembic's label (TC4 "AspectFilter"), also carried by labelled jar labels. */
 	public static final DataComponentType<dev.neothaum.api.aspects.Aspect> ASPECT_FILTER = register("aspect_filter",
 		b -> b.persistent(dev.neothaum.api.aspects.Aspect.CODEC).networkSynchronized(dev.neothaum.api.aspects.Aspect.STREAM_CODEC));

@@ -158,7 +158,10 @@ public final class ArcaneCraftingManager {
 		for (int i = 0; i < 9; i++) {
 			ItemStack s = inv.getItem(i);
 			var rem = s.getItem().getCraftingRemainder();
-			if (rem != null) {
+			if (dev.neothaum.addon.ExperienceSiphon.isExperienceJar(s)) {
+				// condensing experience keeps the jar (an Experience Siphon addition)
+				out.set(i, new ItemStack(s.getItem()));
+			} else if (rem != null) {
 				out.set(i, rem.create());
 			}
 		}

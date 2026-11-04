@@ -1,0 +1,30 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "experience_siphon"
+    }
+  ],
+  "type": "neothaum:arcane_shaped",
+  "research": "XPSIPHON",
+  "aspects": {
+    "aqua": 30,
+    "ordo": 30,
+    "perditio": 30,
+    "terra": 15
+  },
+  "pattern": [
+    "TAT",
+    "TJT",
+    "SSS"
+  ],
+  "key": {
+    "T": "neothaum:thaumium_ingot",
+    "A": "neothaum:amber",
+    "J": "neothaum:warded_jar",
+    "S": "neothaum:arcane_stone_slab"
+  },
+  "result": {
+    "id": "neothaum:experience_siphon"
+  }
+}
