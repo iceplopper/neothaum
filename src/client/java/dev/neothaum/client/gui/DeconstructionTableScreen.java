@@ -29,12 +29,22 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 		}
 	}
 
-	private Aspect currentAspect() {
-		int idx = this.menu.data.get(1);
-		if (idx >= 0 && idx < PRIMALS.length) {
-			return PRIMALS[idx];
+	/** Where each primal's waiting points sit: two rows of three below the input. */
+	private static int[] spot(int i) {
+		return new int[]{46 + i % 3 * 18, 42 + i / 3 * 18};
+	}
+
+	/** The primal under the mouse with points waiting, or -1. */
+	private int hovered(double mouseX, double mouseY) {
+		int k = (this.width - this.imageWidth) / 2;
+		int l = (this.height - this.imageHeight) / 2;
+		for (int i = 0; i < PRIMALS.length; i++) {
+			int[] at = spot(i);
+			if (this.menu.data.get(1 + i) > 0 && mouseX >= k + at[0] && mouseX < k + at[0] + 16 && mouseY >= l + at[1] && mouseY < l + at[1] + 16) {
+				return i;
+			}
 		}
-		return null;
+		return -1;
 	}
 
 	@Override
@@ -51,9 +61,12 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 			this.blit(g, k + 93, l + 15 + 46 - i1, 176, 46 - i1, 9, i1);
 		}
 
-		Aspect aspect = currentAspect();
-		if (aspect != null) {
-			GuiUtil.drawTag(g, k + 64, l + 48, aspect);
+		for (int i = 0; i < PRIMALS.length; i++) {
+			int n = this.menu.data.get(1 + i);
+			if (n > 0) {
+				int[] at = spot(i);
+				GuiUtil.drawTag(g, k + at[0], l + at[1], PRIMALS[i], n, 0, 771, 1.0F, false);
+			}
 		}
 	}
 
@@ -63,9 +76,11 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 		int k = (this.width - this.imageWidth) / 2;
 		int l = (this.height - this.imageHeight) / 2;
 
-		Aspect aspect = currentAspect();
-		if (aspect != null && mouseX >= k + 64 && mouseX < k + 80 && mouseY >= l + 48 && mouseY < l + 64) {
-			g.setTooltipForNextFrame(this.font, Component.literal(aspect.getName() + " - " + aspect.getLocalizedDescription()), mouseX, mouseY);
+		int i = this.hovered(mouseX, mouseY);
+		if (i >= 0) {
+			Aspect aspect = PRIMALS[i];
+			g.setTooltipForNextFrame(this.font, Component.literal(aspect.getName() + " - " + aspect.getLocalizedDescription()
+				+ " (click to take, shift-click to take all)"), mouseX, mouseY);
 		}
 	}
 
@@ -76,10 +91,10 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 		int k = (this.width - this.imageWidth) / 2;
 		int l = (this.height - this.imageHeight) / 2;
 
-		Aspect aspect = currentAspect();
-		if (aspect != null && mouseX >= k + 64 && mouseX < k + 80 && mouseY >= l + 48 && mouseY < l + 64) {
+		int i = this.hovered(mouseX, mouseY);
+		if (i >= 0) {
 			if (this.minecraft != null && this.minecraft.gameMode != null) {
-				this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 1);
+				this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, event.hasShiftDown() ? 0 : 1 + i);
 				if (this.minecraft.player != null) {
 					this.minecraft.player.playSound(TVSounds.HHOFF, 0.2F, 1.0F);
 				}

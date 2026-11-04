@@ -32,7 +32,12 @@ import net.minecraft.world.level.storage.ValueOutput;
 public class DeconstructionTableBlockEntity extends TVBlockEntity implements WorldlyContainer,
 	net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider<net.minecraft.core.BlockPos> {
 	public ItemStack inputStack = ItemStack.EMPTY;
-	public Aspect aspect = null;
+	/**
+	 * The primal points broken out and waiting to be claimed, by PRIMALS index. TC4 held one point and stopped until it was taken; these stack,
+	 * up to MAX of each, and the table keeps working meanwhile.
+	 */
+	public final int[] points = new int[6];
+	public static final int MAX = 64;
 	public int breaktime = 0;
 
 	private static final Aspect[] PRIMALS = {
@@ -42,24 +47,21 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 	public final ContainerData data = new ContainerData() {
 		@Override
 		public int get(int index) {
-			return switch (index) {
-				case 0 -> breaktime;
-				case 1 -> aspectIndex(aspect);
-				default -> 0;
-			};
+			return index == 0 ? breaktime : index <= 6 ? points[index - 1] : 0;
 		}
 
 		@Override
 		public void set(int index, int value) {
-			switch (index) {
-				case 0 -> breaktime = value;
-				case 1 -> aspect = aspectFromIndex(value);
+			if (index == 0) {
+				breaktime = value;
+			} else if (index <= 6) {
+				points[index - 1] = value;
 			}
 		}
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 7;
 		}
 	};
 
@@ -86,7 +88,12 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 		if (level.isClientSide()) return;
 		boolean dirty = false;
 
-		if (table.aspect == null && !table.inputStack.isEmpty()) {
+		// it pauses only while one of the primals is full
+		boolean full = false;
+		for (int n : table.points) {
+			full |= n >= MAX;
+		}
+		if (!full && !table.inputStack.isEmpty()) {
 			AspectList al = ObjectAspects.getAspects(table.inputStack);
 			if (al != null && al.size() > 0) {
 				if (table.breaktime == 0) {
@@ -98,7 +105,10 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 						AspectList primals = ResearchManager.reduceToPrimals(al);
 						if (primals != null && primals.size() > 0 && level.getRandom().nextInt(80) < primals.visSize()) {
 							Aspect[] parray = primals.getAspects();
-							table.aspect = parray[level.getRandom().nextInt(parray.length)];
+							int idx = aspectIndex(parray[level.getRandom().nextInt(parray.length)]);
+							if (idx >= 0) {
+								table.points[idx]++;
+							}
 						}
 						table.inputStack.shrink(1);
 						dirty = true;
@@ -122,16 +132,22 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 		}
 	}
 
-	public void claimAspect(Player player) {
-		if (this.aspect != null) {
-			if (player instanceof ServerPlayer sp) {
-				PlayerKnowledge k = ResearchManager.knowledge(sp).copy();
-				if (k.addAspectPool(this.aspect, 1)) {
-					ResearchManager.setKnowledge(sp, k);
-					TVNetwork.sendAspectPool(sp, this.aspect, 1, k.getAspectPool(this.aspect));
-				}
+	/** Gives the player the waiting points of one primal (by PRIMALS index), or of all six when index is -1. */
+	public void claimAspect(Player player, int index) {
+		if (!(player instanceof ServerPlayer sp)) {
+			return;
+		}
+		PlayerKnowledge k = ResearchManager.knowledge(sp).copy();
+		boolean changed = false;
+		for (int i = 0; i < PRIMALS.length; i++) {
+			if ((index == -1 || index == i) && this.points[i] > 0 && k.addAspectPool(PRIMALS[i], this.points[i])) {
+				TVNetwork.sendAspectPool(sp, PRIMALS[i], this.points[i], k.getAspectPool(PRIMALS[i]));
+				this.points[i] = 0;
+				changed = true;
 			}
-			this.aspect = null;
+		}
+		if (changed) {
+			ResearchManager.setKnowledge(sp, k);
 			this.markForUpdate();
 		}
 	}
@@ -216,7 +232,7 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 	protected void saveAdditional(ValueOutput output) {
 		super.saveAdditional(output);
 		output.putInt("breaktime", this.breaktime);
-		output.putString("aspect", this.aspect != null ? this.aspect.getTag() : "");
+		output.putIntArray("points", this.points);
 		if (!this.inputStack.isEmpty()) {
 			output.store("inputStack", ItemStack.OPTIONAL_CODEC, this.inputStack);
 		}
@@ -226,8 +242,14 @@ public class DeconstructionTableBlockEntity extends TVBlockEntity implements Wor
 	protected void loadAdditional(ValueInput input) {
 		super.loadAdditional(input);
 		this.breaktime = input.getIntOr("breaktime", 0);
-		String tag = input.getStringOr("aspect", "");
-		this.aspect = tag.isEmpty() ? null : Aspect.getAspect(tag);
+		int[] saved = input.getIntArray("points").orElse(new int[0]);
+		java.util.Arrays.fill(this.points, 0);
+		System.arraycopy(saved, 0, this.points, 0, Math.min(saved.length, 6));
+		// a table saved before the points stacked held a single aspect
+		Aspect old = Aspect.getAspect(input.getStringOr("aspect", ""));
+		if (old != null && aspectIndex(old) >= 0 && saved.length == 0) {
+			this.points[aspectIndex(old)] = 1;
+		}
 		this.inputStack = input.read("inputStack", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
 	}
 

@@ -23,7 +23,7 @@ public class DeconstructionTableMenu extends AbstractContainerMenu {
 
 	public DeconstructionTableMenu(int id, Inventory inv, BlockPos pos) {
 		this(id, inv, inv.player.level().getBlockEntity(pos) instanceof Container c ? c : new SimpleContainer(1), pos,
-			inv.player.level().getBlockEntity(pos) instanceof DeconstructionTableBlockEntity t ? t.data : new SimpleContainerData(2));
+			inv.player.level().getBlockEntity(pos) instanceof DeconstructionTableBlockEntity t ? t.data : new SimpleContainerData(7));
 	}
 
 	public DeconstructionTableMenu(int id, Inventory inv, Container tile, BlockPos pos, ContainerData data) {
@@ -59,8 +59,9 @@ public class DeconstructionTableMenu extends AbstractContainerMenu {
 
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
-		if (id == 1 && table != null) {
-			table.claimAspect(player);
+		// buttons 1 to 6: claim that primal's points; 0: claim all of them
+		if (id >= 0 && id <= 6 && table != null) {
+			table.claimAspect(player, id - 1);
 			return true;
 		}
 		return false;

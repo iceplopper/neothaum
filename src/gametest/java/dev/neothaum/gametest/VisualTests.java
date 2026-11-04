@@ -3709,6 +3709,40 @@ public class VisualTests implements FabricClientGameTest {
 		NeoThaum.LOGGER.info("[visual-test] jar aspects: warded {} void {}",
 			dev.neothaum.aspects.ObjectAspects.getAspects(new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR)),
 			dev.neothaum.aspects.ObjectAspects.getAspects(new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.VOID_JAR)));
+		// --- the deconstruction table keeps breaking items while points wait, stacking each primal, and gives them all on a shift-click
+		net.minecraft.core.BlockPos dt = server.computeOnServer(srv -> srv.getPlayerList().getPlayers().get(0).blockPosition().offset(0, 0, 2));
+		String decon = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			level.setBlockAndUpdate(dt, dev.neothaum.registry.TVBlocks.DECONSTRUCTION_TABLE.defaultBlockState());
+			if (!(level.getBlockEntity(dt) instanceof dev.neothaum.tiles.DeconstructionTableBlockEntity t)) {
+				return "no table";
+			}
+			t.setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_BLOCK, 32));
+			for (int i = 0; i < 41 * 32; i++) {
+				dev.neothaum.tiles.DeconstructionTableBlockEntity.tick(level, dt, t.getBlockState(), t);
+			}
+			return java.util.Arrays.toString(t.points) + " left " + t.inputStack.getCount();
+		});
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			p.gameMode.useItemOn(p, srv.overworld(), net.minecraft.world.item.ItemStack.EMPTY, net.minecraft.world.InteractionHand.MAIN_HAND,
+				new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(dt), net.minecraft.core.Direction.UP, dt, false));
+		});
+		ctx.waitTicks(10);
+		shot(ctx, "deconstruction_table");
+		String claimed = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			int before = ResearchManager.knowledge(p).getAspectPool(dev.neothaum.api.aspects.Aspect.EARTH);
+			if (p.containerMenu instanceof dev.neothaum.menu.DeconstructionTableMenu m) {
+				m.clickMenuButton(p, 0);
+			}
+			int after = ResearchManager.knowledge(p).getAspectPool(dev.neothaum.api.aspects.Aspect.EARTH);
+			var t = (dev.neothaum.tiles.DeconstructionTableBlockEntity) srv.overworld().getBlockEntity(dt);
+			return "terra pool +" + (after - before) + ", left " + java.util.Arrays.toString(t.points);
+		});
+		ctx.runOnClient(mc -> mc.player.closeContainer());
+		check("deconstruction table stacks points and keeps working", decon.endsWith(" left 0") && claimed.endsWith("[0, 0, 0, 0, 0, 0]")
+			&& !decon.startsWith("[0, 0, 0, 0, 0, 0]"), decon + " | " + claimed);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);
