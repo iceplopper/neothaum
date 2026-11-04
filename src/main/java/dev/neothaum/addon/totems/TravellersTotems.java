@@ -156,6 +156,11 @@ public final class TravellersTotems {
 		PayloadTypeRegistry.serverboundPlay().register(TravelTo.TYPE, TravelTo.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(TravelTo.TYPE, (p, ctx) -> TotemTravel.request(ctx.player(), p.target(), p.compass()));
 		TotemTravel.init();
+		// rarely, a totem in the world
+		Registry.register(BuiltInRegistries.FEATURE_TYPE, NeoThaum.id("travellers_totem"), TotemFeature.CODEC);
+		net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),
+			net.minecraft.world.level.levelgen.GenerationStep.Decoration.SURFACE_STRUCTURES,
+			ResourceKey.create(Registries.PLACED_FEATURE, NeoThaum.id("travellers_totem")));
 	}
 
 	private static Item blockItem(Block b) {

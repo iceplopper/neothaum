@@ -8443,6 +8443,152 @@
         "DISTILESSENTIA"
       ],
       "addition": "experience_siphon"
+    },
+    {
+      "key": "TOTEMLORE",
+      "category": "ARTIFICE",
+      "aspects": {},
+      "col": 2,
+      "row": -3,
+      "complexity": 1,
+      "icon": {
+        "item": "neothaum:travellers_totem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TOTEMLORE.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TOTEMLORE.2"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TOTEMLORE.3"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TOTEMLORE.4"
+        }
+      ],
+      "flags": [
+        "hidden",
+        "round",
+        "special"
+      ],
+      "addition": "travellers_totems"
+    },
+    {
+      "key": "HOMETOTEM",
+      "category": "ARTIFICE",
+      "aspects": {
+        "iter": 6,
+        "terra": 4,
+        "ordo": 4,
+        "praecantatio": 3
+      },
+      "col": 3,
+      "row": -5,
+      "complexity": 2,
+      "icon": {
+        "item": "neothaum:home_totem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.HOMETOTEM.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.HOMETOTEM.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:home_totem"
+          ]
+        }
+      ],
+      "parents": [
+        "THAUMIUM"
+      ],
+      "addition": "travellers_totems"
+    },
+    {
+      "key": "TRAVELTOTEM",
+      "category": "ARTIFICE",
+      "aspects": {
+        "iter": 8,
+        "alienis": 6,
+        "praecantatio": 4,
+        "terra": 4
+      },
+      "col": 5,
+      "row": -6,
+      "complexity": 3,
+      "icon": {
+        "item": "neothaum:travellers_totem"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.TRAVELTOTEM.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.TRAVELTOTEM.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:travellers_totem"
+          ]
+        }
+      ],
+      "parents": [
+        "PAVETRAVEL",
+        "HOMETOTEM"
+      ],
+      "addition": "travellers_totems"
+    },
+    {
+      "key": "WAYCOMPASS",
+      "category": "ARTIFICE",
+      "aspects": {
+        "iter": 10,
+        "alienis": 8,
+        "instrumentum": 4,
+        "vacuos": 4
+      },
+      "col": 7,
+      "row": -6,
+      "complexity": 4,
+      "icon": {
+        "item": "neothaum:wayfarers_compass"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.WAYCOMPASS.1"
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.WAYCOMPASS.2"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:wayfarers_compass"
+          ]
+        }
+      ],
+      "parents": [
+        "TRAVELTOTEM",
+        "TRAVELTRUNK",
+        "VOIDMETAL"
+      ],
+      "addition": "travellers_totems"
     }
   ]
 }

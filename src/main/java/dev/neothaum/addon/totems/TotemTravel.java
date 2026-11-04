@@ -83,7 +83,7 @@ public final class TotemTravel {
 	}
 
 	/** The player picked a destination. From a totem: one they know, near them. With the compass: one it carries, or home. */
-	static void request(ServerPlayer sp, GlobalPos target, boolean compass) {
+	public static void request(ServerPlayer sp, GlobalPos target, boolean compass) {
 		if (!TravellersTotems.enabled() || CHANNELS.containsKey(sp.getUUID())) {
 			return;
 		}

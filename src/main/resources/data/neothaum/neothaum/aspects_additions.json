@@ -199,6 +199,32 @@
         "praecantatio": 2,
         "fames": 1
       }
+    },
+    {
+      "item": "neothaum:travellers_totem",
+      "aspects": {
+        "iter": 8,
+        "alienis": 4,
+        "terra": 4,
+        "praecantatio": 4
+      }
+    },
+    {
+      "item": "neothaum:home_totem",
+      "aspects": {
+        "iter": 4,
+        "terra": 4,
+        "tutamen": 2
+      }
+    },
+    {
+      "item": "neothaum:wayfarers_compass",
+      "aspects": {
+        "iter": 6,
+        "alienis": 4,
+        "instrumentum": 2,
+        "praecantatio": 3
+      }
     }
   ],
   "entities": [

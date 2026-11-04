@@ -224,10 +224,10 @@ public final class TotemNames {
 			float avg = sum / land;
 			int relief = max - min;
 			if (relief < 4) {
-				add(s, "flat", columns * 0.5F);
+				add(s, "flat", columns * 0.25F);
 			}
 			if (relief > 24) {
-				add(s, "rugged", columns * 0.4F);
+				add(s, "rugged", columns * 0.25F);
 			}
 			if (steep > 3) {
 				add(s, "cliff", steep * 3);
@@ -242,10 +242,10 @@ public final class TotemNames {
 			} else if (centreHeight < avg - 6) {
 				add(s, edgeHigher >= edge - 1 && edge > 0 ? "enclosed_valley" : "valley", columns * 0.6F);
 			} else if (relief > 10 && relief <= 24) {
-				add(s, "slope", columns * 0.2F);
+				add(s, "slope", columns * 0.15F);
 			}
 			if (Math.abs(centreHeight - sea) <= 4 && relief < 6) {
-				add(s, "low", columns * 0.3F);
+				add(s, "low", columns * 0.2F);
 			}
 		}
 		if (centreHeight < sea - 5) {

@@ -141,6 +141,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		MenuScreens.register(TVMenus.ALCHEMY_FURNACE, dev.neothaum.client.gui.AlchemyFurnaceScreen::new);
 		MenuScreens.register(TVMenus.PECH, dev.neothaum.client.gui.PechScreen::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR, dev.neothaum.client.render.JarRenderer::new);
+		BlockEntityRendererRegistry.register(dev.neothaum.addon.totems.TravellersTotems.TOTEM_ENTITY, dev.neothaum.client.addon.TotemRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ALEMBIC, dev.neothaum.client.render.AlembicRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.ETHEREAL_BLOOM, dev.neothaum.client.render.EtherealBloomRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.TUBE, dev.neothaum.client.render.TubeRenderer::new);

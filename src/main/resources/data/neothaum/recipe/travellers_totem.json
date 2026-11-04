@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "travellers_totems"
+    }
+  ],
+  "type": "neothaum:infusion",
+  "research": "TRAVELTOTEM",
+  "instability": 3,
+  "aspects": {
+    "iter": 20,
+    "alienis": 8,
+    "praecantatio": 8,
+    "terra": 8
+  },
+  "central": "neothaum:paving_stone_of_travel",
+  "components": [
+    "neothaum:arcane_stone_block",
+    "minecraft:ender_eye",
+    "neothaum:thaumium_ingot",
+    "neothaum:thaumium_ingot",
+    "minecraft:compass",
+    "neothaum:arcane_stone_block",
+    "minecraft:ender_eye",
+    "neothaum:thaumium_ingot",
+    "neothaum:thaumium_ingot",
+    "neothaum:amber"
+  ],
+  "result": {
+    "id": "neothaum:travellers_totem"
+  }
+}

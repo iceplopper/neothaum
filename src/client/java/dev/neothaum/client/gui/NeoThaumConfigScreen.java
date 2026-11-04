@@ -250,6 +250,11 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "that draws experience from a player sneaking on it and pours it into empty warded jars, ten levels to a jar. A full jar and "
 					+ "ten of each primal make Condensed Experience at the arcane worktable, which gives the ten levels back when eaten. Takes "
 					+ "effect on restart." + off, () -> cfg.additionExperienceSiphon, v -> cfg.additionExperienceSiphon = v);
+				this.toggle("Traveller's Totems", "Adds Traveller's Totems, found rarely in the overworld and later raised by players: learn one by "
+					+ "touching it, then travel free between those you know. Adds the Home Totem, which anyone can claim with a wand and travel to "
+					+ "but not from, and the Wayfarer's Compass, which carries five totems. Each is named in Latin for what is round it. Only "
+					+ "a thaumium pickaxe or better can mine them. Takes effect on restart." + off,
+					() -> cfg.additionTravellersTotems, v -> cfg.additionTravellersTotems = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

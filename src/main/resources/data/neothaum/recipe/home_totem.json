@@ -1,0 +1,30 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "travellers_totems"
+    }
+  ],
+  "type": "neothaum:arcane_shaped",
+  "research": "HOMETOTEM",
+  "aspects": {
+    "terra": 20,
+    "ordo": 20,
+    "aer": 10
+  },
+  "pattern": [
+    "ACA",
+    "SES",
+    "TST"
+  ],
+  "key": {
+    "A": "neothaum:amber",
+    "C": "minecraft:compass",
+    "S": "neothaum:arcane_stone_block",
+    "E": "minecraft:ender_pearl",
+    "T": "neothaum:thaumium_ingot"
+  },
+  "result": {
+    "id": "neothaum:home_totem"
+  }
+}
