@@ -219,6 +219,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.fx.BeamFX::render);
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.ArchitectOverlay::render);
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.BellOverlay::render);
+		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.fx.SourceFX::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.BeamFX::tick);
 		MenuScreens.register(TVMenus.FOCUS_POUCH, dev.neothaum.client.gui.FocusPouchScreen::new);
 		MenuScreens.register(TVMenus.HOVER_HARNESS, dev.neothaum.client.gui.HoverHarnessScreen::new);

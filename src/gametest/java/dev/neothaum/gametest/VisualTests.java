@@ -1079,6 +1079,27 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.waitTicks(10);
 		shot(ctx, "jar_items");
 		ctx.setScreen(() -> null);
+		// drawing vis from a node with a wand, seen with goggles: the soft drain beam
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			dev.neothaum.world.NodeGenerator.createNodeAt(level, new net.minecraft.core.BlockPos(3, 119, 4), dev.neothaum.api.nodes.NodeType.NORMAL, null,
+				new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.FIRE, 200).add(dev.neothaum.api.aspects.Aspect.WATER, 200), true);
+			p.getInventory().clearContent();
+			p.getInventory().setItem(0, dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", "greatwood"));
+			p.getInventory().setSelectedSlot(0);
+		});
+		server.runCommand("item replace entity @a armor.head with neothaum:goggles_of_revealing");
+		server.runCommand("tp @a -1 117 -1");
+		ctx.waitTicks(20);
+		ctx.getInput().lookAt(new net.minecraft.core.BlockPos(3, 119, 4));
+		ctx.waitTicks(5);
+		ctx.getInput().holdKey(options -> options.keyUse);
+		ctx.waitTicks(25);
+		shot(ctx, "node_drain");
+		ctx.waitTicks(7);
+		shot(ctx, "node_drain_2");
+		ctx.getInput().releaseKey(options -> options.keyUse);
 	}
 
 	/** The scenes NEOTHAUM_SCENES can name, in the order they run. */

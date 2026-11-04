@@ -79,8 +79,9 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 		int i = this.hovered(mouseX, mouseY);
 		if (i >= 0) {
 			Aspect aspect = PRIMALS[i];
-			g.setTooltipForNextFrame(this.font, Component.literal(aspect.getName() + " - " + aspect.getLocalizedDescription()
-				+ " (click to take, shift-click to take all)"), mouseX, mouseY);
+			g.setComponentTooltipForNextFrame(this.font, java.util.List.of(Component.literal(aspect.getName()),
+				aspect.getLocalizedDescription().copy().withStyle(net.minecraft.ChatFormatting.GRAY),
+				Component.translatable("neothaum.decontable.take").withStyle(net.minecraft.ChatFormatting.DARK_GRAY)), mouseX, mouseY);
 		}
 	}
 
@@ -102,5 +103,9 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 			}
 		}
 		return super.mouseClicked(event, doubleClick);
+	}
+	/** GuiDeconstructionTable.drawGuiContainerForegroundLayer draws nothing: the board has no room for the usual labels. */
+	@Override
+	protected void extractLabels(GuiGraphicsExtractor g, int mouseX, int mouseY) {
 	}
 }

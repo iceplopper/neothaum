@@ -282,45 +282,15 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 
 	/** UtilsFX.drawFloatyLine: the wavy "wispy" stream from the wand to the node while draining. */
 	private static void drawFloatyLine(PoseStack ps, SubmitNodeCollector collector, State s) {
-		Vec3 node = Vec3.atCenterOf(s.blockPos);
-		double dc1x = s.drainFrom.x - node.x;
-		double dc1y = s.drainFrom.y - node.y;
-		double dc1z = s.drainFrom.z - node.z;
-		float time = (float) (System.nanoTime() / 30000000L);
-		float rr = (s.drainColor >> 16 & 255) / 255.0F, gg = (s.drainColor >> 8 & 255) / 255.0F, bb = (s.drainColor & 255) / 255.0F;
-		float dist = (float) Math.sqrt(dc1x * dc1x + dc1y * dc1y + dc1z * dc1z);
-		float blocks = Math.round(dist);
-		float length = blocks * (16 / 2.0F);
-		float width = 0.15F;
-		float speed = -0.02F;
-		List<double[]> pts = new ArrayList<>();
-		for (int i = 0; i <= length * s.drainProgress; i++) {
-			float f2 = i / length;
-			float f3 = 1.0F - Math.abs(i - length / 2.0F) / (length / 2.0F);
-			double dx = dc1x + Mth.sin((float) ((node.z % 16.0 + dist * (1.0F - f2) * 16 / 2.0F - time % 32767.0F / 5.0F) / 4.0)) * 0.5F * f3;
-			double dy = dc1y + Mth.sin((float) ((node.x % 16.0 + dist * (1.0F - f2) * 16 / 2.0F - time % 32767.0F / 5.0F) / 3.0)) * 0.5F * f3;
-			double dz = dc1z + Mth.sin((float) ((node.y % 16.0 + dist * (1.0F - f2) * 16 / 2.0F - time % 32767.0F / 5.0F) / 2.0)) * 0.5F * f3;
-			float f13 = (1.0F - f2) * dist - time * speed;
-			pts.add(new double[]{dx * f2 + 0.5, dy * f2 + 0.5, dz * f2 + 0.5, f13, f3});
+		// TC4's wavering stream from the node to the wand, drawn as a smooth soft beam facing the camera (TC4's stepped clock and crossed
+		// flat ribbons showed hard edges and pixels)
+		Vec3 origin = Vec3.atLowerCornerOf(s.blockPos);
+		Vec3 eye = net.minecraft.client.Minecraft.getInstance().gameRenderer.mainCamera().position().subtract(origin);
+		var geometry = SoftBeam.geometry(eye, s.drainFrom.subtract(origin), new Vec3(0.5, 0.5, 0.5), s.drainColor, 0.9F, 0.3F, 0.35F, 0.0F,
+			-1.5F, s.drainProgress);
+		if (geometry != null) {
+			afterTerrain(collector, ps, SoftBeam.type(), geometry);
 		}
-		if (pts.size() < 2) {
-			return;
-		}
-		afterTerrain(collector, ps, TVRenderTypes.glow(TVRenderTypes.WISPY, true, true), (pose, vc) -> {
-			for (int pass = 0; pass < 2; pass++) {
-				for (int i = 0; i < pts.size() - 1; i++) {
-					double[] p0 = pts.get(i);
-					double[] p1 = pts.get(i + 1);
-					float ox = pass == 1 ? width : 0, oy = pass == 0 ? width : 0;
-					int a0 = (int) (p0[4] * 255), a1 = (int) (p1[4] * 255);
-					int r = (int) (rr * 255), g = (int) (gg * 255), b = (int) (bb * 255);
-					quadV(vc, pose, (float) (p0[0] - ox), (float) (p0[1] - oy), (float) p0[2], (float) p0[3], 1.0F, r, g, b, a0);
-					quadV(vc, pose, (float) (p0[0] + ox), (float) (p0[1] + oy), (float) p0[2], (float) p0[3], 0.0F, r, g, b, a0);
-					quadV(vc, pose, (float) (p1[0] + ox), (float) (p1[1] + oy), (float) p1[2], (float) p1[3], 0.0F, r, g, b, a1);
-					quadV(vc, pose, (float) (p1[0] - ox), (float) (p1[1] - oy), (float) p1[2], (float) p1[3], 1.0F, r, g, b, a1);
-				}
-			}
-		});
 	}
 
 	private static void quadV(VertexConsumer vc, PoseStack.Pose pose, float x, float y, float z, float u, float v, int r, int g, int b, int a) {
