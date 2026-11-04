@@ -157,12 +157,34 @@ public class CrucibleBlockEntity extends TVBlockEntity implements dev.neothaum.a
 		}
 	}
 
-	/** Flux goo/gas arrive with the taint phase; until then spilled vis simply dissipates with a puff of smoke. */
+	/**
+	 * TileCrucible.spill: one time in four (scaled by the flux setting) the lost essentia becomes flux, gas or goo, above the crucible; flux
+	 * already there thickens, and once it is as thick as it gets the flux goes into a free space around the crucible instead.
+	 */
 	public void spill() {
-		if (this.level instanceof ServerLevel sl && this.level.getRandom().nextInt(4) == 0) {
-			sl.sendParticles(net.minecraft.core.particles.ParticleTypes.WITCH, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.1,
-				this.worldPosition.getZ() + 0.5, 3, 0.2, 0.1, 0.2, 0.0);
+		var rand = this.level.getRandom();
+		if (!(this.level instanceof ServerLevel sl) || rand.nextFloat() >= 0.25F * Math.max(0.0F, dev.neothaum.config.NeoThaumConfig.current.fluxMultiplier)) {
+			return;
 		}
+		BlockPos above = this.worldPosition.above();
+		BlockState there = sl.getBlockState(above);
+		if (there.isAir()) {
+			sl.setBlock(above, freshFlux(rand.nextBoolean()), 3);
+		} else if ((there.is(dev.neothaum.registry.TVBlocks.FLUX_GOO) || there.is(dev.neothaum.registry.TVBlocks.FLUX_GAS))
+			&& there.getValue(dev.neothaum.blocks.FluxFluidBlock.LEVEL) < 7) {
+			sl.setBlock(above, there.setValue(dev.neothaum.blocks.FluxFluidBlock.LEVEL, there.getValue(dev.neothaum.blocks.FluxFluidBlock.LEVEL) + 1), 3);
+		} else {
+			BlockPos side = this.worldPosition.offset(rand.nextInt(3) - 1, rand.nextInt(3) - 1, rand.nextInt(3) - 1);
+			if (sl.isEmptyBlock(side)) {
+				sl.setBlock(side, freshFlux(rand.nextBoolean()), 3);
+			}
+		}
+	}
+
+	/** One quantum of flux gas or goo (TC4 metadata 0). */
+	private static BlockState freshFlux(boolean gas) {
+		return (gas ? dev.neothaum.registry.TVBlocks.FLUX_GAS : dev.neothaum.registry.TVBlocks.FLUX_GOO).defaultBlockState()
+			.setValue(dev.neothaum.blocks.FluxFluidBlock.LEVEL, 0);
 	}
 
 	public void spillRemnants() {

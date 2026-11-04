@@ -79,14 +79,18 @@ public class BrainJarRenderer implements BlockEntityRenderer<BrainJarBlockEntity
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
+		draw(ps, collector, s.lightCoords, s.bob, s.rot);
+	}
+
+	/** The brain, bobbing and turned by {@code rot}, in its brine; for the placed jar and its item. */
+	static void draw(PoseStack ps, SubmitNodeCollector collector, int light, float bob, float rot) {
 		init();
-		int light = s.lightCoords;
 		ps.pushPose();
 		ps.translate(0.5F, 0.01F, 0.5F);
 		ps.rotateDegrees(Axis.XP, 180.0F);
 		ps.pushPose();
-		ps.translate(0.0F, -0.8F + s.bob, 0.0F);
-		ps.rotateDegrees(Axis.YP, s.rot * Mth.RAD_TO_DEG);
+		ps.translate(0.0F, -0.8F + bob, 0.0F);
+		ps.rotateDegrees(Axis.YP, rot * Mth.RAD_TO_DEG);
 		ps.rotateDegrees(Axis.YP, -90.0F);
 		ps.scale(0.4F, 0.4F, 0.4F);
 		collector.submitCustomGeometry(ps, RenderTypes.entityCutout(BRAIN), (pose, vc) -> {
@@ -101,5 +105,35 @@ public class BrainJarRenderer implements BlockEntityRenderer<BrainJarBlockEntity
 			brine.render(local, vc, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 		});
 		ps.popPose();
+	}
+
+	/** ItemJarFilledRenderer for the brain: the jar item shows its brain and brine, as the placed jar does, facing forward. */
+	public record ItemRenderer() implements net.minecraft.client.renderer.special.NoDataSpecialModelRenderer {
+		@Override
+		public void submit(PoseStack ps, SubmitNodeCollector collector, int light, int overlay, boolean glint, int outline) {
+			draw(ps, collector, light, 0.03F, 0.0F);
+		}
+
+		@Override
+		public void getExtents(java.util.function.Consumer<org.joml.Vector3fc> out) {
+			for (int i = 0; i < 8; i++) {
+				out.accept(new org.joml.Vector3f(i & 1, i >> 1 & 1, i >> 2 & 1));
+			}
+		}
+	}
+
+	public record Unbaked() implements net.minecraft.client.renderer.special.SpecialModelRenderer.Unbaked<Void> {
+		public static final com.mojang.serialization.MapCodec<Unbaked> CODEC = com.mojang.serialization.MapCodec.unit(new Unbaked());
+
+		@Override
+		public net.minecraft.client.renderer.special.SpecialModelRenderer<Void> bake(
+			net.minecraft.client.renderer.special.SpecialModelRenderer.BakingContext ctx) {
+			return new ItemRenderer();
+		}
+
+		@Override
+		public com.mojang.serialization.MapCodec<Unbaked> type() {
+			return CODEC;
+		}
 	}
 }

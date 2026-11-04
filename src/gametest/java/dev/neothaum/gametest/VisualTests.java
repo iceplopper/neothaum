@@ -1053,6 +1053,32 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.getInput().releaseKey(options -> options.keyUse);
 		ctx.waitTicks(5);
 		shot(ctx, "thaumometer_view_lowered");
+		// jars and labels as items: filled jars show their essentia, the brain jar its brain, written labels their ink
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var inv = p.getInventory();
+			inv.clearContent();
+			var fire = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR);
+			fire.set(dev.neothaum.registry.TVComponents.ASPECTS, new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.FIRE, 48));
+			var water = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR);
+			water.set(dev.neothaum.registry.TVComponents.ASPECTS, new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.WATER, 20));
+			water.set(dev.neothaum.registry.TVComponents.ASPECT_FILTER, dev.neothaum.api.aspects.Aspect.WATER);
+			var voidJar = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.VOID_JAR);
+			voidJar.set(dev.neothaum.registry.TVComponents.ASPECTS, new dev.neothaum.api.aspects.AspectList().add(dev.neothaum.api.aspects.Aspect.ENTROPY, 64));
+			var written = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.JAR_LABEL);
+			written.set(dev.neothaum.registry.TVComponents.ASPECT_FILTER, dev.neothaum.api.aspects.Aspect.LIFE);
+			net.minecraft.world.item.ItemStack[] row = {new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR), fire, water, voidJar,
+				new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.BRAIN_IN_A_JAR), new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.JAR_LABEL),
+				written};
+			for (int i = 0; i < row.length; i++) {
+				inv.setItem(i, row[i]);
+			}
+		});
+		ctx.waitTicks(10);
+		ctx.setScreen(() -> new InventoryScreen(net.minecraft.client.Minecraft.getInstance().player));
+		ctx.waitTicks(10);
+		shot(ctx, "jar_items");
+		ctx.setScreen(() -> null);
 	}
 
 	/** The scenes NEOTHAUM_SCENES can name, in the order they run. */
@@ -3656,6 +3682,33 @@ public class VisualTests implements FabricClientGameTest {
 			return joined + " of " + total;
 		});
 		check("barrow mound iron bars join up", bars.contains(" of ") && !bars.startsWith("0 ") && bars.split(" of ")[0].equals(bars.split(" of ")[1]), bars);
+		// --- an over-full, boiling crucible spills flux gas or goo around it
+		net.minecraft.core.BlockPos cru = server.computeOnServer(srv -> srv.getPlayerList().getPlayers().get(0).blockPosition().offset(-30, 0, -30));
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			level.setBlockAndUpdate(cru.below(), net.minecraft.world.level.block.Blocks.LAVA.defaultBlockState());
+			level.setBlockAndUpdate(cru, dev.neothaum.registry.TVBlocks.CRUCIBLE.defaultBlockState());
+			if (level.getBlockEntity(cru) instanceof dev.neothaum.tiles.CrucibleBlockEntity c) {
+				c.water = 1000;
+				c.heat = 200;
+				c.aspects.add(dev.neothaum.api.aspects.Aspect.AIR, 200);
+			}
+		});
+		ctx.waitTicks(200);
+		int flux = server.computeOnServer(srv -> {
+			int n = 0;
+			for (var at : net.minecraft.core.BlockPos.betweenClosed(cru.offset(-1, -1, -1), cru.offset(1, 2, 1))) {
+				var st = srv.overworld().getBlockState(at);
+				if (st.is(dev.neothaum.registry.TVBlocks.FLUX_GAS) || st.is(dev.neothaum.registry.TVBlocks.FLUX_GOO)) {
+					n += st.getValue(dev.neothaum.blocks.FluxFluidBlock.LEVEL) + 1;
+				}
+			}
+			return n;
+		});
+		check("an over-full crucible spills flux", flux > 0, "flux quanta around it after 10 s = " + flux);
+		NeoThaum.LOGGER.info("[visual-test] jar aspects: warded {} void {}",
+			dev.neothaum.aspects.ObjectAspects.getAspects(new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR)),
+			dev.neothaum.aspects.ObjectAspects.getAspects(new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.VOID_JAR)));
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);

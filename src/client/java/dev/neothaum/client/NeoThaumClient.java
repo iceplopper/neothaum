@@ -184,6 +184,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("wand"), dev.neothaum.client.render.WandRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("jar_node"), dev.neothaum.client.render.JarNodeRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("jar"), dev.neothaum.client.render.JarRenderer.Unbaked.CODEC);
+		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("brain_jar"), dev.neothaum.client.render.BrainJarRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("vis_device"), dev.neothaum.client.render.VisDeviceRenderers.DeviceUnbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("alembic"), dev.neothaum.client.render.AlembicRenderer.Unbaked.CODEC);
 		dev.neothaum.client.mixin.SpecialModelRenderersAccessor.neothaum$idMapper().put(NeoThaum.id("device"), dev.neothaum.client.render.DeviceItemRenderers.Unbaked.CODEC);
