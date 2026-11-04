@@ -22,7 +22,11 @@ public class ArcaneWorktableBlockEntity extends TVBlockEntity implements Contain
 	public static final int RESULT_SLOT = 9;
 	public static final int WAND_SLOT = 10;
 	private final NonNullList<ItemStack> items = NonNullList.withSize(11, ItemStack.EMPTY);
-	public ArcaneWorkbenchMenu eventHandler;
+	/**
+	 * Every open worktable screen (server side), each told when the grid or wand changes. TC4 kept only the last one opened, so on a server,
+	 * once a second player had opened and closed the same worktable, nobody's output updated any more.
+	 */
+	public final java.util.List<ArcaneWorkbenchMenu> viewers = new java.util.ArrayList<>();
 
 	public ArcaneWorktableBlockEntity(BlockPos pos, BlockState state) {
 		super(TVBlockEntities.ARCANE_WORKTABLE, pos, state);
@@ -86,8 +90,10 @@ public class ArcaneWorktableBlockEntity extends TVBlockEntity implements Contain
 
 	private void changed(int slot) {
 		this.setChanged();
-		if (slot != RESULT_SLOT && this.eventHandler != null) {
-			this.eventHandler.slotsChanged(this);
+		if (slot != RESULT_SLOT) {
+			for (ArcaneWorkbenchMenu viewer : java.util.List.copyOf(this.viewers)) {
+				viewer.slotsChanged(this);
+			}
 		}
 		if (slot == WAND_SLOT) {
 			this.markForUpdate();

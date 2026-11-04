@@ -36,7 +36,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
 		this.player = inv.player;
 		this.cost = new SimpleContainerData(7);
 		if (tile instanceof ArcaneWorktableBlockEntity be && !inv.player.level().isClientSide()) {
-			be.eventHandler = this;
+			be.viewers.add(this);
 		}
 		this.addSlot(new ResultSlot(tile, ArcaneWorktableBlockEntity.RESULT_SLOT, 160, 64));
 		this.addSlot(new Slot(tile, ArcaneWorktableBlockEntity.WAND_SLOT, 160, 24) {
@@ -105,8 +105,8 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
 	@Override
 	public void removed(Player player) {
 		super.removed(player);
-		if (this.tile instanceof ArcaneWorktableBlockEntity be && be.eventHandler == this) {
-			be.eventHandler = null;
+		if (this.tile instanceof ArcaneWorktableBlockEntity be) {
+			be.viewers.remove(this);
 		}
 	}
 

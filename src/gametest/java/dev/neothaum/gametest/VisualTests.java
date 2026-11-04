@@ -3555,13 +3555,14 @@ public class VisualTests implements FabricClientGameTest {
 			for (var a : dev.neothaum.api.aspects.Aspect.getPrimalAspects()) {
 				dev.neothaum.items.WandItem.storeVis(wand, a, 2000);
 			}
-			menu.setCarried(wand);
-			menu.clicked(1, 0, net.minecraft.world.inventory.ContainerInput.PICKUP, p);
-			return before + " -> " + menu.getSlot(0).getItem();
+			// shift-clicked in from the hotbar (menu slot 38), as a player usually does
+			p.getInventory().setItem(0, wand);
+			menu.clicked(38, 0, net.minecraft.world.inventory.ContainerInput.QUICK_MOVE, p);
+			return before + " -> " + menu.getSlot(0).getItem() + " (wand in its slot: " + menu.getSlot(1).getItem().getItem() + ")";
 		});
 		ctx.waitTicks(5);
 		String clientBench = ctx.computeOnClient(mc -> mc.player.containerMenu instanceof dev.neothaum.menu.ArcaneWorkbenchMenu m ? m.getSlot(0).getItem().toString() : "none");
-		check("worktable output appears when the wand goes in last", bench.endsWith("-> 9 neothaum:arcane_stone_block") && clientBench.equals("9 neothaum:arcane_stone_block"),
+		check("worktable output appears when the wand goes in last", bench.contains("-> 9 neothaum:arcane_stone_block") && clientBench.equals("9 neothaum:arcane_stone_block"),
 			"server " + bench + ", client " + clientBench);
 		ctx.runOnClient(mc -> mc.player.closeContainer());
 		// --- the config page: every tab, every control explained
@@ -3731,6 +3732,40 @@ public class VisualTests implements FabricClientGameTest {
 			ctx.waitTicks(20);
 			String screen = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
 			check("mp arcane worktable opens on the client", screen.equals("ArcaneWorkbenchScreen"), "client screen=" + screen);
+			// an arcane recipe in the grid, then the wand shift-clicked in by the client, through the click packet
+			server.runCommand("neothaum research @a ARCANESTONE");
+			server.runOnServer(srv -> {
+				var p = firstPlayer(srv);
+				if (p.containerMenu instanceof dev.neothaum.menu.ArcaneWorkbenchMenu menu) {
+					for (int i = 0; i < 9; i++) {
+						menu.getSlot(2 + i).set(new net.minecraft.world.item.ItemStack(i == 4 ? dev.neothaum.registry.TVItems.EARTH_SHARD
+							: net.minecraft.world.item.Items.STONE));
+					}
+					menu.broadcastChanges();
+				}
+				var wand = dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", "greatwood");
+				for (var a : dev.neothaum.api.aspects.Aspect.getPrimalAspects()) {
+					dev.neothaum.items.WandItem.storeVis(wand, a, 2000);
+				}
+				p.getInventory().setItem(0, wand);
+				p.containerMenu.broadcastChanges();
+				// someone else opens the same worktable and closes it again (this used to leave nobody to work out the output)
+				if (p.containerMenu instanceof dev.neothaum.menu.ArcaneWorkbenchMenu menu) {
+					new dev.neothaum.menu.ArcaneWorkbenchMenu(99, p.getInventory(), menu.tile).removed(p);
+				}
+			});
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(10);
+			ctx.runOnClient(mc -> mc.gameMode.handleContainerInput(mc.player.containerMenu.containerId, 38, 0,
+				net.minecraft.world.inventory.ContainerInput.QUICK_MOVE, mc.player));
+			conn.waitForServerboundPackets();
+			ctx.waitTicks(10);
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(5);
+			String mpServer = server.computeOnServer(srv -> firstPlayer(srv).containerMenu.getSlot(0).getItem().toString());
+			String mpClient = ctx.computeOnClient(mc -> mc.player.containerMenu.getSlot(0).getItem() + " wand slot " + mc.player.containerMenu.getSlot(1).getItem().getItem());
+			check("mp worktable output after shift-clicking the wand in", mpServer.equals("9 neothaum:arcane_stone_block") && mpClient.startsWith("9 neothaum:arcane_stone_block"),
+				"server " + mpServer + ", client " + mpClient);
 			shot(ctx, "mp_worktable");
 			ctx.runOnClient(mc -> mc.player.closeContainer());
 			ctx.waitTicks(10);
