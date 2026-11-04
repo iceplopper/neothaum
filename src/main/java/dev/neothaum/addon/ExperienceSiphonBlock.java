@@ -20,8 +20,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * The Experience Siphon: a half-height arcane stone plate. Use it with an empty warded jar to put the jar in; use it with an empty hand to
- * take the jar out (full or not). Hoppers can feed it empty jars from the sides and draw full ones from below. A redstone signal stops it; a
+ * The Experience Siphon: a half-height arcane stone plate. Use it with an empty warded jar to put the jar in; use it otherwise to open its
+ * screen, with the jar slot and a gauge of its store. Hoppers can feed it empty jars from the sides and draw full ones from below. A redstone signal stops it; a
  * comparator reads how full its store is.
  */
 public class ExperienceSiphonBlock extends BaseEntityBlock {
@@ -57,12 +57,20 @@ public class ExperienceSiphonBlock extends BaseEntityBlock {
 		if (!(level.getBlockEntity(pos) instanceof ExperienceSiphonBlockEntity siphon) || !ExperienceSiphon.isEmptyJar(stack)) {
 			return InteractionResult.TRY_WITH_EMPTY_HAND;
 		}
-		if (!siphon.jar.isEmpty()) {
-			return InteractionResult.FAIL;
+		ItemStack in = siphon.getItem(ExperienceSiphonBlockEntity.IN);
+		if (!in.isEmpty() && (!ItemStack.isSameItemSameComponents(in, stack) || in.getCount() >= in.getMaxStackSize())) {
+			return InteractionResult.TRY_WITH_EMPTY_HAND;
 		}
 		if (!level.isClientSide()) {
-			siphon.setItem(0, stack.copyWithCount(1));
-			stack.consume(1, player);
+			// the held jars go into its input
+			int move = in.isEmpty() ? stack.getCount() : Math.min(stack.getCount(), in.getMaxStackSize() - in.getCount());
+			if (in.isEmpty()) {
+				siphon.setItem(ExperienceSiphonBlockEntity.IN, stack.copyWithCount(move));
+			} else {
+				in.grow(move);
+				siphon.markForUpdate();
+			}
+			stack.consume(move, player);
 			level.playSound(null, pos, dev.neothaum.registry.TVSounds.JAR, SoundSource.BLOCKS, 0.4F, 1.0F);
 		}
 		return InteractionResult.SUCCESS;
@@ -70,16 +78,12 @@ public class ExperienceSiphonBlock extends BaseEntityBlock {
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-		if (!(level.getBlockEntity(pos) instanceof ExperienceSiphonBlockEntity siphon) || siphon.jar.isEmpty()) {
+		// opens its screen: the jar slot and how full its store is
+		if (!(level.getBlockEntity(pos) instanceof ExperienceSiphonBlockEntity siphon)) {
 			return InteractionResult.PASS;
 		}
 		if (!level.isClientSide()) {
-			ItemStack jar = siphon.removeItemNoUpdate(0);
-			siphon.markForUpdate();
-			if (!player.getInventory().add(jar)) {
-				player.drop(jar, false, net.minecraft.util.Prediction.SERVER_ONLY);
-			}
-			level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.3F, 1.0F);
+			player.openMenu(siphon);
 		}
 		return InteractionResult.SUCCESS;
 	}

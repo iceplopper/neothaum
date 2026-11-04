@@ -1075,17 +1075,22 @@ public class VisualTests implements FabricClientGameTest {
 			var siphon = (dev.neothaum.addon.ExperienceSiphonBlockEntity) level.getBlockEntity(pos);
 			// off the plate, to look at it
 			p.teleportTo(level, 0.5, 116.6, -2.5, java.util.Set.of(), 0, 35, false);
-			// an empty jar fills at a jar's worth
-			siphon.setItem(0, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR));
+			// empty jars in: after a while, one fills at a jar's worth and moves to the output
+			siphon.setItem(dev.neothaum.addon.ExperienceSiphonBlockEntity.IN, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR, 2));
 			siphon.store = dev.neothaum.addon.ExperienceSiphon.JAR + 5;
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < dev.neothaum.addon.ExperienceSiphonBlockEntity.FILL - 1; i++) {
 				dev.neothaum.addon.ExperienceSiphonBlockEntity.tick(level, pos, level.getBlockState(pos), siphon);
 			}
-			var jar = siphon.getItem(0);
-			sb.append("jar ").append(jar.getOrDefault(dev.neothaum.registry.TVComponents.EXPERIENCE, 0)).append(" left ").append(siphon.store);
+			sb.append("waiting ").append(siphon.getItem(dev.neothaum.addon.ExperienceSiphonBlockEntity.OUT).isEmpty());
+			dev.neothaum.addon.ExperienceSiphonBlockEntity.tick(level, pos, level.getBlockState(pos), siphon);
+			var jar = siphon.getItem(dev.neothaum.addon.ExperienceSiphonBlockEntity.OUT);
+			sb.append(" jar ").append(jar.getOrDefault(dev.neothaum.registry.TVComponents.EXPERIENCE, 0)).append(" left ").append(siphon.store)
+				.append(" in ").append(siphon.getItem(dev.neothaum.addon.ExperienceSiphonBlockEntity.IN).getCount());
 			sb.append(" levels ").append(dev.neothaum.addon.ExperienceSiphon.levels(dev.neothaum.addon.ExperienceSiphon.JAR));
 			sb.append(" comparator ").append(level.getBlockState(pos).getAnalogOutputSignal(level, pos, net.minecraft.core.Direction.NORTH));
-			sb.append(" hopper takes ").append(siphon.canTakeItemThroughFace(0, jar, net.minecraft.core.Direction.DOWN));
+			sb.append(" hopper takes ").append(siphon.canTakeItemThroughFace(dev.neothaum.addon.ExperienceSiphonBlockEntity.OUT, jar, net.minecraft.core.Direction.DOWN))
+				.append(" hopper feeds ").append(siphon.canPlaceItemThroughFace(dev.neothaum.addon.ExperienceSiphonBlockEntity.IN,
+					new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR), net.minecraft.core.Direction.UP));
 			// a placed experience jar: tubes leave it alone
 			var placed = (dev.neothaum.tiles.JarBlockEntity) level.getBlockEntity(new net.minecraft.core.BlockPos(2, 116, 0));
 			placed.experience = dev.neothaum.addon.ExperienceSiphon.JAR;
@@ -1116,9 +1121,22 @@ public class VisualTests implements FabricClientGameTest {
 			return sb.toString();
 		});
 		check("experience siphon fills jars, which tubes ignore, and condenses", result.equals(
-			"jar 160 left 5 levels 10 comparator 1 hopper takes true tube ignores true recipe full true empty false jar back true eaten +160"), result);
+			"waiting true jar 160 left 5 in 1 levels 10 comparator 1 hopper takes true hopper feeds true tube ignores true recipe full true empty false jar back true eaten +160"), result);
 		ctx.waitTicks(20);
 		shot(ctx, "experience_siphon");
+		// its screen, with half a store and a jar part filled
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var siphon = (dev.neothaum.addon.ExperienceSiphonBlockEntity) srv.overworld().getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0));
+			siphon.store = dev.neothaum.addon.ExperienceSiphon.STORE / 2;
+			siphon.setItem(dev.neothaum.addon.ExperienceSiphonBlockEntity.IN, new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVBlocks.WARDED_JAR, 3));
+			p.openMenu(siphon);
+		});
+		ctx.waitTicks(20);
+		boolean open = ctx.computeOnClient(mc -> mc.gui.screen() instanceof dev.neothaum.client.addon.ExperienceSiphonScreen);
+		shot(ctx, "experience_siphon_screen");
+		check("experience siphon screen opens", open, String.valueOf(open));
+		ctx.setScreen(() -> null);
 		cfg.additionsEnabled = wasOn;
 		cfg.additionExperienceSiphon = wasSiphon;
 		ResearchManager.reload();

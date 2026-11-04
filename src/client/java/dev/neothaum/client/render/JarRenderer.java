@@ -39,7 +39,8 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 		if (be.experience > 0) {
 			// experience from an Experience Siphon: a pale green liquid, full at a jar's worth
 			s.level = Math.min(1.0F, (float) be.experience / dev.neothaum.addon.ExperienceSiphon.JAR) * 0.625F;
-			s.color = EXPERIENCE_COLOR;
+			s.color = dev.neothaum.client.addon.ExperienceSiphonScreen.glow((be.getBlockPos().hashCode() & 63) * 0.1F) & 0xFFFFFF;
+			s.lightCoords = 0xF000F0;
 		}
 		s.filter = be.aspectFilter;
 		s.facing = be.facing.getAxis().isHorizontal() ? be.facing : Direction.NORTH;
@@ -63,11 +64,10 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 		ps.popPose();
 	}
 
-	public record JarData(float level, int color, Aspect filter) {
+	public record JarData(float level, int color, Aspect filter, boolean glows) {
 	}
 
-	/** The colour of experience in a jar: an experience orb's green. */
-	public static final int EXPERIENCE_COLOR = 0x9CFF5A;
+
 
 	/** ItemJarFilledRenderer: a jar item shows its essentia and label as the placed jar does. */
 	public record ItemRenderer() implements net.minecraft.client.renderer.special.SpecialModelRenderer<JarData> {
@@ -75,7 +75,8 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 		public JarData extractArgument(net.minecraft.world.item.ItemStack stack) {
 			int xp = stack.getOrDefault(dev.neothaum.registry.TVComponents.EXPERIENCE, 0);
 			if (xp > 0) {
-				return new JarData(Math.min(1.0F, (float) xp / dev.neothaum.addon.ExperienceSiphon.JAR) * 0.625F, EXPERIENCE_COLOR, null);
+				return new JarData(Math.min(1.0F, (float) xp / dev.neothaum.addon.ExperienceSiphon.JAR) * 0.625F,
+					dev.neothaum.client.addon.ExperienceSiphonScreen.glow(0.0F) & 0xFFFFFF, null, true);
 			}
 			var al = stack.get(dev.neothaum.registry.TVComponents.ASPECTS);
 			Aspect filter = stack.get(dev.neothaum.registry.TVComponents.ASPECT_FILTER);
@@ -85,7 +86,7 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 				return null;
 			}
 			return new JarData(amount > 0 ? Math.min(1.0F, (float) amount / JarBlockEntity.MAX) * 0.625F : 0.0F,
-				held != null ? held.getColor() : 0xFFFFFF, filter);
+				held != null ? held.getColor() : 0xFFFFFF, filter, false);
 		}
 
 		@Override
@@ -97,7 +98,7 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity, JarRende
 			ps.translate(0.5F, 0.01F, 0.5F);
 			if (data.level() > 0.0F) {
 				EssentiaRender.liquid(ps, collector, -0.25F, 0.0625F, -0.25F, 0.25F, 0.0625F + data.level(), 0.25F, data.color(),
-					net.minecraft.util.Util.getMillis() / 50L, light);
+					net.minecraft.util.Util.getMillis() / 50L, data.glows() ? 0xF000F0 : light);
 			}
 			if (data.filter() != null) {
 				EssentiaRender.faceTowards(ps, Direction.NORTH);

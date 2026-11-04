@@ -235,6 +235,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		MenuScreens.register(TVMenus.HAND_MIRROR, dev.neothaum.client.gui.HandMirrorScreen::new);
 		MenuScreens.register(TVMenus.THAUMATORIUM, dev.neothaum.client.gui.ThaumatoriumScreen::new);
 		MenuScreens.register(TVMenus.SPA, dev.neothaum.client.gui.SpaScreen::new);
+		MenuScreens.register(dev.neothaum.addon.ExperienceSiphon.MENU, dev.neothaum.client.addon.ExperienceSiphonScreen::new);
 		MenuScreens.register(TVMenus.DECONSTRUCTION_TABLE, dev.neothaum.client.gui.DeconstructionTableScreen::new);
 		MenuScreens.register(TVMenus.ARCANE_BORE, dev.neothaum.client.gui.ArcaneBoreScreen::new);
 		MenuScreens.register(TVMenus.GOLEM, dev.neothaum.client.gui.GolemScreen::new);

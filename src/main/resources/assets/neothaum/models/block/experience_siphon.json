@@ -3,6 +3,6 @@
   "textures": {
     "bottom": "neothaum:blocks/arcane_stone",
     "top": "neothaum:blocks/experience_siphon_top",
-    "side": "neothaum:blocks/arcane_stone"
+    "side": "neothaum:blocks/experience_siphon_side"
   }
 }

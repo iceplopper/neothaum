@@ -42,6 +42,9 @@ public final class ExperienceSiphon {
 		false);
 	public static final BlockEntityType<ExperienceSiphonBlockEntity> SIPHON_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
 		NeoThaum.id("experience_siphon"), new BlockEntityType<>(ExperienceSiphonBlockEntity::new, Set.of(SIPHON)));
+	public static final net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<ExperienceSiphonMenu, net.minecraft.core.BlockPos> MENU = Registry.register(
+		BuiltInRegistries.MENU, NeoThaum.id("experience_siphon"),
+		new net.fabricmc.fabric.api.menu.v1.ExtendedMenuType<>(ExperienceSiphonMenu::new, net.minecraft.core.BlockPos.STREAM_CODEC));
 	public static Item siphonItem;
 	public static Item condensed;
 
