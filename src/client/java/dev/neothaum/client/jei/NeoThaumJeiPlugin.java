@@ -126,6 +126,11 @@ public class NeoThaumJeiPlugin implements IModPlugin {
 	@Override
 	public void onRuntimeAvailable(IJeiRuntime runtime) {
 		jeiRuntime = runtime;
+		// the wood sets' items are hidden while that addition is off
+		if (!dev.neothaum.addon.WoodSets.enabled()) {
+			runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK,
+				dev.neothaum.addon.WoodSets.ITEMS.stream().map(net.minecraft.world.item.ItemStack::new).toList());
+		}
 		updateRuntimeRecipes();
 	}
 

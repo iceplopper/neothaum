@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left_open",
+  "textures": {
+    "bottom": "neothaum:blocks/greatwood_door_bottom",
+    "top": "neothaum:blocks/greatwood_door_top"
+  }
+}

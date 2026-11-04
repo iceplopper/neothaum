@@ -123,6 +123,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(dev.neothaum.client.render.ContainerTags::render);
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.BoltFX::tick);
 		dev.neothaum.client.entity.TVEntityRenderers.init();
+		dev.neothaum.client.addon.WoodSetsClient.init();
 		dev.neothaum.client.render.armor.TCArmorRenderers.init();
 		ClientBridge.openNodeEditor = pos -> Minecraft.getInstance().gui.setScreen(new dev.neothaum.client.devtools.NodeEditorScreen(pos));
 

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right",
+  "textures": {
+    "bottom": "neothaum:blocks/silverwood_door_bottom",
+    "top": "neothaum:blocks/silverwood_door_top"
+  }
+}

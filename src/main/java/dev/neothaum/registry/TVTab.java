@@ -93,6 +93,9 @@ public final class TVTab {
 			|| item.components().has(DataComponents.WEAPON)) {
 			return Category.TOOLS;
 		}
+		if (dev.neothaum.addon.WoodSets.ITEMS.contains(item)) {
+			return Category.BUILDING;
+		}
 		if (item instanceof BlockItem bi) {
 			Block b = bi.getBlock();
 			if (NATURAL.contains(b) || b instanceof CrystalClusterBlock) {
@@ -112,7 +115,7 @@ public final class TVTab {
 			.icon(icon)
 			.displayItems((params, out) -> {
 				for (Item item : TVItems.TAB_ORDER) {
-					if (!in.test(item)) {
+					if (!in.test(item) || !dev.neothaum.addon.WoodSets.shown(item)) {
 						continue;
 					}
 					// ItemNugget.getSubItems: the tin, silver and lead pieces only when a mod adds that ingot

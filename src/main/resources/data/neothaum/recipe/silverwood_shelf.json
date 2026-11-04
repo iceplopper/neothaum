@@ -1,0 +1,22 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "wood_sets"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "shelf",
+  "key": {
+    "#": "neothaum:stripped_silverwood_log"
+  },
+  "pattern": [
+    "###",
+    "   ",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "neothaum:silverwood_shelf"
+  }
+}

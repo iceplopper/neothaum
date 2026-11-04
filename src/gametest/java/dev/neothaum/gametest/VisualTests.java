@@ -1036,6 +1036,145 @@ public class VisualTests implements FabricClientGameTest {
 	}
 
 	/**
+	 * The wood sets addition: with it on, every block places and drops, an axe strips the magical logs, doors open, the boats float and carry
+	 * the player, and the recipes are there; with it off, the recipes are gone and an axe leaves the logs alone. Screenshots of both sets
+	 * built and of their items.
+	 */
+	private static void woodSetsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		boolean wasOn = cfg.additionsEnabled;
+		boolean wasSets = cfg.additionWoodSets;
+		cfg.additionsEnabled = true;
+		cfg.additionWoodSets = true;
+		server.runCommand("reload");
+		ctx.waitTicks(40);
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear", "fill -9 116 -6 9 124 10 air",
+			"fill -9 115 -6 9 115 10 stone", "fill -3 115 -3 3 115 0 water", "tp @a 0 118.5 -5 0 20"}) {
+			server.runCommand(cmd);
+		}
+		String[] woods = {"greatwood", "silverwood"};
+		for (int i = 0; i < 2; i++) {
+			String w = woods[i];
+			int z = 3 + i * 3;
+			for (String cmd : new String[]{
+				"setblock -7 116 " + z + " neothaum:stripped_" + w + "_log", "setblock -6 116 " + z + " neothaum:" + w + "_wood",
+				"setblock -5 116 " + z + " neothaum:stripped_" + w + "_wood", "setblock -4 116 " + z + " neothaum:" + w + "_log",
+				"setblock -3 116 " + z + " neothaum:" + w + "_fence", "setblock -2 116 " + z + " neothaum:" + w + "_fence",
+				"setblock -1 116 " + z + " neothaum:" + w + "_fence_gate",
+				"setblock 0 116 " + z + " neothaum:" + w + "_door[half=lower,facing=north]",
+				"setblock 0 117 " + z + " neothaum:" + w + "_door[half=upper,facing=north]",
+				"setblock 1 116 " + z + " neothaum:" + w + "_trapdoor[facing=north,half=bottom]",
+				"setblock 2 116 " + z + " neothaum:" + w + "_pressure_plate",
+				"setblock 3 116 " + z + " neothaum:" + w + "_planks", "setblock 3 116 " + (z - 1) + " neothaum:" + w + "_button[face=wall,facing=north]",
+				"setblock 5 116 " + z + " neothaum:" + w + "_shelf[facing=north]", "setblock 6 116 " + z + " neothaum:" + w + "_planks"}) {
+				server.runCommand(cmd);
+			}
+		}
+		server.runCommand("summon neothaum:greatwood_boat -1.5 116 -1.5");
+		server.runCommand("summon neothaum:silverwood_chest_boat 1.5 116 -1.5");
+		ctx.waitTicks(30);
+		shot(ctx, "wood_sets");
+		String on = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			StringBuilder sb = new StringBuilder();
+			// every block is there and has a loot table that drops something
+			int placed = 0;
+			int drops = 0;
+			for (var s : new dev.neothaum.addon.WoodSets.Set1[]{dev.neothaum.addon.WoodSets.GREATWOOD, dev.neothaum.addon.WoodSets.SILVERWOOD}) {
+				for (var b : s.blocks()) {
+					var key = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(b);
+					var table = srv.reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(
+						net.minecraft.core.registries.Registries.LOOT_TABLE, key.withPrefix("blocks/")));
+					if (table != net.minecraft.world.level.storage.loot.LootTable.EMPTY) {
+						drops++;
+					}
+				}
+				for (var b : s.blocks()) {
+					boolean found = false;
+					for (var pos : net.minecraft.core.BlockPos.betweenClosed(-7, 116, 2, 6, 117, 6)) {
+						found |= level.getBlockState(pos).is(b);
+					}
+					if (found) {
+						placed++;
+					} else {
+						sb.append("missing ").append(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(b).getPath()).append(' ');
+					}
+				}
+			}
+			sb.append("drops ").append(drops).append(" placed ").append(placed);
+			// an axe strips the greatwood log in place
+			var logPos = new net.minecraft.core.BlockPos(-4, 116, 3);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.IRON_AXE));
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(logPos), net.minecraft.core.Direction.NORTH, logPos, false);
+			net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.invoker().interact(p, level, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+			sb.append(" stripped ").append(level.getBlockState(logPos).is(dev.neothaum.addon.WoodSets.GREATWOOD.strippedLog));
+			// the door opens
+			var doorPos = new net.minecraft.core.BlockPos(0, 116, 3);
+			var door = level.getBlockState(doorPos);
+			((net.minecraft.world.level.block.DoorBlock) door.getBlock()).setOpen(p, level, door, doorPos, true);
+			sb.append(" door opens ").append(level.getBlockState(doorPos).getValue(net.minecraft.world.level.block.DoorBlock.OPEN));
+			// the boat takes the player
+			var boats = level.getEntitiesOfClass(net.minecraft.world.entity.vehicle.boat.AbstractBoat.class,
+				new net.minecraft.world.phys.AABB(-4, 114, -4, 4, 118, 1));
+			sb.append(" boats ").append(boats.size());
+			if (!boats.isEmpty()) {
+				p.startRiding(boats.get(0));
+				sb.append(" riding ").append(p.getVehicle() == boats.get(0));
+				p.stopRiding();
+			}
+			// recipes, and an item made with them
+			var rm = srv.getRecipeManager();
+			int recipes = 0;
+			for (String r : new String[]{"greatwood_door", "silverwood_shelf", "greatwood_boat", "silverwood_chest_boat", "greatwood_planks_from_logs"}) {
+				if (rm.byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, NeoThaum.id(r))).isPresent()) {
+					recipes++;
+				}
+			}
+			sb.append(" recipes ").append(recipes);
+			// in the creative tab
+			sb.append(" shown ").append(dev.neothaum.addon.WoodSets.shown(dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem()));
+			var inv = p.getInventory();
+			inv.clearContent();
+			int slot = 0;
+			for (var item : dev.neothaum.addon.WoodSets.ITEMS) {
+				if (slot < 36) {
+					inv.setItem(slot++, new net.minecraft.world.item.ItemStack(item));
+				}
+			}
+			return sb.toString();
+		});
+		check("wood sets work with the addition on", on.equals("drops 20 placed 20 stripped true door opens true boats 2 riding true recipes 5 shown true"), on);
+		ctx.waitTicks(10);
+		ctx.setScreen(() -> new InventoryScreen(net.minecraft.client.Minecraft.getInstance().player));
+		ctx.waitTicks(10);
+		shot(ctx, "wood_set_items");
+		ctx.setScreen(() -> null);
+		// with the addition off: no recipes, and an axe leaves the silverwood log alone
+		cfg.additionsEnabled = false;
+		server.runCommand("reload");
+		ctx.waitTicks(40);
+		String off = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var logPos = new net.minecraft.core.BlockPos(-4, 116, 6);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.IRON_AXE));
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(logPos), net.minecraft.core.Direction.NORTH, logPos, false);
+			var result = net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.invoker().interact(p, level, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+			boolean recipe = srv.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE,
+				NeoThaum.id("greatwood_door"))).isPresent();
+			return "log kept " + level.getBlockState(logPos).is(dev.neothaum.registry.TVBlocks.SILVERWOOD_LOG) + " refused " + (result == net.minecraft.world.InteractionResult.FAIL)
+				+ " recipe " + recipe + " shown " + dev.neothaum.addon.WoodSets.shown(dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem());
+		});
+		check("wood sets are gone with the addition off", off.equals("log kept true refused true recipe false shown false"), off);
+		cfg.additionsEnabled = wasOn;
+		cfg.additionWoodSets = wasSets;
+		server.runCommand("reload");
+		server.runOnServer(srv -> srv.getPlayerList().getPlayers().get(0).getInventory().clearContent());
+		ctx.waitTicks(20);
+	}
+
+	/**
 	 * Looking through the thaumometer's screen at water, a glass pane, a nether portal and a piglin (run under a shader pack): all of them
 	 * should show through it.
 	 */
@@ -1107,7 +1246,7 @@ public class VisualTests implements FabricClientGameTest {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -1271,6 +1410,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "thaumometerview" -> {
 				thaumometerViewScene(ctx, server);
+			}
+			case "woodsets" -> {
+				woodSetsScene(ctx, server);
 			}
 			case "config" -> {
 				configScene(ctx, server);
@@ -3880,7 +4022,8 @@ public class VisualTests implements FabricClientGameTest {
 			var k3 = ResearchManager.knowledge(p).copy();
 			k3.research.remove("ELDRITCHMINOR");
 			ResearchManager.setKnowledge(p, k3);
-			net.minecraft.core.BlockPos ground = level.getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at.offset(24, 0, 24));
+			// level with the player (a heightmap there can be an ungenerated chunk's, far below)
+			net.minecraft.core.BlockPos ground = at.offset(24, 0, 24);
 			// a clear stone floor round it, so the guardians have room to stand whatever the land is like there
 			for (net.minecraft.core.BlockPos q : net.minecraft.core.BlockPos.betweenClosed(ground.offset(-12, -1, -12), ground.offset(12, 4, 12))) {
 				level.setBlock(q, q.getY() < ground.getY() ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState()
@@ -3957,7 +4100,12 @@ public class VisualTests implements FabricClientGameTest {
 			var p = srv.getPlayerList().getPlayers().get(0);
 			var wand = p.getInventory().getItem(0);
 			dev.neothaum.items.WandItem.addVis(wand, dev.neothaum.api.aspects.Aspect.AIR, 100000, true);
-			var o = new dev.neothaum.entity.AspectOrbEntity(level, p.getX() + 3, p.getY() + 0.5, p.getZ(), dev.neothaum.api.aspects.Aspect.AIR, 3);
+			// a floor under where it falls, whatever the player stands (or flies) over
+			var spot = p.blockPosition().offset(3, 0, 0);
+			level.setBlock(spot.below(), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 3);
+			level.setBlock(spot, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+			level.setBlock(spot.above(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+			var o = new dev.neothaum.entity.AspectOrbEntity(level, spot.getX() + 0.5, spot.getY() + 0.5, spot.getZ() + 0.5, dev.neothaum.api.aspects.Aspect.AIR, 3);
 			o.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
 			level.addFreshEntity(o);
 			orbIds[0] = o.getId();

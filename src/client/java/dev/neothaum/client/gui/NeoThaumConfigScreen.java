@@ -238,6 +238,10 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "their common tags: ores, ingots, gems, dusts, tools, armour, food, crops, logs and so on. Items crafted from them then get aspects "
 					+ "through TC4's recipe rule. Vanilla and NeoThaum items are untouched. Applies when the world loads or /reload runs." + off,
 					() -> cfg.additionModdedAspects, v -> cfg.additionModdedAspects = v);
+				this.toggle("Greatwood and Silverwood Sets", "Stripped logs and wood, fences and fence gates, doors and trapdoors, pressure "
+					+ "plates and buttons, shelves, and boats with and without a chest, for both magical woods. While off they can't be crafted, "
+					+ "aren't shown and an axe won't strip the logs; ones already placed stay. Applies when the world loads or /reload runs." + off,
+					() -> cfg.additionWoodSets, v -> cfg.additionWoodSets = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

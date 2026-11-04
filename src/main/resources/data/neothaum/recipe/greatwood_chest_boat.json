@@ -1,0 +1,17 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "wood_sets"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "group": "chest_boat",
+  "ingredients": [
+    "minecraft:chest",
+    "neothaum:greatwood_boat"
+  ],
+  "result": {
+    "id": "neothaum:greatwood_chest_boat"
+  }
+}

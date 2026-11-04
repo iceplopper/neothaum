@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_pressed",
+  "textures": {
+    "texture": "neothaum:blocks/planks_greatwood"
+  }
+}

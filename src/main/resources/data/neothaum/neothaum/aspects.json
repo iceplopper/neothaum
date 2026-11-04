@@ -2686,6 +2686,83 @@
     "perditio": 3,
     "gelum": 3
    }
+  },
+  {
+   "item": "neothaum:stripped_greatwood_log",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:greatwood_wood",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:stripped_greatwood_wood",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1
+   }
+  },
+  {
+   "item": "neothaum:greatwood_door",
+   "aspects": {
+    "machina": 1,
+    "motus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:greatwood_boat",
+   "aspects": {
+    "aqua": 4,
+    "iter": 4
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:stripped_silverwood_log",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1,
+    "ordo": 1
+   }
+  },
+  {
+   "item": "neothaum:silverwood_wood",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1,
+    "ordo": 1
+   }
+  },
+  {
+   "item": "neothaum:stripped_silverwood_wood",
+   "aspects": {
+    "arbor": 3,
+    "praecantatio": 1,
+    "ordo": 1
+   }
+  },
+  {
+   "item": "neothaum:silverwood_door",
+   "aspects": {
+    "machina": 1,
+    "motus": 1
+   },
+   "complex": true
+  },
+  {
+   "item": "neothaum:silverwood_boat",
+   "aspects": {
+    "aqua": 4,
+    "iter": 4
+   },
+   "complex": true
   }
  ],
  "entities": [
@@ -3268,6 +3345,34 @@
    "aspects": {
     "vitium": 6,
     "aqua": 4
+   }
+  },
+  {
+   "entity": "neothaum:greatwood_boat",
+   "aspects": {
+    "machina": 2,
+    "aqua": 2
+   }
+  },
+  {
+   "entity": "neothaum:greatwood_chest_boat",
+   "aspects": {
+    "machina": 2,
+    "aqua": 2
+   }
+  },
+  {
+   "entity": "neothaum:silverwood_boat",
+   "aspects": {
+    "machina": 2,
+    "aqua": 2
+   }
+  },
+  {
+   "entity": "neothaum:silverwood_chest_boat",
+   "aspects": {
+    "machina": 2,
+    "aqua": 2
    }
   }
  ]

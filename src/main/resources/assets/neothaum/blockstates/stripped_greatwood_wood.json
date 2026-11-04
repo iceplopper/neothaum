@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "neothaum:block/stripped_greatwood_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "neothaum:block/stripped_greatwood_wood"
+    },
+    "axis=z": {
+      "model": "neothaum:block/stripped_greatwood_wood",
+      "x": 90
+    }
+  }
+}

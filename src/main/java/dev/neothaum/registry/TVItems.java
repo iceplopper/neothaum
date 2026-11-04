@@ -486,7 +486,7 @@ public final class TVItems {
 		return register(name, p -> new RunicBaubleItem(type, charge, kind, p), new Item.Properties().stacksTo(1).rarity(rarity));
 	}
 
-	private static net.minecraft.world.item.component.CookingFuel fuel(int ticks) {
+	public static net.minecraft.world.item.component.CookingFuel fuel(int ticks) {
 		return new net.minecraft.world.item.component.CookingFuel(new net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt.Constant(ticks),
 			net.minecraft.world.level.storage.loot.providers.number.floats.ResolvableFloat.fromKey(
 				net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProviders.COOKING_DEFAULT_SPEED_MULTIPLIER));

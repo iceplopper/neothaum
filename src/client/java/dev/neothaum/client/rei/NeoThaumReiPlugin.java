@@ -30,6 +30,15 @@ public class NeoThaumReiPlugin implements REIClientPlugin {
 	/** Recipes already shown, so the recipes the server syncs later are added once. */
 	private static final Set<Identifier> SHOWN = new HashSet<>();
 
+	/** The wood sets' items are hidden while that addition is off. */
+	@Override
+	public void registerEntries(me.shedaniel.rei.api.client.registry.entry.EntryRegistry registry) {
+		if (!dev.neothaum.addon.WoodSets.enabled()) {
+			registry.removeEntryIf(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s
+				&& dev.neothaum.addon.WoodSets.ITEMS.contains(s.getItem()));
+		}
+	}
+
 	@Override
 	public void registerCategories(CategoryRegistry registry) {
 		registry.add(new ReiCategories.Arcane(), new ReiCategories.Crucible(), new ReiCategories.InfusionPage(),

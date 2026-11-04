@@ -1,0 +1,17 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "wood_sets"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "wooden_button",
+  "ingredients": [
+    "neothaum:silverwood_planks"
+  ],
+  "result": {
+    "id": "neothaum:silverwood_button"
+  }
+}

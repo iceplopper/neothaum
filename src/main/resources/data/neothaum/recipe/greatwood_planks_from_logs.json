@@ -1,0 +1,18 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "wood_sets"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+    "#neothaum:greatwood_logs"
+  ],
+  "result": {
+    "id": "neothaum:greatwood_planks",
+    "count": 4
+  }
+}

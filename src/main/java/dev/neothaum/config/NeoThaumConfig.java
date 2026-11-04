@@ -179,6 +179,8 @@ public class NeoThaumConfig {
 		public boolean additionMarkerCopy = true;
 		/** Another mod's items with no aspects and no recipe take aspects from their common tags (ores, ingots, gems, logs...). On reload. */
 		public boolean additionModdedAspects = true;
+		/** Greatwood and silverwood fences, doors, trapdoors, pressure plates, buttons, shelves, boats, stripped logs and wood. */
+		public boolean additionWoodSets = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

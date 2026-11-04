@@ -14,6 +14,26 @@
     "neothaum:silverwood_slab",
     "neothaum:arcane_bellows",
     "neothaum:hungry_chest",
-    "neothaum:deconstruction_table"
+    "neothaum:deconstruction_table",
+    "neothaum:stripped_greatwood_log",
+    "neothaum:stripped_silverwood_log",
+    "neothaum:greatwood_wood",
+    "neothaum:silverwood_wood",
+    "neothaum:stripped_greatwood_wood",
+    "neothaum:stripped_silverwood_wood",
+    "neothaum:greatwood_fence",
+    "neothaum:silverwood_fence",
+    "neothaum:greatwood_fence_gate",
+    "neothaum:silverwood_fence_gate",
+    "neothaum:greatwood_door",
+    "neothaum:silverwood_door",
+    "neothaum:greatwood_trapdoor",
+    "neothaum:silverwood_trapdoor",
+    "neothaum:greatwood_pressure_plate",
+    "neothaum:silverwood_pressure_plate",
+    "neothaum:greatwood_button",
+    "neothaum:silverwood_button",
+    "neothaum:greatwood_shelf",
+    "neothaum:silverwood_shelf"
   ]
 }

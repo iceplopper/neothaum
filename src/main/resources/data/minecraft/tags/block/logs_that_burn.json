@@ -2,6 +2,12 @@
   "replace": false,
   "values": [
     "neothaum:greatwood_log",
-    "neothaum:silverwood_log"
+    "neothaum:silverwood_log",
+    "neothaum:stripped_greatwood_log",
+    "neothaum:stripped_silverwood_log",
+    "neothaum:greatwood_wood",
+    "neothaum:silverwood_wood",
+    "neothaum:stripped_greatwood_wood",
+    "neothaum:stripped_silverwood_wood"
   ]
 }

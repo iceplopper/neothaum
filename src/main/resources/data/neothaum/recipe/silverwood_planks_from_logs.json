@@ -1,0 +1,18 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "wood_sets"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+    "#neothaum:silverwood_logs"
+  ],
+  "result": {
+    "id": "neothaum:silverwood_planks",
+    "count": 4
+  }
+}
