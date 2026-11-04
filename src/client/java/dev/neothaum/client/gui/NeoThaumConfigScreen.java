@@ -108,7 +108,7 @@ public class NeoThaumConfigScreen extends Screen {
 					v -> cfg.barrowMoundMultiplier = v);
 				this.slider("Hilltop Stones", "NeoThaum: how often hilltop stones generate (x1 is TC4's 1 chunk in 40).",
 					() -> cfg.hilltopStonesMultiplier, v -> cfg.hilltopStonesMultiplier = v);
-				this.slider("Obsidian Totems", "NeoThaum: how often obsidian totems generate (x1 is TC4's 1 chunk in 360).",
+				this.slider("Obsidian Totems", "NeoThaum: how often obsidian totems generate (x1 is TC4's 1 chunk in 360; NeoThaum's default is x0.5, half as many).",
 					() -> cfg.obsidianTotemMultiplier, v -> cfg.obsidianTotemMultiplier = v);
 				this.toggle("Village Buildings", "NeoThaum: whether villages can have wizard towers and bankers' houses. Default: on.",
 					() -> cfg.villageBuildings, v -> cfg.villageBuildings = v);

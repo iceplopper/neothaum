@@ -195,7 +195,8 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 			CrimsonKnightEntity knight = TVEntities.CULTIST_KNIGHT.create(sl, EntitySpawnReason.EVENT);
 			BlockPos at = this.defenderSpot(sl);
 			if (knight != null && at != null) {
-				knight.snapTo(at.getX(), at.getY(), at.getZ(), 0, 0);
+				// in the middle of the block, not on its corner, where it would overlap the blocks beside it
+				knight.snapTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, 0, 0);
 				if (sl.noCollision(knight) && !sl.containsAnyLiquid(knight.getBoundingBox())) {
 					knight.finalizeSpawn(sl, sl.getCurrentDifficultyAt(at), EntitySpawnReason.EVENT, null);
 					knight.spawnAnim();
@@ -214,8 +215,9 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 		EldritchGuardianEntity guardian = TVEntities.ELDRITCH_GUARDIAN.create(sl, EntitySpawnReason.EVENT);
 		BlockPos at = this.defenderSpot(sl);
 		if (guardian != null && at != null) {
-			guardian.snapTo(at.getX(), at.getY(), at.getZ(), 0, 0);
-			if (guardian.checkSpawnObstruction(sl)) {
+			guardian.snapTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, 0, 0);
+			// room to stand: no blocks (trees, the ground) or liquid where it would be, as well as no other creature
+			if (sl.noCollision(guardian) && !sl.containsAnyLiquid(guardian.getBoundingBox()) && guardian.checkSpawnObstruction(sl)) {
 				guardian.finalizeSpawn(sl, sl.getCurrentDifficultyAt(at), EntitySpawnReason.EVENT, null);
 				guardian.spawnAnim();
 				guardian.setHomeTo(this.worldPosition, 16);

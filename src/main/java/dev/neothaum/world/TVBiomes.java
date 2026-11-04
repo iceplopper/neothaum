@@ -23,11 +23,25 @@ public final class TVBiomes {
 	public static boolean GENERATE = true;
 	/** The running server's biomes, for placing NeoThaum's in other mods' biome lists (MultiNoiseBiomeSourceMixin); null between servers. */
 	private static net.minecraft.core.HolderGetter<Biome> lookup;
+	private static boolean serverRunning;
 
 	public static void init() {
-		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTING.register(srv ->
-			lookup = srv.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME));
-		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(srv -> lookup = null);
+		// as soon as the world's biomes are set up, before its biome source first lists the biomes it can make (and so which decorations to
+		// run): waiting for the server to start was too late, and Magical Forest in a Terralith world came out bare. Registries set up while
+		// a server runs are the client's own copy, made when it joins, and are left alone.
+		net.fabricmc.fabric.api.event.registry.DynamicRegistrySetupCallback.EVENT.register(view -> {
+			if (!serverRunning) {
+				view.getOptional(net.minecraft.core.registries.Registries.BIOME).ifPresent(biomes -> lookup = biomes);
+			}
+		});
+		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTING.register(srv -> {
+			serverRunning = true;
+			lookup = srv.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME);
+		});
+		net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(srv -> {
+			serverRunning = false;
+			lookup = null;
+		});
 	}
 
 	/** One of NeoThaum's biomes as the running server has it, or null outside a server. */

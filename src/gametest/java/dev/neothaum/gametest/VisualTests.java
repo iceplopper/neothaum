@@ -2170,6 +2170,40 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			NeoThaum.LOGGER.info("[visual-test] biomes: sampled by mod {}; other mods' biomes {}, without NeoThaum's tags {}: {}", sampled, foreign,
 				untagged.size(), untagged);
+			// what grows in Magical Forest: the top blocks and the logs, grass and flowers of a few generated Magical Forest chunks
+			java.util.Map<String, Integer> tops = new java.util.TreeMap<>();
+			int logs = 0;
+			int plants = 0;
+			int sampledChunks = 0;
+			for (int i = 0; i < n && sampledChunks < 4; i++) {
+				for (int j = 0; j < n && sampledChunks < 4; j++) {
+					if (grid[i][j] != 1) {
+						continue;
+					}
+					int bx = (i - n / 2) * step;
+					int bz = (j - n / 2) * step;
+					var chunk = level.getChunk(bx >> 4, bz >> 4);
+					sampledChunks++;
+					for (int dx = 0; dx < 16; dx++) {
+						for (int dz = 0; dz < 16; dz++) {
+							int x = (bx & ~15) + dx;
+							int z = (bz & ~15) + dz;
+							int y = chunk.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+							var top = level.getBlockState(new net.minecraft.core.BlockPos(x, y, z));
+							tops.merge(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(top.getBlock()).getPath(), 1, Integer::sum);
+							for (int yy = y; yy < y + 12; yy++) {
+								var st = level.getBlockState(new net.minecraft.core.BlockPos(x, yy, z));
+								if (st.is(net.minecraft.tags.BlockTags.LOGS)) {
+									logs++;
+								} else if (st.is(net.minecraft.world.level.block.Blocks.SHORT_GRASS) || st.is(net.minecraft.tags.BlockTags.FLOWERS)) {
+									plants++;
+								}
+							}
+						}
+					}
+				}
+			}
+			NeoThaum.LOGGER.info("[visual-test] biomes: magical forest chunks {}: tops {} logs {} plants {}", sampledChunks, tops, logs, plants);
 			check("biomes: NeoThaum's biomes generate", magic > 0 && taint > 0, "magical=" + magic + " tainted=" + taint + " by mod " + sampled);
 		});
 	}
@@ -3565,6 +3599,40 @@ public class VisualTests implements FabricClientGameTest {
 		check("worktable output appears when the wand goes in last", bench.contains("-> 9 neothaum:arcane_stone_block") && clientBench.equals("9 neothaum:arcane_stone_block"),
 			"server " + bench + ", client " + clientBench);
 		ctx.runOnClient(mc -> mc.player.closeContainer());
+		// --- a barrow mound's iron bars join up with what is beside them
+		String bars = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			int gx = p.getBlockX() + 200;
+			int gz = p.getBlockZ() + 200;
+			int gy = p.getBlockY() - 1;
+			for (int x = -2; x < 22; x++) {
+				for (int z = -2; z < 22; z++) {
+					for (int y = gy - 12; y <= gy; y++) {
+						level.setBlock(new net.minecraft.core.BlockPos(gx + x, y, gz + z), (y == gy ? net.minecraft.world.level.block.Blocks.GRASS_BLOCK
+							: net.minecraft.world.level.block.Blocks.STONE).defaultBlockState(), 2);
+					}
+				}
+			}
+			var origin = new net.minecraft.core.BlockPos(gx, gy - 9, gz);
+			if (!dev.neothaum.world.BarrowMoundFeature.generate(level, level.getRandom(), origin)) {
+				return "not generated";
+			}
+			int total = 0;
+			int joined = 0;
+			for (var at : net.minecraft.core.BlockPos.betweenClosed(origin.offset(-1, -2, -1), origin.offset(20, 12, 20))) {
+				var st = level.getBlockState(at);
+				if (st.is(net.minecraft.world.level.block.Blocks.IRON_BARS)) {
+					total++;
+					if (st.getValue(net.minecraft.world.level.block.CrossCollisionBlock.NORTH) || st.getValue(net.minecraft.world.level.block.CrossCollisionBlock.SOUTH)
+						|| st.getValue(net.minecraft.world.level.block.CrossCollisionBlock.EAST) || st.getValue(net.minecraft.world.level.block.CrossCollisionBlock.WEST)) {
+						joined++;
+					}
+				}
+			}
+			return joined + " of " + total;
+		});
+		check("barrow mound iron bars join up", bars.contains(" of ") && !bars.startsWith("0 ") && bars.split(" of ")[0].equals(bars.split(" of ")[1]), bars);
 		// --- the config page: every tab, every control explained
 		ctx.setScreen(() -> new dev.neothaum.client.gui.NeoThaumConfigScreen(null));
 		ctx.waitTicks(5);

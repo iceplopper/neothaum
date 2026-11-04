@@ -45,9 +45,19 @@ public class EldritchGuardianEntity extends Monster implements dev.neothaum.api.
 		this.xpReward = 20;
 	}
 
-	/** getCanSpawnHere: never within 32 blocks (16 up and down) of another guardian, and otherwise as any monster. */
+	/**
+	 * getCanSpawnHere: never within 32 blocks (16 up and down) of another guardian, and otherwise as any monster. Outside the Outer Lands a
+	 * guardian also only appears near someone who has learned Eldritch Minor: the eerie land around obsidian totems made them a common
+	 * sight long before a player had any business with the eldritch.
+	 */
 	public static boolean checkGuardianSpawnRules(EntityType<EldritchGuardianEntity> type, net.minecraft.world.level.ServerLevelAccessor level,
 		net.minecraft.world.entity.EntitySpawnReason reason, net.minecraft.core.BlockPos pos, net.minecraft.util.RandomSource random) {
+		boolean natural = reason == net.minecraft.world.entity.EntitySpawnReason.NATURAL || reason == net.minecraft.world.entity.EntitySpawnReason.CHUNK_GENERATION;
+		if (natural && !level.getLevel().dimension().equals(dev.neothaum.world.outer.OuterLands.KEY)
+			&& level.getLevel().players().stream().noneMatch(p -> p.distanceToSqr(net.minecraft.world.phys.Vec3.atCenterOf(pos)) < 128.0 * 128.0
+				&& dev.neothaum.research.ResearchManager.isResearchComplete(p, "ELDRITCHMINOR"))) {
+			return false;
+		}
 		return level.getEntitiesOfClass(EldritchGuardianEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(32.0, 16.0, 32.0)).isEmpty()
 			&& Monster.checkMonsterSpawnRules(type, level, reason, pos, random);
 	}

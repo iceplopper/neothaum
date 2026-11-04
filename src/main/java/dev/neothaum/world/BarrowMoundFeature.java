@@ -68,6 +68,13 @@ public final class BarrowMoundFeature {
 		for (Placement p : placements()) {
 			world.setBlock(origin.offset(p.x, p.y, p.z), p.state, Block.UPDATE_CLIENTS);
 		}
+		// once all of it stands, the iron bars (and anything else that joins its neighbours) join up with what is beside them
+		for (Placement p : placements()) {
+			if (p.state.getBlock() instanceof net.minecraft.world.level.block.CrossCollisionBlock) {
+				BlockPos at = origin.offset(p.x, p.y, p.z);
+				world.setBlock(at, Block.updateFromNeighbourShapes(p.state, world, at), Block.UPDATE_CLIENTS);
+			}
+		}
 		// an urn or (three times in ten) a crate either side of the chest, a tenth of them rare and a quarter more uncommon
 		for (int z : new int[]{7, 11}) {
 			float rr = rand.nextFloat();

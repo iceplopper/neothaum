@@ -57,7 +57,8 @@ public class NeoThaumConfig {
 		public float eldritchRingMultiplier = 1.0f;
 		public float barrowMoundMultiplier = 1.0f;
 		public float hilltopStonesMultiplier = 1.0f;
-		public float obsidianTotemMultiplier = 1.0f;
+		/** Half TC4's rate by default: TC4's totems (and the eerie land round their sinister nodes) were everywhere. */
+		public float obsidianTotemMultiplier = 0.5f;
 		/** Whether wizard towers and bankers' houses are among the buildings villages can have (TC4 built them nowhere else). Default: true. */
 		public boolean villageBuildings = true;
 
