@@ -34,7 +34,7 @@ public class NeoThaumReiPlugin implements REIClientPlugin {
 	@Override
 	public void registerEntries(me.shedaniel.rei.api.client.registry.entry.EntryRegistry registry) {
 		registry.removeEntryIf(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s
-			&& (!dev.neothaum.addon.WoodSets.shown(s.getItem()) || !dev.neothaum.addon.ExperienceSiphon.shown(s.getItem())));
+			&& !dev.neothaum.addon.Additions.shown(s.getItem()));
 	}
 
 	@Override

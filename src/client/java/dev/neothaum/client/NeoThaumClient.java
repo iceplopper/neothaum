@@ -132,6 +132,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(dev.neothaum.client.fx.BoltFX::tick);
 		dev.neothaum.client.entity.TVEntityRenderers.init();
 		dev.neothaum.client.addon.WoodSetsClient.init();
+		dev.neothaum.client.addon.TotemTravelScreen.register();
 		dev.neothaum.client.render.armor.TCArmorRenderers.init();
 		ClientBridge.openNodeEditor = pos -> Minecraft.getInstance().gui.setScreen(new dev.neothaum.client.devtools.NodeEditorScreen(pos));
 

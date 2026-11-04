@@ -98,15 +98,13 @@ public final class ExperienceSiphon {
 		var ckey = ResourceKey.create(Registries.ITEM, NeoThaum.id("condensed_experience"));
 		condensed = Registry.register(BuiltInRegistries.ITEM, ckey, new CondensedExperienceItem(new Item.Properties().setId(ckey).stacksTo(16)
 			.rarity(Rarity.UNCOMMON).component(net.minecraft.core.component.DataComponents.CONSUMABLE, Consumables.defaultFood().build())));
+		Additions.hideWith(siphonItem, "experience_siphon");
+		Additions.hideWith(condensed, "experience_siphon");
 		int at = TVItems.TAB_ORDER.indexOf(TVBlocks.WARDED_JAR.asItem()) + 1;
 		TVItems.TAB_ORDER.add(at > 0 ? at : TVItems.TAB_ORDER.size(), siphonItem);
 		TVItems.TAB_ORDER.add(TVItems.TAB_ORDER.indexOf(siphonItem) + 1, condensed);
 	}
 
-	/** Whether the creative tab and recipe viewers show this item: the siphon's items only while it is on. */
-	public static boolean shown(Item item) {
-		return item != siphonItem && item != condensed || enabled();
-	}
 
 	/** Loads the class (registering the block) from NeoThaum.onInitialize, right after TVBlocks. */
 	public static void registerBlocks() {

@@ -126,15 +126,11 @@ public class NeoThaumJeiPlugin implements IModPlugin {
 	@Override
 	public void onRuntimeAvailable(IJeiRuntime runtime) {
 		jeiRuntime = runtime;
-		if (!dev.neothaum.addon.ExperienceSiphon.enabled()) {
-			runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, java.util.List.of(
-				new net.minecraft.world.item.ItemStack(dev.neothaum.addon.ExperienceSiphon.siphonItem),
-				new net.minecraft.world.item.ItemStack(dev.neothaum.addon.ExperienceSiphon.condensed)));
-		}
-		// the wood sets' items are hidden while that addition is off
-		if (!dev.neothaum.addon.WoodSets.enabled()) {
-			runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK,
-				dev.neothaum.addon.WoodSets.ITEMS.stream().map(net.minecraft.world.item.ItemStack::new).toList());
+		// the additions' items are hidden while their additions are off
+		var hidden = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream().filter(i -> !dev.neothaum.addon.Additions.shown(i))
+			.map(net.minecraft.world.item.ItemStack::new).toList();
+		if (!hidden.isEmpty()) {
+			runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, hidden);
 		}
 		updateRuntimeRecipes();
 	}

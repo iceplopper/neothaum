@@ -105,10 +105,6 @@ public final class WoodSets {
 		return Additions.enabled("wood_sets");
 	}
 
-	/** Whether the creative tab and recipe viewers show this item: an item of this addition only while it is on. */
-	public static boolean shown(Item item) {
-		return !ITEMS.contains(item) || enabled();
-	}
 
 	/** Called after the blocks: their items, the boats' items, stripping, burning and the shelves' block entity. */
 	public static void init() {
@@ -131,6 +127,7 @@ public final class WoodSets {
 			Item item = b instanceof DoorBlock ? new DoubleHighBlockItem(b, props) : new BlockItem(b, props);
 			ITEMS.add(Registry.register(BuiltInRegistries.ITEM, key, item));
 		}
+		ITEMS.forEach(i -> Additions.hideWith(i, "wood_sets"));
 		for (Set1 s : new Set1[]{GREATWOOD, SILVERWOOD}) {
 			s.boatItem = item(s.name + "_boat", p -> new BoatItem(s.boat, p.stacksTo(1).cookingFuel(ContextIntProviders.COOKING_TIME_BOATS)));
 			s.chestBoatItem = item(s.name + "_chest_boat",
@@ -144,6 +141,10 @@ public final class WoodSets {
 				fire.add(b, 5, 20);
 			}
 		}
+		Additions.hideWith(GREATWOOD.boatItem, "wood_sets");
+		Additions.hideWith(GREATWOOD.chestBoatItem, "wood_sets");
+		Additions.hideWith(SILVERWOOD.boatItem, "wood_sets");
+		Additions.hideWith(SILVERWOOD.chestBoatItem, "wood_sets");
 		// in the creative tab after the woods' slabs
 		int at = TVItems.TAB_ORDER.indexOf(TVBlocks.SILVERWOOD_SLAB.asItem()) + 1;
 		TVItems.TAB_ORDER.addAll(at > 0 ? at : TVItems.TAB_ORDER.size(), ITEMS);

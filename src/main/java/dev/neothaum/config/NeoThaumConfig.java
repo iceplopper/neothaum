@@ -185,6 +185,8 @@ public class NeoThaumConfig {
 		public boolean additionHintResearch = true;
 		/** The Experience Siphon: stores experience in warded jars, condensed into something you can eat. On restart. */
 		public boolean additionExperienceSiphon = true;
+		/** Traveller's Totems, the Home Totem and the Wayfarer's Compass: travel between totems you have learned. On restart. */
+		public boolean additionTravellersTotems = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

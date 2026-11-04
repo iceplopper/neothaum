@@ -1467,7 +1467,7 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			sb.append(" recipes ").append(recipes);
 			// in the creative tab
-			sb.append(" shown ").append(dev.neothaum.addon.WoodSets.shown(dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem()));
+			sb.append(" shown ").append(dev.neothaum.addon.Additions.shown(dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem()));
 			var inv = p.getInventory();
 			inv.clearContent();
 			int slot = 0;
@@ -1498,7 +1498,7 @@ public class VisualTests implements FabricClientGameTest {
 			boolean recipe = srv.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE,
 				NeoThaum.id("greatwood_door"))).isPresent();
 			return "log kept " + level.getBlockState(logPos).is(dev.neothaum.registry.TVBlocks.SILVERWOOD_LOG) + " refused " + (result == net.minecraft.world.InteractionResult.FAIL)
-				+ " recipe " + recipe + " shown " + dev.neothaum.addon.WoodSets.shown(dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem());
+				+ " recipe " + recipe + " shown " + dev.neothaum.addon.Additions.shown(dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem());
 		});
 		check("wood sets are gone with the addition off", off.equals("log kept true refused true recipe false shown false"), off);
 		cfg.additionsEnabled = wasOn;

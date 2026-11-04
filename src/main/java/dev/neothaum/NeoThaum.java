@@ -38,10 +38,12 @@ public class NeoThaum implements ModInitializer {
 		TVBlocks.init();
 		dev.neothaum.addon.WoodSets.registerBlocks();
 		dev.neothaum.addon.ExperienceSiphon.registerBlocks();
+		dev.neothaum.addon.totems.TravellersTotems.registerBlocks();
 		dev.neothaum.registry.TVMobEffects.init();
 		TVItems.init();
 		dev.neothaum.addon.WoodSets.init();
 		dev.neothaum.addon.ExperienceSiphon.init();
+		dev.neothaum.addon.totems.TravellersTotems.init();
 		dev.neothaum.entity.TVEntities.init();
 		TVBlockEntities.init();
 		TVMenus.init();

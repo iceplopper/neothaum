@@ -93,7 +93,8 @@ public final class TVTab {
 			|| item.components().has(DataComponents.WEAPON)) {
 			return Category.TOOLS;
 		}
-		if (dev.neothaum.addon.WoodSets.ITEMS.contains(item) || item == dev.neothaum.addon.ExperienceSiphon.siphonItem) {
+		if (dev.neothaum.addon.WoodSets.ITEMS.contains(item) || item == dev.neothaum.addon.ExperienceSiphon.siphonItem
+			|| item == dev.neothaum.addon.totems.TravellersTotems.totemItem || item == dev.neothaum.addon.totems.TravellersTotems.homeTotemItem) {
 			return Category.BUILDING;
 		}
 		if (item instanceof BlockItem bi) {
@@ -115,8 +116,7 @@ public final class TVTab {
 			.icon(icon)
 			.displayItems((params, out) -> {
 				for (Item item : TVItems.TAB_ORDER) {
-					if (!in.test(item) || !dev.neothaum.addon.WoodSets.shown(item)
-						|| !dev.neothaum.addon.ExperienceSiphon.shown(item)) {
+					if (!in.test(item) || !dev.neothaum.addon.Additions.shown(item)) {
 						continue;
 					}
 					// ItemNugget.getSubItems: the tin, silver and lead pieces only when a mod adds that ingot
