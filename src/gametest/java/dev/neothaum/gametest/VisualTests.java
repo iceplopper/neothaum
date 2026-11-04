@@ -1042,6 +1042,22 @@ public class VisualTests implements FabricClientGameTest {
 	 */
 	private static void totemsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
 		var cfg = dev.neothaum.config.NeoThaumConfig.current;
+		// JEI, ready since the world was joined with the additions off: none of their items are listed
+		String jei = ctx.computeOnClient(mc -> {
+			var rt = dev.neothaum.client.jei.NeoThaumJeiPlugin.runtime();
+			if (rt == null) {
+				return "no jei";
+			}
+			var listed = rt.getIngredientManager().getAllIngredients(mezz.jei.api.constants.VanillaTypes.ITEM_STACK);
+			java.util.Set<net.minecraft.world.item.Item> hidden = new java.util.HashSet<>(java.util.List.of(
+				dev.neothaum.addon.totems.TravellersTotems.totemItem, dev.neothaum.addon.totems.TravellersTotems.homeTotemItem,
+				dev.neothaum.addon.totems.TravellersTotems.compass, dev.neothaum.addon.ExperienceSiphon.siphonItem,
+				dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem()));
+			long shown = listed.stream().filter(s -> hidden.contains(s.getItem())).count();
+			boolean core = listed.stream().anyMatch(s -> s.is(dev.neothaum.registry.TVBlocks.WARDED_JAR.asItem()));
+			return "additions listed " + shown + " core listed " + core;
+		});
+		check("JEI hides the additions' items while they are off", jei.equals("additions listed 0 core listed true"), jei);
 		boolean wasOn = cfg.additionsEnabled;
 		cfg.additionsEnabled = true;
 		cfg.additionTravellersTotems = true;
@@ -1170,6 +1186,106 @@ public class VisualTests implements FabricClientGameTest {
 			return "saved " + saved;
 		});
 		check("the compass carries five totems", compass.equals("saved 5"), compass);
+		// renaming: a name tag on a totem the player knows
+		String renamed = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var at = new net.minecraft.core.BlockPos(0, 116, 0);
+			var tag = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.NAME_TAG);
+			tag.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Lapis Testis"));
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, tag);
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.NORTH, at, false);
+			level.getBlockState(at).useItemOn(tag, level, p, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+			var be = (dev.neothaum.addon.totems.TotemBlockEntity) level.getBlockEntity(at);
+			var listed = dev.neothaum.addon.totems.TotemData.get(srv).get(net.minecraft.core.GlobalPos.of(level.dimension(), at)).name();
+			return "name " + be.name + " listed " + listed + " tag used " + p.getMainHandItem().isEmpty();
+		});
+		check("a name tag renames a known totem", renamed.equals("name Lapis Testis listed Lapis Testis tag used true"), renamed);
+		// the lore: the first totem found in the world teaches what they are
+		server.runCommand("setblock -6 116 4 neothaum:travellers_totem");
+		ctx.waitTicks(30);
+		String lore = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var at = new net.minecraft.core.BlockPos(-6, 116, 4);
+			((dev.neothaum.addon.totems.TotemBlockEntity) level.getBlockEntity(at)).natural = true;
+			var k = ResearchManager.knowledge(p).copy();
+			k.research.remove("TOTEMLORE");
+			ResearchManager.setKnowledge(p, k);
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.NORTH, at, false);
+			level.getBlockState(at).useWithoutItem(level, p, hit);
+			return "lore " + ResearchManager.isResearchComplete(p, "TOTEMLORE");
+		});
+		check("touching a totem found in the world teaches its lore", lore.equals("lore true"), lore);
+		// the compass: travel from anywhere, then half a minute to settle
+		String compassTrip = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var c = new net.minecraft.world.item.ItemStack(dev.neothaum.addon.totems.TravellersTotems.compass);
+			c.set(dev.neothaum.addon.totems.TravellersTotems.COMPASS_TOTEMS,
+				java.util.List.of(net.minecraft.core.GlobalPos.of(level.dimension(), new net.minecraft.core.BlockPos(-8, 116, -8))));
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, c);
+			// far from any totem
+			p.teleportTo(15.5, 116, 9.5);
+			dev.neothaum.addon.totems.TotemTravel.request(p, net.minecraft.core.GlobalPos.of(level.dimension(), new net.minecraft.core.BlockPos(-8, 116, -8)), true);
+			return "started " + dev.neothaum.addon.totems.TotemTravel.channelling(p);
+		});
+		ctx.waitTicks(40);
+		String midway = server.computeOnServer(srv -> " not yet " + !srv.getPlayerList().getPlayers().get(0).blockPosition()
+			.closerThan(new net.minecraft.core.BlockPos(-8, 117, -8), 2));
+		ctx.waitTicks(30);
+		String after = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			boolean there = p.blockPosition().closerThan(new net.minecraft.core.BlockPos(-8, 117, -8), 2);
+			boolean cooling = p.getCooldowns().isOnCooldown(p.getMainHandItem());
+			dev.neothaum.addon.totems.TotemTravel.request(p, net.minecraft.core.GlobalPos.of(level.dimension(), new net.minecraft.core.BlockPos(-8, 116, -8)), true);
+			boolean again = dev.neothaum.addon.totems.TotemTravel.channelling(p);
+			return " arrived " + there + " settling " + cooling + " refused again " + !again;
+		});
+		check("the compass takes you to a saved totem, then settles", (compassTrip + midway + after)
+			.equals("started true not yet true arrived true settling true refused again true"), compassTrip + midway + after);
+		// another dimension: a totem in the Nether, and back
+		server.runOnServer(srv -> {
+			var nether = srv.getLevel(net.minecraft.world.level.Level.NETHER);
+			nether.setChunkForced(0, 0, true);
+			for (var q : net.minecraft.core.BlockPos.betweenClosed(-2, 100, -2, 2, 104, 2)) {
+				nether.setBlock(q, q.getY() == 100 ? net.minecraft.world.level.block.Blocks.NETHERRACK.defaultBlockState()
+					: net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+			}
+			nether.setBlock(new net.minecraft.core.BlockPos(0, 101, 0), dev.neothaum.addon.totems.TravellersTotems.TOTEM.defaultBlockState(), 3);
+		});
+		ctx.waitTicks(40);
+		String nether = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var netherLevel = srv.getLevel(net.minecraft.world.level.Level.NETHER);
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var there = net.minecraft.core.GlobalPos.of(net.minecraft.world.level.Level.NETHER, new net.minecraft.core.BlockPos(0, 101, 0));
+			var be = (dev.neothaum.addon.totems.TotemBlockEntity) netherLevel.getBlockEntity(there.pos());
+			p.setAttached(dev.neothaum.addon.totems.TravellersTotems.KNOWN, p.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN).learn(there));
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.item.ItemStack.EMPTY);
+			p.teleportTo(level, 0.5, 117, 0.5, java.util.Set.of(), 0, 0, false);
+			dev.neothaum.addon.totems.TotemTravel.request(p, there, false);
+			NeoThaum.LOGGER.info("[visual-test] totems: the nether totem is {}", be == null ? "missing" : be.name);
+			return "named " + (be != null && !be.name.isEmpty()) + " started " + dev.neothaum.addon.totems.TotemTravel.channelling(p);
+		});
+		ctx.waitTicks(30);
+		String inNether = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			boolean inNetherNow = p.level().dimension() == net.minecraft.world.level.Level.NETHER && p.blockPosition().closerThan(new net.minecraft.core.BlockPos(0, 102, 0), 2);
+			// and back to the overworld's renamed totem
+			dev.neothaum.addon.totems.TotemTravel.request(p, net.minecraft.core.GlobalPos.of(net.minecraft.world.level.Level.OVERWORLD,
+				new net.minecraft.core.BlockPos(0, 116, 0)), false);
+			return " in the nether " + inNetherNow;
+		});
+		ctx.waitTicks(30);
+		String back = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			srv.getLevel(net.minecraft.world.level.Level.NETHER).setChunkForced(0, 0, false);
+			return " back " + (p.level().dimension() == net.minecraft.world.level.Level.OVERWORLD);
+		});
+		check("totems carry you between dimensions", (nether + inNether + back).equals("named true started true in the nether true back true"),
+			nether + inNether + back);
 		// a totem taken up leaves everyone's list
 		String gone = server.computeOnServer(srv -> {
 			var level = srv.overworld();
@@ -1195,10 +1311,10 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.waitTicks(10);
 		shot(ctx, "totem_travel_list");
 		ctx.setScreen(() -> null);
-		ResearchItem lore = ctx.computeOnClient(mc -> ResearchManager.getResearch("TOTEMLORE"));
-		check("totem research is loaded", lore != null, String.valueOf(lore));
-		if (lore != null) {
-			ctx.setScreen(() -> new ResearchPagesScreen(lore, 0, 0, 0));
+		ResearchItem loreEntry = ctx.computeOnClient(mc -> ResearchManager.getResearch("TOTEMLORE"));
+		check("totem research is loaded", loreEntry != null, String.valueOf(loreEntry));
+		if (loreEntry != null) {
+			ctx.setScreen(() -> new ResearchPagesScreen(loreEntry, 0, 0, 0));
 			ctx.waitTicks(10);
 			shot(ctx, "totem_lore_page");
 			ctx.setScreen(() -> null);
@@ -3823,6 +3939,22 @@ public class VisualTests implements FabricClientGameTest {
 
 	/** With REI loaded (NEOTHAUM_TEST_MODS=rei): each NeoThaum page has its displays, and each opens and draws (one screenshot apiece). */
 	private static void reiScene(ClientGameTestContext ctx) {
+		{
+			for (int i = 0; i < 60 && ctx.computeOnClient(mc -> me.shedaniel.rei.api.common.plugins.PluginManager.areAnyReloading()); i++) {
+				ctx.waitTicks(10);
+			}
+			String rei = ctx.computeOnClient(mc -> {
+				var entries = me.shedaniel.rei.api.client.registry.entry.EntryRegistry.getInstance().getEntryStacks().toList();
+				java.util.Set<net.minecraft.world.item.Item> hidden = new java.util.HashSet<>(java.util.List.of(
+					dev.neothaum.addon.totems.TravellersTotems.totemItem, dev.neothaum.addon.totems.TravellersTotems.compass,
+					dev.neothaum.addon.ExperienceSiphon.siphonItem, dev.neothaum.addon.WoodSets.GREATWOOD.door.asItem()));
+				long shown = entries.stream().filter(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s && hidden.contains(s.getItem())).count();
+				boolean core = entries.stream().anyMatch(e -> e.getValue() instanceof net.minecraft.world.item.ItemStack s
+					&& s.is(dev.neothaum.registry.TVBlocks.WARDED_JAR.asItem()));
+				return "additions listed " + shown + " core listed " + core;
+			});
+			check("REI hides the additions' items while they are off", rei.equals("additions listed 0 core listed true"), rei);
+		}
 		for (int i = 0; i < 60 && ctx.computeOnClient(mc -> me.shedaniel.rei.api.common.plugins.PluginManager.areAnyReloading()); i++) {
 			ctx.waitTicks(10);
 		}
@@ -4987,6 +5119,74 @@ public class VisualTests implements FabricClientGameTest {
 			check("mp hard nodes: a hungry node pulls only in hard mode", soft > 5.0 && hard < soft - 1.0,
 				String.format("distance after 3s: hard nodes off %.1f, on %.1f", soft, hard));
 			server.runCommand("neothaum config hardnodes true");
+			// --- Traveller's Totems over a real connection: the server's list opens on the client, the client's pick travels, a home is shared
+			var tcfg = dev.neothaum.config.NeoThaumConfig.current;
+			boolean totemsWere = tcfg.additionsEnabled;
+			tcfg.additionsEnabled = true;
+			dev.neothaum.research.ResearchManager.reload();
+			server.runCommand("reload");
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(20);
+			net.minecraft.core.BlockPos[] tp = server.computeOnServer(srv -> {
+				var p = firstPlayer(srv);
+				var totemBase = p.blockPosition();
+				return new net.minecraft.core.BlockPos[]{totemBase.offset(3, 0, 0), totemBase.offset(20, 0, 0), totemBase.offset(3, 0, 6)};
+			});
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				level.setBlock(tp[0], dev.neothaum.addon.totems.TravellersTotems.TOTEM.defaultBlockState(), 3);
+				level.setBlock(tp[1], dev.neothaum.addon.totems.TravellersTotems.TOTEM.defaultBlockState(), 3);
+				level.setBlock(tp[2], dev.neothaum.addon.totems.TravellersTotems.HOME_TOTEM.defaultBlockState(), 3);
+			});
+			ctx.waitTicks(40);
+			server.runOnServer(srv -> {
+				var level = srv.overworld();
+				var p = firstPlayer(srv);
+				p.teleportTo(tp[0].getX() + 0.5, tp[0].getY() + 1, tp[0].getZ() + 0.5);
+				for (var at : new net.minecraft.core.BlockPos[]{tp[1], tp[0]}) {
+					var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.NORTH, at, false);
+					level.getBlockState(at).useWithoutItem(level, p, hit);
+				}
+				// the list, opened as using a known totem opens it
+				var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(tp[0]), net.minecraft.core.Direction.NORTH, tp[0], false);
+				level.getBlockState(tp[0]).useWithoutItem(level, p, hit);
+			});
+			conn.waitForClientboundPackets();
+			ctx.waitTicks(10);
+			String totemScreen = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+			check("mp the totem list opens on the client", totemScreen.equals("TotemTravelScreen"), totemScreen);
+			ctx.setScreen(() -> null);
+			var dim = server.computeOnServer(srv -> srv.overworld().dimension());
+			ctx.runOnClient(mc -> net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(
+				new dev.neothaum.addon.totems.TravellersTotems.TravelTo(net.minecraft.core.GlobalPos.of(dim, tp[1]), false)));
+			conn.waitForServerboundPackets();
+			ctx.waitTicks(35);
+			conn.waitForClientboundPackets();
+			String mpTrip = server.computeOnServer(srv -> "server " + firstPlayer(srv).blockPosition().closerThan(tp[1].above(), 2));
+			String clientAt = ctx.computeOnClient(mc -> " client " + mc.player.blockPosition().closerThan(tp[1].above(), 2));
+			check("mp the client's pick takes the player there", (mpTrip + clientAt).equals("server true client true"), mpTrip + clientAt);
+			// a Home Totem shared: another player and this one both claim it with a wand
+			String shared = server.computeOnServer(srv -> {
+				var level = srv.overworld();
+				var p = firstPlayer(srv);
+				var other = net.fabricmc.fabric.api.entity.FakePlayer.get(level, new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "Neighbour"));
+				var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(tp[2]), net.minecraft.core.Direction.NORTH, tp[2], false);
+				for (var who : new net.minecraft.world.entity.player.Player[]{p, other}) {
+					var wand = dev.neothaum.items.WandItem.create(dev.neothaum.registry.TVItems.WAND, "gold", "greatwood");
+					who.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, wand);
+					level.getBlockState(tp[2]).useItemOn(wand, level, who, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+					who.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.item.ItemStack.EMPTY);
+				}
+				var gp = net.minecraft.core.GlobalPos.of(level.dimension(), tp[2]);
+				boolean mine = p.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN).home().filter(gp::equals).isPresent();
+				boolean theirs = other.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN).home().filter(gp::equals).isPresent();
+				return "mine " + mine + " theirs " + theirs;
+			});
+			check("mp a Home Totem can be shared", shared.equals("mine true theirs true"), shared);
+			tcfg.additionsEnabled = totemsWere;
+			dev.neothaum.research.ResearchManager.reload();
+			server.runCommand("reload");
+			conn.waitForClientboundPackets();
 		}
 		ctx.waitTicks(10);
 		boolean dropped = ctx.computeOnClient(mc -> dev.neothaum.config.NeoThaumConfig.synced == null);

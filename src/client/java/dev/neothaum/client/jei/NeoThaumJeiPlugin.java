@@ -40,6 +40,11 @@ public class NeoThaumJeiPlugin implements IModPlugin {
 
 	private static IJeiRuntime jeiRuntime;
 
+	/** JEI's runtime once it is ready (null before), for tests. */
+	public static IJeiRuntime runtime() {
+		return jeiRuntime;
+	}
+
 	@Override
 	public Identifier getPluginUid() {
 		return NeoThaum.id("jei_plugin");
