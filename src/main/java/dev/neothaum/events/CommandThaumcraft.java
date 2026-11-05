@@ -73,6 +73,12 @@ public final class CommandThaumcraft {
 					v -> NeoThaumConfig.current.researchDifficulty = v))
 				.then(number("aspectcap", "aspect total cap", 1, 100000, () -> NeoThaumConfig.current.aspectTotalCap,
 					v -> NeoThaumConfig.current.aspectTotalCap = v)))
+			// Traveller's Totems for villages generated before they had them
+			.then(Commands.literal("totems")
+				.then(Commands.literal("villages")
+					.executes(c -> villageTotems(c.getSource(), 1024))
+					.then(Commands.argument("radius", IntegerArgumentType.integer(16, 4096))
+						.executes(c -> villageTotems(c.getSource(), IntegerArgumentType.getInteger(c, "radius"))))))
 			// one addition at a time: /neothaum additions [addition] [enable|disable]
 			.then(Commands.literal("additions")
 				.executes(c -> listAdditions(c.getSource()))
@@ -187,6 +193,31 @@ public final class CommandThaumcraft {
 		refresh(src, done);
 	}
 
+	/**
+	 * /neothaum totems villages [radius]: every village already generated within the radius (in blocks, 1024 unless given) of where the
+	 * command is run that has no Traveller's Totem gets one, as a village generated now would.
+	 */
+	private static int villageTotems(CommandSourceStack src, int radius) {
+		if (!dev.neothaum.addon.totems.TravellersTotems.enabled()) {
+			src.sendFailure(Component.literal("§cTraveller's Totems are switched off (/neothaum additions travellers_totems enable)."));
+			return 0;
+		}
+		src.sendSystemMessage(Component.literal("§5Looking for villages without a Traveller's Totem within " + radius + " blocks..."));
+		var survey = dev.neothaum.addon.totems.VillageTotems.raiseAround(src.getLevel(), net.minecraft.core.BlockPos.containing(src.getPosition()),
+			radius);
+		for (var at : survey.raised()) {
+			src.sendSystemMessage(Component.literal("§5  Raised a totem at " + at.getX() + " " + at.getY() + " " + at.getZ()));
+		}
+		for (var at : survey.noRoom()) {
+			src.sendSystemMessage(Component.literal("§c  No level open ground for a totem in the village at " + at.getX() + " " + at.getZ()));
+		}
+		int raised = survey.raised().size();
+		src.sendSuccess(() -> Component.literal("§5" + survey.villages() + (survey.villages() == 1 ? " village" : " villages") + " found: "
+			+ survey.had() + " had a totem already, " + raised + " raised" + (survey.noRoom().isEmpty() ? "." : ", " + survey.noRoom().size()
+			+ " with no room.")), true);
+		return raised;
+	}
+
 	/** /neothaum additions: each addition, whether it is on, and the master switch. */
 	private static int listAdditions(CommandSourceStack src) {
 		src.sendSystemMessage(Component.literal("§5NeoThaum Additions (features not in TC4)" + (NeoThaumConfig.current.additionsEnabled ? ""
@@ -222,6 +253,7 @@ public final class CommandThaumcraft {
 			"§3Use this to see or change a server setting.", "  /neothaum config <hardnodes|wussmode|additions> [true|false]",
 			"  /neothaum config researchdifficulty [-1|0|1]", "  /neothaum config aspectcap [amount]",
 			"§3Use this after editing config/neothaum.json by hand.", "  /neothaum config reload",
+			"§3Use this to give villages generated before 1.2.1 their Traveller's Totems.", "  /neothaum totems villages [radius]",
 			"§3Use this to list the additions (features not in TC4), or switch one on or off.", "  /neothaum additions [addition] [enable|disable]"}) {
 			src.sendSystemMessage(Component.literal(line));
 		}

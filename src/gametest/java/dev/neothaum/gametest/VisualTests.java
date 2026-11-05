@@ -3675,12 +3675,113 @@ public class VisualTests implements FabricClientGameTest {
 		NeoThaum.LOGGER.info("[visual-test] village totem check: {}", villages);
 		String[] vt = villages.split(" ");
 		check("every village has a Traveller's Totem", Integer.parseInt(vt[1]) > 0 && vt[1].equals(vt[4]), villages);
+		// and every kind of village: the nearest of each found and generated, its surroundings kept loaded (as round a player) so a village
+		// that had no room while generating gets its totem once built, then searched
+		String[] kindNames = {"plains", "desert", "savanna", "snowy", "taiga"};
+		net.minecraft.core.BlockPos[] kindAt = new net.minecraft.core.BlockPos[kindNames.length];
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var registry = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.STRUCTURE);
+			for (int k = 0; k < kindNames.length; k++) {
+				var holder = registry.getOrThrow(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.STRUCTURE,
+					net.minecraft.resources.Identifier.withDefaultNamespace("village_" + kindNames[k])));
+				var near = level.getChunkSource().getGenerator().findNearestMapStructure(level, net.minecraft.core.HolderSet.direct(holder),
+					new net.minecraft.core.BlockPos(0, 64, 0), 150, false);
+				if (near != null) {
+					kindAt[k] = near.getFirst();
+					forceAround(level, kindAt[k], true);
+				}
+			}
+		});
+		ctx.waitTicks(220);
+		java.util.List<net.minecraft.core.BlockPos> typeTotems = new java.util.ArrayList<>();
+		String kinds = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			StringBuilder out = new StringBuilder();
+			for (int k = 0; k < kindNames.length; k++) {
+				var v = kindAt[k];
+				if (v == null) {
+					out.append(kindNames[k]).append(" not found, ");
+					continue;
+				}
+				var totem = villageTotem(level, v);
+				if (totem != null) {
+					typeTotems.add(totem);
+				}
+				out.append(kindNames[k]).append(totem != null ? " yes" : " NO").append(" (").append(v.getX()).append(' ').append(v.getZ()).append("), ");
+			}
+			return out.toString();
+		});
+		check("every kind of village has a Traveller's Totem", !kinds.contains("NO") && !kinds.contains("not found"), kinds);
+		// /nt totems villages: a village whose totem is gone (as in a world from before 1.2.1) gets one again; one with a totem is left be
+		String again = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var v = kindAt[0];
+			var old = villageTotem(level, v);
+			if (old == null) {
+				return "no totem to take";
+			}
+			level.setBlock(old, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+			srv.getCommands().performPrefixedCommand(srv.createCommandSourceStack().withPosition(net.minecraft.world.phys.Vec3.atCenterOf(v)),
+				"nt totems villages 64");
+			var now = villageTotem(level, v);
+			var survey = dev.neothaum.addon.totems.VillageTotems.raiseAround(level, v, 64);
+			return "taken " + old.toShortString() + " then " + (now == null ? "none" : "a totem") + ", run again: " + survey.villages() + " village "
+				+ survey.had() + " had " + survey.raised().size() + " raised";
+		});
+		check("/nt totems villages gives a village without a totem one, and leaves one with a totem be",
+			again.contains("then a totem") && again.endsWith("1 village 1 had 0 raised"), again);
+		server.runOnServer(srv -> {
+			for (var v : kindAt) {
+				if (v != null) {
+					forceAround(srv.overworld(), v, false);
+				}
+			}
+		});
+		server.runCommand("gamemode spectator @a");
+		for (int i = 0; i < typeTotems.size(); i++) {
+			var at = typeTotems.get(i);
+			server.runCommand("tp @a " + (at.getX() + 7.5) + " " + (at.getY() + 6) + " " + (at.getZ() + 7.5) + " facing " + (at.getX() + 0.5) + " "
+				+ (at.getY() + 0.5) + " " + (at.getZ() + 0.5));
+			ctx.waitTicks(60);
+			shot(ctx, "village_totem_kind_" + i);
+		}
+		server.runCommand("gamemode creative @a");
 		if (firstTotem[0] != null) {
 			var at = firstTotem[0];
 			server.runCommand("tp @a " + (at.getX() + 4.5) + " " + (at.getY() + 3) + " " + (at.getZ() + 4.5) + " 135 30");
 			ctx.waitTicks(60);
 			shot(ctx, "village_totem");
 		}
+	}
+
+	/** Keeps the chunks round a village loaded (as a player nearby would), or lets them go. */
+	static void forceAround(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos v, boolean on) {
+		for (int dx = -7; dx <= 7; dx++) {
+			for (int dz = -7; dz <= 7; dz++) {
+				level.setChunkForced((v.getX() >> 4) + dx, (v.getZ() >> 4) + dz, on);
+			}
+		}
+	}
+
+	/** A village's Traveller's Totem, its chunks generated first, searched within 64 blocks of where the village starts; null if none. */
+	static net.minecraft.core.BlockPos villageTotem(net.minecraft.server.level.ServerLevel level, net.minecraft.core.BlockPos v) {
+		for (int dx = -6; dx <= 6; dx++) {
+			for (int dz = -6; dz <= 6; dz++) {
+				level.getChunk((v.getX() >> 4) + dx, (v.getZ() >> 4) + dz);
+			}
+		}
+		for (int x = v.getX() - 80; x <= v.getX() + 80; x++) {
+			for (int z = v.getZ() - 80; z <= v.getZ() + 80; z++) {
+				int top = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, x, z);
+				for (int y = top - 4; y <= top; y++) {
+					if (level.getBlockState(new net.minecraft.core.BlockPos(x, y, z)).is(dev.neothaum.addon.totems.TravellersTotems.TOTEM)) {
+						return new net.minecraft.core.BlockPos(x, y, z);
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

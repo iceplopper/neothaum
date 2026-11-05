@@ -151,6 +151,9 @@ Features that are **not in Thaumcraft 4**, on their own tab. They are **on by de
   applies to everyone who joins.
 - **By hand:** in `config/neothaum.json`, set `"additionsEnabled": false`, then run `/neothaum config reload` (or restart).
 
+**Villages generated before 1.2.1** have no Traveller's Totem. An operator can run `/neothaum totems villages [radius]` (1024 blocks
+unless given) to give each village within the radius that lacks one its totem.
+
 **To switch off just one addition,** an operator runs `/neothaum additions <addition> disable` (and `enable` to bring it back);
 `/neothaum additions` alone lists them all and whether each is on. The names are `travellers_totems`, `experience_siphon`,
 `hint_research`, `wood_sets`, `research_sharing`, `essentia_overlay`, `warp_hud`, `marker_copy`, `modded_aspects`, `vanilla_candles`,

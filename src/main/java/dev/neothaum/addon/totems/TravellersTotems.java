@@ -179,6 +179,7 @@ public final class TravellersTotems {
 
 	/** After TVItems: the items, packets and travel. */
 	public static void init() {
+		VillageTotems.init();
 		totemItem = blockItem(TOTEM);
 		homeTotemItem = blockItem(HOME_TOTEM);
 		var ckey = ResourceKey.create(Registries.ITEM, NeoThaum.id("wayfarers_compass"));
