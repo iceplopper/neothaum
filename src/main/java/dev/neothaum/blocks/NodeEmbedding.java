@@ -33,7 +33,7 @@ public final class NodeEmbedding {
 
 	private static InteractionResult place(Player player, Level level, net.minecraft.world.InteractionHand hand, BlockHitResult hit) {
 		ItemStack stack = player.getItemInHand(hand);
-		if (!(stack.getItem() instanceof BlockItem item) || player.isSpectator()) {
+		if (!(stack.getItem() instanceof BlockItem item) || player.isSpectator() || !dev.neothaum.addon.Additions.enabled("node_embedding")) {
 			return InteractionResult.PASS;
 		}
 		BlockPlaceContext ctx = new BlockPlaceContext(player, hand, stack, hit);

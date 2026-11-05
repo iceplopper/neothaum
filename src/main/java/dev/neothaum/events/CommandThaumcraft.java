@@ -57,13 +57,30 @@ public final class CommandThaumcraft {
 				.then(Commands.literal("reload").executes(c -> reloadConfig(c.getSource())))
 				.then(setting("hardnodes", "hard mode nodes", () -> NeoThaumConfig.current.hardNodes, v -> NeoThaumConfig.current.hardNodes = v))
 				// NeoThaum Additions, the features not in TC4: off for TC4 as it was (their research and recipes follow on restart)
-				.then(setting("additions", "NeoThaum Additions (restart for research and recipes)", () -> NeoThaumConfig.current.additionsEnabled,
-					v -> NeoThaumConfig.current.additionsEnabled = v))
+				.then(Commands.literal("additions")
+					.executes(c -> {
+						c.getSource().sendSystemMessage(Component.literal("§5NeoThaum Additions are " + (NeoThaumConfig.current.additionsEnabled ? "on" : "off")));
+						return 1;
+					})
+					.then(Commands.argument("value", BoolArgumentType.bool()).executes(c -> {
+						boolean v = BoolArgumentType.getBool(c, "value");
+						NeoThaumConfig.current.additionsEnabled = v;
+						additionsChanged(c.getSource(), "NeoThaum Additions are now " + (v ? "on" : "off"));
+						return 1;
+					})))
 				.then(setting("wussmode", "wuss mode", () -> !NeoThaumConfig.current.allowWarp, v -> NeoThaumConfig.current.allowWarp = !v))
 				.then(number("researchdifficulty", "research difficulty", -1, 1, () -> NeoThaumConfig.current.researchDifficulty,
 					v -> NeoThaumConfig.current.researchDifficulty = v))
 				.then(number("aspectcap", "aspect total cap", 1, 100000, () -> NeoThaumConfig.current.aspectTotalCap,
 					v -> NeoThaumConfig.current.aspectTotalCap = v)))
+			// one addition at a time: /neothaum additions [addition] [enable|disable]
+			.then(Commands.literal("additions")
+				.executes(c -> listAdditions(c.getSource()))
+				.then(Commands.argument("addition", StringArgumentType.word())
+					.suggests((c, b) -> SharedSuggestionProvider.suggest(dev.neothaum.addon.Additions.ALL, b))
+					.executes(c -> addition(c.getSource(), StringArgumentType.getString(c, "addition"), null))
+					.then(Commands.literal("enable").executes(c -> addition(c.getSource(), StringArgumentType.getString(c, "addition"), true)))
+					.then(Commands.literal("disable").executes(c -> addition(c.getSource(), StringArgumentType.getString(c, "addition"), false)))))
 			.then(Commands.literal("warp")
 				.then(Commands.argument("player", EntityArgument.player())
 					.then(Commands.literal("set")
@@ -147,15 +164,53 @@ public final class CommandThaumcraft {
 	private static int reloadConfig(CommandSourceStack src) {
 		src.sendSystemMessage(Component.literal("§5Reading NeoThaum's settings again..."));
 		NeoThaumConfig.load();
+		refresh(src, "NeoThaum settings, research, recipes and aspects reloaded.");
+		return 1;
+	}
+
+	/** Research, then the data (recipes and aspects), read again to follow the settings, which go out to everyone online. */
+	private static void refresh(CommandSourceStack src, String done) {
 		ResearchManager.reload();
 		var server = src.getServer();
 		changed(src);
 		server.reloadResources(server.getPackRepository().getSelectedIds()).thenRun(() -> server.execute(
-			() -> src.sendSuccess(() -> Component.literal("§5NeoThaum settings, research, recipes and aspects reloaded."), true)))
+			() -> src.sendSuccess(() -> Component.literal("§5" + done), true)))
 			.exceptionally(e -> {
-				src.sendFailure(Component.literal("§cNeoThaum settings were read, but reloading the data failed: " + e.getMessage()));
+				src.sendFailure(Component.literal("§cNeoThaum's settings changed, but reloading the data failed: " + e.getMessage()));
 				return null;
 			});
+	}
+
+	/** An additions switch changed: saved, and the research, recipes and aspects follow at once. */
+	private static void additionsChanged(CommandSourceStack src, String done) {
+		NeoThaumConfig.save();
+		refresh(src, done);
+	}
+
+	/** /neothaum additions: each addition, whether it is on, and the master switch. */
+	private static int listAdditions(CommandSourceStack src) {
+		src.sendSystemMessage(Component.literal("§5NeoThaum Additions (features not in TC4)" + (NeoThaumConfig.current.additionsEnabled ? ""
+			: ", all off by /neothaum config additions false") + ":"));
+		for (String a : dev.neothaum.addon.Additions.ALL) {
+			boolean on = dev.neothaum.addon.Additions.own(a);
+			src.sendSystemMessage(Component.literal("  " + (on ? "§a" : "§c") + a + " §7" + (on ? "enabled" : "disabled")));
+		}
+		src.sendSystemMessage(Component.literal("§3Use /neothaum additions <addition> <enable|disable> to switch one."));
+		return 1;
+	}
+
+	/** /neothaum additions <addition> [enable|disable]: shows or switches one addition. */
+	private static int addition(CommandSourceStack src, String name, Boolean on) {
+		if (!dev.neothaum.addon.Additions.ALL.contains(name)) {
+			return invalid(src, "§cNo addition " + name + ": use /neothaum additions to list them");
+		}
+		if (on == null) {
+			src.sendSystemMessage(Component.literal("§5" + name + " is " + (dev.neothaum.addon.Additions.own(name) ? "enabled" : "disabled")
+				+ (NeoThaumConfig.current.additionsEnabled ? "" : " (but every addition is off by /neothaum config additions false)")));
+			return 1;
+		}
+		dev.neothaum.addon.Additions.set(name, on);
+		additionsChanged(src, name + " is now " + (on ? "enabled" : "disabled") + ".");
 		return 1;
 	}
 
@@ -166,7 +221,8 @@ public final class CommandThaumcraft {
 			"  /neothaum warp <player> <add|set> <amount> <PERM|TEMP>", "  not specifying perm or temp will just add normal warp",
 			"§3Use this to see or change a server setting.", "  /neothaum config <hardnodes|wussmode|additions> [true|false]",
 			"  /neothaum config researchdifficulty [-1|0|1]", "  /neothaum config aspectcap [amount]",
-			"§3Use this after editing config/neothaum.json by hand.", "  /neothaum config reload"}) {
+			"§3Use this after editing config/neothaum.json by hand.", "  /neothaum config reload",
+			"§3Use this to list the additions (features not in TC4), or switch one on or off.", "  /neothaum additions [addition] [enable|disable]"}) {
 			src.sendSystemMessage(Component.literal(line));
 		}
 		return 1;

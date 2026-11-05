@@ -218,7 +218,8 @@ public class NeoThaumConfigScreen extends Screen {
 			case 8 -> {
 				this.toggle("NeoThaum Additions", "The master switch for every addition on this page: features that are not in TC4. Turn it off "
 					+ "for Thaumcraft 4 as it was: none of them then do anything, whatever their own switches say, and their research, recipes and "
-					+ "items are hidden (on restart). On a server, an operator can use /neothaum config additions false. Default: on.",
+					+ "items are hidden (on restart). On a server, an operator can use /neothaum config additions false, or switch one addition with "
+					+ "/neothaum additions <addition> <enable|disable>. Default: on.",
 					() -> cfg.additionsEnabled, v -> {
 						cfg.additionsEnabled = v;
 						this.init();
@@ -258,6 +259,16 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "but not from, and the Wayfarer's Compass, which carries five totems. Each is named in Latin for what is round it. Only "
 					+ "a thaumium pickaxe or better can mine them. Takes effect on restart." + off,
 					() -> cfg.additionTravellersTotems, v -> cfg.additionTravellersTotems = v);
+				this.toggle("Vanilla Candles", "Lit vanilla candles round an infusion altar steady it as TC4's tallow candles do, and a candle and a "
+					+ "tallow candle of the same colour can be crafted one into the other. Applies when the world loads or /reload runs." + off,
+					() -> cfg.additionVanillaCandles, v -> cfg.additionVanillaCandles = v);
+				this.toggle("Bright Nodes", "Bright nodes light their surroundings fully (with the Bright Node Light setting) and shine with a lens "
+					+ "flare (with the Bright Node Flare setting); in TC4 every node gives the same dim light." + off,
+					() -> cfg.additionBrightNodes, v -> cfg.additionBrightNodes = v);
+				this.toggle("Cost of Keeping Inventory", "With the keepInventory game rule on, each death costs a little warp and a few aspect "
+					+ "points, so dying is never free." + off, () -> cfg.additionKeepInventoryCost, v -> cfg.additionKeepInventoryCost = v);
+				this.toggle("Node Embedding", "A block placed into an aura node goes in around it instead of destroying it, so a node can be hidden "
+					+ "inside arcane stone or a wall." + off, () -> cfg.additionNodeEmbedding, v -> cfg.additionNodeEmbedding = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

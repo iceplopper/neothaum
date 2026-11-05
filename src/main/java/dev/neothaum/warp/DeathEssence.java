@@ -23,7 +23,7 @@ import net.minecraft.world.level.gamerules.GameRules;
 public final class DeathEssence {
 	public static void init() {
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, player, alive) -> {
-			if (!alive && player.level().getGameRules().get(GameRules.KEEP_INVENTORY)) {
+			if (!alive && player.level().getGameRules().get(GameRules.KEEP_INVENTORY) && dev.neothaum.addon.Additions.enabled("keepinventory_cost")) {
 				take(player);
 			}
 		});

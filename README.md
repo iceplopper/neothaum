@@ -139,12 +139,22 @@ Features that are **not in Thaumcraft 4**, on their own tab. They are **on by de
 - **Warp readout:** with a goggled thaumium fortress helm, your warp beside the hotbar.
 - **Golem marker copy:** copy one golemancer's bell's markers to another bell and its golem.
 - **Modded item aspects:** items from other mods with no aspects take them from their common tags (ores, ingots, gems, logs, food...).
+- **Vanilla candles:** lit vanilla candles steady an infusion altar like tallow candles, and the two trade one for one.
+- **Bright nodes:** bright nodes give full light and a lens flare.
+- **Cost of keeping inventory:** with keepInventory on, death costs a little warp and a few aspect points.
+- **Node embedding:** a block placed into a node goes in around it instead of destroying it.
 
-**For Thaumcraft 4 as it was,** turn the **NeoThaum Additions** master switch off, and restart so their research and recipes go too:
+**For Thaumcraft 4 as it was,** turn the **NeoThaum Additions** master switch off:
 
-- **In game:** Mod Menu → NeoThaum → the NeoThaum Additions tab → NeoThaum Additions: off.
-- **On a server:** an operator runs `/neothaum config additions false` (the server's choice applies to everyone who joins).
-- **By hand:** in `config/neothaum.json`, set `"additionsEnabled": false`.
+- **In game:** Mod Menu → NeoThaum → the NeoThaum Additions tab → NeoThaum Additions: off (restart so their research and recipes go too).
+- **On a server:** an operator runs `/neothaum config additions false`; their research and recipes go at once, and the server's choice
+  applies to everyone who joins.
+- **By hand:** in `config/neothaum.json`, set `"additionsEnabled": false`, then run `/neothaum config reload` (or restart).
+
+**To switch off just one addition,** an operator runs `/neothaum additions <addition> disable` (and `enable` to bring it back);
+`/neothaum additions` alone lists them all and whether each is on. The names are `travellers_totems`, `experience_siphon`,
+`hint_research`, `wood_sets`, `research_sharing`, `essentia_overlay`, `warp_hud`, `marker_copy`, `modded_aspects`, `vanilla_candles`,
+`bright_nodes`, `keepinventory_cost` and `node_embedding`. Each also has a switch on the settings tab.
 
 Blocks and items already placed from an addition stay in the world, but do nothing while it is off.
 

@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class VanillaCandles {
 	public static void init() {
-		InfusionMatrixBlockEntity.EXTRA_STABILISERS.add((level, pos) -> isLitCandle(level.getBlockState(pos)));
+		InfusionMatrixBlockEntity.EXTRA_STABILISERS.add((level, pos) -> Additions.enabled("vanilla_candles") && isLitCandle(level.getBlockState(pos)));
 		// the tallow entry shows the vanilla candle's own recipe
 		TVNetwork.EXTRA_SYNCED_RECIPES.add(Identifier.withDefaultNamespace("candle"));
 	}

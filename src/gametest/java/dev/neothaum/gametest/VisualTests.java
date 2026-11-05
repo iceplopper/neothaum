@@ -1485,6 +1485,56 @@ public class VisualTests implements FabricClientGameTest {
 	 * /nt config reload: the settings file, edited by hand, is read again; the research and data follow (here, the additions switched off
 	 * takes the totem research and the Home Totem recipe away, and switching them back on returns them).
 	 */
+	/**
+	 * /nt additions <addition> enable|disable: every addition switches on its own, is saved, and its data follows at once (here the candle
+	 * exchange recipes, and lit vanilla candles steadying an altar).
+	 */
+	private static void additionsCommandScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		var all = dev.neothaum.addon.Additions.ALL;
+		server.runCommand("setblock 4 120 4 minecraft:candle[lit=true]");
+		server.runCommand("nt additions");
+		server.runCommand("nt additions vanilla_candles disable");
+		ctx.waitTicks(60);
+		java.util.function.Function<net.minecraft.server.MinecraftServer, String> look = srv -> {
+			var level = srv.overworld();
+			boolean steadies = dev.neothaum.tiles.InfusionMatrixBlockEntity.EXTRA_STABILISERS.stream()
+				.anyMatch(e -> e.test(level, new net.minecraft.core.BlockPos(4, 120, 4)));
+			boolean recipe = srv.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE,
+				NeoThaum.id("addon/black_candle_from_tallow"))).isPresent();
+			String saved;
+			try {
+				saved = com.google.gson.JsonParser.parseString(java.nio.file.Files.readString(net.fabricmc.loader.api.FabricLoader.getInstance()
+					.getConfigDir().resolve("neothaum.json"))).getAsJsonObject().get("additionVanillaCandles").getAsString();
+			} catch (Exception e) {
+				saved = e.toString();
+			}
+			return "candles " + dev.neothaum.addon.Additions.enabled("vanilla_candles") + " steadies " + steadies + " recipe " + recipe
+				+ " saved " + saved;
+		};
+		String off = server.computeOnServer(look::apply);
+		server.runCommand("nt additions vanilla_candles enable");
+		ctx.waitTicks(60);
+		String on = server.computeOnServer(look::apply);
+		check("/nt additions vanilla_candles disable|enable switches the candles, saves it, and their recipes follow",
+			off.equals("candles false steadies false recipe false saved false") && on.equals("candles true steadies true recipe true saved true"),
+			off + " | " + on);
+		// each of the rest on its own, leaving the others alone
+		StringBuilder wrong = new StringBuilder();
+		for (String a : all) {
+			server.runCommand("nt additions " + a + " disable");
+			String state = server.computeOnServer(srv -> all.stream().filter(x -> !dev.neothaum.addon.Additions.enabled(x)).toList().toString());
+			if (!state.equals("[" + a + "]")) {
+				wrong.append(' ').append(a).append(" left off ").append(state);
+			}
+			server.runCommand("nt additions " + a + " enable");
+		}
+		ctx.waitTicks(60);
+		String after = server.computeOnServer(srv -> dev.neothaum.addon.Additions.state());
+		check("every one of the " + all.size() + " additions switches off and on by itself",
+			wrong.isEmpty() && after.equals(String.join(",", all)), wrong + " after " + after);
+		server.runCommand("setblock 4 120 4 air");
+	}
+
 	private static void configReloadScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
 		java.nio.file.Path file = net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir().resolve("neothaum.json");
 		dev.neothaum.config.NeoThaumConfig.save();
@@ -2248,6 +2298,7 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "reload" -> {
 				configReloadScene(ctx, server);
+				additionsCommandScene(ctx, server);
 			}
 			case "compat" -> {
 				compatScene(ctx, server);

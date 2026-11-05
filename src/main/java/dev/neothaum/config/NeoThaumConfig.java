@@ -192,6 +192,14 @@ public class NeoThaumConfig {
 		public boolean additionExperienceSiphon = true;
 		/** Traveller's Totems, the Home Totem and the Wayfarer's Compass: travel between totems you have learned. On restart. */
 		public boolean additionTravellersTotems = true;
+		/** Lit vanilla candles count as tallow candles round an infusion altar, and the two trade one for one. */
+		public boolean additionVanillaCandles = true;
+		/** Bright nodes give full light (and, with the brightNodeFlare setting, a lens flare); in TC4 every node gives light 8. */
+		public boolean additionBrightNodes = true;
+		/** With keepInventory on, death costs a little warp and a few aspect points. */
+		public boolean additionKeepInventoryCost = true;
+		/** Blocks placed into a node go inside it instead of destroying it (arcane stone hides a node). */
+		public boolean additionNodeEmbedding = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {
@@ -222,9 +230,10 @@ public class NeoThaumConfig {
 	 * TC4's PacketConfig: the settings the server decides that the client also needs, sent when a player joins. Null when not connected; read
 	 * through the accessors below, which fall back to this game's own config.
 	 */
-	public record Synced(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp, boolean additions) {
-		public static Synced of(ConfigData c) {
-			return new Synced(c.researchDifficulty, c.aspectTotalCap, c.hardNodes, c.allowWarp, c.additionsEnabled);
+	public record Synced(int researchDifficulty, int aspectTotalCap, boolean hardNodes, boolean allowWarp, boolean additions, String additionsOff) {
+		/** Whether the server has this one addition switched on (its own switch, whatever the master switch says). */
+		public boolean addition(String name) {
+			return !java.util.Arrays.asList(additionsOff.split(",")).contains(name);
 		}
 	}
 

@@ -44,7 +44,7 @@ public final class BrightNodeFlare {
 
 	/** From NodeRenderer: a bright node was drawn this frame. */
 	public static void seen(BlockPos pos, int color) {
-		if (!NeoThaumConfig.current.brightNodeFlare) {
+		if (!NeoThaumConfig.current.brightNodeFlare || !dev.neothaum.addon.Additions.enabled("bright_nodes")) {
 			return;
 		}
 		Flare f = FLARES.computeIfAbsent(pos.immutable(), p -> new Flare());

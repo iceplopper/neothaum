@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class BrightNodes {
 	public static boolean shouldGlow(NodeModifier modifier) {
-		return modifier == NodeModifier.BRIGHT && NeoThaumConfig.current.brightNodeLight;
+		return modifier == NodeModifier.BRIGHT && NeoThaumConfig.current.brightNodeLight && Additions.enabled("bright_nodes");
 	}
 
 	/** Sets the node block at pos bright or not to match its modifier; anything but a free-floating aura node is left alone. */

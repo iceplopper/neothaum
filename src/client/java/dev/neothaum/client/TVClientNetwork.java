@@ -83,19 +83,19 @@ public final class TVClientNetwork {
 		// PacketConfig: on another's server, its settings win over this game's own (in single player they are the same settings already)
 		ClientPlayNetworking.registerGlobalReceiver(TVNetwork.ConfigSync.TYPE, (p, ctx) -> {
 			if (!ctx.client().hasSingleplayerServer()) {
-				boolean was = dev.neothaum.config.NeoThaumConfig.additionsEnabled();
+				String was = dev.neothaum.addon.Additions.state();
 				dev.neothaum.config.NeoThaumConfig.synced = new dev.neothaum.config.NeoThaumConfig.Synced(p.researchDifficulty(), p.aspectTotalCap(),
-					p.hardNodes(), p.allowWarp(), p.additions());
-				// the additions' research follows the server's switch
-				if (was != p.additions()) {
+					p.hardNodes(), p.allowWarp(), p.additions(), p.additionsOff());
+				// the additions' research follows the server's switches
+				if (!was.equals(dev.neothaum.addon.Additions.state())) {
 					ctx.client().execute(dev.neothaum.research.ResearchManager::reload);
 				}
 			}
 		});
 		net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
-			boolean was = dev.neothaum.config.NeoThaumConfig.additionsEnabled();
+			String was = dev.neothaum.addon.Additions.state();
 			dev.neothaum.config.NeoThaumConfig.synced = null;
-			if (was != dev.neothaum.config.NeoThaumConfig.current.additionsEnabled) {
+			if (!was.equals(dev.neothaum.addon.Additions.state())) {
 				client.execute(dev.neothaum.research.ResearchManager::reload);
 			}
 		});
