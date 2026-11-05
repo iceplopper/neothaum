@@ -35,7 +35,7 @@ public class WayfarersCompassItem extends Item {
 				return InteractionResult.FAIL;
 			}
 			List<net.minecraft.core.GlobalPos> saved = stack.getOrDefault(TravellersTotems.COMPASS_TOTEMS, List.of());
-			ServerPlayNetworking.send(sp, new TravellersTotems.OpenTravel(Optional.empty(), TotemTravel.destinations(sp, Optional.empty(), saved)));
+			ServerPlayNetworking.send(sp, new TravellersTotems.OpenTravel(Optional.empty(), "", TotemTravel.destinations(sp, Optional.empty(), saved)));
 		}
 		return InteractionResult.SUCCESS;
 	}

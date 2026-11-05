@@ -2362,5 +2362,13 @@
   "tc.research_name.WAYCOMPASS": "Wayfarer's Compass",
   "tc.research_text.WAYCOMPASS": "[NeoThaum Addition] Travel in your pocket",
   "tc.research_page.WAYCOMPASS.1": "This compass carries the bearings of up to five totems: sneak and use it on one you know to set it down. Use it anywhere to go to any of them, or home.",
-  "tc.research_page.WAYCOMPASS.2": "It keeps no memory of where you set out from, so there is no going back unless a totem waits there. Its needle needs half a minute to settle between journeys."
+  "tc.research_page.WAYCOMPASS.2": "It keeps no memory of where you set out from, so there is no going back unless a totem waits there. Its needle needs half a minute to settle between journeys.",
+  "neothaum.totem.screen.here": "You stand at %s",
+  "neothaum.compass.screen.here": "The compass's bearings",
+  "neothaum.totem.screen.travel": "Travel",
+  "neothaum.totem.screen.your_home": "Your home",
+  "neothaum.totem.screen.away": "%s away",
+  "neothaum.totem.screen.pick": "Choose a totem from the list.",
+  "neothaum.jade.totem": "Totem: %s",
+  "config.jade.plugin_neothaum.totem": "Traveller's Totem"
 }

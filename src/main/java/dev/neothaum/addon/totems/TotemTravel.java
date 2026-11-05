@@ -79,7 +79,8 @@ public final class TotemTravel {
 	}
 
 	public static void openList(ServerPlayer sp, Optional<GlobalPos> from) {
-		ServerPlayNetworking.send(sp, new TravellersTotems.OpenTravel(from, destinations(sp, from, null)));
+		String name = from.map(f -> TotemData.get(sp.level().getServer()).get(f)).map(TotemData.Totem::name).orElse("");
+		ServerPlayNetworking.send(sp, new TravellersTotems.OpenTravel(from, name, destinations(sp, from, null)));
 	}
 
 	/** The player picked a destination. From a totem: one they know, near them. With the compass: one it carries, or home. */

@@ -1095,6 +1095,11 @@ public class VisualTests implements FabricClientGameTest {
 				+ " listed " + dev.neothaum.addon.totems.TotemData.get(srv).all().size();
 		});
 		check("totems name themselves when placed", named.equals("named true different true listed 3"), named);
+		// the client has each totem's name (Jade shows it from there)
+		ctx.waitTicks(5);
+		String clientName = ctx.computeOnClient(mc -> mc.level.getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0))
+			instanceof dev.neothaum.addon.totems.TotemBlockEntity be ? be.name : "none");
+		check("the client knows a totem's name", !clientName.isEmpty() && !clientName.equals("none"), clientName);
 		// learning both, travelling from one to the other, and being stopped by moving
 		String travel = server.computeOnServer(srv -> {
 			var level = srv.overworld();
@@ -1324,6 +1329,14 @@ public class VisualTests implements FabricClientGameTest {
 			java.util.Optional.of(net.minecraft.core.GlobalPos.of(srv.overworld().dimension(), new net.minecraft.core.BlockPos(0, 116, 0)))));
 		ctx.waitTicks(10);
 		shot(ctx, "totem_travel_list");
+		// the totem picked, shown on the right page
+		ctx.runOnClient(mc -> {
+			if (mc.gui.screen() instanceof dev.neothaum.client.addon.TotemTravelScreen s) {
+				s.select(0);
+			}
+		});
+		ctx.waitTicks(5);
+		shot(ctx, "totem_travel_selected");
 		ctx.setScreen(() -> null);
 		ResearchItem loreEntry = ctx.computeOnClient(mc -> ResearchManager.getResearch("TOTEMLORE"));
 		check("totem research is loaded", loreEntry != null, String.valueOf(loreEntry));

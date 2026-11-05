@@ -102,11 +102,15 @@ public final class TravellersTotems {
 			ByteBufCodecs.STRING_UTF8, Destination::name, ByteBufCodecs.BOOL, Destination::home, Destination::new);
 	}
 
-	/** Server to client: open the travel list, from a totem ({@code from} its position) or the compass (no position). */
-	public record OpenTravel(Optional<GlobalPos> from, List<Destination> destinations) implements CustomPacketPayload {
+	/**
+	 * Server to client: open the travel list, from a totem ({@code from} its position, {@code fromName} its name) or the compass (no position,
+	 * no name).
+	 */
+	public record OpenTravel(Optional<GlobalPos> from, String fromName, List<Destination> destinations) implements CustomPacketPayload {
 		public static final Type<OpenTravel> TYPE = new Type<>(NeoThaum.id("totem_travel_list"));
 		public static final StreamCodec<ByteBuf, OpenTravel> CODEC = StreamCodec.composite(ByteBufCodecs.optional(GlobalPos.STREAM_CODEC),
-			OpenTravel::from, Destination.CODEC.apply(ByteBufCodecs.list()), OpenTravel::destinations, OpenTravel::new);
+			OpenTravel::from, ByteBufCodecs.STRING_UTF8, OpenTravel::fromName, Destination.CODEC.apply(ByteBufCodecs.list()), OpenTravel::destinations,
+			OpenTravel::new);
 
 		@Override
 		public Type<OpenTravel> type() {

@@ -27,6 +27,21 @@ public class NeoThaumJadePlugin implements IWailaPlugin {
 
 	@Override
 	public void registerClient(IWailaClientRegistration registration) {
+		// Traveller's Totems and Home Totems: the totem's name (it lives on the block entity, which the client is sent)
+		registration.registerBlockComponent(new IBlockComponentProvider() {
+			@Override
+			public Identifier getUid() {
+				return NeoThaum.id("totem");
+			}
+
+			@Override
+			public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+				if (accessor.getBlockEntity() instanceof dev.neothaum.addon.totems.TotemBlockEntity totem && !totem.name.isEmpty()) {
+					tooltip.add(Component.translatable("neothaum.jade.totem", totem.name).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+				}
+			}
+		}, dev.neothaum.addon.totems.TotemBlock.class);
+
 		// Aura Node Provider
 		registration.registerBlockComponent(new IBlockComponentProvider() {
 			@Override
