@@ -1427,6 +1427,69 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.waitTicks(20);
 	}
 
+	/**
+	 * The rings' colours side by side, left to right: a totem nobody has attuned to (grey), one someone else has (sea-green), one this
+	 * player has (violet), and this player's Home Totem (amber); each on its dais.
+	 */
+	private static void totemColoursScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear", "fill -16 116 -6 16 126 20 air",
+			"fill -16 115 -6 16 115 20 grass_block", "fill -16 114 -6 16 112 20 dirt"}) {
+			server.runCommand(cmd);
+		}
+		String colours = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var player = srv.getPlayerList().getPlayers().get(0);
+			var known = player.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN);
+			StringBuilder out = new StringBuilder();
+			int[] xs = {-9, -3, 3, 9};
+			for (int i = 0; i < 4; i++) {
+				var ground = new net.minecraft.core.BlockPos(xs[i], 115, 0);
+				dev.neothaum.addon.totems.TotemFeature.build(level, net.minecraft.util.RandomSource.create(i), ground);
+				var at = ground.above(2);
+				if (i == 3) {
+					level.setBlock(at, dev.neothaum.addon.totems.TravellersTotems.HOME_TOTEM.defaultBlockState(), 3);
+				}
+				if (level.getBlockEntity(at) instanceof dev.neothaum.addon.totems.TotemBlockEntity be) {
+					be.attuned = i > 0;
+					be.setChanged();
+					var gp = be.globalPos();
+					known = known.forget(gp);
+					if (i == 2) {
+						known = known.learn(gp);
+					} else if (i == 3) {
+						known = known.withHome(java.util.Optional.of(gp));
+					}
+					level.sendBlockUpdated(at, level.getBlockState(at), level.getBlockState(at), 3);
+				}
+			}
+			player.setAttached(dev.neothaum.addon.totems.TravellersTotems.KNOWN, known);
+			return "built";
+		});
+		server.runCommand("tp @a 0.5 121 16.5 180 18");
+		ctx.waitTicks(60);
+		String seen = ctx.computeOnClient(mc -> {
+			StringBuilder sb = new StringBuilder();
+			for (int x : new int[]{-9, -3, 3, 9}) {
+				if (mc.level.getBlockEntity(new net.minecraft.core.BlockPos(x, 117, 0)) instanceof dev.neothaum.addon.totems.TotemBlockEntity be) {
+					float[] c = dev.neothaum.client.addon.TotemRenderer.colour(be, mc.player);
+					sb.append(c == dev.neothaum.client.addon.TotemRenderer.NOBODY ? "grey " : c == dev.neothaum.client.addon.TotemRenderer.OTHERS
+						? "sea-green " : c == dev.neothaum.client.addon.TotemRenderer.VIOLET ? "violet " : c == dev.neothaum.client.addon.TotemRenderer.AMBER
+						? "amber " : "? ");
+				} else {
+					sb.append("missing ");
+				}
+			}
+			return sb.toString().trim();
+		});
+		check("totem rings, left to right: nobody's, someone else's, mine, my home", seen.equals("grey sea-green violet amber"), colours + " " + seen);
+		shot(ctx, "totem_colours");
+		for (int x : new int[]{-9, -3, 3, 9}) {
+			server.runCommand("tp @a " + (x + 0.5) + " 119.3 5.2 180 14");
+			ctx.waitTicks(15);
+			shot(ctx, "totem_colour_" + x);
+		}
+	}
+
 	/** The totem's dais, on flat ground: the totem on a full arcane stone block, ringed by brick slabs, a flush block at each cardinal point. */
 	private static void daisScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
 		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear", "fill -6 116 -6 6 122 6 air",
@@ -2116,7 +2179,7 @@ public class VisualTests implements FabricClientGameTest {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "reload", "compat",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "totemcolours", "reload", "compat",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -2295,6 +2358,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "dais" -> {
 				daisScene(ctx, server);
+			}
+			case "totemcolours" -> {
+				totemColoursScene(ctx, server);
 			}
 			case "reload" -> {
 				configReloadScene(ctx, server);
