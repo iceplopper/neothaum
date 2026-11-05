@@ -2370,5 +2370,8 @@
   "neothaum.totem.screen.away": "%s away",
   "neothaum.totem.screen.pick": "Choose a totem from the list.",
   "neothaum.jade.totem": "Totem: %s",
-  "config.jade.plugin_neothaum.totem": "Traveller's Totem"
+  "config.jade.plugin_neothaum.totem": "Traveller's Totem",
+  "neothaum.totem.rename.title": "What is this stone called?",
+  "neothaum.totem.rename.done": "Name it",
+  "neothaum.totem.rename.restore": "Its own name"
 }

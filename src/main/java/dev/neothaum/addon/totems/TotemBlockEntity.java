@@ -17,6 +17,8 @@ public class TotemBlockEntity extends TVBlockEntity {
 	public String name = "";
 	/** Generated with the world, not raised by a player: the first to touch one learns the totems' lore. */
 	public boolean natural;
+	/** Someone has attuned to it (or, for a Home Totem, claimed it): its ring shows it to those who haven't yet. */
+	public boolean attuned;
 	private int age;
 
 	public TotemBlockEntity(BlockPos pos, BlockState state) {
@@ -47,6 +49,7 @@ public class TotemBlockEntity extends TVBlockEntity {
 		super.loadAdditional(input);
 		this.name = input.getStringOr("Name", "");
 		this.natural = input.getBooleanOr("Natural", false);
+		this.attuned = input.getBooleanOr("Attuned", false);
 	}
 
 	@Override
@@ -54,5 +57,6 @@ public class TotemBlockEntity extends TVBlockEntity {
 		super.saveAdditional(output);
 		output.putString("Name", this.name);
 		output.putBoolean("Natural", this.natural);
+		output.putBoolean("Attuned", this.attuned);
 	}
 }

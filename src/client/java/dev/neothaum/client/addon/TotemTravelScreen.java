@@ -17,16 +17,18 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 
 /**
- * Travelling by totem, written in the open Thaumonomicon. The left page names the totem you stand at (or the compass) and lists where you
- * can go, nearest first and home last, each name kept to its page; the right page shows the one you pick, its name in full and how far it
- * is, with the button to go there.
+ * Travelling by totem, on a carved slab of arcane stone. The left tablet names the totem you stand at (or the compass) and lists where you
+ * can go, nearest first and home last, each name kept to its tablet; the right tablet shows the one you pick, its name in full and how far
+ * it is, with the button to go there. A glowing violet channel runs between them.
  */
 public class TotemTravelScreen extends Screen {
-	private static final Identifier PAGE = NeoThaum.id("textures/gui/gui_researchbook.png");
-	private static final int PER_PAGE = 8;
+	private static final Identifier SLAB = NeoThaum.id("textures/gui/gui_totem.png");
+	private static final int PER_PAGE = 7;
 	private static final int ROW = 13;
-	private static final int INK = 0xFF2E2014;
-	private static final int FADED = 0xFF7A6A55;
+	/** Pale lettering on the dark stone, and a fainter violet for what goes with it. */
+	private static final int INK = 0xFFEDE4F7;
+	private static final int FADED = 0xFFA996C9;
+	private static final int HOME = 0xFFF2C878;
 	private static final int TEXT_W = 104;
 	private final Optional<GlobalPos> from;
 	private final String fromName;
@@ -47,30 +49,38 @@ public class TotemTravelScreen extends Screen {
 			() -> ctx.client().gui.setScreen(new TotemTravelScreen(p.from(), p.fromName(), p.destinations()))));
 	}
 
-	/** The left page's text column. */
-	private int leftX() {
-		return this.width / 2 - 116;
+	private int slabX() {
+		return this.width / 2 - 128;
 	}
 
-	/** The right page's text column. */
+	private int slabY() {
+		return this.height / 2 - 90;
+	}
+
+	/** The left tablet's text column. */
+	private int leftX() {
+		return this.slabX() + 14;
+	}
+
+	/** The right tablet's text column. */
 	private int rightX() {
-		return this.width / 2 + 12;
+		return this.slabX() + 138;
 	}
 
 	private int top() {
-		return this.height / 2 - 86;
+		return this.slabY() + 15;
 	}
 
 	@Override
 	protected void init() {
 		this.travel = this.addRenderableWidget(Button.builder(Component.translatable("neothaum.totem.screen.travel"), b -> this.travel())
-			.bounds(this.rightX() + 12, this.top() + 140, 80, 20).build());
+			.bounds(this.rightX() + 12, this.top() + 128, 80, 20).build());
 		this.travel.active = this.selected >= 0;
 		int pages = this.pages();
 		Button back = this.addRenderableWidget(Button.builder(Component.literal("<"), b -> this.turn(-1))
-			.bounds(this.leftX(), this.top() + 150, 16, 16).build());
+			.bounds(this.leftX(), this.top() + 134, 16, 16).build());
 		Button forward = this.addRenderableWidget(Button.builder(Component.literal(">"), b -> this.turn(1))
-			.bounds(this.leftX() + TEXT_W - 16, this.top() + 150, 16, 16).build());
+			.bounds(this.leftX() + TEXT_W - 16, this.top() + 134, 16, 16).build());
 		back.visible = forward.visible = pages > 1;
 		back.active = this.page > 0;
 		forward.active = this.page < pages - 1;
@@ -138,8 +148,7 @@ public class TotemTravelScreen extends Screen {
 	@Override
 	public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
 		super.extractBackground(g, mouseX, mouseY, a);
-		// the open Thaumonomicon (its 512-pixel sheet, drawn at half size)
-		g.blit(RenderPipelines.GUI_TEXTURED, PAGE, this.width / 2 - 127, this.height / 2 - 95, 0, 0, 254, 181, 256, 256);
+		g.blit(RenderPipelines.GUI_TEXTURED, SLAB, this.slabX(), this.slabY(), 0, 0, 256, 180, 256, 256);
 	}
 
 	@Override
@@ -165,13 +174,13 @@ public class TotemTravelScreen extends Screen {
 			TravellersTotems.Destination d = this.destinations.get(i);
 			int ry = y + 38 + (i - start) * ROW;
 			if (i == this.selected || i == hover) {
-				g.fill(RenderPipelines.GUI, x - 2, ry - 2, x + TEXT_W + 2, ry + ROW - 3, i == this.selected ? 0x40664422 : 0x20664422);
+				g.fill(RenderPipelines.GUI, x - 2, ry - 2, x + TEXT_W + 2, ry + ROW - 3, i == this.selected ? 0x609A6AE0 : 0x309A6AE0);
 			}
 			// the name has the line to itself; how far it is shows on the right page
-			g.text(this.font, Component.literal(this.fit(d.name(), TEXT_W)), x, ry, d.home() ? 0xFF5A3A10 : INK, false);
+			g.text(this.font, Component.literal(this.fit(d.name(), TEXT_W)), x, ry, d.home() ? HOME : INK, false);
 		}
 		if (this.pages() > 1) {
-			this.centred(g, Component.literal((this.page + 1) + " / " + this.pages()), x, y + 154, FADED);
+			this.centred(g, Component.literal((this.page + 1) + " / " + this.pages()), x, y + 138, FADED);
 		}
 		// the right page: the totem picked
 		int rx = this.rightX();

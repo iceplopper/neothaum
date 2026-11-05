@@ -64,6 +64,10 @@ public final class TravellersTotems {
 			GlobalPos.CODEC.listOf().fieldOf("learned").forGetter(Known::learned), GlobalPos.CODEC.optionalFieldOf("home").forGetter(Known::home),
 			Codec.BOOL.optionalFieldOf("reminded", false).forGetter(Known::reminded)).apply(i, Known::new));
 
+		/** Sent to its player, so their totems' rings show which they have attuned. */
+		public static final StreamCodec<ByteBuf, Known> STREAM_CODEC = StreamCodec.composite(GlobalPos.STREAM_CODEC.apply(ByteBufCodecs.list()),
+			Known::learned, ByteBufCodecs.optional(GlobalPos.STREAM_CODEC), Known::home, ByteBufCodecs.BOOL, Known::reminded, Known::new);
+
 		static Known empty() {
 			return new Known(List.of(), Optional.empty(), false);
 		}
@@ -92,7 +96,8 @@ public final class TravellersTotems {
 	}
 
 	public static final AttachmentType<Known> KNOWN = AttachmentRegistry.<Known>builder().persistent(Known.CODEC).copyOnDeath()
-		.initializer(Known::empty).buildAndRegister(NeoThaum.id("totems"));
+		.initializer(Known::empty).syncWith(Known.STREAM_CODEC, net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate.targetOnly())
+		.buildAndRegister(NeoThaum.id("totems"));
 
 	// ------------------------------------------------------------------ network
 
@@ -130,6 +135,33 @@ public final class TravellersTotems {
 		}
 	}
 
+	/** Server to client: open the naming screen for this totem. */
+	public record OpenRename(GlobalPos pos, String name) implements CustomPacketPayload {
+		public static final Type<OpenRename> TYPE = new Type<>(NeoThaum.id("totem_rename_open"));
+		public static final StreamCodec<ByteBuf, OpenRename> CODEC = StreamCodec.composite(GlobalPos.STREAM_CODEC, OpenRename::pos,
+			ByteBufCodecs.STRING_UTF8, OpenRename::name, OpenRename::new);
+
+		@Override
+		public Type<OpenRename> type() {
+			return TYPE;
+		}
+	}
+
+	/** Client to server: give this totem a name, or ({@code restore}) the Latin name its surroundings give it. */
+	public record Rename(GlobalPos pos, String name, boolean restore) implements CustomPacketPayload {
+		public static final Type<Rename> TYPE = new Type<>(NeoThaum.id("totem_rename"));
+		public static final StreamCodec<ByteBuf, Rename> CODEC = StreamCodec.composite(GlobalPos.STREAM_CODEC, Rename::pos,
+			ByteBufCodecs.STRING_UTF8, Rename::name, ByteBufCodecs.BOOL, Rename::restore, Rename::new);
+
+		@Override
+		public Type<Rename> type() {
+			return TYPE;
+		}
+	}
+
+	/** The longest name a totem takes. */
+	public static final int NAME_LENGTH = 32;
+
 	public static boolean enabled() {
 		return Additions.enabled("travellers_totems");
 	}
@@ -158,6 +190,9 @@ public final class TravellersTotems {
 		}
 		PayloadTypeRegistry.clientboundPlay().register(OpenTravel.TYPE, OpenTravel.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(TravelTo.TYPE, TravelTo.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(OpenRename.TYPE, OpenRename.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(Rename.TYPE, Rename.CODEC);
+		ServerPlayNetworking.registerGlobalReceiver(Rename.TYPE, (p, ctx) -> TotemBlock.rename(ctx.player(), p.pos(), p.name(), p.restore()));
 		ServerPlayNetworking.registerGlobalReceiver(TravelTo.TYPE, (p, ctx) -> TotemTravel.request(ctx.player(), p.target(), p.compass()));
 		TotemTravel.init();
 		// rarely, a totem in the world

@@ -15,14 +15,20 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
-/** A ring of glowing runes turning slowly above a totem, rising and falling a little: violet over a Traveller's Totem, amber over a Home Totem. */
+/**
+ * A ring of glowing runes turning slowly above a totem, rising and falling a little. Its colour is for whoever looks at it: violet over a
+ * Traveller's Totem they have attuned to (amber over their own Home Totem), sea-green over one someone else has attuned to (or claimed) but
+ * they haven't, and a faint grey over one nobody has.
+ */
 public class TotemRenderer implements BlockEntityRenderer<TotemBlockEntity, TotemRenderer.State> {
 	private static final Identifier RING = NeoThaum.id("textures/misc/totem_ring.png");
 	private static final int SEGMENTS = 20;
 
 	public static class State extends BlockEntityRenderState {
 		float time;
-		boolean home;
+		float r;
+		float g;
+		float b;
 	}
 
 	public TotemRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -37,14 +43,31 @@ public class TotemRenderer implements BlockEntityRenderer<TotemBlockEntity, Tote
 	public void extractRenderState(TotemBlockEntity be, State s, float pt, Vec3 cam, ModelFeatureRenderer.CrumblingOverlay crumbling) {
 		BlockEntityRenderer.super.extractRenderState(be, s, pt, cam, crumbling);
 		s.time = (be.getLevel() == null ? 0 : be.getLevel().getGameTime() % 24000L) + pt + (be.getBlockPos().hashCode() & 255);
-		s.home = be.isHome();
+		var mc = net.minecraft.client.Minecraft.getInstance();
+		boolean mine = false;
+		if (mc.player != null && be.getLevel() != null) {
+			var gp = be.globalPos();
+			var known = mc.player.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN);
+			mine = be.isHome() ? known.home().filter(gp::equals).isPresent() : known.learned().contains(gp);
+		}
+		float[] c = mine ? (be.isHome() ? AMBER : VIOLET) : be.attuned ? OTHERS : NOBODY;
+		s.r = c[0];
+		s.g = c[1];
+		s.b = c[2];
 	}
+
+	private static final float[] VIOLET = {0.69F, 0.47F, 1.0F};
+	private static final float[] AMBER = {1.0F, 0.75F, 0.31F};
+	/** Attuned by someone, but not by the one looking. */
+	private static final float[] OTHERS = {0.35F, 0.9F, 0.75F};
+	/** Attuned by nobody yet. */
+	private static final float[] NOBODY = {0.62F, 0.62F, 0.66F};
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
-		float r = s.home ? 1.0F : 0.69F;
-		float g = s.home ? 0.75F : 0.47F;
-		float b = s.home ? 0.31F : 1.0F;
+		float r = s.r;
+		float g = s.g;
+		float b = s.b;
 		float bob = Mth.sin(s.time / 20.0F) * 0.03F;
 		ps.pushPose();
 		ps.translate(0.5F, 1.12F + bob, 0.5F);

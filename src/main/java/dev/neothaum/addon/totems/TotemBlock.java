@@ -137,6 +137,8 @@ public class TotemBlock extends BaseEntityBlock {
 				} else {
 					String old = known.home().map(h -> TotemData.get(sp.level().getServer()).get(h)).map(TotemData.Totem::name).orElse(null);
 					sp.setAttached(TravellersTotems.KNOWN, known.withHome(Optional.of(gp)));
+					totem.attuned = true;
+					totem.markForUpdate();
 					sp.sendSystemMessage((old == null ? Component.translatable("neothaum.totem.home.set", totem.name)
 						: Component.translatable("neothaum.totem.home.replaced", totem.name, old)).withStyle(ChatFormatting.DARK_PURPLE));
 					level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -157,6 +159,11 @@ public class TotemBlock extends BaseEntityBlock {
 		}
 		GlobalPos gp = totem.globalPos();
 		var known = sp.getAttachedOrCreate(TravellersTotems.KNOWN);
+		// sneaking: the naming screen, for anyone who knows it
+		if (sp.isShiftKeyDown() && (known.learned().contains(gp) || known.home().filter(gp::equals).isPresent())) {
+			net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.send(sp, new TravellersTotems.OpenRename(gp, totem.name));
+			return InteractionResult.SUCCESS;
+		}
 		if (this.home) {
 			// a Home Totem says what it is, and how to claim it; it sends no one anywhere
 			sp.sendSystemMessage(Component.translatable(known.home().filter(gp::equals).isPresent() ? "neothaum.totem.home.yours"
@@ -165,6 +172,8 @@ public class TotemBlock extends BaseEntityBlock {
 		}
 		if (!known.learned().contains(gp)) {
 			sp.setAttached(TravellersTotems.KNOWN, known.learn(gp));
+			totem.attuned = true;
+			totem.markForUpdate();
 			sp.sendSystemMessage(Component.translatable("neothaum.totem.learned", totem.name).withStyle(ChatFormatting.DARK_PURPLE));
 			level.playSound(null, pos, dev.neothaum.registry.TVSounds.LEARN, SoundSource.PLAYERS, 0.75F, 1.0F);
 			// the first totem found in the world teaches what they are
@@ -176,6 +185,35 @@ public class TotemBlock extends BaseEntityBlock {
 		}
 		TotemTravel.openList(sp, Optional.of(gp));
 		return InteractionResult.SUCCESS;
+	}
+
+	/** A name from the naming screen: for someone who knows the totem and stands near it. {@code restore} gives back its own Latin name. */
+	public static void rename(ServerPlayer sp, GlobalPos gp, String name, boolean restore) {
+		if (!TravellersTotems.enabled() || gp.dimension() != sp.level().dimension() || gp.pos().distToCenterSqr(sp.position()) > 64
+			|| !(sp.level().getBlockEntity(gp.pos()) instanceof TotemBlockEntity totem)) {
+			return;
+		}
+		var known = sp.getAttachedOrCreate(TravellersTotems.KNOWN);
+		if (!known.learned().contains(gp) && known.home().filter(gp::equals).isEmpty()) {
+			return;
+		}
+		TotemData data = TotemData.get(sp.level().getServer());
+		String chosen;
+		if (restore) {
+			chosen = TotemNames.name((ServerLevel) sp.level(), gp.pos(), n -> !n.equals(totem.name) && data.nameTaken(n));
+		} else {
+			chosen = name.strip();
+			if (chosen.length() > TravellersTotems.NAME_LENGTH) {
+				chosen = chosen.substring(0, TravellersTotems.NAME_LENGTH);
+			}
+			if (chosen.isEmpty()) {
+				return;
+			}
+		}
+		totem.name = chosen;
+		data.put(new TotemData.Totem(gp, chosen, totem.isHome()));
+		totem.markForUpdate();
+		sp.sendSystemMessage(Component.translatable("neothaum.totem.renamed", chosen).withStyle(ChatFormatting.DARK_PURPLE));
 	}
 
 	private static void saveToCompass(ServerPlayer sp, ItemStack compass, TotemBlockEntity totem, boolean knows) {
