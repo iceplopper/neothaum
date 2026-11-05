@@ -1481,6 +1481,46 @@ public class VisualTests implements FabricClientGameTest {
 		shot(ctx, "totem_dais_above");
 	}
 
+	/**
+	 * /nt config reload: the settings file, edited by hand, is read again; the research and data follow (here, the additions switched off
+	 * takes the totem research and the Home Totem recipe away, and switching them back on returns them).
+	 */
+	private static void configReloadScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		java.nio.file.Path file = net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir().resolve("neothaum.json");
+		dev.neothaum.config.NeoThaumConfig.save();
+		String original;
+		try {
+			original = java.nio.file.Files.readString(file);
+			var json = com.google.gson.JsonParser.parseString(original).getAsJsonObject();
+			json.addProperty("aspectTotalCap", 77);
+			json.addProperty("additionsEnabled", false);
+			java.nio.file.Files.writeString(file, new com.google.gson.GsonBuilder().setPrettyPrinting().create().toJson(json));
+		} catch (java.io.IOException e) {
+			check("config reload: settings file edited", false, e.toString());
+			return;
+		}
+		server.runCommand("nt config reload");
+		ctx.waitTicks(60);
+		String off = server.computeOnServer(srv -> "cap " + dev.neothaum.config.NeoThaumConfig.current.aspectTotalCap
+			+ " additions " + dev.neothaum.config.NeoThaumConfig.current.additionsEnabled
+			+ " lore " + (ResearchManager.getResearch("TOTEMLORE") != null)
+			+ " recipe " + srv.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE,
+				NeoThaum.id("home_totem"))).isPresent());
+		try {
+			java.nio.file.Files.writeString(file, original);
+		} catch (java.io.IOException e) {
+			check("config reload: settings file restored", false, e.toString());
+		}
+		server.runCommand("nt config reload");
+		ctx.waitTicks(60);
+		String on = server.computeOnServer(srv -> " then additions " + dev.neothaum.config.NeoThaumConfig.current.additionsEnabled
+			+ " lore " + (ResearchManager.getResearch("TOTEMLORE") != null)
+			+ " recipe " + srv.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE,
+				NeoThaum.id("home_totem"))).isPresent());
+		check("/nt config reload reads the settings file again, and the research and recipes follow",
+			(off + on).equals("cap 77 additions false lore false recipe false then additions true lore true recipe true"), off + on);
+	}
+
 	/** The mods players add beside NeoThaum (NEOTHAUM_TEST_MODS=compat): what each adds, and the aspects its items and creatures have. */
 	private static final String[] COMPAT_MODS = {"travelersbackpack", "elevatorid", "naturescompass", "sorted", "continuity", "ok_zoomer",
 		"sound_physics_remastered", "leavesbegone"};
@@ -2026,7 +2066,7 @@ public class VisualTests implements FabricClientGameTest {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "compat",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "reload", "compat",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -2205,6 +2245,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "dais" -> {
 				daisScene(ctx, server);
+			}
+			case "reload" -> {
+				configReloadScene(ctx, server);
 			}
 			case "compat" -> {
 				compatScene(ctx, server);

@@ -53,6 +53,8 @@ public final class CommandThaumcraft {
 							.executes(c -> giveAspect(c.getSource(), EntityArgument.getPlayer(c, "player"), StringArgumentType.getString(c, "aspect"),
 								IntegerArgumentType.getInteger(c, "amount")))))))
 			.then(Commands.literal("config")
+				// the settings file read again, as after editing it by hand
+				.then(Commands.literal("reload").executes(c -> reloadConfig(c.getSource())))
 				.then(setting("hardnodes", "hard mode nodes", () -> NeoThaumConfig.current.hardNodes, v -> NeoThaumConfig.current.hardNodes = v))
 				// NeoThaum Additions, the features not in TC4: off for TC4 as it was (their research and recipes follow on restart)
 				.then(setting("additions", "NeoThaum Additions (restart for research and recipes)", () -> NeoThaumConfig.current.additionsEnabled,
@@ -138,12 +140,33 @@ public final class CommandThaumcraft {
 		return 0;
 	}
 
+	/**
+	 * /neothaum config reload: reads config/neothaum.json again, then the research (which follows the additions' switches) and the data
+	 * (recipes and aspects, which do too), and sends the settings to everyone online.
+	 */
+	private static int reloadConfig(CommandSourceStack src) {
+		src.sendSystemMessage(Component.literal("§5Reading NeoThaum's settings again..."));
+		NeoThaumConfig.load();
+		ResearchManager.reload();
+		var server = src.getServer();
+		changed(src);
+		server.reloadResources(server.getPackRepository().getSelectedIds()).thenRun(() -> server.execute(
+			() -> src.sendSuccess(() -> Component.literal("§5NeoThaum settings, research, recipes and aspects reloaded."), true)))
+			.exceptionally(e -> {
+				src.sendFailure(Component.literal("§cNeoThaum settings were read, but reloading the data failed: " + e.getMessage()));
+				return null;
+			});
+		return 1;
+	}
+
 	private static int help(CommandSourceStack src) {
 		for (String line : new String[]{"§3You can also use /nt instead of /neothaum.", "§3Use this to give research to a player.",
 			"  /neothaum research <list|player> <all|reset|<research>>", "§3Use this to give aspect research points to a player.",
 			"  /neothaum aspect <player> <aspect|all> <amount>", "§3Use this to give set a players warp level.",
 			"  /neothaum warp <player> <add|set> <amount> <PERM|TEMP>", "  not specifying perm or temp will just add normal warp",
-			"§3Use this to see or change a server setting.", "  /neothaum config <hardnodes|wussmode> [true|false]", "  /neothaum config researchdifficulty [-1|0|1]", "  /neothaum config aspectcap [amount]"}) {
+			"§3Use this to see or change a server setting.", "  /neothaum config <hardnodes|wussmode|additions> [true|false]",
+			"  /neothaum config researchdifficulty [-1|0|1]", "  /neothaum config aspectcap [amount]",
+			"§3Use this after editing config/neothaum.json by hand.", "  /neothaum config reload"}) {
 			src.sendSystemMessage(Component.literal(line));
 		}
 		return 1;
