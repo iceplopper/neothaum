@@ -1100,6 +1100,23 @@ public class VisualTests implements FabricClientGameTest {
 		String clientName = ctx.computeOnClient(mc -> mc.level.getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0))
 			instanceof dev.neothaum.addon.totems.TotemBlockEntity be ? be.name : "none");
 		check("the client knows a totem's name", !clientName.isEmpty() && !clientName.equals("none"), clientName);
+		// the ring's colour: grey while nobody has attuned it, sea-green once someone else has, violet once this player has
+		java.util.function.Supplier<String> ring = () -> ctx.computeOnClient(mc -> {
+			var be = (dev.neothaum.addon.totems.TotemBlockEntity) mc.level.getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0));
+			float[] c = dev.neothaum.client.addon.TotemRenderer.colour(be, mc.player);
+			return c == dev.neothaum.client.addon.TotemRenderer.NOBODY ? "nobody" : c == dev.neothaum.client.addon.TotemRenderer.OTHERS ? "others"
+				: c == dev.neothaum.client.addon.TotemRenderer.VIOLET ? "mine" : "other colour";
+		});
+		String ringBefore = ring.get();
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var other = net.fabricmc.fabric.api.entity.FakePlayer.get(level, new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "Wanderer"));
+			var at = new net.minecraft.core.BlockPos(0, 116, 0);
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.NORTH, at, false);
+			level.getBlockState(at).useWithoutItem(level, other, hit);
+		});
+		ctx.waitTicks(5);
+		String ringOthers = ring.get();
 		// learning both, travelling from one to the other, and being stopped by moving
 		String travel = server.computeOnServer(srv -> {
 			var level = srv.overworld();
@@ -1118,6 +1135,10 @@ public class VisualTests implements FabricClientGameTest {
 			return " arrived " + (p.blockPosition().closerThan(new net.minecraft.core.BlockPos(30, 117, 0), 2));
 		});
 		check("a known totem takes you to another", (travel + arrived).equals("learned 2 channelling true arrived true"), travel + arrived);
+		ctx.waitTicks(5);
+		String ringMine = ring.get();
+		check("the ring shows who has attuned a totem", (ringBefore + " " + ringOthers + " " + ringMine).equals("nobody others mine"),
+			ringBefore + " " + ringOthers + " " + ringMine);
 		String moved = server.computeOnServer(srv -> {
 			var level = srv.overworld();
 			var p = srv.getPlayerList().getPlayers().get(0);
@@ -1205,6 +1226,16 @@ public class VisualTests implements FabricClientGameTest {
 			return "saved " + saved;
 		});
 		check("the compass carries five totems", compass.equals("saved 5"), compass);
+		// the compass's needle: the nearest totem this player hasn't attuned to
+		server.runCommand("setblock 10 116 -8 neothaum:travellers_totem");
+		ctx.waitTicks(30);
+		String aim = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			p.teleportTo(9.5, 116, -4.5);
+			var target = dev.neothaum.addon.totems.WayfarersCompassItem.aim(p, srv.overworld());
+			return String.valueOf(target);
+		});
+		check("the compass points to the nearest totem not yet attuned to", aim.equals(new net.minecraft.core.BlockPos(10, 116, -8).toString()), aim);
 		// renaming: a name tag on a totem the player knows
 		String renamed = server.computeOnServer(srv -> {
 			var level = srv.overworld();
@@ -1220,6 +1251,50 @@ public class VisualTests implements FabricClientGameTest {
 			return "name " + be.name + " listed " + listed + " tag used " + p.getMainHandItem().isEmpty();
 		});
 		check("a name tag renames a known totem", renamed.equals("name Lapis Testis listed Lapis Testis tag used true"), renamed);
+		// the naming screen: sneak and use a totem you know
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			p.teleportTo(0.5, 116, -1.5);
+			var at = new net.minecraft.core.BlockPos(0, 116, 0);
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.NORTH, at, false);
+			p.setShiftKeyDown(true);
+			level.getBlockState(at).useWithoutItem(level, p, hit);
+			p.setShiftKeyDown(false);
+		});
+		ctx.waitTicks(10);
+		String renameScreen = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+		shot(ctx, "totem_rename");
+		ctx.runOnClient(mc -> {
+			if (mc.gui.screen() instanceof dev.neothaum.client.addon.TotemRenameScreen s) {
+				s.type("Saxum Novum");
+				s.done(false);
+			}
+		});
+		ctx.waitTicks(10);
+		String typed = server.computeOnServer(srv -> ((dev.neothaum.addon.totems.TotemBlockEntity) srv.overworld()
+			.getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0))).name);
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var at = new net.minecraft.core.BlockPos(0, 116, 0);
+			var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.NORTH, at, false);
+			p.setShiftKeyDown(true);
+			level.getBlockState(at).useWithoutItem(level, p, hit);
+			p.setShiftKeyDown(false);
+		});
+		ctx.waitTicks(10);
+		ctx.runOnClient(mc -> {
+			if (mc.gui.screen() instanceof dev.neothaum.client.addon.TotemRenameScreen s) {
+				s.done(true);
+			}
+		});
+		ctx.waitTicks(10);
+		String restored = server.computeOnServer(srv -> ((dev.neothaum.addon.totems.TotemBlockEntity) srv.overworld()
+			.getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0))).name);
+		check("sneak-use opens the naming screen, which names the totem or restores its name", renameScreen.equals("TotemRenameScreen")
+			&& typed.equals("Saxum Novum") && !restored.equals("Saxum Novum") && !restored.isEmpty(), renameScreen + " / " + typed + " / " + restored);
+		// the name tag test below names it again
 		// the lore: the first totem found in the world teaches what they are
 		server.runCommand("setblock -6 116 4 neothaum:travellers_totem");
 		ctx.waitTicks(30);
@@ -3337,6 +3412,58 @@ public class VisualTests implements FabricClientGameTest {
 			return places.size() + " place words, raised " + raised;
 		});
 		NeoThaum.LOGGER.info("[visual-test] totem survey: {}", names);
+		// every village has a Traveller's Totem: three villages found and generated, each searched for its totem
+		net.minecraft.core.BlockPos[] firstTotem = new net.minecraft.core.BlockPos[1];
+		String villages = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			int found = 0;
+			int withTotem = 0;
+			StringBuilder where = new StringBuilder();
+			java.util.Set<Long> seenVillages = new java.util.HashSet<>();
+			for (var origin : new net.minecraft.core.BlockPos[]{new net.minecraft.core.BlockPos(0, 64, 0), new net.minecraft.core.BlockPos(1600, 64, 0),
+				new net.minecraft.core.BlockPos(-1600, 64, 1600)}) {
+				var v = level.findNearestMapStructure(net.minecraft.tags.StructureTags.VILLAGE, origin, 60, false);
+				if (v == null || !seenVillages.add(((long) (v.getX() >> 4) << 32) ^ (v.getZ() >> 4 & 0xffffffffL))) {
+					continue;
+				}
+				found++;
+				for (int dx = -5; dx <= 5; dx++) {
+					for (int dz = -5; dz <= 5; dz++) {
+						level.getChunk((v.getX() >> 4) + dx, (v.getZ() >> 4) + dz);
+					}
+				}
+				net.minecraft.core.BlockPos totem = null;
+				for (int x = v.getX() - 64; x <= v.getX() + 64 && totem == null; x++) {
+					for (int z = v.getZ() - 64; z <= v.getZ() + 64 && totem == null; z++) {
+						int top = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, x, z);
+						for (int y = top - 4; y <= top; y++) {
+							if (level.getBlockState(new net.minecraft.core.BlockPos(x, y, z)).is(dev.neothaum.addon.totems.TravellersTotems.TOTEM)) {
+								totem = new net.minecraft.core.BlockPos(x, y, z);
+								break;
+							}
+						}
+					}
+				}
+				if (totem != null) {
+					withTotem++;
+					if (firstTotem[0] == null) {
+						firstTotem[0] = totem;
+					}
+				}
+				where.append(" [village ").append(v.toShortString()).append(" totem ").append(totem == null ? "none" : totem.toShortString()).append(']');
+			}
+			NeoThaum.LOGGER.info("[visual-test] village totems:{}", where);
+			return "villages " + found + " with totems " + withTotem;
+		});
+		NeoThaum.LOGGER.info("[visual-test] village totem check: {}", villages);
+		String[] vt = villages.split(" ");
+		check("every village has a Traveller's Totem", Integer.parseInt(vt[1]) > 0 && vt[1].equals(vt[4]), villages);
+		if (firstTotem[0] != null) {
+			var at = firstTotem[0];
+			server.runCommand("tp @a " + (at.getX() + 4.5) + " " + (at.getY() + 3) + " " + (at.getZ() + 4.5) + " 135 30");
+			ctx.waitTicks(60);
+			shot(ctx, "village_totem");
+		}
 	}
 
 	/**

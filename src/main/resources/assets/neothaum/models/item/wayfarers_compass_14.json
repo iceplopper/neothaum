@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "neothaum:item/wayfarers_compass"
+    "layer0": "neothaum:item/wayfarers_compass_14"
   }
 }

@@ -43,25 +43,29 @@ public class TotemRenderer implements BlockEntityRenderer<TotemBlockEntity, Tote
 	public void extractRenderState(TotemBlockEntity be, State s, float pt, Vec3 cam, ModelFeatureRenderer.CrumblingOverlay crumbling) {
 		BlockEntityRenderer.super.extractRenderState(be, s, pt, cam, crumbling);
 		s.time = (be.getLevel() == null ? 0 : be.getLevel().getGameTime() % 24000L) + pt + (be.getBlockPos().hashCode() & 255);
-		var mc = net.minecraft.client.Minecraft.getInstance();
-		boolean mine = false;
-		if (mc.player != null && be.getLevel() != null) {
-			var gp = be.globalPos();
-			var known = mc.player.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN);
-			mine = be.isHome() ? known.home().filter(gp::equals).isPresent() : known.learned().contains(gp);
-		}
-		float[] c = mine ? (be.isHome() ? AMBER : VIOLET) : be.attuned ? OTHERS : NOBODY;
+		float[] c = colour(be, net.minecraft.client.Minecraft.getInstance().player);
 		s.r = c[0];
 		s.g = c[1];
 		s.b = c[2];
 	}
 
-	private static final float[] VIOLET = {0.69F, 0.47F, 1.0F};
-	private static final float[] AMBER = {1.0F, 0.75F, 0.31F};
+	/** The ring's colour for this player: theirs, someone else's, or nobody's yet. */
+	public static float[] colour(TotemBlockEntity be, net.minecraft.world.entity.player.Player viewer) {
+		boolean mine = false;
+		if (viewer != null && be.getLevel() != null) {
+			var gp = be.globalPos();
+			var known = viewer.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN);
+			mine = be.isHome() ? known.home().filter(gp::equals).isPresent() : known.learned().contains(gp);
+		}
+		return mine ? (be.isHome() ? AMBER : VIOLET) : be.attuned ? OTHERS : NOBODY;
+	}
+
+	public static final float[] VIOLET = {0.69F, 0.47F, 1.0F};
+	public static final float[] AMBER = {1.0F, 0.75F, 0.31F};
 	/** Attuned by someone, but not by the one looking. */
-	private static final float[] OTHERS = {0.35F, 0.9F, 0.75F};
+	public static final float[] OTHERS = {0.35F, 0.9F, 0.75F};
 	/** Attuned by nobody yet. */
-	private static final float[] NOBODY = {0.62F, 0.62F, 0.66F};
+	public static final float[] NOBODY = {0.62F, 0.62F, 0.66F};
 
 	@Override
 	public void submit(State s, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
