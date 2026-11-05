@@ -29,9 +29,9 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 		}
 	}
 
-	/** Where each primal's waiting points sit: two rows of three below the input. */
+	/** Where each primal's waiting points sit: in its own well, two rows of three below the input (gui_decontable.png). */
 	private static int[] spot(int i) {
-		return new int[]{46 + i % 3 * 18, 42 + i / 3 * 18};
+		return new int[]{60 + i % 3 * 19, 33 + i / 3 * 19};
 	}
 
 	/** The primal under the mouse with points waiting, or -1. */
@@ -55,10 +55,12 @@ public class DeconstructionTableScreen extends AbstractContainerScreen<Deconstru
 
 		this.blit(g, k, l, 0, 0, this.imageWidth, this.imageHeight);
 
+		// the time left to break the item, emptying along the groove beside the input, in TC4's blue
 		int breaktime = this.menu.data.get(0);
 		if (breaktime > 0) {
-			int i1 = breaktime * 46 / 40;
-			this.blit(g, k + 93, l + 15 + 46 - i1, 176, 46 - i1, 9, i1);
+			int w = breaktime * 39 / 40;
+			g.fill(RenderPipelines.GUI, k + 85, l + 15, k + 85 + w, l + 20, 0xFF4C4EC6);
+			g.fill(RenderPipelines.GUI, k + 85, l + 15, k + 85 + w, l + 16, 0xFF8C8EE6);
 		}
 
 		for (int i = 0; i < PRIMALS.length; i++) {

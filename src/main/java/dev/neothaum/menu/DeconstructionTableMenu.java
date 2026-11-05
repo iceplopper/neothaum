@@ -36,7 +36,7 @@ public class DeconstructionTableMenu extends AbstractContainerMenu {
 		this.addDataSlots(data);
 
 		// Slot 0: Deconstruction input slot at (64, 16)
-		this.addSlot(new Slot(tile, 0, 64, 16) {
+		this.addSlot(new Slot(tile, 0, 64, 10) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				var al = ObjectAspects.getAspects(stack);

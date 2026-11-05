@@ -4632,9 +4632,17 @@ public class VisualTests implements FabricClientGameTest {
 		String[] sh = sharing.split("/");
 		check("addition research sharing", Integer.parseInt(sh[0]) > 50 && sh[1].equals("1") && sh[2].equals("3") && sh[3].equals("0"),
 			"taught/permanent warp/sticky warp/warp research taught = " + sharing);
+		// the warp readout shows only with the goggled fortress helm, right of the hotbar
+		server.runOnServer(srv -> {
+			var helm = new net.minecraft.world.item.ItemStack(dev.neothaum.registry.TVItems.THAUMIUM_FORTRESS_HELM);
+			helm.set(dev.neothaum.registry.TVComponents.GOGGLES, true);
+			srv.getPlayerList().getPlayers().get(0).setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, helm);
+		});
 		ctx.runOnClient(mc -> cfg.additionsEnabled = true);
 		ctx.waitTicks(10);
 		shot(ctx, "addition_warp_hud");
+		server.runOnServer(srv -> srv.getPlayerList().getPlayers().get(0).setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD,
+			net.minecraft.world.item.ItemStack.EMPTY));
 		// --- marker copy: one bell's markers onto another bell and its golem
 		String copied = server.computeOnServer(srv -> {
 			var level = srv.overworld();

@@ -27,8 +27,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
  * anything the village built).</li>
  * <li>Elsewhere, rarely (one chunk in {@link #RARITY}), in plains, meadows, forests, taiga and savanna, away from any structure.</li>
  * </ul>
- * Each stands on a raised three-by-three dais of arcane stone bricks set in a flush rim of arcane stone, and names itself once its
- * surroundings have finished generating (TotemBlockEntity.tick).
+ * Each stands on a full block of arcane stone, ringed by arcane stone brick slabs, set in a flush rim of arcane stone; it names itself once
+ * its surroundings have finished generating (TotemBlockEntity.tick).
  */
 public record TotemFeature() implements Feature {
 	public static final MapCodec<TotemFeature> CODEC = MapCodec.unit(new TotemFeature());
@@ -180,8 +180,8 @@ public record TotemFeature() implements Feature {
 	}
 
 	/**
-	 * The dais, with the ground block at {@code ground}: a flush rim of arcane stone (five by five, without its corners), a raised three by
-	 * three of arcane stone bricks, and the totem on top; a footing beneath and nothing growing through it.
+	 * The dais, with the ground block at {@code ground}: a flush rim of arcane stone (five by five, without its corners), a full arcane stone
+	 * block raised in its middle ringed by arcane stone brick slabs, and the totem on the block; a footing beneath and nothing growing through.
 	 */
 	public static void build(WorldGenLevel world, RandomSource random, BlockPos ground) {
 		for (int dx = -2; dx <= 2; dx++) {
@@ -198,8 +198,11 @@ public record TotemFeature() implements Feature {
 				for (int up = 1; up <= 3; up++) {
 					world.setBlock(p.above(up), Blocks.AIR.defaultBlockState(), 2);
 				}
-				if (core) {
-					world.setBlock(p.above(), TVBlocks.ARCANE_STONE_BRICKS.defaultBlockState(), 2);
+				if (dx == 0 && dz == 0) {
+					// the totem stands on a full block of arcane stone, ringed by brick slabs
+					world.setBlock(p.above(), TVBlocks.ARCANE_STONE_BLOCK.defaultBlockState(), 2);
+				} else if (core) {
+					world.setBlock(p.above(), TVBlocks.ARCANE_STONE_SLAB.defaultBlockState(), 2);
 				} else if (random.nextInt(5) == 0) {
 					world.setBlock(p.above(), Blocks.MOSS_CARPET.defaultBlockState(), 2);
 				}

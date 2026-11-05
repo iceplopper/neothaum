@@ -35,8 +35,7 @@ public final class AdditionsHud {
 	 * what it pulls and how hard, and which of its sides are open, the side it pulls hardest from marked.
 	 */
 	private static void essentia(GuiGraphicsExtractor g, Minecraft mc) {
-		var helm = mc.player.getItemBySlot(EquipmentSlot.HEAD);
-		if (!helm.is(TVItems.THAUMIUM_FORTRESS_HELM) || !Boolean.TRUE.equals(helm.get(TVComponents.GOGGLES))) {
+		if (!goggledHelm(mc)) {
 			return;
 		}
 		if (!(mc.hitResult instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK
@@ -63,15 +62,35 @@ public final class AdditionsHud {
 		line(g, mc, x, y + 20, sides.toString(), 0xFFC0C0FF);
 	}
 
-	/** Warp readout: the three kinds of warp, left of the hotbar. */
+	/** Whether the player wears a thaumium fortress helm fitted with goggles (the upgraded Goggles of Revealing). */
+	private static boolean goggledHelm(Minecraft mc) {
+		var helm = mc.player.getItemBySlot(EquipmentSlot.HEAD);
+		return helm.is(TVItems.THAUMIUM_FORTRESS_HELM) && Boolean.TRUE.equals(helm.get(TVComponents.GOGGLES));
+	}
+
+	/**
+	 * Warp readout, while wearing the goggled fortress helm: the three kinds of warp, right of the hotbar, past the off-hand slot or the
+	 * attack indicator when either is drawn there.
+	 */
 	private static void warp(GuiGraphicsExtractor g, Minecraft mc) {
+		if (!goggledHelm(mc)) {
+			return;
+		}
 		PlayerKnowledge k = ResearchManager.knowledge(mc.player);
 		int total = k.warp + k.warpSticky + k.warpTemp;
 		if (total <= 0) {
 			return;
 		}
 		String text = "Warp " + total + " (" + k.warp + "/" + k.warpSticky + "/" + k.warpTemp + ")";
-		line(g, mc, g.guiWidth() / 2 - 97 - mc.font.width(text), g.guiHeight() - 12, text, 0xFFB050E0);
+		// the off-hand slot is on the right for a left-handed player; vanilla's hotbar attack indicator is on the side away from it
+		boolean leftHanded = mc.options.mainHand().get() == net.minecraft.world.entity.HumanoidArm.LEFT;
+		boolean offhand = !mc.player.getOffhandItem().isEmpty();
+		boolean indicator = mc.options.attackIndicator().get() == net.minecraft.client.AttackIndicatorStatus.HOTBAR;
+		int x = g.guiWidth() / 2 + 97;
+		if (leftHanded ? offhand : indicator) {
+			x += 24;
+		}
+		line(g, mc, x, g.guiHeight() - 12, text, 0xFFB050E0);
 	}
 
 	private static void line(GuiGraphicsExtractor g, Minecraft mc, int x, int y, String text, int color) {

@@ -232,7 +232,8 @@ public class NeoThaumConfigScreen extends Screen {
 				this.toggle("Essentia Overlay", "While wearing a thaumium fortress helm fitted with goggles, looking at an essentia tube shows what it "
 					+ "holds, what it pulls and how hard, its open sides and its filter." + off, () -> cfg.additionEssentiaOverlay,
 					v -> cfg.additionEssentiaOverlay = v);
-				this.toggle("Warp Readout", "Shows your warp beside the hotbar: the total, then permanent/sticky/temporary." + off,
+				this.toggle("Warp Readout", "While wearing a thaumium fortress helm fitted with goggles, shows your warp right of the hotbar: the "
+					+ "total, then permanent/sticky/temporary." + off,
 					() -> cfg.additionWarpHud, v -> cfg.additionWarpHud = v);
 				this.toggle("Golem Marker Copy", "Hold a golemancer's bell in each hand, sneak and use the main-hand one in the air: its markers replace "
 					+ "the off-hand bell's, and that bell's golem takes them too." + off, () -> cfg.additionMarkerCopy, v -> cfg.additionMarkerCopy = v);

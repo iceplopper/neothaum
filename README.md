@@ -136,7 +136,7 @@ Features that are **not in Thaumcraft 4**, on their own tab. They are **on by de
 - **Greatwood and silverwood sets:** stripped logs and wood, fences, gates, doors, trapdoors, pressure plates, buttons, shelves and boats.
 - **Shared Understanding:** a research that lets you teach another player your research, for warp.
 - **Essentia overlay:** a thaumium fortress helm fitted with goggles shows an essentia tube's contents, suction, open sides and filter.
-- **Warp readout:** your warp beside the hotbar.
+- **Warp readout:** with a goggled thaumium fortress helm, your warp beside the hotbar.
 - **Golem marker copy:** copy one golemancer's bell's markers to another bell and its golem.
 - **Modded item aspects:** items from other mods with no aspects take them from their common tags (ores, ingots, gems, logs, food...).
 
