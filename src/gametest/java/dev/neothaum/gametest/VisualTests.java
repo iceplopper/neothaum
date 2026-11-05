@@ -1427,7 +1427,7 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.waitTicks(20);
 	}
 
-	/** The totem's dais, built on flat ground: the totem on a full arcane stone block, ringed by brick slabs, in a flush rim; a close look. */
+	/** The totem's dais, on flat ground: the totem on a full arcane stone block, ringed by brick slabs, a flush block at each cardinal point. */
 	private static void daisScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
 		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear", "fill -6 116 -6 6 122 6 air",
 			"fill -6 115 -6 6 115 6 grass_block", "fill -6 114 -6 6 112 6 dirt"}) {
@@ -1444,12 +1444,15 @@ public class VisualTests implements FabricClientGameTest {
 				for (int dz = -2; dz <= 2; dz++) {
 					var flush = level.getBlockState(ground.offset(dx, 0, dz));
 					var raised = level.getBlockState(ground.offset(dx, 1, dz));
-					boolean corner = Math.abs(dx) == 2 && Math.abs(dz) == 2;
 					boolean core = Math.abs(dx) <= 1 && Math.abs(dz) <= 1;
-					if (!corner && !flush.is(dev.neothaum.registry.TVBlocks.ARCANE_STONE_BLOCK)) {
+					boolean point = dx == 0 && Math.abs(dz) == 2 || dz == 0 && Math.abs(dx) == 2;
+					if ((core || point) && !flush.is(dev.neothaum.registry.TVBlocks.ARCANE_STONE_BLOCK)) {
 						bad.append(" flush ").append(dx).append(',').append(dz).append('=').append(flush.getBlock().getName().getString());
-					} else if (!corner && !core) {
+					} else if (point) {
 						rim++;
+					} else if (!core && !flush.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK)) {
+						// between the points, the ground is left as it was
+						bad.append(" ground ").append(dx).append(',').append(dz).append('=').append(flush.getBlock().getName().getString());
 					}
 					if (dx == 0 && dz == 0) {
 						if (!raised.is(dev.neothaum.registry.TVBlocks.ARCANE_STONE_BLOCK)) {
@@ -1468,8 +1471,8 @@ public class VisualTests implements FabricClientGameTest {
 			boolean totem = level.getBlockState(ground.above(2)).is(dev.neothaum.addon.totems.TravellersTotems.TOTEM);
 			return "totem on block " + totem + " slabs " + slabs + " rim " + rim + (bad.isEmpty() ? "" : " wrong:" + bad);
 		});
-		check("the dais: the totem on a full arcane stone block, ringed by brick slabs, in a flush rim",
-			dais.equals("totem on block true slabs 8 rim 12"), dais);
+		check("the dais: the totem on a full arcane stone block, ringed by brick slabs, a flush block at each cardinal point",
+			dais.equals("totem on block true slabs 8 rim 4"), dais);
 		server.runCommand("tp @a 3.5 118.5 3.5 135 35");
 		ctx.waitTicks(30);
 		shot(ctx, "totem_dais");

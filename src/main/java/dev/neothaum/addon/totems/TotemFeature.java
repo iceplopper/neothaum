@@ -27,8 +27,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
  * anything the village built).</li>
  * <li>Elsewhere, rarely (one chunk in {@link #RARITY}), in plains, meadows, forests, taiga and savanna, away from any structure.</li>
  * </ul>
- * Each stands on a full block of arcane stone, ringed by arcane stone brick slabs, set in a flush rim of arcane stone; it names itself once
- * its surroundings have finished generating (TotemBlockEntity.tick).
+ * Each stands on a full block of arcane stone, ringed by arcane stone brick slabs, with a flush block of arcane stone at each cardinal
+ * point; it names itself once its surroundings have finished generating (TotemBlockEntity.tick).
  */
 public record TotemFeature() implements Feature {
 	public static final MapCodec<TotemFeature> CODEC = MapCodec.unit(new TotemFeature());
@@ -180,16 +180,19 @@ public record TotemFeature() implements Feature {
 	}
 
 	/**
-	 * The dais, with the ground block at {@code ground}: a flush rim of arcane stone (five by five, without its corners), a full arcane stone
-	 * block raised in its middle ringed by arcane stone brick slabs, and the totem on the block; a footing beneath and nothing growing through.
+	 * The dais, with the ground block at {@code ground}: a full arcane stone block raised in the middle, ringed by arcane stone brick slabs
+	 * (all on arcane stone set flush in the ground), a flush arcane stone block at each cardinal point, and the totem on the middle block; a
+	 * footing beneath and nothing growing through.
 	 */
 	public static void build(WorldGenLevel world, RandomSource random, BlockPos ground) {
 		for (int dx = -2; dx <= 2; dx++) {
 			for (int dz = -2; dz <= 2; dz++) {
-				if (Math.abs(dx) == 2 && Math.abs(dz) == 2) {
+				boolean core = Math.abs(dx) <= 1 && Math.abs(dz) <= 1;
+				// beyond the raised middle, one flush block at each cardinal point
+				boolean point = dx == 0 && Math.abs(dz) == 2 || dz == 0 && Math.abs(dx) == 2;
+				if (!core && !point) {
 					continue;
 				}
-				boolean core = Math.abs(dx) <= 1 && Math.abs(dz) <= 1;
 				BlockPos p = ground.offset(dx, 0, dz);
 				world.setBlock(p, TVBlocks.ARCANE_STONE_BLOCK.defaultBlockState(), 2);
 				for (int down = 1; down <= 3 && !world.getBlockState(p.below(down)).isSolid(); down++) {
