@@ -1427,6 +1427,57 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.waitTicks(20);
 	}
 
+	/** The totem's dais, built on flat ground: the totem on a full arcane stone block, ringed by brick slabs, in a flush rim; a close look. */
+	private static void daisScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear", "fill -6 116 -6 6 122 6 air",
+			"fill -6 115 -6 6 115 6 grass_block", "fill -6 114 -6 6 112 6 dirt"}) {
+			server.runCommand(cmd);
+		}
+		String dais = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var ground = new net.minecraft.core.BlockPos(0, 115, 0);
+			dev.neothaum.addon.totems.TotemFeature.build(level, net.minecraft.util.RandomSource.create(1), ground);
+			StringBuilder bad = new StringBuilder();
+			int slabs = 0;
+			int rim = 0;
+			for (int dx = -2; dx <= 2; dx++) {
+				for (int dz = -2; dz <= 2; dz++) {
+					var flush = level.getBlockState(ground.offset(dx, 0, dz));
+					var raised = level.getBlockState(ground.offset(dx, 1, dz));
+					boolean corner = Math.abs(dx) == 2 && Math.abs(dz) == 2;
+					boolean core = Math.abs(dx) <= 1 && Math.abs(dz) <= 1;
+					if (!corner && !flush.is(dev.neothaum.registry.TVBlocks.ARCANE_STONE_BLOCK)) {
+						bad.append(" flush ").append(dx).append(',').append(dz).append('=').append(flush.getBlock().getName().getString());
+					} else if (!corner && !core) {
+						rim++;
+					}
+					if (dx == 0 && dz == 0) {
+						if (!raised.is(dev.neothaum.registry.TVBlocks.ARCANE_STONE_BLOCK)) {
+							bad.append(" centre=").append(raised.getBlock().getName().getString());
+						}
+					} else if (core) {
+						if (raised.is(dev.neothaum.registry.TVBlocks.ARCANE_STONE_SLAB)
+							&& raised.getValue(net.minecraft.world.level.block.SlabBlock.TYPE) == net.minecraft.world.level.block.state.properties.SlabType.BOTTOM) {
+							slabs++;
+						} else {
+							bad.append(" ring ").append(dx).append(',').append(dz).append('=').append(raised);
+						}
+					}
+				}
+			}
+			boolean totem = level.getBlockState(ground.above(2)).is(dev.neothaum.addon.totems.TravellersTotems.TOTEM);
+			return "totem on block " + totem + " slabs " + slabs + " rim " + rim + (bad.isEmpty() ? "" : " wrong:" + bad);
+		});
+		check("the dais: the totem on a full arcane stone block, ringed by brick slabs, in a flush rim",
+			dais.equals("totem on block true slabs 8 rim 12"), dais);
+		server.runCommand("tp @a 3.5 118.5 3.5 135 35");
+		ctx.waitTicks(30);
+		shot(ctx, "totem_dais");
+		server.runCommand("tp @a 0.5 121 4.5 180 60");
+		ctx.waitTicks(10);
+		shot(ctx, "totem_dais_above");
+	}
+
 	/** The mods players add beside NeoThaum (NEOTHAUM_TEST_MODS=compat): what each adds, and the aspects its items and creatures have. */
 	private static final String[] COMPAT_MODS = {"travelersbackpack", "elevatorid", "naturescompass", "sorted", "continuity", "ok_zoomer",
 		"sound_physics_remastered", "leavesbegone"};
@@ -1972,7 +2023,7 @@ public class VisualTests implements FabricClientGameTest {
 		"essentia", "suction", "infusion", "tabs", "bellows", "mobs", "peaceful", "wands",
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
-		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "compat",
+		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "compat",
 		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
@@ -2148,6 +2199,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "totems" -> {
 				totemsScene(ctx, server);
+			}
+			case "dais" -> {
+				daisScene(ctx, server);
 			}
 			case "compat" -> {
 				compatScene(ctx, server);
