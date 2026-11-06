@@ -12,7 +12,8 @@
               "source": "block_entity",
               "include": [
                 "neothaum:aspects",
-                "neothaum:aspect_filter"
+                "neothaum:aspect_filter",
+                "neothaum:experience"
               ],
               "type": "minecraft:copy_components"
             }
