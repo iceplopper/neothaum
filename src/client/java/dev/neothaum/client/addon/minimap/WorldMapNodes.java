@@ -50,7 +50,27 @@ public final class WorldMapNodes {
 	private static int tick;
 
 	/** What the map remembers of a node: where it is, its type and modifier, and its strongest aspect for the colour. */
-	record Seen(int x, int y, int z, String type, String modifier, String aspect) {
+	public record Seen(int x, int y, int z, String type, String modifier, String aspect) {
+	}
+
+	/** The nodes seen in this dimension that the player has scanned: for other maps (JourneyMapNodes). */
+	public static List<Seen> seenIn(ResourceKey<Level> dim) {
+		Minecraft mc = Minecraft.getInstance();
+		var nodes = seen.get(dim.identifier().toString());
+		if (nodes == null || mc.player == null) {
+			return List.of();
+		}
+		return nodes.values().stream()
+			.filter(s -> ScanManager.hasBeenScanned(mc.player, ScanManager.ScanResult.node(new net.minecraft.core.BlockPos(s.x, s.y, s.z)))).toList();
+	}
+
+	/** A node's name, as on hover: its type, its modifier, and where it is. */
+	public static String name(Seen s) {
+		String name = Component.translatable("nodetype." + s.type + ".name").getString();
+		if (!s.modifier.isEmpty()) {
+			name += ", " + Component.translatable("nodemod." + s.modifier + ".name").getString();
+		}
+		return name + " (" + s.x + ", " + s.y + ", " + s.z + ")";
 	}
 
 	/** Every second, while wearing goggles, note the nodes in the chunks the client has loaded. */
@@ -208,7 +228,7 @@ public final class WorldMapNodes {
 		};
 	}
 
-	private static int color(Seen s) {
+	static int color(Seen s) {
 		Aspect a = s.aspect.isEmpty() ? null : Aspect.getAspect(s.aspect);
 		return a == null ? 0xFFFFFF : a.getColor();
 	}

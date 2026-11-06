@@ -31,6 +31,9 @@
 		],
 		"modmenu": [
 			"dev.neothaum.client.addon.modmenu.NeoThaumModMenu"
+		],
+		"journeymap": [
+			"dev.neothaum.client.addon.minimap.JourneyMapNodes"
 		]
 	},
 	"depends": {

@@ -50,6 +50,8 @@ configurations {
 	bopTest { transitive = false }
 	// the mods players add alongside NeoThaum (agentic/compat/mods): NEOTHAUM_TEST_MODS=compat
 	compatTest { transitive = false }
+	// JourneyMap's release, for the API bundled inside it (extractJourneymapApi)
+	journeymapMod { transitive = false }
 }
 
 dependencies {
@@ -69,6 +71,10 @@ dependencies {
 	compileOnly "maven.modrinth:appleskin:${project.appleskin_version}"
 	appleskinTest "maven.modrinth:appleskin:${project.appleskin_version}"
 	compileOnly "maven.modrinth:rei:${project.rei_version}"
+	// JourneyMap: its API comes bundled inside the mod jar; extractJourneymapApi takes it out to compile against (JourneyMap supplies it
+	// at runtime)
+	journeymapMod "maven.modrinth:journeymap:${project.journeymap_version}"
+	compileOnly files(layout.buildDirectory.file("journeymap/journeymap-api.jar")).builtBy("extractJourneymapApi")
 	// REI's widget API uses Cloth's math types (Point, Rectangle), which Cloth Config only carries as a nested jar
 	compileOnly "me.shedaniel.cloth:basic-math:0.6.1"
 	// and REI's EntryStacks overloads mention Architectury's FluidStack
@@ -126,4 +132,12 @@ if (!testMods.isEmpty()) {
 		def jars = testMods.unique().collectMany { configurations.getByName(it + "Test").files.collect { f -> f.absolutePath } }
 		vmArg "-Dfabric.addMods=${jars.join(File.pathSeparator)}"
 	}
+}
+
+// JourneyMap's API, as bundled in the JourneyMap release (META-INF/jars/journeymap-api-fabric-*.jar), for compiling JourneyMapNodes
+tasks.register('extractJourneymapApi', Copy) {
+	from({ zipTree(configurations.journeymapMod.singleFile).matching { include 'META-INF/jars/journeymap-api-fabric-*.jar' } })
+	eachFile { it.path = 'journeymap-api.jar' }
+	includeEmptyDirs = false
+	into layout.buildDirectory.dir('journeymap')
 }
