@@ -57,6 +57,8 @@ public class ThaumatoriumBlockEntity extends TVBlockEntity implements AspectCont
 	public int venting = 0;
 	public int counter = 0;
 	public boolean heated = false;
+	/** Heated by an arcane campfire (a NeoThaum Addition): it works a step every 4 ticks instead of 5. */
+	private boolean campfire = false;
 
 	public ThaumatoriumBlockEntity(BlockPos pos, BlockState state) {
 		super(TVBlockEntities.THAUMATORIUM, pos, state);
@@ -188,11 +190,12 @@ public class ThaumatoriumBlockEntity extends TVBlockEntity implements AspectCont
 	public static void serverTick(Level level, BlockPos pos, BlockState state, ThaumatoriumBlockEntity be) {
 		if (be.counter == 0 || be.counter % 40 == 0) {
 			be.heated = be.checkHeat();
+			be.campfire = be.heated && dev.neothaum.addon.ArcaneCampfire.litAt(level, pos.below(2));
 			be.checkUpgrades();
 		}
 		be.counter++;
 
-		if (be.heated && !be.isGettingPower() && be.counter % 5 == 0 && !be.selectedRecipes.isEmpty()) {
+		if (be.heated && !be.isGettingPower() && be.counter % (be.campfire ? 4 : 5) == 0 && !be.selectedRecipes.isEmpty()) {
 			if (be.inputStack.isEmpty()) {
 				be.currentSuction = null;
 				return;

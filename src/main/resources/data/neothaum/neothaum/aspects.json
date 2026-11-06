@@ -2686,6 +2686,15 @@
     "perditio": 3,
     "gelum": 3
    }
+  },
+  {
+   "item": "neothaum:arcane_campfire",
+   "aspects": {
+    "ignis": 4,
+    "lux": 3,
+    "arbor": 3,
+    "praecantatio": 2
+   }
   }
  ],
  "entities": [

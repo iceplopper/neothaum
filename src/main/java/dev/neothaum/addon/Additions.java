@@ -15,7 +15,7 @@ public final class Additions {
 	/** Every addition, by the name /neothaum additions and data files use, in the order the settings screen shows them. */
 	public static final java.util.List<String> ALL = java.util.List.of("travellers_totems", "experience_siphon", "hint_research", "wood_sets",
 		"research_sharing", "essentia_overlay", "warp_hud", "marker_copy", "modded_aspects", "vanilla_candles", "bright_nodes",
-		"keepinventory_cost", "node_embedding");
+		"keepinventory_cost", "node_embedding", "arcane_campfire");
 
 	/** An addition's own switch (whatever the master switch says). */
 	public static boolean own(String name) {
@@ -38,6 +38,7 @@ public final class Additions {
 			case "bright_nodes" -> cfg.additionBrightNodes;
 			case "keepinventory_cost" -> cfg.additionKeepInventoryCost;
 			case "node_embedding" -> cfg.additionNodeEmbedding;
+			case "arcane_campfire" -> cfg.additionArcaneCampfire;
 			default -> false;
 		};
 	}
@@ -69,6 +70,7 @@ public final class Additions {
 			case "bright_nodes" -> cfg.additionBrightNodes = on;
 			case "keepinventory_cost" -> cfg.additionKeepInventoryCost = on;
 			case "node_embedding" -> cfg.additionNodeEmbedding = on;
+			case "arcane_campfire" -> cfg.additionArcaneCampfire = on;
 			default -> {
 				return false;
 			}

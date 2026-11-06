@@ -80,7 +80,9 @@ public class CrucibleBlockEntity extends TVBlockEntity implements dev.neothaum.a
 				}
 			} else if (isHeatSource(this.level.getBlockState(this.worldPosition.below()))) {
 				if (this.heat < 200) {
-					this.heat = (short) (this.heat + 1 + this.bellows * 2);
+					// NeoThaum Addition: an arcane campfire heats it twice as fast
+					int campfire = dev.neothaum.addon.ArcaneCampfire.litAt(this.level, this.worldPosition.below()) ? 1 : 0;
+					this.heat = (short) Math.min(200, this.heat + 1 + campfire + this.bellows * 2);
 					if (prevheat < 151 && this.heat >= 151) {
 						this.markForUpdate();
 					}

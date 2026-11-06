@@ -2373,5 +2373,9 @@
   "config.jade.plugin_neothaum.totem": "Traveller's Totem",
   "neothaum.totem.rename.title": "What is this stone called?",
   "neothaum.totem.rename.done": "Name it",
-  "neothaum.totem.rename.restore": "Its own name"
+  "neothaum.totem.rename.restore": "Its own name",
+  "block.neothaum.arcane_campfire": "Arcane Campfire",
+  "tc.research_name.ARCANECAMPFIRE": "Arcane Campfire",
+  "tc.research_text.ARCANECAMPFIRE": "[NeoThaum Addition] A fire that never tires",
+  "tc.research_page.ARCANECAMPFIRE.1": "Nitor wants only somewhere to burn. Bedded in greatwood it makes a campfire that never needs feeding, burning a violet that lights the whole clearing. It cooks and smokes as any campfire does, and water or a shovel will still put it out.<BR>Its heat rises straight and strong: an arcane levitator set above it (or the lowest of a stack) carries all the way to 256 blocks. Beneath a crucible it brings the water to the boil twice as fast, and beneath the crucible of a thaumatorium it hurries the work along a little."
 }

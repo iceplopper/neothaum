@@ -8589,6 +8589,38 @@
         "VOIDMETAL"
       ],
       "addition": "travellers_totems"
+    },
+    {
+      "key": "ARCANECAMPFIRE",
+      "category": "ARTIFICE",
+      "aspects": {
+        "ignis": 4,
+        "motus": 3,
+        "volatus": 3,
+        "praecantatio": 2
+      },
+      "col": -3,
+      "row": -5,
+      "complexity": 2,
+      "icon": {
+        "item": "neothaum:arcane_campfire"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.ARCANECAMPFIRE.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:arcane_campfire"
+          ]
+        }
+      ],
+      "parents": [
+        "LEVITATOR"
+      ],
+      "addition": "arcane_campfire"
     }
   ]
 }

@@ -200,6 +200,8 @@ public class NeoThaumConfig {
 		public boolean additionKeepInventoryCost = true;
 		/** Blocks placed into a node go inside it instead of destroying it (arcane stone hides a node). */
 		public boolean additionNodeEmbedding = true;
+		/** The Arcane Campfire: a nitor-fed campfire that lifts levitators to 256 blocks and heats crucibles faster. */
+		public boolean additionArcaneCampfire = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

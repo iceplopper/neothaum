@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "arcane_campfire"
+    }
+  ],
+  "type": "neothaum:arcane_shaped",
+  "research": "ARCANECAMPFIRE",
+  "aspects": {
+    "ignis": 10,
+    "aer": 5,
+    "ordo": 5
+  },
+  "pattern": [
+    " S ",
+    "SNS",
+    "LLL"
+  ],
+  "key": {
+    "S": "minecraft:stick",
+    "N": "neothaum:nitor",
+    "L": "neothaum:greatwood_log"
+  },
+  "result": {
+    "id": "neothaum:arcane_campfire"
+  }
+}

@@ -52,10 +52,15 @@ public class ArcaneLevitatorBlockEntity extends BlockEntity {
 			tile.requiresUpdate = false;
 			int max = 10;
 			// Stacked levitators increase range by +10 each
-			for (int count = 1; level.getBlockState(pos.below(count)).is(TVBlocks.ARCANE_LEVITATOR); count++) {
+			int count = 1;
+			for (; level.getBlockState(pos.below(count)).is(TVBlocks.ARCANE_LEVITATOR); count++) {
 				if (!level.hasNeighborSignal(pos.below(count))) {
 					max += 10;
 				}
+			}
+			// NeoThaum Addition: a lit arcane campfire under the stack lifts it much higher
+			if (dev.neothaum.addon.ArcaneCampfire.litAt(level, pos.below(count))) {
+				max = Math.max(max, dev.neothaum.addon.ArcaneCampfire.LEVITATOR_RANGE);
 			}
 
 			tile.rangeAbove = 0;

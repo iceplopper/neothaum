@@ -269,6 +269,9 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "points, so dying is never free." + off, () -> cfg.additionKeepInventoryCost, v -> cfg.additionKeepInventoryCost = v);
 				this.toggle("Node Embedding", "A block placed into an aura node goes in around it instead of destroying it, so a node can be hidden "
 					+ "inside arcane stone or a wall." + off, () -> cfg.additionNodeEmbedding, v -> cfg.additionNodeEmbedding = v);
+				this.toggle("Arcane Campfire", "A campfire of greatwood fed by nitor, burning violet: it cooks and smokes like any campfire, lifts the "
+					+ "arcane levitators above it to 256 blocks, heats a crucible twice as fast and quickens a thaumatorium a little. Applies when "
+					+ "the world loads or /reload runs." + off, () -> cfg.additionArcaneCampfire, v -> cfg.additionArcaneCampfire = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}
