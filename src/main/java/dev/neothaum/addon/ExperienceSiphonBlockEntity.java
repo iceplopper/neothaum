@@ -65,11 +65,11 @@ public class ExperienceSiphonBlockEntity extends TVBlockEntity implements Worldl
 			return;
 		}
 		boolean changed = false;
-		// every ten ticks: a level's worth (from zero) from each player kneeling on it
-		if (++siphon.count % 10 == 0) {
+		// four times a second: the top level of each player kneeling on it
+		if (++siphon.count % ExperienceSiphon.DRAW_EVERY == 0) {
 			for (Player p : level.getEntitiesOfClass(Player.class, new AABB(pos.getX(), pos.getY() + 0.4, pos.getZ(), pos.getX() + 1,
 				pos.getY() + 1.2, pos.getZ() + 1))) {
-				int take = Math.min(Math.min(ExperienceSiphon.DRAW, ExperienceSiphon.STORE - siphon.store), ExperienceSiphon.pointsOf(p));
+				int take = Math.min(ExperienceSiphon.drawFrom(p), ExperienceSiphon.STORE - siphon.store);
 				if (!p.isShiftKeyDown() || p.isSpectator() || p.getAbilities().instabuild || take <= 0) {
 					continue;
 				}

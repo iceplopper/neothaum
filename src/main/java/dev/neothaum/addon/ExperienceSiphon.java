@@ -23,7 +23,7 @@ import net.minecraft.world.level.material.MapColor;
 
 /**
  * NeoThaum Addition: the Experience Siphon, an arcane stone plate that draws experience from a player who kneels (sneaks) on it into a store
- * of thirty levels, and pours it into empty warded jars, ten levels to a jar. Those jars hold experience instead of essentia, and tubes leave
+ * of sixty levels, a level at a time four times a second, and pours it into empty warded jars, ten levels to a jar. Those jars hold experience instead of essentia, and tubes leave
  * them alone. A full jar and ten of each primal make Condensed Experience at the arcane worktable (the jar is kept), which gives the ten levels
  * back when eaten.
  *
@@ -32,10 +32,15 @@ import net.minecraft.world.level.material.MapColor;
 public final class ExperienceSiphon {
 	/** Points in a full jar: the 160 from level 0 to level 10. */
 	public static final int JAR = pointsForLevels(10);
-	/** Points the siphon holds: the 1395 from level 0 to level 30. */
-	public static final int STORE = pointsForLevels(30);
-	/** Points drawn each time: level 0 to 1. */
-	public static final int DRAW = pointsForLevels(1);
+	/** Points the siphon holds: the 8670 from level 0 to level 60. */
+	public static final int STORE = pointsForLevels(60);
+	/** Ticks between draws: each takes the player's top level (and any progress into the next), four levels a second. */
+	public static final int DRAW_EVERY = 5;
+
+	/** Points one draw takes from this player: down to the start of the level below theirs (or to nothing at level 0). */
+	public static int drawFrom(net.minecraft.world.entity.player.Player p) {
+		return pointsOf(p) - pointsForLevels(Math.max(0, p.experienceLevel - 1));
+	}
 
 	public static final Block SIPHON = TVBlocks.register("experience_siphon", ExperienceSiphonBlock::new, BlockBehaviour.Properties.of()
 		.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(2.0F, 10.0F).sound(SoundType.STONE),
