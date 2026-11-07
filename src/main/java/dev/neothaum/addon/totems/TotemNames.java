@@ -48,8 +48,17 @@ public final class TotemNames {
 		}
 	}
 
+	/** A phrase for something that stands close by, already inflected: "ad Quercum" (by the oak), "Luporum" (of the wolves). */
+	private record Landmark(String phrase, List<String> features) {
+	}
+
 	private static final List<Place> PLACES = new ArrayList<>();
 	private static final List<Describer> DESCRIBERS = new ArrayList<>();
+	private static final List<Landmark> LANDMARKS = new ArrayList<>();
+	/** How close a landmark must be: blocks across from the totem. */
+	private static final int NEAR = 10;
+	/** The longest name a totem is given (as a player may give one). */
+	private static final int LONGEST = TravellersTotems.NAME_LENGTH;
 	private static final Map<String, String> FAMILY = new HashMap<>();
 	private static final int RADIUS = 48;
 
@@ -63,6 +72,12 @@ public final class TotemNames {
 			for (JsonElement e : root.getAsJsonArray("describers")) {
 				JsonObject o = e.getAsJsonObject();
 				DESCRIBERS.add(new Describer(o.get("m").getAsString(), o.get("f").getAsString(), o.get("n").getAsString(), strings(o)));
+			}
+			if (root.has("landmarks")) {
+				for (JsonElement e : root.getAsJsonArray("landmarks")) {
+					JsonObject o = e.getAsJsonObject();
+					LANDMARKS.add(new Landmark(o.get("phrase").getAsString(), strings(o)));
+				}
 			}
 			for (var fam : root.getAsJsonObject("families").entrySet()) {
 				fam.getValue().getAsJsonArray().forEach(f -> FAMILY.put(f.getAsString(), fam.getKey()));
@@ -82,27 +97,34 @@ public final class TotemNames {
 		return FAMILY.getOrDefault(feature, feature);
 	}
 
-	/** A name for a totem here: the best place word and describing word for its surroundings, numbered if the name is taken. */
+	/**
+	 * A name for a totem here. The place word comes from one of the three strongest features round it (the stronger the likelier), the
+	 * describing word from the strongest feature of another family; and when something stands close by (a tree, lava, a flower, a bell, a
+	 * beast) the name may say so, as "Collis ad Quercum" (the hill by the oak) or "Fons Luporum" (the spring of the wolves). Each choice is
+	 * seeded by the totem's place, so a totem keeps its name however often it is worked out. A name already in use gets a numeral.
+	 */
 	public static String name(ServerLevel level, BlockPos pos, Predicate<String> taken) {
 		Map<String, Float> scores = survey(level, pos);
+		Map<String, Float> near = nearby(level, pos);
 		RandomSource rand = RandomSource.create(pos.asLong() ^ level.getSeed());
 		List<String> ranked = new ArrayList<>(scores.keySet());
 		// highest first; equal scores in a random order
 		java.util.Collections.shuffle(ranked, new java.util.Random(rand.nextLong()));
 		ranked.sort(Comparator.comparing((String f) -> -scores.get(f)));
-		Place place = null;
-		String placeFeature = "nothing";
+		// the place: one of the three strongest features that has a place word, weighted by score
+		List<String> candidates = new ArrayList<>();
 		for (String f : ranked) {
-			List<Place> fits = PLACES.stream().filter(p -> p.features().contains(f)).toList();
-			if (!fits.isEmpty()) {
-				place = fits.get(rand.nextInt(fits.size()));
-				placeFeature = f;
-				break;
+			if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
+				candidates.add(f);
+				if (candidates.size() == 3) {
+					break;
+				}
 			}
 		}
-		if (place == null) {
-			place = PLACES.stream().filter(p -> p.features().contains("nothing")).findFirst().orElse(PLACES.get(0));
-		}
+		String placeFeature = candidates.isEmpty() ? "nothing" : weighted(candidates, scores, rand);
+		List<Place> places = PLACES.stream().filter(p -> p.features().contains(placeFeature)).toList();
+		Place place = places.isEmpty() ? PLACES.get(0) : places.get(rand.nextInt(places.size()));
+		// the describer: the strongest feature of another family, from all its words
 		Describer describer = null;
 		String used = family(placeFeature);
 		for (String f : ranked) {
@@ -116,14 +138,222 @@ public final class TotemNames {
 			}
 		}
 		if (describer == null) {
-			describer = DESCRIBERS.stream().filter(d -> d.features().contains("nothing")).findFirst().orElse(DESCRIBERS.get(0));
+			List<Describer> quiet = DESCRIBERS.stream().filter(d -> d.features().contains("nothing")).toList();
+			describer = quiet.isEmpty() ? DESCRIBERS.get(0) : quiet.get(rand.nextInt(quiet.size()));
 		}
-		String base = capital(place.word()) + " " + capital(describer.forGender(place.gender()));
+		// a landmark close by, if there is one worth naming
+		List<String> marks = new ArrayList<>();
+		for (var e : near.entrySet()) {
+			if (e.getValue() >= 3.0F && LANDMARKS.stream().anyMatch(l -> l.features().contains(e.getKey()))) {
+				marks.add(e.getKey());
+			}
+		}
+		marks.sort(Comparator.naturalOrder());
+		String landmark = null;
+		// never the place's own word again ("Betulla sub Betulla"): then the next landmark
+		String stem = place.word().substring(0, Math.min(5, place.word().length())).toLowerCase(java.util.Locale.ROOT);
+		while (landmark == null && !marks.isEmpty()) {
+			String mf = weighted(marks, near, rand);
+			List<Landmark> fits = LANDMARKS.stream().filter(l -> l.features().contains(mf)
+				&& !l.phrase().toLowerCase(java.util.Locale.ROOT).contains(stem)).toList();
+			if (fits.isEmpty()) {
+				marks.remove(mf);
+			} else {
+				landmark = fits.get(rand.nextInt(fits.size())).phrase();
+			}
+		}
+		String p = capital(place.word());
+		String d = capital(describer.forGender(place.gender()));
+		String base = p + " " + d;
+		if (landmark != null) {
+			float roll = rand.nextFloat();
+			String withMark = p + " " + landmark;
+			String full = base + " " + landmark;
+			if (roll < 0.15F && full.length() <= LONGEST) {
+				base = full;
+			} else if (roll < 0.65F && withMark.length() <= LONGEST) {
+				base = withMark;
+			}
+		}
 		String name = base;
 		for (int n = 2; taken.test(name); n++) {
 			name = base + " " + roman(n);
 		}
 		return name;
+	}
+
+	/** One of these, the higher its score the likelier. */
+	private static String weighted(List<String> options, Map<String, Float> scores, RandomSource rand) {
+		float total = 0;
+		for (String o : options) {
+			total += Math.max(0.01F, scores.getOrDefault(o, 0F));
+		}
+		float r = rand.nextFloat() * total;
+		for (String o : options) {
+			r -= Math.max(0.01F, scores.getOrDefault(o, 0F));
+			if (r <= 0) {
+				return o;
+			}
+		}
+		return options.get(options.size() - 1);
+	}
+
+	/**
+	 * What stands within a few blocks of the totem, for its name's landmark: the kind of tree, flowers by kind, lava, falling water, crops,
+	 * ores showing in a face of rock, a bell, a campfire, the beasts about. Each scored by how much of it there is and how close.
+	 */
+	static Map<String, Float> nearby(ServerLevel level, BlockPos centre) {
+		Map<String, Float> s = new HashMap<>();
+		int caveAir = 0;
+		for (BlockPos p : BlockPos.betweenClosed(centre.offset(-NEAR, -5, -NEAR), centre.offset(NEAR, 8, NEAR))) {
+			if (!level.hasChunk(p.getX() >> 4, p.getZ() >> 4)) {
+				continue;
+			}
+			BlockState b = level.getBlockState(p);
+			if (b.isAir()) {
+				if (p.getY() < level.getHeight(Heightmap.Types.WORLD_SURFACE, p.getX(), p.getZ()) - 2) {
+					caveAir++;
+				}
+				continue;
+			}
+			// the closer, the more it counts
+			float w = 1.5F - (float) Math.sqrt(p.distSqr(centre)) / (NEAR * 2.0F);
+			String id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(b.getBlock()).getPath();
+			String f = nearFeature(level, p, b, id);
+			if (f != null) {
+				add(s, f, w * nearWeight(f));
+			}
+		}
+		if (caveAir > 40) {
+			add(s, "near_cave", caveAir / 15.0F);
+		}
+		for (Entity e : level.getEntities((Entity) null, new AABB(centre).inflate(24, 12, 24), e -> true)) {
+			String f = switch (net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()).getPath()) {
+				case "rabbit" -> "near_rabbits";
+				case "sheep" -> "near_sheep";
+				case "cow", "mooshroom" -> "near_cows";
+				case "pig" -> "near_pigs";
+				case "goat" -> "near_goats";
+				case "chicken" -> "near_chickens";
+				case "horse", "donkey", "mule" -> "near_horses";
+				case "camel" -> "near_camels";
+				case "parrot" -> "near_parrots";
+				case "turtle" -> "near_turtles";
+				case "frog" -> "near_frogs";
+				case "dolphin" -> "near_dolphins";
+				case "squid", "glow_squid" -> "near_squid";
+				case "bat" -> "near_bats";
+				case "wolf" -> "near_wolves";
+				case "fox" -> "near_foxes";
+				case "polar_bear", "panda" -> "near_bears";
+				case "cat", "ocelot" -> "near_cats";
+				case "cod", "salmon", "tropical_fish", "pufferfish" -> "near_fish";
+				case "bee" -> "near_bees";
+				default -> null;
+			};
+			if (f != null) {
+				add(s, f, 2.0F);
+			}
+		}
+		return s;
+	}
+
+	/** How much one block of a landmark counts: rare and striking things more, things that come in drifts (snow, logs) less. */
+	private static float nearWeight(String f) {
+		return switch (f) {
+			case "near_bell", "near_aura_node" -> 40;
+			case "near_altar", "near_campfire" -> 15;
+			case "near_bees", "near_diamond", "near_emerald" -> 10;
+			case "near_lava", "near_waterfall", "near_gold", "near_amethyst" -> 3;
+			case "near_coal", "near_copper", "near_iron", "near_redstone", "near_lapis", "near_obsidian", "near_light", "near_hay",
+				 "near_bones", "near_pumpkin", "near_melon", "near_cactus", "near_berries" -> 2.5F;
+			case "near_poppy", "near_dandelion", "near_cornflower", "near_lily", "near_allium", "near_orchid", "near_daisy", "near_rose",
+				 "near_peony", "near_sunflower", "near_flowers", "near_mushroom", "near_coral", "near_lily_pad" -> 2;
+			case "near_water", "near_kelp", "near_bamboo", "near_sugar_cane", "near_moss", "near_boulder", "near_taint" -> 0.4F;
+			case "near_snow", "near_ice" -> 0.05F;
+			default -> 0.35F; // tree trunks
+		};
+	}
+
+	/** The landmark a block is, if any. */
+	private static String nearFeature(ServerLevel level, BlockPos p, BlockState b, String id) {
+		if (!b.getFluidState().isEmpty()) {
+			if (b.getFluidState().is(Fluids.LAVA)) {
+				return "near_lava";
+			}
+			if (b.getFluidState().is(Fluids.WATER)) {
+				// water falling over an edge, or standing water
+				if (!b.getFluidState().isSource() && b.getFluidState().getValue(net.minecraft.world.level.material.FlowingFluid.FALLING)) {
+					return "near_waterfall";
+				}
+				return b.getBlock() == Blocks.WATER ? "near_water" : null;
+			}
+		}
+		if (b.is(BlockTags.LOGS)) {
+			for (String tree : new String[]{"dark_oak", "pale_oak", "oak", "birch", "spruce", "jungle", "acacia", "cherry", "mangrove", "greatwood",
+				"silverwood"}) {
+				if (id.startsWith(tree) || id.startsWith("stripped_" + tree)) {
+					return tree.equals("jungle") ? "near_jungle_tree" : "near_" + tree;
+				}
+			}
+			return null;
+		}
+		if (b.is(BlockTags.CORALS) || b.is(BlockTags.CORAL_BLOCKS)) {
+			return "near_coral";
+		}
+		if (id.endsWith("_ore")) {
+			// only ore that shows, in a face of rock open to the air
+			boolean open = false;
+			for (net.minecraft.core.Direction d : net.minecraft.core.Direction.values()) {
+				open |= level.getBlockState(p.relative(d)).isAir();
+			}
+			if (!open) {
+				return null;
+			}
+			String ore = id.replace("deepslate_", "").replace("_ore", "");
+			return switch (ore) {
+				case "coal", "copper", "iron", "gold", "diamond", "emerald", "redstone", "lapis" -> "near_" + ore;
+				default -> null;
+			};
+		}
+		return switch (id) {
+			case "poppy" -> "near_poppy";
+			case "dandelion" -> "near_dandelion";
+			case "cornflower" -> "near_cornflower";
+			case "lily_of_the_valley", "white_tulip" -> "near_lily";
+			case "allium" -> "near_allium";
+			case "blue_orchid" -> "near_orchid";
+			case "oxeye_daisy" -> "near_daisy";
+			case "rose_bush" -> "near_rose";
+			case "peony", "pink_petals" -> "near_peony";
+			case "sunflower" -> "near_sunflower";
+			case "red_tulip", "orange_tulip", "pink_tulip", "azure_bluet", "lilac", "wildflowers", "torchflower", "pitcher_plant" -> "near_flowers";
+			case "red_mushroom", "brown_mushroom", "red_mushroom_block", "brown_mushroom_block", "mushroom_stem" -> "near_mushroom";
+			case "pumpkin", "carved_pumpkin", "jack_o_lantern" -> "near_pumpkin";
+			case "melon" -> "near_melon";
+			case "sweet_berry_bush" -> "near_berries";
+			case "cactus" -> "near_cactus";
+			case "bamboo" -> "near_bamboo";
+			case "sugar_cane" -> "near_sugar_cane";
+			case "lily_pad" -> "near_lily_pad";
+			case "kelp", "kelp_plant", "seagrass", "tall_seagrass" -> "near_kelp";
+			case "mossy_cobblestone", "cobblestone", "andesite", "diorite", "granite", "tuff" -> "near_boulder";
+			case "moss_block", "moss_carpet" -> "near_moss";
+			case "bone_block" -> "near_bones";
+			case "bell" -> "near_bell";
+			case "campfire", "soul_campfire", "arcane_campfire" -> "near_campfire";
+			case "lantern", "soul_lantern", "torch", "wall_torch" -> "near_light";
+			case "hay_block" -> "near_hay";
+			case "amethyst_block", "budding_amethyst", "amethyst_cluster", "large_amethyst_bud" -> "near_amethyst";
+			case "obsidian", "crying_obsidian" -> "near_obsidian";
+			case "snow", "snow_block", "powder_snow" -> "near_snow";
+			case "ice", "packed_ice", "blue_ice" -> "near_ice";
+			case "bee_nest", "beehive" -> "near_bees";
+			case "aura_node", "energized_aura_node" -> "near_aura_node";
+			case "obsidian_totem", "charged_obsidian_totem", "eldritch_altar", "eldritch_obelisk" -> "near_altar";
+			case "crusted_taint", "tainted_soil", "taint_fibres", "flesh_block" -> "near_taint";
+			default -> null;
+		};
 	}
 
 	/** What is round a totem, each feature scored by how much of it there is. */

@@ -1,1067 +1,8978 @@
 {
-  "places": [
-    {
-      "word": "vicus",
-      "gender": "m",
-      "features": [
-        "village"
-      ]
-    },
-    {
-      "word": "portus",
-      "gender": "m",
-      "features": [
-        "harbour"
-      ]
-    },
-    {
-      "word": "castellum",
-      "gender": "n",
-      "features": [
-        "outpost"
-      ]
-    },
-    {
-      "word": "turris",
-      "gender": "f",
-      "features": [
-        "tower"
-      ]
-    },
-    {
-      "word": "ara",
-      "gender": "f",
-      "features": [
-        "altar"
-      ]
-    },
-    {
-      "word": "templum",
-      "gender": "n",
-      "features": [
-        "temple"
-      ]
-    },
-    {
-      "word": "tumulus",
-      "gender": "m",
-      "features": [
-        "barrow"
-      ]
-    },
-    {
-      "word": "rudus",
-      "gender": "n",
-      "features": [
-        "ruins"
-      ]
-    },
-    {
-      "word": "via",
-      "gender": "f",
-      "features": [
-        "road"
-      ]
-    },
-    {
-      "word": "trivium",
-      "gender": "n",
-      "features": [
-        "crossroads"
-      ]
-    },
-    {
-      "word": "limes",
-      "gender": "m",
-      "features": [
-        "boundary"
-      ]
-    },
-    {
-      "word": "solitudo",
-      "gender": "f",
-      "features": [
-        "nothing"
-      ]
-    },
-    {
-      "word": "ora",
-      "gender": "f",
-      "features": [
-        "shore"
-      ]
-    },
-    {
-      "word": "litus",
-      "gender": "n",
-      "features": [
-        "beach"
-      ]
-    },
-    {
-      "word": "sinus",
-      "gender": "m",
-      "features": [
-        "bay"
-      ]
-    },
-    {
-      "word": "insula",
-      "gender": "f",
-      "features": [
-        "island"
-      ]
-    },
-    {
-      "word": "paeninsula",
-      "gender": "f",
-      "features": [
-        "peninsula"
-      ]
-    },
-    {
-      "word": "promunturium",
-      "gender": "n",
-      "features": [
-        "headland"
-      ]
-    },
-    {
-      "word": "aequor",
-      "gender": "n",
-      "features": [
-        "ocean"
-      ]
-    },
-    {
-      "word": "pelagus",
-      "gender": "n",
-      "features": [
-        "deep_ocean"
-      ]
-    },
-    {
-      "word": "ripa",
-      "gender": "f",
-      "features": [
-        "riverbank"
-      ]
-    },
-    {
-      "word": "flumen",
-      "gender": "n",
-      "features": [
-        "wide_river"
-      ]
-    },
-    {
-      "word": "rivus",
-      "gender": "m",
-      "features": [
-        "stream"
-      ]
-    },
-    {
-      "word": "vadum",
-      "gender": "n",
-      "features": [
-        "ford"
-      ]
-    },
-    {
-      "word": "lacus",
-      "gender": "m",
-      "features": [
-        "lake"
-      ]
-    },
-    {
-      "word": "stagnum",
-      "gender": "n",
-      "features": [
-        "pond"
-      ]
-    },
-    {
-      "word": "fons",
-      "gender": "m",
-      "features": [
-        "spring"
-      ]
-    },
-    {
-      "word": "oasis",
-      "gender": "f",
-      "features": [
-        "oasis"
-      ]
-    },
-    {
-      "word": "palus",
-      "gender": "f",
-      "features": [
-        "swamp"
-      ]
-    },
-    {
-      "word": "uligo",
-      "gender": "f",
-      "features": [
-        "mangrove"
-      ]
-    },
-    {
-      "word": "lama",
-      "gender": "f",
-      "features": [
-        "bog"
-      ]
-    },
-    {
-      "word": "mons",
-      "gender": "m",
-      "features": [
-        "mountain"
-      ]
-    },
-    {
-      "word": "cacumen",
-      "gender": "n",
-      "features": [
-        "summit"
-      ]
-    },
-    {
-      "word": "iugum",
-      "gender": "n",
-      "features": [
-        "ridge"
-      ]
-    },
-    {
-      "word": "scopulus",
-      "gender": "m",
-      "features": [
-        "crag"
-      ]
-    },
-    {
-      "word": "rupes",
-      "gender": "f",
-      "features": [
-        "cliff"
-      ]
-    },
-    {
-      "word": "clivus",
-      "gender": "m",
-      "features": [
-        "slope"
-      ]
-    },
-    {
-      "word": "collis",
-      "gender": "m",
-      "features": [
-        "hill"
-      ]
-    },
-    {
-      "word": "vallis",
-      "gender": "f",
-      "features": [
-        "valley"
-      ]
-    },
-    {
-      "word": "convallis",
-      "gender": "f",
-      "features": [
-        "enclosed_valley"
-      ]
-    },
-    {
-      "word": "campus",
-      "gender": "m",
-      "features": [
-        "plains"
-      ]
-    },
-    {
-      "word": "pratum",
-      "gender": "n",
-      "features": [
-        "meadow"
-      ]
-    },
-    {
-      "word": "ager",
-      "gender": "m",
-      "features": [
-        "farmland"
-      ]
-    },
-    {
-      "word": "pascuum",
-      "gender": "n",
-      "features": [
-        "pasture"
-      ]
-    },
-    {
-      "word": "planitia",
-      "gender": "f",
-      "features": [
-        "savanna"
-      ]
-    },
-    {
-      "word": "arena",
-      "gender": "f",
-      "features": [
-        "desert"
-      ]
-    },
-    {
-      "word": "silva",
-      "gender": "f",
-      "features": [
-        "forest"
-      ]
-    },
-    {
-      "word": "saltus",
-      "gender": "m",
-      "features": [
-        "sparse_forest"
-      ]
-    },
-    {
-      "word": "nemus",
-      "gender": "n",
-      "features": [
-        "grove"
-      ]
-    },
-    {
-      "word": "lucus",
-      "gender": "m",
-      "features": [
-        "magical_forest"
-      ]
-    },
-    {
-      "word": "quercetum",
-      "gender": "n",
-      "features": [
-        "dark_forest"
-      ]
-    },
-    {
-      "word": "pinetum",
-      "gender": "n",
-      "features": [
-        "taiga"
-      ]
-    },
-    {
-      "word": "abietum",
-      "gender": "n",
-      "features": [
-        "snowy_taiga"
-      ]
-    },
-    {
-      "word": "dumetum",
-      "gender": "n",
-      "features": [
-        "thicket"
-      ]
-    },
-    {
-      "word": "harundinetum",
-      "gender": "n",
-      "features": [
-        "reeds"
-      ]
-    },
-    {
-      "word": "specus",
-      "gender": "m",
-      "features": [
-        "cave"
-      ]
-    },
-    {
-      "word": "antrum",
-      "gender": "n",
-      "features": [
-        "lush_caves"
-      ]
-    },
-    {
-      "word": "caverna",
-      "gender": "f",
-      "features": [
-        "dripstone"
-      ]
-    },
-    {
-      "word": "glacies",
-      "gender": "f",
-      "features": [
-        "ice"
-      ]
-    }
-  ],
-  "describers": [
-    {
-      "m": "silvester",
-      "f": "silvestris",
-      "n": "silvestre",
-      "features": [
-        "forest"
-      ]
-    },
-    {
-      "m": "frondosus",
-      "f": "frondosa",
-      "n": "frondosum",
-      "features": [
-        "jungle"
-      ]
-    },
-    {
-      "m": "umbrosus",
-      "f": "umbrosa",
-      "n": "umbrosum",
-      "features": [
-        "dark_forest"
-      ]
-    },
-    {
-      "m": "albus",
-      "f": "alba",
-      "n": "album",
-      "features": [
-        "birch"
-      ]
-    },
-    {
-      "m": "pinifer",
-      "f": "pinifera",
-      "n": "piniferum",
-      "features": [
-        "spruce"
-      ]
-    },
-    {
-      "m": "cerasinus",
-      "f": "cerasina",
-      "n": "cerasinum",
-      "features": [
-        "cherry"
-      ]
-    },
-    {
-      "m": "nebulosus",
-      "f": "nebulosa",
-      "n": "nebulosum",
-      "features": [
-        "pale_garden"
-      ]
-    },
-    {
-      "m": "arcanus",
-      "f": "arcana",
-      "n": "arcanum",
-      "features": [
-        "magical_forest"
-      ]
-    },
-    {
-      "m": "argenteus",
-      "f": "argentea",
-      "n": "argenteum",
-      "features": [
-        "silverwood"
-      ]
-    },
-    {
-      "m": "sacer",
-      "f": "sacra",
-      "n": "sacrum",
-      "features": [
-        "aura_node"
-      ]
-    },
-    {
-      "m": "magicus",
-      "f": "magica",
-      "n": "magicum",
-      "features": [
-        "infused_stone"
-      ]
-    },
-    {
-      "m": "corruptus",
-      "f": "corrupta",
-      "n": "corruptum",
-      "features": [
-        "taint"
-      ]
-    },
-    {
-      "m": "obscurus",
-      "f": "obscura",
-      "n": "obscurum",
-      "features": [
-        "eerie"
-      ]
-    },
-    {
-      "m": "tenebrosus",
-      "f": "tenebrosa",
-      "n": "tenebrosum",
-      "features": [
-        "deep_dark"
-      ]
-    },
-    {
-      "m": "montanus",
-      "f": "montana",
-      "n": "montanum",
-      "features": [
-        "mountain"
-      ]
-    },
-    {
-      "m": "altus",
-      "f": "alta",
-      "n": "altum",
-      "features": [
-        "high"
-      ]
-    },
-    {
-      "m": "humilis",
-      "f": "humilis",
-      "n": "humile",
-      "features": [
-        "low"
-      ]
-    },
-    {
-      "m": "planus",
-      "f": "plana",
-      "n": "planum",
-      "features": [
-        "flat"
-      ]
-    },
-    {
-      "m": "asper",
-      "f": "aspera",
-      "n": "asperum",
-      "features": [
-        "rugged"
-      ]
-    },
-    {
-      "m": "praeruptus",
-      "f": "praerupta",
-      "n": "praeruptum",
-      "features": [
-        "cliff"
-      ]
-    },
-    {
-      "m": "cavus",
-      "f": "cava",
-      "n": "cavum",
-      "features": [
-        "cave"
-      ]
-    },
-    {
-      "m": "profundus",
-      "f": "profunda",
-      "n": "profundum",
-      "features": [
-        "below_sea"
-      ]
-    },
-    {
-      "m": "saxosus",
-      "f": "saxosa",
-      "n": "saxosum",
-      "features": [
-        "stone"
-      ]
-    },
-    {
-      "m": "cretosus",
-      "f": "cretosa",
-      "n": "cretosum",
-      "features": [
-        "calcite"
-      ]
-    },
-    {
-      "m": "niger",
-      "f": "nigra",
-      "n": "nigrum",
-      "features": [
-        "blackstone"
-      ]
-    },
-    {
-      "m": "ferreus",
-      "f": "ferrea",
-      "n": "ferreum",
-      "features": [
-        "iron"
-      ]
-    },
-    {
-      "m": "aureus",
-      "f": "aurea",
-      "n": "aureum",
-      "features": [
-        "gold"
-      ]
-    },
-    {
-      "m": "rubeus",
-      "f": "rubea",
-      "n": "rubeum",
-      "features": [
-        "red_sand"
-      ]
-    },
-    {
-      "m": "purpureus",
-      "f": "purpurea",
-      "n": "purpureum",
-      "features": [
-        "amethyst"
-      ]
-    },
-    {
-      "m": "ardens",
-      "f": "ardens",
-      "n": "ardens",
-      "features": [
-        "lava"
-      ]
-    },
-    {
-      "m": "maritimus",
-      "f": "maritima",
-      "n": "maritimum",
-      "features": [
-        "ocean"
-      ]
-    },
-    {
-      "m": "calidus",
-      "f": "calida",
-      "n": "calidum",
-      "features": [
-        "warm_ocean"
-      ]
-    },
-    {
-      "m": "frigidus",
-      "f": "frigida",
-      "n": "frigidum",
-      "features": [
-        "cold"
-      ]
-    },
-    {
-      "m": "piscosus",
-      "f": "piscosa",
-      "n": "piscosum",
-      "features": [
-        "fish"
-      ]
-    },
-    {
-      "m": "fluvialis",
-      "f": "fluvialis",
-      "n": "fluviale",
-      "features": [
-        "river"
-      ]
-    },
-    {
-      "m": "tranquillus",
-      "f": "tranquilla",
-      "n": "tranquillum",
-      "features": [
-        "lake"
-      ]
-    },
-    {
-      "m": "humidus",
-      "f": "humida",
-      "n": "humidum",
-      "features": [
-        "water"
-      ]
-    },
-    {
-      "m": "palustris",
-      "f": "palustris",
-      "n": "palustre",
-      "features": [
-        "swamp"
-      ]
-    },
-    {
-      "m": "lutosus",
-      "f": "lutosa",
-      "n": "lutosum",
-      "features": [
-        "mud"
-      ]
-    },
-    {
-      "m": "nivalis",
-      "f": "nivalis",
-      "n": "nivale",
-      "features": [
-        "snow"
-      ]
-    },
-    {
-      "m": "gelidus",
-      "f": "gelida",
-      "n": "gelidum",
-      "features": [
-        "ice"
-      ]
-    },
-    {
-      "m": "glacialis",
-      "f": "glacialis",
-      "n": "glaciale",
-      "features": [
-        "packed_ice"
-      ]
-    },
-    {
-      "m": "caeruleus",
-      "f": "caerulea",
-      "n": "caeruleum",
-      "features": [
-        "blue_ice"
-      ]
-    },
-    {
-      "m": "aridus",
-      "f": "arida",
-      "n": "aridum",
-      "features": [
-        "desert"
-      ]
-    },
-    {
-      "m": "torridus",
-      "f": "torrida",
-      "n": "torridum",
-      "features": [
-        "savanna"
-      ]
-    },
-    {
-      "m": "arenosus",
-      "f": "arenosa",
-      "n": "arenosum",
-      "features": [
-        "sand"
-      ]
-    },
-    {
-      "m": "spinosus",
-      "f": "spinosa",
-      "n": "spinosum",
-      "features": [
-        "cactus"
-      ]
-    },
-    {
-      "m": "ventosus",
-      "f": "ventosa",
-      "n": "ventosum",
-      "features": [
-        "windswept"
-      ]
-    },
-    {
-      "m": "herbosus",
-      "f": "herbosa",
-      "n": "herbosum",
-      "features": [
-        "grass"
-      ]
-    },
-    {
-      "m": "floridus",
-      "f": "florida",
-      "n": "floridum",
-      "features": [
-        "flowers"
-      ]
-    },
-    {
-      "m": "mellifer",
-      "f": "mellifera",
-      "n": "melliferum",
-      "features": [
-        "bees"
-      ]
-    },
-    {
-      "m": "baccifer",
-      "f": "baccifera",
-      "n": "bacciferum",
-      "features": [
-        "berries"
-      ]
-    },
-    {
-      "m": "fertilis",
-      "f": "fertilis",
-      "n": "fertile",
-      "features": [
-        "farmland"
-      ]
-    },
-    {
-      "m": "fungosus",
-      "f": "fungosa",
-      "n": "fungosum",
-      "features": [
-        "mushrooms"
-      ]
-    },
-    {
-      "m": "muscosus",
-      "f": "muscosa",
-      "n": "muscosum",
-      "features": [
-        "moss"
-      ]
-    },
-    {
-      "m": "viridis",
-      "f": "viridis",
-      "n": "viride",
-      "features": [
-        "lush_caves"
-      ]
-    },
-    {
-      "m": "harundineus",
-      "f": "harundinea",
-      "n": "harundineum",
-      "features": [
-        "reeds"
-      ]
-    },
-    {
-      "m": "pecuosus",
-      "f": "pecuosa",
-      "n": "pecuosum",
-      "features": [
-        "pasture"
-      ]
-    },
-    {
-      "m": "equinus",
-      "f": "equina",
-      "n": "equinum",
-      "features": [
-        "horses"
-      ]
-    },
-    {
-      "m": "lupinus",
-      "f": "lupina",
-      "n": "lupinum",
-      "features": [
-        "wolves"
-      ]
-    },
-    {
-      "m": "vulpinus",
-      "f": "vulpina",
-      "n": "vulpinum",
-      "features": [
-        "foxes"
-      ]
-    },
-    {
-      "m": "ursinus",
-      "f": "ursina",
-      "n": "ursinum",
-      "features": [
-        "bears"
-      ]
-    },
-    {
-      "m": "hostilis",
-      "f": "hostilis",
-      "n": "hostile",
-      "features": [
-        "outpost"
-      ]
-    },
-    {
-      "m": "antiquus",
-      "f": "antiqua",
-      "n": "antiquum",
-      "features": [
-        "ruins",
-        "barrow"
-      ]
-    },
-    {
-      "m": "desertus",
-      "f": "deserta",
-      "n": "desertum",
-      "features": [
-        "abandoned_village"
-      ]
-    },
-    {
-      "m": "quietus",
-      "f": "quieta",
-      "n": "quietum",
-      "features": [
-        "nothing"
-      ]
-    }
-  ],
-  "families": {
-    "woods": [
-      "forest",
-      "sparse_forest",
-      "grove",
-      "magical_forest",
-      "dark_forest",
-      "taiga",
-      "snowy_taiga",
-      "thicket",
-      "jungle",
-      "birch",
-      "spruce",
-      "cherry",
-      "pale_garden",
-      "silverwood"
-    ],
-    "heights": [
-      "mountain",
-      "summit",
-      "ridge",
-      "crag",
-      "cliff",
-      "slope",
-      "hill",
-      "high",
-      "rugged",
-      "windswept"
-    ],
-    "lows": [
-      "valley",
-      "enclosed_valley",
-      "low",
-      "flat",
-      "below_sea"
-    ],
-    "sea": [
-      "shore",
-      "beach",
-      "bay",
-      "island",
-      "peninsula",
-      "headland",
-      "ocean",
-      "deep_ocean",
-      "warm_ocean",
-      "harbour"
-    ],
-    "fresh_water": [
-      "riverbank",
-      "wide_river",
-      "stream",
-      "ford",
-      "river",
-      "lake",
-      "pond",
-      "spring",
-      "oasis",
-      "water"
-    ],
-    "wet": [
-      "swamp",
-      "mangrove",
-      "bog",
-      "mud"
-    ],
-    "cold": [
-      "snow",
-      "ice",
-      "packed_ice",
-      "blue_ice",
-      "cold",
-      "snowy_taiga"
-    ],
-    "dry": [
-      "desert",
-      "sand",
-      "red_sand",
-      "cactus",
-      "savanna"
-    ],
-    "fields": [
-      "plains",
-      "meadow",
-      "grass",
-      "flowers",
-      "farmland",
-      "pasture"
-    ],
-    "caves": [
-      "cave",
-      "lush_caves",
-      "dripstone",
-      "deep_dark"
-    ],
-    "settled": [
-      "village",
-      "abandoned_village",
-      "road",
-      "crossroads",
-      "boundary",
-      "outpost",
-      "tower"
-    ],
-    "old": [
-      "ruins",
-      "barrow",
-      "temple",
-      "altar"
-    ],
-    "stone": [
-      "stone",
-      "calcite",
-      "blackstone"
-    ],
-    "quiet": [
-      "nothing"
-    ]
+ "places": [
+  {
+   "word": "vicus",
+   "gender": "m",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "portus",
+   "gender": "m",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "castellum",
+   "gender": "n",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "turris",
+   "gender": "f",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "ara",
+   "gender": "f",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "templum",
+   "gender": "n",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "tumulus",
+   "gender": "m",
+   "features": [
+    "barrow"
+   ]
+  },
+  {
+   "word": "rudus",
+   "gender": "n",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "word": "via",
+   "gender": "f",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "trivium",
+   "gender": "n",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "word": "limes",
+   "gender": "m",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "solitudo",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "ora",
+   "gender": "f",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "word": "litus",
+   "gender": "n",
+   "features": [
+    "beach"
+   ]
+  },
+  {
+   "word": "sinus",
+   "gender": "m",
+   "features": [
+    "bay"
+   ]
+  },
+  {
+   "word": "insula",
+   "gender": "f",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "word": "paeninsula",
+   "gender": "f",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "word": "promunturium",
+   "gender": "n",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "aequor",
+   "gender": "n",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "pelagus",
+   "gender": "n",
+   "features": [
+    "deep_ocean"
+   ]
+  },
+  {
+   "word": "ripa",
+   "gender": "f",
+   "features": [
+    "riverbank"
+   ]
+  },
+  {
+   "word": "flumen",
+   "gender": "n",
+   "features": [
+    "wide_river"
+   ]
+  },
+  {
+   "word": "rivus",
+   "gender": "m",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "vadum",
+   "gender": "n",
+   "features": [
+    "ford"
+   ]
+  },
+  {
+   "word": "lacus",
+   "gender": "m",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "word": "stagnum",
+   "gender": "n",
+   "features": [
+    "pond"
+   ]
+  },
+  {
+   "word": "fons",
+   "gender": "m",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "word": "oasis",
+   "gender": "f",
+   "features": [
+    "oasis"
+   ]
+  },
+  {
+   "word": "palus",
+   "gender": "f",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "word": "uligo",
+   "gender": "f",
+   "features": [
+    "mangrove"
+   ]
+  },
+  {
+   "word": "lama",
+   "gender": "f",
+   "features": [
+    "bog"
+   ]
+  },
+  {
+   "word": "mons",
+   "gender": "m",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "word": "cacumen",
+   "gender": "n",
+   "features": [
+    "summit"
+   ]
+  },
+  {
+   "word": "iugum",
+   "gender": "n",
+   "features": [
+    "ridge"
+   ]
+  },
+  {
+   "word": "scopulus",
+   "gender": "m",
+   "features": [
+    "crag"
+   ]
+  },
+  {
+   "word": "rupes",
+   "gender": "f",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "word": "clivus",
+   "gender": "m",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "word": "collis",
+   "gender": "m",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "word": "vallis",
+   "gender": "f",
+   "features": [
+    "valley"
+   ]
+  },
+  {
+   "word": "convallis",
+   "gender": "f",
+   "features": [
+    "enclosed_valley"
+   ]
+  },
+  {
+   "word": "campus",
+   "gender": "m",
+   "features": [
+    "plains"
+   ]
+  },
+  {
+   "word": "pratum",
+   "gender": "n",
+   "features": [
+    "meadow"
+   ]
+  },
+  {
+   "word": "ager",
+   "gender": "m",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "word": "pascuum",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "planitia",
+   "gender": "f",
+   "features": [
+    "savanna"
+   ]
+  },
+  {
+   "word": "arena",
+   "gender": "f",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "word": "silva",
+   "gender": "f",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "saltus",
+   "gender": "m",
+   "features": [
+    "sparse_forest",
+    "valley"
+   ]
+  },
+  {
+   "word": "nemus",
+   "gender": "n",
+   "features": [
+    "grove"
+   ]
+  },
+  {
+   "word": "lucus",
+   "gender": "m",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "word": "quercetum",
+   "gender": "n",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "word": "pinetum",
+   "gender": "n",
+   "features": [
+    "taiga"
+   ]
+  },
+  {
+   "word": "abietum",
+   "gender": "n",
+   "features": [
+    "snowy_taiga"
+   ]
+  },
+  {
+   "word": "dumetum",
+   "gender": "n",
+   "features": [
+    "thicket"
+   ]
+  },
+  {
+   "word": "harundinetum",
+   "gender": "n",
+   "features": [
+    "reeds"
+   ]
+  },
+  {
+   "word": "specus",
+   "gender": "m",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "antrum",
+   "gender": "n",
+   "features": [
+    "lush_caves"
+   ]
+  },
+  {
+   "word": "caverna",
+   "gender": "f",
+   "features": [
+    "dripstone"
+   ]
+  },
+  {
+   "word": "glacies",
+   "gender": "f",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "word": "pagus",
+   "gender": "m",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "oppidum",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "villa",
+   "gender": "f",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "colonia",
+   "gender": "f",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "municipium",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "praedium",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "fundus",
+   "gender": "m",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "domicilium",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "sedes",
+   "gender": "f",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "mansio",
+   "gender": "f",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "hospitium",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "tectum",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "atrium",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "forum",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "conciliabulum",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "viculus",
+   "gender": "m",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "oppidulum",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "habitatio",
+   "gender": "f",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "castrum",
+   "gender": "n",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "word": "navale",
+   "gender": "n",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "emporium",
+   "gender": "n",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "crepido",
+   "gender": "f",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "moles",
+   "gender": "f",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "refugium",
+   "gender": "n",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "receptaculum",
+   "gender": "n",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "statio",
+   "gender": "f",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "word": "praesidium",
+   "gender": "n",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "propugnaculum",
+   "gender": "n",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "vallum",
+   "gender": "n",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "munimentum",
+   "gender": "n",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "arx",
+   "gender": "f",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "custodia",
+   "gender": "f",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "burgus",
+   "gender": "m",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "munitio",
+   "gender": "f",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "firmamentum",
+   "gender": "n",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "word": "pharus",
+   "gender": "f",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "specula",
+   "gender": "f",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "pinna",
+   "gender": "f",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "columen",
+   "gender": "n",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "obeliscus",
+   "gender": "m",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "pyramis",
+   "gender": "f",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "colossus",
+   "gender": "m",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "columna",
+   "gender": "f",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "word": "altare",
+   "gender": "n",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "sacellum",
+   "gender": "n",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "delubrum",
+   "gender": "n",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "fanum",
+   "gender": "n",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "sacrarium",
+   "gender": "n",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "lapis",
+   "gender": "m",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "aedicula",
+   "gender": "f",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "mensa",
+   "gender": "f",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "donarium",
+   "gender": "n",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "lararium",
+   "gender": "n",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "tripus",
+   "gender": "m",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "cippus",
+   "gender": "m",
+   "features": [
+    "altar"
+   ]
+  },
+  {
+   "word": "aedes",
+   "gender": "f",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "sanctuarium",
+   "gender": "n",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "adytum",
+   "gender": "n",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "pantheum",
+   "gender": "n",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "oraculum",
+   "gender": "n",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "basilica",
+   "gender": "f",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "cella",
+   "gender": "f",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "penetrale",
+   "gender": "n",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "word": "sepulcrum",
+   "gender": "n",
+   "features": [
+    "barrow"
+   ]
+  },
+  {
+   "word": "monumentum",
+   "gender": "n",
+   "features": [
+    "barrow"
+   ]
+  },
+  {
+   "word": "mausoleum",
+   "gender": "n",
+   "features": [
+    "barrow"
+   ]
+  },
+  {
+   "word": "bustum",
+   "gender": "n",
+   "features": [
+    "barrow"
+   ]
+  },
+  {
+   "word": "cenotaphium",
+   "gender": "n",
+   "features": [
+    "barrow"
+   ]
+  },
+  {
+   "word": "ruina",
+   "gender": "f",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "word": "vestigium",
+   "gender": "n",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "word": "murus",
+   "gender": "m",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "word": "maceria",
+   "gender": "f",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "word": "fragmentum",
+   "gender": "n",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "word": "caementum",
+   "gender": "n",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "word": "iter",
+   "gender": "n",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "semita",
+   "gender": "f",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "callis",
+   "gender": "m",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "trames",
+   "gender": "m",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "strata",
+   "gender": "f",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "diverticulum",
+   "gender": "n",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "orbita",
+   "gender": "f",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "transitus",
+   "gender": "m",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "meatus",
+   "gender": "m",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "cursus",
+   "gender": "m",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "angiportus",
+   "gender": "m",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "word": "quadrivium",
+   "gender": "n",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "word": "compitum",
+   "gender": "n",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "word": "bivium",
+   "gender": "n",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "word": "divortium",
+   "gender": "n",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "word": "concursus",
+   "gender": "m",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "word": "commissura",
+   "gender": "f",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "word": "finis",
+   "gender": "m",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "terminus",
+   "gender": "m",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "margo",
+   "gender": "m",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "confinium",
+   "gender": "n",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "extremum",
+   "gender": "n",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "meta",
+   "gender": "f",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "limen",
+   "gender": "n",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "word": "tugurium",
+   "gender": "n",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "word": "casa",
+   "gender": "f",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "word": "gurgustium",
+   "gender": "n",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "word": "vastitas",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "secessus",
+   "gender": "m",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "recessus",
+   "gender": "m",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "otium",
+   "gender": "n",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "quies",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "silentium",
+   "gender": "n",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "regio",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "tractus",
+   "gender": "m",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "plaga",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "locus",
+   "gender": "m",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "spatium",
+   "gender": "n",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "latebra",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "angulus",
+   "gender": "m",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "terra",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "solum",
+   "gender": "n",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "orbis",
+   "gender": "m",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "rus",
+   "gender": "n",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "secretum",
+   "gender": "n",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "pausa",
+   "gender": "f",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "word": "acta",
+   "gender": "f",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "word": "aestuarium",
+   "gender": "n",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "word": "salum",
+   "gender": "n",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "word": "fretum",
+   "gender": "n",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "word": "sabulum",
+   "gender": "n",
+   "features": [
+    "beach"
+   ]
+  },
+  {
+   "word": "glarea",
+   "gender": "f",
+   "features": [
+    "beach"
+   ]
+  },
+  {
+   "word": "gurges",
+   "gender": "m",
+   "features": [
+    "bay"
+   ]
+  },
+  {
+   "word": "lacuna",
+   "gender": "f",
+   "features": [
+    "bay"
+   ]
+  },
+  {
+   "word": "flexus",
+   "gender": "m",
+   "features": [
+    "bay"
+   ]
+  },
+  {
+   "word": "curvamen",
+   "gender": "n",
+   "features": [
+    "bay"
+   ]
+  },
+  {
+   "word": "cautes",
+   "gender": "f",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "word": "petra",
+   "gender": "f",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "word": "saxum",
+   "gender": "n",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "word": "cervix",
+   "gender": "f",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "word": "lingua",
+   "gender": "f",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "word": "isthmus",
+   "gender": "m",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "word": "dorsum",
+   "gender": "n",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "word": "caput",
+   "gender": "n",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "frons",
+   "gender": "f",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "acies",
+   "gender": "f",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "rostrum",
+   "gender": "n",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "cornu",
+   "gender": "n",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "prora",
+   "gender": "f",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "mucro",
+   "gender": "m",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "word": "mare",
+   "gender": "n",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "pontus",
+   "gender": "m",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "oceanus",
+   "gender": "m",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "altum",
+   "gender": "n",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "unda",
+   "gender": "f",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "fluctus",
+   "gender": "m",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "aestus",
+   "gender": "m",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "word": "abyssus",
+   "gender": "f",
+   "features": [
+    "deep_ocean"
+   ]
+  },
+  {
+   "word": "profundum",
+   "gender": "n",
+   "features": [
+    "deep_ocean"
+   ]
+  },
+  {
+   "word": "barathrum",
+   "gender": "n",
+   "features": [
+    "deep_ocean",
+    "below_sea"
+   ]
+  },
+  {
+   "word": "vorago",
+   "gender": "f",
+   "features": [
+    "deep_ocean"
+   ]
+  },
+  {
+   "word": "imum",
+   "gender": "n",
+   "features": [
+    "deep_ocean"
+   ]
+  },
+  {
+   "word": "corallium",
+   "gender": "n",
+   "features": [
+    "warm_ocean"
+   ]
+  },
+  {
+   "word": "labrum",
+   "gender": "n",
+   "features": [
+    "riverbank"
+   ]
+  },
+  {
+   "word": "amnis",
+   "gender": "m",
+   "features": [
+    "wide_river"
+   ]
+  },
+  {
+   "word": "fluvius",
+   "gender": "m",
+   "features": [
+    "wide_river"
+   ]
+  },
+  {
+   "word": "alveus",
+   "gender": "m",
+   "features": [
+    "wide_river"
+   ]
+  },
+  {
+   "word": "torrens",
+   "gender": "m",
+   "features": [
+    "wide_river"
+   ]
+  },
+  {
+   "word": "fluentum",
+   "gender": "n",
+   "features": [
+    "wide_river"
+   ]
+  },
+  {
+   "word": "rivulus",
+   "gender": "m",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "latex",
+   "gender": "m",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "lympha",
+   "gender": "f",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "scaturigo",
+   "gender": "f",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "ductus",
+   "gender": "m",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "canalis",
+   "gender": "m",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "fossa",
+   "gender": "f",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "incile",
+   "gender": "n",
+   "features": [
+    "stream"
+   ]
+  },
+  {
+   "word": "pons",
+   "gender": "m",
+   "features": [
+    "ford"
+   ]
+  },
+  {
+   "word": "traiectus",
+   "gender": "m",
+   "features": [
+    "ford"
+   ]
+  },
+  {
+   "word": "commeatus",
+   "gender": "m",
+   "features": [
+    "ford"
+   ]
+  },
+  {
+   "word": "speculum",
+   "gender": "n",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "word": "piscina",
+   "gender": "f",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "word": "lacusculus",
+   "gender": "m",
+   "features": [
+    "pond"
+   ]
+  },
+  {
+   "word": "puteus",
+   "gender": "m",
+   "features": [
+    "pond"
+   ]
+  },
+  {
+   "word": "cisterna",
+   "gender": "f",
+   "features": [
+    "pond"
+   ]
+  },
+  {
+   "word": "fovea",
+   "gender": "f",
+   "features": [
+    "pond"
+   ]
+  },
+  {
+   "word": "origo",
+   "gender": "f",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "word": "nymphaeum",
+   "gender": "n",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "word": "fonticulus",
+   "gender": "m",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "word": "lavacrum",
+   "gender": "n",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "word": "hortus",
+   "gender": "m",
+   "features": [
+    "oasis"
+   ]
+  },
+  {
+   "word": "viridarium",
+   "gender": "n",
+   "features": [
+    "oasis"
+   ]
+  },
+  {
+   "word": "umbraculum",
+   "gender": "n",
+   "features": [
+    "oasis"
+   ]
+  },
+  {
+   "word": "aqua",
+   "gender": "f",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "word": "caenum",
+   "gender": "n",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "word": "limus",
+   "gender": "m",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "word": "carectum",
+   "gender": "n",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "word": "iuncetum",
+   "gender": "n",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "word": "salictum",
+   "gender": "n",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "word": "radix",
+   "gender": "f",
+   "features": [
+    "mangrove"
+   ]
+  },
+  {
+   "word": "lutum",
+   "gender": "n",
+   "features": [
+    "mud"
+   ]
+  },
+  {
+   "word": "volutabrum",
+   "gender": "n",
+   "features": [
+    "mud"
+   ]
+  },
+  {
+   "word": "sordes",
+   "gender": "f",
+   "features": [
+    "mud"
+   ]
+  },
+  {
+   "word": "vertex",
+   "gender": "m",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "word": "culmen",
+   "gender": "n",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "word": "fastigium",
+   "gender": "n",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "word": "apex",
+   "gender": "m",
+   "features": [
+    "summit"
+   ]
+  },
+  {
+   "word": "summum",
+   "gender": "n",
+   "features": [
+    "summit"
+   ]
+  },
+  {
+   "word": "spina",
+   "gender": "f",
+   "features": [
+    "ridge"
+   ]
+  },
+  {
+   "word": "tergum",
+   "gender": "n",
+   "features": [
+    "ridge"
+   ]
+  },
+  {
+   "word": "crista",
+   "gender": "f",
+   "features": [
+    "ridge"
+   ]
+  },
+  {
+   "word": "supercilium",
+   "gender": "n",
+   "features": [
+    "ridge"
+   ]
+  },
+  {
+   "word": "silex",
+   "gender": "m",
+   "features": [
+    "crag"
+   ]
+  },
+  {
+   "word": "scrupus",
+   "gender": "m",
+   "features": [
+    "crag"
+   ]
+  },
+  {
+   "word": "praeceps",
+   "gender": "n",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "word": "abruptum",
+   "gender": "n",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "word": "praeruptum",
+   "gender": "n",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "word": "praecipitium",
+   "gender": "n",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "word": "declive",
+   "gender": "n",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "word": "acclivitas",
+   "gender": "f",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "word": "devexum",
+   "gender": "n",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "word": "latus",
+   "gender": "n",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "word": "ascensus",
+   "gender": "m",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "word": "descensus",
+   "gender": "m",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "word": "colliculus",
+   "gender": "m",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "word": "grumus",
+   "gender": "m",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "word": "monticulus",
+   "gender": "m",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "word": "cumulus",
+   "gender": "m",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "word": "gibbus",
+   "gender": "m",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "word": "altitudo",
+   "gender": "f",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "word": "excelsum",
+   "gender": "n",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "word": "sublime",
+   "gender": "n",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "word": "aether",
+   "gender": "m",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "word": "caelum",
+   "gender": "n",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "word": "asperitas",
+   "gender": "f",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "word": "salebra",
+   "gender": "f",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "word": "ventus",
+   "gender": "m",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "word": "aura",
+   "gender": "f",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "word": "procella",
+   "gender": "f",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "word": "turbo",
+   "gender": "m",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "word": "flatus",
+   "gender": "m",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "word": "concavum",
+   "gender": "n",
+   "features": [
+    "valley"
+   ]
+  },
+  {
+   "word": "gremium",
+   "gender": "n",
+   "features": [
+    "valley"
+   ]
+  },
+  {
+   "word": "hiatus",
+   "gender": "m",
+   "features": [
+    "valley"
+   ]
+  },
+  {
+   "word": "cavea",
+   "gender": "f",
+   "features": [
+    "valley"
+   ]
+  },
+  {
+   "word": "anfractus",
+   "gender": "m",
+   "features": [
+    "valley"
+   ]
+  },
+  {
+   "word": "theatrum",
+   "gender": "n",
+   "features": [
+    "enclosed_valley"
+   ]
+  },
+  {
+   "word": "crater",
+   "gender": "m",
+   "features": [
+    "enclosed_valley"
+   ]
+  },
+  {
+   "word": "planities",
+   "gender": "f",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "word": "area",
+   "gender": "f",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "word": "aequum",
+   "gender": "n",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "word": "tabula",
+   "gender": "f",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "word": "arbustum",
+   "gender": "n",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "silvula",
+   "gender": "f",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "virgultum",
+   "gender": "n",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "arboretum",
+   "gender": "n",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "lustrum",
+   "gender": "n",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "materia",
+   "gender": "f",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "umbra",
+   "gender": "f",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "word": "pomarium",
+   "gender": "n",
+   "features": [
+    "grove"
+   ]
+  },
+  {
+   "word": "sacrum",
+   "gender": "n",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "word": "arcanum",
+   "gender": "n",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "word": "mysterium",
+   "gender": "n",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "word": "robur",
+   "gender": "n",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "word": "opacum",
+   "gender": "n",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "word": "caligo",
+   "gender": "f",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "word": "pinus",
+   "gender": "f",
+   "features": [
+    "taiga"
+   ]
+  },
+  {
+   "word": "picea",
+   "gender": "f",
+   "features": [
+    "taiga"
+   ]
+  },
+  {
+   "word": "taeda",
+   "gender": "f",
+   "features": [
+    "taiga"
+   ]
+  },
+  {
+   "word": "larix",
+   "gender": "f",
+   "features": [
+    "taiga"
+   ]
+  },
+  {
+   "word": "abies",
+   "gender": "f",
+   "features": [
+    "snowy_taiga"
+   ]
+  },
+  {
+   "word": "frutetum",
+   "gender": "n",
+   "features": [
+    "thicket"
+   ]
+  },
+  {
+   "word": "vepretum",
+   "gender": "n",
+   "features": [
+    "thicket"
+   ]
+  },
+  {
+   "word": "rubetum",
+   "gender": "n",
+   "features": [
+    "thicket"
+   ]
+  },
+  {
+   "word": "spinetum",
+   "gender": "n",
+   "features": [
+    "thicket"
+   ]
+  },
+  {
+   "word": "senticetum",
+   "gender": "n",
+   "features": [
+    "thicket"
+   ]
+  },
+  {
+   "word": "palmetum",
+   "gender": "n",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "word": "labyrinthus",
+   "gender": "m",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "word": "betulla",
+   "gender": "f",
+   "features": [
+    "birch"
+   ]
+  },
+  {
+   "word": "cerasus",
+   "gender": "f",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "word": "nebula",
+   "gender": "f",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "word": "arvum",
+   "gender": "n",
+   "features": [
+    "plains"
+   ]
+  },
+  {
+   "word": "tellus",
+   "gender": "f",
+   "features": [
+    "plains"
+   ]
+  },
+  {
+   "word": "campestre",
+   "gender": "n",
+   "features": [
+    "plains"
+   ]
+  },
+  {
+   "word": "gramen",
+   "gender": "n",
+   "features": [
+    "meadow"
+   ]
+  },
+  {
+   "word": "pratulum",
+   "gender": "n",
+   "features": [
+    "meadow"
+   ]
+  },
+  {
+   "word": "viretum",
+   "gender": "n",
+   "features": [
+    "meadow"
+   ]
+  },
+  {
+   "word": "caespes",
+   "gender": "m",
+   "features": [
+    "meadow"
+   ]
+  },
+  {
+   "word": "seges",
+   "gender": "f",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "word": "novale",
+   "gender": "n",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "word": "vinea",
+   "gender": "f",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "word": "olivetum",
+   "gender": "n",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "word": "messis",
+   "gender": "f",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "word": "horreum",
+   "gender": "n",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "word": "pabulum",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "stabulum",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "ovile",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "bubile",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "caula",
+   "gender": "f",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "saeptum",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "armentum",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "grex",
+   "gender": "m",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "pecus",
+   "gender": "n",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "word": "rosarium",
+   "gender": "n",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "word": "hortulus",
+   "gender": "m",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "word": "violarium",
+   "gender": "n",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "word": "herba",
+   "gender": "f",
+   "features": [
+    "grass"
+   ]
+  },
+  {
+   "word": "acacia",
+   "gender": "f",
+   "features": [
+    "savanna"
+   ]
+  },
+  {
+   "word": "eremus",
+   "gender": "f",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "word": "desertum",
+   "gender": "n",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "word": "sitis",
+   "gender": "f",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "word": "pulvis",
+   "gender": "m",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "word": "ochra",
+   "gender": "f",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "word": "minium",
+   "gender": "n",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "word": "rubrica",
+   "gender": "f",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "word": "argilla",
+   "gender": "f",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "word": "figlina",
+   "gender": "f",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "word": "aculeus",
+   "gender": "m",
+   "features": [
+    "cactus"
+   ]
+  },
+  {
+   "word": "carduus",
+   "gender": "m",
+   "features": [
+    "cactus"
+   ]
+  },
+  {
+   "word": "nix",
+   "gender": "f",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "pruina",
+   "gender": "f",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "bruma",
+   "gender": "f",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "hiems",
+   "gender": "f",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "gelu",
+   "gender": "n",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "frigus",
+   "gender": "n",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "algor",
+   "gender": "m",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "candor",
+   "gender": "m",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "septentrio",
+   "gender": "m",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "word": "crusta",
+   "gender": "f",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "word": "vitrum",
+   "gender": "n",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "word": "crystallus",
+   "gender": "f",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "word": "spelunca",
+   "gender": "f",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "cavum",
+   "gender": "n",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "cubile",
+   "gender": "n",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "crypta",
+   "gender": "f",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "hypogeum",
+   "gender": "n",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "foramen",
+   "gender": "n",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "os",
+   "gender": "n",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "word": "stiria",
+   "gender": "f",
+   "features": [
+    "dripstone"
+   ]
+  },
+  {
+   "word": "stilla",
+   "gender": "f",
+   "features": [
+    "dripstone"
+   ]
+  },
+  {
+   "word": "orcus",
+   "gender": "m",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "word": "avernus",
+   "gender": "m",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "word": "erebus",
+   "gender": "m",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "word": "chaos",
+   "gender": "n",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "word": "tartarus",
+   "gender": "m",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "word": "nox",
+   "gender": "f",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "word": "lapidicina",
+   "gender": "f",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "word": "saxetum",
+   "gender": "n",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "word": "cos",
+   "gender": "f",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "word": "marmor",
+   "gender": "n",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "word": "creta",
+   "gender": "f",
+   "features": [
+    "calcite"
+   ]
+  },
+  {
+   "word": "gypsum",
+   "gender": "n",
+   "features": [
+    "calcite"
+   ]
+  },
+  {
+   "word": "calx",
+   "gender": "f",
+   "features": [
+    "calcite"
+   ]
+  },
+  {
+   "word": "basaltes",
+   "gender": "m",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "word": "carbo",
+   "gender": "m",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "word": "cinis",
+   "gender": "m",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "word": "favilla",
+   "gender": "f",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "word": "scoria",
+   "gender": "f",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "word": "pumex",
+   "gender": "m",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "word": "fornax",
+   "gender": "f",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "word": "caminus",
+   "gender": "m",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "word": "ignis",
+   "gender": "m",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "word": "flamma",
+   "gender": "f",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "word": "incendium",
+   "gender": "n",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "word": "pyra",
+   "gender": "f",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "word": "rogus",
+   "gender": "m",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "word": "nodus",
+   "gender": "m",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "vortex",
+   "gender": "m",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "anima",
+   "gender": "f",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "numen",
+   "gender": "n",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "lumen",
+   "gender": "n",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "sidus",
+   "gender": "n",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "stella",
+   "gender": "f",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "astrum",
+   "gender": "n",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "spiritus",
+   "gender": "m",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "genius",
+   "gender": "m",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "word": "gemma",
+   "gender": "f",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "word": "lapillus",
+   "gender": "m",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "word": "larva",
+   "gender": "f",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "word": "phantasma",
+   "gender": "n",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "word": "portentum",
+   "gender": "n",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "word": "monstrum",
+   "gender": "n",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "word": "prodigium",
+   "gender": "n",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "word": "miraculum",
+   "gender": "n",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "word": "tabes",
+   "gender": "f",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "contagium",
+   "gender": "n",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "lues",
+   "gender": "f",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "pestis",
+   "gender": "f",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "vulnus",
+   "gender": "n",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "ulcus",
+   "gender": "n",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "putredo",
+   "gender": "f",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "venenum",
+   "gender": "n",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "virus",
+   "gender": "n",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "caro",
+   "gender": "f",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "word": "ferraria",
+   "gender": "f",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "word": "metallum",
+   "gender": "n",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "word": "fodina",
+   "gender": "f",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "word": "vena",
+   "gender": "f",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "word": "officina",
+   "gender": "f",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "word": "fabrica",
+   "gender": "f",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "word": "aurifodina",
+   "gender": "f",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "word": "thesaurus",
+   "gender": "m",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "word": "gaza",
+   "gender": "f",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "word": "aerarium",
+   "gender": "n",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "word": "margarita",
+   "gender": "f",
+   "features": [
+    "amethyst"
+   ]
+  },
+  {
+   "word": "equile",
+   "gender": "n",
+   "features": [
+    "horses"
+   ]
+  },
+  {
+   "word": "hippodromus",
+   "gender": "m",
+   "features": [
+    "horses"
+   ]
+  },
+  {
+   "word": "alvearium",
+   "gender": "n",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "word": "apiarium",
+   "gender": "n",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "word": "mellarium",
+   "gender": "n",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "word": "vivarium",
+   "gender": "n",
+   "features": [
+    "fish"
+   ]
   }
+ ],
+ "describers": [
+  {
+   "m": "silvester",
+   "f": "silvestris",
+   "n": "silvestre",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "frondosus",
+   "f": "frondosa",
+   "n": "frondosum",
+   "features": [
+    "jungle",
+    "forest"
+   ]
+  },
+  {
+   "m": "umbrosus",
+   "f": "umbrosa",
+   "n": "umbrosum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "albus",
+   "f": "alba",
+   "n": "album",
+   "features": [
+    "birch"
+   ]
+  },
+  {
+   "m": "pinifer",
+   "f": "pinifera",
+   "n": "piniferum",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "cerasinus",
+   "f": "cerasina",
+   "n": "cerasinum",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "nebulosus",
+   "f": "nebulosa",
+   "n": "nebulosum",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "arcanus",
+   "f": "arcana",
+   "n": "arcanum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "argenteus",
+   "f": "argentea",
+   "n": "argenteum",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "sacer",
+   "f": "sacra",
+   "n": "sacrum",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "magicus",
+   "f": "magica",
+   "n": "magicum",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "m": "corruptus",
+   "f": "corrupta",
+   "n": "corruptum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "obscurus",
+   "f": "obscura",
+   "n": "obscurum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "tenebrosus",
+   "f": "tenebrosa",
+   "n": "tenebrosum",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "m": "montanus",
+   "f": "montana",
+   "n": "montanum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "altus",
+   "f": "alta",
+   "n": "altum",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "humilis",
+   "f": "humilis",
+   "n": "humile",
+   "features": [
+    "low"
+   ]
+  },
+  {
+   "m": "planus",
+   "f": "plana",
+   "n": "planum",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "asper",
+   "f": "aspera",
+   "n": "asperum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "praeruptus",
+   "f": "praerupta",
+   "n": "praeruptum",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "m": "cavus",
+   "f": "cava",
+   "n": "cavum",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "m": "profundus",
+   "f": "profunda",
+   "n": "profundum",
+   "features": [
+    "below_sea"
+   ]
+  },
+  {
+   "m": "saxosus",
+   "f": "saxosa",
+   "n": "saxosum",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "m": "cretosus",
+   "f": "cretosa",
+   "n": "cretosum",
+   "features": [
+    "calcite"
+   ]
+  },
+  {
+   "m": "niger",
+   "f": "nigra",
+   "n": "nigrum",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "m": "ferreus",
+   "f": "ferrea",
+   "n": "ferreum",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "m": "aureus",
+   "f": "aurea",
+   "n": "aureum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "rubeus",
+   "f": "rubea",
+   "n": "rubeum",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "m": "purpureus",
+   "f": "purpurea",
+   "n": "purpureum",
+   "features": [
+    "amethyst"
+   ]
+  },
+  {
+   "m": "ardens",
+   "f": "ardens",
+   "n": "ardens",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "maritimus",
+   "f": "maritima",
+   "n": "maritimum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "calidus",
+   "f": "calida",
+   "n": "calidum",
+   "features": [
+    "warm_ocean"
+   ]
+  },
+  {
+   "m": "frigidus",
+   "f": "frigida",
+   "n": "frigidum",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "piscosus",
+   "f": "piscosa",
+   "n": "piscosum",
+   "features": [
+    "fish"
+   ]
+  },
+  {
+   "m": "fluvialis",
+   "f": "fluvialis",
+   "n": "fluviale",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "tranquillus",
+   "f": "tranquilla",
+   "n": "tranquillum",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "m": "humidus",
+   "f": "humida",
+   "n": "humidum",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "m": "palustris",
+   "f": "palustris",
+   "n": "palustre",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "m": "lutosus",
+   "f": "lutosa",
+   "n": "lutosum",
+   "features": [
+    "mud"
+   ]
+  },
+  {
+   "m": "nivalis",
+   "f": "nivalis",
+   "n": "nivale",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "m": "gelidus",
+   "f": "gelida",
+   "n": "gelidum",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "m": "glacialis",
+   "f": "glacialis",
+   "n": "glaciale",
+   "features": [
+    "packed_ice"
+   ]
+  },
+  {
+   "m": "caeruleus",
+   "f": "caerulea",
+   "n": "caeruleum",
+   "features": [
+    "blue_ice"
+   ]
+  },
+  {
+   "m": "aridus",
+   "f": "arida",
+   "n": "aridum",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "torridus",
+   "f": "torrida",
+   "n": "torridum",
+   "features": [
+    "savanna"
+   ]
+  },
+  {
+   "m": "arenosus",
+   "f": "arenosa",
+   "n": "arenosum",
+   "features": [
+    "sand"
+   ]
+  },
+  {
+   "m": "spinosus",
+   "f": "spinosa",
+   "n": "spinosum",
+   "features": [
+    "cactus"
+   ]
+  },
+  {
+   "m": "ventosus",
+   "f": "ventosa",
+   "n": "ventosum",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "m": "herbosus",
+   "f": "herbosa",
+   "n": "herbosum",
+   "features": [
+    "grass"
+   ]
+  },
+  {
+   "m": "floridus",
+   "f": "florida",
+   "n": "floridum",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "mellifer",
+   "f": "mellifera",
+   "n": "melliferum",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "m": "baccifer",
+   "f": "baccifera",
+   "n": "bacciferum",
+   "features": [
+    "berries"
+   ]
+  },
+  {
+   "m": "fertilis",
+   "f": "fertilis",
+   "n": "fertile",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "fungosus",
+   "f": "fungosa",
+   "n": "fungosum",
+   "features": [
+    "mushrooms"
+   ]
+  },
+  {
+   "m": "muscosus",
+   "f": "muscosa",
+   "n": "muscosum",
+   "features": [
+    "moss"
+   ]
+  },
+  {
+   "m": "viridis",
+   "f": "viridis",
+   "n": "viride",
+   "features": [
+    "lush_caves",
+    "grass"
+   ]
+  },
+  {
+   "m": "harundineus",
+   "f": "harundinea",
+   "n": "harundineum",
+   "features": [
+    "reeds"
+   ]
+  },
+  {
+   "m": "pecuosus",
+   "f": "pecuosa",
+   "n": "pecuosum",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "equinus",
+   "f": "equina",
+   "n": "equinum",
+   "features": [
+    "horses"
+   ]
+  },
+  {
+   "m": "lupinus",
+   "f": "lupina",
+   "n": "lupinum",
+   "features": [
+    "wolves"
+   ]
+  },
+  {
+   "m": "vulpinus",
+   "f": "vulpina",
+   "n": "vulpinum",
+   "features": [
+    "foxes"
+   ]
+  },
+  {
+   "m": "ursinus",
+   "f": "ursina",
+   "n": "ursinum",
+   "features": [
+    "bears"
+   ]
+  },
+  {
+   "m": "hostilis",
+   "f": "hostilis",
+   "n": "hostile",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "antiquus",
+   "f": "antiqua",
+   "n": "antiquum",
+   "features": [
+    "ruins",
+    "barrow"
+   ]
+  },
+  {
+   "m": "desertus",
+   "f": "deserta",
+   "n": "desertum",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "quietus",
+   "f": "quieta",
+   "n": "quietum",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "m": "nemorosus",
+   "f": "nemorosa",
+   "n": "nemorosum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "silvosus",
+   "f": "silvosa",
+   "n": "silvosum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "ramosus",
+   "f": "ramosa",
+   "n": "ramosum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "arboreus",
+   "f": "arborea",
+   "n": "arboreum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "foliosus",
+   "f": "foliosa",
+   "n": "foliosum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "opacus",
+   "f": "opaca",
+   "n": "opacum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "umbrifer",
+   "f": "umbrifera",
+   "n": "umbriferum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "frondifer",
+   "f": "frondifera",
+   "n": "frondiferum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "lignosus",
+   "f": "lignosa",
+   "n": "lignosum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "comatus",
+   "f": "comata",
+   "n": "comatum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "virens",
+   "f": "virens",
+   "n": "virens",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "viridans",
+   "f": "viridans",
+   "n": "viridans",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "saltuosus",
+   "f": "saltuosa",
+   "n": "saltuosum",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "frondens",
+   "f": "frondens",
+   "n": "frondens",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "nemoralis",
+   "f": "nemoralis",
+   "n": "nemorale",
+   "features": [
+    "forest"
+   ]
+  },
+  {
+   "m": "perplexus",
+   "f": "perplexa",
+   "n": "perplexum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "impeditus",
+   "f": "impedita",
+   "n": "impeditum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "luxurians",
+   "f": "luxurians",
+   "n": "luxurians",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "implicitus",
+   "f": "implicita",
+   "n": "implicitum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "intricatus",
+   "f": "intricata",
+   "n": "intricatum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "aestuosus",
+   "f": "aestuosa",
+   "n": "aestuosum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "uvidus",
+   "f": "uvida",
+   "n": "uvidum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "madidus",
+   "f": "madida",
+   "n": "madidum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "fecundus",
+   "f": "fecunda",
+   "n": "fecundum",
+   "features": [
+    "jungle"
+   ]
+  },
+  {
+   "m": "caecus",
+   "f": "caeca",
+   "n": "caecum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "nocturnus",
+   "f": "nocturna",
+   "n": "nocturnum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "ater",
+   "f": "atra",
+   "n": "atrum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "fuscus",
+   "f": "fusca",
+   "n": "fuscum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "furvus",
+   "f": "furva",
+   "n": "furvum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "caliginosus",
+   "f": "caliginosa",
+   "n": "caliginosum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "lucifugus",
+   "f": "lucifuga",
+   "n": "lucifugum",
+   "features": [
+    "dark_forest"
+   ]
+  },
+  {
+   "m": "candidus",
+   "f": "candida",
+   "n": "candidum",
+   "features": [
+    "birch"
+   ]
+  },
+  {
+   "m": "lacteus",
+   "f": "lactea",
+   "n": "lacteum",
+   "features": [
+    "birch"
+   ]
+  },
+  {
+   "m": "pallidus",
+   "f": "pallida",
+   "n": "pallidum",
+   "features": [
+    "birch"
+   ]
+  },
+  {
+   "m": "eburneus",
+   "f": "eburnea",
+   "n": "eburneum",
+   "features": [
+    "birch"
+   ]
+  },
+  {
+   "m": "pineus",
+   "f": "pinea",
+   "n": "pineum",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "abiegnus",
+   "f": "abiegna",
+   "n": "abiegnum",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "resinosus",
+   "f": "resinosa",
+   "n": "resinosum",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "conifer",
+   "f": "conifera",
+   "n": "coniferum",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "taedifer",
+   "f": "taedifera",
+   "n": "taediferum",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "aculeatus",
+   "f": "aculeata",
+   "n": "aculeatum",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "sempervirens",
+   "f": "sempervirens",
+   "n": "sempervirens",
+   "features": [
+    "spruce"
+   ]
+  },
+  {
+   "m": "roseus",
+   "f": "rosea",
+   "n": "roseum",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "rubicundus",
+   "f": "rubicunda",
+   "n": "rubicundum",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "florens",
+   "f": "florens",
+   "n": "florens",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "vernus",
+   "f": "verna",
+   "n": "vernum",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "blandus",
+   "f": "blanda",
+   "n": "blandum",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "dulcis",
+   "f": "dulcis",
+   "n": "dulce",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "suavis",
+   "f": "suavis",
+   "n": "suave",
+   "features": [
+    "cherry"
+   ]
+  },
+  {
+   "m": "pallens",
+   "f": "pallens",
+   "n": "pallens",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "cinereus",
+   "f": "cinerea",
+   "n": "cinereum",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "canus",
+   "f": "cana",
+   "n": "canum",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "lividus",
+   "f": "livida",
+   "n": "lividum",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "exsanguis",
+   "f": "exsanguis",
+   "n": "exsangue",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "luridus",
+   "f": "lurida",
+   "n": "luridum",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "umbratilis",
+   "f": "umbratilis",
+   "n": "umbratile",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "mutus",
+   "f": "muta",
+   "n": "mutum",
+   "features": [
+    "pale_garden"
+   ]
+  },
+  {
+   "m": "mysticus",
+   "f": "mystica",
+   "n": "mysticum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "mirus",
+   "f": "mira",
+   "n": "mirum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "mirabilis",
+   "f": "mirabilis",
+   "n": "mirabile",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "sanctus",
+   "f": "sancta",
+   "n": "sanctum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "divinus",
+   "f": "divina",
+   "n": "divinum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "fatalis",
+   "f": "fatalis",
+   "n": "fatale",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "fatidicus",
+   "f": "fatidica",
+   "n": "fatidicum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "incantatus",
+   "f": "incantata",
+   "n": "incantatum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "venustus",
+   "f": "venusta",
+   "n": "venustum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "beatus",
+   "f": "beata",
+   "n": "beatum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "fortunatus",
+   "f": "fortunata",
+   "n": "fortunatum",
+   "features": [
+    "magical_forest"
+   ]
+  },
+  {
+   "m": "argentatus",
+   "f": "argentata",
+   "n": "argentatum",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "nitidus",
+   "f": "nitida",
+   "n": "nitidum",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "splendidus",
+   "f": "splendida",
+   "n": "splendidum",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "lucidus",
+   "f": "lucida",
+   "n": "lucidum",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "fulgens",
+   "f": "fulgens",
+   "n": "fulgens",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "candens",
+   "f": "candens",
+   "n": "candens",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "coruscus",
+   "f": "corusca",
+   "n": "coruscum",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "radians",
+   "f": "radians",
+   "n": "radians",
+   "features": [
+    "silverwood"
+   ]
+  },
+  {
+   "m": "vitalis",
+   "f": "vitalis",
+   "n": "vitale",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "potens",
+   "f": "potens",
+   "n": "potens",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "fervidus",
+   "f": "fervida",
+   "n": "fervidum",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "vibrans",
+   "f": "vibrans",
+   "n": "vibrans",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "aethereus",
+   "f": "aetherea",
+   "n": "aethereum",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "caelestis",
+   "f": "caelestis",
+   "n": "caeleste",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "sidereus",
+   "f": "siderea",
+   "n": "sidereum",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "stellatus",
+   "f": "stellata",
+   "n": "stellatum",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "luminosus",
+   "f": "luminosa",
+   "n": "luminosum",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "radiosus",
+   "f": "radiosa",
+   "n": "radiosum",
+   "features": [
+    "aura_node"
+   ]
+  },
+  {
+   "m": "gemmeus",
+   "f": "gemmea",
+   "n": "gemmeum",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "m": "gemmatus",
+   "f": "gemmata",
+   "n": "gemmatum",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "m": "crystallinus",
+   "f": "crystallina",
+   "n": "crystallinum",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "m": "lucens",
+   "f": "lucens",
+   "n": "lucens",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "m": "pellucidus",
+   "f": "pellucida",
+   "n": "pellucidum",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "m": "vitreus",
+   "f": "vitrea",
+   "n": "vitreum",
+   "features": [
+    "infused_stone"
+   ]
+  },
+  {
+   "m": "putridus",
+   "f": "putrida",
+   "n": "putridum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "foedus",
+   "f": "foeda",
+   "n": "foedum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "tabidus",
+   "f": "tabida",
+   "n": "tabidum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "pestifer",
+   "f": "pestifera",
+   "n": "pestiferum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "pestilens",
+   "f": "pestilens",
+   "n": "pestilens",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "venenatus",
+   "f": "venenata",
+   "n": "venenatum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "virulentus",
+   "f": "virulenta",
+   "n": "virulentum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "morbidus",
+   "f": "morbida",
+   "n": "morbidum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "contaminatus",
+   "f": "contaminata",
+   "n": "contaminatum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "impurus",
+   "f": "impura",
+   "n": "impurum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "profanus",
+   "f": "profana",
+   "n": "profanum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "exsecratus",
+   "f": "exsecrata",
+   "n": "exsecratum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "maledictus",
+   "f": "maledicta",
+   "n": "maledictum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "deformis",
+   "f": "deformis",
+   "n": "deforme",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "monstrosus",
+   "f": "monstrosa",
+   "n": "monstrosum",
+   "features": [
+    "taint"
+   ]
+  },
+  {
+   "m": "tenebricosus",
+   "f": "tenebricosa",
+   "n": "tenebricosum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "sinister",
+   "f": "sinistra",
+   "n": "sinistrum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "dirus",
+   "f": "dira",
+   "n": "dirum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "horrendus",
+   "f": "horrenda",
+   "n": "horrendum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "lugubris",
+   "f": "lugubris",
+   "n": "lugubre",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "funestus",
+   "f": "funesta",
+   "n": "funestum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "ominosus",
+   "f": "ominosa",
+   "n": "ominosum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "infaustus",
+   "f": "infausta",
+   "n": "infaustum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "inquietus",
+   "f": "inquieta",
+   "n": "inquietum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "maestus",
+   "f": "maesta",
+   "n": "maestum",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "tristis",
+   "f": "tristis",
+   "n": "triste",
+   "features": [
+    "eerie"
+   ]
+  },
+  {
+   "m": "infernus",
+   "f": "inferna",
+   "n": "infernum",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "m": "stygius",
+   "f": "stygia",
+   "n": "stygium",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "m": "silens",
+   "f": "silens",
+   "n": "silens",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "m": "tacitus",
+   "f": "tacita",
+   "n": "tacitum",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "m": "abditus",
+   "f": "abdita",
+   "n": "abditum",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "m": "occultus",
+   "f": "occulta",
+   "n": "occultum",
+   "features": [
+    "deep_dark"
+   ]
+  },
+  {
+   "m": "montuosus",
+   "f": "montuosa",
+   "n": "montuosum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "alpinus",
+   "f": "alpina",
+   "n": "alpinum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "excelsus",
+   "f": "excelsa",
+   "n": "excelsum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "celsus",
+   "f": "celsa",
+   "n": "celsum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "arduus",
+   "f": "ardua",
+   "n": "arduum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "ingens",
+   "f": "ingens",
+   "n": "ingens",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "saxeus",
+   "f": "saxea",
+   "n": "saxeum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "superbus",
+   "f": "superba",
+   "n": "superbum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "sublimis",
+   "f": "sublimis",
+   "n": "sublime",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "editus",
+   "f": "edita",
+   "n": "editum",
+   "features": [
+    "mountain"
+   ]
+  },
+  {
+   "m": "elatus",
+   "f": "elata",
+   "n": "elatum",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "aerius",
+   "f": "aeria",
+   "n": "aerium",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "aetherius",
+   "f": "aetheria",
+   "n": "aetherium",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "nubifer",
+   "f": "nubifera",
+   "n": "nubiferum",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "nubilus",
+   "f": "nubila",
+   "n": "nubilum",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "summus",
+   "f": "summa",
+   "n": "summum",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "supremus",
+   "f": "suprema",
+   "n": "supremum",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "praealtus",
+   "f": "praealta",
+   "n": "praealtum",
+   "features": [
+    "high"
+   ]
+  },
+  {
+   "m": "demissus",
+   "f": "demissa",
+   "n": "demissum",
+   "features": [
+    "low"
+   ]
+  },
+  {
+   "m": "imus",
+   "f": "ima",
+   "n": "imum",
+   "features": [
+    "low"
+   ]
+  },
+  {
+   "m": "depressus",
+   "f": "depressa",
+   "n": "depressum",
+   "features": [
+    "low"
+   ]
+  },
+  {
+   "m": "submissus",
+   "f": "submissa",
+   "n": "submissum",
+   "features": [
+    "low"
+   ]
+  },
+  {
+   "m": "supinus",
+   "f": "supina",
+   "n": "supinum",
+   "features": [
+    "low"
+   ]
+  },
+  {
+   "m": "aequus",
+   "f": "aequa",
+   "n": "aequum",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "aequalis",
+   "f": "aequalis",
+   "n": "aequale",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "patens",
+   "f": "patens",
+   "n": "patens",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "patulus",
+   "f": "patula",
+   "n": "patulum",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "apertus",
+   "f": "aperta",
+   "n": "apertum",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "latus",
+   "f": "lata",
+   "n": "latum",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "levis",
+   "f": "levis",
+   "n": "leve",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "porrectus",
+   "f": "porrecta",
+   "n": "porrectum",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "extentus",
+   "f": "extenta",
+   "n": "extentum",
+   "features": [
+    "flat"
+   ]
+  },
+  {
+   "m": "confragosus",
+   "f": "confragosa",
+   "n": "confragosum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "salebrosus",
+   "f": "salebrosa",
+   "n": "salebrosum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "horridus",
+   "f": "horrida",
+   "n": "horridum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "scaber",
+   "f": "scabra",
+   "n": "scabrum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "inaequalis",
+   "f": "inaequalis",
+   "n": "inaequale",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "abruptus",
+   "f": "abrupta",
+   "n": "abruptum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "scrupeus",
+   "f": "scrupea",
+   "n": "scrupeum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "durus",
+   "f": "dura",
+   "n": "durum",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "rudis",
+   "f": "rudis",
+   "n": "rude",
+   "features": [
+    "rugged"
+   ]
+  },
+  {
+   "m": "praeceps",
+   "f": "praeceps",
+   "n": "praeceps",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "m": "pendulus",
+   "f": "pendula",
+   "n": "pendulum",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "m": "pensilis",
+   "f": "pensilis",
+   "n": "pensile",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "m": "declivis",
+   "f": "declivis",
+   "n": "declive",
+   "features": [
+    "cliff"
+   ]
+  },
+  {
+   "m": "concavus",
+   "f": "concava",
+   "n": "concavum",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "m": "cavernosus",
+   "f": "cavernosa",
+   "n": "cavernosum",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "m": "subterraneus",
+   "f": "subterranea",
+   "n": "subterraneum",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "m": "latebrosus",
+   "f": "latebrosa",
+   "n": "latebrosum",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "m": "opertus",
+   "f": "operta",
+   "n": "opertum",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "m": "abstrusus",
+   "f": "abstrusa",
+   "n": "abstrusum",
+   "features": [
+    "cave"
+   ]
+  },
+  {
+   "m": "demersus",
+   "f": "demersa",
+   "n": "demersum",
+   "features": [
+    "below_sea"
+   ]
+  },
+  {
+   "m": "submersus",
+   "f": "submersa",
+   "n": "submersum",
+   "features": [
+    "below_sea"
+   ]
+  },
+  {
+   "m": "mersus",
+   "f": "mersa",
+   "n": "mersum",
+   "features": [
+    "below_sea"
+   ]
+  },
+  {
+   "m": "lapidosus",
+   "f": "lapidosa",
+   "n": "lapidosum",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "m": "petrosus",
+   "f": "petrosa",
+   "n": "petrosum",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "m": "siliceus",
+   "f": "silicea",
+   "n": "siliceum",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "m": "glareosus",
+   "f": "glareosa",
+   "n": "glareosum",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "m": "calculosus",
+   "f": "calculosa",
+   "n": "calculosum",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "m": "marmoreus",
+   "f": "marmorea",
+   "n": "marmoreum",
+   "features": [
+    "stone"
+   ]
+  },
+  {
+   "m": "cretaceus",
+   "f": "cretacea",
+   "n": "cretaceum",
+   "features": [
+    "calcite"
+   ]
+  },
+  {
+   "m": "gypseus",
+   "f": "gypsea",
+   "n": "gypseum",
+   "features": [
+    "calcite"
+   ]
+  },
+  {
+   "m": "niveus",
+   "f": "nivea",
+   "n": "niveum",
+   "features": [
+    "calcite"
+   ]
+  },
+  {
+   "m": "fuliginosus",
+   "f": "fuliginosa",
+   "n": "fuliginosum",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "m": "ustus",
+   "f": "usta",
+   "n": "ustum",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "m": "adustus",
+   "f": "adusta",
+   "n": "adustum",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "m": "piceus",
+   "f": "picea",
+   "n": "piceum",
+   "features": [
+    "blackstone"
+   ]
+  },
+  {
+   "m": "ferratus",
+   "f": "ferrata",
+   "n": "ferratum",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "m": "ferrugineus",
+   "f": "ferruginea",
+   "n": "ferrugineum",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "m": "chalybeius",
+   "f": "chalybeia",
+   "n": "chalybeium",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "m": "rigidus",
+   "f": "rigida",
+   "n": "rigidum",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "m": "solidus",
+   "f": "solida",
+   "n": "solidum",
+   "features": [
+    "iron"
+   ]
+  },
+  {
+   "m": "auratus",
+   "f": "aurata",
+   "n": "auratum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "aurifer",
+   "f": "aurifera",
+   "n": "auriferum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "fulvus",
+   "f": "fulva",
+   "n": "fulvum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "flavus",
+   "f": "flava",
+   "n": "flavum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "rutilus",
+   "f": "rutila",
+   "n": "rutilum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "dives",
+   "f": "dives",
+   "n": "dives",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "opulentus",
+   "f": "opulenta",
+   "n": "opulentum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "pretiosus",
+   "f": "pretiosa",
+   "n": "pretiosum",
+   "features": [
+    "gold"
+   ]
+  },
+  {
+   "m": "ruber",
+   "f": "rubra",
+   "n": "rubrum",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "m": "rubens",
+   "f": "rubens",
+   "n": "rubens",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "m": "puniceus",
+   "f": "punicea",
+   "n": "puniceum",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "m": "sanguineus",
+   "f": "sanguinea",
+   "n": "sanguineum",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "m": "miniatus",
+   "f": "miniata",
+   "n": "miniatum",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "m": "testaceus",
+   "f": "testacea",
+   "n": "testaceum",
+   "features": [
+    "red_sand"
+   ]
+  },
+  {
+   "m": "violaceus",
+   "f": "violacea",
+   "n": "violaceum",
+   "features": [
+    "amethyst"
+   ]
+  },
+  {
+   "m": "ianthinus",
+   "f": "ianthina",
+   "n": "ianthinum",
+   "features": [
+    "amethyst"
+   ]
+  },
+  {
+   "m": "amethystinus",
+   "f": "amethystina",
+   "n": "amethystinum",
+   "features": [
+    "amethyst"
+   ]
+  },
+  {
+   "m": "ostrinus",
+   "f": "ostrina",
+   "n": "ostrinum",
+   "features": [
+    "amethyst"
+   ]
+  },
+  {
+   "m": "hyacinthinus",
+   "f": "hyacinthina",
+   "n": "hyacinthinum",
+   "features": [
+    "amethyst"
+   ]
+  },
+  {
+   "m": "flammeus",
+   "f": "flammea",
+   "n": "flammeum",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "igneus",
+   "f": "ignea",
+   "n": "igneum",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "fervens",
+   "f": "fervens",
+   "n": "fervens",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "ignifer",
+   "f": "ignifera",
+   "n": "igniferum",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "aestuans",
+   "f": "aestuans",
+   "n": "aestuans",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "fumosus",
+   "f": "fumosa",
+   "n": "fumosum",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "sulphureus",
+   "f": "sulphurea",
+   "n": "sulphureum",
+   "features": [
+    "lava"
+   ]
+  },
+  {
+   "m": "marinus",
+   "f": "marina",
+   "n": "marinum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "aequoreus",
+   "f": "aequorea",
+   "n": "aequoreum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "pelagius",
+   "f": "pelagia",
+   "n": "pelagium",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "salsus",
+   "f": "salsa",
+   "n": "salsum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "undosus",
+   "f": "undosa",
+   "n": "undosum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "fluctuosus",
+   "f": "fluctuosa",
+   "n": "fluctuosum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "glaucus",
+   "f": "glauca",
+   "n": "glaucum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "spumosus",
+   "f": "spumosa",
+   "n": "spumosum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "spumeus",
+   "f": "spumea",
+   "n": "spumeum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "tumidus",
+   "f": "tumida",
+   "n": "tumidum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "procellosus",
+   "f": "procellosa",
+   "n": "procellosum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "nauticus",
+   "f": "nautica",
+   "n": "nauticum",
+   "features": [
+    "ocean"
+   ]
+  },
+  {
+   "m": "tepidus",
+   "f": "tepida",
+   "n": "tepidum",
+   "features": [
+    "warm_ocean"
+   ]
+  },
+  {
+   "m": "tepens",
+   "f": "tepens",
+   "n": "tepens",
+   "features": [
+    "warm_ocean"
+   ]
+  },
+  {
+   "m": "aestivus",
+   "f": "aestiva",
+   "n": "aestivum",
+   "features": [
+    "warm_ocean"
+   ]
+  },
+  {
+   "m": "placidus",
+   "f": "placida",
+   "n": "placidum",
+   "features": [
+    "warm_ocean"
+   ]
+  },
+  {
+   "m": "algidus",
+   "f": "algida",
+   "n": "algidum",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "brumalis",
+   "f": "brumalis",
+   "n": "brumale",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "hibernus",
+   "f": "hiberna",
+   "n": "hibernum",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "hiemalis",
+   "f": "hiemalis",
+   "n": "hiemale",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "septentrionalis",
+   "f": "septentrionalis",
+   "n": "septentrionale",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "borealis",
+   "f": "borealis",
+   "n": "boreale",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "aquilonius",
+   "f": "aquilonia",
+   "n": "aquilonium",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "rigens",
+   "f": "rigens",
+   "n": "rigens",
+   "features": [
+    "cold"
+   ]
+  },
+  {
+   "m": "piscatorius",
+   "f": "piscatoria",
+   "n": "piscatorium",
+   "features": [
+    "fish"
+   ]
+  },
+  {
+   "m": "squamosus",
+   "f": "squamosa",
+   "n": "squamosum",
+   "features": [
+    "fish"
+   ]
+  },
+  {
+   "m": "fluviatilis",
+   "f": "fluviatilis",
+   "n": "fluviatile",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "amnicus",
+   "f": "amnica",
+   "n": "amnicum",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "fluens",
+   "f": "fluens",
+   "n": "fluens",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "labens",
+   "f": "labens",
+   "n": "labens",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "currens",
+   "f": "currens",
+   "n": "currens",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "rapidus",
+   "f": "rapida",
+   "n": "rapidum",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "celer",
+   "f": "celeris",
+   "n": "celere",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "vagus",
+   "f": "vaga",
+   "n": "vagum",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "sinuosus",
+   "f": "sinuosa",
+   "n": "sinuosum",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "flexuosus",
+   "f": "flexuosa",
+   "n": "flexuosum",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "torrens",
+   "f": "torrens",
+   "n": "torrens",
+   "features": [
+    "river"
+   ]
+  },
+  {
+   "m": "stagnans",
+   "f": "stagnans",
+   "n": "stagnans",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "m": "lacustris",
+   "f": "lacustris",
+   "n": "lacustre",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "m": "lenis",
+   "f": "lenis",
+   "n": "lene",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "m": "serenus",
+   "f": "serena",
+   "n": "serenum",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "m": "immotus",
+   "f": "immota",
+   "n": "immotum",
+   "features": [
+    "lake"
+   ]
+  },
+  {
+   "m": "aquosus",
+   "f": "aquosa",
+   "n": "aquosum",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "m": "liquidus",
+   "f": "liquida",
+   "n": "liquidum",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "m": "roscidus",
+   "f": "roscida",
+   "n": "roscidum",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "m": "irriguus",
+   "f": "irrigua",
+   "n": "irriguum",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "m": "riguus",
+   "f": "rigua",
+   "n": "riguum",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "m": "madens",
+   "f": "madens",
+   "n": "madens",
+   "features": [
+    "water"
+   ]
+  },
+  {
+   "m": "paludosus",
+   "f": "paludosa",
+   "n": "paludosum",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "m": "uliginosus",
+   "f": "uliginosa",
+   "n": "uliginosum",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "m": "limosus",
+   "f": "limosa",
+   "n": "limosum",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "m": "caenosus",
+   "f": "caenosa",
+   "n": "caenosum",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "m": "iuncosus",
+   "f": "iuncosa",
+   "n": "iuncosum",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "m": "graveolens",
+   "f": "graveolens",
+   "n": "graveolens",
+   "features": [
+    "swamp"
+   ]
+  },
+  {
+   "m": "lutulentus",
+   "f": "lutulenta",
+   "n": "lutulentum",
+   "features": [
+    "mud"
+   ]
+  },
+  {
+   "m": "sordidus",
+   "f": "sordida",
+   "n": "sordidum",
+   "features": [
+    "mud"
+   ]
+  },
+  {
+   "m": "turbidus",
+   "f": "turbida",
+   "n": "turbidum",
+   "features": [
+    "mud"
+   ]
+  },
+  {
+   "m": "nivosus",
+   "f": "nivosa",
+   "n": "nivosum",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "m": "pruinosus",
+   "f": "pruinosa",
+   "n": "pruinosum",
+   "features": [
+    "snow"
+   ]
+  },
+  {
+   "m": "gelatus",
+   "f": "gelata",
+   "n": "gelatum",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "m": "lubricus",
+   "f": "lubrica",
+   "n": "lubricum",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "m": "splendens",
+   "f": "splendens",
+   "n": "splendens",
+   "features": [
+    "ice"
+   ]
+  },
+  {
+   "m": "concretus",
+   "f": "concreta",
+   "n": "concretum",
+   "features": [
+    "packed_ice"
+   ]
+  },
+  {
+   "m": "densus",
+   "f": "densa",
+   "n": "densum",
+   "features": [
+    "packed_ice"
+   ]
+  },
+  {
+   "m": "cyaneus",
+   "f": "cyanea",
+   "n": "cyaneum",
+   "features": [
+    "blue_ice"
+   ]
+  },
+  {
+   "m": "venetus",
+   "f": "veneta",
+   "n": "venetum",
+   "features": [
+    "blue_ice"
+   ]
+  },
+  {
+   "m": "siccus",
+   "f": "sicca",
+   "n": "siccum",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "sitiens",
+   "f": "sitiens",
+   "n": "sitiens",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "sterilis",
+   "f": "sterilis",
+   "n": "sterile",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "ieiunus",
+   "f": "ieiuna",
+   "n": "ieiunum",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "exustus",
+   "f": "exusta",
+   "n": "exustum",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "pulverulentus",
+   "f": "pulverulenta",
+   "n": "pulverulentum",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "inops",
+   "f": "inops",
+   "n": "inops",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "squalidus",
+   "f": "squalida",
+   "n": "squalidum",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "vastus",
+   "f": "vasta",
+   "n": "vastum",
+   "features": [
+    "desert"
+   ]
+  },
+  {
+   "m": "apricus",
+   "f": "aprica",
+   "n": "apricum",
+   "features": [
+    "savanna"
+   ]
+  },
+  {
+   "m": "solaris",
+   "f": "solaris",
+   "n": "solare",
+   "features": [
+    "savanna"
+   ]
+  },
+  {
+   "m": "flavens",
+   "f": "flavens",
+   "n": "flavens",
+   "features": [
+    "savanna"
+   ]
+  },
+  {
+   "m": "gramineus",
+   "f": "graminea",
+   "n": "gramineum",
+   "features": [
+    "savanna"
+   ]
+  },
+  {
+   "m": "sabulosus",
+   "f": "sabulosa",
+   "n": "sabulosum",
+   "features": [
+    "sand"
+   ]
+  },
+  {
+   "m": "pulvereus",
+   "f": "pulverea",
+   "n": "pulvereum",
+   "features": [
+    "sand"
+   ]
+  },
+  {
+   "m": "spinifer",
+   "f": "spinifera",
+   "n": "spiniferum",
+   "features": [
+    "cactus"
+   ]
+  },
+  {
+   "m": "hirsutus",
+   "f": "hirsuta",
+   "n": "hirsutum",
+   "features": [
+    "cactus"
+   ]
+  },
+  {
+   "m": "turbineus",
+   "f": "turbinea",
+   "n": "turbineum",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "m": "sonorus",
+   "f": "sonora",
+   "n": "sonorum",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "m": "stridens",
+   "f": "stridens",
+   "n": "stridens",
+   "features": [
+    "windswept"
+   ]
+  },
+  {
+   "m": "herbidus",
+   "f": "herbida",
+   "n": "herbidum",
+   "features": [
+    "grass"
+   ]
+  },
+  {
+   "m": "floreus",
+   "f": "florea",
+   "n": "floreum",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "florifer",
+   "f": "florifera",
+   "n": "floriferum",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "odoratus",
+   "f": "odorata",
+   "n": "odoratum",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "odorus",
+   "f": "odora",
+   "n": "odorum",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "fragrans",
+   "f": "fragrans",
+   "n": "fragrans",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "suaveolens",
+   "f": "suaveolens",
+   "n": "suaveolens",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "pictus",
+   "f": "picta",
+   "n": "pictum",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "versicolor",
+   "f": "versicolor",
+   "n": "versicolor",
+   "features": [
+    "flowers"
+   ]
+  },
+  {
+   "m": "mellitus",
+   "f": "mellita",
+   "n": "mellitum",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "m": "melleus",
+   "f": "mellea",
+   "n": "melleum",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "m": "susurrans",
+   "f": "susurrans",
+   "n": "susurrans",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "m": "cereus",
+   "f": "cerea",
+   "n": "cereum",
+   "features": [
+    "bees"
+   ]
+  },
+  {
+   "m": "baccatus",
+   "f": "baccata",
+   "n": "baccatum",
+   "features": [
+    "berries"
+   ]
+  },
+  {
+   "m": "sucosus",
+   "f": "sucosa",
+   "n": "sucosum",
+   "features": [
+    "berries"
+   ]
+  },
+  {
+   "m": "frugifer",
+   "f": "frugifera",
+   "n": "frugiferum",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "uber",
+   "f": "uber",
+   "n": "uber",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "cultus",
+   "f": "culta",
+   "n": "cultum",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "arabilis",
+   "f": "arabilis",
+   "n": "arabile",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "laetus",
+   "f": "laeta",
+   "n": "laetum",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "opimus",
+   "f": "opima",
+   "n": "opimum",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "frumentarius",
+   "f": "frumentaria",
+   "n": "frumentarium",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "rusticus",
+   "f": "rustica",
+   "n": "rusticum",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "agrestis",
+   "f": "agrestis",
+   "n": "agreste",
+   "features": [
+    "farmland"
+   ]
+  },
+  {
+   "m": "spongiosus",
+   "f": "spongiosa",
+   "n": "spongiosum",
+   "features": [
+    "mushrooms"
+   ]
+  },
+  {
+   "m": "musceus",
+   "f": "muscea",
+   "n": "musceum",
+   "features": [
+    "moss"
+   ]
+  },
+  {
+   "m": "mollis",
+   "f": "mollis",
+   "n": "molle",
+   "features": [
+    "moss"
+   ]
+  },
+  {
+   "m": "villosus",
+   "f": "villosa",
+   "n": "villosum",
+   "features": [
+    "moss"
+   ]
+  },
+  {
+   "m": "amoenus",
+   "f": "amoena",
+   "n": "amoenum",
+   "features": [
+    "lush_caves"
+   ]
+  },
+  {
+   "m": "sibilans",
+   "f": "sibilans",
+   "n": "sibilans",
+   "features": [
+    "reeds"
+   ]
+  },
+  {
+   "m": "canneus",
+   "f": "cannea",
+   "n": "canneum",
+   "features": [
+    "reeds"
+   ]
+  },
+  {
+   "m": "pastoralis",
+   "f": "pastoralis",
+   "n": "pastorale",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "pascuus",
+   "f": "pascua",
+   "n": "pascuum",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "armentalis",
+   "f": "armentalis",
+   "n": "armentale",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "gregalis",
+   "f": "gregalis",
+   "n": "gregale",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "ovinus",
+   "f": "ovina",
+   "n": "ovinum",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "bovinus",
+   "f": "bovina",
+   "n": "bovinum",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "caprinus",
+   "f": "caprina",
+   "n": "caprinum",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "suillus",
+   "f": "suilla",
+   "n": "suillum",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "gallinaceus",
+   "f": "gallinacea",
+   "n": "gallinaceum",
+   "features": [
+    "pasture"
+   ]
+  },
+  {
+   "m": "equester",
+   "f": "equestris",
+   "n": "equestre",
+   "features": [
+    "horses"
+   ]
+  },
+  {
+   "m": "caballinus",
+   "f": "caballina",
+   "n": "caballinum",
+   "features": [
+    "horses"
+   ]
+  },
+  {
+   "m": "ferus",
+   "f": "fera",
+   "n": "ferum",
+   "features": [
+    "wolves"
+   ]
+  },
+  {
+   "m": "saevus",
+   "f": "saeva",
+   "n": "saevum",
+   "features": [
+    "wolves"
+   ]
+  },
+  {
+   "m": "rapax",
+   "f": "rapax",
+   "n": "rapax",
+   "features": [
+    "wolves"
+   ]
+  },
+  {
+   "m": "vorax",
+   "f": "vorax",
+   "n": "vorax",
+   "features": [
+    "wolves"
+   ]
+  },
+  {
+   "m": "ululans",
+   "f": "ululans",
+   "n": "ululans",
+   "features": [
+    "wolves"
+   ]
+  },
+  {
+   "m": "fremens",
+   "f": "fremens",
+   "n": "fremens",
+   "features": [
+    "wolves"
+   ]
+  },
+  {
+   "m": "callidus",
+   "f": "callida",
+   "n": "callidum",
+   "features": [
+    "foxes"
+   ]
+  },
+  {
+   "m": "astutus",
+   "f": "astuta",
+   "n": "astutum",
+   "features": [
+    "foxes"
+   ]
+  },
+  {
+   "m": "dolosus",
+   "f": "dolosa",
+   "n": "dolosum",
+   "features": [
+    "foxes"
+   ]
+  },
+  {
+   "m": "versutus",
+   "f": "versuta",
+   "n": "versutum",
+   "features": [
+    "foxes"
+   ]
+  },
+  {
+   "m": "rufus",
+   "f": "rufa",
+   "n": "rufum",
+   "features": [
+    "foxes"
+   ]
+  },
+  {
+   "m": "hirtus",
+   "f": "hirta",
+   "n": "hirtum",
+   "features": [
+    "bears"
+   ]
+  },
+  {
+   "m": "immanis",
+   "f": "immanis",
+   "n": "immane",
+   "features": [
+    "bears"
+   ]
+  },
+  {
+   "m": "robustus",
+   "f": "robusta",
+   "n": "robustum",
+   "features": [
+    "bears"
+   ]
+  },
+  {
+   "m": "bellicus",
+   "f": "bellica",
+   "n": "bellicum",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "militaris",
+   "f": "militaris",
+   "n": "militare",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "armatus",
+   "f": "armata",
+   "n": "armatum",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "munitus",
+   "f": "munita",
+   "n": "munitum",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "vigil",
+   "f": "vigil",
+   "n": "vigil",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "infestus",
+   "f": "infesta",
+   "n": "infestum",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "minax",
+   "f": "minax",
+   "n": "minax",
+   "features": [
+    "outpost"
+   ]
+  },
+  {
+   "m": "vetus",
+   "f": "veta",
+   "n": "vetum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "priscus",
+   "f": "prisca",
+   "n": "priscum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "vetustus",
+   "f": "vetusta",
+   "n": "vetustum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "collapsus",
+   "f": "collapsa",
+   "n": "collapsum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "dirutus",
+   "f": "diruta",
+   "n": "dirutum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "desolatus",
+   "f": "desolata",
+   "n": "desolatum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "fractus",
+   "f": "fracta",
+   "n": "fractum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "semirutus",
+   "f": "semiruta",
+   "n": "semirutum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "avitus",
+   "f": "avita",
+   "n": "avitum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "pristinus",
+   "f": "pristina",
+   "n": "pristinum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "perditus",
+   "f": "perdita",
+   "n": "perditum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "oblitus",
+   "f": "oblita",
+   "n": "oblitum",
+   "features": [
+    "ruins"
+   ]
+  },
+  {
+   "m": "relictus",
+   "f": "relicta",
+   "n": "relictum",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "derelictus",
+   "f": "derelicta",
+   "n": "derelictum",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "vacuus",
+   "f": "vacua",
+   "n": "vacuum",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "inanis",
+   "f": "inanis",
+   "n": "inane",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "orbatus",
+   "f": "orbata",
+   "n": "orbatum",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "solus",
+   "f": "sola",
+   "n": "solum",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "viduus",
+   "f": "vidua",
+   "n": "viduum",
+   "features": [
+    "abandoned_village"
+   ]
+  },
+  {
+   "m": "secretus",
+   "f": "secreta",
+   "n": "secretum",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "m": "solitarius",
+   "f": "solitaria",
+   "n": "solitarium",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "m": "remotus",
+   "f": "remota",
+   "n": "remotum",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "m": "longinquus",
+   "f": "longinqua",
+   "n": "longinquum",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "m": "ignotus",
+   "f": "ignota",
+   "n": "ignotum",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "m": "mitis",
+   "f": "mitis",
+   "n": "mite",
+   "features": [
+    "nothing"
+   ]
+  },
+  {
+   "m": "vicinus",
+   "f": "vicina",
+   "n": "vicinum",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "m": "communis",
+   "f": "communis",
+   "n": "commune",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "m": "popularis",
+   "f": "popularis",
+   "n": "populare",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "m": "hospitalis",
+   "f": "hospitalis",
+   "n": "hospitale",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "m": "humanus",
+   "f": "humana",
+   "n": "humanum",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "m": "frequens",
+   "f": "frequens",
+   "n": "frequens",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "m": "celeber",
+   "f": "celebris",
+   "n": "celebre",
+   "features": [
+    "village"
+   ]
+  },
+  {
+   "m": "navalis",
+   "f": "navalis",
+   "n": "navale",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "m": "portuosus",
+   "f": "portuosa",
+   "n": "portuosum",
+   "features": [
+    "harbour"
+   ]
+  },
+  {
+   "m": "sacratus",
+   "f": "sacrata",
+   "n": "sacratum",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "divus",
+   "f": "diva",
+   "n": "divum",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "pius",
+   "f": "pia",
+   "n": "pium",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "votivus",
+   "f": "votiva",
+   "n": "votivum",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "religiosus",
+   "f": "religiosa",
+   "n": "religiosum",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "sollemnis",
+   "f": "sollemnis",
+   "n": "sollemne",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "consecratus",
+   "f": "consecrata",
+   "n": "consecratum",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "augustus",
+   "f": "augusta",
+   "n": "augustum",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "venerabilis",
+   "f": "venerabilis",
+   "n": "venerabile",
+   "features": [
+    "temple"
+   ]
+  },
+  {
+   "m": "turritus",
+   "f": "turrita",
+   "n": "turritum",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "m": "pinnatus",
+   "f": "pinnata",
+   "n": "pinnatum",
+   "features": [
+    "tower"
+   ]
+  },
+  {
+   "m": "tritus",
+   "f": "trita",
+   "n": "tritum",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "m": "publicus",
+   "f": "publica",
+   "n": "publicum",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "m": "regius",
+   "f": "regia",
+   "n": "regium",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "m": "stratus",
+   "f": "strata",
+   "n": "stratum",
+   "features": [
+    "road"
+   ]
+  },
+  {
+   "m": "medius",
+   "f": "media",
+   "n": "medium",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "m": "ambiguus",
+   "f": "ambigua",
+   "n": "ambiguum",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "m": "anceps",
+   "f": "anceps",
+   "n": "anceps",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "m": "dubius",
+   "f": "dubia",
+   "n": "dubium",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "m": "geminus",
+   "f": "gemina",
+   "n": "geminum",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "m": "triplex",
+   "f": "triplex",
+   "n": "triplex",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "m": "quadruplex",
+   "f": "quadruplex",
+   "n": "quadruplex",
+   "features": [
+    "crossroads"
+   ]
+  },
+  {
+   "m": "extremus",
+   "f": "extrema",
+   "n": "extremum",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "m": "ultimus",
+   "f": "ultima",
+   "n": "ultimum",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "m": "finitimus",
+   "f": "finitima",
+   "n": "finitimum",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "m": "limitaneus",
+   "f": "limitanea",
+   "n": "limitaneum",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "m": "confinis",
+   "f": "confinis",
+   "n": "confine",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "m": "externus",
+   "f": "externa",
+   "n": "externum",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "m": "postremus",
+   "f": "postrema",
+   "n": "postremum",
+   "features": [
+    "boundary"
+   ]
+  },
+  {
+   "m": "insularis",
+   "f": "insularis",
+   "n": "insulare",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "m": "cinctus",
+   "f": "cincta",
+   "n": "cinctum",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "m": "circumfusus",
+   "f": "circumfusa",
+   "n": "circumfusum",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "m": "seclusus",
+   "f": "seclusa",
+   "n": "seclusum",
+   "features": [
+    "island"
+   ]
+  },
+  {
+   "m": "prominens",
+   "f": "prominens",
+   "n": "prominens",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "m": "proiectus",
+   "f": "proiecta",
+   "n": "proiectum",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "m": "angustus",
+   "f": "angusta",
+   "n": "angustum",
+   "features": [
+    "peninsula"
+   ]
+  },
+  {
+   "m": "eminens",
+   "f": "eminens",
+   "n": "eminens",
+   "features": [
+    "headland"
+   ]
+  },
+  {
+   "m": "curvus",
+   "f": "curva",
+   "n": "curvum",
+   "features": [
+    "bay"
+   ]
+  },
+  {
+   "m": "tutus",
+   "f": "tuta",
+   "n": "tutum",
+   "features": [
+    "bay"
+   ]
+  },
+  {
+   "m": "litoralis",
+   "f": "litoralis",
+   "n": "litorale",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "m": "litoreus",
+   "f": "litorea",
+   "n": "litoreum",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "m": "algosus",
+   "f": "algosa",
+   "n": "algosum",
+   "features": [
+    "shore"
+   ]
+  },
+  {
+   "m": "fontanus",
+   "f": "fontana",
+   "n": "fontanum",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "m": "perennis",
+   "f": "perennis",
+   "n": "perenne",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "m": "purus",
+   "f": "pura",
+   "n": "purum",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "m": "limpidus",
+   "f": "limpida",
+   "n": "limpidum",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "m": "salubris",
+   "f": "salubris",
+   "n": "salubre",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "m": "vivus",
+   "f": "viva",
+   "n": "vivum",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "m": "scatens",
+   "f": "scatens",
+   "n": "scatens",
+   "features": [
+    "spring"
+   ]
+  },
+  {
+   "m": "felix",
+   "f": "felix",
+   "n": "felix",
+   "features": [
+    "oasis"
+   ]
+  },
+  {
+   "m": "pratensis",
+   "f": "pratensis",
+   "n": "pratense",
+   "features": [
+    "meadow"
+   ]
+  },
+  {
+   "m": "florulentus",
+   "f": "florulenta",
+   "n": "florulentum",
+   "features": [
+    "meadow"
+   ]
+  },
+  {
+   "m": "campestris",
+   "f": "campestris",
+   "n": "campestre",
+   "features": [
+    "plains"
+   ]
+  },
+  {
+   "m": "spatiosus",
+   "f": "spatiosa",
+   "n": "spatiosum",
+   "features": [
+    "plains"
+   ]
+  },
+  {
+   "m": "amplus",
+   "f": "ampla",
+   "n": "amplum",
+   "features": [
+    "plains"
+   ]
+  },
+  {
+   "m": "collinus",
+   "f": "collina",
+   "n": "collinum",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "m": "acclivis",
+   "f": "acclivis",
+   "n": "acclive",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "m": "clivosus",
+   "f": "clivosa",
+   "n": "clivosum",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "m": "tumulosus",
+   "f": "tumulosa",
+   "n": "tumulosum",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "m": "gibbosus",
+   "f": "gibbosa",
+   "n": "gibbosum",
+   "features": [
+    "hill"
+   ]
+  },
+  {
+   "m": "reductus",
+   "f": "reducta",
+   "n": "reductum",
+   "features": [
+    "valley"
+   ]
+  },
+  {
+   "m": "clausus",
+   "f": "clausa",
+   "n": "clausum",
+   "features": [
+    "enclosed_valley"
+   ]
+  },
+  {
+   "m": "inclusus",
+   "f": "inclusa",
+   "n": "inclusum",
+   "features": [
+    "enclosed_valley"
+   ]
+  },
+  {
+   "m": "saeptus",
+   "f": "saepta",
+   "n": "saeptum",
+   "features": [
+    "enclosed_valley"
+   ]
+  },
+  {
+   "m": "circumdatus",
+   "f": "circumdata",
+   "n": "circumdatum",
+   "features": [
+    "enclosed_valley"
+   ]
+  },
+  {
+   "m": "devexus",
+   "f": "devexa",
+   "n": "devexum",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "m": "obliquus",
+   "f": "obliqua",
+   "n": "obliquum",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "m": "pronus",
+   "f": "prona",
+   "n": "pronum",
+   "features": [
+    "slope"
+   ]
+  },
+  {
+   "m": "acutus",
+   "f": "acuta",
+   "n": "acutum",
+   "features": [
+    "summit"
+   ]
+  },
+  {
+   "m": "cuspidatus",
+   "f": "cuspidata",
+   "n": "cuspidatum",
+   "features": [
+    "summit"
+   ]
+  },
+  {
+   "m": "longus",
+   "f": "longa",
+   "n": "longum",
+   "features": [
+    "ridge"
+   ]
+  },
+  {
+   "m": "cristatus",
+   "f": "cristata",
+   "n": "cristatum",
+   "features": [
+    "ridge"
+   ]
+  },
+  {
+   "m": "scopulosus",
+   "f": "scopulosa",
+   "n": "scopulosum",
+   "features": [
+    "crag"
+   ]
+  },
+  {
+   "m": "rupestris",
+   "f": "rupestris",
+   "n": "rupestre",
+   "features": [
+    "crag"
+   ]
+  },
+  {
+   "m": "immensus",
+   "f": "immensa",
+   "n": "immensum",
+   "features": [
+    "deep_ocean"
+   ]
+  },
+  {
+   "m": "stillans",
+   "f": "stillans",
+   "n": "stillans",
+   "features": [
+    "dripstone"
+   ]
+  },
+  {
+   "m": "guttatus",
+   "f": "guttata",
+   "n": "guttatum",
+   "features": [
+    "dripstone"
+   ]
+  },
+  {
+   "m": "pendens",
+   "f": "pendens",
+   "n": "pendens",
+   "features": [
+    "dripstone"
+   ]
+  },
+  {
+   "m": "radicosus",
+   "f": "radicosa",
+   "n": "radicosum",
+   "features": [
+    "mangrove"
+   ]
+  },
+  {
+   "m": "intortus",
+   "f": "intorta",
+   "n": "intortum",
+   "features": [
+    "mangrove"
+   ]
+  },
+  {
+   "m": "tortuosus",
+   "f": "tortuosa",
+   "n": "tortuosum",
+   "features": [
+    "mangrove"
+   ]
+  },
+  {
+   "m": "nodosus",
+   "f": "nodosa",
+   "n": "nodosum",
+   "features": [
+    "mangrove"
+   ]
+  }
+ ],
+ "landmarks": [
+  {
+   "phrase": "ad Quercum",
+   "features": [
+    "near_oak"
+   ]
+  },
+  {
+   "phrase": "sub Quercu",
+   "features": [
+    "near_oak"
+   ]
+  },
+  {
+   "phrase": "iuxta Robur",
+   "features": [
+    "near_oak"
+   ]
+  },
+  {
+   "phrase": "Quercuum",
+   "features": [
+    "near_oak"
+   ]
+  },
+  {
+   "phrase": "sub Robore",
+   "features": [
+    "near_oak"
+   ]
+  },
+  {
+   "phrase": "prope Quercum",
+   "features": [
+    "near_oak"
+   ]
+  },
+  {
+   "phrase": "ad Betullam",
+   "features": [
+    "near_birch"
+   ]
+  },
+  {
+   "phrase": "sub Betulla",
+   "features": [
+    "near_birch"
+   ]
+  },
+  {
+   "phrase": "Betullarum",
+   "features": [
+    "near_birch"
+   ]
+  },
+  {
+   "phrase": "iuxta Betullam",
+   "features": [
+    "near_birch"
+   ]
+  },
+  {
+   "phrase": "ad Piceam",
+   "features": [
+    "near_spruce"
+   ]
+  },
+  {
+   "phrase": "sub Picea",
+   "features": [
+    "near_spruce"
+   ]
+  },
+  {
+   "phrase": "Picearum",
+   "features": [
+    "near_spruce"
+   ]
+  },
+  {
+   "phrase": "inter Abietes",
+   "features": [
+    "near_spruce"
+   ]
+  },
+  {
+   "phrase": "sub Abiete",
+   "features": [
+    "near_spruce"
+   ]
+  },
+  {
+   "phrase": "inter Palmas",
+   "features": [
+    "near_jungle_tree"
+   ]
+  },
+  {
+   "phrase": "sub Palma",
+   "features": [
+    "near_jungle_tree"
+   ]
+  },
+  {
+   "phrase": "Palmarum",
+   "features": [
+    "near_jungle_tree"
+   ]
+  },
+  {
+   "phrase": "sub Arbore",
+   "features": [
+    "near_jungle_tree"
+   ]
+  },
+  {
+   "phrase": "ad Acaciam",
+   "features": [
+    "near_acacia"
+   ]
+  },
+  {
+   "phrase": "sub Acacia",
+   "features": [
+    "near_acacia"
+   ]
+  },
+  {
+   "phrase": "Acaciarum",
+   "features": [
+    "near_acacia"
+   ]
+  },
+  {
+   "phrase": "inter Quercus",
+   "features": [
+    "near_dark_oak"
+   ]
+  },
+  {
+   "phrase": "Roborum",
+   "features": [
+    "near_dark_oak"
+   ]
+  },
+  {
+   "phrase": "sub Umbra",
+   "features": [
+    "near_dark_oak"
+   ]
+  },
+  {
+   "phrase": "ad Cerasum",
+   "features": [
+    "near_cherry"
+   ]
+  },
+  {
+   "phrase": "sub Ceraso",
+   "features": [
+    "near_cherry"
+   ]
+  },
+  {
+   "phrase": "Cerasorum",
+   "features": [
+    "near_cherry"
+   ]
+  },
+  {
+   "phrase": "inter Radices",
+   "features": [
+    "near_mangrove"
+   ]
+  },
+  {
+   "phrase": "Radicum",
+   "features": [
+    "near_mangrove"
+   ]
+  },
+  {
+   "phrase": "ad Radices",
+   "features": [
+    "near_mangrove"
+   ]
+  },
+  {
+   "phrase": "ad Arborem Canam",
+   "features": [
+    "near_pale_oak"
+   ]
+  },
+  {
+   "phrase": "sub Arbore Cana",
+   "features": [
+    "near_pale_oak"
+   ]
+  },
+  {
+   "phrase": "ad Arborem Magnam",
+   "features": [
+    "near_greatwood"
+   ]
+  },
+  {
+   "phrase": "Arboris Magnae",
+   "features": [
+    "near_greatwood"
+   ]
+  },
+  {
+   "phrase": "sub Ingenti Arbore",
+   "features": [
+    "near_greatwood"
+   ]
+  },
+  {
+   "phrase": "ad Arborem Argenteam",
+   "features": [
+    "near_silverwood"
+   ]
+  },
+  {
+   "phrase": "sub Arbore Argentea",
+   "features": [
+    "near_silverwood"
+   ]
+  },
+  {
+   "phrase": "Argenti",
+   "features": [
+    "near_silverwood"
+   ]
+  },
+  {
+   "phrase": "ad Ignem",
+   "features": [
+    "near_lava"
+   ]
+  },
+  {
+   "phrase": "iuxta Flammas",
+   "features": [
+    "near_lava"
+   ]
+  },
+  {
+   "phrase": "prope Fornacem",
+   "features": [
+    "near_lava"
+   ]
+  },
+  {
+   "phrase": "Flammarum",
+   "features": [
+    "near_lava"
+   ]
+  },
+  {
+   "phrase": "ad Rivum Ardentem",
+   "features": [
+    "near_lava"
+   ]
+  },
+  {
+   "phrase": "super Ignem",
+   "features": [
+    "near_lava"
+   ]
+  },
+  {
+   "phrase": "ad Aquam",
+   "features": [
+    "near_water"
+   ]
+  },
+  {
+   "phrase": "iuxta Undas",
+   "features": [
+    "near_water"
+   ]
+  },
+  {
+   "phrase": "Aquarum",
+   "features": [
+    "near_water"
+   ]
+  },
+  {
+   "phrase": "ad Cataractam",
+   "features": [
+    "near_waterfall"
+   ]
+  },
+  {
+   "phrase": "sub Cataracta",
+   "features": [
+    "near_waterfall"
+   ]
+  },
+  {
+   "phrase": "Cataractarum",
+   "features": [
+    "near_waterfall"
+   ]
+  },
+  {
+   "phrase": "inter Papavera",
+   "features": [
+    "near_poppy"
+   ]
+  },
+  {
+   "phrase": "Papaverum",
+   "features": [
+    "near_poppy"
+   ]
+  },
+  {
+   "phrase": "ad Papaver",
+   "features": [
+    "near_poppy"
+   ]
+  },
+  {
+   "phrase": "ad Flores Flavos",
+   "features": [
+    "near_dandelion"
+   ]
+  },
+  {
+   "phrase": "Florum Aureorum",
+   "features": [
+    "near_dandelion"
+   ]
+  },
+  {
+   "phrase": "inter Cyanos",
+   "features": [
+    "near_cornflower"
+   ]
+  },
+  {
+   "phrase": "Cyanorum",
+   "features": [
+    "near_cornflower"
+   ]
+  },
+  {
+   "phrase": "inter Lilia",
+   "features": [
+    "near_lily"
+   ]
+  },
+  {
+   "phrase": "Liliorum",
+   "features": [
+    "near_lily"
+   ]
+  },
+  {
+   "phrase": "ad Lilium",
+   "features": [
+    "near_lily"
+   ]
+  },
+  {
+   "phrase": "inter Allia",
+   "features": [
+    "near_allium"
+   ]
+  },
+  {
+   "phrase": "Alliorum",
+   "features": [
+    "near_allium"
+   ]
+  },
+  {
+   "phrase": "inter Orchides",
+   "features": [
+    "near_orchid"
+   ]
+  },
+  {
+   "phrase": "Orchidum",
+   "features": [
+    "near_orchid"
+   ]
+  },
+  {
+   "phrase": "inter Bellides",
+   "features": [
+    "near_daisy"
+   ]
+  },
+  {
+   "phrase": "Bellidum",
+   "features": [
+    "near_daisy"
+   ]
+  },
+  {
+   "phrase": "ad Rosas",
+   "features": [
+    "near_rose"
+   ]
+  },
+  {
+   "phrase": "inter Rosas",
+   "features": [
+    "near_rose"
+   ]
+  },
+  {
+   "phrase": "Rosarum",
+   "features": [
+    "near_rose"
+   ]
+  },
+  {
+   "phrase": "sub Rosa",
+   "features": [
+    "near_rose"
+   ]
+  },
+  {
+   "phrase": "ad Paeoniam",
+   "features": [
+    "near_peony"
+   ]
+  },
+  {
+   "phrase": "Paeoniarum",
+   "features": [
+    "near_peony"
+   ]
+  },
+  {
+   "phrase": "inter Heliotropia",
+   "features": [
+    "near_sunflower"
+   ]
+  },
+  {
+   "phrase": "Heliotropiorum",
+   "features": [
+    "near_sunflower"
+   ]
+  },
+  {
+   "phrase": "inter Flores",
+   "features": [
+    "near_flowers"
+   ]
+  },
+  {
+   "phrase": "Florum",
+   "features": [
+    "near_flowers"
+   ]
+  },
+  {
+   "phrase": "ad Flores",
+   "features": [
+    "near_flowers"
+   ]
+  },
+  {
+   "phrase": "ad Fungos",
+   "features": [
+    "near_mushroom"
+   ]
+  },
+  {
+   "phrase": "Fungorum",
+   "features": [
+    "near_mushroom"
+   ]
+  },
+  {
+   "phrase": "sub Fungo",
+   "features": [
+    "near_mushroom"
+   ]
+  },
+  {
+   "phrase": "inter Cucurbitas",
+   "features": [
+    "near_pumpkin"
+   ]
+  },
+  {
+   "phrase": "Cucurbitarum",
+   "features": [
+    "near_pumpkin"
+   ]
+  },
+  {
+   "phrase": "ad Pepones",
+   "features": [
+    "near_melon"
+   ]
+  },
+  {
+   "phrase": "Peponum",
+   "features": [
+    "near_melon"
+   ]
+  },
+  {
+   "phrase": "inter Rubos",
+   "features": [
+    "near_berries"
+   ]
+  },
+  {
+   "phrase": "Ruborum",
+   "features": [
+    "near_berries"
+   ]
+  },
+  {
+   "phrase": "ad Rubum",
+   "features": [
+    "near_berries"
+   ]
+  },
+  {
+   "phrase": "ad Spinas",
+   "features": [
+    "near_cactus"
+   ]
+  },
+  {
+   "phrase": "inter Spinas",
+   "features": [
+    "near_cactus"
+   ]
+  },
+  {
+   "phrase": "Spinarum",
+   "features": [
+    "near_cactus"
+   ]
+  },
+  {
+   "phrase": "inter Harundines",
+   "features": [
+    "near_bamboo"
+   ]
+  },
+  {
+   "phrase": "Harundinum",
+   "features": [
+    "near_bamboo"
+   ]
+  },
+  {
+   "phrase": "ad Harundinem",
+   "features": [
+    "near_bamboo"
+   ]
+  },
+  {
+   "phrase": "ad Calamos",
+   "features": [
+    "near_sugar_cane"
+   ]
+  },
+  {
+   "phrase": "Calamorum",
+   "features": [
+    "near_sugar_cane"
+   ]
+  },
+  {
+   "phrase": "inter Calamos",
+   "features": [
+    "near_sugar_cane"
+   ]
+  },
+  {
+   "phrase": "inter Nymphaeas",
+   "features": [
+    "near_lily_pad"
+   ]
+  },
+  {
+   "phrase": "Nymphaearum",
+   "features": [
+    "near_lily_pad"
+   ]
+  },
+  {
+   "phrase": "inter Algas",
+   "features": [
+    "near_kelp"
+   ]
+  },
+  {
+   "phrase": "Algarum",
+   "features": [
+    "near_kelp"
+   ]
+  },
+  {
+   "phrase": "ad Corallium",
+   "features": [
+    "near_coral"
+   ]
+  },
+  {
+   "phrase": "Coralliorum",
+   "features": [
+    "near_coral"
+   ]
+  },
+  {
+   "phrase": "inter Corallia",
+   "features": [
+    "near_coral"
+   ]
+  },
+  {
+   "phrase": "ad Saxum",
+   "features": [
+    "near_boulder"
+   ]
+  },
+  {
+   "phrase": "sub Saxo",
+   "features": [
+    "near_boulder"
+   ]
+  },
+  {
+   "phrase": "ad Lapidem",
+   "features": [
+    "near_boulder"
+   ]
+  },
+  {
+   "phrase": "Saxorum",
+   "features": [
+    "near_boulder"
+   ]
+  },
+  {
+   "phrase": "iuxta Petram",
+   "features": [
+    "near_boulder"
+   ]
+  },
+  {
+   "phrase": "Musci",
+   "features": [
+    "near_moss"
+   ]
+  },
+  {
+   "phrase": "ad Muscum",
+   "features": [
+    "near_moss"
+   ]
+  },
+  {
+   "phrase": "Ossium",
+   "features": [
+    "near_bones"
+   ]
+  },
+  {
+   "phrase": "ad Ossa",
+   "features": [
+    "near_bones"
+   ]
+  },
+  {
+   "phrase": "inter Ossa",
+   "features": [
+    "near_bones"
+   ]
+  },
+  {
+   "phrase": "ad Campanam",
+   "features": [
+    "near_bell"
+   ]
+  },
+  {
+   "phrase": "sub Campana",
+   "features": [
+    "near_bell"
+   ]
+  },
+  {
+   "phrase": "Campanae",
+   "features": [
+    "near_bell"
+   ]
+  },
+  {
+   "phrase": "ad Focum",
+   "features": [
+    "near_campfire"
+   ]
+  },
+  {
+   "phrase": "iuxta Focum",
+   "features": [
+    "near_campfire"
+   ]
+  },
+  {
+   "phrase": "Foci",
+   "features": [
+    "near_campfire"
+   ]
+  },
+  {
+   "phrase": "ad Lucernam",
+   "features": [
+    "near_light"
+   ]
+  },
+  {
+   "phrase": "ad Lumen",
+   "features": [
+    "near_light"
+   ]
+  },
+  {
+   "phrase": "Luminis",
+   "features": [
+    "near_light"
+   ]
+  },
+  {
+   "phrase": "ad Faenum",
+   "features": [
+    "near_hay"
+   ]
+  },
+  {
+   "phrase": "Faeni",
+   "features": [
+    "near_hay"
+   ]
+  },
+  {
+   "phrase": "ad Carbones",
+   "features": [
+    "near_coal"
+   ]
+  },
+  {
+   "phrase": "Carbonum",
+   "features": [
+    "near_coal"
+   ]
+  },
+  {
+   "phrase": "ad Aes",
+   "features": [
+    "near_copper"
+   ]
+  },
+  {
+   "phrase": "Aeris",
+   "features": [
+    "near_copper"
+   ]
+  },
+  {
+   "phrase": "ad Ferrum",
+   "features": [
+    "near_iron"
+   ]
+  },
+  {
+   "phrase": "Ferri",
+   "features": [
+    "near_iron"
+   ]
+  },
+  {
+   "phrase": "ad Aurum",
+   "features": [
+    "near_gold"
+   ]
+  },
+  {
+   "phrase": "Auri",
+   "features": [
+    "near_gold"
+   ]
+  },
+  {
+   "phrase": "ad Adamantem",
+   "features": [
+    "near_diamond"
+   ]
+  },
+  {
+   "phrase": "Adamantis",
+   "features": [
+    "near_diamond"
+   ]
+  },
+  {
+   "phrase": "ad Smaragdum",
+   "features": [
+    "near_emerald"
+   ]
+  },
+  {
+   "phrase": "Smaragdi",
+   "features": [
+    "near_emerald"
+   ]
+  },
+  {
+   "phrase": "ad Minium",
+   "features": [
+    "near_redstone"
+   ]
+  },
+  {
+   "phrase": "Minii",
+   "features": [
+    "near_redstone"
+   ]
+  },
+  {
+   "phrase": "ad Sapphirum",
+   "features": [
+    "near_lapis"
+   ]
+  },
+  {
+   "phrase": "Sapphiri",
+   "features": [
+    "near_lapis"
+   ]
+  },
+  {
+   "phrase": "ad Amethystum",
+   "features": [
+    "near_amethyst"
+   ]
+  },
+  {
+   "phrase": "Amethysti",
+   "features": [
+    "near_amethyst"
+   ]
+  },
+  {
+   "phrase": "ad Obsidianum",
+   "features": [
+    "near_obsidian"
+   ]
+  },
+  {
+   "phrase": "Obsidiani",
+   "features": [
+    "near_obsidian"
+   ]
+  },
+  {
+   "phrase": "sub Nive",
+   "features": [
+    "near_snow"
+   ]
+  },
+  {
+   "phrase": "Nivium",
+   "features": [
+    "near_snow"
+   ]
+  },
+  {
+   "phrase": "ad Nives",
+   "features": [
+    "near_snow"
+   ]
+  },
+  {
+   "phrase": "ad Glaciem",
+   "features": [
+    "near_ice"
+   ]
+  },
+  {
+   "phrase": "Glaciei",
+   "features": [
+    "near_ice"
+   ]
+  },
+  {
+   "phrase": "ad Alveos",
+   "features": [
+    "near_bees"
+   ]
+  },
+  {
+   "phrase": "Apium",
+   "features": [
+    "near_bees"
+   ]
+  },
+  {
+   "phrase": "inter Apes",
+   "features": [
+    "near_bees"
+   ]
+  },
+  {
+   "phrase": "ad Specum",
+   "features": [
+    "near_cave"
+   ]
+  },
+  {
+   "phrase": "ad Os Antri",
+   "features": [
+    "near_cave"
+   ]
+  },
+  {
+   "phrase": "Antri",
+   "features": [
+    "near_cave"
+   ]
+  },
+  {
+   "phrase": "ad Nodum",
+   "features": [
+    "near_aura_node"
+   ]
+  },
+  {
+   "phrase": "Nodi",
+   "features": [
+    "near_aura_node"
+   ]
+  },
+  {
+   "phrase": "ad Fontem Magicum",
+   "features": [
+    "near_aura_node"
+   ]
+  },
+  {
+   "phrase": "ad Tabem",
+   "features": [
+    "near_taint"
+   ]
+  },
+  {
+   "phrase": "Tabis",
+   "features": [
+    "near_taint"
+   ]
+  },
+  {
+   "phrase": "ad Aram",
+   "features": [
+    "near_altar"
+   ]
+  },
+  {
+   "phrase": "Arae",
+   "features": [
+    "near_altar"
+   ]
+  },
+  {
+   "phrase": "sub Obelisco",
+   "features": [
+    "near_altar"
+   ]
+  },
+  {
+   "phrase": "Cuniculorum",
+   "features": [
+    "near_rabbits"
+   ]
+  },
+  {
+   "phrase": "ad Cuniculos",
+   "features": [
+    "near_rabbits"
+   ]
+  },
+  {
+   "phrase": "Ovium",
+   "features": [
+    "near_sheep"
+   ]
+  },
+  {
+   "phrase": "inter Oves",
+   "features": [
+    "near_sheep"
+   ]
+  },
+  {
+   "phrase": "Boum",
+   "features": [
+    "near_cows"
+   ]
+  },
+  {
+   "phrase": "inter Boves",
+   "features": [
+    "near_cows"
+   ]
+  },
+  {
+   "phrase": "Suum",
+   "features": [
+    "near_pigs"
+   ]
+  },
+  {
+   "phrase": "Caprarum",
+   "features": [
+    "near_goats"
+   ]
+  },
+  {
+   "phrase": "inter Capras",
+   "features": [
+    "near_goats"
+   ]
+  },
+  {
+   "phrase": "Gallinarum",
+   "features": [
+    "near_chickens"
+   ]
+  },
+  {
+   "phrase": "Equorum",
+   "features": [
+    "near_horses"
+   ]
+  },
+  {
+   "phrase": "inter Equos",
+   "features": [
+    "near_horses"
+   ]
+  },
+  {
+   "phrase": "Camelorum",
+   "features": [
+    "near_camels"
+   ]
+  },
+  {
+   "phrase": "Psittacorum",
+   "features": [
+    "near_parrots"
+   ]
+  },
+  {
+   "phrase": "Testudinum",
+   "features": [
+    "near_turtles"
+   ]
+  },
+  {
+   "phrase": "Ranarum",
+   "features": [
+    "near_frogs"
+   ]
+  },
+  {
+   "phrase": "inter Ranas",
+   "features": [
+    "near_frogs"
+   ]
+  },
+  {
+   "phrase": "Delphinorum",
+   "features": [
+    "near_dolphins"
+   ]
+  },
+  {
+   "phrase": "Loliginum",
+   "features": [
+    "near_squid"
+   ]
+  },
+  {
+   "phrase": "Vespertilionum",
+   "features": [
+    "near_bats"
+   ]
+  },
+  {
+   "phrase": "Luporum",
+   "features": [
+    "near_wolves"
+   ]
+  },
+  {
+   "phrase": "inter Lupos",
+   "features": [
+    "near_wolves"
+   ]
+  },
+  {
+   "phrase": "Vulpium",
+   "features": [
+    "near_foxes"
+   ]
+  },
+  {
+   "phrase": "Ursorum",
+   "features": [
+    "near_bears"
+   ]
+  },
+  {
+   "phrase": "Felium",
+   "features": [
+    "near_cats"
+   ]
+  },
+  {
+   "phrase": "Pardorum",
+   "features": [
+    "near_cats"
+   ]
+  },
+  {
+   "phrase": "Piscium",
+   "features": [
+    "near_fish"
+   ]
+  },
+  {
+   "phrase": "inter Pisces",
+   "features": [
+    "near_fish"
+   ]
+  }
+ ],
+ "families": {
+  "woods": [
+   "forest",
+   "sparse_forest",
+   "grove",
+   "magical_forest",
+   "dark_forest",
+   "taiga",
+   "snowy_taiga",
+   "thicket",
+   "jungle",
+   "birch",
+   "spruce",
+   "cherry",
+   "pale_garden",
+   "silverwood"
+  ],
+  "heights": [
+   "mountain",
+   "summit",
+   "ridge",
+   "crag",
+   "cliff",
+   "slope",
+   "hill",
+   "high",
+   "rugged",
+   "windswept"
+  ],
+  "lows": [
+   "valley",
+   "enclosed_valley",
+   "low",
+   "flat",
+   "below_sea"
+  ],
+  "sea": [
+   "shore",
+   "beach",
+   "bay",
+   "island",
+   "peninsula",
+   "headland",
+   "ocean",
+   "deep_ocean",
+   "warm_ocean",
+   "harbour"
+  ],
+  "fresh_water": [
+   "riverbank",
+   "wide_river",
+   "stream",
+   "ford",
+   "river",
+   "lake",
+   "pond",
+   "spring",
+   "oasis",
+   "water"
+  ],
+  "wet": [
+   "swamp",
+   "mangrove",
+   "bog",
+   "mud"
+  ],
+  "cold": [
+   "snow",
+   "ice",
+   "packed_ice",
+   "blue_ice",
+   "cold",
+   "snowy_taiga"
+  ],
+  "dry": [
+   "desert",
+   "sand",
+   "red_sand",
+   "cactus",
+   "savanna"
+  ],
+  "fields": [
+   "plains",
+   "meadow",
+   "grass",
+   "flowers",
+   "farmland",
+   "pasture"
+  ],
+  "caves": [
+   "cave",
+   "lush_caves",
+   "dripstone",
+   "deep_dark"
+  ],
+  "settled": [
+   "village",
+   "abandoned_village",
+   "road",
+   "crossroads",
+   "boundary",
+   "outpost",
+   "tower"
+  ],
+  "old": [
+   "ruins",
+   "barrow",
+   "temple",
+   "altar"
+  ],
+  "stone": [
+   "stone",
+   "calcite",
+   "blackstone"
+  ],
+  "quiet": [
+   "nothing"
+  ],
+  "fire": [
+   "lava"
+  ],
+  "metal": [
+   "iron",
+   "gold",
+   "amethyst"
+  ],
+  "magic": [
+   "aura_node",
+   "infused_stone",
+   "eerie",
+   "taint"
+  ],
+  "beasts": [
+   "horses",
+   "wolves",
+   "foxes",
+   "bears",
+   "bees",
+   "fish"
+  ]
+ }
 }
