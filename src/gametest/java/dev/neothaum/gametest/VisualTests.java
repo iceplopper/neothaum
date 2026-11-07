@@ -963,6 +963,105 @@ public class VisualTests implements FabricClientGameTest {
 		});
 	}
 
+	/**
+	 * Attuned totems on maps (NEOTHAUM_TEST_XAERO=1 for Xaero's World Map and Minimap): two Traveller's Totems and a Home Totem the player
+	 * knows, and one they don't (never shown). A held map, the minimap, then the World Map with the cursor on a totem, then hidden with its
+	 * button.
+	 */
+	private static void totemMapsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode creative @a", "time set noon", "weather clear", "fill -40 117 -40 40 130 40 air",
+			"fill -40 116 -40 40 116 40 grass_block", "tp @a 0 117 0 0 60", "clear @a", "neothaum additions travellers_totems enable"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var player = srv.getPlayerList().getPlayers().get(0);
+			var data = dev.neothaum.addon.totems.TotemData.get(srv);
+			var known = player.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN);
+			Object[][] totems = {{20, 10, "Silva Antiqua", false, true}, {-24, -18, "Lapis Fontis", false, true}, {6, 28, "Domus Mea", true, true},
+				{-20, 26, "Ignotum", false, false}};
+			for (Object[] o : totems) {
+				var pos = new net.minecraft.core.BlockPos((int) o[0], 117, (int) o[1]);
+				boolean home = (boolean) o[3];
+				level.setBlock(pos, (home ? dev.neothaum.addon.totems.TravellersTotems.HOME_TOTEM : dev.neothaum.addon.totems.TravellersTotems.TOTEM)
+					.defaultBlockState(), 3);
+				var gp = net.minecraft.core.GlobalPos.of(level.dimension(), pos);
+				data.put(new dev.neothaum.addon.totems.TotemData.Totem(gp, (String) o[2], home));
+				if ((boolean) o[4]) {
+					known = home ? known.withHome(java.util.Optional.of(gp)) : known.learn(gp);
+				}
+			}
+			player.setAttached(dev.neothaum.addon.totems.TravellersTotems.KNOWN, known);
+			// a fresh map of the area, in the main hand, and nothing in the other, so it is held in both hands
+			var map = net.minecraft.world.item.MapItem.create(level, 0, 0, (byte) 0, true, false);
+			player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, map);
+		});
+		// the marks go out every five seconds; the map fills in as it is held
+		ctx.waitTicks(220);
+		ctx.runOnClient(mc -> NeoThaum.LOGGER.info("[visual-test] totemmaps: marks in this dimension = {}",
+			dev.neothaum.client.addon.minimap.TotemMapMarks.in(mc.level.dimension()).size()));
+		shot(ctx, "totemmaps_held_map");
+		server.runCommand("tp @a 0 117 0 0 0");
+		ctx.waitTicks(20);
+		shot(ctx, "totemmaps_minimap");
+		ctx.runOnClient(mc -> {
+			try {
+				Object session = Class.forName("xaero.map.WorldMapSession").getMethod("getCurrentSession").invoke(null);
+				Object processor = session.getClass().getMethod("getMapProcessor").invoke(session);
+				Class<?> gui = Class.forName("xaero.map.gui.GuiMap");
+				Object screen = gui.getConstructor(net.minecraft.client.gui.screens.Screen.class, net.minecraft.client.gui.screens.Screen.class,
+					processor.getClass(), net.minecraft.world.entity.Entity.class).newInstance(null, null, processor, mc.player);
+				mc.gui.setScreen((net.minecraft.client.gui.screens.Screen) screen);
+			} catch (ReflectiveOperationException e) {
+				NeoThaum.LOGGER.info("[visual-test] totemmaps: could not open the World Map", e);
+			}
+		});
+		ctx.waitTicks(80);
+		// the cursor onto Silva Antiqua (20, 10), where the World Map draws it
+		double[] at = new double[2];
+		ctx.runOnClient(mc -> {
+			var screen = mc.gui.screen();
+			try {
+				Class<?> gui = Class.forName("xaero.map.gui.GuiMap");
+				double camX = field(gui, screen, "cameraX"), camZ = field(gui, screen, "cameraZ");
+				double ppb = field(gui, screen, "scale") / field(gui, screen, "screenScale");
+				double gx = screen.width / 2.0 + (20.5 - camX) * ppb, gy = screen.height / 2.0 + (10.5 - camZ) * ppb;
+				double s = mc.getWindow().getGuiScale();
+				at[0] = gx * s;
+				at[1] = gy * s;
+				NeoThaum.LOGGER.info("[visual-test] totemmaps: world map camera {},{} ppb {} -> totem at gui {},{}", camX, camZ, ppb, gx, gy);
+			} catch (ReflectiveOperationException e) {
+				NeoThaum.LOGGER.info("[visual-test] totemmaps: could not read the World Map's camera", e);
+			}
+		});
+		ctx.getInput().setCursorPos(at[0], at[1]);
+		ctx.waitTicks(5);
+		shot(ctx, "totemmaps_worldmap_hover");
+		ctx.runOnClient(mc -> {
+			var screen = mc.gui.screen();
+			if (screen != null) {
+				int x = screen.width - 10, y = screen.height - 210;
+				var click = new net.minecraft.client.input.MouseButtonEvent(x, y, new net.minecraft.client.input.MouseButtonInfo(1, 0));
+				boolean before = dev.neothaum.config.NeoThaumConfig.current.mapTotems;
+				screen.mouseClicked(click, false);
+				screen.mouseReleased(click);
+				NeoThaum.LOGGER.info("[visual-test] totemmaps: totem toggle {} -> {}", before, dev.neothaum.config.NeoThaumConfig.current.mapTotems);
+			}
+		});
+		ctx.waitTicks(5);
+		shot(ctx, "totemmaps_worldmap_hidden");
+		ctx.runOnClient(mc -> {
+			dev.neothaum.config.NeoThaumConfig.current.mapTotems = true;
+			mc.gui.setScreen(null);
+		});
+	}
+
+	private static double field(Class<?> c, Object o, String name) throws ReflectiveOperationException {
+		var f = c.getDeclaredField(name);
+		f.setAccessible(true);
+		return f.getDouble(o);
+	}
+
 	/** Befriending a pech by dropping gold for it, then right-clicking it to trade. */
 	private static void pechScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server,
 		TestSingleplayerContext sp) {
@@ -2180,7 +2279,7 @@ public class VisualTests implements FabricClientGameTest {
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
 		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "totemcolours", "reload", "compat",
-		"config", "worldmap", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
+		"config", "worldmap", "totemmaps", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
 	 * Runs the named scenes one after another in a shared world, tidied between them (mobs removed, the player back in creative at the start
@@ -2374,6 +2473,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "worldmap" -> {
 				worldMapScene(ctx, server, sp);
+			}
+			case "totemmaps" -> {
+				totemMapsScene(ctx, server);
 			}
 			case "golemancy" -> {
 				golemancyScene(ctx, server);
