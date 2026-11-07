@@ -18,7 +18,6 @@ import net.minecraft.world.level.material.MapColor;
 /**
  * NeoThaum Addition: storage blocks TC4 never had, beside its Block of Thaumium. A Block of Quicksilver (nine quicksilver, held in an iron
  * case; four interiors picked at random per block) and a Block of Void Metal (nine void metal ingots). Each crafts back into its nine.
- * Both connect into one surface with Continuity (assets/neothaum/optifine/ctm).
  */
 public final class StorageBlocks {
 	public static final Block QUICKSILVER_BLOCK = TVBlocks.register("quicksilver_block", Block::new, BlockBehaviour.Properties.of()
