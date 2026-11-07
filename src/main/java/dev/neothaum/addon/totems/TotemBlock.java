@@ -81,6 +81,18 @@ public class TotemBlock extends BaseEntityBlock {
 
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		// a totem named at an anvil keeps its given name (else it names itself for the land round it, a moment after it is set down)
+		if (stack.has(DataComponents.CUSTOM_NAME) && level instanceof ServerLevel sl && sl.getBlockEntity(pos) instanceof TotemBlockEntity totem) {
+			String given = stack.getHoverName().getString().strip();
+			if (given.length() > TravellersTotems.NAME_LENGTH) {
+				given = given.substring(0, TravellersTotems.NAME_LENGTH);
+			}
+			if (!given.isEmpty()) {
+				totem.name = given;
+				TotemData.get(sl.getServer()).put(new TotemData.Totem(totem.globalPos(), given, this.home));
+				totem.markForUpdate();
+			}
+		}
 		// the first Home Totem a player sets down: how to claim one
 		if (this.home && placer instanceof ServerPlayer sp && TravellersTotems.enabled()) {
 			var known = sp.getAttachedOrCreate(TravellersTotems.KNOWN);

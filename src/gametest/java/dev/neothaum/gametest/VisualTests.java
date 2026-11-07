@@ -986,6 +986,10 @@ public class VisualTests implements FabricClientGameTest {
 				level.setBlock(pos, (home ? dev.neothaum.addon.totems.TravellersTotems.HOME_TOTEM : dev.neothaum.addon.totems.TravellersTotems.TOTEM)
 					.defaultBlockState(), 3);
 				var gp = net.minecraft.core.GlobalPos.of(level.dimension(), pos);
+				// a given name, as a name tag or the rename screen gives it (on the totem as well, or it names itself)
+				if (level.getBlockEntity(pos) instanceof dev.neothaum.addon.totems.TotemBlockEntity be) {
+					be.name = (String) o[2];
+				}
 				data.put(new dev.neothaum.addon.totems.TotemData.Totem(gp, (String) o[2], home));
 				if ((boolean) o[4]) {
 					known = home ? known.withHome(java.util.Optional.of(gp)) : known.learn(gp);
