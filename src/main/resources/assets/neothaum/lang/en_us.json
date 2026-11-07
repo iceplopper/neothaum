@@ -2318,9 +2318,11 @@
   "tc.research_name.XPSIPHON": "Experience Siphon",
   "tc.research_text.XPSIPHON": "[NeoThaum Addition] Bottling the lessons of a life",
   "tc.research_page.XPSIPHON.1": "What we call experience is a kind of essentia, the residue of everything a body has learned the hard way. It is too wayward for tubes and too stubborn for any alembic, but it can be coaxed out of a person who is willing to part with it.<BR>This plate of arcane stone draws it from anyone who kneels upon it (sneak while standing on it), a level at a time, four levels a second.",
-  "tc.research_page.XPSIPHON.2": "The siphon holds sixty levels' worth, counted as though from nothing. Open it to set empty warded jars in its upper slot: it fills them one at a time, ten levels to a jar, and sets each full jar in the slot beneath. A hopper above or beside it can feed it empty jars, and one beneath can take the full ones away.<BR>These jars will not share their contents with your tubes, and pouring one out spills it as experience. A redstone signal stops the siphon, and a comparator reads how full it is.",
+  "tc.research_page.XPSIPHON.2": "The siphon holds sixty levels' worth, counted as though from nothing. Open it to set empty warded jars in its upper slot: it fills them one at a time, ten levels to a jar, and sets each full jar in the slot beneath. A hopper above or beside it can feed it empty jars, and one beneath can take the full ones away.<BR>These jars will not share their contents with your tubes, and pouring one out spills it as experience. A redstone signal stops the siphon, and a comparator reads how full it is. It chimes when it is full, and keeps what it holds when it is broken.",
   "tc.research_page.XPSIPHON.3": "A full jar and a little vis condense its contents into something you can swallow, and the jar is returned to you. Eating it gives back the ten levels it held, counted as though from nothing, so it is best saved for when you have little.",
   "neothaum.experience.store": "Stored: %s of %s levels",
+  "neothaum.experience.full": "The siphon is full",
+  "neothaum.experience.siphon_tip": "Sneak on it to give it your experience, four levels a second. Holds %s levels.",
   "block.neothaum.travellers_totem": "Traveller's Totem",
   "block.neothaum.home_totem": "Home Totem",
   "item.neothaum.wayfarers_compass": "Wayfarer's Compass",
@@ -2377,5 +2379,7 @@
   "block.neothaum.arcane_campfire": "Arcane Campfire",
   "tc.research_name.ARCANECAMPFIRE": "Arcane Campfire",
   "tc.research_text.ARCANECAMPFIRE": "[NeoThaum Addition] A fire that never tires",
-  "tc.research_page.ARCANECAMPFIRE.1": "Nitor wants only somewhere to burn. Bedded in greatwood it makes a campfire that never needs feeding, burning a violet that lights the whole clearing. It cooks and smokes as any campfire does, and water or a shovel will still put it out.<BR>Its heat rises straight and strong: an arcane levitator set above it (or the lowest of a stack) carries all the way to 256 blocks. Beneath a crucible it brings the water to the boil twice as fast, and beneath the crucible of a thaumatorium it hurries the work along a little."
+  "tc.research_page.ARCANECAMPFIRE.1": "Nitor wants only somewhere to burn. Bedded in greatwood it makes a campfire that never needs feeding, burning a violet that lights the whole clearing. It cooks and smokes as any campfire does, and water or a shovel will still put it out.<BR>Its heat rises straight and strong: an arcane levitator set above it (or the lowest of a stack) carries all the way to 256 blocks. Beneath a crucible it brings the water to the boil twice as fast, and beneath the crucible of a thaumatorium it hurries the work along a little.",
+  "block.neothaum.quicksilver_block": "Block of Quicksilver",
+  "block.neothaum.void_metal_block": "Block of Void Metal"
 }

@@ -63,6 +63,8 @@
     "neothaum:ancient_stone_stairs",
     "neothaum:ancient_stone_slab",
     "neothaum:glowing_crusted_stone",
-    "neothaum:glyphed_stone"
+    "neothaum:glyphed_stone",
+    "neothaum:quicksilver_block",
+    "neothaum:void_metal_block"
   ]
 }

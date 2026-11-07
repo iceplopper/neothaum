@@ -272,6 +272,8 @@ public class NeoThaumConfigScreen extends Screen {
 				this.toggle("Arcane Campfire", "A campfire of greatwood fed by nitor, burning violet: it cooks and smokes like any campfire, lifts the "
 					+ "arcane levitators above it to 256 blocks, heats a crucible twice as fast and quickens a thaumatorium a little. Applies when "
 					+ "the world loads or /reload runs." + off, () -> cfg.additionArcaneCampfire, v -> cfg.additionArcaneCampfire = v);
+				this.toggle("Storage Blocks", "Blocks of Quicksilver and of Void Metal, nine to a block and back, beside TC4's Block of Thaumium. "
+					+ "Applies when the world loads or /reload runs." + off, () -> cfg.additionStorageBlocks, v -> cfg.additionStorageBlocks = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

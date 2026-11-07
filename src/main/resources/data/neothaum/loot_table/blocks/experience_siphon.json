@@ -2,19 +2,26 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "neothaum:experience_siphon"
+          "name": "neothaum:experience_siphon",
+          "modifier": [
+            {
+              "source": "block_entity",
+              "include": [
+                "neothaum:experience"
+              ],
+              "type": "minecraft:copy_components"
+            }
+          ]
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
     }
-  ]
+  ],
+  "random_sequence": "neothaum:blocks/experience_siphon"
 }

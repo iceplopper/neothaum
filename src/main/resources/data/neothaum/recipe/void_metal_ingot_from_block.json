@@ -1,0 +1,17 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "storage_blocks"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "neothaum:void_metal_block"
+  ],
+  "result": {
+    "id": "neothaum:void_metal_ingot",
+    "count": 9
+  }
+}

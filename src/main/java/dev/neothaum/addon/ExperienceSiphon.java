@@ -99,7 +99,20 @@ public final class ExperienceSiphon {
 	/** Called from NeoThaum.onInitialize after TVItems: the items. */
 	public static void init() {
 		var key = ResourceKey.create(Registries.ITEM, NeoThaum.id("experience_siphon"));
-		siphonItem = Registry.register(BuiltInRegistries.ITEM, key, new BlockItem(SIPHON, new Item.Properties().setId(key).useBlockDescriptionPrefix()));
+		siphonItem = Registry.register(BuiltInRegistries.ITEM, key, new BlockItem(SIPHON, new Item.Properties().setId(key).useBlockDescriptionPrefix()) {
+			/** What it does, and what it holds if it was broken with experience in it. */
+			@Override
+			public void appendHoverText(ItemStack stack, TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display,
+				java.util.function.Consumer<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+				lines.accept(net.minecraft.network.chat.Component.translatable("neothaum.experience.siphon_tip", levels(STORE))
+					.withStyle(net.minecraft.ChatFormatting.GRAY));
+				int held = stack.getOrDefault(TVComponents.EXPERIENCE, 0);
+				if (held > 0) {
+					lines.accept(net.minecraft.network.chat.Component.translatable("neothaum.experience.store", levels(held), levels(STORE))
+						.withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+				}
+			}
+		});
 		var ckey = ResourceKey.create(Registries.ITEM, NeoThaum.id("condensed_experience"));
 		condensed = Registry.register(BuiltInRegistries.ITEM, ckey, new CondensedExperienceItem(new Item.Properties().setId(ckey).stacksTo(16)
 			.rarity(Rarity.UNCOMMON).component(net.minecraft.core.component.DataComponents.CONSUMABLE, Consumables.defaultFood().build())));

@@ -65,6 +65,7 @@ public class ExperienceSiphonBlockEntity extends TVBlockEntity implements Worldl
 			return;
 		}
 		boolean changed = false;
+		boolean wasFull = siphon.store >= ExperienceSiphon.STORE;
 		// four times a second: the top level of each player kneeling on it
 		if (++siphon.count % ExperienceSiphon.DRAW_EVERY == 0) {
 			for (Player p : level.getEntitiesOfClass(Player.class, new AABB(pos.getX(), pos.getY() + 0.4, pos.getZ(), pos.getX() + 1,
@@ -78,6 +79,15 @@ public class ExperienceSiphonBlockEntity extends TVBlockEntity implements Worldl
 				changed = true;
 				sl.playSound(null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 0.1F, 0.5F + sl.getRandom().nextFloat() * 0.2F);
 				sl.sendParticles(ParticleTypes.WITCH, p.getX(), p.getY() + 0.3, p.getZ(), 3, 0.25, 0.3, 0.25, 0.0);
+			}
+		}
+		// just filled: a chime and a burst of light, and word to whoever is kneeling on it, so they know to stand
+		if (!wasFull && siphon.store >= ExperienceSiphon.STORE) {
+			sl.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5F, 1.6F);
+			sl.sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 16, 0.3, 0.2, 0.3, 0.04);
+			for (net.minecraft.server.level.ServerPlayer p : level.getEntitiesOfClass(net.minecraft.server.level.ServerPlayer.class, new AABB(pos).inflate(1.0, 1.5, 1.0))) {
+				p.sendSystemMessage(net.minecraft.network.chat.Component.translatable("neothaum.experience.full")
+					.withStyle(net.minecraft.ChatFormatting.DARK_PURPLE), true);
 			}
 		}
 		// filling: an empty jar in, a jar's worth stored, and room for it out
@@ -133,6 +143,21 @@ public class ExperienceSiphonBlockEntity extends TVBlockEntity implements Worldl
 		ContainerHelper.loadAllItems(input, this.items);
 		// a siphon from before it had two slots kept its one jar under "Jar"
 		input.read("Jar", ItemStack.OPTIONAL_CODEC).ifPresent(j -> this.items.set(ExperienceSiphon.isExperienceJar(j) ? OUT : IN, j));
+	}
+
+	/** A siphon broken with experience in it keeps it (the loot table copies it to the item), and gives it back when placed. */
+	@Override
+	protected void applyImplicitComponents(net.minecraft.core.component.DataComponentGetter components) {
+		super.applyImplicitComponents(components);
+		this.store = Math.min(ExperienceSiphon.STORE, components.getOrDefault(TVComponents.EXPERIENCE, 0));
+	}
+
+	@Override
+	protected void collectImplicitComponents(net.minecraft.core.component.DataComponentMap.Builder builder) {
+		super.collectImplicitComponents(builder);
+		if (this.store > 0) {
+			builder.set(TVComponents.EXPERIENCE, this.store);
+		}
 	}
 
 	@Override

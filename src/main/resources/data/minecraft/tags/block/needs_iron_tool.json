@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "neothaum:thaumium_block"
+    "neothaum:thaumium_block",
+    "neothaum:void_metal_block"
   ]
 }

@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "neothaum:block/quicksilver_block_0"
+      },
+      {
+        "model": "neothaum:block/quicksilver_block_1"
+      },
+      {
+        "model": "neothaum:block/quicksilver_block_2"
+      },
+      {
+        "model": "neothaum:block/quicksilver_block_3"
+      }
+    ]
+  }
+}
