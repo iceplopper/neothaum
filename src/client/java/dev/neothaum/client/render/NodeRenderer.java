@@ -62,8 +62,13 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 		return true;
 	}
 
+	/** The game asks a node for its state only this close. The node itself fades out by 64 blocks (draw), but a bright node's lens flare
+	 * (an addon) shows to the end of the render distance, so with the flare on, nodes are looked at that far. */
 	@Override
 	public int getViewDistance() {
+		if (dev.neothaum.config.NeoThaumConfig.current.brightNodeFlare && dev.neothaum.addon.Additions.enabled("bright_nodes")) {
+			return (int) dev.neothaum.client.addon.BrightNodeFlare.range();
+		}
 		return 64;
 	}
 
@@ -74,6 +79,13 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 		s.type = node.getNodeType();
 		s.modifier = node.getNodeModifier();
 		s.x = node.getBlockPos().getX();
+		// past 64 blocks only a bright node's flare shows: skip the rest (and its sight checks) for the others
+		if (s.modifier != NodeModifier.BRIGHT && cam.distanceTo(Vec3.atCenterOf(node.getBlockPos())) > 64.0) {
+			s.visible = false;
+			s.embedded = null;
+			s.drainFrom = null;
+			return;
+		}
 		Player viewer = Minecraft.getInstance().player;
 		s.visible = false;
 		s.depthIgnore = false;

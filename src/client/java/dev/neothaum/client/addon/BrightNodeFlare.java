@@ -31,7 +31,13 @@ public final class BrightNodeFlare {
 	private static final Identifier GHOST = NeoThaum.id("textures/misc/flare_ghost.png");
 	/** Ghost rings along the flare line: where (0 the node, 1 the middle of the screen, past 1 beyond it), size and strength. */
 	private static final float[][] GHOSTS = {{0.45F, 0.22F, 0.16F}, {0.8F, 0.1F, 0.24F}, {1.3F, 0.32F, 0.1F}, {1.7F, 0.16F, 0.18F}};
-	private static final double RANGE = 48.0;
+	/** Within this the flare is at its strongest close up, weakening to a steady glow at its edge; beyond it, that glow carries on. */
+	private static final double NEAR = 48.0;
+
+	/** How far a flare shows: to the end of the render distance (and never less than 64 blocks). */
+	public static double range() {
+		return Math.max(64.0, Minecraft.getInstance().options.getEffectiveRenderDistance() * 16.0 + 16.0);
+	}
 
 	private static final class Flare {
 		Vec3 pos;
@@ -84,6 +90,7 @@ public final class BrightNodeFlare {
 		float cx = w / 2.0F;
 		float cy = h / 2.0F;
 		long now = System.nanoTime();
+		double range = range();
 		for (Iterator<Map.Entry<BlockPos, Flare>> it = FLARES.entrySet().iterator(); it.hasNext(); ) {
 			Flare f = it.next().getValue();
 			boolean current = now - f.seenAt < 100_000_000L;
@@ -94,7 +101,7 @@ public final class BrightNodeFlare {
 			float sx = inFront ? cx + clip.x / clip.w * cx : 0.0F;
 			float sy = inFront ? cy - clip.y / clip.w * cy : 0.0F;
 			boolean onScreen = inFront && sx > -w * 0.1F && sx < w * 1.1F && sy > -h * 0.1F && sy < h * 1.1F;
-			boolean clear = current && onScreen && dist < RANGE && clearSight(mc, eye, f.pos);
+			boolean clear = current && onScreen && dist < range && clearSight(mc, eye, f.pos);
 			// ease in and out rather than pop
 			f.strength = Mth.clamp(f.strength + (clear ? 0.12F : -0.08F), 0.0F, 1.0F);
 			if (f.strength <= 0.0F) {
@@ -106,8 +113,8 @@ public final class BrightNodeFlare {
 			if (!inFront) {
 				continue;
 			}
-			// stronger close up and toward the middle of the view
-			float nearness = (float) Math.max(0.0, 1.0 - dist / RANGE);
+			// stronger close up and toward the middle of the view; far off, a steady glow out to the end of the render distance
+			float nearness = (float) Math.max(0.0, 1.0 - dist / NEAR);
 			float centred = 1.0F - Mth.clamp((float) Math.hypot((sx - cx) / cx, (sy - cy) / cy) / 1.2F, 0.0F, 1.0F);
 			float power = f.strength * (0.35F + 0.65F * nearness) * (0.4F + 0.6F * centred);
 			draw(g, f.color, sx, sy, cx, cy, h, power, now);
