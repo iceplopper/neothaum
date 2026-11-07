@@ -274,6 +274,9 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "the world loads or /reload runs." + off, () -> cfg.additionArcaneCampfire, v -> cfg.additionArcaneCampfire = v);
 				this.toggle("Storage Blocks", "Blocks of Quicksilver and of Void Metal, nine to a block and back, beside TC4's Block of Thaumium. "
 					+ "Applies when the world loads or /reload runs." + off, () -> cfg.additionStorageBlocks, v -> cfg.additionStorageBlocks = v);
+				this.toggle("Long Tubes", "Suction carries eight times as far down essentia tubes: an empty jar draws from 255 tubes away, a "
+					+ "labelled jar from 511 and a machine from over a thousand (TC4: 31, 63 and 127)." + off,
+					() -> cfg.additionLongTubes, v -> cfg.additionLongTubes = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

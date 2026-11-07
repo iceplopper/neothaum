@@ -207,6 +207,8 @@ public class NeoThaumConfig {
 		public boolean additionArcaneCampfire = true;
 		/** Blocks of Quicksilver and Void Metal: storage blocks TC4 didn't have, nine to a block. */
 		public boolean additionStorageBlocks = true;
+		/** Suction carries eight times as far down essentia tubes (TC4: a point lost each tube, so an empty jar reached 31 tubes). */
+		public boolean additionLongTubes = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

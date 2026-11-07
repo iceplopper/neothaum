@@ -35,9 +35,23 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 	/** The strongest suction on this tube, whatever its aspect (what other blocks see from getSuctionType / getSuctionAmount). */
 	Aspect suctionType;
 	int suction;
-	/** Suction for particular aspects (jars that already hold or are labelled for one), and for any aspect at all (empty jars). */
+	/**
+	 * Suction for particular aspects (jars that already hold or are labelled for one), and for any aspect at all (empty jars), in steps of
+	 * 1/{@link #steps()} of a point: each tube takes one step off, so with Long Tubes (an addition) suction carries eight times as far as TC4's
+	 * one point a tube (an empty jar's 32 reaches 255 tubes, a labelled one's 64 reaches 511), and which suction is stronger is unchanged.
+	 */
 	final Map<Aspect, Integer> typedSuction = new HashMap<>();
 	int anySuction;
+
+	/** Steps to a point of suction: 8 with the Long Tubes addition, else 1 (TC4: a point lost each tube). */
+	static int steps() {
+		return dev.neothaum.addon.Additions.enabled("long_tubes") ? 8 : 1;
+	}
+
+	/** Steps to points, rounded up, so the last tube of a run still shows (and pulls with) one point. */
+	private static int points(int steps, int per) {
+		return (steps + per - 1) / per;
+	}
 	int count;
 	public Aspect aspectFilter;
 	public boolean allowFlow = true;
@@ -144,6 +158,7 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 		if (this.kind() == Kind.VALVE && !this.allowFlow) {
 			return;
 		}
+		int per = steps();
 		for (Direction loc : Direction.values()) {
 			if ((!directional || this.facing == loc.getOpposite()) && this.isConnectable(loc)) {
 				EssentiaTransport ic = EssentiaTransport.connectable(this.level, this.worldPosition, loc);
@@ -156,18 +171,19 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 					}
 					this.offer(null, t.anySuction, filter, restrict);
 				} else {
-					this.offer(ic.getSuctionType(loc.getOpposite()), ic.getSuctionAmount(loc.getOpposite()), filter, restrict);
+					this.offer(ic.getSuctionType(loc.getOpposite()), ic.getSuctionAmount(loc.getOpposite()) * per, filter, restrict);
 				}
 			}
 		}
 		this.typedSuction.values().removeIf(v -> v <= this.anySuction);
-		this.suction = this.anySuction;
+		int strongest = this.anySuction;
 		for (Map.Entry<Aspect, Integer> e : this.typedSuction.entrySet()) {
-			if (e.getValue() > this.suction) {
-				this.suction = e.getValue();
+			if (e.getValue() > strongest) {
+				strongest = e.getValue();
 				this.suctionType = e.getKey();
 			}
 		}
+		this.suction = points(strongest, per);
 	}
 
 	private void offer(Aspect type, int suck, Aspect filter, boolean restrict) {
@@ -194,6 +210,11 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 
 	@Override
 	public int getSuctionFor(Aspect aspect, Direction face) {
+		return points(this.stepsFor(aspect), steps());
+	}
+
+	/** This tube's suction for an aspect in steps: between two tubes, the finer measure decides which way essentia goes. */
+	private int stepsFor(Aspect aspect) {
 		return Math.max(this.typedSuction.getOrDefault(aspect, 0), this.anySuction);
 	}
 
@@ -217,7 +238,8 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 				continue;
 			}
 			int mine = this.getSuctionFor(a, loc);
-			if (mine > ic.getSuctionFor(a, loc.getOpposite()) && mine >= ic.getMinimumSuction()) {
+			boolean stronger = ic instanceof TubeBlockEntity t ? this.stepsFor(a) > t.stepsFor(a) : mine > ic.getSuctionFor(a, loc.getOpposite());
+			if (stronger && mine >= ic.getMinimumSuction()) {
 				int am = this.addEssentia(a, ic.takeEssentia(a, 1, loc.getOpposite()), loc);
 				if (am > 0) {
 					if (this.level.getRandom().nextInt(100) == 0) {
