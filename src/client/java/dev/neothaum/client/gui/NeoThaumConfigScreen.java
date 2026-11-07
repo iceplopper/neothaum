@@ -295,6 +295,8 @@ public class NeoThaumConfigScreen extends Screen {
 					+ "pack is in use. Default: on.", () -> cfg.brightNodeFlare, v -> cfg.brightNodeFlare = v);
 				this.toggle("World Map Nodes", "NeoThaum: the aura nodes you have seen are drawn on Xaero's World Map. Default: on.",
 					() -> cfg.worldMapNodes, v -> cfg.worldMapNodes = v);
+				this.toggle("Totems on Maps", "NeoThaum: the totems you have attuned to, and your Home Totem, show on map items and on Xaero's World "
+					+ "Map and Minimap. Default: on.", () -> cfg.mapTotems, v -> cfg.mapTotems = v);
 				this.toggle("Creative Dev Tab", "NeoThaum: shows the creative mode \"TC: Dev Tools\" tab. Default: on.", () -> cfg.showCreativeDebugTab,
 					v -> cfg.showCreativeDebugTab = v);
 			}

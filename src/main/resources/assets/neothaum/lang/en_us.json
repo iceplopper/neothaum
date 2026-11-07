@@ -2131,6 +2131,8 @@
   "config.jade.plugin_neothaum.aura_node": "Aura Node",
   "config.jade.plugin_neothaum.runic_matrix": "Runic Matrix",
   "neothaum.worldmap.nodes.tooltip": "Show or hide the aura nodes you have seen through Goggles of Revealing",
+  "neothaum.worldmap.totems.tooltip": "Show or hide the totems you have attuned to",
+  "neothaum.worldmap.totems.home": "%s (Home Totem)",
   "block.neothaum.golem_fetter": "Golem Fetter",
   "block.neothaum.loot_urn_common": "Old Urn",
   "block.neothaum.loot_crate_common": "Abandoned Crate",

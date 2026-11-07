@@ -127,33 +127,41 @@ public final class WorldMapNodes {
 	/** Adds the show/hide button to the top of Xaero's own button column on the right of the map screen. */
 	public static void addToggle(Screen screen, java.util.function.Consumer<Button> add) {
 		// Xaero's right-hand column runs from waypoints at height - 20 up to zoom in at height - 180; this goes in the next slot up
-		int x = screen.width - 20, y = screen.height - 200;
-		Component tip = Component.translatable("neothaum.worldmap.nodes.tooltip");
+		addToggle(screen, add, screen.height - 200, BUTTON, Component.translatable("neothaum.worldmap.nodes.tooltip"),
+			() -> NeoThaumConfig.current.worldMapNodes, WorldMapNodes::toggle);
+	}
+
+	/**
+	 * A show/hide button in Xaero's right-hand column at this height: one of Xaero's own textured buttons, so it looks like its neighbours.
+	 * The icon (32 by 16) has its "on" half at u = 0 and its "off" half at u = 16.
+	 */
+	static void addToggle(Screen screen, java.util.function.Consumer<Button> add, int y, Identifier icon, Component tip,
+		java.util.function.BooleanSupplier on, Runnable toggle) {
+		int x = screen.width - 20;
 		try {
-			// one of Xaero's own textured buttons, so it looks like its neighbours; the icon's "on" half is at u = 0, "off" at u = 16
 			Class<?> tooltip = Class.forName("xaero.lib.client.gui.widget.Tooltip");
 			Object tooltipValue = tooltip.getConstructor(Component.class).newInstance(tip);
 			Class<?> textured = Class.forName("xaero.map.gui.GuiTexturedButton");
 			var textureX = textured.getDeclaredField("textureX");
 			textureX.setAccessible(true);
 			Button.OnPress press = btn -> {
-				toggle();
+				toggle.run();
 				try {
-					textureX.setInt(btn, iconU());
+					textureX.setInt(btn, on.getAsBoolean() ? 0 : 16);
 				} catch (IllegalAccessException e) {
-					NeoThaum.LOGGER.warn("Could not update the world map node button", e);
+					NeoThaum.LOGGER.warn("Could not update a world map button", e);
 				}
 			};
 			java.util.function.Supplier<Object> tooltipSupplier = () -> tooltipValue;
 			Button b = (Button) textured.getConstructor(int.class, int.class, int.class, int.class, int.class, int.class, int.class, int.class,
 					Identifier.class, Button.OnPress.class, java.util.function.Supplier.class, int.class, int.class)
-				.newInstance(x, y, 20, 20, iconU(), 0, 16, 16, BUTTON, press, tooltipSupplier, 32, 16);
+				.newInstance(x, y, 20, 20, on.getAsBoolean() ? 0 : 16, 0, 16, 16, icon, press, tooltipSupplier, 32, 16);
 			add.accept(b);
 		} catch (ReflectiveOperationException | ClassCastException e) {
-			NeoThaum.LOGGER.warn("Xaero's textured button is unavailable; using a plain one for the node toggle", e);
-			add.accept(Button.builder(Component.literal(NeoThaumConfig.current.worldMapNodes ? "✦" : "✧"), btn -> {
-				toggle();
-				btn.setMessage(Component.literal(NeoThaumConfig.current.worldMapNodes ? "✦" : "✧"));
+			NeoThaum.LOGGER.warn("Xaero's textured button is unavailable; using a plain one", e);
+			add.accept(Button.builder(Component.literal(on.getAsBoolean() ? "✦" : "✧"), btn -> {
+				toggle.run();
+				btn.setMessage(Component.literal(on.getAsBoolean() ? "✦" : "✧"));
 			}).bounds(x, y, 20, 20).tooltip(Tooltip.create(tip)).build());
 		}
 	}
@@ -163,10 +171,6 @@ public final class WorldMapNodes {
 	private static void toggle() {
 		NeoThaumConfig.current.worldMapNodes = !NeoThaumConfig.current.worldMapNodes;
 		NeoThaumConfig.save();
-	}
-
-	private static int iconU() {
-		return NeoThaumConfig.current.worldMapNodes ? 0 : 16;
 	}
 
 	/**

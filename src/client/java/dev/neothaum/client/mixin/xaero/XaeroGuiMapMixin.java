@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** Xaero's World Map screen: adds the aura node button and draws the nodes over the map. Skipped when the World Map is not installed. */
+/** Xaero's World Map screen: adds the aura node and totem buttons and draws the totems and nodes over the map. Skipped when the World Map is not installed. */
 @Pseudo
 @Mixin(targets = "xaero.map.gui.GuiMap", remap = false)
 public abstract class XaeroGuiMapMixin {
@@ -32,10 +32,13 @@ public abstract class XaeroGuiMapMixin {
 	private void neothaum$addNodeButton(CallbackInfo ci) {
 		Screen screen = (Screen) (Object) this;
 		WorldMapNodes.addToggle(screen, b -> ((ScreenWidgetAccessor) screen).neothaum$addRenderableWidget(b));
+		dev.neothaum.client.addon.minimap.TotemMapMarks.addToggle(screen, b -> ((ScreenWidgetAccessor) screen).neothaum$addRenderableWidget(b));
 	}
 
 	@Inject(method = "extractRenderState", at = @At("TAIL"), require = 0)
 	private void neothaum$drawNodes(GuiGraphicsExtractor g, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+		dev.neothaum.client.addon.minimap.TotemMapMarks.render(g, (Screen) (Object) this, mouseX, mouseY, this.cameraX, this.cameraZ, this.scale,
+			this.screenScale, this.lastViewedDimensionId);
 		WorldMapNodes.render(g, (Screen) (Object) this, mouseX, mouseY, this.cameraX, this.cameraZ, this.scale, this.screenScale,
 			this.lastViewedDimensionId);
 	}

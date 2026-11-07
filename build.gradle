@@ -75,6 +75,9 @@ dependencies {
 	// at runtime)
 	journeymapMod "maven.modrinth:journeymap:${project.journeymap_version}"
 	compileOnly files(layout.buildDirectory.file("journeymap/journeymap-api.jar")).builtBy("extractJourneymapApi")
+	// Xaero's Minimap: attuned totems go on it through its element-renderer API (TotemMinimapElements); its library comes bundled in it
+	compileOnly files("run/mods/xaerominimap-fabric-26.3-26.6.2.jar")
+	compileOnly files(layout.buildDirectory.file("xaero/xaerolib.jar")).builtBy("extractXaeroLib")
 	// REI's widget API uses Cloth's math types (Point, Rectangle), which Cloth Config only carries as a nested jar
 	compileOnly "me.shedaniel.cloth:basic-math:0.6.1"
 	// and REI's EntryStacks overloads mention Architectury's FluidStack
@@ -135,6 +138,13 @@ if (!testMods.isEmpty()) {
 }
 
 // JourneyMap's API, as bundled in the JourneyMap release (META-INF/jars/journeymap-api-fabric-*.jar), for compiling JourneyMapNodes
+tasks.register('extractXaeroLib', Copy) {
+	from({ zipTree(file("run/mods/xaerominimap-fabric-26.3-26.6.2.jar")).matching { include 'META-INF/jars/xaerolib-fabric-*.jar' } })
+	eachFile { it.path = 'xaerolib.jar' }
+	includeEmptyDirs = false
+	into layout.buildDirectory.dir('xaero')
+}
+
 tasks.register('extractJourneymapApi', Copy) {
 	from({ zipTree(configurations.journeymapMod.singleFile).matching { include 'META-INF/jars/journeymap-api-fabric-*.jar' } })
 	eachFile { it.path = 'journeymap-api.jar' }

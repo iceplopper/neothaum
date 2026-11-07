@@ -196,6 +196,7 @@ public final class TravellersTotems {
 		ServerPlayNetworking.registerGlobalReceiver(Rename.TYPE, (p, ctx) -> TotemBlock.rename(ctx.player(), p.pos(), p.name(), p.restore()));
 		ServerPlayNetworking.registerGlobalReceiver(TravelTo.TYPE, (p, ctx) -> TotemTravel.request(ctx.player(), p.target(), p.compass()));
 		TotemTravel.init();
+		TotemMarks.init();
 		// rarely, a totem in the world
 		Registry.register(BuiltInRegistries.FEATURE_TYPE, NeoThaum.id("travellers_totem"), TotemFeature.CODEC);
 		net.fabricmc.fabric.api.biome.v1.BiomeModifications.addFeature(net.fabricmc.fabric.api.biome.v1.BiomeSelectors.foundInOverworld(),

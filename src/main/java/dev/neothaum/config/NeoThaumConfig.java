@@ -19,6 +19,9 @@ public class NeoThaumConfig {
 		// --- Addons ---
 		/** Whether the aura nodes you have seen are drawn on Xaero's World Map (toggled by the button on the map). Default: true. */
 		public boolean worldMapNodes = true;
+		/** Whether the totems you have attuned to (and your Home Totem) show on maps: map items, and Xaero's World Map and Minimap (toggled
+		 * by the button on the World Map). Default: true. */
+		public boolean mapTotems = true;
 		/** Whether bright nodes light their surroundings fully (light 15; TC4 gave every node 8). Default: true. */
 		public boolean brightNodeLight = true;
 		/** Whether looking toward a bright node in clear sight shows a lens flare, while an Iris shader pack is in use (client only). Default: true. */
