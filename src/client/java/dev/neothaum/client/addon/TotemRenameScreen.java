@@ -107,7 +107,7 @@ public class TotemRenameScreen extends Screen {
 	@Override
 	public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
 		super.extractBackground(g, mouseX, mouseY, a);
-		g.blit(RenderPipelines.GUI_TEXTURED, SLAB, this.slabX(), this.slabY(), 0, 184, 200, 72, 256, 256);
+		g.blit(RenderPipelines.GUI_TEXTURED, SLAB, this.slabX(), this.slabY(), 0, 184, 200, 72, 512, 256);
 	}
 
 	@Override

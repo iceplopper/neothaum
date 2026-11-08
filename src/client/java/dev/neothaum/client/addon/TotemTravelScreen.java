@@ -33,7 +33,11 @@ public class TotemTravelScreen extends Screen {
 	private static final int INK = 0xFFEDE4F7;
 	private static final int FADED = 0xFFA996C9;
 	private static final int HOME = 0xFFF2C878;
+	/** The right tablet's text width, and the left's (the list, wider so most names fit whole), and the slab's (gen_totem_gui.py). */
 	private static final int TEXT_W = 104;
+	private static final int WIDER = 66;
+	private static final int LIST_W = TEXT_W + WIDER;
+	private static final int SLAB_W = 256 + WIDER;
 	/** The home button's icon, on Minecraft's own grey button: a house, dimmer when there is no Home Totem to go to. */
 	private static final Identifier HOUSE = NeoThaum.id("totem/house");
 	private static final Identifier HOUSE_DISABLED = NeoThaum.id("totem/house_disabled");
@@ -67,7 +71,7 @@ public class TotemTravelScreen extends Screen {
 	}
 
 	private int slabX() {
-		return this.width / 2 - 128;
+		return this.width / 2 - SLAB_W / 2;
 	}
 
 	private int slabY() {
@@ -81,7 +85,7 @@ public class TotemTravelScreen extends Screen {
 
 	/** The right tablet's text column. */
 	private int rightX() {
-		return this.slabX() + 138;
+		return this.slabX() + 138 + WIDER;
 	}
 
 	private int top() {
@@ -110,7 +114,7 @@ public class TotemTravelScreen extends Screen {
 		Button back = this.addRenderableWidget(Button.builder(Component.literal("<"), b -> this.turn(-1))
 			.bounds(this.leftX(), this.top() + 134, 16, 16).build());
 		Button forward = this.addRenderableWidget(Button.builder(Component.literal(">"), b -> this.turn(1))
-			.bounds(this.leftX() + TEXT_W - 16, this.top() + 134, 16, 16).build());
+			.bounds(this.leftX() + LIST_W - 16, this.top() + 134, 16, 16).build());
 		back.visible = forward.visible = pages > 1;
 		back.active = this.page > 0;
 		forward.active = this.page < pages - 1;
@@ -120,7 +124,7 @@ public class TotemTravelScreen extends Screen {
 	private List<FormattedCharSequence> heading() {
 		Component here = this.from.isPresent() ? Component.translatable("neothaum.totem.screen.here", this.fromName)
 			: Component.translatable("neothaum.compass.screen.here");
-		return this.font.split(here, TEXT_W);
+		return this.font.split(here, LIST_W);
 	}
 
 	/** Where the list starts, below the heading however long the name makes it (from the tablet's top). */
@@ -145,7 +149,7 @@ public class TotemTravelScreen extends Screen {
 	/** The index of the list row under the mouse, or -1. */
 	private int rowAt(double mx, double my) {
 		int y0 = this.top() + this.listTop();
-		if (mx < this.leftX() - 2 || mx > this.leftX() + TEXT_W + 2 || my < y0) {
+		if (mx < this.leftX() - 2 || mx > this.leftX() + LIST_W + 2 || my < y0) {
 			return -1;
 		}
 		int row = (int) ((my - y0) / ROW);
@@ -226,7 +230,7 @@ public class TotemTravelScreen extends Screen {
 	@Override
 	public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
 		super.extractBackground(g, mouseX, mouseY, a);
-		g.blit(RenderPipelines.GUI_TEXTURED, SLAB, this.slabX(), this.slabY(), 0, 0, 256, 180, 256, 256);
+		g.blit(RenderPipelines.GUI_TEXTURED, SLAB, this.slabX(), this.slabY(), 0, 0, SLAB_W, 180, 512, 256);
 	}
 
 	@Override
@@ -238,7 +242,7 @@ public class TotemTravelScreen extends Screen {
 		this.centred(g, this.title, x, y, INK);
 		int hy = y + 12;
 		for (FormattedCharSequence line : this.heading()) {
-			g.text(this.font, line, x + (TEXT_W - this.font.width(line)) / 2, hy, FADED, false);
+			g.text(this.font, line, x + (LIST_W - this.font.width(line)) / 2, hy, FADED, false);
 			hy += 10;
 		}
 		if (this.destinations.isEmpty()) {
@@ -252,16 +256,15 @@ public class TotemTravelScreen extends Screen {
 			TravellersTotems.Destination d = this.destinations.get(i);
 			int ry = y + top + (i - start) * ROW;
 			if (i == this.selected || i == hover) {
-				g.fill(RenderPipelines.GUI, x - 2, ry - 2, x + TEXT_W + 2, ry + ROW - 3, i == this.selected ? 0x609A6AE0 : 0x309A6AE0);
+				g.fill(RenderPipelines.GUI, x - 2, ry - 2, x + LIST_W + 2, ry + ROW - 3, i == this.selected ? 0x609A6AE0 : 0x309A6AE0);
 			}
-			// the name has the line to itself (after a mark if it is in the Nether or the End); how far it is shows on the right page
+			// the name has the line to itself, after the place for a mark (shown if it is in the Nether or the End), so all the names line up;
+			// how far it is shows on the right page
 			Identifier mark = mark(d);
-			int tx = x;
 			if (mark != null) {
 				g.blitSprite(RenderPipelines.GUI_TEXTURED, mark, x, ry - 1, MARK, MARK);
-				tx += MARK + 2;
 			}
-			g.text(this.font, Component.literal(this.fit(d.name(), TEXT_W - (tx - x))), tx, ry, INK, false);
+			g.text(this.font, Component.literal(this.fit(d.name(), LIST_W - MARK - 2)), x + MARK + 2, ry, INK, false);
 		}
 		if (this.pages() > 1) {
 			this.centred(g, Component.literal((this.page + 1) + " / " + this.pages()), x, y + 138, FADED);
@@ -297,7 +300,7 @@ public class TotemTravelScreen extends Screen {
 	}
 
 	private void centred(GuiGraphicsExtractor g, Component c, int x, int y, int colour) {
-		g.text(this.font, c, x + (TEXT_W - this.font.width(c)) / 2, y, colour, false);
+		g.text(this.font, c, x + (LIST_W - this.font.width(c)) / 2, y, colour, false);
 	}
 
 	/** The text, shortened with an ellipsis to fit the width. */
