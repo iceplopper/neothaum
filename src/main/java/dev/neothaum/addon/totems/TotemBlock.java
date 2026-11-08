@@ -206,7 +206,7 @@ public class TotemBlock extends BaseEntityBlock {
 
 	/**
 	 * Renames a totem for a player who knows it: to the name typed, to its own name ({@code restore}), or to another name drawn from its
-	 * surroundings ({@code reroll}), after which the rename screen opens again on the new name, to keep or draw again.
+	 * surroundings ({@code reroll}), after which the open rename screen shows the new name, to keep or draw again.
 	 */
 	public static void rename(ServerPlayer sp, GlobalPos gp, String name, boolean restore, boolean reroll) {
 		if (!TravellersTotems.enabled() || gp.dimension() != sp.level().dimension() || gp.pos().distToCenterSqr(sp.position()) > 64

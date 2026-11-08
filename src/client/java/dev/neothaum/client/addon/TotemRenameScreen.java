@@ -20,7 +20,7 @@ import net.minecraft.resources.Identifier;
 public class TotemRenameScreen extends Screen {
 	private static final Identifier SLAB = NeoThaum.id("textures/gui/gui_totem.png");
 	private final GlobalPos pos;
-	private final String current;
+	private String current;
 	private EditBox box;
 
 	public TotemRenameScreen(GlobalPos pos, String current) {
@@ -30,8 +30,22 @@ public class TotemRenameScreen extends Screen {
 	}
 
 	public static void register() {
-		ClientPlayNetworking.registerGlobalReceiver(TravellersTotems.OpenRename.TYPE, (p, ctx) -> ctx.client().execute(
-			() -> ctx.client().gui.setScreen(new TotemRenameScreen(p.pos(), p.name()))));
+		ClientPlayNetworking.registerGlobalReceiver(TravellersTotems.OpenRename.TYPE, (p, ctx) -> ctx.client().execute(() -> {
+			// a new name drawn while the screen is open ("Another name") goes into it; no second screen is opened over the first
+			if (ctx.client().gui.screen() instanceof TotemRenameScreen open && open.pos.equals(p.pos())) {
+				open.drawn(p.name());
+			} else {
+				ctx.client().gui.setScreen(new TotemRenameScreen(p.pos(), p.name()));
+			}
+		}));
+	}
+
+	/** The totem has been given this name (by "Another name"): show it, to keep or draw again. */
+	private void drawn(String name) {
+		this.current = name;
+		if (this.box != null) {
+			this.box.setValue(name);
+		}
 	}
 
 	private int slabX() {
