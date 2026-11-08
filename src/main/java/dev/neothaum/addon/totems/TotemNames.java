@@ -133,13 +133,16 @@ public final class TotemNames {
 		// highest first; equal scores in a random order
 		java.util.Collections.shuffle(ranked, new java.util.Random(rand.nextLong()));
 		ranked.sort(Comparator.comparing((String f) -> -scores.get(f)));
-		// the place: one of the two most significant features that has a place word. What the biome is (by its name and kind) only names the
-		// place when nothing else defines it: a village, a summit, a lake or a cliff in a forest is named for itself, not for the forest.
+		// the place: one of the two most significant features that has a place word, from the land itself first. What the biome is (by its
+		// name and kind) names the place when no natural feature defines it; a village (or a harbour, a road, a player's home) only when the
+		// land gives nothing at all: a totem by a village is named for the hill or the river it stands by.
 		java.util.Set<String> biome = biomeFeatures(level, pos);
-		boolean defined = ranked.stream().anyMatch(f -> !biome.contains(f) && scores.get(f) >= DEFINING && significance(f) >= 1.0F
+		List<String> land = ranked.stream().filter(f -> !SETTLED.contains(f)).toList();
+		List<String> settled = ranked.stream().filter(SETTLED::contains).toList();
+		boolean defined = land.stream().anyMatch(f -> !biome.contains(f) && scores.get(f) >= DEFINING && significance(f) >= 1.0F
 			&& PLACES.stream().anyMatch(p -> p.features().contains(f)));
 		List<String> candidates = new ArrayList<>();
-		for (String f : ranked) {
+		for (String f : land) {
 			boolean fromBiome = biome.contains(f);
 			if (defined ? !fromBiome && significance(f) >= 1.0F : fromBiome) {
 				if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
@@ -153,29 +156,33 @@ public final class TotemNames {
 		// the biome's own word where the survey found too little of it to rank (a modded biome named for what it is)
 		if (candidates.isEmpty()) {
 			for (String f : biome) {
-				if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
+				if (!SETTLED.contains(f) && PLACES.stream().anyMatch(p -> p.features().contains(f))) {
 					candidates.add(f);
 					scores.merge(f, 1.0F, Math::max);
 				}
 			}
 			candidates.sort(Comparator.naturalOrder());
 		}
-		if (candidates.isEmpty()) {
-			for (String f : ranked) {
-				if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
-					candidates.add(f);
-					break;
+		// then the village, if the land gave nothing; then anything at all
+		for (List<String> from : List.of(settled, ranked)) {
+			if (candidates.isEmpty()) {
+				for (String f : from) {
+					if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
+						candidates.add(f);
+						break;
+					}
 				}
 			}
 		}
 		String placeFeature = candidates.isEmpty() ? "nothing" : weighted(candidates, scores, rand);
 		List<Place> places = PLACES.stream().filter(p -> p.features().contains(placeFeature)).toList();
 		Place place = places.isEmpty() ? PLACES.get(0) : places.get(rand.nextInt(places.size()));
-		// the describer: the most significant feature of another family, from all its words; but where that is nothing much (no feature
-		// defines the place), a word from the biome's name instead: "temperate" in Temperate Highlands, "hot" in Hot Forest
+		// the describer, in the same order: the most significant feature of the land (of another family than the place's); where that is
+		// nothing much, a word from the biome's name ("temperate" in Temperate Highlands); then the village ("Campus Frequens", the busy
+		// plain); then the land's lesser features; then a quiet word
 		Describer describer = null;
 		String describing = null;
-		for (String f : ranked) {
+		for (String f : land) {
 			if (overlap(placeFeature, f)) {
 				continue;
 			}
@@ -193,8 +200,10 @@ public final class TotemNames {
 					qualities.add(q);
 				}
 			}
-			if (!qualities.isEmpty()) {
-				String q = qualities.get(rand.nextInt(qualities.size()));
+			String village = settled.stream().filter(f -> !overlap(placeFeature, f) && scores.get(f) >= DEFINING
+				&& DESCRIBERS.stream().anyMatch(d -> d.features().contains(f))).findFirst().orElse(null);
+			String q = !qualities.isEmpty() ? qualities.get(rand.nextInt(qualities.size())) : village;
+			if (q != null) {
 				List<Describer> fits = DESCRIBERS.stream().filter(d -> d.features().contains(q)).toList();
 				describer = fits.get(rand.nextInt(fits.size()));
 			}
@@ -240,6 +249,10 @@ public final class TotemNames {
 		}
 		return name;
 	}
+
+	/** What people made, named for only when the land itself gives nothing: villages, harbours, a player's home, roads. */
+	private static final java.util.Set<String> SETTLED = java.util.Set.of("village", "harbour", "homestead", "abandoned_village", "road",
+		"crossroads", "boundary");
 
 	/** How significant a feature must be (its score, weighed) to define a place by itself, ahead of its biome. */
 	private static final float DEFINING = 30.0F;
@@ -448,7 +461,9 @@ public final class TotemNames {
 	/** How much one block of a landmark counts: rare and striking things more, things that come in drifts (snow, logs) less. */
 	private static float nearWeight(String f) {
 		return switch (f) {
-			case "near_bell", "near_aura_node" -> 40;
+			case "near_aura_node" -> 40;
+			// every village has one: worth a name now and then, not every time
+			case "near_bell" -> 12;
 			case "near_altar", "near_campfire" -> 15;
 			case "near_bees", "near_diamond", "near_emerald" -> 10;
 			case "near_lava", "near_waterfall", "near_gold", "near_amethyst" -> 3;
