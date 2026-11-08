@@ -8,6 +8,9 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -33,18 +36,31 @@ public class TotemTravelScreen extends Screen {
 	private static final int FADED = 0xFFA996C9;
 	private static final int HOME = 0xFFF2C878;
 	private static final int TEXT_W = 104;
+	/** The home button, carved in the slab's stone with a house glowing in it; unlit and grey when there is no Home Totem to go to. */
+	private static final WidgetSprites HOME_SPRITES = new WidgetSprites(NeoThaum.id("totem/home"), NeoThaum.id("totem/home_disabled"),
+		NeoThaum.id("totem/home_highlighted"));
+	/** Marks beside a totem in another world: a nether portal, an eye of ender. */
+	private static final Identifier NETHER_MARK = NeoThaum.id("totem/nether");
+	private static final Identifier END_MARK = NeoThaum.id("totem/end");
+	private static final int MARK = 9;
 	private final Optional<GlobalPos> from;
 	private final String fromName;
+	/** The totems in the list (the Home Totem has its own button). */
 	private final List<TravellersTotems.Destination> destinations;
+	/** The Home Totem, if there is one to go to from here. */
+	private final TravellersTotems.Destination home;
 	private int page;
 	private int selected = -1;
+	private boolean homeSelected;
 	private Button travel;
+	private Button homeButton;
 
 	public TotemTravelScreen(Optional<GlobalPos> from, String fromName, List<TravellersTotems.Destination> destinations) {
 		super(Component.translatable(from.isPresent() ? "neothaum.totem.screen.title" : "neothaum.compass.screen.title"));
 		this.from = from;
 		this.fromName = fromName;
-		this.destinations = destinations;
+		this.destinations = destinations.stream().filter(d -> !d.home()).toList();
+		this.home = destinations.stream().filter(TravellersTotems.Destination::home).findFirst().orElse(null);
 	}
 
 	public static void register() {
@@ -77,8 +93,14 @@ public class TotemTravelScreen extends Screen {
 	@Override
 	protected void init() {
 		this.travel = this.addRenderableWidget(Button.builder(Component.translatable("neothaum.totem.screen.travel"), b -> this.travel())
-			.bounds(this.rightX() + 12, this.top() + 128, 80, 20).build());
-		this.travel.active = this.selected >= 0;
+			.bounds(this.rightX() + 26, this.top() + 128, 76, 20).build());
+		this.travel.active = this.picked() != null;
+		// the Home Totem, a button of its own beside Travel
+		this.homeButton = this.addRenderableWidget(new ImageButton(this.rightX() + 2, this.top() + 128, 20, 20, HOME_SPRITES, b -> this.pickHome(),
+			Component.translatable("neothaum.totem.screen.home")));
+		this.homeButton.active = this.home != null;
+		this.homeButton.setTooltip(Tooltip.create(this.home != null ? Component.translatable("neothaum.totem.screen.home_named", this.home.name())
+			: this.hasHome() ? Component.translatable("neothaum.totem.screen.home_here") : Component.translatable("neothaum.totem.screen.no_home")));
 		int pages = this.pages();
 		Button back = this.addRenderableWidget(Button.builder(Component.literal("<"), b -> this.turn(-1))
 			.bounds(this.leftX(), this.top() + 134, 16, 16).build());
@@ -129,7 +151,37 @@ public class TotemTravelScreen extends Screen {
 	/** Picks a totem from the list (for tests, and for the mouse). */
 	public void select(int index) {
 		this.selected = index;
-		this.travel.active = index >= 0;
+		this.homeSelected = false;
+		this.travel.active = this.picked() != null;
+	}
+
+	/** Picks the Home Totem. */
+	public void pickHome() {
+		if (this.home != null) {
+			this.selected = -1;
+			this.homeSelected = true;
+			this.travel.active = true;
+		}
+	}
+
+	/** The totem picked, from the list or the home button, or null. */
+	private TravellersTotems.Destination picked() {
+		if (this.homeSelected) {
+			return this.home;
+		}
+		return this.selected >= 0 && this.selected < this.destinations.size() ? this.destinations.get(this.selected) : null;
+	}
+
+	/** Whether this player has a Home Totem at all (it may be the one they stand at). */
+	private boolean hasHome() {
+		Minecraft mc = Minecraft.getInstance();
+		return mc.player != null && mc.player.getAttachedOrCreate(TravellersTotems.KNOWN).home().isPresent();
+	}
+
+	/** The mark for a totem in the Nether or the End, or null. */
+	private static Identifier mark(TravellersTotems.Destination d) {
+		var dim = d.pos().dimension();
+		return dim == net.minecraft.world.level.Level.NETHER ? NETHER_MARK : dim == net.minecraft.world.level.Level.END ? END_MARK : null;
 	}
 
 	@Override
@@ -147,10 +199,11 @@ public class TotemTravelScreen extends Screen {
 	}
 
 	private void travel() {
-		if (this.selected < 0 || this.selected >= this.destinations.size()) {
+		TravellersTotems.Destination d = this.picked();
+		if (d == null) {
 			return;
 		}
-		ClientPlayNetworking.send(new TravellersTotems.TravelTo(this.destinations.get(this.selected).pos(), this.from.isEmpty()));
+		ClientPlayNetworking.send(new TravellersTotems.TravelTo(d.pos(), this.from.isEmpty()));
 		this.onClose();
 	}
 
@@ -196,20 +249,31 @@ public class TotemTravelScreen extends Screen {
 			if (i == this.selected || i == hover) {
 				g.fill(RenderPipelines.GUI, x - 2, ry - 2, x + TEXT_W + 2, ry + ROW - 3, i == this.selected ? 0x609A6AE0 : 0x309A6AE0);
 			}
-			// the name has the line to itself; how far it is shows on the right page
-			g.text(this.font, Component.literal(this.fit(d.name(), TEXT_W)), x, ry, d.home() ? HOME : INK, false);
+			// the name has the line to itself (after a mark if it is in the Nether or the End); how far it is shows on the right page
+			Identifier mark = mark(d);
+			int tx = x;
+			if (mark != null) {
+				g.blitSprite(RenderPipelines.GUI_TEXTURED, mark, x, ry - 1, MARK, MARK);
+				tx += MARK + 2;
+			}
+			g.text(this.font, Component.literal(this.fit(d.name(), TEXT_W - (tx - x))), tx, ry, INK, false);
 		}
 		if (this.pages() > 1) {
 			this.centred(g, Component.literal((this.page + 1) + " / " + this.pages()), x, y + 138, FADED);
 		}
 		// the right page: the totem picked
 		int rx = this.rightX();
-		if (this.selected >= 0 && this.selected < this.destinations.size()) {
-			TravellersTotems.Destination d = this.destinations.get(this.selected);
+		if (this.picked() != null) {
+			TravellersTotems.Destination d = this.picked();
 			int ly = y + 20;
 			for (FormattedCharSequence line : this.font.split(Component.literal(d.name()), TEXT_W)) {
-				g.text(this.font, line, rx + (TEXT_W - this.font.width(line)) / 2, ly, INK, false);
+				g.text(this.font, line, rx + (TEXT_W - this.font.width(line)) / 2, ly, d.home() ? HOME : INK, false);
 				ly += 11;
+			}
+			Identifier mark = mark(d);
+			if (mark != null) {
+				g.blitSprite(RenderPipelines.GUI_TEXTURED, mark, rx + (TEXT_W - MARK) / 2, ly, MARK, MARK);
+				ly += MARK + 2;
 			}
 			ly += 6;
 			Component info = d.home() ? Component.translatable("neothaum.totem.screen.your_home")
@@ -218,7 +282,7 @@ public class TotemTravelScreen extends Screen {
 				g.text(this.font, line, rx + (TEXT_W - this.font.width(line)) / 2, ly, FADED, false);
 				ly += 11;
 			}
-		} else if (!this.destinations.isEmpty()) {
+		} else if (!this.destinations.isEmpty() || this.home != null) {
 			int ly = y + 60;
 			for (FormattedCharSequence line : this.font.split(Component.translatable("neothaum.totem.screen.pick"), TEXT_W)) {
 				g.text(this.font, line, rx + (TEXT_W - this.font.width(line)) / 2, ly, FADED, false);
