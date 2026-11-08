@@ -79,8 +79,8 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 		s.type = node.getNodeType();
 		s.modifier = node.getNodeModifier();
 		s.x = node.getBlockPos().getX();
-		// past 64 blocks only a bright node's flare shows: skip the rest (and its sight checks) for the others
-		if (s.modifier != NodeModifier.BRIGHT && cam.distanceTo(Vec3.atCenterOf(node.getBlockPos())) > 64.0) {
+		// past 64 blocks only the flare of a bright node set in glass (or another clear block) shows: skip the rest (and their sight checks)
+		if (!(s.modifier == NodeModifier.BRIGHT && inClearBlock(node)) && cam.distanceTo(Vec3.atCenterOf(node.getBlockPos())) > 64.0) {
 			s.visible = false;
 			s.embedded = null;
 			s.drainFrom = null;
@@ -140,7 +140,7 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 			&& s.aspects.size() > 0) {
 			// the bright-node lens flare (an addon), in the colour of the node's strongest aspect
 			Aspect strongest = s.aspects.getAspectsSortedAmount()[0];
-			dev.neothaum.client.addon.BrightNodeFlare.seen(node.getBlockPos(), strongest.getColor());
+			dev.neothaum.client.addon.BrightNodeFlare.seen(node.getBlockPos(), strongest.getColor(), inClearBlock(node));
 		}
 		s.drainFrom = null;
 		if (node.drainEntity instanceof Player p && p.isUsingItem()) {
@@ -152,6 +152,12 @@ public class NodeRenderer implements BlockEntityRenderer<NodeBlockEntity, NodeRe
 		} else if (node.drainEntity != null) {
 			node.drainEntity = null;
 		}
+	}
+
+	/** Whether the node is set inside a block light passes through (glass, a pane, ice): such a bright node's flare carries to the end of the
+	 * render distance; any other's only as far as it always did. */
+	private static boolean inClearBlock(NodeBlockEntity node) {
+		return node.embedded != null && !node.embedded.isAir() && !node.embedded.canOcclude() && !node.embedded.is(HIDES_NODES);
 	}
 
 	/** Blocks that stop nodes being seen through them, even with goggles (arcane stone block, bricks, stairs and slab by default; a tag, so others can join). */

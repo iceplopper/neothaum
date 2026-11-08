@@ -41,6 +41,8 @@ public final class BrightNodeFlare {
 
 	private static final class Flare {
 		Vec3 pos;
+		/** Set in glass or another clear block: seen to the end of the render distance; else only within {@link #NEAR}. */
+		boolean far;
 		int color;
 		long seenAt;
 		float strength;
@@ -49,7 +51,7 @@ public final class BrightNodeFlare {
 	private static final Map<BlockPos, Flare> FLARES = new HashMap<>();
 
 	/** From NodeRenderer: a bright node was drawn this frame. */
-	public static void seen(BlockPos pos, int color) {
+	public static void seen(BlockPos pos, int color, boolean far) {
 		if (!NeoThaumConfig.current.brightNodeFlare || !dev.neothaum.addon.Additions.enabled("bright_nodes")) {
 			return;
 		}
@@ -57,6 +59,7 @@ public final class BrightNodeFlare {
 		f.pos = Vec3.atCenterOf(pos);
 		f.color = color;
 		f.seenAt = System.nanoTime();
+		f.far = far;
 	}
 
 	/** HUD element for when the HUD shows: under the hotbar and the rest. */
@@ -101,7 +104,7 @@ public final class BrightNodeFlare {
 			float sx = inFront ? cx + clip.x / clip.w * cx : 0.0F;
 			float sy = inFront ? cy - clip.y / clip.w * cy : 0.0F;
 			boolean onScreen = inFront && sx > -w * 0.1F && sx < w * 1.1F && sy > -h * 0.1F && sy < h * 1.1F;
-			boolean clear = current && onScreen && dist < range && clearSight(mc, eye, f.pos);
+			boolean clear = current && onScreen && dist < (f.far ? range : NEAR) && clearSight(mc, eye, f.pos);
 			// ease in and out rather than pop
 			f.strength = Mth.clamp(f.strength + (clear ? 0.12F : -0.08F), 0.0F, 1.0F);
 			if (f.strength <= 0.0F) {
