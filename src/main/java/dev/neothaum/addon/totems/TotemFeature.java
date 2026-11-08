@@ -25,7 +25,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
  * <ul>
  * <li>Every village has one, in the chunk where the village starts, on the nearest level natural ground to the village's start (never on
  * anything the village built).</li>
- * <li>Elsewhere, rarely (one chunk in {@link #RARITY}), in plains, meadows, forests, taiga and savanna, away from any structure.</li>
+ * <li>Elsewhere, rarely (one chunk in {@link #RARITY}), in any overworld biome (modded ones too, as Terralith's), on dry, level ground away
+ * from any structure.</li>
  * </ul>
  * Each stands on a full block of arcane stone, ringed by arcane stone brick slabs, with a flush block of arcane stone at each cardinal
  * point; it names itself once its surroundings have finished generating (TotemBlockEntity.tick).
@@ -247,7 +248,7 @@ public record TotemFeature() implements Feature {
 	public static boolean raise(WorldGenLevel world, RandomSource random, int x, int z) {
 		int y = world.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z);
 		BlockPos ground = new BlockPos(x, y - 1, z);
-		if (!suits(world.getBiome(ground)) || !world.getFluidState(ground.above()).isEmpty() || !world.getBlockState(ground).isSolid()
+		if (!world.getFluidState(ground.above()).isEmpty() || !world.getBlockState(ground).isSolid()
 			|| !world.getChunk(ground).getAllReferences().isEmpty()) {
 			return false;
 		}
@@ -300,10 +301,5 @@ public record TotemFeature() implements Feature {
 		if (world.getBlockEntity(at) instanceof TotemBlockEntity totem) {
 			totem.natural = true;
 		}
-	}
-
-	private static boolean suits(Holder<Biome> b) {
-		return b.is(BiomeTags.IS_FOREST) || b.is(BiomeTags.IS_TAIGA) || b.is(BiomeTags.IS_SAVANNA) || b.is(Biomes.PLAINS)
-			|| b.is(Biomes.SUNFLOWER_PLAINS) || b.is(Biomes.MEADOW);
 	}
 }
