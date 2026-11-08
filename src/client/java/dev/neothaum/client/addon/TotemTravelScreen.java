@@ -9,8 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -36,9 +34,9 @@ public class TotemTravelScreen extends Screen {
 	private static final int FADED = 0xFFA996C9;
 	private static final int HOME = 0xFFF2C878;
 	private static final int TEXT_W = 104;
-	/** The home button, carved in the slab's stone with a house glowing in it; unlit and grey when there is no Home Totem to go to. */
-	private static final WidgetSprites HOME_SPRITES = new WidgetSprites(NeoThaum.id("totem/home"), NeoThaum.id("totem/home_disabled"),
-		NeoThaum.id("totem/home_highlighted"));
+	/** The home button's icon, on Minecraft's own grey button: a house, dimmer when there is no Home Totem to go to. */
+	private static final Identifier HOUSE = NeoThaum.id("totem/house");
+	private static final Identifier HOUSE_DISABLED = NeoThaum.id("totem/house_disabled");
 	/** Marks beside a totem in another world: a nether portal, an eye of ender. */
 	private static final Identifier NETHER_MARK = NeoThaum.id("totem/nether");
 	private static final Identifier END_MARK = NeoThaum.id("totem/end");
@@ -96,8 +94,15 @@ public class TotemTravelScreen extends Screen {
 			.bounds(this.rightX() + 26, this.top() + 128, 76, 20).build());
 		this.travel.active = this.picked() != null;
 		// the Home Totem, a button of its own beside Travel
-		this.homeButton = this.addRenderableWidget(new ImageButton(this.rightX() + 2, this.top() + 128, 20, 20, HOME_SPRITES, b -> this.pickHome(),
-			Component.translatable("neothaum.totem.screen.home")));
+		this.homeButton = this.addRenderableWidget(new Button(this.rightX() + 2, this.top() + 128, 20, 20,
+			Component.translatable("neothaum.totem.screen.home"), b -> this.pickHome(), narration -> narration.get()) {
+			@Override
+			public void extractContents(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
+				// Minecraft's own button, grey and lighter under the cursor, with the house on it instead of words
+				this.extractDefaultSprite(g);
+				g.blitSprite(RenderPipelines.GUI_TEXTURED, this.active ? HOUSE : HOUSE_DISABLED, this.getX() + 2, this.getY() + 2, 16, 16);
+			}
+		});
 		this.homeButton.active = this.home != null;
 		this.homeButton.setTooltip(Tooltip.create(this.home != null ? Component.translatable("neothaum.totem.screen.home_named", this.home.name())
 			: this.hasHome() ? Component.translatable("neothaum.totem.screen.home_here") : Component.translatable("neothaum.totem.screen.no_home")));
