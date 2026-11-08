@@ -341,14 +341,17 @@
    "word": "nemus",
    "gender": "n",
    "features": [
-    "grove"
+    "grove",
+    "birch",
+    "cherry"
    ]
   },
   {
    "word": "lucus",
    "gender": "m",
    "features": [
-    "magical_forest"
+    "magical_forest",
+    "birch"
    ]
   },
   {
@@ -1707,7 +1710,9 @@
    "word": "hortus",
    "gender": "m",
    "features": [
-    "oasis"
+    "oasis",
+    "cherry",
+    "pale_garden"
    ]
   },
   {
@@ -2141,14 +2146,16 @@
    "word": "arbustum",
    "gender": "n",
    "features": [
-    "forest"
+    "forest",
+    "birch"
    ]
   },
   {
    "word": "silvula",
    "gender": "f",
    "features": [
-    "forest"
+    "forest",
+    "birch"
    ]
   },
   {
@@ -2183,14 +2190,16 @@
    "word": "umbra",
    "gender": "f",
    "features": [
-    "forest"
+    "forest",
+    "pale_garden"
    ]
   },
   {
    "word": "pomarium",
    "gender": "n",
    "features": [
-    "grove"
+    "grove",
+    "cherry"
    ]
   },
   {
@@ -2232,7 +2241,8 @@
    "word": "caligo",
    "gender": "f",
    "features": [
-    "dark_forest"
+    "dark_forest",
+    "pale_garden"
    ]
   },
   {

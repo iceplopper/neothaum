@@ -98,25 +98,29 @@ public final class TotemNames {
 	}
 
 	/**
-	 * A name for a totem here. The place word comes from one of the three strongest features round it (the stronger the likelier), the
-	 * describing word from the strongest feature of another family; and when something stands close by (a tree, lava, a flower, a bell, a
-	 * beast) the name may say so, as "Collis ad Quercum" (the hill by the oak) or "Fons Luporum" (the spring of the wolves). Each choice is
-	 * seeded by the totem's place, so a totem keeps its name however often it is worked out. A name already in use gets a numeral.
+	 * A name for a totem here, two words wherever it can be: a place word and a describing word ("Collis Herbosus"), or a place word and
+	 * something striking close by ("Fons Luporum", the spring of the wolves). Features count by how significant they are, not only how much
+	 * of them there is: a village, a summit, a lake or a node outweighs grass, stone and flat ground. The place word comes from one of the two
+	 * most significant features (the more significant the likelier), the describer from the most significant of another family. A landmark
+	 * must be striking to be named, and only a very striking one (a bell, a node, an altar) takes three words ("Collis ad Campanam"). Each
+	 * choice is seeded by the totem's place, so a totem keeps its name however often it is worked out. A name in use gets a numeral.
 	 */
 	public static String name(ServerLevel level, BlockPos pos, Predicate<String> taken) {
-		Map<String, Float> scores = survey(level, pos);
+		Map<String, Float> raw = survey(level, pos);
+		Map<String, Float> scores = new HashMap<>();
+		raw.forEach((f, v) -> scores.put(f, v * significance(f)));
 		Map<String, Float> near = nearby(level, pos);
 		RandomSource rand = RandomSource.create(pos.asLong() ^ level.getSeed());
 		List<String> ranked = new ArrayList<>(scores.keySet());
 		// highest first; equal scores in a random order
 		java.util.Collections.shuffle(ranked, new java.util.Random(rand.nextLong()));
 		ranked.sort(Comparator.comparing((String f) -> -scores.get(f)));
-		// the place: one of the three strongest features that has a place word, weighted by score
+		// the place: one of the two most significant features that has a place word
 		List<String> candidates = new ArrayList<>();
 		for (String f : ranked) {
 			if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
 				candidates.add(f);
-				if (candidates.size() == 3) {
+				if (candidates.size() == 2) {
 					break;
 				}
 			}
@@ -124,7 +128,7 @@ public final class TotemNames {
 		String placeFeature = candidates.isEmpty() ? "nothing" : weighted(candidates, scores, rand);
 		List<Place> places = PLACES.stream().filter(p -> p.features().contains(placeFeature)).toList();
 		Place place = places.isEmpty() ? PLACES.get(0) : places.get(rand.nextInt(places.size()));
-		// the describer: the strongest feature of another family, from all its words
+		// the describer: the most significant feature of another family, from all its words
 		Describer describer = null;
 		String used = family(placeFeature);
 		for (String f : ranked) {
@@ -141,45 +145,66 @@ public final class TotemNames {
 			List<Describer> quiet = DESCRIBERS.stream().filter(d -> d.features().contains("nothing")).toList();
 			describer = quiet.isEmpty() ? DESCRIBERS.get(0) : quiet.get(rand.nextInt(quiet.size()));
 		}
-		// a landmark close by, if there is one worth naming
+		String p = capital(place.word());
+		String base = p + " " + capital(describer.forGender(place.gender()));
+		// something striking close by, named in one word if it can be ("Luporum"), never the place's own word again ("Betulla Betullarum")
+		String stem = place.word().substring(0, Math.min(5, place.word().length())).toLowerCase(java.util.Locale.ROOT);
 		List<String> marks = new ArrayList<>();
 		for (var e : near.entrySet()) {
-			if (e.getValue() >= 3.0F && LANDMARKS.stream().anyMatch(l -> l.features().contains(e.getKey()))) {
+			if (e.getValue() >= STRIKING && LANDMARKS.stream().anyMatch(l -> l.features().contains(e.getKey()))) {
 				marks.add(e.getKey());
 			}
 		}
 		marks.sort(Comparator.naturalOrder());
-		String landmark = null;
-		// never the place's own word again ("Betulla sub Betulla"): then the next landmark
-		String stem = place.word().substring(0, Math.min(5, place.word().length())).toLowerCase(java.util.Locale.ROOT);
-		while (landmark == null && !marks.isEmpty()) {
+		while (!marks.isEmpty()) {
 			String mf = weighted(marks, near, rand);
 			List<Landmark> fits = LANDMARKS.stream().filter(l -> l.features().contains(mf)
 				&& !l.phrase().toLowerCase(java.util.Locale.ROOT).contains(stem)).toList();
-			if (fits.isEmpty()) {
-				marks.remove(mf);
-			} else {
-				landmark = fits.get(rand.nextInt(fits.size())).phrase();
+			List<Landmark> oneWord = fits.stream().filter(l -> !l.phrase().contains(" ")).toList();
+			if (!oneWord.isEmpty()) {
+				if (rand.nextFloat() < 0.45F) {
+					base = p + " " + oneWord.get(rand.nextInt(oneWord.size())).phrase();
+				}
+				break;
 			}
-		}
-		String p = capital(place.word());
-		String d = capital(describer.forGender(place.gender()));
-		String base = p + " " + d;
-		if (landmark != null) {
-			float roll = rand.nextFloat();
-			String withMark = p + " " + landmark;
-			String full = base + " " + landmark;
-			if (roll < 0.15F && full.length() <= LONGEST) {
-				base = full;
-			} else if (roll < 0.65F && withMark.length() <= LONGEST) {
-				base = withMark;
+			if (!fits.isEmpty()) {
+				String withMark = p + " " + fits.get(rand.nextInt(fits.size())).phrase();
+				if (near.get(mf) >= VERY_STRIKING && rand.nextFloat() < 0.35F && withMark.length() <= LONGEST) {
+					base = withMark;
+				}
+				break;
 			}
+			marks.remove(mf);
 		}
 		String name = base;
 		for (int n = 2; taken.test(name); n++) {
 			name = base + " " + roman(n);
 		}
 		return name;
+	}
+
+	/** How much a landmark must score to be named; and to be named in three words. */
+	private static final float STRIKING = 10.0F;
+	private static final float VERY_STRIKING = 30.0F;
+
+	/**
+	 * How much a feature says about a place, as a weight on its score: what a traveller would remember it by (a village, a summit, a lake, a
+	 * node, a cave, an island) counts for more, and what is everywhere (grass, stone, flat ground, plain forest) for less.
+	 */
+	private static float significance(String f) {
+		return switch (f) {
+			case "village", "harbour", "outpost", "temple", "ruins", "barrow", "altar", "tower", "abandoned_village", "aura_node", "island",
+				 "peninsula", "headland", "summit", "cliff", "crag", "spring", "oasis", "lake", "ford", "wide_river", "enclosed_valley", "cave",
+				 "lush_caves", "deep_dark", "dripstone", "taint", "eerie", "magical_forest", "silverwood", "mangrove", "cherry", "pale_garden",
+				 "mushrooms", "amethyst", "lava", "gold", "bees", "blue_ice", "packed_ice", "crossroads", "infused_stone", "bay" -> 2.0F;
+			case "mountain", "ridge", "hill", "valley", "river", "stream", "pond", "swamp", "jungle", "dark_forest", "birch", "taiga",
+				 "snowy_taiga", "desert", "savanna", "meadow", "badlands", "red_sand", "ice", "beach", "shore", "deep_ocean", "warm_ocean",
+				 "horses", "wolves", "foxes", "bears", "farmland", "pasture", "flowers", "reeds", "cactus", "berries", "moss", "calcite",
+				 "blackstone", "iron", "road", "boundary", "windswept" -> 1.0F;
+			case "plains", "forest", "sand", "snow", "cold", "ocean", "rugged", "high", "below_sea", "mud", "grove", "spruce", "thicket",
+				 "fish" -> 0.6F;
+			default -> 0.3F; // grass, flat, stone, low, slope, sparse woods, open water, nothing
+		};
 	}
 
 	/** One of these, the higher its score the likelier. */

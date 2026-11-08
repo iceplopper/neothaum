@@ -23,8 +23,11 @@ import net.minecraft.util.FormattedCharSequence;
  */
 public class TotemTravelScreen extends Screen {
 	private static final Identifier SLAB = NeoThaum.id("textures/gui/gui_totem.png");
-	private static final int PER_PAGE = 7;
 	private static final int ROW = 13;
+	/** Where the list must end, above the page number and the page buttons. */
+	private static final int LIST_BOTTOM = 132;
+	/** Space between the heading (however many lines it wraps to) and the list. */
+	private static final int GAP = 10;
 	/** Pale lettering on the dark stone, and a fainter violet for what goes with it. */
 	private static final int INK = 0xFFEDE4F7;
 	private static final int FADED = 0xFFA996C9;
@@ -86,8 +89,25 @@ public class TotemTravelScreen extends Screen {
 		forward.active = this.page < pages - 1;
 	}
 
+	/** The heading over the list: the totem you stand at (or the compass), wrapped to the tablet. */
+	private List<FormattedCharSequence> heading() {
+		Component here = this.from.isPresent() ? Component.translatable("neothaum.totem.screen.here", this.fromName)
+			: Component.translatable("neothaum.compass.screen.here");
+		return this.font.split(here, TEXT_W);
+	}
+
+	/** Where the list starts, below the heading however long the name makes it (from the tablet's top). */
+	private int listTop() {
+		return Math.max(40, 12 + this.heading().size() * 10 + GAP);
+	}
+
+	/** How many totems fit on a page below the heading: seven, or fewer under a long name. */
+	private int perPage() {
+		return Math.max(3, Math.min(7, (LIST_BOTTOM - this.listTop()) / ROW));
+	}
+
 	private int pages() {
-		return Math.max(1, (this.destinations.size() + PER_PAGE - 1) / PER_PAGE);
+		return Math.max(1, (this.destinations.size() + this.perPage() - 1) / this.perPage());
 	}
 
 	private void turn(int by) {
@@ -97,13 +117,13 @@ public class TotemTravelScreen extends Screen {
 
 	/** The index of the list row under the mouse, or -1. */
 	private int rowAt(double mx, double my) {
-		int y0 = this.top() + 38;
+		int y0 = this.top() + this.listTop();
 		if (mx < this.leftX() - 2 || mx > this.leftX() + TEXT_W + 2 || my < y0) {
 			return -1;
 		}
 		int row = (int) ((my - y0) / ROW);
-		int i = this.page * PER_PAGE + row;
-		return row < PER_PAGE && i < this.destinations.size() ? i : -1;
+		int i = this.page * this.perPage() + row;
+		return row < this.perPage() && i < this.destinations.size() ? i : -1;
 	}
 
 	/** Picks a totem from the list (for tests, and for the mouse). */
@@ -158,10 +178,8 @@ public class TotemTravelScreen extends Screen {
 		int y = this.top();
 		// the left page: where you stand, and where you can go
 		this.centred(g, this.title, x, y, INK);
-		Component here = this.from.isPresent() ? Component.translatable("neothaum.totem.screen.here", this.fromName)
-			: Component.translatable("neothaum.compass.screen.here");
 		int hy = y + 12;
-		for (FormattedCharSequence line : this.font.split(here, TEXT_W)) {
+		for (FormattedCharSequence line : this.heading()) {
 			g.text(this.font, line, x + (TEXT_W - this.font.width(line)) / 2, hy, FADED, false);
 			hy += 10;
 		}
@@ -169,10 +187,12 @@ public class TotemTravelScreen extends Screen {
 			this.centred(g, Component.translatable("neothaum.totem.screen.none"), x, y + 60, FADED);
 		}
 		int hover = this.rowAt(mouseX, mouseY);
-		int start = this.page * PER_PAGE;
-		for (int i = start; i < Math.min(this.destinations.size(), start + PER_PAGE); i++) {
+		int per = this.perPage();
+		int top = this.listTop();
+		int start = this.page * per;
+		for (int i = start; i < Math.min(this.destinations.size(), start + per); i++) {
 			TravellersTotems.Destination d = this.destinations.get(i);
-			int ry = y + 38 + (i - start) * ROW;
+			int ry = y + top + (i - start) * ROW;
 			if (i == this.selected || i == hover) {
 				g.fill(RenderPipelines.GUI, x - 2, ry - 2, x + TEXT_W + 2, ry + ROW - 3, i == this.selected ? 0x609A6AE0 : 0x309A6AE0);
 			}
