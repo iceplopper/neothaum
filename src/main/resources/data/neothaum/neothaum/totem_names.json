@@ -435,7 +435,8 @@
    "word": "villa",
    "gender": "f",
    "features": [
-    "village"
+    "village",
+    "homestead"
    ]
   },
   {
@@ -456,7 +457,8 @@
    "word": "praedium",
    "gender": "n",
    "features": [
-    "village"
+    "village",
+    "homestead"
    ]
   },
   {
@@ -470,14 +472,16 @@
    "word": "domicilium",
    "gender": "n",
    "features": [
-    "village"
+    "village",
+    "homestead"
    ]
   },
   {
    "word": "sedes",
    "gender": "f",
    "features": [
-    "village"
+    "village",
+    "homestead"
    ]
   },
   {
@@ -498,7 +502,8 @@
    "word": "tectum",
    "gender": "n",
    "features": [
-    "village"
+    "village",
+    "homestead"
    ]
   },
   {
@@ -1114,7 +1119,8 @@
    "word": "casa",
    "gender": "f",
    "features": [
-    "abandoned_village"
+    "abandoned_village",
+    "homestead"
    ]
   },
   {
@@ -1122,6 +1128,27 @@
    "gender": "n",
    "features": [
     "abandoned_village"
+   ]
+  },
+  {
+   "word": "domus",
+   "gender": "f",
+   "features": [
+    "homestead"
+   ]
+  },
+  {
+   "word": "aedificium",
+   "gender": "n",
+   "features": [
+    "homestead"
+   ]
+  },
+  {
+   "word": "habitaculum",
+   "gender": "n",
+   "features": [
+    "homestead"
    ]
   },
   {
@@ -6944,6 +6971,38 @@
    ]
   },
   {
+   "m": "domesticus",
+   "f": "domestica",
+   "n": "domesticum",
+   "features": [
+    "homestead"
+   ]
+  },
+  {
+   "m": "familiaris",
+   "f": "familiaris",
+   "n": "familiare",
+   "features": [
+    "homestead"
+   ]
+  },
+  {
+   "m": "privatus",
+   "f": "privata",
+   "n": "privatum",
+   "features": [
+    "homestead"
+   ]
+  },
+  {
+   "m": "proprius",
+   "f": "propria",
+   "n": "proprium",
+   "features": [
+    "homestead"
+   ]
+  },
+  {
    "m": "secretus",
    "f": "secreta",
    "n": "secretum",
@@ -9357,7 +9416,8 @@
    "crossroads",
    "boundary",
    "outpost",
-   "tower"
+   "tower",
+   "homestead"
   ],
   "old": [
    "ruins",

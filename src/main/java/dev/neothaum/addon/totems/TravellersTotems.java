@@ -148,10 +148,10 @@ public final class TravellersTotems {
 	}
 
 	/** Client to server: give this totem a name, or ({@code restore}) the Latin name its surroundings give it. */
-	public record Rename(GlobalPos pos, String name, boolean restore) implements CustomPacketPayload {
+	public record Rename(GlobalPos pos, String name, boolean restore, boolean reroll) implements CustomPacketPayload {
 		public static final Type<Rename> TYPE = new Type<>(NeoThaum.id("totem_rename"));
 		public static final StreamCodec<ByteBuf, Rename> CODEC = StreamCodec.composite(GlobalPos.STREAM_CODEC, Rename::pos,
-			ByteBufCodecs.STRING_UTF8, Rename::name, ByteBufCodecs.BOOL, Rename::restore, Rename::new);
+			ByteBufCodecs.STRING_UTF8, Rename::name, ByteBufCodecs.BOOL, Rename::restore, ByteBufCodecs.BOOL, Rename::reroll, Rename::new);
 
 		@Override
 		public Type<Rename> type() {
@@ -193,7 +193,7 @@ public final class TravellersTotems {
 		PayloadTypeRegistry.serverboundPlay().register(TravelTo.TYPE, TravelTo.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(OpenRename.TYPE, OpenRename.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(Rename.TYPE, Rename.CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(Rename.TYPE, (p, ctx) -> TotemBlock.rename(ctx.player(), p.pos(), p.name(), p.restore()));
+		ServerPlayNetworking.registerGlobalReceiver(Rename.TYPE, (p, ctx) -> TotemBlock.rename(ctx.player(), p.pos(), p.name(), p.restore(), p.reroll()));
 		ServerPlayNetworking.registerGlobalReceiver(TravelTo.TYPE, (p, ctx) -> TotemTravel.request(ctx.player(), p.target(), p.compass()));
 		TotemTravel.init();
 		TotemMarks.init();

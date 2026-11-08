@@ -53,18 +53,26 @@ public class TotemRenameScreen extends Screen {
 		this.setInitialFocus(this.box);
 		int y = this.slabY() + 78;
 		this.addRenderableWidget(Button.builder(Component.translatable("neothaum.totem.rename.done"), b -> this.done(false))
-			.bounds(this.width / 2 - 100, y, 64, 20).build());
+			.bounds(this.width / 2 - 100, y, 48, 20).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("neothaum.totem.rename.restore"), b -> this.done(true))
-			.bounds(this.width / 2 - 32, y, 132, 20).build());
+			.bounds(this.width / 2 - 50, y, 74, 20).build());
+		// another name from the same surroundings; the screen comes back with it, to keep or draw again
+		this.addRenderableWidget(Button.builder(Component.translatable("neothaum.totem.rename.reroll"), b -> this.reroll())
+			.bounds(this.width / 2 + 26, y, 74, 20).build());
 	}
 
 	/** Sends the name (or asks for the totem's own), and closes. */
 	public void done(boolean restore) {
 		String name = this.box.getValue().strip();
 		if (restore || !name.isEmpty() && !name.equals(this.current)) {
-			ClientPlayNetworking.send(new TravellersTotems.Rename(this.pos, name, restore));
+			ClientPlayNetworking.send(new TravellersTotems.Rename(this.pos, name, restore, false));
 		}
 		this.onClose();
+	}
+
+	/** Asks for another name from the totem's surroundings; the server renames it and opens this screen again on the new name. */
+	public void reroll() {
+		ClientPlayNetworking.send(new TravellersTotems.Rename(this.pos, "", false, true));
 	}
 
 	/** The name being typed, for tests. */

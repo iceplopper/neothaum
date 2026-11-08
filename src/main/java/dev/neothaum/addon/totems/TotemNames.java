@@ -118,11 +118,17 @@ public final class TotemNames {
 	 * choice is seeded by the totem's place, so a totem keeps its name however often it is worked out. A name in use gets a numeral.
 	 */
 	public static String name(ServerLevel level, BlockPos pos, Predicate<String> taken) {
+		return name(level, pos, taken, 0L);
+	}
+
+	/** A name as above, from another draw: the same surroundings weighed the same way, but other choices among them (the rename screen's
+	 * "Another name"). Draw 0 is the totem's own name. */
+	public static String name(ServerLevel level, BlockPos pos, Predicate<String> taken, long draw) {
 		Map<String, Float> raw = survey(level, pos);
 		Map<String, Float> scores = new HashMap<>();
 		raw.forEach((f, v) -> scores.put(f, v * significance(f)));
 		Map<String, Float> near = nearby(level, pos);
-		RandomSource rand = RandomSource.create(pos.asLong() ^ level.getSeed());
+		RandomSource rand = RandomSource.create(pos.asLong() ^ level.getSeed() ^ draw * 0x9E3779B97F4A7C15L);
 		List<String> ranked = new ArrayList<>(scores.keySet());
 		// highest first; equal scores in a random order
 		java.util.Collections.shuffle(ranked, new java.util.Random(rand.nextLong()));
@@ -349,7 +355,7 @@ public final class TotemNames {
 	 */
 	private static float significance(String f) {
 		return switch (f) {
-			case "village", "harbour", "outpost", "temple", "ruins", "barrow", "altar", "tower", "abandoned_village", "aura_node", "island",
+			case "village", "homestead", "harbour", "outpost", "temple", "ruins", "barrow", "altar", "tower", "abandoned_village", "aura_node", "island",
 				 "peninsula", "headland", "summit", "cliff", "crag", "spring", "oasis", "lake", "ford", "wide_river", "enclosed_valley", "cave",
 				 "lush_caves", "deep_dark", "dripstone", "taint", "eerie", "magical_forest", "silverwood", "mangrove", "cherry", "pale_garden",
 				 "mushrooms", "amethyst", "lava", "gold", "bees", "blue_ice", "packed_ice", "crossroads", "infused_stone", "bay" -> 2.0F;
@@ -748,9 +754,15 @@ public final class TotemNames {
 		} else if (many == 2) {
 			add(s, "boundary", columns * 0.2F);
 		}
-		blocks(s, level, centre);
+		int built = blocks(s, level, centre);
 		creatures(s, level, centre);
 		structures(s, level, centre);
+		// a house or a base a player has built: only where there is no village (its structure close by, or villagers about), so a village's
+		// own houses are never taken for one
+		if (built > 40 && s.getOrDefault("village", 0F) <= 0 && s.getOrDefault("abandoned_village", 0F) <= 0
+			&& s.getOrDefault("harbour", 0F) <= 0) {
+			add(s, "homestead", built / 4.0F);
+		}
 		add(s, "nothing", 0.5F);
 		return s;
 	}
@@ -902,7 +914,7 @@ public final class TotemNames {
 	}
 
 	/** Blocks near the totem itself: ores, stone, crystals, nodes, taint, caves, lava, altars. */
-	private static void blocks(Map<String, Float> s, ServerLevel level, BlockPos centre) {
+	private static int blocks(Map<String, Float> s, ServerLevel level, BlockPos centre) {
 		int caveAir = 0;
 		int built = 0;
 		for (BlockPos p : BlockPos.betweenClosed(centre.offset(-16, -12, -16), centre.offset(16, 12, 16))) {
@@ -961,10 +973,7 @@ public final class TotemNames {
 		if (caveAir > 120) {
 			add(s, "cave", caveAir / 30.0F);
 		}
-		// a house or a base: enough building round the totem makes it a settlement, as a village is
-		if (built > 40) {
-			add(s, "village", built / 4.0F);
-		}
+		return built;
 	}
 
 	/** Whether a block is one players build houses with (planks, bricks, glass, doors, beds, wool, worked stone). */

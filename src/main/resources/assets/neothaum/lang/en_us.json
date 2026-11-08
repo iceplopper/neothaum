@@ -2378,6 +2378,7 @@
   "neothaum.totem.rename.title": "What is this stone called?",
   "neothaum.totem.rename.done": "Name it",
   "neothaum.totem.rename.restore": "Its own name",
+  "neothaum.totem.rename.reroll": "Another name",
   "block.neothaum.arcane_campfire": "Arcane Campfire",
   "tc.research_name.ARCANECAMPFIRE": "Arcane Campfire",
   "tc.research_text.ARCANECAMPFIRE": "[NeoThaum Addition] A fire that never tires",

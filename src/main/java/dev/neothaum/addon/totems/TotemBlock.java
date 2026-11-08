@@ -201,6 +201,14 @@ public class TotemBlock extends BaseEntityBlock {
 
 	/** A name from the naming screen: for someone who knows the totem and stands near it. {@code restore} gives back its own Latin name. */
 	public static void rename(ServerPlayer sp, GlobalPos gp, String name, boolean restore) {
+		rename(sp, gp, name, restore, false);
+	}
+
+	/**
+	 * Renames a totem for a player who knows it: to the name typed, to its own name ({@code restore}), or to another name drawn from its
+	 * surroundings ({@code reroll}), after which the rename screen opens again on the new name, to keep or draw again.
+	 */
+	public static void rename(ServerPlayer sp, GlobalPos gp, String name, boolean restore, boolean reroll) {
 		if (!TravellersTotems.enabled() || gp.dimension() != sp.level().dimension() || gp.pos().distToCenterSqr(sp.position()) > 64
 			|| !(sp.level().getBlockEntity(gp.pos()) instanceof TotemBlockEntity totem)) {
 			return;
@@ -211,7 +219,14 @@ public class TotemBlock extends BaseEntityBlock {
 		}
 		TotemData data = TotemData.get(sp.level().getServer());
 		String chosen;
-		if (restore) {
+		if (reroll) {
+			// draws until one differs from the name it has
+			chosen = totem.name;
+			for (int i = 0; i < 12 && chosen.equals(totem.name); i++) {
+				chosen = TotemNames.name((ServerLevel) sp.level(), gp.pos(), n -> !n.equals(totem.name) && data.nameTaken(n),
+					sp.getRandom().nextLong() | 1L);
+			}
+		} else if (restore) {
 			chosen = TotemNames.name((ServerLevel) sp.level(), gp.pos(), n -> !n.equals(totem.name) && data.nameTaken(n));
 		} else {
 			chosen = name.strip();
@@ -226,6 +241,9 @@ public class TotemBlock extends BaseEntityBlock {
 		data.put(new TotemData.Totem(gp, chosen, totem.isHome()));
 		totem.markForUpdate();
 		sp.sendSystemMessage(Component.translatable("neothaum.totem.renamed", chosen).withStyle(ChatFormatting.DARK_PURPLE));
+		if (reroll) {
+			net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.send(sp, new TravellersTotems.OpenRename(gp, chosen));
+		}
 	}
 
 	private static void saveToCompass(ServerPlayer sp, ItemStack compass, TotemBlockEntity totem, boolean knows) {
