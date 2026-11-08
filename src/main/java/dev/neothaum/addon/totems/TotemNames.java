@@ -446,8 +446,15 @@ public final class TotemNames {
 			case "near_altar", "near_campfire" -> 15;
 			case "near_bees", "near_diamond", "near_emerald" -> 10;
 			case "near_lava", "near_waterfall", "near_gold", "near_amethyst" -> 3;
-			case "near_coal", "near_copper", "near_iron", "near_redstone", "near_lapis", "near_obsidian", "near_light", "near_hay",
+			case "near_coal", "near_copper", "near_iron", "near_redstone", "near_lapis", "near_obsidian", "near_hay",
 				 "near_bones", "near_pumpkin", "near_melon", "near_cactus", "near_berries" -> 2.5F;
+			// what players build: a beacon is enough alone; the rest must be there in some number to count
+			case "near_beacon" -> 40;
+			case "near_furnace", "near_anvil", "near_cauldron", "near_banners", "near_workshop" -> 2.5F;
+			case "near_beds", "near_chests", "near_alchemy" -> 1.5F;
+			case "near_light", "near_books" -> 1.0F;
+			case "near_fences", "near_farmland" -> 0.4F;
+			case "near_walls", "near_glass" -> 0.15F;
 			case "near_poppy", "near_dandelion", "near_cornflower", "near_lily", "near_allium", "near_orchid", "near_daisy", "near_rose",
 				 "near_peony", "near_sunflower", "near_flowers", "near_mushroom", "near_coral", "near_lily_pad" -> 2;
 			case "near_water", "near_kelp", "near_bamboo", "near_sugar_cane", "near_moss", "near_boulder", "near_taint" -> 0.4F;
@@ -533,6 +540,37 @@ public final class TotemNames {
 			case "aura_node", "energized_aura_node" -> "near_aura_node";
 			case "obsidian_totem", "charged_obsidian_totem", "eldritch_altar", "eldritch_obelisk" -> "near_altar";
 			case "crusted_taint", "tainted_soil", "taint_fibres", "flesh_block" -> "near_taint";
+			default -> built(id);
+		};
+	}
+
+	/** Blocks players build with, for a landmark when there are enough of them: fences, farmland, furnaces, a beacon, bookshelves. */
+	private static String built(String id) {
+		if (id.endsWith("_fence") || id.endsWith("_fence_gate")) {
+			return "near_fences";
+		}
+		if (id.endsWith("_wall") || id.endsWith("bricks") || id.endsWith("brick_stairs") || id.endsWith("brick_slab")) {
+			return "near_walls";
+		}
+		if (id.endsWith("_banner") || id.endsWith("_wall_banner")) {
+			return "near_banners";
+		}
+		if (id.endsWith("_bed")) {
+			return "near_beds";
+		}
+		if (id.contains("glass")) {
+			return "near_glass";
+		}
+		return switch (id) {
+			case "farmland" -> "near_farmland";
+			case "furnace", "blast_furnace", "smoker", "arcane_furnace", "alchemical_furnace", "advanced_alchemical_furnace" -> "near_furnace";
+			case "beacon" -> "near_beacon";
+			case "bookshelf", "chiseled_bookshelf", "lectern", "enchanting_table", "research_table" -> "near_books";
+			case "anvil", "chipped_anvil", "damaged_anvil", "smithing_table", "grindstone" -> "near_anvil";
+			case "cauldron", "water_cauldron", "lava_cauldron", "powder_snow_cauldron", "brewing_stand" -> "near_cauldron";
+			case "crucible", "arcane_alembic", "warded_jar", "void_jar", "essentia_reservoir", "thaumatorium" -> "near_alchemy";
+			case "chest", "trapped_chest", "barrel", "hungry_chest" -> "near_chests";
+			case "crafting_table", "arcane_worktable", "table", "stonecutter", "loom", "cartography_table", "fletching_table" -> "near_workshop";
 			default -> null;
 		};
 	}
@@ -866,6 +904,7 @@ public final class TotemNames {
 	/** Blocks near the totem itself: ores, stone, crystals, nodes, taint, caves, lava, altars. */
 	private static void blocks(Map<String, Float> s, ServerLevel level, BlockPos centre) {
 		int caveAir = 0;
+		int built = 0;
 		for (BlockPos p : BlockPos.betweenClosed(centre.offset(-16, -12, -16), centre.offset(16, 12, 16))) {
 			if ((p.getX() + p.getY() + p.getZ()) % 2 != 0 || !level.hasChunk(p.getX() >> 4, p.getZ() >> 4)) {
 				continue;
@@ -879,6 +918,9 @@ public final class TotemNames {
 					caveAir++;
 				}
 				continue;
+			}
+			if (isBuilt(b, path)) {
+				built++;
 			}
 			if (k == Blocks.IRON_ORE || k == Blocks.DEEPSLATE_IRON_ORE || k == Blocks.RAW_IRON_BLOCK) {
 				add(s, "iron", 2);
@@ -919,6 +961,18 @@ public final class TotemNames {
 		if (caveAir > 120) {
 			add(s, "cave", caveAir / 30.0F);
 		}
+		// a house or a base: enough building round the totem makes it a settlement, as a village is
+		if (built > 40) {
+			add(s, "village", built / 4.0F);
+		}
+	}
+
+	/** Whether a block is one players build houses with (planks, bricks, glass, doors, beds, wool, worked stone). */
+	private static boolean isBuilt(BlockState b, String path) {
+		return b.is(BlockTags.PLANKS) || b.is(BlockTags.WOODEN_STAIRS) || b.is(BlockTags.WOODEN_SLABS) || b.is(BlockTags.DOORS)
+			|| b.is(BlockTags.BEDS) || b.is(BlockTags.WOOL) || b.is(BlockTags.STONE_BRICKS) || path.contains("glass") || path.endsWith("bricks")
+			|| path.startsWith("polished_") || path.endsWith("_fence") || path.equals("crafting_table") || path.equals("furnace")
+			|| path.equals("chest") || path.equals("bookshelf");
 	}
 
 	private static void creatures(Map<String, Float> s, ServerLevel level, BlockPos centre) {

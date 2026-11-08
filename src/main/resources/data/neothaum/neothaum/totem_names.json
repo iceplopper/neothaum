@@ -9009,6 +9009,240 @@
    "features": [
     "near_fish"
    ]
+  },
+  {
+   "phrase": "inter Saepes",
+   "features": [
+    "near_fences"
+   ]
+  },
+  {
+   "phrase": "Saepium",
+   "features": [
+    "near_fences"
+   ]
+  },
+  {
+   "phrase": "ad Saepem",
+   "features": [
+    "near_fences"
+   ]
+  },
+  {
+   "phrase": "inter Muros",
+   "features": [
+    "near_walls"
+   ]
+  },
+  {
+   "phrase": "Murorum",
+   "features": [
+    "near_walls"
+   ]
+  },
+  {
+   "phrase": "ad Murum",
+   "features": [
+    "near_walls"
+   ]
+  },
+  {
+   "phrase": "inter Segetes",
+   "features": [
+    "near_farmland"
+   ]
+  },
+  {
+   "phrase": "Segetum",
+   "features": [
+    "near_farmland"
+   ]
+  },
+  {
+   "phrase": "ad Segetes",
+   "features": [
+    "near_farmland"
+   ]
+  },
+  {
+   "phrase": "ad Fornacem",
+   "features": [
+    "near_furnace"
+   ]
+  },
+  {
+   "phrase": "Fornacum",
+   "features": [
+    "near_furnace"
+   ]
+  },
+  {
+   "phrase": "ad Caminum",
+   "features": [
+    "near_furnace"
+   ]
+  },
+  {
+   "phrase": "ad Pharum",
+   "features": [
+    "near_beacon"
+   ]
+  },
+  {
+   "phrase": "Phari",
+   "features": [
+    "near_beacon"
+   ]
+  },
+  {
+   "phrase": "sub Pharo",
+   "features": [
+    "near_beacon"
+   ]
+  },
+  {
+   "phrase": "Librorum",
+   "features": [
+    "near_books"
+   ]
+  },
+  {
+   "phrase": "inter Libros",
+   "features": [
+    "near_books"
+   ]
+  },
+  {
+   "phrase": "ad Bibliothecam",
+   "features": [
+    "near_books"
+   ]
+  },
+  {
+   "phrase": "ad Incudem",
+   "features": [
+    "near_anvil"
+   ]
+  },
+  {
+   "phrase": "Incudum",
+   "features": [
+    "near_anvil"
+   ]
+  },
+  {
+   "phrase": "ad Ahenum",
+   "features": [
+    "near_cauldron"
+   ]
+  },
+  {
+   "phrase": "Ahenorum",
+   "features": [
+    "near_cauldron"
+   ]
+  },
+  {
+   "phrase": "inter Vasa",
+   "features": [
+    "near_alchemy"
+   ]
+  },
+  {
+   "phrase": "Vasorum",
+   "features": [
+    "near_alchemy"
+   ]
+  },
+  {
+   "phrase": "ad Crucibulum",
+   "features": [
+    "near_alchemy"
+   ]
+  },
+  {
+   "phrase": "Vexillorum",
+   "features": [
+    "near_banners"
+   ]
+  },
+  {
+   "phrase": "sub Vexillis",
+   "features": [
+    "near_banners"
+   ]
+  },
+  {
+   "phrase": "inter Vexilla",
+   "features": [
+    "near_banners"
+   ]
+  },
+  {
+   "phrase": "Arcarum",
+   "features": [
+    "near_chests"
+   ]
+  },
+  {
+   "phrase": "ad Arcas",
+   "features": [
+    "near_chests"
+   ]
+  },
+  {
+   "phrase": "Horreorum",
+   "features": [
+    "near_chests"
+   ]
+  },
+  {
+   "phrase": "Lectorum",
+   "features": [
+    "near_beds"
+   ]
+  },
+  {
+   "phrase": "ad Lectos",
+   "features": [
+    "near_beds"
+   ]
+  },
+  {
+   "phrase": "Officinae",
+   "features": [
+    "near_workshop"
+   ]
+  },
+  {
+   "phrase": "ad Officinam",
+   "features": [
+    "near_workshop"
+   ]
+  },
+  {
+   "phrase": "Fabrorum",
+   "features": [
+    "near_workshop"
+   ]
+  },
+  {
+   "phrase": "Vitri",
+   "features": [
+    "near_glass"
+   ]
+  },
+  {
+   "phrase": "ad Vitrum",
+   "features": [
+    "near_glass"
+   ]
+  },
+  {
+   "phrase": "Vitrorum",
+   "features": [
+    "near_glass"
+   ]
   }
  ],
  "families": {
@@ -9105,7 +9339,9 @@
    "grass",
    "flowers",
    "farmland",
-   "pasture"
+   "pasture",
+   "near_farmland",
+   "near_fences"
   ],
   "caves": [
    "cave",
@@ -9129,7 +9365,8 @@
    "temple",
    "altar",
    "near_altar",
-   "near_bones"
+   "near_bones",
+   "near_walls"
   ],
   "stone": [
    "stone",
@@ -9143,7 +9380,8 @@
   "fire": [
    "lava",
    "near_lava",
-   "near_campfire"
+   "near_campfire",
+   "near_furnace"
   ],
   "metal": [
    "iron",
