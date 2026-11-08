@@ -127,12 +127,37 @@ public final class TotemNames {
 		// highest first; equal scores in a random order
 		java.util.Collections.shuffle(ranked, new java.util.Random(rand.nextLong()));
 		ranked.sort(Comparator.comparing((String f) -> -scores.get(f)));
-		// the place: one of the two most significant features that has a place word
+		// the place: one of the two most significant features that has a place word. What the biome is (by its name and kind) only names the
+		// place when nothing else defines it: a village, a summit, a lake or a cliff in a forest is named for itself, not for the forest.
+		java.util.Set<String> biome = biomeFeatures(level, pos);
+		boolean defined = ranked.stream().anyMatch(f -> !biome.contains(f) && scores.get(f) >= DEFINING && significance(f) >= 1.0F
+			&& PLACES.stream().anyMatch(p -> p.features().contains(f)));
 		List<String> candidates = new ArrayList<>();
 		for (String f : ranked) {
-			if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
-				candidates.add(f);
-				if (candidates.size() == 2) {
+			boolean fromBiome = biome.contains(f);
+			if (defined ? !fromBiome && significance(f) >= 1.0F : fromBiome) {
+				if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
+					candidates.add(f);
+					if (candidates.size() == 2) {
+						break;
+					}
+				}
+			}
+		}
+		// the biome's own word where the survey found too little of it to rank (a modded biome named for what it is)
+		if (candidates.isEmpty()) {
+			for (String f : biome) {
+				if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
+					candidates.add(f);
+					scores.merge(f, 1.0F, Math::max);
+				}
+			}
+			candidates.sort(Comparator.naturalOrder());
+		}
+		if (candidates.isEmpty()) {
+			for (String f : ranked) {
+				if (PLACES.stream().anyMatch(p -> p.features().contains(f))) {
+					candidates.add(f);
 					break;
 				}
 			}
@@ -192,6 +217,72 @@ public final class TotemNames {
 			name = base + " " + roman(n);
 		}
 		return name;
+	}
+
+	/** How significant a feature must be (its score, weighed) to define a place by itself, ahead of its biome. */
+	private static final float DEFINING = 30.0F;
+
+	/**
+	 * What the biome the totem stands in is, as features: from its name (so modded biomes count: "rocky_mountains", "marsh", "volcanic_crater")
+	 * and from its kind (its tags). Used to name a place that has nothing more defining.
+	 */
+	static java.util.Set<String> biomeFeatures(ServerLevel level, BlockPos pos) {
+		java.util.Set<String> out = new java.util.LinkedHashSet<>();
+		Holder<Biome> b = level.getBiome(pos);
+		String id = b.unwrapKey().map(k -> k.identifier().getPath()).orElse("");
+		String[][] words = {
+			{"village", "village"}, {"cherry", "cherry"}, {"pale_garden", "pale_garden"}, {"birch", "birch"}, {"dark_forest", "dark_forest"},
+			{"mangrove", "mangrove"}, {"magical", "magical_forest"}, {"taint", "taint"}, {"eerie", "eerie"}, {"mushroom", "mushrooms"},
+			{"flower", "flowers"}, {"meadow", "meadow"}, {"heath", "meadow"}, {"moor", "meadow"}, {"prairie", "plains"}, {"steppe", "savanna"},
+			{"savanna", "savanna"}, {"shrubland", "thicket"}, {"scrub", "thicket"}, {"bush", "thicket"}, {"plains", "plains"}, {"field", "plains"},
+			{"jungle", "jungle"}, {"rainforest", "jungle"}, {"bamboo", "jungle"}, {"taiga", "taiga"}, {"conifer", "taiga"}, {"pine", "taiga"},
+			{"grove", "grove"}, {"orchard", "grove"}, {"woodland", "forest"}, {"forest", "forest"}, {"wood", "forest"},
+			{"swamp", "swamp"}, {"marsh", "swamp"}, {"bog", "bog"}, {"fen", "bog"}, {"wetland", "swamp"}, {"bayou", "swamp"},
+			{"desert", "desert"}, {"dune", "desert"}, {"badlands", "red_sand"}, {"mesa", "red_sand"}, {"canyon", "valley"}, {"valley", "valley"},
+			{"gorge", "enclosed_valley"}, {"ravine", "enclosed_valley"}, {"peak", "summit"}, {"summit", "summit"}, {"crag", "crag"},
+			{"cliff", "cliff"}, {"mountain", "mountain"}, {"alps", "mountain"}, {"highland", "high"}, {"plateau", "high"}, {"hill", "hill"},
+			{"slope", "slope"}, {"tundra", "snow"}, {"snow", "snow"}, {"frozen", "ice"}, {"ice", "ice"}, {"glacier", "ice"}, {"volcan", "lava"},
+			{"crater", "lava"}, {"lava", "lava"}, {"beach", "beach"}, {"shore", "shore"}, {"coast", "shore"}, {"island", "island"},
+			{"deep_ocean", "deep_ocean"}, {"warm_ocean", "warm_ocean"}, {"ocean", "ocean"}, {"sea", "ocean"}, {"lake", "lake"},
+			{"river", "river"}, {"stream", "stream"}, {"cave", "cave"}, {"cavern", "cave"}, {"dripstone", "dripstone"}, {"lush", "lush_caves"},
+			{"deep_dark", "deep_dark"}, {"stony", "stone"}, {"rocky", "stone"}, {"windswept", "windswept"}};
+		for (String[] w : words) {
+			if (id.contains(w[0])) {
+				out.add(w[1]);
+			}
+		}
+		// and by kind, for names that say nothing
+		if (b.is(BiomeTags.IS_OCEAN)) {
+			out.add("ocean");
+		}
+		if (b.is(BiomeTags.IS_RIVER)) {
+			out.add("river");
+		}
+		if (b.is(BiomeTags.IS_FOREST)) {
+			out.add("forest");
+		}
+		if (b.is(BiomeTags.IS_TAIGA)) {
+			out.add("taiga");
+		}
+		if (b.is(BiomeTags.IS_JUNGLE)) {
+			out.add("jungle");
+		}
+		if (b.is(BiomeTags.IS_SAVANNA)) {
+			out.add("savanna");
+		}
+		if (b.is(BiomeTags.IS_BADLANDS)) {
+			out.add("red_sand");
+		}
+		if (b.is(BiomeTags.IS_MOUNTAIN)) {
+			out.add("mountain");
+		}
+		if (b.is(BiomeTags.IS_BEACH)) {
+			out.add("beach");
+		}
+		if (b.is(BiomeTags.IS_HILL)) {
+			out.add("hill");
+		}
+		return out;
 	}
 
 	/** How much a landmark must score to be named; and to be named in three words. */
