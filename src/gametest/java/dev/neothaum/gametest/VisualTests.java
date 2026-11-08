@@ -1060,6 +1060,144 @@ public class VisualTests implements FabricClientGameTest {
 		});
 	}
 
+	/**
+	 * The totems' screens, driven as a player would: the travel list (long names, totems in the Nether and the End, the home button with a
+	 * home and without), and the naming screen opened by sneaking and using a totem, "Another name" clicked with the mouse, closed with
+	 * Escape, and opened again the same way.
+	 */
+	private static void totemScreensScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode survival @a", "time set noon", "weather clear", "fill -12 116 -12 12 124 12 air",
+			"fill -12 115 -12 12 115 12 grass_block", "clear @a", "neothaum additions travellers_totems enable", "tp @a 0.5 116 2.5 180 20"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var data = dev.neothaum.addon.totems.TotemData.get(srv);
+			var known = dev.neothaum.addon.totems.TravellersTotems.Known.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE,
+				com.google.gson.JsonParser.parseString("{\"learned\":[]}")).getOrThrow();
+			level.setBlock(new net.minecraft.core.BlockPos(0, 116, 0), dev.neothaum.addon.totems.TravellersTotems.TOTEM.defaultBlockState(), 3);
+			Object[][] totems = {
+				{net.minecraft.world.level.Level.OVERWORLD, 300, 70, 40, "Collis Herbosus ad Campanam", false},
+				{net.minecraft.world.level.Level.OVERWORLD, -900, 64, 200, "Fons Luporum", false},
+				{net.minecraft.world.level.Level.NETHER, 40, 70, 12, "Fornax Flammarum", false},
+				{net.minecraft.world.level.Level.END, 100, 60, 0, "Insula Nigra", false},
+				{net.minecraft.world.level.Level.OVERWORLD, 50, 70, -60, "Domus Mea", true}};
+			for (Object[] o : totems) {
+				@SuppressWarnings("unchecked")
+				var dim = (net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>) o[0];
+				var gp = net.minecraft.core.GlobalPos.of(dim, new net.minecraft.core.BlockPos((int) o[1], (int) o[2], (int) o[3]));
+				data.put(new dev.neothaum.addon.totems.TotemData.Totem(gp, (String) o[4], (boolean) o[5]));
+				known = (boolean) o[5] ? known.withHome(java.util.Optional.of(gp)) : known.learn(gp);
+			}
+			p.setAttached(dev.neothaum.addon.totems.TravellersTotems.KNOWN, known);
+		});
+		ctx.waitTicks(40);
+		// the totem here has named itself by now; learn it too, so it can be renamed
+		server.runOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var gp = net.minecraft.core.GlobalPos.of(level.dimension(), new net.minecraft.core.BlockPos(0, 116, 0));
+			p.setAttached(dev.neothaum.addon.totems.TravellersTotems.KNOWN, p.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN).learn(gp));
+			dev.neothaum.addon.totems.TotemTravel.openList(p, java.util.Optional.empty());
+		});
+		ctx.waitTicks(10);
+		shot(ctx, "totemscreens_list");
+		ctx.runOnClient(mc -> {
+			if (mc.gui.screen() instanceof dev.neothaum.client.addon.TotemTravelScreen s) {
+				s.pickHome();
+			}
+		});
+		ctx.waitTicks(3);
+		shot(ctx, "totemscreens_home_picked");
+		ctx.runOnClient(mc -> {
+			if (mc.gui.screen() instanceof dev.neothaum.client.addon.TotemTravelScreen s) {
+				s.select(1);
+			}
+		});
+		ctx.waitTicks(3);
+		shot(ctx, "totemscreens_nether_picked");
+		// no home: the button greys
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			p.setAttached(dev.neothaum.addon.totems.TravellersTotems.KNOWN,
+				p.getAttachedOrCreate(dev.neothaum.addon.totems.TravellersTotems.KNOWN).withHome(java.util.Optional.empty()));
+		});
+		ctx.waitTicks(5);
+		server.runOnServer(srv -> dev.neothaum.addon.totems.TotemTravel.openList(srv.getPlayerList().getPlayers().get(0), java.util.Optional.empty()));
+		ctx.waitTicks(10);
+		shot(ctx, "totemscreens_no_home");
+		ctx.runOnClient(mc -> mc.gui.setScreen(null));
+		ctx.waitTicks(5);
+		// the naming screen, as a player opens it: sneak and use the totem
+		ctx.getInput().lookAt(new net.minecraft.core.BlockPos(0, 116, 0));
+		ctx.waitTicks(3);
+		ctx.getInput().holdKey(options -> options.keyShift);
+		ctx.waitTicks(3);
+		ctx.getInput().pressKey(options -> options.keyUse);
+		ctx.waitTicks(10);
+		ctx.getInput().releaseKey(options -> options.keyShift);
+		String first = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+		String before = server.computeOnServer(srv -> ((dev.neothaum.addon.totems.TotemBlockEntity) srv.overworld()
+			.getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0))).name);
+		// "Another name", clicked with the mouse
+		double[] at = new double[2];
+		ctx.runOnClient(mc -> {
+			var s = mc.gui.screen();
+			if (s != null) {
+				double scale = mc.getWindow().getGuiScale();
+				at[0] = (s.width / 2.0 + 26 + 37) * scale;
+				at[1] = (s.height / 2.0 - 50 + 78 + 10) * scale;
+			}
+		});
+		ctx.getInput().setCursorPos(at[0], at[1]);
+		ctx.waitTicks(2);
+		// the test's mouse doesn't reach screens: a click through the screen's own handling, press then release, as a player's
+		ctx.runOnClient(mc -> {
+			var s = mc.gui.screen();
+			if (s != null) {
+				var click = new net.minecraft.client.input.MouseButtonEvent(s.width / 2.0 + 26 + 37, s.height / 2.0 - 50 + 78 + 10,
+					new net.minecraft.client.input.MouseButtonInfo(1, 0));
+				s.mouseClicked(click, false);
+				s.mouseReleased(click);
+			}
+		});
+		ctx.waitTicks(15);
+		String after = server.computeOnServer(srv -> ((dev.neothaum.addon.totems.TotemBlockEntity) srv.overworld()
+			.getBlockEntity(new net.minecraft.core.BlockPos(0, 116, 0))).name);
+		String shown = ctx.computeOnClient(mc -> mc.gui.screen() instanceof dev.neothaum.client.addon.TotemRenameScreen s ? s.typed() : "no screen");
+		shot(ctx, "totemscreens_rerolled");
+		// Escape, through the screen's own key handling
+		ctx.runOnClient(mc -> {
+			var s = mc.gui.screen();
+			if (s != null) {
+				boolean handled = s.keyPressed(new net.minecraft.client.input.KeyEvent(41, 41, 0));
+				NeoThaum.LOGGER.info("[visual-test] totemscreens: escape on {} handled {} -> now {}", System.identityHashCode(s), handled,
+					mc.gui.screen() == null ? "none" : System.identityHashCode(mc.gui.screen()));
+			}
+		});
+		for (int i = 0; i < 10; i++) {
+			ctx.waitTicks(1);
+			ctx.runOnClient(mc -> NeoThaum.LOGGER.info("[visual-test] totemscreens: tick after escape: {}",
+				mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName() + "@" + System.identityHashCode(mc.gui.screen())));
+		}
+		ctx.waitTicks(10);
+		String closed = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+		// and open it again the same way
+		ctx.getInput().holdKey(options -> options.keyShift);
+		ctx.waitTicks(3);
+		ctx.getInput().pressKey(options -> options.keyUse);
+		ctx.waitTicks(10);
+		ctx.getInput().releaseKey(options -> options.keyShift);
+		String again = ctx.computeOnClient(mc -> mc.gui.screen() == null ? "none" : mc.gui.screen().getClass().getSimpleName());
+		shot(ctx, "totemscreens_reopened");
+		check("totem naming screen: opens, 'Another name' renames it in place, closes, and opens again",
+			first.equals("TotemRenameScreen") && !after.equals(before) && shown.equals(after) && closed.equals("none")
+				&& again.equals("TotemRenameScreen"),
+			first + " / " + before + " -> " + after + " shown " + shown + " / closed " + closed + " / again " + again);
+		ctx.runOnClient(mc -> mc.gui.setScreen(null));
+	}
+
 	private static double field(Class<?> c, Object o, String name) throws ReflectiveOperationException {
 		var f = c.getDeclaredField(name);
 		f.setAccessible(true);
@@ -2283,7 +2421,7 @@ public class VisualTests implements FabricClientGameTest {
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
 		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "totemcolours", "reload", "compat",
-		"config", "worldmap", "totemmaps", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
+		"config", "worldmap", "totemmaps", "totemscreens", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
 	 * Runs the named scenes one after another in a shared world, tidied between them (mobs removed, the player back in creative at the start
@@ -2480,6 +2618,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "totemmaps" -> {
 				totemMapsScene(ctx, server);
+			}
+			case "totemscreens" -> {
+				totemScreensScene(ctx, server);
 			}
 			case "golemancy" -> {
 				golemancyScene(ctx, server);

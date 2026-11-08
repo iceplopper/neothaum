@@ -89,6 +89,11 @@ public class TotemRenameScreen extends Screen {
 		ClientPlayNetworking.send(new TravellersTotems.Rename(this.pos, "", false, true));
 	}
 
+	/** What the name box holds, for tests. */
+	public String typed() {
+		return this.box == null ? "" : this.box.getValue();
+	}
+
 	/** The name being typed, for tests. */
 	public void type(String name) {
 		this.box.setValue(name);
