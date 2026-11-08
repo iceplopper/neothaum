@@ -33,8 +33,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
  */
 public record TotemFeature() implements Feature {
 	public static final MapCodec<TotemFeature> CODEC = MapCodec.unit(new TotemFeature());
-	/** One chunk in this many: about one totem every eight or nine hundred blocks in the lands they favour. */
-	public static final int RARITY = 3000;
+	/** One chunk in this many: about one totem every five or six hundred blocks where the ground suits. */
+	public static final int RARITY = 1250;
 
 	@Override
 	public MapCodec<TotemFeature> codec() {

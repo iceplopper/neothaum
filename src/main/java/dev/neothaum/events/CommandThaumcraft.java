@@ -210,7 +210,7 @@ public final class CommandThaumcraft {
 
 	/**
 	 * /neothaum totems overworld [radius] [frequency]: wild Traveller's Totems on overworld land already generated within the radius (1024
-	 * unless given), each chunk with world generation's chance of one (1 in 3000) times the frequency (1 unless given). The same chunks win
+	 * unless given), each chunk with world generation's chance of one (1 in 1250) times the frequency (1 unless given). The same chunks win
 	 * every time it is run, so running it again adds none; a higher frequency adds more. Never where players have spent time.
 	 */
 	private static int wildTotems(CommandSourceStack src, int radius, double frequency) {
@@ -304,7 +304,7 @@ public final class CommandThaumcraft {
 			"  /neothaum config researchdifficulty [-1|0|1]", "  /neothaum config aspectcap [amount]",
 			"§3Use this after editing config/neothaum.json by hand.", "  /neothaum config reload",
 			"§3Use this to give villages generated before 1.2.1 their Traveller's Totems.", "  /neothaum totems villages [radius]",
-			"§3Use this to put wild Traveller's Totems on land generated before 1.2.4 (frequency 1 is 1 chunk in 3000).",
+			"§3Use this to put wild Traveller's Totems on land generated before 1.2.4 (frequency 1 is 1 chunk in 1250).",
 			"  /neothaum totems overworld [radius] [frequency]",
 			"§3Use this to list the additions (features not in TC4), or switch one on or off.", "  /neothaum additions [addition] [enable|disable]"}) {
 			src.sendSystemMessage(Component.literal(line));
