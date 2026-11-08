@@ -75,7 +75,6 @@ public final class CommandThaumcraft {
 					v -> NeoThaumConfig.current.aspectTotalCap = v)))
 			// Traveller's Totems for villages generated before they had them
 			.then(totems("totems"))
-			.then(totems("totem"))
 			// one addition at a time: /neothaum additions [addition] [enable|disable]
 			.then(Commands.literal("additions")
 				.executes(c -> listAdditions(c.getSource()))
@@ -191,7 +190,7 @@ public final class CommandThaumcraft {
 	}
 
 	/**
-	 * /neothaum totems (or totem): villages [radius], for villages generated before they had totems; overworld [radius] [frequency], for
+	 * /neothaum totems: villages [radius], for villages generated before they had totems; overworld [radius] [frequency], for
 	 * wild totems on land generated before 1.2.4.
 	 */
 	private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> totems(String name) {
@@ -225,13 +224,23 @@ public final class CommandThaumcraft {
 			+ " (1 chunk in " + Math.round(dev.neothaum.addon.totems.TotemFeature.RARITY / frequency) + ")..."));
 		var survey = dev.neothaum.addon.totems.WildTotems.raiseAround(level, centre, radius, frequency);
 		for (var at : survey.raised()) {
-			src.sendSystemMessage(Component.literal("§5  Raised a totem at " + at.getX() + " " + at.getY() + " " + at.getZ()));
+			src.sendSystemMessage(raisedAt(at));
 		}
 		survey.passed().forEach((why, n) -> src.sendSystemMessage(Component.literal("§7  " + n + " passed over: " + why)));
 		int raised = survey.raised().size();
 		src.sendSuccess(() -> Component.literal("§5" + survey.chunks() + " chunks looked at, " + survey.won() + " drew a totem, " + raised
 			+ " raised."), true);
 		return raised;
+	}
+
+	/** "Raised a totem at x y z", the coordinates clickable: a click puts "/tp @s x y z" in the chat box, to go and see it. */
+	private static Component raisedAt(net.minecraft.core.BlockPos at) {
+		String xyz = at.getX() + " " + at.getY() + " " + at.getZ();
+		return Component.literal("  Raised a totem at ").withStyle(net.minecraft.ChatFormatting.DARK_PURPLE)
+			.append(Component.literal("[" + xyz + "]").withStyle(style -> style.withColor(net.minecraft.ChatFormatting.LIGHT_PURPLE)
+				.withUnderlined(true)
+				.withClickEvent(new net.minecraft.network.chat.ClickEvent.SuggestCommand("/tp @s " + at.getX() + " " + (at.getY() + 1) + " " + at.getZ()))
+				.withHoverEvent(new net.minecraft.network.chat.HoverEvent.ShowText(Component.literal("Click to put a /tp to it in the chat box")))));
 	}
 
 	/**
@@ -247,7 +256,7 @@ public final class CommandThaumcraft {
 		var survey = dev.neothaum.addon.totems.VillageTotems.raiseAround(src.getLevel(), net.minecraft.core.BlockPos.containing(src.getPosition()),
 			radius);
 		for (var at : survey.raised()) {
-			src.sendSystemMessage(Component.literal("§5  Raised a totem at " + at.getX() + " " + at.getY() + " " + at.getZ()));
+			src.sendSystemMessage(raisedAt(at));
 		}
 		for (var at : survey.noRoom()) {
 			src.sendSystemMessage(Component.literal("§c  No level open ground for a totem in the village at " + at.getX() + " " + at.getZ()));
