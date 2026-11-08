@@ -8890,7 +8890,9 @@
    "ocean",
    "deep_ocean",
    "warm_ocean",
-   "harbour"
+   "harbour",
+   "near_kelp",
+   "near_coral"
   ],
   "fresh_water": [
    "riverbank",
@@ -8902,7 +8904,10 @@
    "pond",
    "spring",
    "oasis",
-   "water"
+   "water",
+   "near_water",
+   "near_waterfall",
+   "near_lily_pad"
   ],
   "wet": [
    "swamp",
@@ -8916,7 +8921,9 @@
    "packed_ice",
    "blue_ice",
    "cold",
-   "snowy_taiga"
+   "snowy_taiga",
+   "near_snow",
+   "near_ice"
   ],
   "dry": [
    "desert",
@@ -8937,7 +8944,8 @@
    "cave",
    "lush_caves",
    "dripstone",
-   "deep_dark"
+   "deep_dark",
+   "near_cave"
   ],
   "settled": [
    "village",
@@ -8952,29 +8960,46 @@
    "ruins",
    "barrow",
    "temple",
-   "altar"
+   "altar",
+   "near_altar",
+   "near_bones"
   ],
   "stone": [
    "stone",
    "calcite",
-   "blackstone"
+   "blackstone",
+   "near_boulder"
   ],
   "quiet": [
    "nothing"
   ],
   "fire": [
-   "lava"
+   "lava",
+   "near_lava",
+   "near_campfire"
   ],
   "metal": [
    "iron",
    "gold",
-   "amethyst"
+   "amethyst",
+   "near_coal",
+   "near_copper",
+   "near_iron",
+   "near_gold",
+   "near_diamond",
+   "near_emerald",
+   "near_redstone",
+   "near_lapis",
+   "near_amethyst",
+   "near_obsidian"
   ],
   "magic": [
    "aura_node",
    "infused_stone",
    "eerie",
-   "taint"
+   "taint",
+   "near_aura_node",
+   "near_taint"
   ],
   "beasts": [
    "horses",
@@ -8982,7 +9007,10 @@
    "foxes",
    "bears",
    "bees",
-   "fish"
+   "fish",
+   "near_horses",
+   "near_bees",
+   "near_fish"
   ]
  }
 }

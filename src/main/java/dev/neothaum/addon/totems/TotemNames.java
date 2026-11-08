@@ -97,6 +97,18 @@ public final class TotemNames {
 		return FAMILY.getOrDefault(feature, feature);
 	}
 
+	/** Features that also belong to a second family, for telling what would say the same thing twice: a cliff or a crag is rock. */
+	private static final Map<String, String> ALSO = Map.of("cliff", "stone", "crag", "stone", "island", "stone");
+
+	/** Whether two features would say the same thing twice in a name ("Rupes Calculosa", "Fons ad Aquam"). */
+	private static boolean overlap(String a, String b) {
+		java.util.Set<String> fa = new HashSet<>(List.of(family(a)));
+		if (ALSO.containsKey(a)) {
+			fa.add(ALSO.get(a));
+		}
+		return fa.contains(family(b)) || ALSO.containsKey(b) && fa.contains(ALSO.get(b));
+	}
+
 	/**
 	 * A name for a totem here, two words wherever it can be: a place word and a describing word ("Collis Herbosus"), or a place word and
 	 * something striking close by ("Fons Luporum", the spring of the wolves). Features count by how significant they are, not only how much
@@ -130,9 +142,8 @@ public final class TotemNames {
 		Place place = places.isEmpty() ? PLACES.get(0) : places.get(rand.nextInt(places.size()));
 		// the describer: the most significant feature of another family, from all its words
 		Describer describer = null;
-		String used = family(placeFeature);
 		for (String f : ranked) {
-			if (family(f).equals(used)) {
+			if (overlap(placeFeature, f)) {
 				continue;
 			}
 			List<Describer> fits = DESCRIBERS.stream().filter(d -> d.features().contains(f)).toList();
@@ -151,7 +162,7 @@ public final class TotemNames {
 		String stem = place.word().substring(0, Math.min(5, place.word().length())).toLowerCase(java.util.Locale.ROOT);
 		List<String> marks = new ArrayList<>();
 		for (var e : near.entrySet()) {
-			if (e.getValue() >= STRIKING && LANDMARKS.stream().anyMatch(l -> l.features().contains(e.getKey()))) {
+			if (e.getValue() >= STRIKING && !overlap(placeFeature, e.getKey()) && LANDMARKS.stream().anyMatch(l -> l.features().contains(e.getKey()))) {
 				marks.add(e.getKey());
 			}
 		}
