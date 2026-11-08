@@ -2,7 +2,13 @@
   "type": "neothaum:crucible",
   "research": "CRUCIBLE",
   "catalyst": "neothaum:entropy_shard",
-  "aspects": {},
+  "aspects": {
+    "aer": 2,
+    "ignis": 2,
+    "aqua": 2,
+    "terra": 2,
+    "ordo": 2
+  },
   "result": {
     "id": "neothaum:balanced_shard"
   }
