@@ -3316,7 +3316,8 @@
    "f": "nebulosa",
    "n": "nebulosum",
    "features": [
-    "pale_garden"
+    "pale_garden",
+    "misty"
    ]
   },
   {
@@ -3516,7 +3517,8 @@
    "f": "calida",
    "n": "calidum",
    "features": [
-    "warm_ocean"
+    "warm_ocean",
+    "hot"
    ]
   },
   {
@@ -3620,7 +3622,8 @@
    "f": "torrida",
    "n": "torridum",
    "features": [
-    "savanna"
+    "savanna",
+    "hot"
    ]
   },
   {
@@ -3709,7 +3712,8 @@
    "n": "viride",
    "features": [
     "lush_caves",
-    "grass"
+    "grass",
+    "lush"
    ]
   },
   {
@@ -3774,7 +3778,8 @@
    "n": "antiquum",
    "features": [
     "ruins",
-    "barrow"
+    "barrow",
+    "old_growth"
    ]
   },
   {
@@ -3838,7 +3843,8 @@
    "f": "opaca",
    "n": "opacum",
    "features": [
-    "forest"
+    "forest",
+    "dense"
    ]
   },
   {
@@ -3934,7 +3940,8 @@
    "f": "luxurians",
    "n": "luxurians",
    "features": [
-    "jungle"
+    "jungle",
+    "lush"
    ]
   },
   {
@@ -3958,7 +3965,8 @@
    "f": "aestuosa",
    "n": "aestuosum",
    "features": [
-    "jungle"
+    "jungle",
+    "hot"
    ]
   },
   {
@@ -3982,7 +3990,8 @@
    "f": "fecunda",
    "n": "fecundum",
    "features": [
-    "jungle"
+    "jungle",
+    "lush"
    ]
   },
   {
@@ -4030,7 +4039,8 @@
    "f": "caliginosa",
    "n": "caliginosum",
    "features": [
-    "dark_forest"
+    "dark_forest",
+    "misty"
    ]
   },
   {
@@ -4366,7 +4376,8 @@
    "f": "lucida",
    "n": "lucidum",
    "features": [
-    "silverwood"
+    "silverwood",
+    "sunny"
    ]
   },
   {
@@ -4422,7 +4433,8 @@
    "f": "fervida",
    "n": "fervidum",
    "features": [
-    "aura_node"
+    "aura_node",
+    "hot"
    ]
   },
   {
@@ -4830,7 +4842,8 @@
    "f": "ingens",
    "n": "ingens",
    "features": [
-    "mountain"
+    "mountain",
+    "giant"
    ]
   },
   {
@@ -4902,7 +4915,8 @@
    "f": "nubila",
    "n": "nubilum",
    "features": [
-    "high"
+    "high",
+    "misty"
    ]
   },
   {
@@ -5382,7 +5396,8 @@
    "f": "fulva",
    "n": "fulvum",
    "features": [
-    "gold"
+    "gold",
+    "autumn"
    ]
   },
   {
@@ -5398,7 +5413,8 @@
    "f": "rutila",
    "n": "rutilum",
    "features": [
-    "gold"
+    "gold",
+    "autumn"
    ]
   },
   {
@@ -5534,7 +5550,8 @@
    "f": "fervens",
    "n": "fervens",
    "features": [
-    "lava"
+    "lava",
+    "hot"
    ]
   },
   {
@@ -5598,7 +5615,8 @@
    "f": "salsa",
    "n": "salsum",
    "features": [
-    "ocean"
+    "ocean",
+    "salty"
    ]
   },
   {
@@ -5686,7 +5704,8 @@
    "f": "aestiva",
    "n": "aestivum",
    "features": [
-    "warm_ocean"
+    "warm_ocean",
+    "hot"
    ]
   },
   {
@@ -5886,7 +5905,8 @@
    "f": "lenis",
    "n": "lene",
    "features": [
-    "lake"
+    "lake",
+    "temperate"
    ]
   },
   {
@@ -5894,7 +5914,8 @@
    "f": "serena",
    "n": "serenum",
    "features": [
-    "lake"
+    "lake",
+    "sunny"
    ]
   },
   {
@@ -5926,7 +5947,8 @@
    "f": "roscida",
    "n": "roscidum",
    "features": [
-    "water"
+    "water",
+    "misty"
    ]
   },
   {
@@ -6078,7 +6100,8 @@
    "f": "densa",
    "n": "densum",
    "features": [
-    "packed_ice"
+    "packed_ice",
+    "dense"
    ]
   },
   {
@@ -6174,7 +6197,8 @@
    "f": "aprica",
    "n": "apricum",
    "features": [
-    "savanna"
+    "savanna",
+    "sunny"
    ]
   },
   {
@@ -6182,7 +6206,8 @@
    "f": "solaris",
    "n": "solare",
    "features": [
-    "savanna"
+    "savanna",
+    "sunny"
    ]
   },
   {
@@ -6190,7 +6215,8 @@
    "f": "flavens",
    "n": "flavens",
    "features": [
-    "savanna"
+    "savanna",
+    "autumn"
    ]
   },
   {
@@ -6414,7 +6440,8 @@
    "f": "laeta",
    "n": "laetum",
    "features": [
-    "farmland"
+    "farmland",
+    "lush"
    ]
   },
   {
@@ -6486,7 +6513,8 @@
    "f": "amoena",
    "n": "amoenum",
    "features": [
-    "lush_caves"
+    "lush_caves",
+    "lush"
    ]
   },
   {
@@ -6774,7 +6802,8 @@
    "f": "prisca",
    "n": "priscum",
    "features": [
-    "ruins"
+    "ruins",
+    "old_growth"
    ]
   },
   {
@@ -6782,7 +6811,8 @@
    "f": "vetusta",
    "n": "vetustum",
    "features": [
-    "ruins"
+    "ruins",
+    "old_growth"
    ]
   },
   {
@@ -6958,7 +6988,8 @@
    "f": "mitis",
    "n": "mite",
    "features": [
-    "nothing"
+    "nothing",
+    "temperate"
    ]
   },
   {
@@ -7687,6 +7718,142 @@
    "n": "nodosum",
    "features": [
     "mangrove"
+   ]
+  },
+  {
+   "m": "temperatus",
+   "f": "temperata",
+   "n": "temperatum",
+   "features": [
+    "temperate"
+   ]
+  },
+  {
+   "m": "clemens",
+   "f": "clemens",
+   "n": "clemens",
+   "features": [
+    "temperate"
+   ]
+  },
+  {
+   "m": "modicus",
+   "f": "modica",
+   "n": "modicum",
+   "features": [
+    "temperate"
+   ]
+  },
+  {
+   "m": "vaporosus",
+   "f": "vaporosa",
+   "n": "vaporosum",
+   "features": [
+    "misty"
+   ]
+  },
+  {
+   "m": "nimbosus",
+   "f": "nimbosa",
+   "n": "nimbosum",
+   "features": [
+    "misty"
+   ]
+  },
+  {
+   "m": "annosus",
+   "f": "annosa",
+   "n": "annosum",
+   "features": [
+    "old_growth"
+   ]
+  },
+  {
+   "m": "primaevus",
+   "f": "primaeva",
+   "n": "primaevum",
+   "features": [
+    "old_growth"
+   ]
+  },
+  {
+   "m": "rarus",
+   "f": "rara",
+   "n": "rarum",
+   "features": [
+    "sparse"
+   ]
+  },
+  {
+   "m": "dispersus",
+   "f": "dispersa",
+   "n": "dispersum",
+   "features": [
+    "sparse"
+   ]
+  },
+  {
+   "m": "tenuis",
+   "f": "tenuis",
+   "n": "tenue",
+   "features": [
+    "sparse"
+   ]
+  },
+  {
+   "m": "spissus",
+   "f": "spissa",
+   "n": "spissum",
+   "features": [
+    "dense"
+   ]
+  },
+  {
+   "m": "confertus",
+   "f": "conferta",
+   "n": "confertum",
+   "features": [
+    "dense"
+   ]
+  },
+  {
+   "m": "procerus",
+   "f": "procera",
+   "n": "procerum",
+   "features": [
+    "giant"
+   ]
+  },
+  {
+   "m": "giganteus",
+   "f": "gigantea",
+   "n": "giganteum",
+   "features": [
+    "giant"
+   ]
+  },
+  {
+   "m": "magnus",
+   "f": "magna",
+   "n": "magnum",
+   "features": [
+    "giant"
+   ]
+  },
+  {
+   "m": "grandis",
+   "f": "grandis",
+   "n": "grande",
+   "features": [
+    "giant"
+   ]
+  },
+  {
+   "m": "autumnalis",
+   "f": "autumnalis",
+   "n": "autumnale",
+   "features": [
+    "autumn"
    ]
   }
  ],

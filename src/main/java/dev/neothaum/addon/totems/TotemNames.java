@@ -165,8 +165,10 @@ public final class TotemNames {
 		String placeFeature = candidates.isEmpty() ? "nothing" : weighted(candidates, scores, rand);
 		List<Place> places = PLACES.stream().filter(p -> p.features().contains(placeFeature)).toList();
 		Place place = places.isEmpty() ? PLACES.get(0) : places.get(rand.nextInt(places.size()));
-		// the describer: the most significant feature of another family, from all its words
+		// the describer: the most significant feature of another family, from all its words; but where that is nothing much (no feature
+		// defines the place), a word from the biome's name instead: "temperate" in Temperate Highlands, "hot" in Hot Forest
 		Describer describer = null;
+		String describing = null;
 		for (String f : ranked) {
 			if (overlap(placeFeature, f)) {
 				continue;
@@ -174,7 +176,21 @@ public final class TotemNames {
 			List<Describer> fits = DESCRIBERS.stream().filter(d -> d.features().contains(f)).toList();
 			if (!fits.isEmpty()) {
 				describer = fits.get(rand.nextInt(fits.size()));
+				describing = f;
 				break;
+			}
+		}
+		if (describing == null || scores.get(describing) < DEFINING || significance(describing) < 1.0F) {
+			List<String> qualities = new ArrayList<>();
+			for (String q : biomeQualities(level, pos)) {
+				if (!overlap(placeFeature, q) && DESCRIBERS.stream().anyMatch(d -> d.features().contains(q))) {
+					qualities.add(q);
+				}
+			}
+			if (!qualities.isEmpty()) {
+				String q = qualities.get(rand.nextInt(qualities.size()));
+				List<Describer> fits = DESCRIBERS.stream().filter(d -> d.features().contains(q)).toList();
+				describer = fits.get(rand.nextInt(fits.size()));
 			}
 		}
 		if (describer == null) {
@@ -281,6 +297,44 @@ public final class TotemNames {
 		}
 		if (b.is(BiomeTags.IS_HILL)) {
 			out.add("hill");
+		}
+		return out;
+	}
+
+	/** The qualifying words of a biome's name, and the describer features they give ("temperate_highlands", "hot_forest"). */
+	private static final Map<String, String> QUALITIES = Map.ofEntries(
+		Map.entry("temperate", "temperate"), Map.entry("mild", "temperate"),
+		Map.entry("hot", "hot"), Map.entry("warm", "hot"), Map.entry("tropical", "hot"), Map.entry("subtropical", "hot"), Map.entry("scorched", "hot"),
+		Map.entry("cold", "cold"), Map.entry("chilly", "cold"), Map.entry("frigid", "cold"), Map.entry("frozen", "cold"), Map.entry("snowy", "cold"),
+		Map.entry("icy", "cold"), Map.entry("frosty", "cold"), Map.entry("boreal", "cold"), Map.entry("arctic", "cold"), Map.entry("alpine", "cold"),
+		Map.entry("dry", "desert"), Map.entry("arid", "desert"), Map.entry("wet", "water"), Map.entry("humid", "water"), Map.entry("damp", "water"),
+		Map.entry("misty", "misty"), Map.entry("foggy", "misty"), Map.entry("cloudy", "misty"), Map.entry("cloud", "misty"),
+		Map.entry("old", "old_growth"), Map.entry("ancient", "old_growth"), Map.entry("primeval", "old_growth"), Map.entry("aged", "old_growth"),
+		Map.entry("sparse", "sparse"), Map.entry("thin", "sparse"), Map.entry("dense", "dense"), Map.entry("thick", "dense"),
+		Map.entry("overgrown", "dense"), Map.entry("tall", "giant"), Map.entry("giant", "giant"), Map.entry("great", "giant"),
+		Map.entry("towering", "giant"), Map.entry("huge", "giant"), Map.entry("mega", "giant"), Map.entry("dark", "dark_forest"),
+		Map.entry("shadowy", "dark_forest"), Map.entry("gloomy", "dark_forest"), Map.entry("bright", "sunny"), Map.entry("sunny", "sunny"),
+		Map.entry("sunlit", "sunny"), Map.entry("lush", "lush"), Map.entry("verdant", "lush"), Map.entry("green", "lush"),
+		Map.entry("autumn", "autumn"), Map.entry("autumnal", "autumn"), Map.entry("windswept", "windswept"), Map.entry("windy", "windswept"),
+		Map.entry("rocky", "rugged"), Map.entry("stony", "rugged"), Map.entry("shattered", "rugged"), Map.entry("jagged", "rugged"),
+		Map.entry("rugged", "rugged"), Map.entry("craggy", "rugged"), Map.entry("volcanic", "lava"), Map.entry("ashen", "blackstone"),
+		Map.entry("burnt", "blackstone"), Map.entry("flowering", "flowers"), Map.entry("blooming", "flowers"), Map.entry("flowery", "flowers"),
+		Map.entry("mossy", "moss"), Map.entry("enchanted", "magical_forest"), Map.entry("mystic", "magical_forest"),
+		Map.entry("haunted", "eerie"), Map.entry("dead", "eerie"), Map.entry("cursed", "eerie"), Map.entry("spooky", "eerie"),
+		Map.entry("red", "red_sand"), Map.entry("crimson", "red_sand"), Map.entry("scarlet", "red_sand"), Map.entry("white", "birch"),
+		Map.entry("pale", "pale_garden"), Map.entry("blue", "blue_ice"), Map.entry("golden", "gold"), Map.entry("yellow", "gold"),
+		Map.entry("salt", "salty"), Map.entry("saline", "salty"), Map.entry("silent", "nothing"), Map.entry("quiet", "nothing"),
+		Map.entry("calm", "nothing"));
+
+	/** What the biome's name says of it besides what it is: "temperate" and "hot", as describer features. */
+	static List<String> biomeQualities(ServerLevel level, BlockPos pos) {
+		String id = level.getBiome(pos).unwrapKey().map(k -> k.identifier().getPath()).orElse("");
+		List<String> out = new ArrayList<>();
+		for (String word : id.split("[_/]")) {
+			String q = QUALITIES.get(word);
+			if (q != null && !out.contains(q)) {
+				out.add(q);
+			}
 		}
 		return out;
 	}
