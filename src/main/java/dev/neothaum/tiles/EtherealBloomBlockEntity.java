@@ -49,9 +49,15 @@ public class EtherealBloomBlockEntity extends BlockEntity {
 				int targetZ = pos.getZ() + dz;
 				BlockPos targetColPos = new BlockPos(targetX, pos.getY(), targetZ);
 
-				// Cleanse biome
+				// cleanse the biome: back to what the world first made here (as TC4), or plains where that was itself taint
 				if (TVBiomes.is(level, targetColPos, TVBiomes.TAINTED_LAND) || TVBiomes.is(level, targetColPos, TVBiomes.EERIE)) {
-					TVBiomes.setBiomeAt(level, targetX, targetZ, Biomes.PLAINS);
+					int surface = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE, targetX, targetZ);
+					var original = TVBiomes.originalBiome((ServerLevel) level, targetX, surface, targetZ);
+					if (original.is(TVBiomes.TAINTED_LAND) || original.is(TVBiomes.EERIE)) {
+						TVBiomes.setBiomeAt((ServerLevel) level, targetX, targetZ, Biomes.PLAINS);
+					} else {
+						TVBiomes.setBiomeAt((ServerLevel) level, targetX, targetZ, original);
+					}
 				}
 
 				// Cleanse vertical column of blocks within [-4, +4] range

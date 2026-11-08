@@ -61,8 +61,21 @@ public final class TVBiomes {
 	 * Utils.setBiomeAt: turns the column at x, z into the biome, from the bottom of the world to the top, and tells nearby players. Biomes are
 	 * stored four blocks to a cell now, so the whole 4x4 column the block is in changes.
 	 */
+	/**
+	 * The biome world generation made at this spot, whatever it has become since (tainted land, an eerie place): what the world's generator
+	 * gives for it from the seed, as TC4's ethereal bloom asked the world's chunk manager.
+	 */
+	public static Holder<Biome> originalBiome(ServerLevel level, int x, int y, int z) {
+		var resolver = level.getChunkSource().getGenerator().getBiomeSource().createUncachedResolver(level.getChunkSource().randomState());
+		return resolver.getNoiseBiome(net.minecraft.core.QuartPos.fromBlock(x), net.minecraft.core.QuartPos.fromBlock(y),
+			net.minecraft.core.QuartPos.fromBlock(z));
+	}
+
 	public static void setBiomeAt(ServerLevel level, int x, int z, ResourceKey<Biome> biome) {
-		Holder<Biome> holder = level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(biome);
+		setBiomeAt(level, x, z, level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(biome));
+	}
+
+	public static void setBiomeAt(ServerLevel level, int x, int z, Holder<Biome> holder) {
 		LevelChunk chunk = level.getChunk(SectionPos.blockToSectionCoord(x), SectionPos.blockToSectionCoord(z));
 		if (setBiomeAt(chunk, x, z, holder)) {
 			level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(chunk));
