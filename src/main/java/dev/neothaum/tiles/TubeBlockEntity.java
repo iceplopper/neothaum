@@ -48,9 +48,12 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 		return dev.neothaum.addon.Additions.enabled("long_tubes") ? 8 : 1;
 	}
 
-	/** Steps to points, rounded up, so the last tube of a run still shows (and pulls with) one point. */
+	/**
+	 * Steps to points, rounded down: so a tube is always weaker than the jar or machine whose suction it carries, the tube beside a jar one
+	 * point weaker as in TC4. (Rounded up, the tube beside a jar matched the jar, and a jar only takes from a tube weaker than itself.)
+	 */
 	private static int points(int steps, int per) {
-		return (steps + per - 1) / per;
+		return steps / per;
 	}
 	int count;
 	public Aspect aspectFilter;
