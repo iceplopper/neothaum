@@ -215,8 +215,9 @@ public record TCWorldFeature(boolean nether) implements Feature {
 		int z = cz + random.nextInt(16);
 		int y = heightAt(world, x, z) - 9;
 		if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_BARROW_MOUND_RARITY, cfg.barrowMoundMultiplier)) {
-			if (BarrowMoundFeature.generate(world, random, new BlockPos(x, y, z))) {
-				NodeGenerator.createRandomNodeAt(world, new BlockPos(x + 9, y + 8, z + 9), random, false, true, false, true);
+			// the mound is 18 blocks across: centred on the spot (TC4 built it out from there), so it stays in the chunks it may reach
+			if (BarrowMoundFeature.generate(world, random, new BlockPos(x - 9, y, z - 9))) {
+				NodeGenerator.createRandomNodeAt(world, new BlockPos(x, y + 8, z), random, false, true, false, true);
 				return true;
 			}
 		} else if (dev.neothaum.config.NeoThaumConfig.roll(random, dev.neothaum.config.NeoThaumConfig.TC4_ELDRITCH_RING_RARITY, cfg.eldritchRingMultiplier)) {

@@ -23,6 +23,9 @@ import net.minecraft.world.level.material.Fluids;
  * BiomeGenMagicalForest.decorate, BiomeGenTaint.decorate and BiomeGenEerie's decorator settings, run once per chunk from its min corner: trees,
  * grass, flowers, lily pads, mushrooms, mossy boulders and vishrooms for the magical forest; trees, grass, crusted taint and fibres for the
  * tainted land; a few trees, flowers and grass for eerie places.
+ *
+ * <p>TC4 put each of these 8 blocks into the next chunk (Minecraft 1.7 decorated a chunk from its middle); here they stay in the chunk being
+ * made, as Minecraft now asks, so a big tree or a scatter of flowers never reaches a chunk that may not be read or written yet.
  */
 public record TCBiomeDecorFeature(String biome) implements Feature {
 	public static final MapCodec<TCBiomeDecorFeature> CODEC = Codec.STRING.fieldOf("biome").xmap(TCBiomeDecorFeature::new, TCBiomeDecorFeature::biome);
@@ -85,8 +88,8 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 	private static void magicalForest(WorldGenLevel world, ChunkGenerator gen, RandomSource random, int x, int z) {
 		int k = random.nextInt(3);
 		for (int l = 0; l < k; l++) {
-			int i1 = x + random.nextInt(16) + 8;
-			int j1 = z + random.nextInt(16) + 8;
+			int i1 = x + random.nextInt(16);
+			int j1 = z + random.nextInt(16);
 			BlockPos p = new BlockPos(i1, height(world, i1, j1), j1);
 			if (canPlaceTreeAt(world, p)) {
 				placeVanilla(world, gen, random, "forest_rock", p);
@@ -94,8 +97,8 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 		}
 		for (int a = 0; a < 4; a++) {
 			for (int b = 0; b < 4; b++) {
-				int i1 = x + a * 4 + 1 + 8 + random.nextInt(3);
-				int j1 = z + b * 4 + 1 + 8 + random.nextInt(3);
+				int i1 = x + a * 4 + 1 + random.nextInt(3);
+				int j1 = z + b * 4 + 1 + random.nextInt(3);
 				if (random.nextInt(40) == 0) {
 					BlockPos p = new BlockPos(i1, height(world, i1, j1), j1);
 					if (canPlaceTreeAt(world, p)) {
@@ -108,8 +111,8 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 		int trees = 2 + (random.nextInt(10) == 0 ? 1 : 0);
 		for (int t = 0; t < trees; t++) {
 			for (int tries = 0; tries < 3; tries++) {
-				int tx = x + random.nextInt(16) + 8;
-				int tz = z + random.nextInt(16) + 8;
+				int tx = x + random.nextInt(16);
+				int tz = z + random.nextInt(16);
 				BlockPos p = new BlockPos(tx, height(world, tx, tz), tz);
 				if (canPlaceTreeAt(world, p)) {
 					if (random.nextInt(14) == 0) {
@@ -124,22 +127,22 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 			}
 		}
 		for (int f = 0; f < 10; f++) {
-			scatter(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8, 64, RED_FLOWERS[random.nextInt(RED_FLOWERS.length)]
+			scatter(world, random, x + random.nextInt(16), z + random.nextInt(16), 64, RED_FLOWERS[random.nextInt(RED_FLOWERS.length)]
 				.defaultBlockState());
 		}
 		for (int g = 0; g < 12; g++) {
-			scatter(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8, 128,
+			scatter(world, random, x + random.nextInt(16), z + random.nextInt(16), 128,
 				(random.nextInt(4) == 0 ? Blocks.FERN : Blocks.SHORT_GRASS).defaultBlockState());
 		}
 		for (int w = 0; w < 6; w++) {
-			lilyPads(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8);
+			lilyPads(world, random, x + random.nextInt(16), z + random.nextInt(16));
 		}
 		for (int m = 0; m < 6; m++) {
 			if (random.nextInt(4) == 0) {
-				scatter(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8, 64, Blocks.BROWN_MUSHROOM.defaultBlockState());
+				scatter(world, random, x + random.nextInt(16), z + random.nextInt(16), 64, Blocks.BROWN_MUSHROOM.defaultBlockState());
 			}
 			if (random.nextInt(8) == 0) {
-				scatter(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8, 64, Blocks.RED_MUSHROOM.defaultBlockState());
+				scatter(world, random, x + random.nextInt(16), z + random.nextInt(16), 64, Blocks.RED_MUSHROOM.defaultBlockState());
 			}
 		}
 		for (int a = 0; a < 8; a++) {
@@ -158,8 +161,8 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 
 		// TC4 WorldGenManaPods: 10 attempts per chunk hanging from logs
 		for (int p = 0; p < 10; p++) {
-			int px = x + random.nextInt(16) + 8;
-			int pz = z + random.nextInt(16) + 8;
+			int px = x + random.nextInt(16);
+			int pz = z + random.nextInt(16);
 			generateManaPods(world, random, px, 64, pz);
 		}
 	}
@@ -228,8 +231,8 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 		int trees = 2 + (random.nextInt(10) == 0 ? 1 : 0);
 		for (int t = 0; t < trees; t++) {
 			for (int tries = 0; tries < 3; tries++) {
-				int tx = x + random.nextInt(16) + 8;
-				int tz = z + random.nextInt(16) + 8;
+				int tx = x + random.nextInt(16);
+				int tz = z + random.nextInt(16);
 				BlockPos p = new BlockPos(tx, height(world, tx, tz), tz);
 				if (canPlaceTreeAt(world, p)) {
 					placeVanilla(world, gen, random, random.nextInt(8) == 0 ? "fancy_oak" : random.nextInt(10) == 0 ? "fancy_oak" : "oak", p);
@@ -238,12 +241,12 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 			}
 		}
 		for (int g = 0; g < 2; g++) {
-			scatter(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8, 128, Blocks.SHORT_GRASS.defaultBlockState());
+			scatter(world, random, x + random.nextInt(16), z + random.nextInt(16), 128, Blocks.SHORT_GRASS.defaultBlockState());
 		}
 		int k = random.nextInt(3);
 		for (int l = 0; l < k; l++) {
-			int i1 = x + random.nextInt(16) + 8;
-			int j1 = z + random.nextInt(16) + 8;
+			int i1 = x + random.nextInt(16);
+			int j1 = z + random.nextInt(16);
 			BlockPos p = new BlockPos(i1, height(world, i1, j1), j1);
 			if (canPlaceTreeAt(world, p)) {
 				blob(world, random, p, TVBlocks.CRUSTED_TAINT.defaultBlockState());
@@ -311,8 +314,8 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 		int trees = 2 + (random.nextInt(10) == 0 ? 1 : 0);
 		for (int t = 0; t < trees; t++) {
 			for (int tries = 0; tries < 3; tries++) {
-				int tx = x + random.nextInt(16) + 8;
-				int tz = z + random.nextInt(16) + 8;
+				int tx = x + random.nextInt(16);
+				int tz = z + random.nextInt(16);
 				BlockPos p = new BlockPos(tx, height(world, tx, tz), tz);
 				if (canPlaceTreeAt(world, p)) {
 					placeVanilla(world, gen, random, random.nextInt(10) == 0 ? "fancy_oak" : "oak", p);
@@ -320,10 +323,10 @@ public record TCBiomeDecorFeature(String biome) implements Feature {
 				}
 			}
 		}
-		scatter(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8, 64,
+		scatter(world, random, x + random.nextInt(16), z + random.nextInt(16), 64,
 			(random.nextInt(3) == 0 ? Blocks.POPPY : Blocks.DANDELION).defaultBlockState());
 		for (int g = 0; g < 2; g++) {
-			scatter(world, random, x + random.nextInt(16) + 8, z + random.nextInt(16) + 8, 128, Blocks.SHORT_GRASS.defaultBlockState());
+			scatter(world, random, x + random.nextInt(16), z + random.nextInt(16), 128, Blocks.SHORT_GRASS.defaultBlockState());
 		}
 	}
 }
