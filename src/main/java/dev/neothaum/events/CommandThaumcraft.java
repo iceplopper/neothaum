@@ -74,11 +74,8 @@ public final class CommandThaumcraft {
 				.then(number("aspectcap", "aspect total cap", 1, 100000, () -> NeoThaumConfig.current.aspectTotalCap,
 					v -> NeoThaumConfig.current.aspectTotalCap = v)))
 			// Traveller's Totems for villages generated before they had them
-			.then(Commands.literal("totems")
-				.then(Commands.literal("villages")
-					.executes(c -> villageTotems(c.getSource(), 1024))
-					.then(Commands.argument("radius", IntegerArgumentType.integer(16, 4096))
-						.executes(c -> villageTotems(c.getSource(), IntegerArgumentType.getInteger(c, "radius"))))))
+			.then(totems("totems"))
+			.then(totems("totem"))
 			// one addition at a time: /neothaum additions [addition] [enable|disable]
 			.then(Commands.literal("additions")
 				.executes(c -> listAdditions(c.getSource()))
@@ -194,6 +191,50 @@ public final class CommandThaumcraft {
 	}
 
 	/**
+	 * /neothaum totems (or totem): villages [radius], for villages generated before they had totems; overworld [radius] [frequency], for
+	 * wild totems on land generated before 1.2.4.
+	 */
+	private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> totems(String name) {
+		return Commands.literal(name)
+			.then(Commands.literal("villages")
+				.executes(c -> villageTotems(c.getSource(), 1024))
+				.then(Commands.argument("radius", IntegerArgumentType.integer(16, 4096))
+					.executes(c -> villageTotems(c.getSource(), IntegerArgumentType.getInteger(c, "radius")))))
+			.then(Commands.literal("overworld")
+				.executes(c -> wildTotems(c.getSource(), 1024, 1.0))
+				.then(Commands.argument("radius", IntegerArgumentType.integer(16, 8192))
+					.executes(c -> wildTotems(c.getSource(), IntegerArgumentType.getInteger(c, "radius"), 1.0))
+					.then(Commands.argument("frequency", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg(0.01, 100.0))
+						.executes(c -> wildTotems(c.getSource(), IntegerArgumentType.getInteger(c, "radius"),
+							com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "frequency"))))));
+	}
+
+	/**
+	 * /neothaum totems overworld [radius] [frequency]: wild Traveller's Totems on overworld land already generated within the radius (1024
+	 * unless given), each chunk with world generation's chance of one (1 in 3000) times the frequency (1 unless given). The same chunks win
+	 * every time it is run, so running it again adds none; a higher frequency adds more. Never where players have spent time.
+	 */
+	private static int wildTotems(CommandSourceStack src, int radius, double frequency) {
+		if (!dev.neothaum.addon.totems.TravellersTotems.enabled()) {
+			src.sendFailure(Component.literal("§cTraveller's Totems are switched off (/neothaum additions travellers_totems enable)."));
+			return 0;
+		}
+		var level = src.getServer().overworld();
+		var centre = src.getLevel() == level ? net.minecraft.core.BlockPos.containing(src.getPosition()) : level.getRespawnData().pos();
+		src.sendSystemMessage(Component.literal("§5Raising wild totems within " + radius + " blocks of " + centre.getX() + " " + centre.getZ()
+			+ " (1 chunk in " + Math.round(dev.neothaum.addon.totems.TotemFeature.RARITY / frequency) + ")..."));
+		var survey = dev.neothaum.addon.totems.WildTotems.raiseAround(level, centre, radius, frequency);
+		for (var at : survey.raised()) {
+			src.sendSystemMessage(Component.literal("§5  Raised a totem at " + at.getX() + " " + at.getY() + " " + at.getZ()));
+		}
+		survey.passed().forEach((why, n) -> src.sendSystemMessage(Component.literal("§7  " + n + " passed over: " + why)));
+		int raised = survey.raised().size();
+		src.sendSuccess(() -> Component.literal("§5" + survey.chunks() + " chunks looked at, " + survey.won() + " drew a totem, " + raised
+			+ " raised."), true);
+		return raised;
+	}
+
+	/**
 	 * /neothaum totems villages [radius]: every village already generated within the radius (in blocks, 1024 unless given) of where the
 	 * command is run that has no Traveller's Totem gets one, as a village generated now would.
 	 */
@@ -254,6 +295,8 @@ public final class CommandThaumcraft {
 			"  /neothaum config researchdifficulty [-1|0|1]", "  /neothaum config aspectcap [amount]",
 			"§3Use this after editing config/neothaum.json by hand.", "  /neothaum config reload",
 			"§3Use this to give villages generated before 1.2.1 their Traveller's Totems.", "  /neothaum totems villages [radius]",
+			"§3Use this to put wild Traveller's Totems on land generated before 1.2.4 (frequency 1 is 1 chunk in 3000).",
+			"  /neothaum totems overworld [radius] [frequency]",
 			"§3Use this to list the additions (features not in TC4), or switch one on or off.", "  /neothaum additions [addition] [enable|disable]"}) {
 			src.sendSystemMessage(Component.literal(line));
 		}
