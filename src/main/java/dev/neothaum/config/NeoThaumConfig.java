@@ -209,6 +209,8 @@ public class NeoThaumConfig {
 		public boolean additionStorageBlocks = true;
 		/** Suction carries eight times as far down essentia tubes (TC4: a point lost each tube, so an empty jar reached 31 tubes). */
 		public boolean additionLongTubes = true;
+		/** Two essentia meeting head on in neighbouring tubes trade places instead of blocking each other. */
+		public boolean additionEssentiaSwap = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

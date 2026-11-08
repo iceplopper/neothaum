@@ -123,6 +123,9 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 					t.essentiaType = null;
 				}
 			}
+			if (t.count % 5 == 0 && t.essentiaAmount > 0 && dev.neothaum.addon.Additions.enabled("essentia_swap")) {
+				t.swapWithNeighbours();
+			}
 			if (t.count % 5 == 0 && t.suction > 0) {
 				t.equalizeWithNeighbours(t.kind() == Kind.ONEWAY);
 			}
@@ -219,6 +222,42 @@ public class TubeBlockEntity extends TVBlockEntity implements EssentiaTransport,
 	/** This tube's suction for an aspect in steps: between two tubes, the finer measure decides which way essentia goes. */
 	private int stepsFor(Aspect aspect) {
 		return Math.max(this.typedSuction.getOrDefault(aspect, 0), this.anySuction);
+	}
+
+	/**
+	 * Essentia Swap (an addition): two essentia meeting head on in neighbouring tubes, each drawn on into the other's tube, trade places
+	 * instead of blocking each other for good (in TC4 a tube full of one aspect stops the other going by). Each move must be one the tube
+	 * would make if it were empty: through open sides, into a one-way tube only from behind, into a filtered tube only its own aspect.
+	 */
+	void swapWithNeighbours() {
+		Aspect mine = this.essentiaType;
+		if (mine == null) {
+			return;
+		}
+		for (Direction loc : Direction.values()) {
+			if (!this.isConnectable(loc) || !this.draws(loc)
+				|| !(this.level.getBlockEntity(this.worldPosition.relative(loc)) instanceof TubeBlockEntity other)) {
+				continue;
+			}
+			Direction back = loc.getOpposite();
+			Aspect theirs = other.essentiaType;
+			if (theirs == null || theirs == mine || other.essentiaAmount <= 0 || !other.isConnectable(back) || !other.draws(back)) {
+				continue;
+			}
+			// each would go into the other's tube if it were empty
+			if (other.stepsFor(mine) > this.stepsFor(mine) && this.stepsFor(theirs) > other.stepsFor(theirs)) {
+				this.essentiaType = theirs;
+				other.essentiaType = mine;
+				this.markForUpdate();
+				other.markForUpdate();
+				return;
+			}
+		}
+	}
+
+	/** Whether this tube draws essentia in from this side (a one-way tube only from behind its facing). */
+	private boolean draws(Direction loc) {
+		return this.kind() != Kind.ONEWAY || this.facing != loc.getOpposite();
 	}
 
 	void equalizeWithNeighbours(boolean directional) {

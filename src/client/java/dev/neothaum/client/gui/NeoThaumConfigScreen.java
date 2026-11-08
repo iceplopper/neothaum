@@ -277,6 +277,8 @@ public class NeoThaumConfigScreen extends Screen {
 				this.toggle("Long Tubes", "Suction carries eight times as far down essentia tubes: an empty jar draws from 255 tubes away, a "
 					+ "labelled jar from 511 and a machine from over a thousand (TC4: 31, 63 and 127)." + off,
 					() -> cfg.additionLongTubes, v -> cfg.additionLongTubes = v);
+				this.toggle("Essentia Swap", "Two essentia meeting head on in neighbouring tubes, each drawn on into the other's tube, trade places "
+					+ "instead of blocking each other for good." + off, () -> cfg.additionEssentiaSwap, v -> cfg.additionEssentiaSwap = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}
