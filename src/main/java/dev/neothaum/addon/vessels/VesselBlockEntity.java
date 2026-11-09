@@ -113,7 +113,7 @@ public class VesselBlockEntity extends TVBlockEntity {
 			try (var reporter = new ProblemReporter.ScopedCollector(dev.neothaum.NeoThaum.LOGGER)) {
 				this.shown = EntityType.loadEntityRecursive(
 					net.minecraft.world.level.storage.TagValueInput.create(reporter, level.registryAccess(), tag), level,
-					new EntitySpawnRequest(EntitySpawnReason.LOAD, true), EntityProcessor.NOP);
+					new EntitySpawnRequest(EntitySpawnReason.LOAD, true), net.minecraft.world.level.BaseSpawner.SET_DISPLAY_ENTITY_ID);
 			}
 		}
 		return this.shown;

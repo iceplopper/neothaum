@@ -1204,7 +1204,7 @@ public class VisualTests implements FabricClientGameTest {
 	 * by a wand for nothing.
 	 */
 	private static void vesselsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
-		for (String cmd : new String[]{"gamemode survival @a", "time set noon", "weather clear", "difficulty peaceful",
+		for (String cmd : new String[]{"gamemode survival @a", "time set noon", "weather clear", "difficulty easy",
 			"fill -8 117 -8 8 124 8 air", "fill -8 116 -8 8 116 8 grass_block", "kill @e[type=!player]", "clear @a",
 			"neothaum additions creature_vessels enable", "tp @a 0.5 117 0.5 180 10", "summon cow 0.5 117 -2.5 {NoAI:1b,CustomName:'Bessie'}"}) {
 			server.runCommand(cmd);
@@ -1232,7 +1232,8 @@ public class VisualTests implements FabricClientGameTest {
 		String refusals = server.computeOnServer(srv -> {
 			var level = srv.overworld();
 			var p = srv.getPlayerList().getPlayers().get(0);
-			var wand = wand("iron", "wood", null, false);
+			// a hostile one costs 25 of Ordo and Aer: more than a starting wand holds
+			var wand = wand("gold", "greatwood", null, false);
 			var zombie = net.minecraft.world.entity.EntityTypes.ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
 			zombie.snapTo(3.5, 117, 0.5, 0, 0);
 			zombie.setNoAi(true);
