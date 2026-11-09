@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wither",
+    "minecraft:ender_dragon",
+    "minecraft:elder_guardian",
+    "minecraft:warden",
+    "neothaum:giant_brainy_zombie",
+    "neothaum:eldritch_warden",
+    "neothaum:eldritch_golem",
+    "neothaum:cultist_leader",
+    "neothaum:cultist_portal",
+    "neothaum:taintacle_giant"
+  ]
+}

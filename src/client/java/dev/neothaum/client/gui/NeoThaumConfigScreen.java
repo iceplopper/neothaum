@@ -279,6 +279,9 @@ public class NeoThaumConfigScreen extends Screen {
 					() -> cfg.additionLongTubes, v -> cfg.additionLongTubes = v);
 				this.toggle("Essentia Swap", "Two essentia meeting head on in neighbouring tubes, each drawn on into the other's tube, trade places "
 					+ "instead of blocking each other for good." + off, () -> cfg.additionEssentiaSwap, v -> cfg.additionEssentiaSwap = v);
+				this.toggle("Vessels of Binding", "Warded jars that carry creatures: bind one with a wand (the vessel in the other hand), set the "
+					+ "vessel down and use it with a wand to let it out. Lesser, ordinary and Greater (eight of a kind). Applies when the world loads "
+					+ "or /reload runs." + off, () -> cfg.additionCreatureVessels, v -> cfg.additionCreatureVessels = v);
 				for (Placed p : this.placed.subList(locked, this.placed.size())) {
 					p.widget().active = cfg.additionsEnabled;
 				}

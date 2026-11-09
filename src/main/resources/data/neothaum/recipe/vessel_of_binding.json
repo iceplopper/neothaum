@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "creature_vessels"
+    }
+  ],
+  "type": "neothaum:infusion",
+  "research": "BINDINGVESSEL",
+  "instability": 3,
+  "aspects": {
+    "vinculum": 16,
+    "bestia": 16,
+    "spiritus": 8,
+    "vitreus": 8
+  },
+  "central": "neothaum:lesser_vessel",
+  "components": [
+    "neothaum:zombie_brain",
+    "minecraft:lead",
+    "neothaum:amber",
+    "neothaum:primal_charm",
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus"
+  ],
+  "result": {
+    "id": "neothaum:vessel_of_binding"
+  }
+}

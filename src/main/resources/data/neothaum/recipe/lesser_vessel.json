@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "creature_vessels"
+    }
+  ],
+  "type": "neothaum:arcane_shaped",
+  "research": "LESSERVESSEL",
+  "aspects": {
+    "ordo": 10,
+    "aer": 10
+  },
+  "pattern": [
+    " L ",
+    "SJS",
+    " W "
+  ],
+  "key": {
+    "L": "minecraft:lead",
+    "S": "neothaum:salis_mundus",
+    "J": "neothaum:warded_jar",
+    "W": "minecraft:wheat"
+  },
+  "result": {
+    "id": "neothaum:lesser_vessel"
+  }
+}

@@ -165,6 +165,7 @@ public class NeoThaumClient implements ClientModInitializer {
 		BlockEntityRendererRegistry.register(TVBlockEntities.BANNER, dev.neothaum.client.render.BannerRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.NODE, NodeRenderer::new);
 		BlockEntityRendererRegistry.register(TVBlockEntities.JAR_NODE, dev.neothaum.client.render.JarNodeRenderer::new);
+		BlockEntityRendererRegistry.register(dev.neothaum.addon.vessels.Vessels.VESSEL_ENTITY, dev.neothaum.client.addon.VesselRenderer::new);
 		dev.neothaum.items.JarNodeItem.DISCOVERED = a -> {
 			var p = net.minecraft.client.Minecraft.getInstance().player;
 			return p == null || dev.neothaum.research.ResearchManager.knowledge(p).hasDiscoveredAspect(a);

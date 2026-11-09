@@ -1198,6 +1198,107 @@ public class VisualTests implements FabricClientGameTest {
 		ctx.runOnClient(mc -> mc.gui.setScreen(null));
 	}
 
+	/**
+	 * Vessels of Binding: a cow bound with the wand and a Lesser Vessel by the player's own use, the refusals (a zombie in a Lesser Vessel,
+	 * a zombie at full health, a cow in a Greater Vessel of sheep), the cow shown turning in its vessel set down, and the creatures let out
+	 * by a wand for nothing.
+	 */
+	private static void vesselsScene(ClientGameTestContext ctx, net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext server) {
+		for (String cmd : new String[]{"gamemode survival @a", "time set noon", "weather clear", "difficulty peaceful",
+			"fill -8 117 -8 8 124 8 air", "fill -8 116 -8 8 116 8 grass_block", "kill @e[type=!player]", "clear @a",
+			"neothaum additions creature_vessels enable", "tp @a 0.5 117 0.5 180 10", "summon cow 0.5 117 -2.5 {NoAI:1b,CustomName:'Bessie'}"}) {
+			server.runCommand(cmd);
+		}
+		server.runOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, wand("iron", "wood", null, false));
+			p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, new net.minecraft.world.item.ItemStack(dev.neothaum.addon.vessels.Vessels.lesserItem));
+		});
+		ctx.waitTicks(20);
+		// the player binds the cow: wand in hand, vessel in the other, use
+		ctx.getInput().lookAt(new net.minecraft.core.BlockPos(0, 117, -3));
+		ctx.waitTicks(3);
+		ctx.getInput().pressKey(options -> options.keyUse);
+		ctx.waitTicks(10);
+		String bound = server.computeOnServer(srv -> {
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var held = p.getOffhandItem().getOrDefault(dev.neothaum.addon.vessels.Vessels.BOUND, java.util.List.of());
+			int cows = srv.overworld().getEntitiesOfClass(net.minecraft.world.entity.animal.cow.Cow.class,
+				new net.minecraft.world.phys.AABB(-8, 110, -8, 8, 130, 8)).size();
+			return "held " + held.size() + " cows " + cows;
+		});
+		shot(ctx, "vessels_bound");
+		// the refusals, and the hostile one worn down
+		String refusals = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var wand = wand("iron", "wood", null, false);
+			var zombie = net.minecraft.world.entity.EntityTypes.ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+			zombie.snapTo(3.5, 117, 0.5, 0, 0);
+			zombie.setNoAi(true);
+			level.addFreshEntity(zombie);
+			var lesser = new net.minecraft.world.item.ItemStack(dev.neothaum.addon.vessels.Vessels.lesserItem);
+			dev.neothaum.addon.vessels.Vessels.bind(p, level, wand, lesser, zombie);
+			var binding = new net.minecraft.world.item.ItemStack(dev.neothaum.addon.vessels.Vessels.bindingItem);
+			dev.neothaum.addon.vessels.Vessels.bind(p, level, wand, binding, zombie);
+			boolean fullRefused = !zombie.isRemoved() && !binding.has(dev.neothaum.addon.vessels.Vessels.BOUND);
+			zombie.setHealth(zombie.getMaxHealth() / 3);
+			dev.neothaum.addon.vessels.Vessels.bind(p, level, wand, binding, zombie);
+			var greater = new net.minecraft.world.item.ItemStack(dev.neothaum.addon.vessels.Vessels.greaterItem);
+			for (int i = 0; i < 3; i++) {
+				var sheep = net.minecraft.world.entity.EntityTypes.SHEEP.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+				sheep.snapTo(-3.5, 117, 0.5 + i, 0, 0);
+				level.addFreshEntity(sheep);
+				dev.neothaum.addon.vessels.Vessels.bind(p, level, wand, greater, sheep);
+			}
+			var cow = net.minecraft.world.entity.EntityTypes.COW.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+			cow.snapTo(-3.5, 117, 4.5, 0, 0);
+			level.addFreshEntity(cow);
+			dev.neothaum.addon.vessels.Vessels.bind(p, level, wand, greater, cow);
+			// set the vessels down: the cow's beside the player, the sheep's further off
+			level.setBlock(new net.minecraft.core.BlockPos(0, 117, -2), dev.neothaum.addon.vessels.Vessels.LESSER.defaultBlockState(), 3);
+			if (level.getBlockEntity(new net.minecraft.core.BlockPos(0, 117, -2)) instanceof dev.neothaum.addon.vessels.VesselBlockEntity be) {
+				be.applyComponentsFromItemStack(p.getOffhandItem());
+				be.setChanged();
+				level.sendBlockUpdated(be.getBlockPos(), be.getBlockState(), be.getBlockState(), 3);
+			}
+			level.setBlock(new net.minecraft.core.BlockPos(-2, 117, -2), dev.neothaum.addon.vessels.Vessels.GREATER.defaultBlockState(), 3);
+			if (level.getBlockEntity(new net.minecraft.core.BlockPos(-2, 117, -2)) instanceof dev.neothaum.addon.vessels.VesselBlockEntity be) {
+				be.applyComponentsFromItemStack(greater);
+				be.setChanged();
+				level.sendBlockUpdated(be.getBlockPos(), be.getBlockState(), be.getBlockState(), 3);
+			}
+			return "lesser refused zombie " + !lesser.has(dev.neothaum.addon.vessels.Vessels.BOUND) + ", full health refused " + fullRefused
+				+ ", worn zombie bound " + binding.getOrDefault(dev.neothaum.addon.vessels.Vessels.BOUND, java.util.List.of()).size()
+				+ ", greater holds " + greater.getOrDefault(dev.neothaum.addon.vessels.Vessels.BOUND, java.util.List.of()).size()
+				+ " (cow refused " + !cow.isRemoved() + ")";
+		});
+		server.runCommand("tp @a 0.5 117 0.5 180 30");
+		ctx.waitTicks(30);
+		shot(ctx, "vessels_set_down");
+		// out again, by a wand
+		String released = server.computeOnServer(srv -> {
+			var level = srv.overworld();
+			var p = srv.getPlayerList().getPlayers().get(0);
+			var wand = wand("iron", "wood", null, false);
+			int before = level.getEntitiesOfClass(net.minecraft.world.entity.animal.Animal.class, new net.minecraft.world.phys.AABB(-8, 110, -8, 8, 130, 8)).size();
+			for (var at : new net.minecraft.core.BlockPos[]{new net.minecraft.core.BlockPos(0, 117, -2), new net.minecraft.core.BlockPos(-2, 117, -2)}) {
+				var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(at), net.minecraft.core.Direction.UP, at, false);
+				level.getBlockState(at).useItemOn(wand, level, p, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+			}
+			int after = level.getEntitiesOfClass(net.minecraft.world.entity.animal.Animal.class, new net.minecraft.world.phys.AABB(-8, 110, -8, 8, 130, 8)).size();
+			var bessie = level.getEntitiesOfClass(net.minecraft.world.entity.animal.cow.Cow.class, new net.minecraft.world.phys.AABB(-8, 110, -8, 8, 130, 8),
+				c -> c.hasCustomName() && c.getCustomName().getString().equals("Bessie")).size();
+			return "animals " + before + " -> " + after + ", Bessie back " + bessie;
+		});
+		ctx.waitTicks(10);
+		shot(ctx, "vessels_released");
+		NeoThaum.LOGGER.info("[visual-test] vessels: {} / {} / {}", bound, refusals, released);
+		check("vessels: the player binds a cow; the refusals hold; set down and released by a wand, they come back as they were",
+			bound.equals("held 1 cows 0") && refusals.equals("lesser refused zombie true, full health refused true, worn zombie bound 1, greater holds 3 (cow refused true)")
+				&& released.endsWith("Bessie back 1"), bound + " / " + refusals + " / " + released);
+	}
+
 	private static double field(Class<?> c, Object o, String name) throws ReflectiveOperationException {
 		var f = c.getDeclaredField(name);
 		f.setAccessible(true);
@@ -2421,7 +2522,7 @@ public class VisualTests implements FabricClientGameTest {
 		"visnet", "nodejar", "icons", "devices", "eldritch", "sounds", "pech", "outer",
 		"aspects", "research", "audit", "metals", "elemental", "baubles", "pechtrade", "trinkets",
 		"rei", "foods", "warpfx", "brightnode", "wisplight", "bore", "harness", "golemai", "thaumometerview", "woodsets", "hints", "siphon", "totems", "dais", "totemcolours", "reload", "compat",
-		"config", "worldmap", "totemmaps", "totemscreens", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
+		"config", "worldmap", "totemmaps", "totemscreens", "vessels", "golemancy", "tooltips", "templates", "staves", "golems", "villages"};
 
 	/**
 	 * Runs the named scenes one after another in a shared world, tidied between them (mobs removed, the player back in creative at the start
@@ -2621,6 +2722,9 @@ public class VisualTests implements FabricClientGameTest {
 			}
 			case "totemscreens" -> {
 				totemScreensScene(ctx, server);
+			}
+			case "vessels" -> {
+				vesselsScene(ctx, server);
 			}
 			case "golemancy" -> {
 				golemancyScene(ctx, server);

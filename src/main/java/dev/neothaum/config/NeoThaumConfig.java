@@ -211,6 +211,8 @@ public class NeoThaumConfig {
 		public boolean additionLongTubes = true;
 		/** Two essentia meeting head on in neighbouring tubes trade places instead of blocking each other. */
 		public boolean additionEssentiaSwap = true;
+		/** Vessels of Binding: jars that carry creatures, bound with a wand and let out with one. */
+		public boolean additionCreatureVessels = true;
 
 		/** Keeps every number within TC4's limits, as TC4 did when it read its config. */
 		void validate() {

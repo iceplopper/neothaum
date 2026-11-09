@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "neothaum:addition",
+      "addition": "creature_vessels"
+    }
+  ],
+  "type": "neothaum:infusion",
+  "research": "GREATERVESSEL",
+  "instability": 5,
+  "aspects": {
+    "vinculum": 32,
+    "bestia": 24,
+    "alienis": 16,
+    "vacuos": 16
+  },
+  "central": "neothaum:vessel_of_binding",
+  "components": [
+    "neothaum:void_metal_ingot",
+    "minecraft:ender_pearl",
+    "neothaum:void_metal_ingot",
+    "neothaum:amber",
+    "neothaum:salis_mundus",
+    "neothaum:salis_mundus"
+  ],
+  "result": {
+    "id": "neothaum:greater_vessel"
+  }
+}

@@ -8621,6 +8621,107 @@
         "LEVITATOR"
       ],
       "addition": "arcane_campfire"
+    },
+    {
+      "key": "LESSERVESSEL",
+      "category": "ALCHEMY",
+      "aspects": {
+        "bestia": 4,
+        "vinculum": 3,
+        "vitreus": 2
+      },
+      "col": 6,
+      "row": -3,
+      "complexity": 2,
+      "icon": {
+        "item": "neothaum:lesser_vessel"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.LESSERVESSEL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:lesser_vessel"
+          ]
+        },
+        {
+          "type": "text",
+          "text": "tc.research_page.LESSERVESSEL.2"
+        }
+      ],
+      "parents": [
+        "JARLABEL"
+      ],
+      "addition": "creature_vessels"
+    },
+    {
+      "key": "BINDINGVESSEL",
+      "category": "ALCHEMY",
+      "aspects": {
+        "vinculum": 6,
+        "bestia": 4,
+        "spiritus": 4,
+        "praecantatio": 3
+      },
+      "col": 7,
+      "row": -4,
+      "complexity": 3,
+      "icon": {
+        "item": "neothaum:vessel_of_binding"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.BINDINGVESSEL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:vessel_of_binding"
+          ]
+        }
+      ],
+      "parents": [
+        "LESSERVESSEL",
+        "INFUSION"
+      ],
+      "addition": "creature_vessels"
+    },
+    {
+      "key": "GREATERVESSEL",
+      "category": "ALCHEMY",
+      "aspects": {
+        "vinculum": 8,
+        "alienis": 4,
+        "vacuos": 4,
+        "bestia": 4
+      },
+      "col": 8,
+      "row": -5,
+      "complexity": 3,
+      "icon": {
+        "item": "neothaum:greater_vessel"
+      },
+      "pages": [
+        {
+          "type": "text",
+          "text": "tc.research_page.GREATERVESSEL.1"
+        },
+        {
+          "type": "recipe",
+          "recipes": [
+            "neothaum:greater_vessel"
+          ]
+        }
+      ],
+      "parents": [
+        "BINDINGVESSEL",
+        "VOIDMETAL"
+      ],
+      "addition": "creature_vessels"
     }
   ]
 }
