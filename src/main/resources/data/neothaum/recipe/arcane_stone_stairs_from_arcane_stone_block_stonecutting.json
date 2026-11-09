@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "neothaum:arcane_stone_block",
+  "result": {
+    "id": "neothaum:arcane_stone_stairs",
+    "count": 1
+  }
+}
