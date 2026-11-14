@@ -140,6 +140,11 @@ public class EldritchAltarBlockEntity extends TVBlockEntity {
 		}
 		altar.counter++;
 		if (altar.counter >= 80 && altar.counter % 40 == 0) {
+			// cultists as guardians (a NeoThaum change; TC4 sent cultists at anyone, on any difficulty): only on Normal or harder, and only
+			// near someone who has learned Eldritch Minor, so a ring found early in the game stays quiet
+			if (!(level instanceof net.minecraft.server.level.ServerLevel sl) || !EldritchGuardianEntity.mayAppear(sl, pos)) {
+				return;
+			}
 			if (altar.spawnType == 0) {
 				if (!altar.spawnedClerics) {
 					altar.spawnClerics();
