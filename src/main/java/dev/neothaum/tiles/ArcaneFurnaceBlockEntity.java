@@ -85,17 +85,41 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 	}
 
 	public boolean canSmelt(ServerLevel serverLevel, ItemStack stack) {
-		if (stack.isEmpty()) {
-			return false;
-		}
-		return this.quickCheck.getRecipeFor(new SingleRecipeInput(stack), serverLevel).isPresent();
+		return this.getSmeltingRecipe(serverLevel, stack).isPresent();
 	}
 
+	/** The recipe for what's smelted: the stack's own, or for a block of raw ore (which only this furnace takes) the raw ore's. */
 	public Optional<RecipeHolder<SmeltingRecipe>> getSmeltingRecipe(ServerLevel serverLevel, ItemStack stack) {
 		if (stack.isEmpty()) {
 			return Optional.empty();
 		}
-		return this.quickCheck.getRecipeFor(new SingleRecipeInput(stack), serverLevel);
+		Optional<RecipeHolder<SmeltingRecipe>> own = this.quickCheck.getRecipeFor(new SingleRecipeInput(stack), serverLevel);
+		if (own.isPresent()) {
+			return own;
+		}
+		ItemStack raw = rawOreOf(stack);
+		return raw.isEmpty() ? Optional.empty() : this.quickCheck.getRecipeFor(new SingleRecipeInput(raw), serverLevel);
+	}
+
+	/**
+	 * NeoThaum: the raw ore a block of raw ore is made of (raw_iron_block → raw_iron, and so for gold, copper, cinnabar and any mod's raw
+	 * metal that follows the same naming), one of it; empty if the stack isn't such a block or has its own smelting recipe.
+	 */
+	public static ItemStack rawOreOf(ItemStack stack) {
+		net.minecraft.resources.Identifier id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+		String path = id.getPath();
+		if (!path.startsWith("raw_") || !path.endsWith("_block")) {
+			return ItemStack.EMPTY;
+		}
+		net.minecraft.resources.Identifier rawId = net.minecraft.resources.Identifier.fromNamespaceAndPath(id.getNamespace(),
+			path.substring(0, path.length() - "_block".length()));
+		return net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(rawId).map(ItemStack::new).orElse(ItemStack.EMPTY);
+	}
+
+	/** How many smelts one of this stack is: nine for a block of raw ore, else one. */
+	private int smeltsIn(ServerLevel serverLevel, ItemStack stack) {
+		return !stack.isEmpty() && this.quickCheck.getRecipeFor(new SingleRecipeInput(stack), serverLevel).isEmpty()
+			&& !rawOreOf(stack).isEmpty() ? 9 : 1;
 	}
 
 	public boolean addItemsToInventory(ItemStack stack) {
@@ -166,9 +190,13 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 					Optional<RecipeHolder<SmeltingRecipe>> opt = furnace.getSmeltingRecipe(serverLevel, stack);
 					if (opt.isPresent()) {
 						RecipeHolder<SmeltingRecipe> recipe = opt.get();
-						ItemStack result = recipe.value().assemble(new SingleRecipeInput(stack));
+						// a block of raw ore smelts as the nine raw ores in it: nine times the ingots, the experience and the chances of a bonus
+						int smelts = furnace.smeltsIn(serverLevel, stack);
+						ItemStack input = smelts > 1 ? rawOreOf(stack) : stack.copy();
+						ItemStack result = recipe.value().assemble(new SingleRecipeInput(input));
 						if (!result.isEmpty()) {
-							furnace.ejectItem(serverLevel, state.getValue(ArcaneFurnaceBlock.FACING), result.copy(), stack.copy(), recipe.value().experience());
+							furnace.ejectItem(serverLevel, state.getValue(ArcaneFurnaceBlock.FACING), result.copyWithCount(result.getCount() * smelts), input,
+								recipe.value().experience() * smelts, smelts);
 							stack.shrink(1);
 							if (stack.isEmpty()) {
 								furnace.items.set(i, ItemStack.EMPTY);
@@ -185,7 +213,8 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 			for (int i = 0; i < furnace.items.size(); i++) {
 				ItemStack stack = furnace.items.get(i);
 				if (!stack.isEmpty() && furnace.canSmelt(serverLevel, stack)) {
-					furnace.maxCookTime = furnace.calcCookTime();
+					// nine smelts' worth of time for a block of raw ore
+					furnace.maxCookTime = furnace.calcCookTime() * furnace.smeltsIn(serverLevel, stack);
 					furnace.cookTime = furnace.maxCookTime;
 					furnace.setChanged();
 					break;
@@ -195,6 +224,11 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 	}
 
 	public void ejectItem(ServerLevel serverLevel, Direction facing, ItemStack result, ItemStack input, float xp) {
+		this.ejectItem(serverLevel, facing, result, input, xp, 1);
+	}
+
+	/** Lets out what was smelted, with its bonus rolled once for each of the {@code smelts} it was (nine for a block of raw ore). */
+	public void ejectItem(ServerLevel serverLevel, Direction facing, ItemStack result, ItemStack input, float xp, int smelts) {
 		RandomSource random = serverLevel.getRandom();
 		double lx = this.worldPosition.getX() + 0.5 + facing.getStepX() * 1.25;
 		double ly = this.worldPosition.getY() + 0.4;
@@ -212,14 +246,16 @@ public class ArcaneFurnaceBlockEntity extends TVBlockEntity implements Container
 			int bellows = this.getBellows();
 			int bonusCount = 0;
 			float bonusMult = Math.max(0.0F, dev.neothaum.config.NeoThaumConfig.current.infernalFurnaceBonusMultiplier);
-			if (bellows == 0) {
-				if (random.nextFloat() < (0.25F * bonusMult)) {
-					bonusCount++;
-				}
-			} else {
-				for (int a = 0; a < bellows; a++) {
-					if (random.nextFloat() < (0.44F * bonusMult)) {
+			for (int s = 0; s < smelts; s++) {
+				if (bellows == 0) {
+					if (random.nextFloat() < (0.25F * bonusMult)) {
 						bonusCount++;
+					}
+				} else {
+					for (int a = 0; a < bellows; a++) {
+						if (random.nextFloat() < (0.44F * bonusMult)) {
+							bonusCount++;
+						}
 					}
 				}
 			}
